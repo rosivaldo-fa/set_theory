@@ -1,6 +1,6 @@
 note
 	description: "Object able to transform objects derived from a generic parameter into objects derived from another generic parameter."
-	author: "Rosivaldo Fernandes Alves"
+	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 

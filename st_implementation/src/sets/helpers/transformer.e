@@ -1,6 +1,6 @@
 note
 	description: "Implementation of {STS_TRANSFORMER}"
-	author: "Rosivaldo Fernandes Alves"
+	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 

@@ -1,6 +1,6 @@
 note
 	description: "Element that checks for equality between two objects; defined as an equivalence relation."
-	author: "Rosivaldo Fernandes Alves"
+	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 

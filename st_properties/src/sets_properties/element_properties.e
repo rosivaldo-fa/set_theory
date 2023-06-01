@@ -1,6 +1,6 @@
 ﻿note
 	description: "Object that checks whether the properties verified within set theory hold for an implementation of {STS_ELEMENT}"
-	author: "Rosivaldo Fernandes Alves"
+	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 

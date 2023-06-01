@@ -1,6 +1,6 @@
 ﻿note
 	description: "Test suite for {STS_ELEMENT}"
-	author: "Rosivaldo Fernandes Alves"
+	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"

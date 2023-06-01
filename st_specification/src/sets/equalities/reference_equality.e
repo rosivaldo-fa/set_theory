@@ -1,6 +1,6 @@
 note
 	description: "Equality that holds for entities that reference the same object, i.e. that are equal according to the = operator."
-	author: "Rosivaldo Fernandes Alves"
+	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 

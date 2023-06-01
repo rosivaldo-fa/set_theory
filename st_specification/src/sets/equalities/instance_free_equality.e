@@ -1,6 +1,6 @@
 note
 	description: "Equality that defines `holds' as a class feature."
-	author: "Rosivaldo Fernandes Alves"
+	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
