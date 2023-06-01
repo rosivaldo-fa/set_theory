@@ -20,11 +20,19 @@ feature -- Membership
 			definition: Result = s ∋ Current
 		end
 
+	is_not_in alias "∉" (s: SET [ELEMENT, EQUALITY [ELEMENT]]): BOOLEAN
+			-- Is not current element in `s'?
+		do
+			Result := not (Current ∈ s)
+		ensure
+			definition: Result = not (Current ∈ s)
+		end
+
 note
 	license: "[
 		Eiffel Forum License v2
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
-	copyright: "Copyright (c) 2012-2023, Rosivaldo Fernandes Alves"
+	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	source: ""
 end

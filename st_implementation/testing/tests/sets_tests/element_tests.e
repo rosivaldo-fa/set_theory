@@ -62,6 +62,39 @@ feature -- Test routines (Membership)
 			assert ("is_in_ok", properties.is_in_ok (a, s))
 		end
 
+	test_is_not_in
+			-- Test {STS_ELEMENT}.is_not_in.
+		note
+			testing: "covers/{STS_ELEMENT}.is_not_in"
+		local
+			a: like element_to_be_tested
+			s: like some_elements
+		do
+			a := element_to_be_tested
+			s := new_element_references-- / a
+			assert ("a ∉ s", a ∉ s)
+			assert ("a ∉ s ok", properties.is_not_in_ok (a, s))
+
+--			s := new_element_references & a
+			create {SET [STS_ELEMENT, STS_REFERENCE_EQUALITY [STS_ELEMENT]]} s.make_singleton (a)
+			assert ("not (a ∉ s)", not (a ∉ s))
+			assert ("not (a ∉ s) ok", properties.is_not_in_ok (a, s))
+
+			s := new_element_objects--/ a.twin
+			assert ("a.twin ∉ s", a ∉ s)
+			assert ("a.twin ∉ s ok", properties.is_not_in_ok (a, s))
+
+			s := new_element_objects--& a
+			create {SET [STS_ELEMENT, STS_OBJECT_EQUALITY [STS_ELEMENT]]} s.make_singleton (a.twin)
+			assert ("not (a.twin ∉ s)", not (a ∉ s))
+			assert ("not (a.twin ∉ s) ok", properties.is_not_in_ok (a, s))
+
+			a := element_to_be_tested
+			s := some_elements
+			assert ("is_not_in", a ∉ s ⇒ True)
+			assert ("is_not_in_ok", properties.is_not_in_ok (a, s))
+		end
+
 feature {NONE} -- Factory (Element to be tested)
 
 	element_to_be_tested: like some_immediate_element
@@ -306,7 +339,7 @@ feature {NONE} -- Implementation
 		end
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo Fernandes Alves"
+	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see http://www.eiffel.com/licensing/forum.txt)
