@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-22-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-22-0 http://www.eiffel.com/developers/xml/configuration-1-22-0.xsd" name="st_implementation" uuid="DF7E41FE-8039-4A8C-8B8A-2C75D721101A" library_target="st_implementation">
+	<description>Implementation of set theory classes, as specified by st_specification.</description>
+	<target name="st_implementation">
+		<note>
+			<eis name="Unnamed" protocol="URI" src="$(system_path)\docs\EIS\st_implementation.html"/>
+		</note>
+		<description>Implementation of set theory classes, as specified by st_specification.</description>
+		<root all_classes="true"/>
+		<file_rule>
+			<exclude>/CVS$</exclude>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/\.git$</exclude>
+			<exclude>/\.svn$</exclude>
+		</file_rule>
+		<option warning="warning" is_obsolete_iteration="false" manifest_array_type="mismatch_error">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<setting name="dead_code_removal" value="feature"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
+			<renaming old_name="SET" new_name="EB_SET"/>
+		</library>
+		<library name="st_specification" location="..\st_specification\st_specification.ecf" readonly="false" prefix="STS_">
+			<option>
+				<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+			</option>
+		</library>
+		<cluster name="src" location=".\src\">
+			<description>Source code of implementation of set theory classes, as specified by st_specification.</description>
+			<cluster name="sets" location=".\src\sets\" recursive="true">
+				<description>Implementation of sets and other core concepts of set theory, as specified by st_specification.</description>
+			</cluster>
+		</cluster>
+	</target>
+	<target name="st_implementation_tests" extends="st_implementation">
+		<note>
+			<eis name="Unnamed" protocol="URI" src="$(system_path)\docs\EIS\st_implementation_tests.html"/>
+		</note>
+		<description>Tests for set theory classes, as implemented by st_implementation, and they respective properties, as stated by st_properties.</description>
+		<root class="APPLICATION" feature="make"/>
+		<option warning="warning">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<library name="st_properties" location="..\st_properties\st_properties.ecf" readonly="false" prefix="STP_">
+			<option>
+				<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+			</option>
+		</library>
+		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf">
+			<class_option class="EQA_TEST_SET">
+				<warning name="obsolete_feature" value="all"/>
+			</class_option>
+		</library>
+		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
+		<cluster name="test" location=".\testing\">
+			<description>Tests for set theory classes, as implemented by st_implementation, and they respective properties, as stated by st_properties.</description>
+			<tests name="tests" location=".\testing\tests\">
+				<description>Repository of tests for classes of set theory, as implemented by st_implementation.</description>
+				<tests name="sets_tests" location=".\testing\tests\sets_tests\">
+					<description>Tests for sets and others core-concept classes of set theory, as implemented by st_implementation.</description>
+				</tests>
+			</tests>
+		</cluster>
+	</target>
+</system>
