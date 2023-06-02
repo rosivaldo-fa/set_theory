@@ -40,10 +40,10 @@ feature -- Test routines (Relationship)
 		end
 
 	test_holds_successively
-			-- Test {INSTANCE_FREE_EQUALITY}.holds_successively.
+			-- Test {STS_INSTANCE_FREE_EQUALITY}.holds_successively.
 			-- Test {STS_REFERENCE_EQUALITY}.holds_successively.
 		note
-			testing: "covers/{INSTANCE_FREE_EQUALITY}.holds_successively"
+			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
 			testing: "covers/{STS_REFERENCE_EQUALITY}.holds_successively"
 		local
 			eq: like equality_to_be_tested

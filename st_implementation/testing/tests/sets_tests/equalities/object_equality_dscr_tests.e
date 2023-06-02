@@ -15,7 +15,8 @@ inherit
 		redefine
 			properties,
 			test_all,
-			test_holds
+			test_holds,
+			test_holds_successively
 		end
 
 	DSCR_TESTS
@@ -51,6 +52,15 @@ feature -- Test routines (Relationship)
 			-- <Precursor>
 		note
 			testing: "covers/{STS_OBJECT_EQUALITY}.holds"
+		do
+			Precursor {OBJECT_EQUALITY_TESTS}
+		end
+
+	test_holds_successively
+			-- <Precursor>
+		note
+			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
+			testing: "covers/{STS_OBJECT_EQUALITY}.holds_successively"
 		do
 			Precursor {OBJECT_EQUALITY_TESTS}
 		end
