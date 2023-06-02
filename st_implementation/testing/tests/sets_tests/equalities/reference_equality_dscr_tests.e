@@ -9,7 +9,7 @@ class
 	REFERENCE_EQUALITY_DSCR_TESTS
 
 inherit
-	EQUALITY_TESTS [detachable separate CHARACTER_REF, REFERENCE_EQUALITY_DSCR]
+	REFERENCE_EQUALITY_TESTS [detachable separate CHARACTER_REF, REFERENCE_EQUALITY_DSCR]
 		rename
 			some_object_a as some_separate_character_ref
 		redefine
@@ -25,7 +25,7 @@ feature -- Test routines (All)
 		note
 			testing: "covers/{STS_REFERENCE_EQUALITY}"
 		do
-			Precursor {EQUALITY_TESTS}
+			Precursor {REFERENCE_EQUALITY_TESTS}
 			test_holds
 			test_holds_successively
 		end
@@ -33,21 +33,20 @@ feature -- Test routines (All)
 feature -- Test routines (Relationship)
 
 	test_holds
-			-- Test {STS_REFERENCE_EQUALITY}.holds.
+			-- <Precursor>
 		note
 			testing: "covers/{STS_REFERENCE_EQUALITY}.holds"
 		do
-			Precursor {EQUALITY_TESTS}
+			Precursor {REFERENCE_EQUALITY_TESTS}
 		end
 
 	test_holds_successively
-			-- Test {INSTANCE_FREE_EQUALITY}.holds_successively.
-			-- Test {STS_REFERENCE_EQUALITY}.holds_successively.
+			-- <Precursor>
 		note
-			testing: "covers/{INSTANCE_FREE_EQUALITY}.holds_successively"
+			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
 			testing: "covers/{STS_REFERENCE_EQUALITY}.holds_successively"
 		do
-			Precursor {EQUALITY_TESTS}
+			Precursor {REFERENCE_EQUALITY_TESTS}
 		end
 
 feature -- Factory (Object)

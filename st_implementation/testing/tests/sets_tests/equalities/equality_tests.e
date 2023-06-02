@@ -21,15 +21,6 @@ feature -- Access
 	properties: EQUALITY_PROPERTIES [A, EQ]
 			-- Object that checks the set-theory properties of {STS_EQUALITY}
 
---feature -- Test routines (All)
-
---	test_all
---			-- Test every routine of {STS_EQUALITY}.
---		do
---			Precursor {ELEMENT_TESTS}
---			test_holds
---		end
-
 feature -- Test routines (Relationship)
 
 	test_holds
@@ -48,16 +39,6 @@ feature -- Test routines (Relationship)
 			a2 := a1
 			assert ("a1 = a2", eq (a1, a2))
 			assert ("a1 = a2 ok", properties.holds_ok (a1, a2, eq))
-
-			from
-				a2 := some_object_a
-			until
-				a2 /= a1
-			loop
-				a2 := some_object_a
-			end
-			assert ("a1 /= a2", not eq (a1, a2))
-			assert ("a1 /= a2 ok", properties.holds_ok (a1, a2, eq))
 
 			a2 := some_object_a
 			assert ("holds", eq (a1, a2) implies True)
@@ -81,18 +62,6 @@ feature -- Test routines (Relationship)
 			a3 := a2
 			assert ("a1 = a2 = a3", eq.holds_successively (a1, a2, a3))
 			assert ("a1 = a2 = a3 ok", properties.holds_successively_ok (a1, a2, a3, eq))
-
-			from
-				a2 := some_object_a
-				a3 := some_object_a
-			until
-				not (a1 = a2 and a2 = a3)
-			loop
-				a2 := some_object_a
-				a3 := some_object_a
-			end
-			assert ("not (a1 = a2 = a3)", not eq.holds_successively (a1, a2, a3))
-			assert ("not (a1 = a2 = a3) ok", properties.holds_successively_ok (a1, a2, a3, eq))
 
 			eq := equality_to_be_tested
 			a2 := some_object_a
@@ -141,6 +110,6 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
-end
 
+end
 
