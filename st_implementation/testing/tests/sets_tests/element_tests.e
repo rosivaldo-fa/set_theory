@@ -27,6 +27,17 @@ feature {NONE} -- Events
 			create properties
 		end
 
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {STS_ELEMENT}.
+		note
+			testing: "covers/{STS_ELEMENT}"
+		do
+			test_is_in
+			test_is_not_in
+		end
+
 feature -- Test routines (Membership)
 
 	test_is_in

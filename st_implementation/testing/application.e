@@ -7,26 +7,27 @@ class
 	APPLICATION
 
 create
-	make
+	test_all
 
 feature  -- Initialization
 
-	make
-			-- Run application.
+	test_all
+			-- Run every available test.
 		local
-			et: ELEMENT_TESTS
+			element_tests: ELEMENT_TESTS
+			reference_equality_dscr_tests: REFERENCE_EQUALITY_DSCR_TESTS
 		do
-			create et
+			create element_tests
+			element_tests.test_all
+			create reference_equality_dscr_tests
+			reference_equality_dscr_tests.test_all
 		end
 
 note
-	copyright: "Copyright (c) 1984-2019, Eiffel Software and others"
-	license: "Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"
-	source: "[
-			Eiffel Software
-			5949 Hollister Ave., Goleta, CA 93117 USA
-			Telephone 805-685-1006, Fax 805-685-6869
-			Website http://www.eiffel.com
-			Customer support http://support.eiffel.com
+	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
+	license: "[
+		Eiffel Forum License v2
+		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
+	source: ""
 end

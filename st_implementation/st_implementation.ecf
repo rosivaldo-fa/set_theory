@@ -38,7 +38,7 @@
 			<eis name="Unnamed" protocol="URI" src="$(system_path)\docs\EIS\st_implementation_tests.html"/>
 		</note>
 		<description>Tests for set theory classes, as implemented by st_implementation, and they respective properties, as stated by st_properties.</description>
-		<root class="APPLICATION" feature="make"/>
+		<root class="APPLICATION" feature="test_all"/>
 		<option warning="warning">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
@@ -58,10 +58,22 @@
 			<description>Tests for set theory classes, as implemented by st_implementation, and they respective properties, as stated by st_properties.</description>
 			<tests name="tests" location=".\testing\tests\">
 				<description>Repository of tests for classes of set theory, as implemented by st_implementation.</description>
-				<tests name="sets_tests" location=".\testing\tests\sets_tests\">
+				<tests name="sets_tests" location=".\testing\tests\sets_tests\" recursive="true">
 					<description>Tests for sets and others core-concept classes of set theory, as implemented by st_implementation.</description>
 				</tests>
 			</tests>
+			<cluster name="adaptation" location=".\testing\adaptation\">
+				<description>Possible adaptations of classes to be tested, e.g. classes derived from generic ones, exposition of access-restricted features to tests etc.</description>
+				<cluster name="test_sets" location=".\testing\adaptation\test_sets\" recursive="true">
+					<description>Classes of sets and other core concepts of set theory, adapted to allow AutoTest working on them.</description>
+				</cluster>
+			</cluster>
+			<cluster name="properties" location=".\testing\properties\">
+				<description>Implementation or deferred classes specified by st_properties</description>
+				<cluster name="sets_properties" location=".\testing\properties\sets_properties\" recursive="true">
+					<description>Implementation of classes with properties of sets and other core concepts of set theory, as specified by st_properties.</description>
+				</cluster>
+			</cluster>
 		</cluster>
 	</target>
 </system>
