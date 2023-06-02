@@ -1,14 +1,14 @@
 note
-	description: "STS_OBJECT_EQUALITY derived for {detachable separate CHARACTER_REF}"
+	description: "Test suite for {STS_OBJECT_STANDARD_EQUALITY}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
-	OBJECT_EQUALITY_DSCR
+deferred class
+	OBJECT_STANDARD_EQUALITY_TESTS [A, EQ -> STS_OBJECT_STANDARD_EQUALITY [A] create default_create end]
 
 inherit
-	STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]
+	EQUALITY_TESTS [A, EQ]
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

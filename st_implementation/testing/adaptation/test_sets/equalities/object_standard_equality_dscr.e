@@ -1,14 +1,14 @@
 note
-	description: "STS_OBJECT_EQUALITY derived for {detachable separate CHARACTER_REF}"
+	description: "STS_OBJECT_STANDARD_EQUALITY derived for {detachable separate CHARACTER_REF}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	OBJECT_EQUALITY_DSCR
+	OBJECT_STANDARD_EQUALITY_DSCR
 
 inherit
-	STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]
+	STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
