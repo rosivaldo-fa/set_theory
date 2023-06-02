@@ -9,6 +9,11 @@ class
 	ELEMENT_TESTS
 
 inherit
+	STS_ELEMENT
+		undefine
+			default_create
+		end
+
 	EQA_TEST_SET
 		redefine
 			on_prepare
