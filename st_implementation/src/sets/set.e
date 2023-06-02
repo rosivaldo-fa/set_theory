@@ -86,7 +86,8 @@ feature -- Factory
 
 feature -- Transformer
 
-	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, EQ, STS_OBJECT_EQUALITY [BOOLEAN]]
+	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, --EQ,
+	STS_OBJECT_EQUALITY [BOOLEAN]]
 			-- <Precursor>
 		do
 			create Result
@@ -120,7 +121,7 @@ feature {NONE} -- Implementation
 		end
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo Fernandes Alves"
+	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see http://www.eiffel.com/licensing/forum.txt)

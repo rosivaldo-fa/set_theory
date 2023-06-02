@@ -95,7 +95,7 @@ feature -- Test routines (Membership)
 			assert ("a.twin ∉ s", a ∉ s)
 			assert ("a.twin ∉ s ok", properties.is_not_in_ok (a, s))
 
-			s := new_element_objects--& a
+--			s := new_element_objects--& a
 			create {SET [STS_ELEMENT, STS_OBJECT_EQUALITY [STS_ELEMENT]]} s.make_singleton (a.twin)
 			assert ("not (a.twin ∉ s)", not (a ∉ s))
 			assert ("not (a.twin ∉ s) ok", properties.is_not_in_ok (a, s))
@@ -216,9 +216,9 @@ feature {NONE} -- Implementation
 							positive: 0 < immediate_instances.count -- immediate_instances.count /= 0
 						end
 					if rt.is_attached then
-						i := some_index_up_to (immediate_instances.count.as_natural_32).as_integer_32 - 1 -- TODO: Create an integer some_index_up_to.
+						i := some_integer_up_to (immediate_instances.count) - 1
 					else
-						i := some_index_up_to (immediate_instances.count.as_natural_32 + 1).as_integer_32 - 1
+						i := some_integer_up_to (immediate_instances.count + 1) - 1
 					end
 					if i < immediate_instances.count then
 							check
@@ -301,6 +301,18 @@ feature {NONE} -- Implementation
 			class
 			positive: 0 < Result
 			small_enough: Result <= n
+		end
+
+	some_integer_up_to (i: INTEGER): INTEGER
+			-- Randomly-created integer in the range {1..`i'}
+		require
+			positive: 0 < i
+		do
+			Result := next_random_item \\ i + 1
+		ensure
+			class
+			positive: 0 < Result
+			small_enough: Result <= i
 		end
 
 	some_count: NATURAL

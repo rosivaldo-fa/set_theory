@@ -105,9 +105,11 @@ feature {NONE} -- Factory (Element to be tested)
 
 	equality_to_be_tested: EQ
 			-- Equality meant to be under tests
+		local
+			new_eq: FUNCTION [EQ]
 		do
+			new_eq := agent new_eq_a
 			check
-				new_eq: attached {FUNCTION [EQ]} agent new_eq_a as new_eq
 				eq: attached {EQ} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_eq' definitions
 				monomorphic: eq.generating_type ~ {detachable EQ}
 			then

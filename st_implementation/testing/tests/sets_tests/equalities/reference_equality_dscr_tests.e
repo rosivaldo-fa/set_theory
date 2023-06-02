@@ -67,24 +67,23 @@ feature -- Factory (Object)
 	some_immediate_separate_character_ref: like some_separate_character_ref
 			-- Randomly-fetched monomorphic separate character reference
 		local
-			new_c: FUNCTION [like new_separate_character_ref]
 			obj: like some_immediate_instance
 		do
-			new_c := agent new_separate_character_ref
-			from
-				obj := some_immediate_instance (new_c)
-			until
-				attached obj -- TODO: System crashes when an agent gets a "separate" Void actual argument.
-			loop
-				obj := some_immediate_instance (new_c)
-			end
+--			from
+--				obj := some_immediate_instance (new_c)
+--			until
+--				attached obj -- TODO: System crashes when an agent gets a "separate" Void actual argument.
+--			loop
+--				obj := some_immediate_instance (new_c)
+--			end
+			obj := some_immediate_instance (agent new_separate_character_ref)
 			if attached obj then
 				Result := {like new_separate_character_ref} / obj
-					check
-							-- `some_immediate_instance' and `new_separate_character_ref' definitions
-						right_type: attached Result
-						monomorphic: object_is_immediate_instance (Result, {like new_separate_character_ref})
-					end
+				check
+						-- `some_immediate_instance' and `new_separate_character_ref' definitions
+					right_type: attached Result
+					monomorphic: object_is_immediate_instance (Result, {like new_separate_character_ref})
+				end
 			end
 		ensure
 --			monomorphic: attached Result implies object_is_immediate_instance (Result, {like some_character_ref}) -- TODO: why not?
@@ -121,12 +120,12 @@ feature -- Factory (Object)
 	some_immediate_character_ref: like some_character_ref
 			-- Randomly-fetched monomorphic character reference
 		local
-			new_c: FUNCTION [like new_character_ref]
+--			new_c: FUNCTION [like new_character_ref]
 			obj: like some_immediate_instance
 		do
-			new_c := agent new_character_ref
+--			new_c := agent new_character_ref
 --			from
-				obj := some_immediate_instance (new_c)
+			obj := some_immediate_instance (agent new_character_ref)
 --			until
 --				attached obj -- TODO: System crashes when an agent gets a "separate" Void actual argument.
 --			loop
@@ -134,11 +133,11 @@ feature -- Factory (Object)
 --			end
 			if attached obj then
 				Result := {like new_character_ref} / obj
-					check
-							-- `some_immediate_instance' and `new_character_ref' definitions
-						right_type: attached Result
-						monomorphic: object_is_immediate_instance (Result, {like new_character_ref})
-					end
+				check
+						-- `some_immediate_instance' and `new_character_ref' definitions
+					right_type: attached Result
+					monomorphic: object_is_immediate_instance (Result, {like new_character_ref})
+				end
 			end
 		ensure
 --			monomorphic: attached Result implies object_is_immediate_instance (Result, {like some_character_ref}) -- TODO: why not?
@@ -161,12 +160,12 @@ feature -- Factory (Object)
 			n: NATURAL
 		do
 			n := some_index
-				check
-					valid_character:
-							-- 0 < n ≤ Max_count ⇐ `some_index' definition
-							-- class invariant: (Min_character.natural_32_code + Max_count - 1).is_valid_character_8_code
-						(Min_character.natural_32_code + n - 1).is_valid_character_8_code
-				end
+			check
+				valid_character:
+						-- 0 < n ≤ Max_count ⇐ `some_index' definition
+						-- class invariant: (Min_character.natural_32_code + Max_count - 1).is_valid_character_8_code
+					(Min_character.natural_32_code + n - 1).is_valid_character_8_code
+			end
 			Result := (Min_character.natural_32_code + n - 1).to_character_8
 		ensure
 			class
@@ -180,9 +179,9 @@ feature {NONE} -- Implementation
 	some_index: NATURAL
 			-- Randomly-created index
 		do
-				check
-					positive: 0 < Max_count -- `Max_count' definition
-				end
+			check
+				positive: 0 < Max_count -- `Max_count' definition
+			end
 			Result := some_index_up_to (Max_count)
 		ensure
 			class
@@ -200,4 +199,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end

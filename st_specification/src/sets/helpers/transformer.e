@@ -5,7 +5,8 @@ note
 	revision: "$Revision$"
 
 deferred class
-	TRANSFORMER [A, B, EQ_A -> EQUALITY [A], EQ_B -> EQUALITY [B]]
+	TRANSFORMER [A, B, --EQ_A -> EQUALITY [A],
+	EQ_B -> EQUALITY [B]]
 
 inherit
 	ELEMENT
@@ -41,7 +42,7 @@ feature -- Transformation
 		end
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo Fernandes Alves"
+	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see http://www.eiffel.com/licensing/forum.txt)

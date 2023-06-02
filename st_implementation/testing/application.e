@@ -9,18 +9,13 @@ class
 create
 	test_all
 
-feature  -- Initialization
+feature {NONE} -- Initialization
 
 	test_all
 			-- Run every available test.
-		local
-			element_tests: ELEMENT_TESTS
-			reference_equality_dscr_tests: REFERENCE_EQUALITY_DSCR_TESTS
 		do
-			create element_tests
-			element_tests.test_all
-			create reference_equality_dscr_tests
-			reference_equality_dscr_tests.test_all
+			(create {ELEMENT_TESTS}).test_all;
+			(create {REFERENCE_EQUALITY_DSCR_TESTS}).test_all
 		end
 
 note

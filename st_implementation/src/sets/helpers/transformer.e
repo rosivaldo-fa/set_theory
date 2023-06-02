@@ -7,12 +7,13 @@ note
 class
 	TRANSFORMER [
 		A, B,
-		EQ_A -> STS_EQUALITY [A] create default_create end, -- TODO: It may be unecessary.
+--		EQ_A -> STS_EQUALITY [A] create default_create end, -- TODO: It may be unecessary.
 		EQ_B -> STS_EQUALITY [B] create default_create end
 		]
 
 inherit
-	STS_TRANSFORMER [A, B, EQ_A, EQ_B]
+	STS_TRANSFORMER [A, B, --EQ_A,
+	EQ_B]
 		redefine
 			set_reduction
 		end
@@ -49,7 +50,7 @@ feature -- Transformation
 		end
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo Fernandes Alves"
+	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see http://www.eiffel.com/licensing/forum.txt)
