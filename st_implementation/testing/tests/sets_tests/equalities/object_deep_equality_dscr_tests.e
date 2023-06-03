@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Test suite for {OBJECT_DEEP_EQUALITY_DSCR}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -32,7 +32,7 @@ inherit
 feature -- Access
 
 	properties: EQUALITY_PROPERTIES [detachable separate CHARACTER_REF, OBJECT_DEEP_EQUALITY_DSCR];
-	-- <Precursor>
+		-- <Precursor>
 
 feature -- Test routines (All)
 

@@ -86,7 +86,7 @@ feature {NONE} -- Factory (Element to be tested)
 			end
 		end
 
-feature -- Factory (object)
+feature -- Factory (Object)
 
 	some_object_a: A
 			-- Randomly-fetched object like {A}
