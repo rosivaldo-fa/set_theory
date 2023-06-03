@@ -65,28 +65,28 @@ feature -- Test routines (Relationship)
 			a1 := some_object_a
 			a2 := object_deep_twin_a (a1)
 			a3 := object_deep_twin_a (a2)
-			assert ("a1 ≜ a2 ≜ a3", eq.holds_successively (a1, a2, a3))
-			assert ("a1 ≜ a2 ≜ a3 ok", properties.holds_successively_ok (a1, a2, a3, eq))
+			assert ("a1 ≡≡≡ a2 ≡≡≡ a3", eq.holds_successively (a1, a2, a3))
+			assert ("a1 ≡≡≡ a2 ≡≡≡ a3 ok", properties.holds_successively_ok (a1, a2, a3, eq))
 
 			from
 				a2 := some_object_a
 				a3 := some_object_a
 			until (
-				agent (ia_a1, ia_a2, ia_a3: A): BOOLEAN
-					do
-						Result := if attached ia_a1 then
-							not (attached ia_a2 and attached ia_a3) or else not (ia_a1 ≜ ia_a2 and ia_a2 ≜ ia_a3)
-						else
-							attached ia_a2 or attached ia_a3
+					agent (ia_a1, ia_a2, ia_a3: A): BOOLEAN
+						do
+							Result := if attached ia_a1 then
+									not (attached ia_a2 and attached ia_a3) or else not (ia_a1 ≡≡≡ ia_a2 and ia_a2 ≡≡≡ ia_a3)
+								else
+									attached ia_a2 or attached ia_a3
+								end
 						end
-					end
 				).item (a1, a2, a3)
 			loop
 				a2 := some_object_a
 				a3 := some_object_a
 			end
-			assert ("not (a1 ≜ a2 ≜ a3)", not eq.holds_successively (a1, a2, a3))
-			assert ("not (a1 ≜ a2 ≜ a3) ok", properties.holds_successively_ok (a1, a2, a3, eq))
+			assert ("not (a1 ≡≡≡ a2 ≡≡≡ a3)", not eq.holds_successively (a1, a2, a3))
+			assert ("not (a1 ≡≡≡ a2 ≡≡≡ a3) ok", properties.holds_successively_ok (a1, a2, a3, eq))
 		end
 
 feature -- Factory (Object)
@@ -111,4 +111,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end
