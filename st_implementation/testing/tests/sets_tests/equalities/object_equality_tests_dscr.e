@@ -1,15 +1,15 @@
-﻿note
-	description: "Test suite for {OBJECT_DEEP_EQUALITY_DSCR}"
+note
+	description: "Test suite for {OBJECT_EQUALITY_DSCR}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
 
 class
-	OBJECT_DEEP_EQUALITY_DSCR_TESTS
+	OBJECT_EQUALITY_TESTS_DSCR
 
 inherit
-	OBJECT_DEEP_EQUALITY_TESTS [detachable separate CHARACTER_REF, OBJECT_DEEP_EQUALITY_DSCR]
+	OBJECT_EQUALITY_TESTS [detachable separate CHARACTER_REF, OBJECT_EQUALITY_DSCR]
 		rename
 			some_object_a as some_separate_character_ref
 		redefine
@@ -31,17 +31,17 @@ inherit
 
 feature -- Access
 
-	properties: EQUALITY_PROPERTIES [detachable separate CHARACTER_REF, OBJECT_DEEP_EQUALITY_DSCR];
-		-- <Precursor>
+	properties: EQUALITY_PROPERTIES [detachable separate CHARACTER_REF, OBJECT_EQUALITY_DSCR]
+			-- <Precursor>
 
 feature -- Test routines (All)
 
 	test_all
-			-- Test every routine of {STS_OBJECT_DEEP_EQUALITY}.
+			-- Test every routine of {STS_OBJECT_EQUALITY}.
 		note
-			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}"
+			testing: "covers/{STS_OBJECT_EQUALITY}"
 		do
-			Precursor {OBJECT_DEEP_EQUALITY_TESTS}
+			Precursor {OBJECT_EQUALITY_TESTS}
 			test_holds
 			test_holds_successively
 		end
@@ -51,18 +51,18 @@ feature -- Test routines (Relationship)
 	test_holds
 			-- <Precursor>
 		note
-			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds"
+			testing: "covers/{STS_OBJECT_EQUALITY}.holds"
 		do
-			Precursor {OBJECT_DEEP_EQUALITY_TESTS}
+			Precursor {OBJECT_EQUALITY_TESTS}
 		end
 
 	test_holds_successively
 			-- <Precursor>
 		note
 			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
-			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds_successively"
+			testing: "covers/{STS_OBJECT_EQUALITY}.holds_successively"
 		do
-			Precursor {OBJECT_DEEP_EQUALITY_TESTS}
+			Precursor {OBJECT_EQUALITY_TESTS}
 		end
 
 note
