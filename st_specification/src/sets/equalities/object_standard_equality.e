@@ -16,13 +16,13 @@ feature -- Relationship
 			-- <Precursor>
 		do
 			if attached a then
-				Result := attached {like a} b as l_b and then a ≜ l_b
+				Result := attached b and then a ≜ b
 			else
 				Result := not attached b
 			end
 		ensure then
-			attached_a: attached a implies Result = (attached {like a} b as l_b and then a ≜ l_b)
-			detached_a: not attached a implies Result = not attached b
+			attached_a: attached a ⇒ Result = (attached b and then a ≜ b)
+			detached_a: not attached a ⇒ Result = not attached b
 		end
 
 note

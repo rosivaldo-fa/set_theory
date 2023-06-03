@@ -75,7 +75,7 @@ feature -- Test routines (Relationship)
 			assert ("not (a1 ~ a2 ~ a3) ok", properties.holds_successively_ok (a1, a2, a3, eq))
 		end
 
-feature -- Factory (object)
+feature -- Factory (Object)
 
 	object_twin_a (a: A): A
 			-- Object equal (by value) to `a'

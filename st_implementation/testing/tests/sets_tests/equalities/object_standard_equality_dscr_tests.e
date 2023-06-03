@@ -14,7 +14,9 @@ inherit
 			some_object_a as some_separate_character_ref
 		redefine
 			properties,
-			test_all
+			test_all,
+			test_holds,
+			test_holds_successively
 		end
 
 	DSCR_TESTS
@@ -30,7 +32,7 @@ inherit
 feature -- Access
 
 	properties: EQUALITY_PROPERTIES [detachable separate CHARACTER_REF, OBJECT_STANDARD_EQUALITY_DSCR];
-			-- <Precursor>
+	-- <Precursor>
 
 feature -- Test routines (All)
 
@@ -44,6 +46,25 @@ feature -- Test routines (All)
 			test_holds_successively
 		end
 
+feature -- Test routines (Relationship)
+
+	test_holds
+			-- <Precursor>
+		note
+			testing: "covers/{STS_OBJECT_STANDARD_EQUALITY}.holds"
+		do
+			Precursor {OBJECT_STANDARD_EQUALITY_TESTS}
+		end
+
+	test_holds_successively
+			-- <Precursor>
+		note
+			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
+			testing: "covers/{STS_OBJECT_STANDARD_EQUALITY}.holds_successively"
+		do
+			Precursor {OBJECT_STANDARD_EQUALITY_TESTS}
+		end
+
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
@@ -51,4 +72,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end

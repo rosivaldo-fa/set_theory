@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Test suite for {STS_EQUALITY}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -41,7 +41,7 @@ feature -- Test routines (Relationship)
 			assert ("a1 = a2 ok", properties.holds_ok (a1, a2, eq))
 
 			a2 := some_object_a
-			assert ("holds", eq (a1, a2) implies True)
+			assert ("holds", eq (a1, a2) ⇒ True)
 			assert ("holds_ok", properties.holds_ok (a1, a2, eq))
 		end
 
@@ -66,7 +66,7 @@ feature -- Test routines (Relationship)
 			eq := equality_to_be_tested
 			a2 := some_object_a
 			a3 := some_object_a
-			assert ("holds_successively", eq.holds_successively (a1, a2, a3) implies True)
+			assert ("holds_successively", eq.holds_successively (a1, a2, a3) ⇒ True)
 			assert ("holds_successively_ok", properties.holds_successively_ok (a1, a2, a3, eq))
 		end
 
