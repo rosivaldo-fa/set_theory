@@ -31,7 +31,7 @@ inherit
 
 feature -- Access
 
-	properties: EQUALITY_PROPERTIES [detachable separate CHARACTER_REF, OBJECT_EQUALITY_DSCR]
+	properties: STP_OBJECT_EQUALITY_PROPERTIES [detachable separate CHARACTER_REF, OBJECT_EQUALITY_DSCR]
 			-- <Precursor>
 
 feature -- Test routines (All)

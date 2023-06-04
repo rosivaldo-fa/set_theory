@@ -10,9 +10,15 @@ deferred class
 inherit
 	EQUALITY_TESTS [A, EQ]
 		redefine
+			properties,
 			test_holds,
 			test_holds_successively
 		end
+
+feature -- Access
+
+	properties: STP_OBJECT_EQUALITY_PROPERTIES [A, EQ]
+			-- Object that checks the set-theory properties of {STS_OBJECT_EQUALITY}
 
 feature -- Test routines (Relationship)
 

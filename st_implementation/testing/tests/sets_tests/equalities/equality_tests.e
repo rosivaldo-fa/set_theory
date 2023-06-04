@@ -18,7 +18,7 @@ inherit
 
 feature -- Access
 
-	properties: EQUALITY_PROPERTIES [A, EQ]
+	properties: STP_EQUALITY_PROPERTIES [A, EQ]
 			-- Object that checks the set-theory properties of {STS_EQUALITY}
 
 feature -- Test routines (Relationship)
