@@ -28,6 +28,7 @@ feature {NONE} -- Initialization
 
 			(create {REFERENCE_EQUALITY_TESTS_N}).test_all;
 			(create {OBJECT_STANDARD_EQUALITY_TESTS_N}).test_all;
+			(create {OBJECT_EQUALITY_TESTS_N}).test_all;
 		end
 
 note
