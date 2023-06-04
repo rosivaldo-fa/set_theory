@@ -50,16 +50,16 @@ feature -- Properties (Primitive)
 
 feature {NONE} -- Anchor
 
-	universe_anchor: STS_SET [A, EQ]
-			-- Anchor for `current_universe'
-		do
-			Result := current_universe
-		end
-
 	o_anchor: STS_SET [A, EQ]
 			-- Anchor for `o'
 		do
 			Result := o
+		end
+
+	universe_anchor: STS_SET [A, EQ]
+			-- Anchor for `current_universe'
+		do
+			Result := current_universe
 		end
 
 note

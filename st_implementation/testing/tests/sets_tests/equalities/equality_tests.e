@@ -8,7 +8,7 @@ deferred class
 	EQUALITY_TESTS [A, EQ -> STS_EQUALITY [A] create default_create end]
 
 inherit
-	ELEMENT_TESTS
+	UNARY_TESTS [A, EQ]
 		rename
 			element_to_be_tested as equality_to_be_tested
 		redefine
@@ -84,13 +84,6 @@ feature {NONE} -- Factory (Element to be tested)
 			then
 				Result := eq
 			end
-		end
-
-feature -- Factory (Object)
-
-	some_object_a: A
-			-- Randomly-fetched object like {A}
-		deferred
 		end
 
 feature -- Factory (Equality)

@@ -1,0 +1,24 @@
+note
+	description: "SET derived for {detachable separate CHARACTER_REF}"
+	author: "Rosivaldo F Alves"
+	date: "$Date$"
+	revision: "$Revision$"
+
+class
+	REFERENCE_SET_DSCR
+
+inherit
+	SET [detachable separate CHARACTER_REF, REFERENCE_EQUALITY_DSCR]
+
+create
+	make_empty,
+	make_singleton
+
+note
+	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
+	license: "[
+		Eiffel Forum License v2
+		(see http://www.eiffel.com/licensing/forum.txt)
+		]"
+	source: ""
+end

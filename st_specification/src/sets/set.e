@@ -11,7 +11,9 @@
 deferred class
 	SET [A, EQ -> EQUALITY [A]]
 
-
+inherit
+	ELEMENT
+	
 feature -- Primitive
 
 	is_empty: BOOLEAN
