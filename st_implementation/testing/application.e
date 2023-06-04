@@ -27,6 +27,7 @@ feature {NONE} -- Initialization
 			(create {OBJECT_DEEP_EQUALITY_TESTS_DIR}).test_all;
 
 			(create {REFERENCE_EQUALITY_TESTS_N}).test_all;
+			(create {OBJECT_STANDARD_EQUALITY_TESTS_N}).test_all;
 		end
 
 note
