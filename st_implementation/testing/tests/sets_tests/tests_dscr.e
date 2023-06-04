@@ -5,7 +5,7 @@
 	revision: "$Revision$"
 
 deferred class
-	DSCR_TESTS
+	TESTS_DSCR
 
 inherit
 	ELEMENT_TESTS

@@ -19,6 +19,7 @@ feature {NONE} -- Initialization
 			(create {OBJECT_EQUALITY_TESTS_DSCR}).test_all;
 			(create {OBJECT_STANDARD_EQUALITY_TESTS_DSCR}).test_all;
 			(create {OBJECT_DEEP_EQUALITY_TESTS_DSCR}).test_all;
+			print (create {REFERENCE_EQUALITY_DIR})
 		end
 
 note

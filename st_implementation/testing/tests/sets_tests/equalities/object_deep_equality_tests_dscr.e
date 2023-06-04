@@ -19,7 +19,7 @@ inherit
 			test_holds_successively
 		end
 
-	DSCR_TESTS
+	TESTS_DSCR
 		rename
 			element_to_be_tested as equality_to_be_tested
 		undefine
