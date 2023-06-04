@@ -1,17 +1,17 @@
 note
-	description: "Test suite for {OBJECT_STANDARD_EQUALITY_DSCR}"
+	description: "Test suite for {OBJECT_STANDARD_EQUALITY_DIR}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
 
 class
-	OBJECT_STANDARD_EQUALITY_TESTS_DSCR
+	OBJECT_STANDARD_EQUALITY_TESTS_DIR
 
 inherit
-	OBJECT_STANDARD_EQUALITY_TESTS [detachable separate CHARACTER_REF, OBJECT_STANDARD_EQUALITY_DSCR]
+	OBJECT_STANDARD_EQUALITY_TESTS [detachable INTEGER_REF, OBJECT_STANDARD_EQUALITY_DIR]
 		rename
-			some_object_a as some_separate_character_ref
+			some_object_a as some_integer_ref
 		redefine
 			properties,
 			test_all,
@@ -19,7 +19,7 @@ inherit
 			test_holds_successively
 		end
 
-	TESTS_DSCR
+	TESTS_DIR
 		rename
 			element_to_be_tested as equality_to_be_tested
 		undefine
@@ -31,7 +31,7 @@ inherit
 
 feature -- Access
 
-	properties: EQUALITY_PROPERTIES [detachable separate CHARACTER_REF, OBJECT_STANDARD_EQUALITY_DSCR];
+	properties: EQUALITY_PROPERTIES [detachable INTEGER_REF, OBJECT_STANDARD_EQUALITY_DIR];
 			-- <Precursor>
 
 feature -- Test routines (All)
