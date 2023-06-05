@@ -9,7 +9,7 @@ class
 	REFERENCE_SET_TESTS_DSCR
 
 inherit
-	SET_TESTS [detachable separate CHARACTER_REF, REFERENCE_EQUALITY_DSCR]
+	SET_TESTS [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 		rename
 			some_object_a as some_separate_character_ref
 		redefine
@@ -29,7 +29,7 @@ inherit
 
 feature -- Access
 
-	properties: SET_PROPERTIES [detachable separate CHARACTER_REF, REFERENCE_EQUALITY_DSCR]
+	properties: SET_PROPERTIES [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 			-- <Precursor>
 
 feature -- Test routines (All)

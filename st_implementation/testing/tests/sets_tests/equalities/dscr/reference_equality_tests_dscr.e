@@ -1,5 +1,5 @@
 ﻿note
-	description: "Test suite for {REFERENCE_EQUALITY_DSCR}"
+	description: "Test suite for {STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -9,7 +9,7 @@ class
 	REFERENCE_EQUALITY_TESTS_DSCR
 
 inherit
-	REFERENCE_EQUALITY_TESTS [detachable separate CHARACTER_REF, REFERENCE_EQUALITY_DSCR]
+	REFERENCE_EQUALITY_TESTS [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 		rename
 			some_object_a as some_separate_character_ref
 		redefine
@@ -31,7 +31,7 @@ inherit
 
 feature -- Access
 
-	properties: EQUALITY_PROPERTIES [detachable separate CHARACTER_REF, REFERENCE_EQUALITY_DSCR]
+	properties: EQUALITY_PROPERTIES [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 			-- <Precursor>
 
 feature -- Test routines (All)

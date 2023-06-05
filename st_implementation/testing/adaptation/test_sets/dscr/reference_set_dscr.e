@@ -8,7 +8,7 @@ class
 	REFERENCE_SET_DSCR
 
 inherit
-	SET [detachable separate CHARACTER_REF, REFERENCE_EQUALITY_DSCR]
+	SET [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 
 create
 	make_empty,
