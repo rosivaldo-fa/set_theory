@@ -77,23 +77,14 @@ feature {NONE} -- Factory (Element to be tested)
 		local
 			new_eq: FUNCTION [EQ]
 		do
-			new_eq := agent new_eq_a
-			check
-				eq: attached {EQ} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_eq' definitions
-				monomorphic: eq.generating_type ~ {detachable EQ}
-			then
-				Result := eq
-			end
+			Result := some_immediate_equality_a
 		end
 
 feature -- Factory (Equality)
 
-	new_eq_a: EQ
-			-- New monomorphic equality of type {EQ}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable EQ}
+	some_immediate_equality_a: EQ
+			-- Some monomorphic equality of type {EQ}
+		deferred
 		end
 
 note

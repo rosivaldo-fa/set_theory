@@ -11,7 +11,8 @@ class
 inherit
 	REFERENCE_EQUALITY_TESTS [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 		rename
-			some_object_a as some_separate_character_ref
+			some_object_a as some_separate_character_ref,
+			some_immediate_equality_a as some_reference_equality_dscr
 		redefine
 			properties,
 			test_all,

@@ -11,7 +11,8 @@ class
 inherit
 	OBJECT_STANDARD_EQUALITY_TESTS [NATURAL, STS_OBJECT_STANDARD_EQUALITY [NATURAL]]
 		rename
-			some_object_a as some_natural
+			some_object_a as some_natural,
+			some_immediate_equality_a as some_object_standard_equality_n
 		redefine
 			properties,
 			test_all,

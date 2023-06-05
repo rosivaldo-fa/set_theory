@@ -11,7 +11,8 @@ class
 inherit
 	OBJECT_EQUALITY_TESTS [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
 		rename
-			some_object_a as some_integer_ref
+			some_object_a as some_integer_ref,
+			some_immediate_equality_a as some_object_equality_dir
 		redefine
 			properties,
 			test_all,
