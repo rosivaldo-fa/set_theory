@@ -130,6 +130,8 @@ feature -- Factory (Element)
 				next_random_item \\ 1
 			when 0 then
 				Result := some_immediate_element
+--			when 1 then
+--				Result := some_equality
 			end
 		end
 
@@ -191,6 +193,14 @@ feature -- Factory (Element)
 --				Result := Result & some_element
 			end
 		end
+
+feature -- Factory (Equality)
+
+--	some_equality: STS_EQUALITY [detachable separate ANY]
+--			-- Randomly-fetched polymorphic equality
+--		do
+--			
+--		end
 
 feature {NONE} -- Implementation
 
