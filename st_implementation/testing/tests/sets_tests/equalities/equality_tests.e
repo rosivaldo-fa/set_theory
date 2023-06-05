@@ -74,8 +74,6 @@ feature {NONE} -- Factory (Element to be tested)
 
 	equality_to_be_tested: EQ
 			-- Equality meant to be under tests
-		local
-			new_eq: FUNCTION [EQ]
 		do
 			Result := some_immediate_equality_a
 		end

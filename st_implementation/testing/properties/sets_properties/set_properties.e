@@ -19,7 +19,6 @@ feature {NONE} -- Initialization
 
 	default_create
 			-- Initialize current property checker
-			--| TODO: what about turning post-conditions into invariants?
 		do
 			create o.make_empty
 		end

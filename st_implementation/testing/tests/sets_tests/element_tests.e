@@ -127,11 +127,13 @@ feature -- Factory (Element)
 			-- Randomly-fetched polymorphic element
 		do
 			inspect
-				next_random_item \\ 1
+				next_random_item \\ 2
 			when 0 then
 				Result := some_immediate_element
 			when 1 then
 				Result := some_equality
+--			when 2 then
+--				Result := some_set
 			end
 		end
 
@@ -228,68 +230,35 @@ feature -- Factory (Equality)
 
 	some_reference_equality_dir: STS_REFERENCE_EQUALITY [detachable INTEGER_REF]
 			-- Randomly-fetched instance of {STS_REFERENCE_EQUALITY [detachable INTEGER_REF]}
-		local
-			new_eq: FUNCTION [STS_REFERENCE_EQUALITY [detachable INTEGER_REF]]
 		do
-			new_eq := agent new_reference_equality_dir
 			check
-				eq: attached {STS_REFERENCE_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_reference_equality_dir' definitions
+				eq: attached {STS_REFERENCE_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (agent: STS_REFERENCE_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable INTEGER_REF]}
 			then
 				Result := eq
 			end
 		end
 
-	new_reference_equality_dir: STS_REFERENCE_EQUALITY [detachable INTEGER_REF]
-			-- New monomorphic instance of {STS_REFERENCE_EQUALITY [detachable INTEGER_REF]}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable INTEGER_REF]}
-		end
-
 	some_reference_equality_dscr: STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]
 			-- Randomly-fetched instance of {STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}
-		local
-			new_eq: FUNCTION [STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 		do
-			new_eq := agent new_reference_equality_dscr
 			check
-				eq: attached {STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_reference_equality_dscr' definitions
+				eq: attached {STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (agent: STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}
 			then
 				Result := eq
 			end
 		end
 
-	new_reference_equality_dscr: STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]
-			-- New monomorphic instance of {STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}
-		end
-
 	some_reference_equality_n: STS_REFERENCE_EQUALITY [NATURAL]
 			-- Randomly-fetched instance of {STS_REFERENCE_EQUALITY [NATURAL]}
-		local
-			new_eq: FUNCTION [STS_REFERENCE_EQUALITY [NATURAL]]
 		do
-			new_eq := agent new_reference_equality_n
 			check
-				eq: attached {STS_REFERENCE_EQUALITY [NATURAL]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_reference_equality_n' definitions
+				eq: attached {STS_REFERENCE_EQUALITY [NATURAL]} some_immediate_instance (agent: STS_REFERENCE_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [NATURAL]}
 			then
 				Result := eq
 			end
-		end
-
-	new_reference_equality_n: STS_REFERENCE_EQUALITY [NATURAL]
-			-- New monomorphic instance of {STS_REFERENCE_EQUALITY [NATURAL]}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STS_REFERENCE_EQUALITY [NATURAL]}
 		end
 
 	some_object_standard_equality: STS_OBJECT_STANDARD_EQUALITY [detachable separate ANY]
@@ -308,68 +277,35 @@ feature -- Factory (Equality)
 
 	some_object_standard_equality_dir: STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]
 			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]}
-		local
-			new_eq: FUNCTION [STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]]
 		do
-			new_eq := agent new_object_standard_equality_dir
 			check
-				eq: attached {STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_standard_equality_dir' definitions
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (agent: STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]}
 			then
 				Result := eq
 			end
 		end
 
-	new_object_standard_equality_dir: STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]
-			-- New monomorphic instance of {STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]}
-		end
-
 	some_object_standard_equality_dscr: STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]
 			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
-		local
-			new_eq: FUNCTION [STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]]
 		do
-			new_eq := agent new_object_standard_equality_dscr
 			check
-				eq: attached {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_standard_equality_dscr' definitions
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (agent: STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
 			then
 				Result := eq
 			end
 		end
 
-	new_object_standard_equality_dscr: STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]
-			-- New monomorphic instance of {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
-		end
-
 	some_object_standard_equality_n: STS_OBJECT_STANDARD_EQUALITY [NATURAL]
 			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [NATURAL]}
-		local
-			new_eq: FUNCTION [STS_OBJECT_STANDARD_EQUALITY [NATURAL]]
 		do
-			new_eq := agent new_object_standard_equality_n
 			check
-				eq: attached {STS_OBJECT_STANDARD_EQUALITY [NATURAL]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_standard_equality_n' definitions
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [NATURAL]} some_immediate_instance (agent: STS_OBJECT_STANDARD_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [NATURAL]}
 			then
 				Result := eq
 			end
-		end
-
-	new_object_standard_equality_n: STS_OBJECT_STANDARD_EQUALITY [NATURAL]
-			-- New monomorphic instance of {STS_OBJECT_STANDARD_EQUALITY [NATURAL]}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [NATURAL]}
 		end
 
 	some_object_equality: STS_OBJECT_EQUALITY [detachable separate ANY]
@@ -388,68 +324,35 @@ feature -- Factory (Equality)
 
 	some_object_equality_dir: STS_OBJECT_EQUALITY [detachable INTEGER_REF]
 			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [detachable INTEGER_REF]}
-		local
-			new_eq: FUNCTION [STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
 		do
-			new_eq := agent new_object_equality_dir
 			check
-				eq: attached {STS_OBJECT_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_equality_dir' definitions
+				eq: attached {STS_OBJECT_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (agent: STS_OBJECT_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable INTEGER_REF]}
 			then
 				Result := eq
 			end
 		end
 
-	new_object_equality_dir: STS_OBJECT_EQUALITY [detachable INTEGER_REF]
-			-- New monomorphic instance of {STS_OBJECT_EQUALITY [detachable INTEGER_REF]}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable INTEGER_REF]}
-		end
-
 	some_object_equality_dscr: STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]
 			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
-		local
-			new_eq: FUNCTION [STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]]
 		do
-			new_eq := agent new_object_equality_dscr
 			check
-				eq: attached {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_equality_dscr' definitions
+				eq: attached {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (agent: STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
 			then
 				Result := eq
 			end
 		end
 
-	new_object_equality_dscr: STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]
-			-- New monomorphic instance of {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
-		end
-
 	some_object_equality_n: STS_OBJECT_EQUALITY [NATURAL]
 			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [NATURAL]}
-		local
-			new_eq: FUNCTION [STS_OBJECT_EQUALITY [NATURAL]]
 		do
-			new_eq := agent new_object_equality_n
 			check
-				eq: attached {STS_OBJECT_EQUALITY [NATURAL]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_equality_n' definitions
+				eq: attached {STS_OBJECT_EQUALITY [NATURAL]} some_immediate_instance (agent: STS_OBJECT_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [NATURAL]}
 			then
 				Result := eq
 			end
-		end
-
-	new_object_equality_n: STS_OBJECT_EQUALITY [NATURAL]
-			-- New monomorphic instance of {STS_OBJECT_EQUALITY [NATURAL]}
-		do
-			create Result
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_EQUALITY [NATURAL]}
 		end
 
 	some_object_deep_equality: STS_OBJECT_DEEP_EQUALITY [detachable separate ANY]
@@ -468,19 +371,324 @@ feature -- Factory (Equality)
 
 	some_object_deep_equality_dir: STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]
 			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]}
-		local
-			new_eq: FUNCTION [STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]]
 		do
-			new_eq := agent new_object_deep_equality_dir
 			check
-				eq: attached {STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_deep_equality_dir' definitions
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (agent: STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]}
 			then
 				Result := eq
 			end
 		end
 
-	new_object_deep_equality_dir: STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]
+	some_object_deep_equality_dscr: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]
+			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]}
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (agent: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_deep_equality_n: STS_OBJECT_DEEP_EQUALITY [NATURAL]
+			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [NATURAL]}
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [NATURAL]} some_immediate_instance (agent: STS_OBJECT_DEEP_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [NATURAL]}
+			then
+				Result := eq
+			end
+		end
+
+feature -- Factory (Set)
+
+--	some_set: STS_SET [detachable separate ANY, STS_EQUALITY [detachable separate ANY]]
+--			-- Randomly-fetched polymorphic set
+--		do
+--			inspect
+--				next_random_item \\ 4
+--			when 0 then
+--				Result := some_set_of_references
+--			when 1 then
+--				Result := some_object_standard_set
+--			when 2 then
+--				Result := some_object_set
+--			when 3 then
+--				Result := some_object_deep_set
+--			end
+--		end
+
+--	some_set_of_references: STS_SET [detachable separate ANY, STS_REFERENCE_EQUALITY [detachable separate ANY]]
+--			-- Randomly-fetched polymorphic set of objects compared by reference
+--		do
+--			inspect
+--				next_random_item \\ 3
+--			when 0 then
+--				Result := some_set_of_references_dir
+--			when 1 then
+--				Result := some_set_of_references_dscr
+--			when 2 then
+--				Result := some_set_of_references_n
+--			end
+--		end
+
+--	some_set_of_references_dir: STS_SET [detachable INTEGER_REF, STS_REFERENCE_EQUALITY [detachable INTEGER_REF]]
+--			-- Randomly-fetched instance of {STS_REFERENCE_EQUALITY [detachable INTEGER_REF]}
+--		local
+--			new_eq: FUNCTION [STS_REFERENCE_EQUALITY [detachable INTEGER_REF]]
+--		do
+--			new_eq := agent new_reference_set_dir
+--			check
+--				eq: attached {STS_REFERENCE_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_reference_set_dir' definitions
+--				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable INTEGER_REF]}
+--			then
+--				Result := eq
+--			end
+--		end
+
+	new_reference_set_dir: STS_REFERENCE_EQUALITY [detachable INTEGER_REF]
+			-- New monomorphic instance of {STS_REFERENCE_EQUALITY [detachable INTEGER_REF]}
+		do
+			create Result
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable INTEGER_REF]}
+		end
+
+	some_set_of_references_dscr: STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]
+			-- Randomly-fetched instance of {STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}
+		local
+			new_eq: FUNCTION [STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
+		do
+			new_eq := agent new_reference_set_dscr
+			check
+				eq: attached {STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_reference_set_dscr' definitions
+				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}
+			then
+				Result := eq
+			end
+		end
+
+	new_reference_set_dscr: STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]
+			-- New monomorphic instance of {STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}
+		do
+			create Result
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}
+		end
+
+	some_set_of_references_n: STS_REFERENCE_EQUALITY [NATURAL]
+			-- Randomly-fetched instance of {STS_REFERENCE_EQUALITY [NATURAL]}
+		local
+			new_eq: FUNCTION [STS_REFERENCE_EQUALITY [NATURAL]]
+		do
+			new_eq := agent new_reference_set_n
+			check
+				eq: attached {STS_REFERENCE_EQUALITY [NATURAL]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_reference_set_n' definitions
+				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [NATURAL]}
+			then
+				Result := eq
+			end
+		end
+
+	new_reference_set_n: STS_REFERENCE_EQUALITY [NATURAL]
+			-- New monomorphic instance of {STS_REFERENCE_EQUALITY [NATURAL]}
+		do
+			create Result
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STS_REFERENCE_EQUALITY [NATURAL]}
+		end
+
+	some_object_standard_set: STS_OBJECT_STANDARD_EQUALITY [detachable separate ANY]
+			-- Randomly-fetched polymorphic reference set
+		do
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				Result := some_object_standard_set_dir
+			when 1 then
+				Result := some_object_standard_set_dscr
+			when 2 then
+				Result := some_object_standard_set_n
+			end
+		end
+
+	some_object_standard_set_dir: STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]
+			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]}
+		local
+			new_eq: FUNCTION [STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]]
+		do
+			new_eq := agent new_object_standard_set_dir
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_standard_set_dir' definitions
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]}
+			then
+				Result := eq
+			end
+		end
+
+	new_object_standard_set_dir: STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]
+			-- New monomorphic instance of {STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]}
+		do
+			create Result
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]}
+		end
+
+	some_object_standard_set_dscr: STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]
+			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
+		local
+			new_eq: FUNCTION [STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]]
+		do
+			new_eq := agent new_object_standard_set_dscr
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_standard_set_dscr' definitions
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
+			then
+				Result := eq
+			end
+		end
+
+	new_object_standard_set_dscr: STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]
+			-- New monomorphic instance of {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
+		do
+			create Result
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
+		end
+
+	some_object_standard_set_n: STS_OBJECT_STANDARD_EQUALITY [NATURAL]
+			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [NATURAL]}
+		local
+			new_eq: FUNCTION [STS_OBJECT_STANDARD_EQUALITY [NATURAL]]
+		do
+			new_eq := agent new_object_standard_set_n
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [NATURAL]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_standard_set_n' definitions
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [NATURAL]}
+			then
+				Result := eq
+			end
+		end
+
+	new_object_standard_set_n: STS_OBJECT_STANDARD_EQUALITY [NATURAL]
+			-- New monomorphic instance of {STS_OBJECT_STANDARD_EQUALITY [NATURAL]}
+		do
+			create Result
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [NATURAL]}
+		end
+
+	some_object_set: STS_OBJECT_EQUALITY [detachable separate ANY]
+			-- Randomly-fetched polymorphic reference set
+		do
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				Result := some_object_set_dir
+			when 1 then
+				Result := some_object_set_dscr
+			when 2 then
+				Result := some_object_set_n
+			end
+		end
+
+	some_object_set_dir: STS_OBJECT_EQUALITY [detachable INTEGER_REF]
+			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [detachable INTEGER_REF]}
+		local
+			new_eq: FUNCTION [STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
+		do
+			new_eq := agent new_object_set_dir
+			check
+				eq: attached {STS_OBJECT_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_set_dir' definitions
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable INTEGER_REF]}
+			then
+				Result := eq
+			end
+		end
+
+	new_object_set_dir: STS_OBJECT_EQUALITY [detachable INTEGER_REF]
+			-- New monomorphic instance of {STS_OBJECT_EQUALITY [detachable INTEGER_REF]}
+		do
+			create Result
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable INTEGER_REF]}
+		end
+
+	some_object_set_dscr: STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]
+			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
+		local
+			new_eq: FUNCTION [STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]]
+		do
+			new_eq := agent new_object_set_dscr
+			check
+				eq: attached {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_set_dscr' definitions
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
+			then
+				Result := eq
+			end
+		end
+
+	new_object_set_dscr: STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]
+			-- New monomorphic instance of {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
+		do
+			create Result
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
+		end
+
+	some_object_set_n: STS_OBJECT_EQUALITY [NATURAL]
+			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [NATURAL]}
+		local
+			new_eq: FUNCTION [STS_OBJECT_EQUALITY [NATURAL]]
+		do
+			new_eq := agent new_object_set_n
+			check
+				eq: attached {STS_OBJECT_EQUALITY [NATURAL]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_set_n' definitions
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [NATURAL]}
+			then
+				Result := eq
+			end
+		end
+
+	new_object_set_n: STS_OBJECT_EQUALITY [NATURAL]
+			-- New monomorphic instance of {STS_OBJECT_EQUALITY [NATURAL]}
+		do
+			create Result
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_EQUALITY [NATURAL]}
+		end
+
+	some_object_deep_set: STS_OBJECT_DEEP_EQUALITY [detachable separate ANY]
+			-- Randomly-fetched polymorphic reference set
+		do
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				Result := some_object_deep_set_dir
+			when 1 then
+				Result := some_object_deep_set_dscr
+			when 2 then
+				Result := some_object_deep_set_n
+			end
+		end
+
+	some_object_deep_set_dir: STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]
+			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]}
+		local
+			new_eq: FUNCTION [STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]]
+		do
+			new_eq := agent new_object_deep_set_dir
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_deep_set_dir' definitions
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]}
+			then
+				Result := eq
+			end
+		end
+
+	new_object_deep_set_dir: STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]
 			-- New monomorphic instance of {STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]}
 		do
 			create Result
@@ -488,21 +696,21 @@ feature -- Factory (Equality)
 			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]}
 		end
 
-	some_object_deep_equality_dscr: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]
+	some_object_deep_set_dscr: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]
 			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]}
 		local
 			new_eq: FUNCTION [STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]]
 		do
-			new_eq := agent new_object_deep_equality_dscr
+			new_eq := agent new_object_deep_set_dscr
 			check
-				eq: attached {STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_deep_equality_dscr' definitions
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_deep_set_dscr' definitions
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]}
 			then
 				Result := eq
 			end
 		end
 
-	new_object_deep_equality_dscr: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]
+	new_object_deep_set_dscr: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]
 			-- New monomorphic instance of {STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]}
 		do
 			create Result
@@ -510,21 +718,21 @@ feature -- Factory (Equality)
 			monomorphic: Result.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]}
 		end
 
-	some_object_deep_equality_n: STS_OBJECT_DEEP_EQUALITY [NATURAL]
+	some_object_deep_set_n: STS_OBJECT_DEEP_EQUALITY [NATURAL]
 			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [NATURAL]}
 		local
 			new_eq: FUNCTION [STS_OBJECT_DEEP_EQUALITY [NATURAL]]
 		do
-			new_eq := agent new_object_deep_equality_n
+			new_eq := agent new_object_deep_set_n
 			check
-				eq: attached {STS_OBJECT_DEEP_EQUALITY [NATURAL]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_deep_equality_n' definitions
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [NATURAL]} some_immediate_instance (new_eq) as eq -- `some_immediate_instance' and `new_object_deep_set_n' definitions
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [NATURAL]}
 			then
 				Result := eq
 			end
 		end
 
-	new_object_deep_equality_n: STS_OBJECT_DEEP_EQUALITY [NATURAL]
+	new_object_deep_set_n: STS_OBJECT_DEEP_EQUALITY [NATURAL]
 			-- New monomorphic instance of {STS_OBJECT_DEEP_EQUALITY [NATURAL]}
 		do
 			create Result
