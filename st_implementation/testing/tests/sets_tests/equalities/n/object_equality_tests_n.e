@@ -1,5 +1,5 @@
 note
-	description: "Test suite for {OBJECT_EQUALITY_N}"
+	description: "Test suite for {STS_OBJECT_EQUALITY [NATURAL]}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -9,7 +9,7 @@ class
 	OBJECT_EQUALITY_TESTS_N
 
 inherit
-	OBJECT_EQUALITY_TESTS [NATURAL, OBJECT_EQUALITY_N]
+	OBJECT_EQUALITY_TESTS [NATURAL, STS_OBJECT_EQUALITY [NATURAL]]
 		rename
 			some_object_a as some_natural
 		redefine
@@ -31,7 +31,7 @@ inherit
 
 feature -- Access
 
-	properties: STP_OBJECT_EQUALITY_PROPERTIES [NATURAL, OBJECT_EQUALITY_N]
+	properties: STP_OBJECT_EQUALITY_PROPERTIES [NATURAL, STS_OBJECT_EQUALITY [NATURAL]]
 			-- <Precursor>
 
 feature -- Test routines (All)
