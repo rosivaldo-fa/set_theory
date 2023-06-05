@@ -85,7 +85,9 @@ feature -- Factory (Object)
 
 	object_twin_a (a: A): A
 			-- Object equal (by value) to `a'
-		do
+	note
+		EIS: "name={ANY}.deep_twin bug", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_implementation_tests.html#19887", "tag=bug, compiler"
+	do
 			if attached a then
 				Result := a.twin
 			else
