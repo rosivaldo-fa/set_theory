@@ -1,5 +1,5 @@
 note
-	description: "Test suite for {OBJECT_EQUALITY_DIR}"
+	description: "Test suite for {STS_OBJECT_EQUALITY [detachable INTEGER_REF]}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -9,7 +9,7 @@ class
 	OBJECT_EQUALITY_TESTS_DIR
 
 inherit
-	OBJECT_EQUALITY_TESTS [detachable INTEGER_REF, OBJECT_EQUALITY_DIR]
+	OBJECT_EQUALITY_TESTS [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
 		rename
 			some_object_a as some_integer_ref
 		redefine
@@ -31,7 +31,7 @@ inherit
 
 feature -- Access
 
-	properties: STP_OBJECT_EQUALITY_PROPERTIES [detachable INTEGER_REF, OBJECT_EQUALITY_DIR]
+	properties: STP_OBJECT_EQUALITY_PROPERTIES [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
 			-- <Precursor>
 
 feature -- Test routines (All)
