@@ -89,7 +89,7 @@ feature {NONE} -- Factory (Element to be tested)
 feature -- Factory (Equality)
 
 	new_eq_a: EQ
-			-- Randomly-created monomorphic equality of type {EQ}
+			-- New monomorphic equality of type {EQ}
 		do
 			create Result
 		ensure
