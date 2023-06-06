@@ -21,6 +21,36 @@ feature -- Access
 	properties: SET_PROPERTIES [A, EQ]
 			-- Object that checks the set-theory properties of {SET}
 
+feature -- Test routines (Primitive)
+
+	test_is_empty
+			-- Test {SET}.is_empty.
+		note
+			testing: "covers/{SET}.is_empty"
+		local
+			s: like set_to_be_tested
+		do
+			s := set_to_be_tested
+			inspect
+				next_random_item \\ 2
+			when 0 then
+--				s := s.o
+			when 1 then
+--				s := s ∖ same_set_a (s)
+			end
+			assert ("s.is_empty", s.is_empty)
+			assert ("s.is_empty ok", properties.is_empty_ok (s))
+
+--			s := set_to_be_tested & some_object_a
+			create s.make_singleton (some_object_a)
+			assert ("not s.is_empty", not s.is_empty)
+			assert ("not s.is_empty ok", properties.is_empty_ok (s))
+
+			s := set_to_be_tested
+			assert ("is_empty", s.is_empty ⇒ True)
+			assert ("is_empty_ok", properties.is_empty_ok (s))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

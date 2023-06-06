@@ -15,7 +15,8 @@ inherit
 			some_immediate_set_a as some_immediate_set_of_references_dscr
 		redefine
 			properties,
-			test_all
+			test_all,
+			test_is_empty
 		end
 
 	TESTS_DSCR
@@ -39,6 +40,17 @@ feature -- Test routines (All)
 			-- Test every routine of {SET}.
 		note
 			testing: "covers/{SET}"
+		do
+			Precursor {SET_TESTS}
+			test_is_empty
+		end
+
+feature -- Test routines (Primitive)
+
+	test_is_empty
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.is_empty"
 		do
 			Precursor {SET_TESTS}
 		end
