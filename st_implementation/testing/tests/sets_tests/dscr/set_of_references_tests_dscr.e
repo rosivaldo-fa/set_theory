@@ -1,17 +1,18 @@
 note
-	description: "Test suite for {REFERENCE_SET_DSCR}"
+	description: "Test suite for {SET [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
 
 class
-	REFERENCE_SET_TESTS_DSCR
+	SET_OF_REFERENCES_TESTS_DSCR
 
 inherit
 	SET_TESTS [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 		rename
-			some_object_a as some_separate_character_ref
+			some_object_a as some_separate_character_ref,
+			some_immediate_set_a as some_immediate_set_of_references_dscr
 		redefine
 			properties,
 			test_all

@@ -62,3 +62,28 @@ APPLICATION         root's creation        a1 ? a2 ? a3:
 APPLICATION         root's creation                                     
 <00000000027C0588>                         Routine failure.              Exit
 -------------------------------------------------------------------------------
+
+st_implementation: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+EQA_EVALUATOR       execute_test @2        attached {EQA_TEST_EVALUATOR [EQA_TEST_SET]} new_instance_of (l_type) as l_eval:
+<000000000473A5E8>                         Assertion violated.           Fail
+-------------------------------------------------------------------------------
+EQA_EVALUATOR       execute_test @2                                     
+<000000000473A5E8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+EQA_EVALUATOR       main_loop @9                                        
+<000000000473A5E8>                         Routine failure.              Rescue
+-------------------------------------------------------------------------------
+EQA_EVALUATOR       make @12                                            
+<000000000473A5E8>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+EQA_EVALUATOR       root's creation                                     
+<000000000473A5E8>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
