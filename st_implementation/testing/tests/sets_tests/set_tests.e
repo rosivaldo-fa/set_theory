@@ -62,9 +62,12 @@ feature {NONE} -- Factory (element to be tested)
 feature -- Factory (Equality)
 
 	some_immediate_set_a: SET [A, EQ]
-			-- Some monomorphic set of element like {A}
+			-- Some monomorphic set of elements like {A}
+		note
+			TODO: "Report bug!"
 		deferred
 		ensure
+			bug_ignored_on_joined_descendant: False
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_a}
 		end
 
