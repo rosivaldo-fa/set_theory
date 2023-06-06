@@ -51,6 +51,26 @@ feature -- Test routines (Primitive)
 			assert ("is_empty_ok", properties.is_empty_ok (s))
 		end
 
+	test_any
+			-- Test {SET}.any.
+		note
+			testing: "covers/{SET}.any"
+		local
+			s: like set_to_be_tested
+		do
+--			s := set_to_be_tested & some_object_a
+			create s.make_singleton (some_object_a)
+				check
+					is_not_empty: not s.is_empty -- s ≍ {a, ...}
+				end
+			assert ("s.any", attached s.any ⇒ True)
+			assert ("s.any ok", properties.any_ok (s))
+
+			s := set_to_be_tested
+			assert ("any", not s.is_empty ⇒ attached s.any ⇒ True)
+			assert ("any_ok", properties.any_ok (s))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

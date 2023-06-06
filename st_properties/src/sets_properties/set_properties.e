@@ -48,6 +48,19 @@ feature -- Properties (Primitive)
 			end
 		end
 
+	any_ok (s: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.any?
+		do
+			if not s.is_empty then
+				check
+					membership: s ∋ s.any
+--					building_up: s ≍ (s.others & s.any)
+				then
+				end
+			end
+			Result := True
+		end
+
 feature {NONE} -- Anchor
 
 	o_anchor: STS_SET [A, EQ]

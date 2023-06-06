@@ -16,7 +16,8 @@ inherit
 		redefine
 			properties,
 			test_all,
-			test_is_empty
+			test_is_empty,
+			test_any
 		end
 
 	TESTS_DSCR
@@ -43,6 +44,7 @@ feature -- Test routines (All)
 		do
 			Precursor {SET_TESTS}
 			test_is_empty
+			test_any
 		end
 
 feature -- Test routines (Primitive)
@@ -51,6 +53,14 @@ feature -- Test routines (Primitive)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.is_empty"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_any
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.any"
 		do
 			Precursor {SET_TESTS}
 		end
