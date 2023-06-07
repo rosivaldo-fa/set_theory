@@ -12,6 +12,7 @@ inherit
 		redefine
 			default_create,
 			with_ok,
+			without_ok,
 			o_anchor,
 			universe_anchor
 		end
@@ -22,6 +23,7 @@ feature {NONE} -- Initialization
 			-- Initialize current property checker
 		do
 			create o.make_empty
+			create eq
 		end
 
 feature -- Access
@@ -192,9 +194,23 @@ feature -- Access
 --			print ("# u: ") print (# Result) print ('%N')
 		end
 
+	eq: EQ
+			-- <Precursor>
+
 feature -- Properties (Construction)
 
 	with_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
+			-- <Precursor>
+		local
+			sa: STS_SET [A, EQ]
+		do
+			if type_is_predefined_expanded (({A}).type_id) then
+				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
+			end
+			Result := Precursor {STP_SET_PROPERTIES}(s, a)
+		end
+
+	without_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
 			-- <Precursor>
 		local
 			sa: STS_SET [A, EQ]

@@ -73,6 +73,15 @@ feature -- Construction
 			nothing_else: Result |∀ agent ored (agent has, agent equality_holds (a, ?), ?)
 		end
 
+	without alias "/" (a: A): like subset_anchor
+			-- Every element in current set but `a'
+		deferred
+		ensure
+			does_not_have_a: Result ∌ a
+			nothing_lost: Current |∀ agent xored (agent Result.has, agent equality_holds (a, ?), ?)
+			nothing_else: Result |∀ agent has
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
@@ -138,6 +147,16 @@ feature -- Predicate
 		ensure
 			class
 			definition: Result = (p1 (x) or p2 (x))
+		end
+
+	xored (p1, p2: PREDICATE [A]; x: A): BOOLEAN
+			-- Does `p1' (`x') or `p2' (`x') hold exclusively, i.e. does `p1' (`x') xor `p2' (`x') hold?
+			-- NOTICE: Please see the comment at the header of `ored'.
+		do
+			Result := p1 (x) xor p2 (x)
+		ensure
+			class
+			definition: Result = (p1 (x) xor p2 (x))
 		end
 
 feature -- Reduction

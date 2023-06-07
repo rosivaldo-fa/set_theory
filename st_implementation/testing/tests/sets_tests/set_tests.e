@@ -156,6 +156,45 @@ feature -- Test routines (Construction)
 			assert ("with_ok", properties.with_ok (s, a))
 		end
 
+	test_without
+			-- Test {SET}.without.
+		note
+			testing: "covers/{SET}.without"
+		local
+			s: like set_to_be_tested
+			a, b, c: A
+		do
+			s := o
+			a := some_object_a
+--			assert ("∅", (s / a) ≍ o)
+			assert ("∅ ok", properties.without_ok (s, a))
+
+			s := s & same_object_a (a)
+--			assert ("still ∅", (s / a) ≍ o)
+			assert ("still ∅ ok", properties.without_ok (s, a))
+
+			b := some_other_object_a (s)
+--			assert ("{a}", (s / b) ≍ singleton (a))
+			assert ("{a} ok", properties.without_ok (s, b))
+
+			s := s & same_object_a (b)
+--			assert ("still {a}", (s / b) ≍ singleton (a))
+			assert ("still {a} ok", properties.without_ok (s, b))
+
+			c := some_other_object_a (s)
+--			assert ("{a,b}", (s / c) ≍ (singleton (a) & b))
+			assert ("{a,b} ok", properties.without_ok (s, c))
+
+			s := s & same_object_a (c)
+--			assert ("still {a,b}", (s / c) ≍ (singleton (a) & b))
+			assert ("still {a,b} ok", properties.without_ok (s, c))
+
+			s := set_to_be_tested
+			a := some_object_a
+			assert ("with", attached (s & a))
+			assert ("without_ok", properties.without_ok (s, a))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

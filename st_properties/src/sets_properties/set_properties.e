@@ -25,6 +25,11 @@ feature -- Access
 		deferred
 		end
 
+	eq: EQ
+			-- Equality for objects like {A}
+		deferred
+		end
+
 feature -- Properties (Primitive)
 
 	is_empty_ok (s: STS_SET [A, EQ]): BOOLEAN
@@ -99,6 +104,59 @@ feature -- Properties (Construction)
 			then
 				Result := True
 			end
+		end
+
+	without_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.without?
+		do
+			check
+				u: attached current_universe as u
+--				definition: (s / a) ≍ (u | agent anded (agent s.has, agent equality_does_not_hold (?, a), ?))
+				excluded: (s / a) ∌ a
+				every_other_element: s |∀ agent implied (agent negated(agent s.equality_holds (?, a), ?), agent (s / a).has, ?)
+--				nothing_else: (s / a) ⊆ s
+--				same_cardinality: s ∌ a ⇒ # (s / a) = # s
+--				decremented_cardinality: s ∋ a ⇒ # (s / a) = # s - 1
+			then
+				Result := True
+			end
+		end
+
+feature -- Predicate
+
+	negated (p: PREDICATE [A]; x: A): BOOLEAN
+			-- Logical negation of `p' (`x'), i.e. is `p' (`x') false?
+		do
+			Result := not p (x)
+		ensure
+			class
+			definition: Result = not p (x)
+		end
+
+	anded (p1, p2: PREDICATE [A]; x: A): BOOLEAN
+			-- Do `p1' (`x') and `p2' (`x') hold?
+		do
+			Result := p1 (x) and p2 (x)
+		ensure
+			class
+			definition: Result = (p1 (x) and p2 (x))
+		end
+
+	implied (p1, p2: PREDICATE [A]; x: A): BOOLEAN
+			-- If `p1' (`x') holds, does `p2' (`x') hold too, i.e. does `p1' (`x') imply `p2' (`x')?
+		do
+			Result := p1 (x) ⇒ p2 (x)
+		ensure
+			class
+			definition: Result = (p1 (x) ⇒ p2 (x))
+		end
+
+	equality_does_not_hold (x1, x2: A): BOOLEAN
+			-- Does not `eq' (`x1', `x2') hold?
+		do
+			Result := not eq (x1, x2)
+		ensure
+			definition: Result = not eq (x1, x2)
 		end
 
 feature {NONE} -- Anchor

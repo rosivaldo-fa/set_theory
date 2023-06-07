@@ -21,7 +21,8 @@ inherit
 			test_any,
 			test_others,
 			test_eq,
-			test_with
+			test_with,
+			test_without
 		end
 
 	TESTS_DSCR
@@ -95,6 +96,14 @@ feature -- Test routines (Construction)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.with"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_without
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.without"
 		do
 			Precursor {SET_TESTS}
 		end

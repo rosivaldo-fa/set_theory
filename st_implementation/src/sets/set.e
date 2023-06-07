@@ -103,6 +103,45 @@ feature -- Construction
 			end
 		end
 
+	without alias "/" (a: A): like subset_anchor
+			-- <Precursor>
+		local
+			s: like subset_anchor
+			l_eq: EQ
+		do
+			from
+				Result := o
+				s := Current
+				l_eq := eq -- Better to avoid recreating `eq' over and over.
+			invariant
+--				building_up: Result ≍ (Current ∖ s)
+			until
+				s.is_empty or else l_eq (s.any, a)
+			loop
+					check
+						does_not_have: Result ∌ s.any -- Result ≍ (Current ∖ s)
+					end
+				Result := Result.extended (s.any)
+				s := s.others
+--			variant
+--				cardinality: natural_as_integer (# s)
+			end
+			if s.is_empty then
+				Result := Current
+			else
+					check
+						unwanted_element_found: l_eq (s.any, a) -- Previous loop exit
+					end
+				s := s.others
+				if not s.is_empty then
+						check
+--							is_disjoint: s.is_disjoint (Result) -- Result ≍ ((Current ∖ s) / a)
+						end
+					Result := s.batch_extended (Result)
+				end
+			end
+		end
+
 	extended (a: A): like superset_anchor
 			-- Current set extended with `a'
 		require
