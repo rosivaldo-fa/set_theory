@@ -11,6 +11,7 @@ inherit
 	STP_SET_PROPERTIES [A, EQ]
 		redefine
 			default_create,
+			with_ok,
 			o_anchor,
 			universe_anchor
 		end
@@ -189,6 +190,67 @@ feature -- Access
 --				end
 --			end
 --			print ("# u: ") print (# Result) print ('%N')
+		end
+
+feature -- Properties (Construction)
+
+	with_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
+			-- <Precursor>
+		local
+			sa: STS_SET [A, EQ]
+		do
+			if type_is_predefined_expanded (({A}).type_id) then
+				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
+			end
+			Result := Precursor {STP_SET_PROPERTIES}(s, a)
+		end
+
+feature -- Factory
+
+	singleton (a: A): STS_SET [A, EQ]
+			-- Singleton in the form {`a'}
+		do
+			Result := o.singleton (a)
+		ensure
+--			definition: Result ≍ o.singleton (a)
+		end
+
+feature -- Predicate
+
+	type_is_predefined_expanded (t_id: INTEGER): BOOLEAN
+			-- Does `t_id' represent a predefined expanded type (i.e. INTEGER, CHAR, REAL etc.)?
+		do
+			Result := t_id = ({POINTER}).type_id or
+				t_id = ({CHARACTER_8}).type_id or
+				t_id = ({CHARACTER_32}).type_id or
+				t_id = ({BOOLEAN}).type_id or
+				t_id = ({INTEGER_8}).type_id or
+				t_id = ({INTEGER_16}).type_id or
+				t_id = ({INTEGER_32}).type_id or
+				t_id = ({INTEGER_64}).type_id or
+				t_id = ({NATURAL_8}).type_id or
+				t_id = ({NATURAL_16}).type_id or
+				t_id = ({NATURAL_32}).type_id or
+				t_id = ({NATURAL_64}).type_id or
+				t_id = ({REAL_32}).type_id or
+				t_id = ({REAL_64}).type_id
+		ensure
+			definition: Result = (
+				t_id = ({POINTER}).type_id or
+				t_id = ({CHARACTER_8}).type_id or
+				t_id = ({CHARACTER_32}).type_id or
+				t_id = ({BOOLEAN}).type_id or
+				t_id = ({INTEGER_8}).type_id or
+				t_id = ({INTEGER_16}).type_id or
+				t_id = ({INTEGER_32}).type_id or
+				t_id = ({INTEGER_64}).type_id or
+				t_id = ({NATURAL_8}).type_id or
+				t_id = ({NATURAL_16}).type_id or
+				t_id = ({NATURAL_32}).type_id or
+				t_id = ({NATURAL_64}).type_id or
+				t_id = ({REAL_32}).type_id or
+				t_id = ({REAL_64}).type_id
+				)
 		end
 
 feature {NONE} -- Anchor

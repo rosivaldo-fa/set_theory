@@ -85,6 +85,22 @@ feature -- Properties (Primitive)
 			end
 		end
 
+feature -- Properties (Construction)
+
+	with_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.with?
+		do
+			check
+				u: attached current_universe as u
+--				definition: (s & a) ≍ (u | agent u.ored (agent s.has, agent u.equality_holds (?, a), ?))
+--				by_union: (s & a) ≍ s ∪ singleton (a)
+--				same_cardinality: s ∋ a ⇒ # (s & a) = # s
+--				incremented_cardinality: s ∌ a ⇒ # (s & a) = # s + 1
+			then
+				Result := True
+			end
+		end
+
 feature {NONE} -- Anchor
 
 	o_anchor: STS_SET [A, EQ]

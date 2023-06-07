@@ -10,12 +10,15 @@ class
 inherit
 	STS_SET [A, EQ]
 		redefine
-			subset_anchor
+			set_anchor,
+			subset_anchor,
+			superset_anchor
 		end
 
 create
 	make_empty,
-	make_singleton
+	make_singleton,
+	make_extended
 
 feature {NONE} -- Initialization
 
@@ -36,6 +39,20 @@ feature {NONE} -- Initialization
 			is_not_empty: not is_empty
 			any: eq (any, a)
 			others: others.is_empty
+		end
+
+	make_extended (a: A; s: STS_SET [A, EQ])
+			-- Create a set whose `any' element and `others' are, respectively, `a' and `s'.
+		require
+			does_not_have: s ∌ a
+		do
+			create others.make_empty
+			others := others.converted (s)
+			create any_storage.put (converted_element (a))
+		ensure
+			is_not_empty: not is_empty
+			any: eq (any, a)
+--			others: others ≍ s
 		end
 
 feature -- Primitive
@@ -74,7 +91,87 @@ feature -- Primitive
 			class
 		end
 
+feature -- Construction
+
+	with alias "&" (a: A): like superset_anchor
+			-- <Precursor>
+		do
+			if Current ∋ a then
+				Result := Current
+			else
+				Result := extended (a)
+			end
+		end
+
+	extended (a: A): like superset_anchor
+			-- Current set extended with `a'
+		require
+			does_not_have: Current ∌ a
+		do
+			create Result.make_extended (a, Current)
+		ensure
+			is_not_empty: not Result.is_empty
+			any: eq (Result.any, a)
+--			others: Result.others ≍ Current
+		end
+
+	batch_extended (s: STS_SET [A, EQ]): like superset_anchor
+			-- Current set extended with every element in `s'
+		require
+--			is_disjoint: is_disjoint (s)
+		local
+			l_s: STS_SET [A, EQ]
+		do
+			from
+				Result := Current
+				l_s := s
+			invariant
+--				building_prefixed_s_up: Result.as_tuple.prefix (# (s ∖ l_s)).terms ≍ (s ∖ l_s)
+--				suffixed_current: Result.as_tuple.suffix (# Current).terms ≍ Current
+			until
+				l_s.is_empty
+			loop
+					check
+						does_not_have: Result ∌ l_s.any -- Result ≍ (Current ∪ (s ∖ l_s))
+					end
+				Result := Result.extended (l_s.any)
+				l_s := l_s.others
+--			variant
+--				cardinality: natural_as_integer (# l_s)
+			end
+		ensure
+--			prefixed_s: Result.as_tuple.right_trimmed (# Current).terms ≍ s
+--			suffixed_current: Result.as_tuple.left_trimmed (# s).terms ≍ Current
+		end
+
 feature -- Factory
+
+	o,
+	empty_set: like subset_anchor
+			-- <Precursor>
+			--| Notice: this implementation aims to prevent the creation of redundant empty sets, so preserving system space at the cost of some time.
+		do
+			from
+				Result := Current
+			invariant
+				looking_up: o = Result.o
+			until
+				Result.is_empty
+			loop
+				Result := Result.others
+--			variant
+--				cardinality: natural_as_integer (# Result)
+			end
+		end
+
+	singleton (a: A): like set_anchor
+			-- <Precursor>
+		do
+				check
+					does_not_have: o ∌ a -- o.is_empty
+				end
+			Result := o.extended (a)
+		end
 
 	converted_element (a: A): like any_anchor
 			-- `a' converted to an element like `any'
@@ -82,6 +179,19 @@ feature -- Factory
 			Result := a
 		ensure
 			definition: eq (Result, a)
+		end
+
+	converted (s: STS_SET [A, EQ]): like set_anchor
+			-- <Precursor>
+		do
+			if attached {like set_anchor} s as cs then
+				Result := cs
+			else
+					check
+--						is_disjoint: o.is_disjoint (s) -- o.is_empty
+					end
+				Result := o.batch_extended (s)
+			end
 		end
 
 feature -- Transformer
@@ -105,7 +215,9 @@ feature -- Anchor
 			Result := any
 		end
 
-	subset_anchor: SET [A, EQ]
+	set_anchor,
+	subset_anchor,
+	superset_anchor: SET [A, EQ]
 			-- <Precursor>
 		do
 			Result := Current

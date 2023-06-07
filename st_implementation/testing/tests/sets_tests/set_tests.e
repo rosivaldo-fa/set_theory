@@ -125,6 +125,37 @@ feature -- Test routines (Primitive)
 			assert ("class: eq", attached {like set_to_be_tested}.eq)
 		end
 
+feature -- Test routines (Construction)
+
+	test_with
+			-- Test {SET}.with.
+		note
+			testing: "covers/{SET}.with"
+		local
+			s: like set_to_be_tested
+			a, b, c: A
+		do
+			s := o
+			a := some_object_a
+--			assert ("{a}", (s & a) ≍ singleton (a))
+			assert ("{a} ok", properties.with_ok (s, a))
+
+			s := s & same_object_a (a)
+			b := some_object_a
+--			assert ("{a,b}", (s & b) ≍ (singleton (a) & b))
+			assert ("{a,b} ok", properties.with_ok (s, b))
+
+			s := s & same_object_a (b)
+			c := some_object_a
+--			assert ("{a,b,c}", (s & c) ≍ (singleton (a) & b & c))
+			assert ("{a,b,c} ok", properties.with_ok (s, c))
+
+			s := set_to_be_tested
+			a := some_object_a
+			assert ("with", attached (s & a))
+			assert ("with_ok", properties.with_ok (s, a))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
@@ -162,11 +193,22 @@ feature {NONE} -- Factory (element to be tested)
 --			n_elements: # Result = n
 		end
 
+feature {NONE} -- Factory (Set)
+
 	o: like set_to_be_tested
 			-- The empty set, i.e. {} or ∅
 			--| TODO: Make it once? An attribute?
 		do
 			create Result.make_empty
+		end
+
+	singleton (a: A): STS_SET [A, EQ]
+			-- Singleton in the form {`a'}
+			--| TODO: DRY.
+		do
+			Result := o.singleton (a)
+		ensure
+--			definition: Result ≍ o.singleton (a)
 		end
 
 feature -- Factory (Equality)
