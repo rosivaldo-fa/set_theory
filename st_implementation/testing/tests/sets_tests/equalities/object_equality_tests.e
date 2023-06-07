@@ -12,7 +12,8 @@ inherit
 		redefine
 			properties,
 			test_holds,
-			test_holds_successively
+			test_holds_successively,
+			same_object_a
 		end
 
 feature -- Access
@@ -83,18 +84,18 @@ feature -- Test routines (Relationship)
 
 feature -- Factory (Object)
 
-	object_twin_a (a: A): A
-			-- Object equal (by value) to `a'
-	note
-		EIS: "name={ANY}.deep_twin bug", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_implementation_tests.html#19887", "tag=bug, compiler"
-	do
-			if attached a then
-				Result := a.twin
-			else
-				Result := a
+	same_object_a (a: A): A
+			-- <Precursor>
+		do
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				Result := Precursor (a)
+			when 1 then
+				Result := object_standard_twin_a (a)
+			when 2 then
+				Result := object_twin_a (a)
 			end
-		ensure
-			definition: Result ~ a
 		end
 
 note

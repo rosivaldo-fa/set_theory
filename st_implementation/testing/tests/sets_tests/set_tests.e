@@ -71,6 +71,51 @@ feature -- Test routines (Primitive)
 			assert ("any_ok", properties.any_ok (s))
 		end
 
+	test_others
+			-- Test {SET}.others.
+		note
+			testing: "covers/{SET}.others"
+		local
+			s: like set_to_be_tested
+			a, b, c: like some_object_a
+		do
+			s := o
+--			assert ("∅", s.others ≍ o)
+			assert ("∅ ok", properties.others_ok (s))
+
+--			s := s & some_object_a
+				check
+					is_not_empty: not s.is_empty -- s = {a}
+				end
+			a := same_object_a (s.any)
+--			assert ("{a}", s.others ≍ o)
+			assert ("{a} ok", properties.others_ok (s))
+
+--			s := s & some_other_object_a (s)
+				check
+					is_not_empty_2: not s.others.is_empty -- s = {a,b}
+				end
+			b := same_set_a (s.others).any
+--			assert ("{a,b}", s.others ≍ (o & b))
+			assert ("{a,b} ok", properties.others_ok (s))
+
+--			s := s & some_other_object_a (s)
+				check
+					is_not_empty_3: not s.others.is_empty -- # s = 3
+				end
+			b := same_set_a (s.others).any
+				check
+--					is_not_empty_4: not (s.others / b).is_empty -- # s = 3
+				end
+--			c := same_set_a (s.others / b).any
+--			assert ("{a,b,c}", s.others ≍ (s.o & b & c))
+			assert ("{a,b,c} ok", properties.others_ok (s))
+
+			s := set_to_be_tested
+			assert ("others", attached s.others)
+			assert ("others_ok", properties.others_ok (s))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
@@ -79,12 +124,48 @@ feature {NONE} -- Factory (element to be tested)
 			Result := some_immediate_set_a
 		end
 
+	set_to_be_tested_with_cardinality (n: NATURAL): like set_to_be_tested
+			-- Set with `n' elements meant to be under tests
+			--| TODO: Make `n' more general.
+		require
+			small_enough: n ≤ Max_count
+		do
+			from
+				from
+					Result := set_to_be_tested
+				until
+--					# Result ≥ n
+					True
+				loop
+					Result := set_to_be_tested
+				end
+--			invariant
+--				at_least_n: # Result ≥ n
+			until
+--				# Result = n
+				True
+			loop
+				Result := Result.others
+--			variant
+--				down_to_n: {like new_set_a}.natural_as_integer (# Result - n)
+			end
+		ensure
+--			n_elements: # Result = n
+		end
+
+	o: like set_to_be_tested
+			-- The empty set, i.e. {} or ∅
+			--| TODO: Make it once? An attribute?
+		do
+			create Result.make_empty
+		end
+
 feature -- Factory (Equality)
 
 	some_immediate_set_a: SET [A, EQ]
 			-- Some monomorphic set of elements like {A}
 		note
-			TODO: "Report bug!"
+			EIS: "name=Post-condition ignored on joined descendant", "protocol=URI", "src=https://support.eiffel.com/report_detail/19889", "tag=bug, compiler"
 		deferred
 		ensure
 			bug_ignored_on_joined_descendant: False

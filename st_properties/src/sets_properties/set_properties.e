@@ -61,6 +61,30 @@ feature -- Properties (Primitive)
 			Result := True
 		end
 
+	others_ok (s: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.others?
+		do
+			if s.is_empty then
+				check
+--					same_set: s.others ≍ s
+--					no_element: # s.others = # s
+				then
+				end
+			else
+				check
+--					decomposing: s.others ≍ (s / s.any)
+--					strict_subset: s.others ⊂ s
+--					one_element_less: # s.others = # s - 1
+				then
+				end
+			end
+			check
+--				subset: s.others ⊆ s
+			then
+				Result := True
+			end
+		end
+
 feature {NONE} -- Anchor
 
 	o_anchor: STS_SET [A, EQ]

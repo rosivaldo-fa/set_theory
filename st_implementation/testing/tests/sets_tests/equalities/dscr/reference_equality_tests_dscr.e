@@ -12,7 +12,8 @@ inherit
 	REFERENCE_EQUALITY_TESTS [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 		rename
 			some_object_a as some_separate_character_ref,
-			some_immediate_equality_a as some_reference_equality_dscr
+			some_immediate_equality_a as some_reference_equality_dscr,
+			some_set_a as some_set_of_references_dscr
 		redefine
 			properties,
 			test_all,
@@ -24,6 +25,7 @@ inherit
 		rename
 			element_to_be_tested as equality_to_be_tested
 		undefine
+			on_prepare,
 			equality_to_be_tested
 		redefine
 			properties,

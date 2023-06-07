@@ -12,7 +12,8 @@ inherit
 	REFERENCE_EQUALITY_TESTS [detachable INTEGER_REF, STS_REFERENCE_EQUALITY [detachable INTEGER_REF]]
 		rename
 			some_object_a as some_integer_ref,
-			some_immediate_equality_a as some_reference_equality_dir
+			some_immediate_equality_a as some_reference_equality_dir,
+			some_set_a as some_set_of_references_dir
 		redefine
 			properties,
 			test_all,
@@ -24,6 +25,7 @@ inherit
 		rename
 			element_to_be_tested as equality_to_be_tested
 		undefine
+			on_prepare,
 			equality_to_be_tested
 		redefine
 			properties,

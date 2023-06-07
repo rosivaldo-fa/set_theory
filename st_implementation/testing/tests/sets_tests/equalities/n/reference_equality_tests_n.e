@@ -12,7 +12,8 @@ inherit
 	REFERENCE_EQUALITY_TESTS [NATURAL, STS_REFERENCE_EQUALITY [NATURAL]]
 		rename
 			some_object_a as some_natural,
-			some_immediate_equality_a as some_reference_equality_n
+			some_immediate_equality_a as some_reference_equality_n,
+			some_set_a as some_set_of_references_n
 		redefine
 			properties,
 			test_all,
@@ -24,6 +25,7 @@ inherit
 		rename
 			element_to_be_tested as equality_to_be_tested
 		undefine
+			on_prepare,
 			equality_to_be_tested
 		redefine
 			properties,

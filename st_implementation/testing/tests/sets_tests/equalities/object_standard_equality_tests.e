@@ -11,7 +11,8 @@ inherit
 	EQUALITY_TESTS [A, EQ]
 		redefine
 			test_holds,
-			test_holds_successively
+			test_holds_successively,
+			same_object_a
 		end
 
 feature -- Test routines (Relationship)
@@ -91,17 +92,16 @@ feature -- Test routines (Relationship)
 
 feature -- Factory (Object)
 
-	object_standard_twin_a (a: A): A
-			-- Object equal (according to `standard_equal') to `a'
+	same_object_a (a: A): A
+			-- <Precursor>
 		do
-			if attached a then
-				Result := a.standard_twin
-			else
-				Result := a
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := Precursor (a)
+			when 1 then
+				Result := object_standard_twin_a (a)
 			end
-		ensure
-			attached_a: attached a ⇒ attached Result and then Result ≜ a
-			detached_a: not attached a ⇒ not attached Result
 		end
 
 note

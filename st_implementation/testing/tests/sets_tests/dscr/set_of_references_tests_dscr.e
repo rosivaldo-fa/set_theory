@@ -12,18 +12,21 @@ inherit
 	SET_TESTS [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 		rename
 			some_object_a as some_separate_character_ref,
-			some_immediate_set_a as some_immediate_set_of_references_dscr
+			some_immediate_set_a as some_immediate_set_of_references_dscr,
+			some_set_a as some_set_of_references_dscr
 		redefine
 			properties,
 			test_all,
 			test_is_empty,
-			test_any
+			test_any,
+			test_others
 		end
 
 	TESTS_DSCR
 		rename
 			element_to_be_tested as set_to_be_tested
 		undefine
+			on_prepare,
 			set_to_be_tested
 		redefine
 			properties,
@@ -45,6 +48,7 @@ feature -- Test routines (All)
 			Precursor {SET_TESTS}
 			test_is_empty
 			test_any
+			test_others
 		end
 
 feature -- Test routines (Primitive)
@@ -61,6 +65,14 @@ feature -- Test routines (Primitive)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.any"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_others
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.others"
 		do
 			Precursor {SET_TESTS}
 		end
