@@ -116,6 +116,15 @@ feature -- Test routines (Primitive)
 			assert ("others_ok", properties.others_ok (s))
 		end
 
+	test_eq
+			-- Test {SET}.eq.
+		note
+			testing: "covers/{SET}.eq"
+		do
+			assert ("eq", attached set_to_be_tested.eq)
+			assert ("class: eq", attached {like set_to_be_tested}.eq)
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

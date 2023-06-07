@@ -19,7 +19,8 @@ inherit
 			test_all,
 			test_is_empty,
 			test_any,
-			test_others
+			test_others,
+			test_eq
 		end
 
 	TESTS_DSCR
@@ -49,6 +50,7 @@ feature -- Test routines (All)
 			test_is_empty
 			test_any
 			test_others
+			test_eq
 		end
 
 feature -- Test routines (Primitive)
@@ -73,6 +75,14 @@ feature -- Test routines (Primitive)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.others"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_eq
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.eq"
 		do
 			Precursor {SET_TESTS}
 		end
