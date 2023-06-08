@@ -178,6 +178,164 @@ feature -- Factory (Set)
 --			definition: Result ≍ s
 		end
 
+	some_set_sa: STS_SET [STS_SET [A, EQ], STS_EQUALITY [STS_SET [A, EQ]]]
+			-- Randomly-fetched polymorphic set of sets of elements like {A}
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_set_references_a
+			when 1 then
+				Result := some_set_standard_objects_a
+			when 2 then
+				Result := some_set_objects_a
+			when 3 then
+				Result := some_set_deep_objects_a
+--			when 4 then
+--				Result := some_sets_a
+			end
+		end
+
+	some_set_references_a: STS_SET [STS_SET [A, EQ], STS_REFERENCE_EQUALITY [STS_SET [A, EQ]]]
+			-- Randomly-fetched set of sets of elements like {A}, and whose (member) sets are compared by their object references.
+		do
+			inspect
+				next_random_item \\ 1
+			when 0 then
+				Result := some_immediate_effecive_set_references_a
+--			when 1 then
+--				Result := some_reference_sets_a
+			end
+		end
+
+	some_immediate_effecive_set_references_a: SET [STS_SET [A, EQ], STS_REFERENCE_EQUALITY [STS_SET [A, EQ]]]
+			-- Randomly-fetched monomorphic set of sets of elements like {A}, and whose (member) sets are compared by their object references.
+		do
+			check
+				ss: attached {SET [STS_SET [A, EQ], STS_REFERENCE_EQUALITY [STS_SET [A, EQ]]]} some_immediate_instance (
+					agent: SET [STS_SET [A, EQ], STS_REFERENCE_EQUALITY [STS_SET [A, EQ]]]
+						do
+							across
+								1 |..| some_count.as_integer_32 as i
+							from
+								create Result.make_empty
+							loop
+								Result := Result & some_set_a
+							end
+						end
+					) as ss -- `some_immediate_instance' definition
+			then
+				Result := cropped_set (ss)
+			end
+		ensure
+			monomorphic: Result.generating_type ~ {detachable SET [STS_SET [A, EQ], STS_REFERENCE_EQUALITY [STS_SET [A, EQ]]]}
+		end
+
+	some_set_standard_objects_a: STS_SET [STS_SET [A, EQ], STS_OBJECT_STANDARD_EQUALITY [STS_SET [A, EQ]]]
+			-- Randomly-fetched set of sets of elements like {A}, and whose (member) sets are compared by their standard object values.
+		do
+			inspect
+				next_random_item \\ 1
+			when 0 then
+				Result := some_immediate_effecive_set_standard_objects_a
+--			when 1 then
+--				Result := some_reference_sets_a
+			end
+		end
+
+	some_immediate_effecive_set_standard_objects_a: SET [STS_SET [A, EQ], STS_OBJECT_STANDARD_EQUALITY [STS_SET [A, EQ]]]
+			-- Randomly-fetched monomorphic set of sets of elements like {A}, and whose (member) sets are compared by their standard object values.
+		do
+			check
+				ss: attached {SET [STS_SET [A, EQ], STS_OBJECT_STANDARD_EQUALITY [STS_SET [A, EQ]]]} some_immediate_instance (
+					agent: SET [STS_SET [A, EQ], STS_OBJECT_STANDARD_EQUALITY [STS_SET [A, EQ]]]
+						do
+							across
+								1 |..| some_count.as_integer_32 as i
+							from
+								create Result.make_empty
+							loop
+								Result := Result & some_set_a
+							end
+						end
+					) as ss -- `some_immediate_instance' definition
+			then
+				Result := cropped_set (ss)
+			end
+		ensure
+			monomorphic: Result.generating_type ~ {detachable SET [STS_SET [A, EQ], STS_OBJECT_STANDARD_EQUALITY [STS_SET [A, EQ]]]}
+		end
+
+	some_set_objects_a: STS_SET [STS_SET [A, EQ], STS_OBJECT_EQUALITY [STS_SET [A, EQ]]]
+			-- Randomly-fetched set of sets of elements like {A}, and whose (member) sets are compared by their standard object values.
+		do
+			inspect
+				next_random_item \\ 1
+			when 0 then
+				Result := some_immediate_effecive_set_objects_a
+--			when 1 then
+--				Result := some_reference_sets_a
+			end
+		end
+
+	some_immediate_effecive_set_objects_a: SET [STS_SET [A, EQ], STS_OBJECT_EQUALITY [STS_SET [A, EQ]]]
+			-- Randomly-fetched monomorphic set of sets of elements like {A}, and whose (member) sets are compared by their object values.
+		do
+			check
+				ss: attached {SET [STS_SET [A, EQ], STS_OBJECT_EQUALITY [STS_SET [A, EQ]]]} some_immediate_instance (
+					agent: SET [STS_SET [A, EQ], STS_OBJECT_EQUALITY [STS_SET [A, EQ]]]
+						do
+							across
+								1 |..| some_count.as_integer_32 as i
+							from
+								create Result.make_empty
+							loop
+								Result := Result & some_set_a
+							end
+						end
+					) as ss -- `some_immediate_instance' definition
+			then
+				Result := cropped_set (ss)
+			end
+		ensure
+			monomorphic: Result.generating_type ~ {detachable SET [STS_SET [A, EQ], STS_OBJECT_EQUALITY [STS_SET [A, EQ]]]}
+		end
+
+	some_set_deep_objects_a: STS_SET [STS_SET [A, EQ], STS_OBJECT_DEEP_EQUALITY [STS_SET [A, EQ]]]
+			-- Randomly-fetched set of sets of elements like {A}, and whose (member) sets are compared by their deep object values.
+		do
+			inspect
+				next_random_item \\ 1
+			when 0 then
+				Result := some_immediate_effecive_set_deep_objects_a
+--			when 1 then
+--				Result := some_reference_sets_a
+			end
+		end
+
+	some_immediate_effecive_set_deep_objects_a: SET [STS_SET [A, EQ], STS_OBJECT_DEEP_EQUALITY [STS_SET [A, EQ]]]
+			-- Randomly-fetched monomorphic set of sets of elements like {A}, and whose (member) sets are compared by their deep object values.
+		do
+			check
+				ss: attached {SET [STS_SET [A, EQ], STS_OBJECT_DEEP_EQUALITY [STS_SET [A, EQ]]]} some_immediate_instance (
+					agent: SET [STS_SET [A, EQ], STS_OBJECT_DEEP_EQUALITY [STS_SET [A, EQ]]]
+						do
+							across
+								1 |..| some_count.as_integer_32 as i
+							from
+								create Result.make_empty
+							loop
+								Result := Result & some_set_a
+							end
+						end
+					) as ss -- `some_immediate_instance' definition
+			then
+				Result := cropped_set (ss)
+			end
+		ensure
+			monomorphic: Result.generating_type ~ {detachable SET [STS_SET [A, EQ], STS_OBJECT_DEEP_EQUALITY [STS_SET [A, EQ]]]}
+		end
+
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[

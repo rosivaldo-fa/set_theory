@@ -21,6 +21,7 @@ inherit
 			test_any,
 			test_others,
 			test_eq,
+			test_is_in,
 			test_with,
 			test_without
 		end
@@ -75,6 +76,17 @@ feature -- Test routines (Primitive)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.eq"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Membership)
+
+	test_is_in
+			-- <Precursor>
+		note
+			testing: "covers/{STS_SET}.is_in"
+			testing: "covers/{SET}.is_in"
 		do
 			Precursor {SET_TESTS}
 		end

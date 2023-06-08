@@ -9,6 +9,9 @@ deferred class
 
 inherit
 	ELEMENT_PROPERTIES
+		rename
+			is_in_ok as element_is_in_ok
+		end
 
 feature -- Access
 
@@ -85,6 +88,18 @@ feature -- Properties (Primitive)
 			end
 			check
 --				subset: s.others ⊆ s
+			then
+				Result := True
+			end
+		end
+
+feature -- Properties (Membership)
+
+	is_in_ok (s: STS_SET [A, EQ]; ss: STS_SET [STS_SET [A, EQ], STS_EQUALITY [STS_SET [A, EQ]]]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_in?
+		do
+			check
+				require_non_emptiness: s ∈ ss ⇒ not ss.is_empty
 			then
 				Result := True
 			end

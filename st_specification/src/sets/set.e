@@ -13,6 +13,9 @@ deferred class
 
 inherit
 	ELEMENT
+		rename
+			is_in as element_is_in
+		end
 
 feature -- Primitive
 
@@ -45,6 +48,14 @@ feature -- Primitive
 		end
 
 feature -- Membership
+
+	is_in alias "∈" (s: SET [SET [A, EQ], EQUALITY [SET [A, EQ]]]): BOOLEAN
+			-- Does `s` have current set?
+		do
+			Result := s ∋ Current
+		ensure
+			definition: Result = s ∋ Current
+		end
 
 	has alias "∋" (a: A): BOOLEAN
 			-- Is `a' an element in current set?
