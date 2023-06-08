@@ -7,28 +7,28 @@ note
 class
 	REFERENCE_SET [A]
 
-inherit
-	STS_REFERENCE_SET [A]
-		redefine
-			subset_anchor
-		end
+--inherit
+--	STS_REFERENCE_SET [A]
+--		redefine
+--			subset_anchor
+--		end
 
-	SET [A, STS_REFERENCE_EQUALITY [A]]
-		redefine
-			subset_anchor
-		end
+--	SET [A, STS_REFERENCE_EQUALITY [A]]
+--		redefine
+--			subset_anchor
+--		end
 
-create
-	make_empty,
-	make_singleton
+--create
+--	make_empty,
+--	make_singleton
 
-feature -- Anchor
+--feature -- Anchor
 
-	subset_anchor: REFERENCE_SET [A]
-			-- <Precursor>
-		do
-			Result := Current
-		end
+--	subset_anchor: REFERENCE_SET [A]
+--			-- <Precursor>
+--		do
+--			Result := Current
+--		end
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

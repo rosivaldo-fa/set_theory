@@ -13,23 +13,13 @@ inherit
 		rename
 			some_object_a as some_separate_character_ref,
 			some_immediate_equality_a as some_object_equality_dscr,
-			some_set_a as some_set_of_objects_dscr
+			some_set_a as some_set_of_objects_dscr,
+			some_immediate_set_a as some_immediate_set_of_objects_dscr
 		redefine
 			properties,
 			test_all,
 			test_holds,
 			test_holds_successively
-		end
-
-	TESTS_DSCR
-		rename
-			element_to_be_tested as equality_to_be_tested
-		undefine
-			on_prepare,
-			equality_to_be_tested
-		redefine
-			properties,
-			test_all
 		end
 
 feature -- Access

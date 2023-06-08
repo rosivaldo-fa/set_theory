@@ -235,8 +235,7 @@ feature -- Factory
 
 feature -- Transformer
 
-	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, --EQ,
-	STS_OBJECT_EQUALITY [BOOLEAN]]
+	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, STS_OBJECT_EQUALITY [BOOLEAN]]
 			-- <Precursor>
 		do
 			create Result

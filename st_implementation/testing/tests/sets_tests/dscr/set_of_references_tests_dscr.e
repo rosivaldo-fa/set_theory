@@ -25,17 +25,6 @@ inherit
 			test_without
 		end
 
-	TESTS_DSCR
-		rename
-			element_to_be_tested as set_to_be_tested
-		undefine
-			on_prepare,
-			set_to_be_tested
-		redefine
-			properties,
-			test_all
-		end
-
 feature -- Access
 
 	properties: SET_PROPERTIES [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]

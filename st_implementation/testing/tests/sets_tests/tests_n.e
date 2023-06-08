@@ -10,16 +10,6 @@ deferred class
 inherit
 	ELEMENT_TESTS
 
-feature -- Factory (Object)
-
-	some_natural: NATURAL
-			-- Randomly-created natural number
-		do
-			Result := (next_random_item \\ Max_count.as_integer_32).as_natural_32
-		ensure
-			class
-		end
-
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[

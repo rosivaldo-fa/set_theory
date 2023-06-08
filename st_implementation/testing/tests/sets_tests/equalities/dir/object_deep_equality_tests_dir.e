@@ -13,23 +13,13 @@ inherit
 		rename
 			some_object_a as some_integer_ref,
 			some_immediate_equality_a as some_object_deep_equality_dir,
-			some_set_a as some_set_of_deep_objects_dir
+			some_set_a as some_set_of_deep_objects_dir,
+			some_immediate_set_a as some_immediate_set_of_deep_objects_dir
 		redefine
 			properties,
 			test_all,
 			test_holds,
 			test_holds_successively
-		end
-
-	TESTS_DIR
-		rename
-			element_to_be_tested as equality_to_be_tested
-		undefine
-			on_prepare,
-			equality_to_be_tested
-		redefine
-			properties,
-			test_all
 		end
 
 feature -- Access

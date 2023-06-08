@@ -40,27 +40,27 @@ feature -- Access
 			check_ops: BOOLEAN
 		do
 			Result := o
-----			if not ({A}).is_attached then -- TODO: "Non-separate" Void must be avoided, since it may require a "separate" Void when e.g. mapping via some
-----										  -- f (Void).
-----				if {A} /~ {separate A} then -- TODO: System crashes when an agent gets a "separate" Void actual argument.
-----						check
-----							has_default: ({A}).has_default -- {A} is a detachable type.
-----							does_not_have: Result ∌ ({A}).default -- Result.is_empty
-----						end
-----					Result := Result.extended (({A}).default)
-----				end
-----			end
---			a_type_id := ({detachable A}).type_id
---			mem_map := {MEMORY}.memory_map
---			if type_is_predefined_expanded (a_type_id) then
---				across
---					mem_map as al
---				from
---					Result := o
---				loop
+			if not ({A}).is_attached then -- TODO: "Non-separate" Void must be avoided, since it may require a "separate" Void when e.g. mapping via some
+										  -- f (Void).
+				if {A} /~ {separate A} then -- TODO: System crashes when an agent gets a "separate" Void actual argument.
+						check
+							has_default: ({A}).has_default -- {A} is a detachable type.
+							does_not_have: Result ∌ ({A}).default -- Result.is_empty
+						end
+					Result := Result.extended (({A}).default)
+				end
+			end
+			a_type_id := ({detachable A}).type_id
+			mem_map := {MEMORY}.memory_map
+			if type_is_predefined_expanded (a_type_id) then
+				across
+					mem_map as al
+				from
+					Result := o
+				loop
 --					if {ISE_RUNTIME}.type_conforms_to (al.key, ({detachable STS_ORDERED_PAIR [A, A, STS_EQUALITY [A], STS_EQUALITY [A]]}).type_id) then
 --						estimated_universe_size := estimated_universe_size + 2 * al.item.count.as_natural_32
-----						print (estimated_universe_size) print ('%N')
+------						print (estimated_universe_size) print ('%N')
 --						if estimated_universe_size > {SETS_TESTS_RESOURCES_UNARY_N}.Max_asserted_elements then
 --							check_ops := {ISE_RUNTIME}.check_assert (False)
 --						end
@@ -84,7 +84,7 @@ feature -- Access
 --							)
 --					then
 --						estimated_universe_size := estimated_universe_size + 2 * al.item.count.as_natural_32
-----						print (estimated_universe_size) print ('%N')
+------						print (estimated_universe_size) print ('%N')
 --						if estimated_universe_size > {SETS_TESTS_RESOURCES_UNARY_N}.Max_asserted_elements then
 --							check_ops := {ISE_RUNTIME}.check_assert (False)
 --						end
@@ -108,7 +108,7 @@ feature -- Access
 --							)
 --					then
 --						estimated_universe_size := estimated_universe_size + 2 * al.item.count.as_natural_32
-----						print (estimated_universe_size) print ('%N')
+------						print (estimated_universe_size) print ('%N')
 --						if estimated_universe_size > {SETS_TESTS_RESOURCES_UNARY_N}.Max_asserted_elements then
 --							check_ops := {ISE_RUNTIME}.check_assert (False)
 --						end
@@ -126,28 +126,29 @@ feature -- Access
 --						if check_ops then
 --							check_ops := {ISE_RUNTIME}.check_assert (True)
 --						end
---					elseif {ISE_RUNTIME}.type_conforms_to (al.key, ({detachable STS_SET [A, STS_EQUALITY [A]]}).type_id) then
---						estimated_universe_size := estimated_universe_size + {SETS_TESTS_RESOURCES}.Max_count * al.item.count.as_natural_32
+--					else
+if {ISE_RUNTIME}.type_conforms_to (@al.key, ({detachable STS_SET [A, STS_EQUALITY [A]]}).type_id) then
+						estimated_universe_size := estimated_universe_size + {ELEMENT_TESTS}.Max_count * al.count.as_natural_32
 ----						print (estimated_universe_size) print ('%N')
 --						if estimated_universe_size > {SETS_TESTS_RESOURCES_UNARY_N}.Max_asserted_elements then
 --							check_ops := {ISE_RUNTIME}.check_assert (False)
 --						end
---							across
---								al.item is x
---							loop
---								check
---									sa: attached {STS_SET [A, STS_EQUALITY [A]]} x as sa
---										-- Every object collected into al.item conforms to {detachable STS_SET [A, STS_EQUALITY [A]]}.
---								then
+							across
+								al as x
+							loop
+								check
+									sa: attached {STS_SET [A, STS_EQUALITY [A]]} x as sa
+										-- Every object collected into al.item conforms to {detachable STS_SET [A, STS_EQUALITY [A]]}.
+								then
 --									Result := Result ∪ converted_set (sa)
---								end
---							end
+								end
+							end
 --						if check_ops then
 --							check_ops := {ISE_RUNTIME}.check_assert (True)
 --						end
 --					elseif {ISE_RUNTIME}.type_conforms_to (al.key, ({detachable STS_N_TUPLE [A, STS_EQUALITY [A]]}).type_id) then
---						estimated_universe_size := estimated_universe_size + {SETS_TESTS_RESOURCES}.Max_count * al.item.count.as_natural_32
-----						print (estimated_universe_size) print ('%N')
+--						estimated_universe_size := estimated_universe_size + {ELEMENT_TESTS}.Max_count * al.item.count.as_natural_32
+------						print (estimated_universe_size) print ('%N')
 --						if estimated_universe_size > {SETS_TESTS_RESOURCES_UNARY_N}.Max_asserted_elements then
 --							check_ops := {ISE_RUNTIME}.check_assert (False)
 --						end
@@ -164,33 +165,33 @@ feature -- Access
 --						if check_ops then
 --							check_ops := {ISE_RUNTIME}.check_assert (True)
 --						end
---					end
---				end
---			else
---				across
---					mem_map as al
---				loop
---					if {ISE_RUNTIME}.type_conforms_to (al.key, a_type_id) then
---						estimated_universe_size := estimated_universe_size + al.item.count.as_natural_32
+					end
+				end
+			else
+				across
+					mem_map as al
+				loop
+					if {ISE_RUNTIME}.type_conforms_to (@al.key, a_type_id) then
+						estimated_universe_size := estimated_universe_size + al.count.as_natural_32
 ----						print (estimated_universe_size) print ('%N')
---						if estimated_universe_size > 1_708 then -- TODO: Magic number!
---							check_ops := {ISE_RUNTIME}.check_assert (False)
---						end
---							across
---								al.item is x
---							loop
---								check
---									a: attached {A} x as a -- {ISE_RUNTIME}.type_conforms_to (al.key, a_type_id)
---								then
---									Result := Result & a
---								end
---							end
---						if check_ops then
---							check_ops := {ISE_RUNTIME}.check_assert (True)
---						end
---					end
---				end
---			end
+						if estimated_universe_size > 1_708 then -- TODO: Magic number!
+							check_ops := {ISE_RUNTIME}.check_assert (False)
+						end
+							across
+								al as x
+							loop
+								check
+									a: attached {A} x as a -- {ISE_RUNTIME}.type_conforms_to (al.key, a_type_id)
+								then
+									Result := Result & a
+								end
+							end
+						if check_ops then
+							check_ops := {ISE_RUNTIME}.check_assert (True)
+						end
+					end
+				end
+			end
 --			print ("# u: ") print (# Result) print ('%N')
 		end
 
@@ -225,10 +226,37 @@ feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
 			-- Singleton in the form {`a'}
+			-- TODO: DRY.
 		do
 			Result := o.singleton (a)
 		ensure
 --			definition: Result ≍ o.singleton (a)
+		end
+
+feature -- Conversion
+
+	converted_set (s: STS_SET [A, STS_EQUALITY [A]]): SET [A, EQ]
+			-- Set with every element in `s', but compared by {EQ}.
+		local
+			l_s: STS_SET [A, STS_EQUALITY [A]]
+		do
+			from
+				Result := o
+				l_s := s
+			invariant
+--				every_element: (s ∖ l_s) |∀ agent Result.has
+--				nothing_else: # Result ≤ # (s ∖ l_s)
+			until
+				l_s.is_empty
+			loop
+				Result := Result & l_s.any
+				l_s := l_s.others
+--			variant
+--				cardinality: (# l_s).as_integer_64
+			end
+		ensure
+			every_element: s |∀ agent Result.has
+--			nothing_else: # Result ≤ # s
 		end
 
 feature -- Predicate
@@ -271,16 +299,11 @@ feature -- Predicate
 
 feature {NONE} -- Anchor
 
-	o_anchor: SET [A, EQ]
-			-- <Precursor>
-		do
-			Result := o
-		end
-
+	o_anchor,
 	universe_anchor: SET [A, EQ]
 			-- <Precursor>
 		do
-			Result := current_universe
+			Result := o
 		end
 
 note

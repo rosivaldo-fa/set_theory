@@ -86,9 +86,8 @@ feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
 			-- Existential quantifier: does `p' hold for some element in current set?
-			--| Notice that Eiffel has its own quantifiers, e.g. ∃ c: s ¦ some_condition (c). But they require that s be a descendant of ITERABLE, and a key idea
-			--| of set_theory is to rely as least as possible upon EiffelBase or any other library, since it should be able to annotate and model those libraries.
-			--| Hence the somewhat awkward syntax of set_theory quantifiers, since they cannot benefit from Eiffel iteration mechanism.
+		note
+			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
 		do
 			Result := transformer_to_boolean.set_reduction (Current, False, agent cumulative_disjunction (?, p, ?))
 		ensure
@@ -97,7 +96,8 @@ feature -- Quantifier
 
 	for_all alias "|∀" (p: PREDICATE [A]): BOOLEAN
 			-- Universal quantifier: does `p' hold for every element in current set?
-			--| NOTICE: See comments at `exists' header.
+		note
+			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
 		do
 			Result := transformer_to_boolean.set_reduction (Current, True, agent cumulative_conjunction (?, p, ?))
 		ensure
@@ -126,7 +126,8 @@ feature -- Predicate
 
 	equality_holds (x1, x2: A): BOOLEAN
 			-- Does `eq' (`x1', `x2') hold?
-			-- NOTICE: Please see the comment at the header of `ored'.
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Result := eq (x1, x2)
 		ensure
@@ -135,13 +136,9 @@ feature -- Predicate
 
 	ored (p1, p2: PREDICATE [A]; x: A): BOOLEAN
 			-- Does `p1' (`x') or `p2' (`x') hold?
-			--| The need for such a feature lies in the fact that the Contract view of EiffelStudio does not show the body of an inline agent. Hence e.g. the
-			--| post-condition clause of `united' whose tag is nothing_else cannot read
-			--| 	Result |∀ agent (ia_s: STS_SET [A, EQ]; ia_x: A): BOOLEAN
-			--| 		do
-			--| 			Result := Current ∋ ia_x or ia_s ∋ ia_x
-			--| 		end (s, ?)
-			--| as would be more straightfoward.			
+			-- TODO: Pull it up?
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Result := p1 (x) or p2 (x)
 		ensure
@@ -151,7 +148,9 @@ feature -- Predicate
 
 	xored (p1, p2: PREDICATE [A]; x: A): BOOLEAN
 			-- Does `p1' (`x') or `p2' (`x') hold exclusively, i.e. does `p1' (`x') xor `p2' (`x') hold?
-			-- NOTICE: Please see the comment at the header of `ored'.
+			-- TODO: Pull it up?
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Result := p1 (x) xor p2 (x)
 		ensure
@@ -163,7 +162,8 @@ feature -- Reduction
 
 	cumulative_disjunction (acc: BOOLEAN; p: PREDICATE [A]; x: A): BOOLEAN
 			-- Logical disjunction of `acc' and `p' (`x'), i.e. `acc' or `p' (`x').
-			-- NOTICE: Please see the comment at the header of `ored'.
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Result := acc or p (x)
 		ensure
@@ -173,7 +173,8 @@ feature -- Reduction
 
 	cumulative_conjunction (acc: BOOLEAN; p: PREDICATE [A]; x: A): BOOLEAN
 			-- Logical conjunction of `acc' and `p' (`x'), i.e. `acc' and `p' (`x').
-			-- NOTICE: Please see the comment at the header of `ored'.
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Result := acc and p (x)
 		ensure
@@ -183,8 +184,7 @@ feature -- Reduction
 
 feature -- Transformer
 
-	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, --EQ,
-	OBJECT_EQUALITY [BOOLEAN]]
+	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, OBJECT_EQUALITY [BOOLEAN]]
 			-- Transformer of objects whose types derive from {A} to objects whose types derive from {BOOLEAN}
 		deferred
 		end
@@ -211,7 +211,7 @@ feature -- Anchor
 
 invariant
 	consistent_emptiness: is_empty ⇒ others.is_empty
---	no_repetition: not is_empty ⇒ others ∌ any -- TODO: Uncomment.
+	no_repetition: not is_empty ⇒ others ∌ any
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

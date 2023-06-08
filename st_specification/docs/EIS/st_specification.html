@@ -7,7 +7,7 @@
 	<meta name="author" content="Rosivaldo Fernandes Alves"/>
 	<meta name="created" content="2023-05-28T11:56:03.868000000"/>
 	<meta name="changedby" content="Rosivaldo Fernandes Alves"/>
-	<meta name="changed" content="2023-05-30T16:44:42.676000000"/>
+	<meta name="changed" content="2023-06-07T11:22:07.591000000"/>
 	<meta name="classification" content="Specification of set theory"/>
 	<meta name="keywords" content="set theory, specification"/>
 	<style type="text/css">
@@ -32,6 +32,38 @@ specifications (like <a href="https://se.inf.ethz.ch/people/schoeller/mml.html">
 the resulting implementation might be significantly different from
 another implementation whose scope is to provide structures for
 general data manipulation.</p>
+<h2 class="western">Notes</h2>
+<ul>
+	<li><p><a name="quantifiers"></a>Eiffel has its own quantifiers,
+	e.g. <font face="Liberation Mono, monospace">∃ c: s ¦
+	some_condition (c)</font>. But they require that s be a descendant
+	of <font face="Liberation Mono, monospace">ITERABLE</font>, and a
+	key idea of <font face="Liberation Mono, monospace">st_specification</font>
+	is to rely as least as possible upon <font face="Liberation Mono, monospace">EiffelBase</font>
+	or any other library, since it should be able to annotate and model
+	those libraries. Hence the somewhat awkward syntax of
+	<font face="Liberation Mono, monospace">st_specification</font>
+	quantifiers, since they cannot benefit from Eiffel iteration
+	mechanism.</p>
+	<li><p><a name="agentonlyfeatures"></a>Many features within
+	<font face="Liberation Mono, monospace">st_specification</font>
+	exist only to be used within agents (although they can be used by
+	their own, of course). The need for such features lies in the fact
+	that the Contract view of EiffelStudio does not show the body of
+	inline agents. Hence e.g. the post-condition clause of <font face="Liberation Mono, monospace">{SET}.united</font>
+	whose tag is <font face="Liberation Mono, monospace">nothing_else</font>
+	cannot read<br/>
+<br/>
+<font face="Liberation Mono, monospace">	Result
+	|∀ agent (ia_s: STS_SET [A, EQ]; ia_x: A): BOOLEAN<br/>
+		do<br/>
+			Result
+	:= Current ∋ ia_x or ia_s ∋ ia_x<br/>
+		end (s, ?)<br/>
+</font><br/>
+as
+	would be more straightforward.		</p>
+</ul>
 <h2 class="western">EiffelStudio bugs</h2>
 <ul>
 	<li><p><a name="bug19883"></a><a href="https://support.eiffel.com/report_detail/19883">#19883</a>:

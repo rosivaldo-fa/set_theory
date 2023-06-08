@@ -13,7 +13,8 @@ inherit
 		rename
 			some_object_a as some_natural,
 			some_immediate_equality_a as some_object_deep_equality_n,
-			some_set_a as some_set_of_deep_objects_n
+			some_set_a as some_set_of_deep_objects_n,
+			some_immediate_set_a as some_immediate_set_of_deep_objects_n
 		redefine
 			properties,
 			test_all,
@@ -35,7 +36,7 @@ inherit
 feature -- Access
 
 	properties: STP_OBJECT_DEEP_EQUALITY_PROPERTIES [NATURAL, STS_OBJECT_DEEP_EQUALITY [NATURAL]];
-	-- <Precursor>
+			-- <Precursor>
 
 feature -- Test routines (All)
 

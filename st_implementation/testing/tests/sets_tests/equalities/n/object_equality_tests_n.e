@@ -13,7 +13,8 @@ inherit
 		rename
 			some_object_a as some_natural,
 			some_immediate_equality_a as some_object_equality_n,
-			some_set_a as some_set_of_objects_n
+			some_set_a as some_set_of_objects_n,
+			some_immediate_set_a as some_immediate_set_of_objects_n
 		redefine
 			properties,
 			test_all,

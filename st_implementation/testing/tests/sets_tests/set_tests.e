@@ -30,19 +30,20 @@ feature -- Test routines (Primitive)
 		local
 			s: like set_to_be_tested
 		do
-			s := set_to_be_tested
 			inspect
-				next_random_item \\ 2
+				next_random_item \\ 3
 			when 0 then
---				s := s.o
+				s := o
 			when 1 then
---				s := s ∖ same_set_a (s)
+				s := set_to_be_tested.o
+			when 2 then
+				s := set_to_be_tested
+				s := s.o-- ∖ same_set_a (s)
 			end
 			assert ("s.is_empty", s.is_empty)
 			assert ("s.is_empty ok", properties.is_empty_ok (s))
 
---			s := set_to_be_tested & some_object_a
-			create s.make_singleton (some_object_a)
+			s := set_to_be_tested & some_object_a
 			assert ("not s.is_empty", not s.is_empty)
 			assert ("not s.is_empty ok", properties.is_empty_ok (s))
 
@@ -58,8 +59,7 @@ feature -- Test routines (Primitive)
 		local
 			s: like set_to_be_tested
 		do
---			s := set_to_be_tested & some_object_a
-			create s.make_singleton (some_object_a)
+			s := set_to_be_tested & some_object_a
 				check
 					is_not_empty: not s.is_empty -- s ≍ {a, ...}
 				end
@@ -83,7 +83,7 @@ feature -- Test routines (Primitive)
 --			assert ("∅", s.others ≍ o)
 			assert ("∅ ok", properties.others_ok (s))
 
---			s := s & some_object_a
+			s := s & some_object_a
 				check
 					is_not_empty: not s.is_empty -- s = {a}
 				end
@@ -91,7 +91,7 @@ feature -- Test routines (Primitive)
 --			assert ("{a}", s.others ≍ o)
 			assert ("{a} ok", properties.others_ok (s))
 
---			s := s & some_other_object_a (s)
+			s := s & some_other_object_a (s)
 				check
 					is_not_empty_2: not s.others.is_empty -- s = {a,b}
 				end
@@ -99,15 +99,15 @@ feature -- Test routines (Primitive)
 --			assert ("{a,b}", s.others ≍ (o & b))
 			assert ("{a,b} ok", properties.others_ok (s))
 
---			s := s & some_other_object_a (s)
+			s := s & some_other_object_a (s)
 				check
 					is_not_empty_3: not s.others.is_empty -- # s = 3
 				end
 			b := same_set_a (s.others).any
 				check
---					is_not_empty_4: not (s.others / b).is_empty -- # s = 3
+					is_not_empty_4: not (s.others / b).is_empty -- # s = 3
 				end
---			c := same_set_a (s.others / b).any
+			c := same_set_a (s.others / b).any
 --			assert ("{a,b,c}", s.others ≍ (s.o & b & c))
 			assert ("{a,b,c} ok", properties.others_ok (s))
 
@@ -248,18 +248,6 @@ feature {NONE} -- Factory (Set)
 			Result := o.singleton (a)
 		ensure
 --			definition: Result ≍ o.singleton (a)
-		end
-
-feature -- Factory (Equality)
-
-	some_immediate_set_a: SET [A, EQ]
-			-- Some monomorphic set of elements like {A}
-		note
-			EIS: "name=Post-condition ignored on joined descendant", "protocol=URI", "src=https://support.eiffel.com/report_detail/19889", "tag=bug, compiler"
-		deferred
-		ensure
-			bug_ignored_on_joined_descendant: False
-			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_a}
 		end
 
 note

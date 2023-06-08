@@ -54,39 +54,35 @@ feature -- Test routines (Membership)
 			s: like some_elements
 		do
 			a := element_to_be_tested
---			s := new_element_references-- & a
-			create {SET [STS_ELEMENT, STS_REFERENCE_EQUALITY [STS_ELEMENT]]} s.make_singleton (a)
+			s := new_element_references & a
 			assert ("a ∈ s", a ∈ s)
 			assert ("a ∈ s ok", properties.is_in_ok (a, s))
 
-			s := new_element_references--/ a
+			s := s / a
 			assert ("not (a ∈ s)", not (a ∈ s))
 			assert ("not (a ∈ s) ok", properties.is_in_ok (a, s))
 
---			s := new_element_objects--& a
-			create {SET [STS_ELEMENT, STS_OBJECT_STANDARD_EQUALITY [STS_ELEMENT]]} s.make_singleton (a.standard_twin)
+			s := new_element_standard_objects & a.standard_twin
 			assert ("a.standard_twin ∈ s", a ∈ s)
 			assert ("a.standard_twin ∈ s ok", properties.is_in_ok (a, s))
 
-			s := new_element_objects--/ a
+			s := s / a.standard_twin
 			assert ("not (a.standard_twin ∈ s)", not (a ∈ s))
 			assert ("not (a.standard_twin ∈ s) ok", properties.is_in_ok (a, s))
 
---			s := new_element_objects--& a
-			create {SET [STS_ELEMENT, STS_OBJECT_EQUALITY [STS_ELEMENT]]} s.make_singleton (a.twin)
+			s := new_element_objects & a.twin
 			assert ("a.twin ∈ s", a ∈ s)
 			assert ("a.twin ∈ s ok", properties.is_in_ok (a, s))
 
-			s := new_element_objects--/ a
+			s := s / a.twin
 			assert ("not (a.twin ∈ s)", not (a ∈ s))
 			assert ("not (a.twin ∈ s) ok", properties.is_in_ok (a, s))
 
---			s := new_element_objects--& a
-			create {SET [STS_ELEMENT, STS_OBJECT_DEEP_EQUALITY [STS_ELEMENT]]} s.make_singleton (a.deep_twin)
+			s := new_element_deep_objects & a.deep_twin
 			assert ("a.deep_twin ∈ s", a ∈ s)
 			assert ("a.deep_twin ∈ s ok", properties.is_in_ok (a, s))
 
-			s := new_element_objects--/ a
+			s := s / a.deep_twin
 			assert ("not (a.deep_twin ∈ s)", not (a ∈ s))
 			assert ("not (a.deep_twin ∈ s) ok", properties.is_in_ok (a, s))
 
@@ -104,23 +100,37 @@ feature -- Test routines (Membership)
 			s: like some_elements
 		do
 			a := element_to_be_tested
-			s := new_element_references-- / a
+			s := new_element_references / a
 			assert ("a ∉ s", a ∉ s)
 			assert ("a ∉ s ok", properties.is_not_in_ok (a, s))
 
---			s := new_element_references & a
-			create {SET [STS_ELEMENT, STS_REFERENCE_EQUALITY [STS_ELEMENT]]} s.make_singleton (a)
+			s := s & a
 			assert ("not (a ∉ s)", not (a ∉ s))
 			assert ("not (a ∉ s) ok", properties.is_not_in_ok (a, s))
 
-			s := new_element_objects--/ a.twin
+			s := new_element_standard_objects / a.standard_twin
+			assert ("a.standard_twin ∉ s", a ∉ s)
+			assert ("a.standard_twin ∉ s ok", properties.is_not_in_ok (a, s))
+
+			s := s & a.standard_twin
+			assert ("not (a.standard_twin ∉ s)", not (a ∉ s))
+			assert ("not (a.standard_twin ∉ s) ok", properties.is_not_in_ok (a, s))
+
+			s := new_element_objects / a.twin
 			assert ("a.twin ∉ s", a ∉ s)
 			assert ("a.twin ∉ s ok", properties.is_not_in_ok (a, s))
 
---			s := new_element_objects--& a
-			create {SET [STS_ELEMENT, STS_OBJECT_EQUALITY [STS_ELEMENT]]} s.make_singleton (a.twin)
+			s := s & a.twin
 			assert ("not (a.twin ∉ s)", not (a ∉ s))
 			assert ("not (a.twin ∉ s) ok", properties.is_not_in_ok (a, s))
+
+			s := new_element_deep_objects / a.deep_twin
+			assert ("a.deep_twin ∉ s", a ∉ s)
+			assert ("a.deep_twin ∉ s ok", properties.is_not_in_ok (a, s))
+
+			s := s & a.deep_twin
+			assert ("not (a.deep_twin ∉ s)", not (a ∉ s))
+			assert ("not (a.deep_twin ∉ s) ok", properties.is_not_in_ok (a, s))
 
 			s := some_elements
 			assert ("is_not_in", a ∉ s ⇒ True)
@@ -135,6 +145,187 @@ feature {NONE} -- Factory (Element to be tested)
 			Result := some_immediate_element
 		ensure
 			monomorphic: Result.generating_type ~ {detachable like element_to_be_tested}
+		end
+
+feature -- Factory (Integer reference)
+
+	some_integer_ref: detachable INTEGER_REF
+			-- Randomly-fetched polymorphic integer-number reference
+		do
+			inspect next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_integer_ref
+			when 1 then
+				Result := some_integer
+			end
+		end
+
+	some_immediate_integer_ref: like some_integer_ref
+			-- Randomly-fetched monomorphic integer-number reference
+		local
+			obj: like some_immediate_instance
+			new_i: FUNCTION [like new_integer_ref]
+		do
+			new_i := agent new_integer_ref
+			obj := some_immediate_instance (new_i)
+			if attached obj then
+				Result := {like new_integer_ref} / obj
+					check
+							-- `some_immediate_instance' and `new_integer_ref' definitions
+						right_type: attached Result
+						monomorphic: Result.generating_type ~ {like new_integer_ref}
+					end
+			end
+		ensure
+			monomorphic: attached Result implies Result.generating_type ~ {like some_integer_ref}
+		end
+
+	new_integer_ref: like some_immediate_integer_ref
+			-- Randomly-created monomorphic integer-number reference
+		do
+			Result := some_integer.to_reference
+		ensure
+			class
+			monomorphic: attached Result implies Result.generating_type ~ {like some_immediate_integer_ref}
+		end
+
+	some_integer: INTEGER
+			-- Randomly-created integer number
+		do
+			Result := next_random_item \\ Max_count.as_integer_32 - Max_count.as_integer_32 // 2
+		ensure
+			class
+		end
+
+feature -- Factory (Separate character reference)
+
+	some_separate_character_ref: detachable separate CHARACTER_REF
+			-- Randomly-fetched polymorphic separate character reference
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_separate_character_ref
+			when 1 then
+				Result := some_character_ref
+			end
+		end
+
+	some_immediate_separate_character_ref: like some_separate_character_ref
+			-- Randomly-fetched monomorphic separate character reference
+		local
+			obj: like some_immediate_instance
+		do
+--			from
+--				obj := some_immediate_instance (new_c)
+--			until
+--				attached obj -- TODO: System crashes when an agent gets a "separate" Void actual argument.
+--			loop
+--				obj := some_immediate_instance (new_c)
+--			end
+			obj := some_immediate_instance (agent new_separate_character_ref)
+			if attached obj then
+				Result := {like new_separate_character_ref} / obj
+				check
+						-- `some_immediate_instance' and `new_separate_character_ref' definitions
+					right_type: attached Result
+					monomorphic: object_is_immediate_instance (Result, {like new_separate_character_ref})
+				end
+			end
+		ensure
+--			monomorphic: attached Result implies object_is_immediate_instance (Result, {like some_character_ref}) -- TODO: why not?
+			monomorphic: attached Result implies object_is_immediate_instance (Result, {like new_separate_character_ref})
+		end
+
+	new_separate_character_ref: like some_immediate_separate_character_ref
+			-- Randomly-created monomorphic separate character reference
+		local
+			c_ref: like new_separate_character_ref
+		do
+			create c_ref
+			separate c_ref as sep_c_ref do
+				sep_c_ref.set_item (some_character)
+			end
+			Result := c_ref
+		ensure
+			class
+			monomorphic: attached Result implies object_is_immediate_instance (Result, {like some_immediate_separate_character_ref})
+		end
+
+	some_character_ref: detachable CHARACTER_REF
+			-- Randomly-fetched polymorphic character reference
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_character_ref
+			when 1 then
+				Result := some_character
+			end
+		end
+
+	some_immediate_character_ref: like some_character_ref
+			-- Randomly-fetched monomorphic character reference
+		local
+--			new_c: FUNCTION [like new_character_ref]
+			obj: like some_immediate_instance
+		do
+--			new_c := agent new_character_ref
+--			from
+			obj := some_immediate_instance (agent new_character_ref)
+--			until
+--				attached obj -- TODO: System crashes when an agent gets a "separate" Void actual argument.
+--			loop
+--				obj := some_immediate_instance (new_c)
+--			end
+			if attached obj then
+				Result := {like new_character_ref} / obj
+				check
+						-- `some_immediate_instance' and `new_character_ref' definitions
+					right_type: attached Result
+					monomorphic: object_is_immediate_instance (Result, {like new_character_ref})
+				end
+			end
+		ensure
+--			monomorphic: attached Result implies object_is_immediate_instance (Result, {like some_character_ref}) -- TODO: why not?
+			monomorphic: attached Result implies object_is_immediate_instance (Result, {like new_character_ref})
+		end
+
+	new_character_ref: like some_immediate_character_ref
+			-- Randomly-created monomorphic character reference
+		do
+			create Result
+			Result.set_item (some_character)
+		ensure
+			class
+			monomorphic: attached Result implies object_is_immediate_instance (Result, {like some_immediate_character_ref})
+		end
+
+	some_character: CHARACTER
+			-- Randomly-created character
+		local
+			n: NATURAL
+		do
+			n := some_index
+			check
+				valid_character:
+						-- 0 < n ≤ Max_count ⇐ `some_index' definition
+						-- class invariant: (Min_character.natural_32_code + Max_count - 1).is_valid_character_8_code
+					(Min_character.natural_32_code + n - 1).is_valid_character_8_code
+			end
+			Result := (Min_character.natural_32_code + n - 1).to_character_8
+		ensure
+			class
+		end
+
+feature -- Factory (Object)
+
+	some_natural: NATURAL
+			-- Randomly-created natural number
+		do
+			Result := (next_random_item \\ Max_count.as_integer_32).as_natural_32
+		ensure
+			class
 		end
 
 feature -- Factory (Element)
@@ -200,7 +391,7 @@ feature -- Factory (Element)
 			from
 				create Result.make_empty
 			loop
---				Result := Result & some_element
+				Result := Result & some_element
 			end
 		end
 
@@ -212,7 +403,7 @@ feature -- Factory (Element)
 			from
 				create Result.make_empty
 			loop
---				Result := Result & some_element
+				Result := Result & some_element
 			end
 		end
 
@@ -224,7 +415,7 @@ feature -- Factory (Element)
 			from
 				create Result.make_empty
 			loop
---				Result := Result & some_element
+				Result := Result & some_element
 			end
 		end
 
@@ -236,7 +427,7 @@ feature -- Factory (Element)
 			from
 				create Result.make_empty
 			loop
---				Result := Result & some_element
+				Result := Result & some_element
 			end
 		end
 
@@ -514,7 +705,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_integer_ref
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -550,7 +741,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_separate_character_ref
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -586,7 +777,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_natural
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -636,7 +827,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_integer_ref
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -672,7 +863,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_separate_character_ref
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -708,7 +899,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_natural
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -758,7 +949,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_integer_ref
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -794,7 +985,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_separate_character_ref
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -830,7 +1021,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_natural
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -880,7 +1071,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_integer_ref
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -916,7 +1107,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
---								Result := Result & some_integer_ref
+								Result := Result & some_separate_character_ref
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -952,7 +1143,7 @@ feature -- Factory (Set)
 							from
 								create Result.make_empty
 							loop
-				--				Result := Result & some_element
+								Result := Result & some_natural
 							end
 						end
 					) as s -- `some_immediate_instance' definition
@@ -1126,9 +1317,13 @@ feature {NONE} -- Implementation
 			upper_bound: Result ≤ Max_count
 		end
 
+feature {SET_PROPERTIES} -- Implementation
+
 	Max_count: NATURAL = 5
 			-- Maximum value for `some_count'
 			-- Why so few? Believe me: you don't want to deal with all subsets of all subsets of a set with 6 elements!
+
+feature {NONE} -- Implementation
 
 	next_random_item: like random_sequence.item
 			-- Item at next position of `random_sequence'
@@ -1162,6 +1357,25 @@ feature {NONE} -- Implementation
 		ensure
 			class
 		end
+
+	Min_character: CHARACTER = 'a'
+			-- Minimum value for `some_character'
+
+	some_index: NATURAL
+			-- Randomly-created index
+		do
+			check
+				positive: 0 < Max_count -- `Max_count' definition
+			end
+			Result := some_index_up_to (Max_count)
+		ensure
+			class
+			positive: 0 < Result
+			upper_bound: Result <= Max_count
+		end
+
+invariant
+	valid_characters: (Min_character.natural_32_code + Max_count - 1).is_valid_character_8_code
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

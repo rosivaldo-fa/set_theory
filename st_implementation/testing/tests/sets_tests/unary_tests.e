@@ -105,11 +105,21 @@ feature -- Factory (Set)
 		deferred
 		end
 
+	some_immediate_set_a: SET [A, EQ]
+			-- Some monomorphic set of elements like {A}
+		note
+			EIS: "name=Post-condition ignored on joined descendant", "protocol=URI", "src=https://support.eiffel.com/report_detail/19889", "tag=bug, compiler"
+		deferred
+		ensure
+			bug_ignored_on_joined_descendant: False
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_a}
+		end
+
 	same_set_a (s: STS_SET [A, EQ]): like some_set_a
 			-- Set mathematically equal to `s', with type randomly chosen.
---		local
---			l_s: STS_SET [A, EQ]
---			tmp_result: SET [A, EQ]
+		local
+			l_s: STS_SET [A, EQ]
+			tmp_result: SET [A, EQ]
 		do
 			inspect
 				next_random_item \\ 4
@@ -125,44 +135,44 @@ feature -- Factory (Set)
 --				inspect
 --					next_random_item \\ 2
 --				when 0 then
-----					create {like new_set_a} Result.make_from_set (s)
+----					create {like some_immediate_set_a} Result.make_from_set (s)
 --				when 1 then
 ----					create {like new_transformable_set_aa} Result.make_from_set (s)
 --				end
---			when 3 then
---				inspect
---					next_random_item \\ 2
---				when 0 then
-----					create {like new_set_a} tmp_result.make_empty
+			when 3 then
+				inspect
+					next_random_item \\ 1
+				when 0 then
+					create {like some_immediate_set_a} tmp_result.make_empty
 --				when 1 then
-----					create {like new_transformable_set_aa} tmp_result.make_empty
---				end
---				inspect
---					next_random_item \\ 2
---				when 0 then
---						check
-----							is_disjoint: tmp_result.is_disjoint (s) -- tmp_result.is_empty
---						end
-----					Result := tmp_result.batch_extended (s)
---				when 1 then
---					from
---						l_s := s
---					invariant
+--					create {like new_transformable_set_aa} tmp_result.make_empty
+				end
+				inspect
+					next_random_item \\ 2
+				when 0 then
+						check
+--							is_disjoint: tmp_result.is_disjoint (s) -- tmp_result.is_empty
+						end
+					Result := tmp_result.batch_extended (s)
+				when 1 then
+					from
+						l_s := s
+					invariant
 ----						building_prefixed_s_up: tmp_result.as_tuple.prefix (# (s ∖ l_s)).terms ≍ (s ∖ l_s)
 ----						suffixed_o: tmp_result.as_tuple.suffix (0).terms.is_empty
---					until
---						l_s.is_empty
---					loop
---							check
-----								does_not_have: tmp_result ∌ l_s.any -- tmp_result ≍ (s ∖ l_s)
---							end
-----						tmp_result := tmp_result.extended (same_object_a (l_s.any))
---						l_s := l_s.others
-----					variant
-------						cardinality: {like new_set_a}.natural_as_integer (# l_s)
---					end
---					Result := tmp_result
---				end
+					until
+						l_s.is_empty
+					loop
+							check
+								does_not_have: tmp_result ∌ l_s.any -- tmp_result ≍ (s ∖ l_s)
+							end
+						tmp_result := tmp_result.extended (same_object_a (l_s.any))
+						l_s := l_s.others
+--					variant
+--						cardinality: {like new_set_a}.natural_as_integer (# l_s)
+					end
+					Result := tmp_result
+				end
 			end
 		ensure
 --			definition: Result ≍ s
