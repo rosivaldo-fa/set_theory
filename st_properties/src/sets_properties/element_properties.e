@@ -18,7 +18,7 @@ feature -- Properties (Membership)
 			EIS: "name=Clickable view does not work for renamed classes.", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_properties.html#bug19884", "tag=bug, EiffelStudio"
 		do
 			check
-				require_non_emptiness: a ∈ s implies not s.is_empty
+				require_non_emptiness: a ∈ s ⇒ not s.is_empty
 			then
 				Result := True
 			end

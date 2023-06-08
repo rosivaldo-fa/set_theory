@@ -1,7 +1,7 @@
 ﻿note
 	description: "[
-		Object that knows whether it is in a given set.
-		Though the elements of a {SET} may be of any type, this class is meant to be the ancestor of any class specified in set_theory.
+			Object that knows whether it is in a given set.
+			Though the elements of a {SET} may be of any type, this class is meant to be the ancestor of any class specified in set_theory.
 		]"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -35,4 +35,5 @@ note
 		]"
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	source: ""
+
 end

@@ -136,7 +136,6 @@ feature -- Test routines (Membership)
 			testing: "covers/{SET}.is_in"
 		local
 			s: like set_to_be_tested
-			same_s: like some_set_a
 			ss: like some_set_sa
 		do
 			s := set_to_be_tested
