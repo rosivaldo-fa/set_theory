@@ -14,7 +14,8 @@ deferred class
 inherit
 	ELEMENT
 		rename
-			is_in as element_is_in
+			is_in as element_is_in,
+			is_not_in as element_is_not_in
 		end
 
 feature -- Primitive
@@ -55,6 +56,14 @@ feature -- Membership
 			Result := s ∋ Current
 		ensure
 			definition: Result = s ∋ Current
+		end
+
+	is_not_in alias "∉" (s: SET [SET [A, EQ], EQUALITY [SET [A, EQ]]]): BOOLEAN
+			-- Is not current set in `s'?
+		do
+			Result := not (Current ∈ s)
+		ensure
+			definition: Result = not (Current ∈ s)
 		end
 
 	has alias "∋" (a: A): BOOLEAN

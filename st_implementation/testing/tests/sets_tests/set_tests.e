@@ -11,6 +11,7 @@ inherit
 	UNARY_TESTS [A, EQ]
 		rename
 			test_is_in as element_test_is_in,
+			test_is_not_in as element_test_is_not_in,
 			element_to_be_tested as set_to_be_tested
 		redefine
 			properties,
@@ -181,6 +182,62 @@ feature -- Test routines (Membership)
 
 --			ss := some_sets_a
 --			assert ("is_in", s ∈ ss ⇒ True)
+--			assert ("is_in_ok", properties.is_in_ok (s, ss))
+		end
+
+	test_is_not_in
+			-- Test {STS_SET}.is_not_in.
+			-- Test {SET}.is_not_in.
+		note
+			testing: "covers/{STS_SET}.is_not_in"
+			testing: "covers/{SET}.is_not_in"
+		local
+			s: like set_to_be_tested
+			ss: like some_set_sa
+		do
+			s := set_to_be_tested
+			ss := some_set_references_a / s
+			assert ("s ∉ ss", s ∉ ss)
+			assert ("s ∉ ss ok", properties.is_in_ok (s, ss))
+
+			ss := some_set_references_a & s
+			assert ("not (s ∉ ss)", not (s ∉ ss))
+			assert ("not (s ∉ ss) ok", properties.is_in_ok (s, ss))
+
+			ss := some_set_standard_objects_a / s.standard_twin
+			assert ("s.standard_twin ∉ ss", s ∉ ss)
+			assert ("s.standard_twin ∉ ss ok", properties.is_in_ok (s, ss))
+
+			ss := some_set_standard_objects_a & s.standard_twin
+			assert ("not (s.standard_twin ∉ ss)", not (s ∉ ss))
+			assert ("not (s.standard_twin ∉ ss) ok", properties.is_in_ok (s, ss))
+
+			ss := some_set_objects_a / s.twin
+			assert ("s.twin ∉ ss", s ∉ ss)
+			assert ("s.twin ∉ ss ok", properties.is_in_ok (s, ss))
+
+			ss := some_set_objects_a & s.twin
+			assert ("not (s.twin ∉ ss)", not (s ∉ ss))
+			assert ("not (s.twin ∉ ss) ok", properties.is_in_ok (s, ss))
+
+			ss := some_set_deep_objects_a / s.deep_twin
+			assert ("s.deep_twin ∉ ss", s ∉ ss)
+			assert ("s.deep_twin ∉ ss ok", properties.is_in_ok (s, ss))
+
+			ss := some_set_deep_objects_a & s.deep_twin
+			assert ("not (s.deep_twin ∉ ss)", not (s ∉ ss))
+			assert ("not (s.deep_twin ∉ ss) ok", properties.is_in_ok (s, ss))
+
+--			ss := some_sets_a / same_set_a (s)
+--			assert ("same_set_a (s) ∉ ss", s ∉ ss)
+--			assert ("same_set_a (s) ∉ ss ok", properties.is_in_ok (s, ss))
+
+--			ss := some_sets_a & same_set_a (s)
+--			assert ("not (same_set_a (s) ∉ ss)", not (s ∉ ss))
+--			assert ("not (same_set_a (s) ∉ ss) ok", properties.is_in_ok (s, ss))
+
+--			ss := some_sets_a
+--			assert ("is_in", s ∉ ss ⇒ True)
 --			assert ("is_in_ok", properties.is_in_ok (s, ss))
 		end
 
