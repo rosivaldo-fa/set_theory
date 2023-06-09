@@ -248,7 +248,6 @@ feature -- Test routines (Membership)
 		local
 			a: A
 			s: like set_to_be_tested
-			s2: like some_set_a
 		do
 			a := some_object_a
 			s := set_to_be_tested & same_object_a (a)
@@ -262,6 +261,31 @@ feature -- Test routines (Membership)
 			s := set_to_be_tested
 			assert ("has", s ∋ a ⇒ True)
 			assert ("has_ok", properties.has_ok (s, a))
+		end
+
+	test_does_not_have
+			-- Test {STS_SET}.does_not_have.
+			-- Test {SET}.does_not_have.
+		note
+			testing: "covers/{STS_SET}.does_not_have"
+			testing: "covers/{SET}.does_not_have"
+		local
+			a: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			a := some_object_a
+			s := set_to_be_tested / same_object_a (a)
+			assert ("s ∌ a", s ∌ a)
+			assert ("s ∌ a ok", properties.does_not_have_ok (s, a))
+
+			s := set_to_be_tested & same_object_a (a)
+			assert ("not (s ∌ a)", not (s ∌ a))
+			assert ("s ∌ same_a ok", properties.does_not_have_ok (s, a))
+
+			s := set_to_be_tested
+			assert ("does_not_have", s ∌ a ⇒ True)
+			assert ("does_not_have_ok", properties.does_not_have_ok (s, a))
 		end
 
 feature -- Test routines (Construction)

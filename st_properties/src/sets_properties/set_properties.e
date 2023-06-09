@@ -131,6 +131,18 @@ feature -- Properties (Membership)
 			end
 		end
 
+	does_not_have_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.does_not_have?
+		do
+			check
+--				definition: s ∌ a = s |∄ agent s.equality_holds (?, a)
+--				has_own_elements: s |∄ agent s.does_not_have
+				empty_set_has_nothing: o ∌ a
+			then
+				Result := True
+			end
+		end
+
 feature -- Properties (Construction)
 
 	with_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
