@@ -11,6 +11,7 @@ inherit
 	STP_SET_PROPERTIES [A, EQ]
 		redefine
 			default_create,
+			has_ok,
 			with_ok,
 			without_ok,
 			o_anchor,
@@ -197,6 +198,19 @@ if {ISE_RUNTIME}.type_conforms_to (@al.key, ({detachable STS_SET [A, STS_EQUALIT
 
 	eq: EQ
 			-- <Precursor>
+
+feature -- Properties (Membership)
+
+	has_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
+			-- <Precursor>
+		local
+			sa: STS_SET [A, EQ]
+		do
+			if type_is_predefined_expanded (({A}).type_id) then
+				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
+			end
+			Result := Precursor {STP_SET_PROPERTIES}(s, a)
+		end
 
 feature -- Properties (Construction)
 

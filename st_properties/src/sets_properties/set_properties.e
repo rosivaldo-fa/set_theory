@@ -117,6 +117,20 @@ feature -- Properties (Membership)
 			end
 		end
 
+	has_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.has?
+		do
+			check
+				u: attached current_universe as u
+				require_non_emptiness: s ∋ a ⇒ not s.is_empty
+				universe_has_everything: u ∋ a
+--				uniqueness: s ∋ a = s |∃! agent s.equality_holds (?, a)
+				has_own_elements: s |∀ agent s.has
+			then
+				Result := True
+			end
+		end
+
 feature -- Properties (Construction)
 
 	with_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN

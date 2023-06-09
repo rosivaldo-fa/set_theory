@@ -10,6 +10,7 @@ class
 inherit
 	STS_SET [A, EQ]
 		redefine
+			has,
 			set_anchor,
 			subset_anchor,
 			superset_anchor
@@ -89,6 +90,30 @@ feature -- Primitive
 			create Result
 		ensure then
 			class
+		end
+
+feature -- Membership
+
+	has alias "∋" (a: A): BOOLEAN
+			-- <Precursor>
+			--| This feature is called very frequently. It is wortwhile to avoid agent indirection and recreating `eq' over and over at each comparison.
+		local
+			s: like subset_anchor
+			l_eq: EQ
+		do
+			from
+				s := Current
+				l_eq := eq
+			invariant
+--				not_found_yet: (Current ∖ s) |∄ agent equality_holds (a, ?)
+			until
+				s.is_empty or else l_eq (a, s.any)
+			loop
+				s := s.others
+--			variant
+--				cardinality: natural_as_integer (# s)
+			end
+			Result := not s.is_empty
 		end
 
 feature -- Construction
