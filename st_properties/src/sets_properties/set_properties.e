@@ -262,7 +262,7 @@ feature -- Properties (Comparison)
 --							end (?, s1, s2)
 --						)
 --				checked_ps_restored: attached {ISE_RUNTIME}.check_assert (checked_ps)
---				by_uninclusion: s1 ≭ s2 = (s1 ⊈ s2 or s2 ⊈ s1)
+				by_uninclusion: s1 ≭ s2 = (s1 ⊈ s2 or s2 ⊈ s1)
 				irreflexive: not (s1 ≭ s1)
 				symmetric: s1 ≭ s2 ⇒ s2 ≭ s1
 				unequal_cardinalities: (# s1 /= # s2) ⇒ s1 ≭ s2
@@ -305,6 +305,17 @@ feature -- Properties (Comparison)
 				o_includes_only_o: s1 ⊈ o ⇒ s1 ≭ o
 				only_u_includes_u: u ⊈ s1 ⇒ s1 ≭ u
 				cardinality: # s1 > # s2 ⇒ s1 ⊈ s2
+			then
+				Result := True
+			end
+		end
+
+	is_superset_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_superset?
+		do
+			check
+				definition: s1 ⊇ s2 = (s2 |∀ agent s1.has)
+				cardinality: s1 ⊇ s2 ⇒ # s1 ≥ # s2
 			then
 				Result := True
 			end

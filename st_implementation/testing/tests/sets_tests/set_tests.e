@@ -552,6 +552,34 @@ feature -- Test routines (Comparison)
 			assert ("is_not_subset ok", properties.is_not_subset_ok (s, s2))
 		end
 
+	test_is_superset
+			-- Test {STS_SET}.is_superset.
+			-- Test {SET}.is_superset.
+		note
+			testing: "covers/{STS_SET}.is_superset"
+			testing: "covers/{SET}.is_superset"
+		local
+			a: A
+			s: like set_to_be_tested
+			s2, s3: like some_set_a
+		do
+			s := set_to_be_tested
+			s2 := some_set_a--∩ same_set_a (s)
+			assert ("s ⊇ s2", s ⊇ s2)
+			assert ("s ⊇ s2 ok", properties.is_superset_ok (s, s2))
+
+			a := some_object_a
+			s := set_to_be_tested / same_object_a (a)
+			s2 := some_set_a & same_object_a (a)
+			assert ("not (s ⊇ s2)", not (s ⊇ s2))
+			assert ("not (s ⊇ s2) ok", properties.is_superset_ok (s, s2))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("is_superset", s ⊇ s2 ⇒ True)
+			assert ("is_superset ok", properties.is_superset_ok (s, s2))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
