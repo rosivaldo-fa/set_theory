@@ -26,7 +26,8 @@ inherit
 			test_has,
 			test_does_not_have,
 			test_with,
-			test_without
+			test_without,
+			test_is_singleton
 		end
 
 feature -- Access
@@ -52,6 +53,7 @@ feature -- Test routines (All)
 			test_does_not_have
 			test_with
 			test_without
+			test_is_singleton
 		end
 
 feature -- Test routines (Primitive)
@@ -139,6 +141,17 @@ feature -- Test routines (Construction)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.without"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_singleton
+			-- <Precursor>
+		note
+			testing: "covers/{STS_SET}.is_singleton"
+			testing: "covers/{SET}.is_singleton"
 		do
 			Precursor {SET_TESTS}
 		end

@@ -236,17 +236,6 @@ feature -- Properties (Construction)
 			Result := Precursor {STP_SET_PROPERTIES}(s, a)
 		end
 
-feature -- Factory
-
-	singleton (a: A): STS_SET [A, EQ]
-			-- Singleton in the form {`a'}
-			-- TODO: DRY.
-		do
-			Result := o.singleton (a)
-		ensure
---			definition: Result ≍ o.singleton (a)
-		end
-
 feature -- Conversion
 
 	converted_set (s: STS_SET [A, STS_EQUALITY [A]]): SET [A, EQ]

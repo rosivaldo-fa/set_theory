@@ -175,6 +175,30 @@ feature -- Properties (Construction)
 			end
 		end
 
+feature -- Properties (Quality)
+
+	is_singleton_ok (s: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_singleton?
+		do
+			check
+--				definition: s.is_singleton = (# s = 1)
+--				by_construction: s.is_singleton ⇒ not s.is_empty and then s ≍ singleton (s.any)
+			then
+				Result := True
+			end
+		end
+
+feature -- Factory
+
+	singleton (a: A): STS_SET [A, EQ]
+			-- Singleton in the form {`a'}
+			-- TODO: DRY
+		do
+			Result := o.singleton (a)
+		ensure
+--			definition: Result ≍ o.singleton (a)
+		end
+
 feature -- Predicate
 
 	negated (p: PREDICATE [A]; x: A): BOOLEAN

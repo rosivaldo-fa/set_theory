@@ -102,6 +102,16 @@ feature -- Construction
 			nothing_else: Result |∀ agent has
 		end
 
+feature -- Quality
+
+	is_singleton: BOOLEAN
+			-- Does current set have exactly one element?
+		do
+			Result := not is_empty and others.is_empty
+		ensure
+			definition: Result = (not is_empty and others.is_empty)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN

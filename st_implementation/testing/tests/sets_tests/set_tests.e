@@ -365,6 +365,39 @@ feature -- Test routines (Construction)
 			assert ("without_ok", properties.without_ok (s, a))
 		end
 
+feature -- Test routines (Quality)
+
+	test_is_singleton
+			-- Test {STS_SET}.is_singleton.
+			-- Test {SET}.is_singleton.
+		note
+			testing: "covers/{STS_SET}.is_singleton"
+			testing: "covers/{SET}.is_singleton"
+		local
+			a, b: A
+			s: like set_to_be_tested
+		do
+			a := some_object_a
+			s := o & same_object_a (a)
+			assert ("s.is_singleton", s.is_singleton)
+			assert ("s.is_singleton ok", properties.is_singleton_ok (s))
+
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				s := o
+			when 1 then
+				b := some_other_object_a (s)
+				s := set_to_be_tested & same_object_a (a) & same_object_a (b)
+			end
+			assert ("not s.is_singleton", not s.is_singleton)
+			assert ("not s.is_singleton ok", properties.is_singleton_ok (s))
+
+			s := set_to_be_tested
+			assert ("is_singleton", s.is_singleton ⇒ True)
+			assert ("is_singleton_ok", properties.is_singleton_ok (s))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
