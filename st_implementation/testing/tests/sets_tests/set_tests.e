@@ -299,8 +299,8 @@ feature -- Test routines (Construction)
 		do
 			s := o
 			a := some_object_a
---			assert ("∅ & {a}", (s & a) ≍ singleton (a))
-			assert ("∅ & {a} ok", properties.with_ok (s, a))
+--			assert ("∅ & a", (s & a) ≍ singleton (a))
+			assert ("∅ & a ok", properties.with_ok (s, a))
 
 			s := s & same_object_a (a)
 --			assert ("{a} & a", (s & a) ≍ singleton (a))
@@ -316,11 +316,11 @@ feature -- Test routines (Construction)
 
 			c := some_object_a
 --			assert ("{a,b} & c", (s & c) ≍ (singleton (a) & b & c))
-			assert ("{a,b} & b ok", properties.with_ok (s, c))
+			assert ("{a,b} & c ok", properties.with_ok (s, c))
 
 			s := s & same_object_a (c)
 --			assert ("{a,b,c} & c", (s & c) ≍ (singleton (a) & b & c))
-			assert ("{a,b,c} & b ok", properties.with_ok (s, c))
+			assert ("{a,b,c} & c ok", properties.with_ok (s, c))
 
 			s := set_to_be_tested
 			assert ("with", attached (s & a))
@@ -337,32 +337,31 @@ feature -- Test routines (Construction)
 		do
 			s := o
 			a := some_object_a
---			assert ("∅", (s / a) ≍ o)
-			assert ("∅ ok", properties.without_ok (s, a))
+--			assert ("∅ / a", (s / a) ≍ o)
+			assert ("∅ / a ok", properties.without_ok (s, a))
 
 			s := s & same_object_a (a)
---			assert ("still ∅", (s / a) ≍ o)
-			assert ("still ∅ ok", properties.without_ok (s, a))
+--			assert ("{a} / a", (s / a) ≍ o)
+			assert ("{a} / a ok", properties.without_ok (s, a))
 
 			b := some_other_object_a (s)
---			assert ("{a}", (s / b) ≍ singleton (a))
-			assert ("{a} ok", properties.without_ok (s, b))
+--			assert ("{a} / b", (s / b) ≍ singleton (a))
+			assert ("{a} / b ok", properties.without_ok (s, b))
 
 			s := s & same_object_a (b)
---			assert ("still {a}", (s / b) ≍ singleton (a))
-			assert ("still {a} ok", properties.without_ok (s, b))
+--			assert ("{a,b} / b", (s / b) ≍ singleton (a))
+			assert ("{a,b} / b ok", properties.without_ok (s, b))
 
 			c := some_other_object_a (s)
---			assert ("{a,b}", (s / c) ≍ (singleton (a) & b))
-			assert ("{a,b} ok", properties.without_ok (s, c))
+--			assert ("{a,b} / c", (s / c) ≍ (singleton (a) & b))
+			assert ("{a,b} / c ok", properties.without_ok (s, c))
 
 			s := s & same_object_a (c)
---			assert ("still {a,b}", (s / c) ≍ (singleton (a) & b))
-			assert ("still {a,b} ok", properties.without_ok (s, c))
+--			assert ("{a,b,c} / c", (s / c) ≍ (singleton (a) / b))
+			assert ("{a,b,c} / c ok", properties.without_ok (s, c))
 
 			s := set_to_be_tested
-			a := some_object_a
-			assert ("with", attached (s & a))
+			assert ("withou", attached (s / a))
 			assert ("without_ok", properties.without_ok (s, a))
 		end
 

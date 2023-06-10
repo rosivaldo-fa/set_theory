@@ -51,6 +51,7 @@ feature -- Test routines (All)
 			test_has
 			test_does_not_have
 			test_with
+			test_without
 		end
 
 feature -- Test routines (Primitive)
