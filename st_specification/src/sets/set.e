@@ -122,6 +122,21 @@ feature -- Measurement
 			definition: Result = transformer_to_natural.set_reduction (Current, 0, agent cumulative_successor)
 		end
 
+feature -- Comparison
+
+	equals alias "≍" (s: SET [A, EQ]): BOOLEAN
+			-- Do current set and `s' have exactly the same elements?
+			--| NOTICE: As expected, the order of the elements within the two sets is irrelevant, as are the types of the
+			--| sets themselves; in order to be regarded equal, sets just must have the same elements under the same
+			--| equality. By the way, redefining `is_equal' is not an option, since `is_equal' post-conditions require that
+			--| `s' is like `Current', and two sets must be comparable according to the types of their elements and of their
+			--| equalities only, not by the type of the sets temselves.
+		do
+			Result := (Current |∀ agent s.has) and (s |∀ agent has)
+		ensure
+			definition: Result = ((Current |∀ agent s.has) and (s |∀ agent has))
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
@@ -196,6 +211,18 @@ feature -- Predicate
 		ensure
 			class
 			definition: Result = (p1 (x) xor p2 (x))
+		end
+
+	iff (p1, p2: PREDICATE [A]; x: A): BOOLEAN
+			-- Is `p1' (`x') equivalent to `p2' (`x'), i.e. does `p1' (`x') hold if and only if `p2' (`x') holds?
+			-- TODO: Pull it up?
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Result := p1 (x) = p2 (x)
+		ensure
+			class
+			definition: Result = (p1 (x) = p2 (x))
 		end
 
 feature -- Reduction

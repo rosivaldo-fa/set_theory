@@ -428,6 +428,41 @@ feature -- Test routines (Measurement)
 			assert ("cardinality_ok", properties.cardinality_ok (s))
 		end
 
+feature -- Test routines (Comparison)
+
+	test_equals
+			-- Test {SET}.equals.
+		note
+			testing: "covers/{SET}.equals"
+		local
+			a: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			s := set_to_be_tested
+			s2 := same_set_a (s)
+			assert ("s ≍ s2", s ≍ s2)
+			assert ("s ≍ s2 ok", properties.equals_ok (s, s2, some_set_a))
+
+			a := some_object_a
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				s := s & same_object_a (a)
+				s2 := s2 / same_object_a (a)
+			when 1 then
+				s := s / same_object_a (a)
+				s2 := s2 & same_object_a (a)
+			end
+			assert ("not (s ≍ s2)", not (s ≍ s2))
+			assert ("(s ≍ s2) ok", properties.equals_ok (s, s2, some_set_a))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("equals", s ≍ s2 ⇒ True)
+			assert ("equals ok", properties.equals_ok (s, s2, some_set_a))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

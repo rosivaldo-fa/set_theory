@@ -200,6 +200,38 @@ feature -- Properties (Measurement)
 			end
 		end
 
+feature -- Properties (Comparison)
+
+	equals_ok (s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.equals?
+		do
+			check
+				u: attached current_universe as u
+				definition: s1 ≍ s2 = (u |∀ agent u.iff (agent s1.has, agent s2.has, ?))
+				u_ps_ps_card: attached (2 ^ (2 ^ # u)) as u_ps_ps_card
+				set_comparisons_upper_bound: attached (2 * u_ps_ps_card) as set_comparisons_upper_bound
+				element_comparisons_upper_bound: attached ((# u ^ 2) * set_comparisons_upper_bound) as
+					element_comparisons_upper_bound
+--				checked_ps: attached {ISE_RUNTIME}.check_assert
+--					(element_comparisons_upper_bound ≤ max_asserted_elements) as checked_ps
+--					by_membership: element_comparisons_upper_bound ≤ max_elements ⇒ s1 ≍ s2 = (
+--						u.powerset.powerset |∀ agent
+--							(ss: STS_SET [STS_SET [A, EQ], STS_SET_EQUALITY [A, EQ]]; ia_s1, ia_s2: STS_SET [A, EQ]): BOOLEAN
+--							do
+--								Result := ia_s1 ∈ ss = ia_s2 ∈ ss
+--							end (?, s1, s2)
+--						)
+--				checked_ps_restored: attached {ISE_RUNTIME}.check_assert (checked_ps)
+--				by_inclusion: s1 ≍ s2 = (s1 ⊆ s2 and s2 ⊆ s1)
+				reflexive: s1 ≍ s1
+				symmetric: s1 ≍ s2 ⇒ s2 ≍ s1
+				transitive: s1 ≍ s2 and s2 ≍ s3 ⇒ s1 ≍ s3
+				same_cardinality: s1 ≍ s2 ⇒ (# s1 = # s2)
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]

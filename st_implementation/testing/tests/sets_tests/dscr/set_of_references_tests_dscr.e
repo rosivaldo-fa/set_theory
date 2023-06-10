@@ -28,7 +28,8 @@ inherit
 			test_with,
 			test_without,
 			test_is_singleton,
-			test_cardinality
+			test_cardinality,
+			test_equals
 		end
 
 feature -- Access
@@ -56,6 +57,7 @@ feature -- Test routines (All)
 			test_without
 			test_is_singleton
 			test_cardinality
+			test_equals
 		end
 
 feature -- Test routines (Primitive)
@@ -164,6 +166,16 @@ feature -- Test routines (Measurement)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.cardinality"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Comparison)
+
+	test_equals
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.equals"
 		do
 			Precursor {SET_TESTS}
 		end

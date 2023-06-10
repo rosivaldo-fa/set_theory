@@ -12,6 +12,8 @@ inherit
 		redefine
 			has,
 			cardinality,
+			equals,
+			equality_holds,
 			set_anchor,
 			subset_anchor,
 			superset_anchor
@@ -230,6 +232,16 @@ feature -- Measurement
 			end
 		end
 
+feature -- Comparison
+
+	equals alias "≍" (s: STS_SET [A, EQ]): BOOLEAN
+			-- <Precursor>
+			--| This feature is called very frequently. It is wortwhile to avoid agent indirection and recreating `eq' over and over at
+			--| each comparison.
+		do
+			Result := Current = s or Current ~ s or # Current = # s and then subset_relation_holds (Current, s, eq)
+		end
+
 feature -- Conversion
 
 	natural_as_integer (n: like natural_anchor): INTEGER_64
@@ -290,6 +302,54 @@ feature -- Factory
 				end
 				Result := o.batch_extended (s)
 			end
+		end
+
+feature -- Predicate
+
+	equality_holds (x1, x2: A): BOOLEAN
+			-- <Precursor>
+		do
+			Result := eq (x1, x2)
+		ensure then
+			class
+		end
+
+	subset_relation_holds (s1, s2: STS_SET [A, EQ]; a_eq: EQ): BOOLEAN
+			-- Does the relation `s1' ⊆ `s1' hold?
+			--| Intended to help avoiding the indirection of agents and the repeated creation of `eq' at each element comparison.
+		local
+			l_s1, l_s2: STS_SET [A, EQ]
+			a: A
+		do
+			from
+				Result := True
+				l_s1 := s1
+			invariant
+--				definition: Result = ((s1 ∖ l_s1) ⊆ s2)
+			until
+				not Result or l_s1.is_empty
+			loop
+				from
+					a := l_s1.any
+					Result := False
+					l_s2 := s2
+				invariant
+--					not_found_yet: (s2 ∖ l_s2) ∌ a
+				until
+					l_s2.is_empty or else a_eq (a, l_s2.any)
+				loop
+					l_s2 := l_s2.others
+				variant
+					cardinality_2: natural_as_integer (# l_s2)
+				end
+				Result := not l_s2.is_empty
+				l_s1 := l_s1.others
+			variant
+				cardinality_1: natural_as_integer (# l_s1)
+			end
+		ensure
+			class
+--			definition: Result = (s1 ⊆ s2)
 		end
 
 feature -- Transformer
