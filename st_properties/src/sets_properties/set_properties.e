@@ -271,6 +271,27 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	is_subset_ok (s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_subset?
+		do
+			check
+				u: attached current_universe as u
+				definition: s1 ⊆ s2 = (u |∀ agent implied (agent s1.has, agent s2.has, ?))
+--				by_difference: s1 ⊆ s2 = (s1 ∖ s2) ≍ o
+				reflexive: s1 ⊆ s1
+				transitive: s1 ⊆ s2 and s2 ⊆ s3 ⇒ s1 ⊆ s3
+				antisymmetric: s1 ⊆ s2 and s2 ⊆ s1 ⇒ s1 ≍ s2
+				everything_includes_o: o ⊆ s1
+				u_includes_everything: s1 ⊆ u
+				equality: s1 ≍ s2 = (s1 ⊆ s2 and s2 ⊆ s1)
+				o_includes_only_o: s1 ⊆ o ⇒ s1 ≍ o
+				only_u_includes_u: u ⊆ s1 ⇒ s1 ≍ u
+				cardinality: s1 ⊆ s2 ⇒ # s1 ≤ # s2
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]

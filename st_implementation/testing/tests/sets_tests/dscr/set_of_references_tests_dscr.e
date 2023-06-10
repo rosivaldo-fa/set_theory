@@ -30,7 +30,8 @@ inherit
 			test_is_singleton,
 			test_cardinality,
 			test_equals,
-			test_unequals
+			test_unequals,
+			test_is_subset
 		end
 
 feature -- Access
@@ -60,6 +61,7 @@ feature -- Test routines (All)
 			test_cardinality
 			test_equals
 			test_unequals
+			test_is_subset
 		end
 
 feature -- Test routines (Primitive)
@@ -187,6 +189,14 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_SET}.unequals"
 			testing: "covers/{SET}.unequals"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_is_subset
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.is_subset"
 		do
 			Precursor {SET_TESTS}
 		end

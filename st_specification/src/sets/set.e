@@ -145,6 +145,14 @@ feature -- Comparison
 			definition: Result = not (Current ≍ s)
 		end
 
+	is_subset alias "⊆" (s: SET [A, EQ]): BOOLEAN
+			-- Does `s' include current set, i.e. does `s' have every element in current set?
+		do
+			Result := Current |∀ agent s.has
+		ensure
+			definition: Result = (Current |∀ agent s.has)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
