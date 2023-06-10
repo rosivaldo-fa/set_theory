@@ -11,6 +11,7 @@ inherit
 	STS_SET [A, EQ]
 		redefine
 			has,
+			cardinality,
 			set_anchor,
 			subset_anchor,
 			superset_anchor
@@ -208,6 +209,39 @@ feature -- Construction
 --			suffixed_current: Result.as_tuple.left_trimmed (# s).terms ≍ Current
 		end
 
+feature -- Measurement
+
+	cardinality alias "#": like natural_anchor
+			-- <Precursor>
+		local
+			s: like subset_anchor
+		do
+			from
+				s := Current
+			invariant
+--				counting_up: Result = transformer_to_natural.set_reduction (Current ∖ s, 0, agent cumulative_successor)
+			until
+				s.is_empty
+			loop
+				Result := Result + 1
+				s := s.others
+			variant
+				cardinality: natural_as_integer (# s)
+			end
+		end
+
+feature -- Conversion
+
+	natural_as_integer (n: like natural_anchor): INTEGER_64
+			-- `n' converted into an integer value
+			-- TODO: make it more flexible.
+		do
+			Result := n.as_integer_64
+		ensure
+			class
+			definition: Result = n.as_integer_64
+		end
+
 feature -- Factory
 
 	o,
@@ -261,6 +295,14 @@ feature -- Factory
 feature -- Transformer
 
 	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, STS_OBJECT_EQUALITY [BOOLEAN]]
+			-- <Precursor>
+		do
+			create Result
+		ensure then
+			class
+		end
+
+	transformer_to_natural: TRANSFORMER [A, like natural_anchor, STS_OBJECT_EQUALITY [like natural_anchor]]
 			-- <Precursor>
 		do
 			create Result

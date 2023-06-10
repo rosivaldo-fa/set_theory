@@ -188,6 +188,18 @@ feature -- Properties (Quality)
 			end
 		end
 
+feature -- Properties (Measurement)
+
+	cardinality_ok (s: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.cardinality?
+		do
+			check
+--				definition: # s = s.as_tuple.n
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]

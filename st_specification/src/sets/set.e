@@ -112,6 +112,16 @@ feature -- Quality
 			definition: Result = (not is_empty and others.is_empty)
 		end
 
+feature -- Measurement
+
+	cardinality alias "#": like natural_anchor
+			-- Number of elements in current set
+		do
+			Result := transformer_to_natural.set_reduction (Current, 0, agent cumulative_successor)
+		ensure
+			definition: Result = transformer_to_natural.set_reduction (Current, 0, agent cumulative_successor)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
@@ -149,7 +159,7 @@ feature -- Factory
 		deferred
 		ensure
 			has_a: Result ∋ a
---			nothing_else: Result.is_singleton
+			nothing_else: Result.is_singleton
 		end
 
 feature -- Predicate
@@ -212,6 +222,17 @@ feature -- Reduction
 			definition: Result = (acc and p (x))
 		end
 
+	cumulative_successor (acc: like natural_anchor; x: A): like natural_anchor
+			-- Natural number that succeeds `acc', i.e. `acc' + 1; `x' is ignored.
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Result := acc + 1
+		ensure
+			class
+			definition: Result = acc + 1
+		end
+
 feature -- Transformer
 
 	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, OBJECT_EQUALITY [BOOLEAN]]
@@ -219,7 +240,20 @@ feature -- Transformer
 		deferred
 		end
 
+	transformer_to_natural: TRANSFORMER [A, like natural_anchor, OBJECT_EQUALITY [like natural_anchor]]
+			-- Transformer of objects whose types derive from {A} to objects whose types derive from {like natural_anchor}
+		deferred
+		end
+
 feature -- Anchor
+
+	natural_anchor: NATURAL
+			-- Anchor for natural numbers
+			--| TODO: Pull it up to a target-dependant class.
+		do
+		ensure
+			class
+		end
 
 	set_anchor: SET [A, EQ]
 			-- Anchor for sets like current one

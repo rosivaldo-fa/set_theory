@@ -398,6 +398,36 @@ feature -- Test routines (Quality)
 			assert ("is_singleton_ok", properties.is_singleton_ok (s))
 		end
 
+feature -- Test routines (Measurement)
+
+	test_cardinality
+			-- Test {SET}.cardinality.
+		note
+			testing: "covers/{SET}.cardinality"
+		local
+			s: like set_to_be_tested
+		do
+			s := o
+			assert ("∅", # s = 0)
+			assert ("∅ ok", properties.cardinality_ok (s))
+
+			s := s & some_object_a
+			assert ("{a}", # s = 1)
+			assert ("{a} ok", properties.cardinality_ok (s))
+
+			s := s & some_other_object_a (s)
+			assert ("{a,b}", # s = 2)
+			assert ("{a,b} ok", properties.cardinality_ok (s))
+
+			s := s & some_other_object_a (s)
+			assert ("{a,b,c}", # s = 3)
+			assert ("{a,b,c} ok", properties.cardinality_ok (s))
+
+			s := set_to_be_tested
+			assert ("cardinality", attached # s)
+			assert ("cardinality_ok", properties.cardinality_ok (s))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
