@@ -1,8 +1,8 @@
 ﻿note
 	description: "[
-		Element that models a mathematical set.
-		Notice that Eiffel Base has a {SET} class, that was renamed to {EB_SET} in order to not clash with this one, that has a more
-		fundamental nature, hence the choice of keeping current's name instead of Eiffel Base's one.
+			Element that models a mathematical set.
+			Notice that Eiffel Base has a {SET} class, that was renamed to {EB_SET} in order to not clash with this one, that has a more
+			fundamental nature, hence the choice of keeping current's name instead of Eiffel Base's one.
 		]"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -284,4 +284,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end

@@ -4,7 +4,7 @@ note
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
+deferred class
 	OBJECT_DEEP_EQUALITY_PROPERTIES [A, EQ -> STS_OBJECT_DEEP_EQUALITY [A]]
 
 inherit

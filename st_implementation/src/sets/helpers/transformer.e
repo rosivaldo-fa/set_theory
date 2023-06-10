@@ -44,9 +44,31 @@ feature -- Transformation
 			loop
 				Result := f (Result, l_xs.any)
 				l_xs := l_xs.others
---			variant
---				cardinality: natural_as_integer (# l_xs)
+			variant
+				cardinality: natural_as_integer (# l_xs)
 			end
+		end
+
+feature -- Conversion
+
+	natural_as_integer (n: like natural_anchor): INTEGER_64
+			-- `n' converted into an integer value
+			-- TODO: DRY.
+		do
+			Result := n.as_integer_64
+		ensure
+			class
+			definition: Result = n.as_integer_64
+		end
+
+feature -- Anchor
+
+	natural_anchor: NATURAL
+			-- Anchor for natural numbers
+			--| TODO: Pull it up to a target-dependant class.
+		do
+		ensure
+			class
 		end
 
 note

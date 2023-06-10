@@ -50,7 +50,7 @@ feature -- Properties (Primitive)
 --						)
 --					)
 				has_nothing: s.is_empty = (u |∀ agent s.does_not_have)
---				no_element: s.is_empty = (# s = 0)
+				no_element: s.is_empty = (# s = 0)
 --				uniqueness: s.is_empty = (s ≍ o)
 			then
 				Result := True
@@ -76,14 +76,14 @@ feature -- Properties (Primitive)
 			if s.is_empty then
 				check
 --					same_set: s.others ≍ s
---					no_element: # s.others = # s
+					no_element: # s.others = # s
 				then
 				end
 			else
 				check
 --					decomposing: s.others ≍ (s / s.any)
 --					strict_subset: s.others ⊂ s
---					one_element_less: # s.others = # s - 1
+					one_element_less: # s.others = # s - 1
 				then
 				end
 			end
@@ -152,8 +152,8 @@ feature -- Properties (Construction)
 				u: attached current_universe as u
 --				definition: (s & a) ≍ (u | agent u.ored (agent s.has, agent u.equality_holds (?, a), ?))
 --				by_union: (s & a) ≍ s ∪ singleton (a)
---				same_cardinality: s ∋ a ⇒ # (s & a) = # s
---				incremented_cardinality: s ∌ a ⇒ # (s & a) = # s + 1
+				same_cardinality: s ∋ a ⇒ # (s & a) = # s
+				incremented_cardinality: s ∌ a ⇒ # (s & a) = # s + 1
 			then
 				Result := True
 			end
@@ -168,8 +168,8 @@ feature -- Properties (Construction)
 				excluded: (s / a) ∌ a
 				every_other_element: s |∀ agent implied (agent negated (agent s.equality_holds (?, a), ?), agent (s / a).has, ?)
 --				nothing_else: (s / a) ⊆ s
---				same_cardinality: s ∌ a ⇒ # (s / a) = # s
---				decremented_cardinality: s ∋ a ⇒ # (s / a) = # s - 1
+				same_cardinality: s ∌ a ⇒ # (s / a) = # s
+				decremented_cardinality: s ∋ a ⇒ # (s / a) = # s - 1
 			then
 				Result := True
 			end
@@ -181,7 +181,7 @@ feature -- Properties (Quality)
 			-- Do the properties verified within set theory hold for {STS_SET}.is_singleton?
 		do
 			check
---				definition: s.is_singleton = (# s = 1)
+				definition: s.is_singleton = (# s = 1)
 --				by_construction: s.is_singleton ⇒ not s.is_empty and then s ≍ singleton (s.any)
 			then
 				Result := True

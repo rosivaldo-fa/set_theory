@@ -111,8 +111,8 @@ feature -- Membership
 				s.is_empty or else l_eq (a, s.any)
 			loop
 				s := s.others
---			variant
---				cardinality: natural_as_integer (# s)
+			variant
+				cardinality: natural_as_integer (# s)
 			end
 			Result := not s.is_empty
 		end
@@ -144,25 +144,25 @@ feature -- Construction
 			until
 				s.is_empty or else l_eq (s.any, a)
 			loop
-					check
-						does_not_have: Result ∌ s.any -- Result ≍ (Current ∖ s)
-					end
+				check
+					does_not_have: Result ∌ s.any -- Result ≍ (Current ∖ s)
+				end
 				Result := Result.extended (s.any)
 				s := s.others
---			variant
---				cardinality: natural_as_integer (# s)
+			variant
+				cardinality: natural_as_integer (# s)
 			end
 			if s.is_empty then
 				Result := Current
 			else
-					check
-						unwanted_element_found: l_eq (s.any, a) -- Previous loop exit
-					end
+				check
+					unwanted_element_found: l_eq (s.any, a) -- Previous loop exit
+				end
 				s := s.others
 				if not s.is_empty then
-						check
+					check
 --							is_disjoint: s.is_disjoint (Result) -- Result ≍ ((Current ∖ s) / a)
-						end
+					end
 					Result := s.batch_extended (Result)
 				end
 			end
@@ -196,13 +196,13 @@ feature -- Construction
 			until
 				l_s.is_empty
 			loop
-					check
-						does_not_have: Result ∌ l_s.any -- Result ≍ (Current ∪ (s ∖ l_s))
-					end
+				check
+					does_not_have: Result ∌ l_s.any -- Result ≍ (Current ∪ (s ∖ l_s))
+				end
 				Result := Result.extended (l_s.any)
 				l_s := l_s.others
---			variant
---				cardinality: natural_as_integer (# l_s)
+			variant
+				cardinality: natural_as_integer (# l_s)
 			end
 		ensure
 --			prefixed_s: Result.as_tuple.right_trimmed (# Current).terms ≍ s
@@ -257,17 +257,17 @@ feature -- Factory
 				Result.is_empty
 			loop
 				Result := Result.others
---			variant
---				cardinality: natural_as_integer (# Result)
+			variant
+				cardinality: natural_as_integer (# Result)
 			end
 		end
 
 	singleton (a: A): like set_anchor
 			-- <Precursor>
 		do
-				check
-					does_not_have: o ∌ a -- o.is_empty
-				end
+			check
+				does_not_have: o ∌ a -- o.is_empty
+			end
 			Result := o.extended (a)
 		end
 
@@ -285,9 +285,9 @@ feature -- Factory
 			if attached {like set_anchor} s as cs then
 				Result := cs
 			else
-					check
+				check
 --						is_disjoint: o.is_disjoint (s) -- o.is_empty
-					end
+				end
 				Result := o.batch_extended (s)
 			end
 		end
@@ -344,4 +344,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end

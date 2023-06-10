@@ -193,7 +193,7 @@ if {ISE_RUNTIME}.type_conforms_to (@al.key, ({detachable STS_SET [A, STS_EQUALIT
 					end
 				end
 			end
---			print ("# u: ") print (# Result) print ('%N')
+			print ("# u: ") print (# Result) print ('%N')
 		end
 
 	eq: EQ
@@ -254,12 +254,12 @@ feature -- Conversion
 			loop
 				Result := Result & l_s.any
 				l_s := l_s.others
---			variant
---				cardinality: (# l_s).as_integer_64
+			variant
+				cardinality: {SET [A, EQ]}.natural_as_integer (# l_s)
 			end
 		ensure
 			every_element: s |∀ agent Result.has
---			nothing_else: # Result ≤ # s
+			nothing_else: # Result ≤ # s
 		end
 
 feature -- Predicate

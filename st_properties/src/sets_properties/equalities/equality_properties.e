@@ -4,7 +4,7 @@
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
+deferred class
 	EQUALITY_PROPERTIES [A, EQ -> STS_EQUALITY [A]]
 
 inherit
@@ -12,11 +12,11 @@ inherit
 
 feature -- Access
 
---	current_universe: STS_SET [A, EQ]
---			-- The current "Universe", i.e. set with every object currently in system memory whose type conforms to {A}.
---			-- Notice that this "universe" may change from a call to another.
---		deferred
---		end
+	current_universe: STS_SET [A, EQ]
+			-- The current "Universe", i.e. set with every object currently in system memory whose type conforms to {A}.
+			-- Notice that this "universe" may change from a call to another.
+		deferred
+		end
 
 feature -- Properties (Relationship)
 
@@ -24,20 +24,13 @@ feature -- Properties (Relationship)
 			-- Do the properties verified within set theory hold for {STS_EQUALITY}.holds?
 		do
 			check
---				u: attached current_universe as u
---				print_u_card: (
---					agent (ia_u: like current_universe): BOOLEAN
+				u: attached current_universe as u
+--				definition: eq (a, b) = (
+--					u.powerset |∀ agent (s: STS_SET [A, EQ]; ia_a, ia_b: A): BOOLEAN
 --						do
---							print (--#
---							 ia_u) print ('%N')
---							Result := True
---						end (u)
---					).item
---				definition: (2 --^ # u
---				) ≤ max_supersets implies eq (a, b) = (u.powerset |∀ agent (s: STS_SET [A, EQ]; ia_a, ia_b: A): BOOLEAN
---					do
---						Result := s ∋ ia_a = s ∋ ia_b
---					end (?, a, b))
+--							Result := s ∋ ia_a = s ∋ ia_b
+--						end (?, a, b)
+--					)
 			then
 				Result := True
 			end

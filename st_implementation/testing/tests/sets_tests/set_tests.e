@@ -446,23 +446,21 @@ feature {NONE} -- Factory (element to be tested)
 				from
 					Result := set_to_be_tested
 				until
---					# Result ≥ n
-					True
+					# Result ≥ n
 				loop
 					Result := set_to_be_tested
 				end
---			invariant
---				at_least_n: # Result ≥ n
+			invariant
+				at_least_n: # Result ≥ n
 			until
---				# Result = n
-				True
+				# Result = n
 			loop
 				Result := Result.others
---			variant
---				down_to_n: {like new_set_a}.natural_as_integer (# Result - n)
+			variant
+				down_to_n: {SET [A, EQ]}.natural_as_integer (# Result - n)
 			end
 		ensure
---			n_elements: # Result = n
+			n_elements: # Result = n
 		end
 
 feature {NONE} -- Factory (Set)

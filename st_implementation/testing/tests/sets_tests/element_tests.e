@@ -1157,11 +1157,11 @@ feature -- Factory (Set)
 
 	cropped_set (s: STS_SET [detachable separate ANY, STS_EQUALITY [detachable separate ANY]]): like s
 			-- `s' striped from as many elements as necessary to keep its cardinality at most `Max_count'
---		local
+		local
 --			cropped_s: STS_SET [detachable separate ANY, STS_EQUALITY [detachable separate ANY]]
---			n: like new_set_a.cardinality
+			n: like natural_anchor
 		do
---			n := # s
+			n := # s
 --			if n ≤ Max_count then
 				Result := s
 --			else
@@ -1174,10 +1174,20 @@ feature -- Factory (Set)
 --					chk_cropp := {ISE_RUNTIME}.check_assert (True)
 --				end
 --			end
---		ensure
---			small_enough: # Result ≤ Max_count
+		ensure
+			small_enough: # Result ≤ Max_count
 --			no_change: # s ≤ Max_count implies Result ≍ s
 --			cropped: Result ⊆ s
+		end
+
+feature -- Anchor
+
+	natural_anchor: NATURAL
+			-- Anchor for natural numbers
+			--| TODO: Pull it up to a target-dependant class.
+		do
+		ensure
+			class
 		end
 
 feature {NONE} -- Implementation

@@ -168,8 +168,8 @@ feature -- Factory (Set)
 							end
 						tmp_result := tmp_result.extended (same_object_a (l_s.any))
 						l_s := l_s.others
---					variant
---						cardinality: {like new_set_a}.natural_as_integer (# l_s)
+					variant
+						cardinality: {SET [A, EQ]}.natural_as_integer (# l_s)
 					end
 					Result := tmp_result
 				end
