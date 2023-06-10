@@ -272,7 +272,6 @@ feature -- Test routines (Membership)
 		local
 			a: A
 			s: like set_to_be_tested
-			s2: like some_set_a
 		do
 			a := some_object_a
 			s := set_to_be_tested / same_object_a (a)
@@ -300,21 +299,30 @@ feature -- Test routines (Construction)
 		do
 			s := o
 			a := some_object_a
---			assert ("{a}", (s & a) ≍ singleton (a))
-			assert ("{a} ok", properties.with_ok (s, a))
+--			assert ("∅ & {a}", (s & a) ≍ singleton (a))
+			assert ("∅ & {a} ok", properties.with_ok (s, a))
 
 			s := s & same_object_a (a)
+--			assert ("{a} & a", (s & a) ≍ singleton (a))
+			assert ("{a} & a ok", properties.with_ok (s, a))
+
 			b := some_object_a
---			assert ("{a,b}", (s & b) ≍ (singleton (a) & b))
-			assert ("{a,b} ok", properties.with_ok (s, b))
+--			assert ("{a} & b", (s & b) ≍ (singleton (a) & b))
+			assert ("{a} & b ok", properties.with_ok (s, b))
 
 			s := s & same_object_a (b)
+--			assert ("{a,b} & b", (s & b) ≍ (singleton (a) & b))
+			assert ("{a,b} & b ok", properties.with_ok (s, b))
+
 			c := some_object_a
---			assert ("{a,b,c}", (s & c) ≍ (singleton (a) & b & c))
-			assert ("{a,b,c} ok", properties.with_ok (s, c))
+--			assert ("{a,b} & c", (s & c) ≍ (singleton (a) & b & c))
+			assert ("{a,b} & b ok", properties.with_ok (s, c))
+
+			s := s & same_object_a (c)
+--			assert ("{a,b,c} & c", (s & c) ≍ (singleton (a) & b & c))
+			assert ("{a,b,c} & b ok", properties.with_ok (s, c))
 
 			s := set_to_be_tested
-			a := some_object_a
 			assert ("with", attached (s & a))
 			assert ("with_ok", properties.with_ok (s, a))
 		end
