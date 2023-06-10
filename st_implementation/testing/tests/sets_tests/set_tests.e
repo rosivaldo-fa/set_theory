@@ -40,7 +40,7 @@ feature -- Test routines (Primitive)
 				s := set_to_be_tested.o
 			when 2 then
 				s := set_to_be_tested
-				s := s.o-- ∖ same_set_a (s)
+				s := s.o -- ∖ same_set_a (s)
 			end
 			assert ("s.is_empty", s.is_empty)
 			assert ("s.is_empty ok", properties.is_empty_ok (s))
@@ -62,9 +62,9 @@ feature -- Test routines (Primitive)
 			s: like set_to_be_tested
 		do
 			s := set_to_be_tested & some_object_a
-				check
-					is_not_empty: not s.is_empty -- s ≍ {a, ...}
-				end
+			check
+				is_not_empty: not s.is_empty -- s ≍ {a, ...}
+			end
 			assert ("s.any", attached s.any ⇒ True)
 			assert ("s.any ok", properties.any_ok (s))
 
@@ -82,35 +82,35 @@ feature -- Test routines (Primitive)
 			a, b, c: like some_object_a
 		do
 			s := o
---			assert ("∅", s.others ≍ o)
+			assert ("∅", s.others ≍ o)
 			assert ("∅ ok", properties.others_ok (s))
 
 			s := s & some_object_a
-				check
-					is_not_empty: not s.is_empty -- s = {a}
-				end
+			check
+				is_not_empty: not s.is_empty -- s = {a}
+			end
 			a := same_object_a (s.any)
---			assert ("{a}", s.others ≍ o)
+			assert ("{a}", s.others ≍ o)
 			assert ("{a} ok", properties.others_ok (s))
 
 			s := s & some_other_object_a (s)
-				check
-					is_not_empty_2: not s.others.is_empty -- s = {a,b}
-				end
+			check
+				is_not_empty_2: not s.others.is_empty -- s = {a,b}
+			end
 			b := same_set_a (s.others).any
---			assert ("{a,b}", s.others ≍ (o & b))
+			assert ("{a,b}", s.others ≍ (o & b))
 			assert ("{a,b} ok", properties.others_ok (s))
 
 			s := s & some_other_object_a (s)
-				check
-					is_not_empty_3: not s.others.is_empty -- # s = 3
-				end
+			check
+				is_not_empty_3: not s.others.is_empty -- # s = 3
+			end
 			b := same_set_a (s.others).any
-				check
-					is_not_empty_4: not (s.others / b).is_empty -- # s = 3
-				end
+			check
+				is_not_empty_4: not (s.others / b).is_empty -- # s = 3
+			end
 			c := same_set_a (s.others / b).any
---			assert ("{a,b,c}", s.others ≍ (s.o & b & c))
+			assert ("{a,b,c}", s.others ≍ (s.o & b & c))
 			assert ("{a,b,c} ok", properties.others_ok (s))
 
 			s := set_to_be_tested
@@ -299,27 +299,27 @@ feature -- Test routines (Construction)
 		do
 			s := o
 			a := some_object_a
---			assert ("∅ & a", (s & a) ≍ singleton (a))
+			assert ("∅ & a", (s & a) ≍ singleton (a))
 			assert ("∅ & a ok", properties.with_ok (s, a))
 
 			s := s & same_object_a (a)
---			assert ("{a} & a", (s & a) ≍ singleton (a))
+			assert ("{a} & a", (s & a) ≍ singleton (a))
 			assert ("{a} & a ok", properties.with_ok (s, a))
 
 			b := some_object_a
---			assert ("{a} & b", (s & b) ≍ (singleton (a) & b))
+			assert ("{a} & b", (s & b) ≍ (singleton (a) & b))
 			assert ("{a} & b ok", properties.with_ok (s, b))
 
 			s := s & same_object_a (b)
---			assert ("{a,b} & b", (s & b) ≍ (singleton (a) & b))
+			assert ("{a,b} & b", (s & b) ≍ (singleton (a) & b))
 			assert ("{a,b} & b ok", properties.with_ok (s, b))
 
 			c := some_object_a
---			assert ("{a,b} & c", (s & c) ≍ (singleton (a) & b & c))
+			assert ("{a,b} & c", (s & c) ≍ (singleton (a) & b & c))
 			assert ("{a,b} & c ok", properties.with_ok (s, c))
 
 			s := s & same_object_a (c)
---			assert ("{a,b,c} & c", (s & c) ≍ (singleton (a) & b & c))
+			assert ("{a,b,c} & c", (s & c) ≍ (singleton (a) & b & c))
 			assert ("{a,b,c} & c ok", properties.with_ok (s, c))
 
 			s := set_to_be_tested
@@ -337,27 +337,27 @@ feature -- Test routines (Construction)
 		do
 			s := o
 			a := some_object_a
---			assert ("∅ / a", (s / a) ≍ o)
+			assert ("∅ / a", (s / a) ≍ o)
 			assert ("∅ / a ok", properties.without_ok (s, a))
 
 			s := s & same_object_a (a)
---			assert ("{a} / a", (s / a) ≍ o)
+			assert ("{a} / a", (s / a) ≍ o)
 			assert ("{a} / a ok", properties.without_ok (s, a))
 
 			b := some_other_object_a (s)
---			assert ("{a} / b", (s / b) ≍ singleton (a))
+			assert ("{a} / b", (s / b) ≍ singleton (a))
 			assert ("{a} / b ok", properties.without_ok (s, b))
 
 			s := s & same_object_a (b)
---			assert ("{a,b} / b", (s / b) ≍ singleton (a))
+			assert ("{a,b} / b", (s / b) ≍ singleton (a))
 			assert ("{a,b} / b ok", properties.without_ok (s, b))
 
 			c := some_other_object_a (s)
---			assert ("{a,b} / c", (s / c) ≍ (singleton (a) & b))
+			assert ("{a,b} / c", (s / c) ≍ (singleton (a) & b))
 			assert ("{a,b} / c ok", properties.without_ok (s, c))
 
 			s := s & same_object_a (c)
---			assert ("{a,b,c} / c", (s / c) ≍ (singleton (a) / b))
+			assert ("{a,b,c} / c", (s / c) ≍ (singleton (a) / b))
 			assert ("{a,b,c} / c ok", properties.without_ok (s, c))
 
 			s := set_to_be_tested
@@ -513,7 +513,7 @@ feature {NONE} -- Factory (Set)
 		do
 			Result := o.singleton (a)
 		ensure
---			definition: Result ≍ o.singleton (a)
+			definition: Result ≍ o.singleton (a)
 		end
 
 note
@@ -523,4 +523,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end

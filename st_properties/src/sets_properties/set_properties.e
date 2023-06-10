@@ -51,7 +51,7 @@ feature -- Properties (Primitive)
 --					)
 				has_nothing: s.is_empty = (u |∀ agent s.does_not_have)
 				no_element: s.is_empty = (# s = 0)
---				uniqueness: s.is_empty = (s ≍ o)
+				uniqueness: s.is_empty = (s ≍ o)
 			then
 				Result := True
 			end
@@ -63,7 +63,7 @@ feature -- Properties (Primitive)
 			if not s.is_empty then
 				check
 					membership: s ∋ s.any
---					building_up: s ≍ (s.others & s.any)
+					building_up: s ≍ (s.others & s.any)
 				then
 				end
 			end
@@ -75,13 +75,13 @@ feature -- Properties (Primitive)
 		do
 			if s.is_empty then
 				check
---					same_set: s.others ≍ s
+					same_set: s.others ≍ s
 					no_element: # s.others = # s
 				then
 				end
 			else
 				check
---					decomposing: s.others ≍ (s / s.any)
+					decomposing: s.others ≍ (s / s.any)
 --					strict_subset: s.others ⊂ s
 					one_element_less: # s.others = # s - 1
 				then
@@ -182,7 +182,7 @@ feature -- Properties (Quality)
 		do
 			check
 				definition: s.is_singleton = (# s = 1)
---				by_construction: s.is_singleton ⇒ not s.is_empty and then s ≍ singleton (s.any)
+				by_construction: s.is_singleton ⇒ not s.is_empty and then s ≍ singleton (s.any)
 			then
 				Result := True
 			end
@@ -240,7 +240,7 @@ feature -- Factory
 		do
 			Result := o.singleton (a)
 		ensure
---			definition: Result ≍ o.singleton (a)
+			definition: Result ≍ o.singleton (a)
 		end
 
 feature -- Predicate

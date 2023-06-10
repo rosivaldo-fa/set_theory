@@ -56,7 +56,7 @@ feature {NONE} -- Initialization
 		ensure
 			is_not_empty: not is_empty
 			any: eq (any, a)
---			others: others ≍ s
+			others: others ≍ s
 		end
 
 feature -- Primitive
@@ -179,7 +179,7 @@ feature -- Construction
 		ensure
 			is_not_empty: not Result.is_empty
 			any: eq (Result.any, a)
---			others: Result.others ≍ Current
+			others: Result.others ≍ Current
 		end
 
 	batch_extended (s: STS_SET [A, EQ]): like superset_anchor

@@ -5,8 +5,7 @@ note
 	revision: "$Revision$"
 
 deferred class
-	TRANSFORMER [A, B, --EQ_A -> EQUALITY [A],
-	EQ_B -> EQUALITY [B]]
+	TRANSFORMER [A, B, EQ_B -> EQUALITY [B]]
 
 inherit
 	ELEMENT

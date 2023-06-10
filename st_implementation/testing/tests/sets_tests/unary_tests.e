@@ -175,7 +175,7 @@ feature -- Factory (Set)
 				end
 			end
 		ensure
---			definition: Result ≍ s
+			definition: Result ≍ s
 		end
 
 	some_set_sa: STS_SET [STS_SET [A, EQ], STS_EQUALITY [STS_SET [A, EQ]]]
