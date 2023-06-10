@@ -170,11 +170,11 @@ feature -- Factory (Integer reference)
 			obj := some_immediate_instance (new_i)
 			if attached obj then
 				Result := {like new_integer_ref} / obj
-					check
-							-- `some_immediate_instance' and `new_integer_ref' definitions
-						right_type: attached Result
-						monomorphic: Result.generating_type ~ {like new_integer_ref}
-					end
+				check
+						-- `some_immediate_instance' and `new_integer_ref' definitions
+					right_type: attached Result
+					monomorphic: Result.generating_type ~ {like new_integer_ref}
+				end
 			end
 		ensure
 			monomorphic: attached Result implies Result.generating_type ~ {like some_integer_ref}
@@ -468,7 +468,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_REFERENCE_EQUALITY [detachable INTEGER_REF]} some_immediate_instance
-					(agent: STS_REFERENCE_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_REFERENCE_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable INTEGER_REF]}
 			then
 				Result := eq
@@ -480,7 +480,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance
-					(agent: STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}
 			then
 				Result := eq
@@ -492,7 +492,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_REFERENCE_EQUALITY [NATURAL]} some_immediate_instance
-					(agent: STS_REFERENCE_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_REFERENCE_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [NATURAL]}
 			then
 				Result := eq
@@ -518,7 +518,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]} some_immediate_instance
-					(agent: STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]}
 			then
 				Result := eq
@@ -530,7 +530,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance
-					(agent: STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
 			then
 				Result := eq
@@ -542,7 +542,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_OBJECT_STANDARD_EQUALITY [NATURAL]} some_immediate_instance
-					(agent: STS_OBJECT_STANDARD_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_OBJECT_STANDARD_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [NATURAL]}
 			then
 				Result := eq
@@ -568,7 +568,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_OBJECT_EQUALITY [detachable INTEGER_REF]} some_immediate_instance
-					(agent: STS_OBJECT_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_OBJECT_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable INTEGER_REF]}
 			then
 				Result := eq
@@ -580,7 +580,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance
-					(agent: STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
 			then
 				Result := eq
@@ -592,7 +592,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_OBJECT_EQUALITY [NATURAL]} some_immediate_instance
-					(agent: STS_OBJECT_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_OBJECT_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [NATURAL]}
 			then
 				Result := eq
@@ -618,7 +618,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]} some_immediate_instance
-					(agent: STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]}
 			then
 				Result := eq
@@ -630,7 +630,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance
-					(agent: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]}
 			then
 				Result := eq
@@ -642,7 +642,7 @@ feature -- Factory (Equality)
 		do
 			check
 				eq: attached {STS_OBJECT_DEEP_EQUALITY [NATURAL]} some_immediate_instance
-					(agent: STS_OBJECT_DEEP_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
+						(agent: STS_OBJECT_DEEP_EQUALITY [NATURAL] do create Result end) as eq -- `some_immediate_instance' definition
 				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [NATURAL]}
 			then
 				Result := eq
@@ -698,17 +698,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [detachable INTEGER_REF, STS_REFERENCE_EQUALITY [detachable INTEGER_REF]]} some_immediate_instance (
-					agent: SET [detachable INTEGER_REF, STS_REFERENCE_EQUALITY [detachable INTEGER_REF]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_integer_ref
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [detachable INTEGER_REF, STS_REFERENCE_EQUALITY [detachable INTEGER_REF]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_integer_ref
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [detachable INTEGER_REF, STS_REFERENCE_EQUALITY [detachable INTEGER_REF]]}
 			then
 				Result := cropped_set (s)
@@ -734,17 +734,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]} some_immediate_instance (
-					agent: SET [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_separate_character_ref
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_separate_character_ref
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]}
 			then
 				Result := cropped_set (s)
@@ -770,17 +770,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [NATURAL, STS_REFERENCE_EQUALITY [NATURAL]]} some_immediate_instance (
-					agent: SET [NATURAL, STS_REFERENCE_EQUALITY [NATURAL]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_natural
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [NATURAL, STS_REFERENCE_EQUALITY [NATURAL]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_natural
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [NATURAL, STS_REFERENCE_EQUALITY [NATURAL]]}
 			then
 				Result := cropped_set (s)
@@ -820,17 +820,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [detachable INTEGER_REF, STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]]} some_immediate_instance (
-					agent: SET [detachable INTEGER_REF, STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_integer_ref
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [detachable INTEGER_REF, STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_integer_ref
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [detachable INTEGER_REF, STS_OBJECT_STANDARD_EQUALITY [detachable INTEGER_REF]]}
 			then
 				Result := cropped_set (s)
@@ -856,17 +856,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [detachable separate CHARACTER_REF, STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]]} some_immediate_instance (
-					agent: SET [detachable separate CHARACTER_REF, STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_separate_character_ref
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [detachable separate CHARACTER_REF, STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_separate_character_ref
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [detachable separate CHARACTER_REF, STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]]}
 			then
 				Result := cropped_set (s)
@@ -892,17 +892,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [NATURAL, STS_OBJECT_STANDARD_EQUALITY [NATURAL]]} some_immediate_instance (
-					agent: SET [NATURAL, STS_OBJECT_STANDARD_EQUALITY [NATURAL]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_natural
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [NATURAL, STS_OBJECT_STANDARD_EQUALITY [NATURAL]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_natural
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [NATURAL, STS_OBJECT_STANDARD_EQUALITY [NATURAL]]}
 			then
 				Result := cropped_set (s)
@@ -942,17 +942,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]} some_immediate_instance (
-					agent: SET [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_integer_ref
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_integer_ref
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]}
 			then
 				Result := cropped_set (s)
@@ -978,17 +978,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [detachable separate CHARACTER_REF, STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]]} some_immediate_instance (
-					agent: SET [detachable separate CHARACTER_REF, STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_separate_character_ref
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [detachable separate CHARACTER_REF, STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_separate_character_ref
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [detachable separate CHARACTER_REF, STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]]}
 			then
 				Result := cropped_set (s)
@@ -1014,17 +1014,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [NATURAL, STS_OBJECT_EQUALITY [NATURAL]]} some_immediate_instance (
-					agent: SET [NATURAL, STS_OBJECT_EQUALITY [NATURAL]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_natural
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [NATURAL, STS_OBJECT_EQUALITY [NATURAL]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_natural
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [NATURAL, STS_OBJECT_EQUALITY [NATURAL]]}
 			then
 				Result := cropped_set (s)
@@ -1064,17 +1064,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [detachable INTEGER_REF, STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]]} some_immediate_instance (
-					agent: SET [detachable INTEGER_REF, STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_integer_ref
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [detachable INTEGER_REF, STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_integer_ref
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [detachable INTEGER_REF, STS_OBJECT_DEEP_EQUALITY [detachable INTEGER_REF]]}
 			then
 				Result := cropped_set (s)
@@ -1100,17 +1100,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [detachable separate CHARACTER_REF, STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]]} some_immediate_instance (
-					agent: SET [detachable separate CHARACTER_REF, STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_separate_character_ref
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [detachable separate CHARACTER_REF, STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_separate_character_ref
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [detachable separate CHARACTER_REF, STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]]}
 			then
 				Result := cropped_set (s)
@@ -1136,17 +1136,17 @@ feature -- Factory (Set)
 		do
 			check
 				s: attached {SET [NATURAL, STS_OBJECT_DEEP_EQUALITY [NATURAL]]} some_immediate_instance (
-					agent: SET [NATURAL, STS_OBJECT_DEEP_EQUALITY [NATURAL]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_natural
-							end
-						end
-					) as s -- `some_immediate_instance' definition
+							agent: SET [NATURAL, STS_OBJECT_DEEP_EQUALITY [NATURAL]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_natural
+									end
+								end
+						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable SET [NATURAL, STS_OBJECT_DEEP_EQUALITY [NATURAL]]}
 			then
 				Result := cropped_set (s)
@@ -1163,7 +1163,7 @@ feature -- Factory (Set)
 		do
 			n := # s
 --			if n ≤ Max_count then
-				Result := s
+			Result := s
 --			else
 --				if n > max_asserted_elements then
 --					chk_cropp := {ISE_RUNTIME}.check_assert (False)
@@ -1177,7 +1177,7 @@ feature -- Factory (Set)
 		ensure
 			small_enough: # Result ≤ Max_count
 			no_change: # s ≤ Max_count implies Result ≍ s
---			cropped: Result ⊆ s
+			cropped: Result ⊆ s
 		end
 
 feature -- Anchor
@@ -1215,22 +1215,22 @@ feature {NONE} -- Implementation
 						Result := Void
 					end
 				else
-						check
-							positive: 0 < immediate_instances.count -- immediate_instances.count /= 0
-						end
+					check
+						positive: 0 < immediate_instances.count -- immediate_instances.count /= 0
+					end
 					if rt.is_attached then
 						i := some_integer_up_to (immediate_instances.count) - 1
 					else
 						i := some_integer_up_to (immediate_instances.count + 1) - 1
 					end
 					if i < immediate_instances.count then
-							check
-								valid_index: immediate_instances.valid_index (i) -- 0 ≤ i < immediate_instances.count
-							end
+						check
+							valid_index: immediate_instances.valid_index (i) -- 0 ≤ i < immediate_instances.count
+						end
 						Result := immediate_instances [i]
 						separate Result as sep_res do
 							chk_ops := {ISE_RUNTIME}.check_assert (True)
-								sep_res.do_nothing -- Cause an invariant violation if Result is ill formed.
+							sep_res.do_nothing -- Cause an invariant violation if Result is ill formed.
 							chk_ops := {ISE_RUNTIME}.check_assert (chk_ops)
 						end
 					else
@@ -1281,10 +1281,10 @@ feature {NONE} -- Implementation
 			l_new_instance_type: TYPE [detachable ANY]
 		do
 			l_new_instance_type := a_new_instance.generating_type
-				check
-					large_enough: l_new_instance_type.generic_parameter_count ≥ 1 -- FUNCTION [detachable separate ANY] has generic parameters.
-					small_enough: l_new_instance_type.generic_parameter_count ≤ l_new_instance_type.generic_parameter_count -- By definition
-				end
+			check
+				large_enough: l_new_instance_type.generic_parameter_count ≥ 1 -- FUNCTION [detachable separate ANY] has generic parameters.
+				small_enough: l_new_instance_type.generic_parameter_count ≤ l_new_instance_type.generic_parameter_count -- By definition
+			end
 			Result := l_new_instance_type.generic_parameter_type (l_new_instance_type.generic_parameter_count)
 		ensure
 			class
@@ -1338,14 +1338,14 @@ feature {NONE} -- Implementation
 	next_random_item: like random_sequence.item
 			-- Item at next position of `random_sequence'
 		do
-				check
-					not_after: not random_sequence.After -- {RANDOM}.After = `False'
-				end
+			check
+				not_after: not random_sequence.After -- {RANDOM}.After = `False'
+			end
 			random_sequence.forth
-				check
-					readable: random_sequence.Readable -- {RANDOM}.Readable = `True'
-					not_off: not random_sequence.off -- {RANDOM}.is_empty = `False' and {RANDOM}.After = `False'
-				end
+			check
+				readable: random_sequence.Readable -- {RANDOM}.Readable = `True'
+				not_off: not random_sequence.off -- {RANDOM}.is_empty = `False' and {RANDOM}.After = `False'
+			end
 			Result := random_sequence.item
 		ensure
 			class
@@ -1394,6 +1394,6 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
-end
 
+end
 

@@ -356,7 +356,7 @@ feature -- Predicate
 			end
 		ensure
 			class
---			definition: Result = (s1 ⊆ s2)
+			definition: Result = (s1 ⊆ s2)
 		end
 
 feature -- Transformer

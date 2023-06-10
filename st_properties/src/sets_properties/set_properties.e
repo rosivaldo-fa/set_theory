@@ -88,7 +88,7 @@ feature -- Properties (Primitive)
 				end
 			end
 			check
---				subset: s.others ⊆ s
+				subset: s.others ⊆ s
 			then
 				Result := True
 			end
@@ -167,7 +167,7 @@ feature -- Properties (Construction)
 --				definition: (s / a) ≍ (u | agent anded (agent s.has, agent negated (agent s.equality_holds (?, a), ?), ?))
 				excluded: (s / a) ∌ a
 				every_other_element: s |∀ agent implied (agent negated (agent s.equality_holds (?, a), ?), agent (s / a).has, ?)
---				nothing_else: (s / a) ⊆ s
+				nothing_else: (s / a) ⊆ s
 				same_cardinality: s ∌ a ⇒ # (s / a) = # s
 				decremented_cardinality: s ∋ a ⇒ # (s / a) = # s - 1
 			then
@@ -222,7 +222,7 @@ feature -- Properties (Comparison)
 --							end (?, s1, s2)
 --						)
 --				checked_ps_restored: attached {ISE_RUNTIME}.check_assert (checked_ps)
---				by_inclusion: s1 ≍ s2 = (s1 ⊆ s2 and s2 ⊆ s1)
+				by_inclusion: s1 ≍ s2 = (s1 ⊆ s2 and s2 ⊆ s1)
 				reflexive: s1 ≍ s1
 				symmetric: s1 ≍ s2 ⇒ s2 ≍ s1
 				transitive: s1 ≍ s2 and s2 ≍ s3 ⇒ s1 ≍ s3
