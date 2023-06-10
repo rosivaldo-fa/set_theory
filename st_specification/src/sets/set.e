@@ -153,6 +153,14 @@ feature -- Comparison
 			definition: Result = (Current |∀ agent s.has)
 		end
 
+	is_not_subset alias "⊈" (s: SET [A, EQ]): BOOLEAN
+			-- Is not current set a subset of `s'?
+		do
+			Result := not (Current ⊆ s)
+		ensure
+			definition: Result = not (Current ⊆ s)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN

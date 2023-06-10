@@ -31,7 +31,8 @@ inherit
 			test_cardinality,
 			test_equals,
 			test_unequals,
-			test_is_subset
+			test_is_subset,
+			test_is_not_subset
 		end
 
 feature -- Access
@@ -62,6 +63,7 @@ feature -- Test routines (All)
 			test_equals
 			test_unequals
 			test_is_subset
+			test_is_not_subset
 		end
 
 feature -- Test routines (Primitive)
@@ -197,6 +199,15 @@ feature -- Test routines (Comparison)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.is_subset"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_is_not_subset
+			-- <Precursor>
+		note
+			testing: "covers/{STS_SET}.is_not_subset"
+			testing: "covers/{SET}.is_not_subset"
 		do
 			Precursor {SET_TESTS}
 		end

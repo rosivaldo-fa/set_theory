@@ -524,6 +524,34 @@ feature -- Test routines (Comparison)
 			assert ("is_subset ok", properties.is_subset_ok (s, s2, some_set_a))
 		end
 
+	test_is_not_subset
+			-- Test {STS_SET}.is_not_subset.
+			-- Test {SET}.is_not_subset.
+		note
+			testing: "covers/{STS_SET}.is_not_subset"
+			testing: "covers/{SET}.is_not_subset"
+		local
+			a: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			a := some_object_a
+			s := set_to_be_tested & same_object_a (a)
+			s2 := some_set_a / same_object_a (a)
+			assert ("s ⊈ s2", s ⊈ s2)
+			assert ("s ⊈ s2 ok", properties.is_not_subset_ok (s, s2))
+
+			s := set_to_be_tested
+			s2 := some_set_a --∪ same_set_a (s)
+			assert ("not (s ⊈ s2)", not (s ⊈ s2))
+			assert ("not (s ⊈ s2) ok", properties.is_not_subset_ok (s, s2))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("is_not_subset", s ⊈ s2 ⇒ True)
+			assert ("is_not_subset ok", properties.is_not_subset_ok (s, s2))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
