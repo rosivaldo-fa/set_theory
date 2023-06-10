@@ -232,6 +232,45 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	unequals_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.unequals?
+		do
+			check
+				u: attached current_universe as u
+				definition_1: s1 ≭ s2 = (
+					u |∃ agent u.ored (
+						agent anded (agent s1.has, agent s2.does_not_have, ?),
+						agent anded (agent s1.does_not_have, agent s2.has, ?), ?
+						)
+					)
+				definition_2: s1 ≭ s2 = (
+					(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?)) or
+					(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
+					)
+				lesser_definition: s1 ≭ s2 = ((s1 |∃ agent s2.does_not_have) or (s2 |∃ agent s1.does_not_have))
+				u_ps_ps_card: attached (2 ^ (2 ^ # u)) as u_ps_ps_card
+				set_comparisons_upper_bound: attached (2 * u_ps_ps_card) as set_comparisons_upper_bound
+				element_comparisons_upper_bound: attached ((# u ^ 2) * set_comparisons_upper_bound) as
+					element_comparisons_upper_bound
+--				checked_ps: attached {ISE_RUNTIME}.check_assert
+--					(element_comparisons_upper_bound ≤ max_asserted_elements) as checked_ps
+--					by_membership: element_comparisons_upper_bound ≤ max_elements ⇒ s1 ≭ s2 = (
+--						u.powerset.powerset |∃ agent
+--							(s: STS_SET [STS_SET [A, EQ], STS_SET_EQUALITY [A, EQ]]; ia_s1, ia_s2: STS_SET [A, EQ]): BOOLEAN
+--							do
+--								Result := ia_s1 ∈ s /= ia_s2 ∈ s
+--							end (?, s1, s2)
+--						)
+--				checked_ps_restored: attached {ISE_RUNTIME}.check_assert (checked_ps)
+--				by_uninclusion: s1 ≭ s2 = (s1 ⊈ s2 or s2 ⊈ s1)
+				irreflexive: not (s1 ≭ s1)
+				symmetric: s1 ≭ s2 ⇒ s2 ≭ s1
+				unequal_cardinalities: (# s1 /= # s2) ⇒ s1 ≭ s2
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]

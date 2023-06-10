@@ -463,6 +463,41 @@ feature -- Test routines (Comparison)
 			assert ("equals ok", properties.equals_ok (s, s2, some_set_a))
 		end
 
+	test_unequals
+			-- Test {STS_SET}.unequals.
+			-- Test {SET}.unequals.
+		note
+			testing: "covers/{STS_SET}.unequals"
+			testing: "covers/{SET}.unequals"
+		local
+			a: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			a := some_object_a
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				s := set_to_be_tested & same_object_a (a)
+				s2 := some_set_a / same_object_a (a)
+			when 1 then
+				s := set_to_be_tested / same_object_a (a)
+				s2 := some_set_a & same_object_a (a)
+			end
+			assert ("s ≭ s2", s ≭ s2)
+			assert ("s ≭ s2 ok", properties.unequals_ok (s, s2))
+
+			s := set_to_be_tested
+			s2 := same_set_a (s)
+			assert ("not (s ≭ s2)", not (s ≭ s2))
+			assert ("(s ≭ s2) ok", properties.unequals_ok (s, s2))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("unequals", s ≭ s2 ⇒ True)
+			assert ("unequals ok", properties.unequals_ok (s, s2))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
