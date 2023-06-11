@@ -310,11 +310,22 @@ feature -- Properties (Comparison)
 			end
 		end
 
-	is_superset_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+	is_superset_ok (s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
 			-- Do the properties verified within set theory hold for {STS_SET}.is_superset?
 		do
 			check
-				definition: s1 ⊇ s2 = (s2 |∀ agent s1.has)
+				u: attached current_universe as u
+				definition: s1 ⊇ s2 = (u |∀ agent implied (agent s2.has, agent s1.has, ?))
+				lesser_definition: s1 ⊇ s2 = (s2 |∀ agent s1.has)
+--				by_difference: s1 ⊇ s2 = (s2 ∖ s1) ≍ o
+				reflexive: s1 ⊇ s1
+				transitive: s1 ⊇ s2 and s2 ⊇ s3 ⇒ s1 ⊇ s3
+				antisymmetric: s1 ⊇ s2 and s2 ⊇ s1 ⇒ s1 ≍ s2
+				everything_includes_o: s1 ⊇ o
+				u_includes_everything: u ⊇ s1
+				equality: s1 ≍ s2 = (s1 ⊇ s2 and s2 ⊇ s1)
+				o_includes_only_o: o ⊇ s1 ⇒ s1 ≍ o
+				only_u_includes_u: s1 ⊇ u ⇒ s1 ≍ u
 				cardinality: s1 ⊇ s2 ⇒ # s1 ≥ # s2
 			then
 				Result := True
@@ -443,6 +454,17 @@ feature -- Properties (Comparison)
 		do
 			check
 				definition: s1.is_trivial_superset (s2) = (s1 ≍ s2 or s2 ≍ o)
+			then
+				Result := True
+			end
+		end
+
+	is_proper_subset_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_proper_subset?
+		do
+			check
+				definition: s1.is_proper_subset (s2) = (s1 ⊆ s2 and not s1.is_trivial_subset (s2))
+				irreflexive: not s1.is_proper_subset (s1)
 			then
 				Result := True
 			end

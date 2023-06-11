@@ -241,6 +241,14 @@ feature -- Comparison
 			definition: Result = s.is_trivial_subset (Current)
 		end
 
+	is_proper_subset (s: SET [A, EQ]): BOOLEAN
+			-- Is current set a non-trivial subset of `s'?
+		do
+			Result := Current ⊆ s and Current ≭ o and Current ≭ s
+		ensure
+			definition: Result = (Current ⊆ s and Current ≭ o and Current ≭ s)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN

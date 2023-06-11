@@ -566,18 +566,18 @@ feature -- Test routines (Comparison)
 			s := set_to_be_tested
 			s2 := some_set_a--∩ same_set_a (s)
 			assert ("s ⊇ s2", s ⊇ s2)
-			assert ("s ⊇ s2 ok", properties.is_superset_ok (s, s2))
+			assert ("s ⊇ s2 ok", properties.is_superset_ok (s, s2, some_set_a))
 
 			a := some_object_a
 			s := set_to_be_tested / same_object_a (a)
 			s2 := some_set_a & same_object_a (a)
 			assert ("not (s ⊇ s2)", not (s ⊇ s2))
-			assert ("not (s ⊇ s2) ok", properties.is_superset_ok (s, s2))
+			assert ("not (s ⊇ s2) ok", properties.is_superset_ok (s, s2, some_set_a))
 
 			s := set_to_be_tested
 			s2 := some_set_a
 			assert ("is_superset", s ⊇ s2 ⇒ True)
-			assert ("is_superset ok", properties.is_superset_ok (s, s2))
+			assert ("is_superset ok", properties.is_superset_ok (s, s2, some_set_a))
 		end
 
 	test_is_not_superset
@@ -884,6 +884,63 @@ feature -- Test routines (Comparison)
 			s2 := some_set_a
 			assert ("is_trivial_superset", s.is_trivial_superset (s2) ⇒ True)
 			assert ("is_trivial_superset_ok", properties.is_trivial_superset_ok (s, s2))
+		end
+
+	test_is_proper_subset
+			-- Test {SET}.is_proper_subset.
+		note
+			testing: "covers/{SET}.is_proper_subset"
+		local
+			s: like set_to_be_tested
+			s1, s2: like some_set_a
+		do
+			from
+				s := set_to_be_tested
+			until
+				not s.is_empty
+			loop
+				s := set_to_be_tested
+			end
+			from
+				s2 := some_set_a
+			until
+				s2 ⊈ s
+			loop
+				s2 := some_set_a
+			end
+--			s2 := s2 ∪ same_set_a (s)
+			assert ("s.is_proper_subset (s2)", s.is_proper_subset (s2))
+			assert ("s.is_proper_subset (s2) ok", properties.is_proper_subset_ok (s, s2))
+
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				s := set_to_be_tested.o
+				s2 := some_set_a
+			when 1 then
+				s := set_to_be_tested
+				s2 := same_set_a (s)
+			when 2 then
+				from
+					s := set_to_be_tested
+				until
+					not s.is_empty
+				loop
+					s := set_to_be_tested
+				end
+				s1 := same_set_a (s)
+					check
+						is_not_empty: not s1.is_empty -- s1 ≍ s
+					end
+				s2 := some_set_a / same_object_a (s1.any)
+			end
+			assert ("not s.is_proper_subset (s2)", not s.is_proper_subset (s2))
+			assert ("not s.is_proper_subset (s2) ok", properties.is_proper_subset_ok (s, s2))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("is_proper_subset", s.is_proper_subset (s2) ⇒ True)
+			assert ("is_proper_subset_ok", properties.is_proper_subset_ok (s, s2))
 		end
 
 feature {NONE} -- Factory (element to be tested)

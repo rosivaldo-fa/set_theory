@@ -16,6 +16,7 @@ inherit
 			is_subset,
 			is_strict_subset,
 			is_trivial_subset,
+			is_proper_subset,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -262,6 +263,12 @@ feature -- Comparison
 			-- <Precursor>
 		do
 			Result := is_empty or Current ≍ s
+		end
+
+	is_proper_subset (s: STS_SET [A, EQ]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := not is_empty and Current ⊂ s
 		end
 
 feature -- Conversion
