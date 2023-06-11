@@ -561,7 +561,7 @@ feature -- Test routines (Comparison)
 		local
 			a: A
 			s: like set_to_be_tested
-			s2, s3: like some_set_a
+			s2: like some_set_a
 		do
 			s := set_to_be_tested
 			s2 := some_set_a--∩ same_set_a (s)
@@ -606,6 +606,45 @@ feature -- Test routines (Comparison)
 			s2 := some_set_a
 			assert ("is_not_superset", s ⊉ s2 ⇒ True)
 			assert ("is_not_superset ok", properties.is_not_superset_ok (s, s2))
+		end
+
+	test_is_comparable
+			-- Test {STS_SET}.is_comparable.
+			-- Test {STI_SET}.is_comparable.
+		note
+			testing: "covers/{STS_SET}.is_comparable"
+			testing: "covers/{STI_SET}.is_comparable"
+		local
+			a, b: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			if next_random_item \\ 2 = 0 then
+				s := set_to_be_tested
+				s2 := some_set_a --∪ same_set_a (s)
+			else
+				s := set_to_be_tested
+				s2 := some_set_a--∩ same_set_a (s)
+			end
+			assert ("s.is_comparable (s2)", s.is_comparable (s2))
+			assert ("s.is_comparable (s2) ok", properties.is_comparable_ok (s, s2))
+
+			a := some_object_a
+			b := some_other_object_a (singleton (same_object_a (a)))
+			if next_random_item \\ 2 = 0 then
+				s := set_to_be_tested & same_object_a (a) / same_object_a (b)
+				s2 := (some_set_a / same_object_a (a)) & same_object_a (b)
+			else
+				s := (set_to_be_tested / same_object_a (a)) & same_object_a (b)
+				s2 := some_set_a & same_object_a (a) / same_object_a (b)
+			end
+			assert ("not s.is_comparable (s2)", not s.is_comparable (s2))
+			assert ("not s.is_comparable (s2) ok", properties.is_comparable_ok (s, s2))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("is_comparable", s.is_comparable (s2) ⇒ True)
+			assert ("is_comparable_ok", properties.is_comparable_ok (s, s2))
 		end
 
 feature {NONE} -- Factory (element to be tested)

@@ -177,6 +177,14 @@ feature -- Comparison
 			definition: Result = not (Current ⊇ s)
 		end
 
+	is_comparable (s: SET [A, EQ]): BOOLEAN
+			-- Is current set a subset or a superset of `s'?
+		do
+			Result := Current ⊆ s or s ⊆ Current
+		ensure
+			definition: Result = (Current ⊆ s or s ⊆ Current)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN

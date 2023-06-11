@@ -332,6 +332,17 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	is_comparable_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_comparable?
+		do
+			check
+				reflexive: s1.is_comparable (s1)
+				symmetric: s1.is_comparable (s2) ⇒ s2.is_comparable (s1)
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
