@@ -82,7 +82,7 @@ feature -- Properties (Primitive)
 			else
 				check
 					decomposing: s.others ≍ (s / s.any)
---					strict_subset: s.others ⊂ s
+					strict_subset: s.others ⊂ s
 					one_element_less: # s.others = # s - 1
 				then
 				end
