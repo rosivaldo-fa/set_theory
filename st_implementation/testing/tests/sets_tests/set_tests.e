@@ -862,19 +862,21 @@ feature -- Test routines (Comparison)
 		do
 			s := set_to_be_tested
 			if next_random_item \\ 2 = 0 then
-				s2 := same_set_a (s)
-			else
 				s2 := some_set_a.o
+			else
+				s2 := same_set_a (s)
 			end
 			assert ("s.is_trivial_superset (s2)", s.is_trivial_superset (s2))
 			assert ("s.is_trivial_superset (s2) ok", properties.is_trivial_superset_ok (s, s2))
 
-			s1 := some_set_a & some_object_a
-			s2 := same_set_a (s1)
-				check
-					is_not_empty: not s2.is_empty -- Above: s1 := some_set_a & some_object_a; s2 ≍ s1
-				end
-			s := set_to_be_tested / same_object_a (s2.any)
+			if next_random_item \\ 2 = 0 then
+				s := set_to_be_tested
+				s2 := some_set_a & some_other_object_a (s)
+			else
+				s2 := some_set_a & some_object_a
+				s1 := set_to_be_tested--∪ s2
+				 & some_other_object_a (s2)
+			end
 			assert ("not s.is_trivial_superset (s2)", not s.is_trivial_superset (s2))
 			assert ("not s.is_trivial_superset (s2) ok", properties.is_trivial_superset_ok (s, s2))
 
