@@ -582,10 +582,10 @@ feature -- Test routines (Comparison)
 
 	test_is_not_superset
 			-- Test {STS_SET}.is_not_superset.
-			-- Test {STI_SET}.is_not_superset.
+			-- Test {SET}.is_not_superset.
 		note
 			testing: "covers/{STS_SET}.is_not_superset"
-			testing: "covers/{STI_SET}.is_not_superset"
+			testing: "covers/{SET}.is_not_superset"
 		local
 			a: A
 			s: like set_to_be_tested
@@ -610,10 +610,10 @@ feature -- Test routines (Comparison)
 
 	test_is_comparable
 			-- Test {STS_SET}.is_comparable.
-			-- Test {STI_SET}.is_comparable.
+			-- Test {SET}.is_comparable.
 		note
 			testing: "covers/{STS_SET}.is_comparable"
-			testing: "covers/{STI_SET}.is_comparable"
+			testing: "covers/{SET}.is_comparable"
 		local
 			a, b: A
 			s: like set_to_be_tested
