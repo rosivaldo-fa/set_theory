@@ -332,6 +332,18 @@ feature -- Factory
 			definition: Result ≍ o.singleton (a)
 		end
 
+	is_not_superset_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_not_superset?
+		do
+			check
+				definition: s1 ⊉ s2 = (s2 |∃ agent s1.does_not_have)
+				cardinality: # s1 < # s2 ⇒ s1 ⊉ s2
+				cardinality: s1 ⊇ s2 ⇒ # s1 ≥ # s2
+			then
+				Result := True
+			end
+		end
+
 feature -- Predicate
 
 	negated (p: PREDICATE [A]; x: A): BOOLEAN
