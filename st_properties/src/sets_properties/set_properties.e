@@ -343,6 +343,27 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	is_not_comparable_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_not_comparable?
+		do
+			check
+				u: attached current_universe as u
+				definition: s1.is_not_comparable (s2) = (
+						(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?))
+						and
+						(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
+					)
+				lesser_definition: s1.is_not_comparable (s2) = (
+						(s1 |∃ agent s2.does_not_have) and (s2 |∃ agent s1.does_not_have)
+					)
+				by_inclusion: s1.is_not_comparable (s2) = (s1 ⊈ s2 and s2 ⊈ s1)
+--				proper_symmetric_difference: s1.is_not_comparable (s2) ⇒ (s1 ⊖ s2) ≭ o
+				irreflexive: not s1.is_not_comparable (s1)
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
