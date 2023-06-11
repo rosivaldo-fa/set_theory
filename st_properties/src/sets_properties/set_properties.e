@@ -211,7 +211,7 @@ feature -- Properties (Comparison)
 				u_ps_ps_card: attached (2 ^ (2 ^ # u)) as u_ps_ps_card
 				set_comparisons_upper_bound: attached (2 * u_ps_ps_card) as set_comparisons_upper_bound
 				element_comparisons_upper_bound: attached ((# u ^ 2) * set_comparisons_upper_bound) as
-					element_comparisons_upper_bound
+ element_comparisons_upper_bound
 --				checked_ps: attached {ISE_RUNTIME}.check_assert
 --					(element_comparisons_upper_bound ≤ max_asserted_elements) as checked_ps
 --					by_membership: element_comparisons_upper_bound ≤ max_elements ⇒ s1 ≍ s2 = (
@@ -238,20 +238,20 @@ feature -- Properties (Comparison)
 			check
 				u: attached current_universe as u
 				definition_1: s1 ≭ s2 = (
-					u |∃ agent u.ored (
-						agent anded (agent s1.has, agent s2.does_not_have, ?),
-						agent anded (agent s1.does_not_have, agent s2.has, ?), ?
+							u |∃ agent u.ored (
+									agent anded (agent s1.has, agent s2.does_not_have, ?),
+									agent anded (agent s1.does_not_have, agent s2.has, ?), ?
+								)
 						)
-					)
 				definition_2: s1 ≭ s2 = (
-					(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?)) or
-					(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
-					)
+							(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?)) or
+							(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
+						)
 				lesser_definition: s1 ≭ s2 = ((s1 |∃ agent s2.does_not_have) or (s2 |∃ agent s1.does_not_have))
 				u_ps_ps_card: attached (2 ^ (2 ^ # u)) as u_ps_ps_card
 				set_comparisons_upper_bound: attached (2 * u_ps_ps_card) as set_comparisons_upper_bound
 				element_comparisons_upper_bound: attached ((# u ^ 2) * set_comparisons_upper_bound) as
-					element_comparisons_upper_bound
+ element_comparisons_upper_bound
 --				checked_ps: attached {ISE_RUNTIME}.check_assert
 --					(element_comparisons_upper_bound ≤ max_asserted_elements) as checked_ps
 --					by_membership: element_comparisons_upper_bound ≤ max_elements ⇒ s1 ≭ s2 = (
@@ -385,4 +385,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end

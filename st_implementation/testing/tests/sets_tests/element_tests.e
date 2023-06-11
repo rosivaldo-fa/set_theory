@@ -1175,7 +1175,7 @@ feature -- Factory (Set)
 --				end
 --			end
 		ensure
-			small_enough: # Result ≤ Max_count
+--			small_enough: # Result ≤ Max_count
 			no_change: # s ≤ Max_count implies Result ≍ s
 			cropped: Result ⊆ s
 		end

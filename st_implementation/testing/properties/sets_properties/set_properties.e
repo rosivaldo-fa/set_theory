@@ -43,13 +43,13 @@ feature -- Access
 			Result := o
 			if not ({A}).is_attached then -- TODO: "Non-separate" Void must be avoided, since it may require a "separate" Void when e.g. mapping via some
 										  -- f (Void).
-				if {A} /~ {separate A} then -- TODO: System crashes when an agent gets a "separate" Void actual argument.
+--				if {A} /~ {separate A} then -- TODO: System crashes when an agent gets a "separate" Void actual argument.
 						check
 							has_default: ({A}).has_default -- {A} is a detachable type.
 							does_not_have: Result ∌ ({A}).default -- Result.is_empty
 						end
 					Result := Result.extended (({A}).default)
-				end
+--				end
 			end
 			a_type_id := ({detachable A}).type_id
 			mem_map := {MEMORY}.memory_map
@@ -193,7 +193,7 @@ if {ISE_RUNTIME}.type_conforms_to (@al.key, ({detachable STS_SET [A, STS_EQUALIT
 					end
 				end
 			end
-			print ("# u: ") print (# Result) print ('%N')
+--			print ("# u: ") print (# Result) print ('%N')
 		end
 
 	eq: EQ

@@ -122,7 +122,7 @@ feature -- Factory (Set)
 			tmp_result: SET [A, EQ]
 		do
 			inspect
-				next_random_item \\ 4
+				next_random_item \\ 3
 			when 0 then
 				Result := s
 			when 1 then
@@ -139,7 +139,7 @@ feature -- Factory (Set)
 --				when 1 then
 ----					create {like new_transformable_set_aa} Result.make_from_set (s)
 --				end
-			when 3 then
+			when 2 then
 				inspect
 					next_random_item \\ 1
 				when 0 then

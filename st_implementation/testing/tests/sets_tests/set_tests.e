@@ -357,7 +357,7 @@ feature -- Test routines (Construction)
 			assert ("{a,b} / c ok", properties.without_ok (s, c))
 
 			s := s & same_object_a (c)
-			assert ("{a,b,c} / c", (s / c) ≍ (singleton (a) / b))
+			assert ("{a,b,c} / c", (s / c) ≍ (singleton (a) & b))
 			assert ("{a,b,c} / c ok", properties.without_ok (s, c))
 
 			s := set_to_be_tested
