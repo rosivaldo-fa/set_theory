@@ -822,6 +822,39 @@ feature -- Test routines (Comparison)
 			assert ("is_not_strict_superset_ok", properties.is_not_strict_superset_ok (s, s2))
 		end
 
+	test_is_trivial_subset
+			-- Test {SET}.is_trivial_subset.
+		note
+			testing: "covers/{SET}.is_trivial_subset"
+		local
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			s := set_to_be_tested
+			if next_random_item \\ 2 = 0 then
+				s2 := same_set_a (o)
+			else
+				s2 := same_set_a (s)
+			end
+			assert ("s.is_trivial_subset (s2)", s.is_trivial_subset (s2))
+
+			s := set_to_be_tested & some_object_a
+			if next_random_item \\ 2 = 0 then
+				s2 := some_set_a & some_other_object_a (s)
+			else
+				from
+					s2 := some_set_a--∩ same_set_a (s).others
+				until
+					not s2.is_empty
+				loop
+					s2 := some_set_a--∩ same_set_a (s).others
+				end
+			end
+			assert ("not s.is_trivial_subset (s2)", not s.is_trivial_subset (s2))
+
+			assert ("is_trivial_subset", set_to_be_tested.is_trivial_subset (some_set_a) ⇒ True)
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

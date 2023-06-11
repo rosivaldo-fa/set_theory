@@ -225,6 +225,14 @@ feature -- Comparison
 			definition: Result = not (Current ⊃ s)
 		end
 
+	is_trivial_subset (s: SET [A, EQ]): BOOLEAN
+			-- Is current set the empty or the full susbset of `s'?
+		do
+			Result := Current ≍ o or Current ≍ s
+		ensure
+			definition: Result = (Current ≍ o or Current ≍ s)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
