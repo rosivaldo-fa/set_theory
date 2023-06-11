@@ -193,6 +193,14 @@ feature -- Comparison
 			definition: Result = not is_comparable (s)
 		end
 
+	is_strict_subset alias "⊂" (s: SET [A, EQ]): BOOLEAN
+			-- Does `s' include current set and are both sets unequal?
+		do
+			Result := Current ⊆ s and Current ≭ s
+		ensure
+			definition: Result = (Current ⊆ s and Current ≭ s)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN

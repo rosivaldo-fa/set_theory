@@ -686,6 +686,38 @@ feature -- Test routines (Comparison)
 			assert ("is_not_comparable_ok", properties.is_not_comparable_ok (s, s2))
 		end
 
+	test_is_strict_subset
+			-- Test {SET}.is_strict_subset.
+		note
+			testing: "covers/{SET}.is_strict_subset"
+		local
+			a: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			s := set_to_be_tested
+			s2 := some_set_a--∪ same_set_a (s)
+			 & some_other_object_a (s)
+			assert ("s ⊂ s2", s ⊂ s2)
+			assert ("s ⊂ s2 ok", properties.is_strict_subset_ok (s, s2, some_set_a))
+
+			s := set_to_be_tested
+			if next_random_item \\ 2 = 0 then
+				s2 := same_set_a (s)
+			else
+				a := some_object_a
+				s := s & same_object_a (a)
+				s2 := some_set_a / same_object_a (a)
+			end
+			assert ("not (s ⊂ s2)", not (s ⊂ s2))
+			assert ("not (s ⊂ s2) ok", properties.is_strict_subset_ok (s, s2, some_set_a))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("is_strict_subset", s ⊂ s2 ⇒ True)
+			assert ("is_strict_subset_ok", properties.is_strict_subset_ok (s, s2, some_set_a))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

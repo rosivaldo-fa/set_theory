@@ -14,6 +14,7 @@ inherit
 			cardinality,
 			equals,
 			is_subset,
+			is_strict_subset,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -247,6 +248,13 @@ feature -- Comparison
 			--| This feature is called very frequently. It is wortwhile to avoid agent indirection and recreating `eq' over and over at each comparison.
 		do
 			Result := Current = s or Current ~ s or # Current ≤ # s and then subset_relation_holds (Current, s, eq)
+		end
+
+	is_strict_subset alias "⊂" (s: STS_SET [A, EQ]): BOOLEAN
+			-- <Precursor>
+			--| This feature is called somewhat frequently. It is wortwhile to avoid agent indirection and recreating `eq' over and over at each comparison.
+		do
+			Result := Current /= s and Current /~ s and # Current < # s and then subset_relation_holds (Current, s, eq)
 		end
 
 feature -- Conversion
