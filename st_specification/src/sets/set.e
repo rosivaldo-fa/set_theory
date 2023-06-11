@@ -209,6 +209,14 @@ feature -- Comparison
 			definition: Result = not (Current ⊂ s)
 		end
 
+	is_strict_superset alias "⊃" (s: SET [A, EQ]): BOOLEAN
+			-- Does current set include `s' strictly?
+		do
+			Result := s ⊂ Current
+		ensure
+			definition: Result = (s ⊂ Current)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN

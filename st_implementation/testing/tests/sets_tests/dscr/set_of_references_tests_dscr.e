@@ -38,7 +38,8 @@ inherit
 			test_is_comparable,
 			test_is_not_comparable,
 			test_is_strict_subset,
-			test_is_not_strict_subset
+			test_is_not_strict_subset,
+			test_is_strict_superset
 		end
 
 feature -- Access
@@ -76,6 +77,7 @@ feature -- Test routines (All)
 			test_is_not_comparable
 			test_is_strict_subset
 			test_is_not_strict_subset
+			test_is_strict_superset
 		end
 
 feature -- Test routines (Primitive)
@@ -273,6 +275,15 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_SET}.is_not_strict_subset"
 			testing: "covers/{SET}.is_not_strict_subset"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_is_strict_superset
+			-- <Precursor>
+		note
+			testing: "covers/{STS_SET}.is_strict_superset"
+			testing: "covers/{SET}.is_strict_superset"
 		do
 			Precursor {SET_TESTS}
 		end
