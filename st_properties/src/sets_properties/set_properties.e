@@ -385,6 +385,24 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	is_not_strict_subset_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_not_strict_subset?
+		do
+			check
+				u: attached current_universe as u
+				definition: s1 ⊄ s2 = (
+						(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?)) or
+						(u |∀ agent implied (agent s2.has, agent s1.has, ?))
+					)
+				lesser_definition: s1 ⊄ s2 = ((s1 |∃ agent s2.does_not_have) or (s2 |∀ agent s1.has))
+				by_inclusion: s1 ⊄ s2 = (s1 ⊈ s2 or s2 ⊆ s1)
+				reflexive: s1 ⊄ s1
+				cardinality: # s1 ≥ # s2 ⇒ s1 ⊄ s2
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
