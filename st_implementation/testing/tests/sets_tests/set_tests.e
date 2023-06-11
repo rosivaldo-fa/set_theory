@@ -830,29 +830,58 @@ feature -- Test routines (Comparison)
 			s: like set_to_be_tested
 			s2: like some_set_a
 		do
-			s := set_to_be_tested
 			if next_random_item \\ 2 = 0 then
-				s2 := same_set_a (o)
+				s := o
+				s2 := some_set_a
 			else
+				s := set_to_be_tested
 				s2 := same_set_a (s)
 			end
 			assert ("s.is_trivial_subset (s2)", s.is_trivial_subset (s2))
 
 			s := set_to_be_tested & some_object_a
 			if next_random_item \\ 2 = 0 then
-				s2 := some_set_a & some_other_object_a (s)
+				s2 := some_set_a--∩ same_set_a (s).others
 			else
-				from
-					s2 := some_set_a--∩ same_set_a (s).others
-				until
-					not s2.is_empty
-				loop
-					s2 := some_set_a--∩ same_set_a (s).others
-				end
+				s2 := some_set_a & some_other_object_a (s)
 			end
 			assert ("not s.is_trivial_subset (s2)", not s.is_trivial_subset (s2))
 
 			assert ("is_trivial_subset", set_to_be_tested.is_trivial_subset (some_set_a) ⇒ True)
+		end
+
+	test_is_trivial_superset
+			-- Test {STS_SET}.is_trivial_superset.
+			-- Test {SET}.is_trivial_superset.
+		note
+			testing: "covers/{STS_SET}.is_trivial_superset"
+			testing: "covers/{SET}.is_trivial_superset"
+		local
+			s: like set_to_be_tested
+			s1, s2: like some_set_a
+		do
+			s := set_to_be_tested
+			if next_random_item \\ 2 = 0 then
+				s2 := same_set_a (s)
+			else
+				s2 := some_set_a.o
+			end
+			assert ("s.is_trivial_superset (s2)", s.is_trivial_superset (s2))
+			assert ("s.is_trivial_superset (s2) ok", properties.is_trivial_superset_ok (s, s2))
+
+			s1 := some_set_a & some_object_a
+			s2 := same_set_a (s1)
+				check
+					is_not_empty: not s2.is_empty -- Above: s1 := some_set_a & some_object_a; s2 ≍ s1
+				end
+			s := set_to_be_tested / same_object_a (s2.any)
+			assert ("not s.is_trivial_superset (s2)", not s.is_trivial_superset (s2))
+			assert ("not s.is_trivial_superset (s2) ok", properties.is_trivial_superset_ok (s, s2))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("is_trivial_superset", s.is_trivial_superset (s2) ⇒ True)
+			assert ("is_trivial_superset_ok", properties.is_trivial_superset_ok (s, s2))
 		end
 
 feature {NONE} -- Factory (element to be tested)
