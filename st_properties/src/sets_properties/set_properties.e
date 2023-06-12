@@ -456,6 +456,7 @@ feature -- Properties (Comparison)
 					)
 				lesser_definition: s1 ⊅ s2 = ((s1 |∀ agent s2.has) or (s2 |∃ agent s1.does_not_have))
 				by_inclusion: s1 ⊅ s2 = (s1 ⊉ s2 or s1 ≍ s2)
+				reflexive: s1 ⊅ s1
 				cardinality: # s1 ≤ # s2 ⇒ s1 ⊅ s2
 			then
 				Result := True
