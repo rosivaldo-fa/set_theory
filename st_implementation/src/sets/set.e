@@ -190,7 +190,7 @@ feature -- Construction
 	batch_extended (s: STS_SET [A, EQ]): like superset_anchor
 			-- Current set extended with every element in `s'
 		require
---			is_disjoint: is_disjoint (s)
+			is_disjoint: is_disjoint (s)
 		local
 			l_s: STS_SET [A, EQ]
 		do
