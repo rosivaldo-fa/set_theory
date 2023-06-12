@@ -488,12 +488,14 @@ feature -- Properties (Comparison)
 			end
 		end
 
-	is_proper_subset_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+	is_proper_subset_ok (s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
 			-- Do the properties verified within set theory hold for {STS_SET}.is_proper_subset?
 		do
 			check
 				definition: s1.is_proper_subset (s2) = (s1 ⊆ s2 and not s1.is_trivial_subset (s2))
 				irreflexive: not s1.is_proper_subset (s1)
+				asymmetric: s1.is_proper_subset (s2) ⇒ not s2.is_proper_subset (s1)
+				transitive: s1.is_proper_subset (s2) and s2.is_proper_subset (s3) ⇒ s1.is_proper_subset (s3)
 			then
 				Result := True
 			end
