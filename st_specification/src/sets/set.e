@@ -249,6 +249,14 @@ feature -- Comparison
 			definition: Result = (Current ⊆ s and Current ≭ o and Current ≭ s)
 		end
 
+	is_proper_superset (s: SET [A, EQ]): BOOLEAN
+			-- Is `s' a proper subset of current set?
+		do
+			Result := s.is_proper_subset (Current)
+		ensure
+			definition: Result = s.is_proper_subset (Current)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN

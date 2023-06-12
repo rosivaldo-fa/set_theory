@@ -901,7 +901,7 @@ feature -- Test routines (Comparison)
 			s1, s2: like some_set_a
 		do
 			s := set_to_be_tested & some_object_a
-			s2 := some_set_a & some_other_object_a (s) --∪ s
+			s2 := some_set_a & some_other_object_a (s) --∪ same_set_a (s)
 			assert ("s.is_proper_subset (s2)", s.is_proper_subset (s2))
 			assert ("s.is_proper_subset (s2) ok", properties.is_proper_subset_ok (s, s2, some_set_a))
 
@@ -925,6 +925,44 @@ feature -- Test routines (Comparison)
 			s2 := some_set_a
 			assert ("is_proper_subset", s.is_proper_subset (s2) ⇒ True)
 			assert ("is_proper_subset_ok", properties.is_proper_subset_ok (s, s2, some_set_a))
+		end
+
+	test_is_proper_superset
+			-- Test {STS_SET}.is_proper_superset.
+			-- Test {SET}.is_proper_superset.
+		note
+			testing: "covers/{STS_SET}.is_proper_superset"
+			testing: "covers/{SET}.is_proper_superset"
+		local
+			a: A
+			s: like set_to_be_tested
+			s1, s2: like some_set_a
+		do
+			s2 := some_set_a & some_object_a
+			s := set_to_be_tested & some_other_object_a (s2) --∪ same_set_a (s2)			
+			assert ("s.is_proper_superset (s2)", s.is_proper_superset (s2))
+			assert ("s.is_proper_superset (s2) ok", properties.is_proper_superset_ok (s, s2, some_set_a))
+
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				s2 := o
+				s := set_to_be_tested
+			when 1 then
+				s2 := some_set_a
+				s := o--∪ same_set_a (s2)
+			when 2 then
+				a := some_object_a
+				s2 := some_set_a & same_object_a (a)
+				s := set_to_be_tested / same_object_a (a)
+			end
+			assert ("not s.is_proper_superset (s2)", not s.is_proper_superset (s2))
+			assert ("not s.is_proper_superset (s2) ok", properties.is_proper_superset_ok (s, s2, some_set_a))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("is_proper_superset", s.is_proper_superset (s2) ⇒ True)
+			assert ("is_proper_superset_ok", properties.is_proper_superset_ok (s, s2, some_set_a))
 		end
 
 feature {NONE} -- Factory (element to be tested)
