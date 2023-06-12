@@ -17,6 +17,7 @@ inherit
 			is_strict_subset,
 			is_trivial_subset,
 			is_proper_subset,
+			is_disjoint,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -269,6 +270,102 @@ feature -- Comparison
 			-- <Precursor>
 		do
 			Result := not is_empty and Current ⊂ s
+		end
+
+	is_disjoint (s: STS_SET [A, EQ]): BOOLEAN
+			-- <Precursor>
+		local
+			s1, s2: STS_SET [A, EQ]
+			l_eq: EQ
+		do
+			Result := True
+			if not is_empty and not s.is_empty then
+				from
+					l_eq := eq -- Better to avoid recreating `eq' over and over.
+					s1 := Current
+				invariant
+--					definition: Result = ((Current ∖ s1) ∩ s) ≍ o
+				until
+					not Result or s1.is_empty
+				loop
+					from
+						s2 := s
+					invariant
+--						not_found_yet: (s ∖ s2) ∌ s1.any
+					until
+						s2.is_empty or else l_eq (s1.any, s2.any)
+					loop
+						s2 := s2.others
+					variant
+						cardinality_2: natural_as_integer (# s2)
+					end
+					Result := s2.is_empty
+					s1 := s1.others
+				variant
+					cardinality_1: natural_as_integer (# s1)
+				end
+			end
+		end
+
+feature -- Operation
+
+	filtered alias "|" (p: PREDICATE [A]): like subset_anchor
+			-- <Precursor>
+		local
+			s, previous_result, last_segment: like subset_anchor
+		do
+			from
+				Result := o
+				s := Current
+			invariant
+--				every_compliant_element: (Current ∖ s) |∀ agent (Current ∖ s).iff (p, agent Result.has, ?)
+--				nothing_else: Result ⊆ (Current ∖ s)
+			until
+				s.is_empty
+			loop
+				if p (s.any) then
+					from
+						previous_result := Result
+							check
+								does_not_have: Result ∌ s.any -- Result ⊆ (Current ∖ s)
+							end
+						Result := Result.extended (s.any)
+						last_segment := s
+						s := s.others
+					invariant
+--						previous_every_compliant_element: (Current ∖ last_segment) |∀ agent (Current ∖ last_segment).iff (p, agent previous_result.has, ?)
+--						previous_nothing_else: previous_result ⊆ (Current ∖ last_segment)
+--						compliant_segment: (last_segment ∖ s) |∀ p
+--						previous_result_is_disjoint: previous_result.is_disjoint (last_segment ∖ s) -- previous_result ⊆ (Current ∖ last_segment)
+--						building_up: Result ≍ previous_result.batch_extended (last_segment ∖ s)
+					until
+						s.is_empty or else not p (s.any)
+					loop
+							check
+								loop_does_not_have: Result ∌ s.any
+									-- previous_result.is_disjoint (last_segment ∖ s)
+									-- Result ≍ previous_result.batch_extended (last_segment ∖ s)
+							end
+						Result := Result.extended (s.any)
+						s := s.others
+					variant
+						inner_cardinality: natural_as_integer (# s)
+					end
+					if s.is_empty then
+							check
+								last_segment_is_disjoint: last_segment.is_disjoint (previous_result) -- previous_result.is_disjoint (last_segment ∖ s)
+							end
+							-- (last_segment ∖ s) |∀ p)
+						Result := last_segment.batch_extended (previous_result)
+					else
+						s := s.others
+					end
+				else
+					s := s.others
+				end
+			variant
+				outer_cardinality: natural_as_integer (# s)
+			end
 		end
 
 feature -- Conversion

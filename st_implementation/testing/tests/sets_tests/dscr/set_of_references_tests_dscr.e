@@ -44,7 +44,8 @@ inherit
 			test_is_trivial_subset,
 			test_is_trivial_superset,
 			test_is_proper_subset,
-			test_is_proper_superset
+			test_is_proper_superset,
+			test_is_disjoint
 		end
 
 feature -- Access
@@ -88,6 +89,7 @@ feature -- Test routines (All)
 			test_is_trivial_superset
 			test_is_proper_subset
 			test_is_proper_superset
+			test_is_disjoint
 		end
 
 feature -- Test routines (Primitive)
@@ -337,6 +339,14 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_SET}.is_proper_superset"
 			testing: "covers/{SET}.is_proper_superset"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_is_disjoint
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.is_disjoint"
 		do
 			Precursor {SET_TESTS}
 		end

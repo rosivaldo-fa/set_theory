@@ -514,6 +514,21 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	is_disjoint_ok (s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_disjoint?
+		do
+			check
+--				definition: s1.is_disjoint (s2) = s1 |∄ agent s2.has
+				quasi_irreflexive: s1 ≭ o ⇒ not s1.is_disjoint (s1)
+				symmetric: s1.is_disjoint (s2) = s2.is_disjoint (s1)
+				not_transitive: s1.is_disjoint (s2) and s2.is_disjoint (s3) ⇒ s1.is_disjoint (s3) or not s1.is_disjoint (s3)
+				left_disjoint: o.is_disjoint (s2)
+				right_disjoint: s1.is_disjoint (o)
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]

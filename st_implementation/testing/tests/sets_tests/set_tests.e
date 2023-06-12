@@ -898,7 +898,7 @@ feature -- Test routines (Comparison)
 		local
 			a: A
 			s: like set_to_be_tested
-			s1, s2: like some_set_a
+			s2: like some_set_a
 		do
 			s := set_to_be_tested & some_object_a
 			s2 := some_set_a & some_other_object_a (s) --∪ same_set_a (s)
@@ -936,7 +936,7 @@ feature -- Test routines (Comparison)
 		local
 			a: A
 			s: like set_to_be_tested
-			s1, s2: like some_set_a
+			s2: like some_set_a
 		do
 			s2 := some_set_a & some_object_a
 			s := set_to_be_tested & some_other_object_a (s2) --∪ same_set_a (s2)			
@@ -963,6 +963,37 @@ feature -- Test routines (Comparison)
 			s2 := some_set_a
 			assert ("is_proper_superset", s.is_proper_superset (s2) ⇒ True)
 			assert ("is_proper_superset_ok", properties.is_proper_superset_ok (s, s2, some_set_a))
+		end
+
+	test_is_disjoint
+			-- Test {STI_SET}.is_disjoint.
+		note
+			testing: "covers/{STI_SET}.is_disjoint"
+		local
+			a: A
+			s: like set_to_be_tested
+			s1, s2: like some_set_a
+		do
+			if next_random_item \\ 2 = 0 then
+				s := set_to_be_tested
+				s2 := some_set_a--∖ same_set_a (s)
+			else
+				s2 := some_set_a
+				s := set_to_be_tested--∖ same_set_a (s2)
+			end
+			assert ("s.is_disjoint (s2)", s.is_disjoint (s2))
+			assert ("s.is_disjoint (s2) ok", properties.is_disjoint_ok (s, s2, some_set_a))
+
+			a := some_object_a
+			s := set_to_be_tested & same_object_a (a)
+			s2 := some_set_a & same_object_a (a)
+			assert ("not s.is_disjoint (s2)", not s.is_disjoint (s2))
+			assert ("not s.is_disjoint (s2) ok", properties.is_disjoint_ok (s, s2, some_set_a))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("is_disjoint", s.is_disjoint (s2) ⇒ True)
+			assert ("is_disjoint_ok", properties.is_disjoint_ok (s, s2, some_set_a))
 		end
 
 feature {NONE} -- Factory (element to be tested)

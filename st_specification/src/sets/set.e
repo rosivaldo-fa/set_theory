@@ -257,6 +257,14 @@ feature -- Comparison
 			definition: Result = s.is_proper_subset (Current)
 		end
 
+	is_disjoint (s: SET [A, EQ]): BOOLEAN
+			-- Do current set and `s' have no common element?
+		do
+			Result := (Current ∩ s) ≍ o
+		ensure
+			definition: Result = (Current ∩ s) ≍ o
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
@@ -277,6 +285,24 @@ feature -- Quantifier
 			Result := transformer_to_boolean.set_reduction (Current, True, agent cumulative_conjunction (?, p, ?))
 		ensure
 			definition: Result = transformer_to_boolean.set_reduction (Current, True, agent cumulative_conjunction (?, p, ?))
+		end
+
+feature -- Operation
+
+	filtered alias "|" (p: PREDICATE [A]): like subset_anchor
+			-- Every element in current set for which `p' holds
+		deferred
+		ensure
+			every_compliant_element: Current |∀ agent iff (p, agent Result.has, ?)
+			nothing_else: Result ⊆ Current
+		end
+
+	intersected alias "∩" (s: SET [A, EQ]): like subset_anchor
+			-- Intersection of current set and `s', i.e. every element in current set that is in `s'.
+		do
+			Result := Current | agent s.has
+		ensure
+			definition: Result ≍ (Current | agent s.has)
 		end
 
 feature -- Factory
