@@ -424,7 +424,7 @@ feature -- Properties (Comparison)
 			end
 		end
 
-	is_strict_superset_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+	is_strict_superset_ok (s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
 			-- Do the properties verified within set theory hold for {STS_SET}.is_strict_superset?
 		do
 			check
@@ -434,8 +434,11 @@ feature -- Properties (Comparison)
 					(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?))
 					)
 				lesser_definition: s1 ⊃ s2 = ((s1 |∃ agent s2.does_not_have) and (s2 |∀ agent s1.has))
-				by_inclusion: s1 ⊃ s2 = (s1 ⊇ s2 and s1 ≭ s2)
---				proper_difference: s1 ⊃ s2 ⇒ (s1 ∖ s2) ≭ o
+				by_inclusion: s1 ⊃ s2 = (s1 ⊇ s2 and s2 ⊉ s1)
+				irreflexive: not (s1 ⊃ s1)
+				transitive: s1 ⊃ s2 and s2 ⊃ s3 ⇒ s1 ⊃ s3
+				asymmetric: s1 ⊃ s2 ⇒ not (s2 ⊃ s1)
+--				proper_difference: s1 ⊃ s2 ⇒ (s2 ∖ s1) ≭ o
 				cardinality: s1 ⊃ s2 ⇒ # s1 > # s2
 			then
 				Result := True

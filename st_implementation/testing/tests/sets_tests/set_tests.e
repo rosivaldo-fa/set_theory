@@ -768,7 +768,7 @@ feature -- Test routines (Comparison)
 			s2 := some_set_a / same_object_a (a)
 			s2 := s2--∩ same_set_a (s)
 			assert ("s ⊃ s2", s ⊃ s2)
-			assert ("s ⊃ s2 ok", properties.is_strict_superset_ok (s, s2))
+			assert ("s ⊃ s2 ok", properties.is_strict_superset_ok (s, s2, some_set_a))
 
 			s := set_to_be_tested
 			if next_random_item \\ 2 = 0 then
@@ -779,12 +779,12 @@ feature -- Test routines (Comparison)
 				s2 := some_set_a & same_object_a (a)
 			end
 			assert ("not (s ⊃ s2)", not (s ⊃ s2))
-			assert ("not (s ⊃ s2) ok", properties.is_strict_superset_ok (s, s2))
+			assert ("not (s ⊃ s2) ok", properties.is_strict_superset_ok (s, s2, some_set_a))
 
 			s := set_to_be_tested
 			s2 := some_set_a
 			assert ("is_strict_superset", s ⊃ s2 ⇒ True)
-			assert ("is_strict_superset_ok", properties.is_strict_superset_ok (s, s2))
+			assert ("is_strict_superset_ok", properties.is_strict_superset_ok (s, s2, some_set_a))
 		end
 
 	test_is_not_strict_superset
