@@ -1032,9 +1032,9 @@ feature -- Test routines (Comparison)
 feature -- Test routines (Quantifier)
 
 	test_exists
-			-- Test {STI_SET}.exists.
+			-- Test {SET}.exists.
 		note
-			testing: "covers/{STI_SET}.exists"
+			testing: "covers/{SET}.exists"
 		local
 			a: A
 			s: like set_to_be_tested
@@ -1044,7 +1044,6 @@ feature -- Test routines (Quantifier)
 				do
 					Result := x = Void or else x.out.hash_code \\ 2 = 0
 				end
-
 			from
 				a := some_object_a
 			until
@@ -1063,6 +1062,41 @@ feature -- Test routines (Quantifier)
 			s := set_to_be_tested
 			assert ("exists", (s |∃ p) ⇒ True)
 			assert ("exists_ok", properties.exists_ok (s, p))
+		end
+
+	test_does_not_exist
+			-- Test {STS_SET}.does_not_exist.
+			-- Test {SET}.does_not_exist.
+		note
+			testing: "covers/{STS_SET}.does_not_exist"
+			testing: "covers/{SET}.does_not_exist"
+		local
+			a: A
+			s: like set_to_be_tested
+			p: PREDICATE [A]
+		do
+			p := agent (x: A): BOOLEAN
+				do
+					Result := x = Void or else x.out.hash_code \\ 2 = 0
+				end
+			s := set_to_be_tested | agent negated (p, ?)
+			assert ("s |∄ p", s |∄ p)
+			assert ("s |∄ p ok", properties.does_not_exist_ok (s, p))
+
+			from
+				a := some_object_a
+			until
+				p (a)
+			loop
+				a := some_object_a
+			end
+			s := set_to_be_tested & same_object_a (a)
+			assert ("not (s |∄ p)", not (s |∄ p))
+			assert ("not (s |∄ p) ok", properties.does_not_exist_ok (s, p))
+
+			s := set_to_be_tested
+			assert ("does_not_exist", s |∄ p ⇒ True)
+			assert ("does_not_exist_ok", properties.does_not_exist_ok (s, p))
 		end
 
 feature {NONE} -- Factory (element to be tested)

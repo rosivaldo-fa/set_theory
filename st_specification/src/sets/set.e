@@ -295,6 +295,16 @@ feature -- Quantifier
 			definition: Result = transformer_to_boolean.set_reduction (Current, False, agent cumulative_disjunction (?, p, ?))
 		end
 
+	does_not_exist alias "|∄" (p: PREDICATE [A]): BOOLEAN
+			-- Existence negation: does `p' hold for no element in current set?
+		note
+			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
+		do
+			Result := not (Current |∃ p)
+		ensure
+			definition: Result = not (Current |∃ p)
+		end
+
 	for_all alias "|∀" (p: PREDICATE [A]): BOOLEAN
 			-- Universal quantifier: does `p' hold for every element in current set?
 		note
