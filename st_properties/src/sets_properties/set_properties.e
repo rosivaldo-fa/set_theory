@@ -362,7 +362,7 @@ feature -- Properties (Comparison)
 			end
 		end
 
-	is_not_comparable_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
+	is_not_comparable_ok (s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
 			-- Do the properties verified within set theory hold for {STS_SET}.is_not_comparable?
 		do
 			check
@@ -378,6 +378,8 @@ feature -- Properties (Comparison)
 				by_inclusion: s1.is_not_comparable (s2) = (s1 ⊈ s2 and s2 ⊈ s1)
 --				proper_symmetric_difference: s1.is_not_comparable (s2) ⇒ (s1 ⊖ s2) ≭ o
 				irreflexive: not s1.is_not_comparable (s1)
+				symmetric: s1.is_not_comparable (s2) ⇒ s2.is_not_comparable (s1)
+				not_transitive: s1.is_not_comparable (s2) and s2.is_not_comparable (s3) ⇒ s1.is_not_comparable (s3) or not s1.is_not_comparable (s3)
 			then
 				Result := True
 			end
