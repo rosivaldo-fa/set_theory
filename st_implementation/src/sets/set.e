@@ -18,6 +18,7 @@ inherit
 			is_trivial_subset,
 			is_proper_subset,
 			is_disjoint,
+			exists,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -305,6 +306,27 @@ feature -- Comparison
 					cardinality_1: natural_as_integer (# s1)
 				end
 			end
+		end
+
+feature -- Quantifier
+
+	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
+			-- <Precursor>
+		local
+			s: SET [A, EQ]
+		do
+			from
+				s := Current
+			invariant
+--				not_yet: not transformer_to_boolean.set_reduction (Current ∖ s, False, agent disjunction (?, p, ?))
+			until
+				s.is_empty or else p (s.any)
+			loop
+				s := s.others
+			variant
+				cardinality: natural_as_integer (# s)
+			end
+			Result := not s.is_empty
 		end
 
 feature -- Operation

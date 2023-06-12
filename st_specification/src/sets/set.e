@@ -273,6 +273,16 @@ feature -- Comparison
 			definition: Result = not is_disjoint (s)
 		end
 
+feature -- Relationship
+
+--	is_partitioned (ss: SET_OF_SETS [A, EQ]): BOOLEAN
+--			-- Is `ss' a partition of current set, i.e. a partition whose union equals current set?
+--		do
+--			Result := (Current ≍ ⋃ ss) and ss.is_partition
+--		ensure
+--			definition: Result = ((Current ≍ ⋃ ss) and ss.is_partition)
+--		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN

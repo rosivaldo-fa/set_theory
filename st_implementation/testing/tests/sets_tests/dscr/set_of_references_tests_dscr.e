@@ -46,7 +46,8 @@ inherit
 			test_is_proper_subset,
 			test_is_proper_superset,
 			test_is_disjoint,
-			test_intersects
+			test_intersects,
+			test_exists
 		end
 
 feature -- Access
@@ -92,6 +93,7 @@ feature -- Test routines (All)
 			test_is_proper_superset
 			test_is_disjoint
 			test_intersects
+			test_exists
 		end
 
 feature -- Test routines (Primitive)
@@ -358,6 +360,16 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_SET}.intersects"
 			testing: "covers/{SET}.intersects"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Quantifier)
+
+	test_exists
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.exists"
 		do
 			Precursor {SET_TESTS}
 		end

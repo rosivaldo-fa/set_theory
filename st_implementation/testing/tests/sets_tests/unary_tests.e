@@ -336,6 +336,18 @@ feature -- Factory (Set)
 			monomorphic: Result.generating_type ~ {detachable SET [STS_SET [A, EQ], STS_OBJECT_DEEP_EQUALITY [STS_SET [A, EQ]]]}
 		end
 
+feature -- Predicate
+
+	negated (p: PREDICATE [A]; x: A): BOOLEAN
+			-- Logical negation of `p' (`x'), i.e. is `p' (`x') false?
+			-- TODO: DRY.
+		do
+			Result := not p (x)
+		ensure
+			class
+			definition: Result = not p (x)
+		end
+
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[

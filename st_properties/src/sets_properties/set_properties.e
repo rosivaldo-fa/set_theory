@@ -543,6 +543,19 @@ feature -- Properties (Comparison)
 			end
 		end
 
+feature -- Properties (Quantifier)
+
+	exists_ok (s: STS_SET [A, EQ]; p: PREDICATE [A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.exists?
+		do
+			check
+				definition: (s |∃ p) = not (s |∀ agent negated (p, ?))
+				by_filtering: (s |∃ p) = (s | p) ≭ o
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]

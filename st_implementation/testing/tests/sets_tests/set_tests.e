@@ -1029,6 +1029,42 @@ feature -- Test routines (Comparison)
 			assert ("intersects_ok", properties.intersects_ok (s, s2, some_set_a))
 		end
 
+feature -- Test routines (Quantifier)
+
+	test_exists
+			-- Test {STI_SET}.exists.
+		note
+			testing: "covers/{STI_SET}.exists"
+		local
+			a: A
+			s: like set_to_be_tested
+			p: PREDICATE [A]
+		do
+			p := agent (x: A): BOOLEAN
+				do
+					Result := x = Void or else x.out.hash_code \\ 2 = 0
+				end
+
+			from
+				a := some_object_a
+			until
+				p (a)
+			loop
+				a := some_object_a
+			end
+			s := set_to_be_tested & same_object_a (a)
+			assert ("s |∃ p", s |∃ p)
+			assert ("s |∃ p ok", properties.exists_ok (s, p))
+
+			s := set_to_be_tested | agent negated (p, ?)
+			assert ("not (s |∃ p)", not (s |∃ p))
+			assert ("not (s |∃ p) ok", properties.exists_ok (s, p))
+
+			s := set_to_be_tested
+			assert ("exists", (s |∃ p) ⇒ True)
+			assert ("exists_ok", properties.exists_ok (s, p))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
