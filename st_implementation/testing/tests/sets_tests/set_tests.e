@@ -966,13 +966,13 @@ feature -- Test routines (Comparison)
 		end
 
 	test_is_disjoint
-			-- Test {STI_SET}.is_disjoint.
+			-- Test {SET}.is_disjoint.
 		note
-			testing: "covers/{STI_SET}.is_disjoint"
+			testing: "covers/{SET}.is_disjoint"
 		local
 			a: A
 			s: like set_to_be_tested
-			s1, s2: like some_set_a
+			s2: like some_set_a
 		do
 			if next_random_item \\ 2 = 0 then
 				s := set_to_be_tested
@@ -994,6 +994,39 @@ feature -- Test routines (Comparison)
 			s2 := some_set_a
 			assert ("is_disjoint", s.is_disjoint (s2) ⇒ True)
 			assert ("is_disjoint_ok", properties.is_disjoint_ok (s, s2, some_set_a))
+		end
+
+	test_intersects
+			-- Test {STS_SET}.intersects.
+			-- Test {SET}.intersects.
+		note
+			testing: "covers/{STS_SET}.intersects"
+			testing: "covers/{SET}.intersects"
+		local
+			a: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			a := some_object_a
+			s := set_to_be_tested & same_object_a (a)
+			s2 := some_set_a & same_object_a (a)
+			assert ("s.intersects (s2)", s.intersects (s2))
+			assert ("s.intersects (s2) ok", properties.intersects_ok (s, s2, some_set_a))
+
+			if next_random_item \\ 2 = 0 then
+				s := set_to_be_tested
+				s2 := some_set_a--∖ same_set_a (s)
+			else
+				s2 := some_set_a
+				s := set_to_be_tested--∖ same_set_a (s2)
+			end
+			assert ("not s.intersects (s2)", not s.intersects (s2))
+			assert ("not s.intersects (s2) ok", properties.intersects_ok (s, s2, some_set_a))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("intersects", s.intersects (s2) ⇒ True)
+			assert ("intersects_ok", properties.intersects_ok (s, s2, some_set_a))
 		end
 
 feature {NONE} -- Factory (element to be tested)

@@ -529,6 +529,20 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	intersects_ok (s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.intersects?
+		do
+			check
+				definition: s1.intersects (s2) = (s1 ∩ s2) ≭ o
+				by_existence: s1.intersects (s2) = (s1 |∃ agent s2.has)
+				quasi_reflexive: s1 ≭ o ⇒ s1.intersects (s1)
+				symmetric: s1.intersects (s2) = s2.intersects (s1)
+				not_transitive: s1.intersects (s2) and s2.intersects (s3) ⇒ s1.intersects (s3) or not s1.intersects (s3)
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]

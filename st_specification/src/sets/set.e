@@ -265,6 +265,14 @@ feature -- Comparison
 			definition: Result = (Current ∩ s) ≍ o
 		end
 
+	intersects (s: SET [A, EQ]): BOOLEAN
+			-- Do current set and `s' have any common element?
+		do
+			Result := not is_disjoint (s)
+		ensure
+			definition: Result = not is_disjoint (s)
+		end
+
 feature -- Quantifier
 
 	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
