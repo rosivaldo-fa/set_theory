@@ -627,7 +627,7 @@ feature -- Test routines (Comparison)
 				s2 := some_set_a--∩ same_set_a (s)
 			end
 			assert ("s.is_comparable (s2)", s.is_comparable (s2))
-			assert ("s.is_comparable (s2) ok", properties.is_comparable_ok (s, s2))
+			assert ("s.is_comparable (s2) ok", properties.is_comparable_ok (s, s2, some_set_a))
 
 			a := some_object_a
 			b := some_other_object_a (singleton (same_object_a (a)))
@@ -639,12 +639,12 @@ feature -- Test routines (Comparison)
 				s2 := some_set_a & same_object_a (a) / same_object_a (b)
 			end
 			assert ("not s.is_comparable (s2)", not s.is_comparable (s2))
-			assert ("not s.is_comparable (s2) ok", properties.is_comparable_ok (s, s2))
+			assert ("not s.is_comparable (s2) ok", properties.is_comparable_ok (s, s2, some_set_a))
 
 			s := set_to_be_tested
 			s2 := some_set_a
 			assert ("is_comparable", s.is_comparable (s2) ⇒ True)
-			assert ("is_comparable_ok", properties.is_comparable_ok (s, s2))
+			assert ("is_comparable_ok", properties.is_comparable_ok (s, s2, some_set_a))
 		end
 
 	test_is_not_comparable
