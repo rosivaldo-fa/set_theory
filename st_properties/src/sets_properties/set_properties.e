@@ -463,6 +463,18 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	is_trivial_subset_ok (s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.is_trivial_subset?
+		do
+			check
+				reflexive: s1.is_trivial_subset (s1)
+				antisymmetric: s1.is_trivial_subset (s2) and s2.is_trivial_subset (s1) ⇒ s1 ≍ s2
+				transitive: s1.is_trivial_subset (s2) and s2.is_trivial_subset (s3) ⇒ s1.is_trivial_subset (s3)
+			then
+				Result := True
+			end
+		end
+
 	is_trivial_superset_ok (s1, s2: STS_SET [A, EQ]): BOOLEAN
 			-- Do the properties verified within set theory hold for {STS_SET}.is_trivial_superset?
 		do

@@ -838,6 +838,7 @@ feature -- Test routines (Comparison)
 				s2 := same_set_a (s)
 			end
 			assert ("s.is_trivial_subset (s2)", s.is_trivial_subset (s2))
+			assert ("s.is_trivial_subset (s2) ok", properties.is_trivial_subset_ok (s, s2, some_set_a))
 
 			s := set_to_be_tested & some_object_a
 			if next_random_item \\ 2 = 0 then
@@ -846,8 +847,12 @@ feature -- Test routines (Comparison)
 				s2 := some_set_a & some_other_object_a (s)
 			end
 			assert ("not s.is_trivial_subset (s2)", not s.is_trivial_subset (s2))
+			assert ("not s.is_trivial_subset (s2) ok", properties.is_trivial_subset_ok (s, s2, some_set_a))
 
-			assert ("is_trivial_subset", set_to_be_tested.is_trivial_subset (some_set_a) ⇒ True)
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("is_trivial_subset", s.is_trivial_subset (s2) ⇒ True)
+			assert ("is_trivial_subset_ok", properties.is_trivial_subset_ok (s, s2, some_set_a))
 		end
 
 	test_is_trivial_superset
