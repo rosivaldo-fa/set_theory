@@ -1155,9 +1155,9 @@ feature -- Test routines (Quantifier)
 			p := agent (x, y: A): BOOLEAN
 				do
 					if x = Void then
-						Result := y /= Void
+						Result := y = Void
 					else
-						Result := y = Void or else x.out.hash_code \\ 2 = y.out.hash_code \\ 2
+						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
 					end
 				end
 			from
@@ -1216,9 +1216,9 @@ feature -- Test routines (Quantifier)
 			p := agent (x, y: A): BOOLEAN
 				do
 					if x = Void then
-						Result := y /= Void
+						Result := y = Void
 					else
-						Result := y = Void or else x.out.hash_code \\ 2 = y.out.hash_code \\ 2
+						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
 					end
 				end
 			from
@@ -1256,9 +1256,9 @@ feature -- Test routines (Quantifier)
 			p := agent (x, y: A): BOOLEAN
 				do
 					if x = Void then
-						Result := y /= Void
+						Result := y = Void
 					else
-						Result := y = Void or else x.out.hash_code \\ 2 = y.out.hash_code \\ 2
+						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
 					end
 				end
 			from
