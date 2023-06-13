@@ -16,16 +16,16 @@ feature -- Bug
 			-- Reproduce a bug on hash codes of separate objects.
 		local
 			a: A
-			h1, h2: INTEGER
+			o1, o2: STRING
 		do
 			from
 			until False
 			loop
 				a := some_object_a
-				h1 := object_hash_code (a)
-				h2 := object_hash_code (a)
+				o1 := object_out (a)
+				o2 := object_out (a)
 				check
-					h1 = h2
+					o1.hash_code = o2.hash_code
 				then
 				end
 			end
@@ -33,15 +33,14 @@ feature -- Bug
 
 feature {NONE} -- Implementation
 
-	object_hash_code (a: A): INTEGER
-			-- Hash code of `a'.`out'; 0 if `a' is Void.
+	object_out (a: A): STRING
+			-- New string containing terse printable representation of `a'
 		do
 			if a /= Void then
-				Result := a.out.hash_code
+				create Result.make_from_separate (a.out)
+			else
+				create Result.make_empty
 			end
-		ensure
-			when_void: a = Void ⇒ Result = 0
-			when_not_void: a /= Void ⇒ Result = a.out.hash_code
 		end
 
 note
