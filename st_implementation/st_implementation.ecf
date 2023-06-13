@@ -80,4 +80,9 @@
 			</cluster>
 		</cluster>
 	</target>
+	<target name="st_implementation_bugs" extends="st_implementation_tests">
+		<description>Bugs found within set theory classes, as implemented by st_implementation, and they respective properties, as stated by st_properties.</description>
+		<root class="BUGS" feature="reproduce_bugs"/>
+		<cluster name="bugs" location=".\bugs\" recursive="true"/>
+	</target>
 </system>

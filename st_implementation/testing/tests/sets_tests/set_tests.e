@@ -1119,7 +1119,9 @@ feature -- Test routines (Quantifier)
 			loop
 				a := some_object_a
 			end
-			s := set_to_be_tested | agent negated (p, ?) & same_object_a (a)
+			s := set_to_be_tested | agent negated (p, ?)
+			assert ("separate fail", s |∀ agent negated (p, ?))
+			s := s & same_object_a (a)
 			assert ("s |∃! p", s |∃! p)
 			assert ("s |∃! p ok", properties.exists_unique_ok (s, p))
 

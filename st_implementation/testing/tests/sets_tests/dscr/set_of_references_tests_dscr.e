@@ -400,7 +400,14 @@ feature -- Test routines (Quantifier)
 		note
 			testing: "covers/{SET}.exists_unique"
 		do
+			from
+
+			until false
+
+			loop
+
 			Precursor {SET_TESTS}
+			end
 		end
 
 	test_exists_pair
