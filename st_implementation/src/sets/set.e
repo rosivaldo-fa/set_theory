@@ -22,6 +22,7 @@ inherit
 			exists_unique,
 			exists_pair,
 			exists_distinct_pair,
+			for_all,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -416,6 +417,25 @@ feature -- Quantifier
 			variant
 				cardinality_1: natural_as_integer (# s1)
 			end
+		end
+
+	for_all alias "|∀" (p: PREDICATE [A]): BOOLEAN
+			-- <Precursor>
+		local
+			s: like subset_anchor
+		do
+			from
+				s := Current
+			invariant
+--				so_far_so_good: transformer_to_boolean.set_reduction (Current ∖ s, True, agent conjunction (?, p, ?))
+			until
+				s.is_empty or else not p (s.any)
+			loop
+				s := s.others
+			variant
+				cardinality: natural_as_integer (# s)
+			end
+			Result := s.is_empty
 		end
 
 feature -- Operation

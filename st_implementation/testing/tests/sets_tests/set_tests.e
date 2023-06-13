@@ -1279,6 +1279,39 @@ feature -- Test routines (Quantifier)
 			assert ("exists_distinct_pair_ok", properties.exists_distinct_pair_ok (s, p))
 		end
 
+	test_for_all
+			-- Test {SET}.for_all.
+		note
+			testing: "covers/{SET}.for_all"
+		local
+			a: A
+			s: like set_to_be_tested
+			p: PREDICATE [A]
+		do
+			p := agent (x: A): BOOLEAN
+				do
+					Result := x = Void or else x.out.hash_code \\ 2 = 0
+				end
+			s := set_to_be_tested | p
+			assert ("s |∀ p", s |∀ p)
+			assert ("s |∀ p ok", properties.for_all_ok (s, p))
+
+			from
+				a := some_object_a
+			until
+				not p (a)
+			loop
+				a := some_object_a
+			end
+			s := set_to_be_tested & same_object_a (a)
+			assert ("not (s |∀ p)", not (s |∀ p))
+			assert ("not (s |∀ p) ok", properties.for_all_ok (s, p))
+
+			s := set_to_be_tested
+			assert ("for_all", (s |∀ p) ⇒ True)
+			assert ("for_all_ok", properties.for_all_ok (s, p))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

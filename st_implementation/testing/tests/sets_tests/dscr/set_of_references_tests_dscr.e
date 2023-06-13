@@ -52,7 +52,8 @@ inherit
 			test_exists_unique,
 			test_exists_pair,
 			test_does_not_exist_pair,
-			test_exists_distinct_pair
+			test_exists_distinct_pair,
+			test_for_all
 		end
 
 feature -- Access
@@ -104,6 +105,7 @@ feature -- Test routines (All)
 			test_exists_pair
 			test_does_not_exist_pair
 			test_exists_distinct_pair
+			test_for_all
 		end
 
 feature -- Test routines (Primitive)
@@ -422,6 +424,14 @@ feature -- Test routines (Quantifier)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.exists_distinct_pair"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_for_all
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.for_all"
 		do
 			Precursor {SET_TESTS}
 		end
