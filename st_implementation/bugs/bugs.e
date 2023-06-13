@@ -13,11 +13,8 @@ feature {NONE} -- Initialization
 
 	reproduce_bugs
 			-- Reproduce selected known bugs.
-		local
-			shb: SEPARATE_OUT_BUG_DSCR
 		do
-			create shb
-			shb.reproduce_separate_out_bug
+			{SEPARATE_VOID_UNSAFETY}.reproduce_separate_void_unsafety
 		end
 
 note

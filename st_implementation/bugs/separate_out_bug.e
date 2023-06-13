@@ -3,6 +3,7 @@
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	EIS: "name={(separate) A}.out inconsistent results", "protocol=URI", "src=https://support.eiffel.com/report_detail/19890", "tag=separate, bug, compiler, SCOOP"
 
 deferred class
 	SEPARATE_OUT_BUG [A, EQ -> STS_EQUALITY [A] create default_create end]
@@ -14,6 +15,8 @@ feature -- Bug
 
 	reproduce_separate_out_bug
 			-- Reproduce a bug on `out' value of separate, generic objects.
+		note
+			EIS: "name={(separate) A}.out inconsistent results", "protocol=URI", "src=https://support.eiffel.com/report_detail/19890", "tag=separate, bug, compiler, SCOOP"
 		local
 			a: A
 			s1, s2: STRING
