@@ -325,6 +325,16 @@ feature -- Quantifier
 --			definition: Result = (× Current).exist_xy (p)
 		end
 
+	does_not_exist_pair (p: PREDICATE [A, A]): BOOLEAN
+			-- Does `p' hold for no pair of elements in current set?
+		note
+			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
+		do
+			Result := not exists_pair (p)
+		ensure
+			definition: Result = not exists_pair (p)
+		end
+
 	for_all alias "|∀" (p: PREDICATE [A]): BOOLEAN
 			-- Universal quantifier: does `p' hold for every element in current set?
 		note
