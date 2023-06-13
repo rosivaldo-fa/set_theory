@@ -315,6 +315,16 @@ feature -- Quantifier
 			definition: Result = (Current | p).is_singleton
 		end
 
+	exists_pair (p: PREDICATE [A, A]): BOOLEAN
+			-- Does `p' hold for some pair of elements in current set?
+		note
+			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
+		do
+--			Result := (× Current).exist_xy (p)
+		ensure
+--			definition: Result = (× Current).exist_xy (p)
+		end
+
 	for_all alias "|∀" (p: PREDICATE [A]): BOOLEAN
 			-- Universal quantifier: does `p' hold for every element in current set?
 		note

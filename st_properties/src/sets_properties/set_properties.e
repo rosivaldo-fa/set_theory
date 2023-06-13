@@ -592,6 +592,17 @@ feature -- Properties (Quantifier)
 			end
 		end
 
+	exists_pair_ok (s: STS_SET [A, EQ]; p: PREDICATE [A, A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.exists_pair?
+		do
+			check
+--				definition: s.exists_pair (p) = not s.for_all_pairs (agent pair_negated (p, ?, ?))
+--				by_filtering: s.exists_pair (p) = ((× s).filtered_xy (p)) ≭ (× o)
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]

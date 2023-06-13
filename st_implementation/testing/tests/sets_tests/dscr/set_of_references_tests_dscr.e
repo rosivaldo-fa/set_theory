@@ -49,7 +49,8 @@ inherit
 			test_intersects,
 			test_exists,
 			test_does_not_exist,
-			test_exists_unique
+			test_exists_unique,
+			test_exists_pair
 		end
 
 feature -- Access
@@ -98,6 +99,7 @@ feature -- Test routines (All)
 			test_exists
 			test_does_not_exist
 			test_exists_unique
+			test_exists_pair
 		end
 
 feature -- Test routines (Primitive)
@@ -391,6 +393,14 @@ feature -- Test routines (Quantifier)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.exists_unique"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_exists_pair
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.exists_pair"
 		do
 			Precursor {SET_TESTS}
 		end

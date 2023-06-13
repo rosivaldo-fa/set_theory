@@ -20,6 +20,7 @@ inherit
 			is_disjoint,
 			exists,
 			exists_unique,
+			exists_pair,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -351,6 +352,36 @@ feature -- Quantifier
 						found: p (s.any) -- loop termination
 					end
 				Result := s.others |∄ p
+			end
+		end
+
+	exists_pair (p: PREDICATE [A, A]): BOOLEAN
+			-- <Precursor>
+		local
+			s1, s2: like subset_anchor
+		do
+			from
+				s1 := Current
+			invariant
+--				definition: Result = ((Current ∖ s1).crossed (Current)).exist_xy (p)
+			until
+				Result or s1.is_empty
+			loop
+				from
+					s2 := Current
+				invariant
+--					not_yet: (singleton (s1.any) × (Current ∖ s2)).do_not_exist_xy (p)
+				until
+					s2.is_empty or else p (s1.any, s2.any)
+				loop
+					s2 := s2.others
+				variant
+					cardinality_2: natural_as_integer (# s2)
+				end
+				Result := not s2.is_empty
+				s1 := s1.others
+			variant
+				cardinality_1: natural_as_integer (# s1)
 			end
 		end
 

@@ -1143,6 +1143,49 @@ feature -- Test routines (Quantifier)
 			assert ("exists_unique_ok", properties.exists_unique_ok (s, p))
 		end
 
+	test_exists_pair
+			-- Test {SET}.exists_pair.
+		note
+			testing: "covers/{SET}.exists_pair"
+		local
+			a, b: A
+			s: like set_to_be_tested
+			p: PREDICATE [A, A]
+		do
+			p := agent (x, y: A): BOOLEAN
+				do
+					if x = Void then
+						Result := y /= Void
+					else
+						Result := y = Void or else x.out.hash_code \\ 2 /= y.out.hash_code \\ 2
+					end
+				end
+			from
+				a := some_object_a
+				b := some_object_a
+			until
+				p (a, b)
+			loop
+				a := some_object_a
+				b := some_object_a
+			end
+			s := set_to_be_tested & a & b
+			assert ("s.exists_pair (p)", s.exists_pair (p))
+			assert ("s.exists_pair (p) ok", properties.exists_pair_ok (s, p))
+
+			if next_random_item \\ 2 = 0 then
+				s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, a, ?)
+			else
+				s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, ?, b)
+			end
+			assert ("not s.exists_pair (p)", not s.exists_pair (p))
+			assert ("not s.exists_pair (p) ok", properties.exists_pair_ok (s, p))
+
+			s := set_to_be_tested
+			assert ("exists_pair", s.exists_pair (p) ⇒ True)
+			assert ("exists_pair_ok", properties.exists_pair_ok (s, p))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
@@ -1194,6 +1237,18 @@ feature {NONE} -- Factory (Set)
 			Result := o.singleton (a)
 		ensure
 			definition: Result ≍ o.singleton (a)
+		end
+
+feature -- Predicate
+
+	binary_anded (p: PREDICATE [A]; x: A; q: PREDICATE [A]; y: A): BOOLEAN
+			-- Does `p' (`x') and `q' (`y') hold?
+			-- TODO: Pull it up?
+		do
+			Result := p (x) and q (y)
+		ensure
+			class
+			definition: Result = (p (x) and q (y))
 		end
 
 note
