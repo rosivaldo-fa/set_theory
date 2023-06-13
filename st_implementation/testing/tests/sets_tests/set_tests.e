@@ -1157,7 +1157,7 @@ feature -- Test routines (Quantifier)
 					if x = Void then
 						Result := y /= Void
 					else
-						Result := y = Void or else x.out.hash_code \\ 2 /= y.out.hash_code \\ 2
+						Result := y = Void or else x.out.hash_code \\ 2 = y.out.hash_code \\ 2
 					end
 				end
 			from
@@ -1173,11 +1173,15 @@ feature -- Test routines (Quantifier)
 			assert ("s.exists_pair (p)", s.exists_pair (p))
 			assert ("s.exists_pair (p) ok", properties.exists_pair_ok (s, p))
 
-			if next_random_item \\ 2 = 0 then
-				s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, a, ?)
-			else
-				s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, ?, b)
-			end
+			p := agent (x, y: A): BOOLEAN
+				do
+					if x = Void then
+						Result := y /= Void
+					else
+						Result := y = Void or else x.out.hash_code \\ 2 /= y.out.hash_code \\ 2
+					end
+				end
+			s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, some_object_a, ?)
 			assert ("not s.exists_pair (p)", not s.exists_pair (p))
 			assert ("not s.exists_pair (p) ok", properties.exists_pair_ok (s, p))
 
@@ -1205,6 +1209,18 @@ feature -- Test routines (Quantifier)
 						Result := y = Void or else x.out.hash_code \\ 2 /= y.out.hash_code \\ 2
 					end
 				end
+			s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, some_object_a, ?)
+			assert ("s.does_not_exist_pair (p)", s.does_not_exist_pair (p))
+			assert ("s.does_not_exist_pair (p) ok", properties.does_not_exist_pair_ok (s, p))
+
+			p := agent (x, y: A): BOOLEAN
+				do
+					if x = Void then
+						Result := y /= Void
+					else
+						Result := y = Void or else x.out.hash_code \\ 2 = y.out.hash_code \\ 2
+					end
+				end
 			from
 				a := some_object_a
 				b := some_object_a
@@ -1214,14 +1230,6 @@ feature -- Test routines (Quantifier)
 				a := some_object_a
 				b := some_object_a
 			end
-			if next_random_item \\ 2 = 0 then
-				s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, a, ?)
-			else
-				s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, ?, b)
-			end
-			assert ("s.does_not_exist_pair (p)", s.does_not_exist_pair (p))
-			assert ("s.does_not_exist_pair (p) ok", properties.does_not_exist_pair_ok (s, p))
-
 			s := set_to_be_tested & a & b
 			assert ("not s.does_not_exist_pair (p)", not s.does_not_exist_pair (p))
 			assert ("not s.does_not_exist_pair (p) ok", properties.does_not_exist_pair_ok (s, p))
@@ -1230,6 +1238,40 @@ feature -- Test routines (Quantifier)
 			assert ("does_not_exist_pair", s.does_not_exist_pair (p) ⇒ True)
 			assert ("does_not_exist_pair_ok", properties.does_not_exist_pair_ok (s, p))
 		end
+
+--	test_exists_distinct_pair
+--			-- Test {SET}.exists_distinct_pair.
+--		note
+--			testing: "covers/{SET}.exists_distinct_pair"
+--		local
+--			a, b: A
+--			s: like set_to_be_tested
+--			p: PREDICATE [A, A]
+--		do
+--			p := agent p_x1_x2
+--			from
+--				a := some_object_a
+--				b := some_object_a
+--			until
+--				p (a, b) and not eq (a, b)
+--			loop
+--				a := some_object_a
+--				b := some_object_a
+--			end
+--			s := set_to_be_tested & a & b
+--			assert ("s.exists_distinct_pair (p)", s.exists_distinct_pair (p))
+--			assert ("s.exists_distinct_pair (p) ok", properties.exists_distinct_pair_ok (s, p))
+
+--			s := set_to_be_tested
+--			p := agent (s.element_to_element).anded (agent s.does_not_have, ?, agent s.does_not_have, ?)
+--			assert ("not s.exists_distinct_pair (p)", not s.exists_distinct_pair (p))
+--			assert ("not s.exists_distinct_pair (p) ok", properties.exists_distinct_pair_ok (s, p))
+
+--			s := set_to_be_tested
+--			p := agent p_x1_x2
+--			assert ("exists_distinct_pair", s.exists_distinct_pair (p) ⇒ True)
+--			assert ("exists_distinct_pair_ok", properties.exists_distinct_pair_ok (s, p))
+--		end
 
 feature {NONE} -- Factory (element to be tested)
 

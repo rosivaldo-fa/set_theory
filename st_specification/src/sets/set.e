@@ -335,6 +335,16 @@ feature -- Quantifier
 			definition: Result = not exists_pair (p)
 		end
 
+	exists_distinct_pair (p: PREDICATE [A, A]): BOOLEAN
+			-- Does `p' hold for some pair of distinct elements in current set?
+		note
+			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
+		do
+--			Result := (× Current ∖ ∆ Current).exist_xy (p)
+		ensure
+--			definition: Result = (× Current ∖ ∆ Current).exist_xy (p)
+		end
+
 	for_all alias "|∀" (p: PREDICATE [A]): BOOLEAN
 			-- Universal quantifier: does `p' hold for every element in current set?
 		note

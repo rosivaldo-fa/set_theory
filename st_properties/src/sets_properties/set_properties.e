@@ -614,6 +614,27 @@ feature -- Properties (Quantifier)
 			end
 		end
 
+--	exists_distinct_pair_ok (s: STS_SET [A, EQ]; p: PREDICATE [A, A]): BOOLEAN
+--			-- Do the properties verified within set theory hold for {STS_SET}.exists_distinct_pair?
+--		do
+--			check
+--				definition: s.exists_distinct_pair (p) = not s.for_all_distinct_pairs (agent pair_negated(p, ?, ?))
+--			then
+--			end
+--			if (# s ^ 2) ≤ max_elements then
+--				check
+--					by_filtering: s.exists_distinct_pair (p) = (× s).filtered_xy (p) ⊈ ∆ s
+--					by_square: s.exists_distinct_pair (p) = (× s).exist_xy (agent pair_anded (p, agent equality_does_not_hold, ?, ?))
+--				then
+--				end
+--			end
+--			check
+--				by_inequality: s.exists_distinct_pair (p) = s.exists_pair (agent pair_anded (p, agent equality_does_not_hold, ?, ?))
+--			then
+--				Result := True
+--			end
+--		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
