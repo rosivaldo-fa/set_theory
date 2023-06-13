@@ -437,3 +437,111 @@ BUGS                reproduce_bugs @2
 BUGS                root's creation                                     
 <0000000004D05098>                         Routine failure.              Exit
 -------------------------------------------------------------------------------
+
+st_implementation: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+SEPARATE_HASH_BUG_DSCR
+                    reproduce_separate_hash_bug @6
+                                           h1 = h2:
+<00000000047640F8>  (From SEPARATE_HASH_BUG)
+                                           Assertion violated.           Fail
+-------------------------------------------------------------------------------
+SEPARATE_HASH_BUG_DSCR
+                    reproduce_separate_hash_bug @6
+<00000000047640F8>  (From SEPARATE_HASH_BUG)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+BUGS                reproduce_bugs @2                                   
+<0000000004764098>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+BUGS                root's creation                                     
+<0000000004764098>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
+
+st_implementation: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+SEPARATE_HASH_BUG_DSCR
+                    reproduce_separate_hash_bug @6
+                                           h1 = h2:
+<0000000004BD40F8>  (From SEPARATE_HASH_BUG)
+                                           Assertion violated.           Fail
+-------------------------------------------------------------------------------
+SEPARATE_HASH_BUG_DSCR
+                    reproduce_separate_hash_bug @6
+<0000000004BD40F8>  (From SEPARATE_HASH_BUG)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+BUGS                reproduce_bugs @2                                   
+<0000000004BD4098>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+BUGS                root's creation                                     
+<0000000004BD4098>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
+
+st_implementation: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+SEPARATE_HASH_BUG_DSCR
+                    reproduce_separate_hash_bug @5
+                                           h1 = h2:
+<0000000004BF00F8>  (From SEPARATE_HASH_BUG)
+                                           Assertion violated.           Fail
+-------------------------------------------------------------------------------
+SEPARATE_HASH_BUG_DSCR
+                    reproduce_separate_hash_bug @5
+<0000000004BF00F8>  (From SEPARATE_HASH_BUG)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+BUGS                reproduce_bugs @2                                   
+<0000000004BF0098>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+BUGS                root's creation                                     
+<0000000004BF0098>                         Routine failure.              Exit
+-------------------------------------------------------------------------------
+
+st_implementation: system execution failed.
+Following is the set of recorded exceptions:
+
+******************************** Thread exception *****************************
+In thread           Root thread            0x0 (thread id)
+*******************************************************************************
+-------------------------------------------------------------------------------
+Class / Object      Routine                Nature of exception           Effect
+-------------------------------------------------------------------------------
+SEPARATE_HASH_BUG_DSCR
+                    reproduce_separate_hash_bug @5
+                                           h1 = h2:
+<0000000004C7E0F8>  (From SEPARATE_HASH_BUG)
+                                           Assertion violated.           Fail
+-------------------------------------------------------------------------------
+SEPARATE_HASH_BUG_DSCR
+                    reproduce_separate_hash_bug @5
+<0000000004C7E0F8>  (From SEPARATE_HASH_BUG)
+                                           Routine failure.              Fail
+-------------------------------------------------------------------------------
+BUGS                reproduce_bugs @2                                   
+<0000000004C7E098>                         Routine failure.              Fail
+-------------------------------------------------------------------------------
+BUGS                root's creation                                     
+<0000000004C7E098>                         Routine failure.              Exit
+-------------------------------------------------------------------------------

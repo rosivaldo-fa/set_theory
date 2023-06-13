@@ -1392,7 +1392,7 @@ feature {NONE} -- Implementation
 				Result := a.out.hash_code
 			end
 		ensure
-			when_void: a = Void ⇒  Result = 0
+			when_void: a = Void ⇒ Result = 0
 			when_not_void: a /= Void ⇒ Result = a.out.hash_code
 		end
 

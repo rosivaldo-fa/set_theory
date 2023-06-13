@@ -1,5 +1,5 @@
-note
-	description: "Object that reproduces a bug on hash codes of separate objects"
+﻿note
+	description: "Object that reproduces a bug on hash codes of separate, generic objects"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -15,39 +15,33 @@ feature -- Bug
 	reproduce_separate_hash_bug
 			-- Reproduce a bug on hash codes of separate objects.
 		local
-			e: ELEMENT_TESTS
 			a: A
-			i: INTEGER
-			cell: CELL [A]
+			h1, h2: INTEGER
 		do
 			from
-				create e
 			until False
 			loop
 				a := some_object_a
-				i := (
-					agent (x: A): INTEGER
-						do
-							if attached x then
-								Result := x.out.hash_code
-							end
-						end
-					).item (a)
-				create cell.put (a)
+				h1 := object_hash_code (a)
+				h2 := object_hash_code (a)
 				check
-					(
-						agent (x, y: A): BOOLEAN
-							do
-								if x = Void then
-									Result := y = Void
-								else
-									Result := y /= Void and then x.out.hash_code = y.out.hash_code
-								end
-							end
-						).item (a, cell.item)
+					h1 = h2
 				then
 				end
 			end
+		end
+
+feature {NONE} -- Implementation
+
+	object_hash_code (a: A): INTEGER
+			-- Hash code of `a'.`out'; 0 if `a' is Void.
+		do
+			if a /= Void then
+				Result := a.out.hash_code
+			end
+		ensure
+			when_void: a = Void ⇒ Result = 0
+			when_not_void: a /= Void ⇒ Result = a.out.hash_code
 		end
 
 note
