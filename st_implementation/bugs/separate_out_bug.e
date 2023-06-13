@@ -1,31 +1,31 @@
 ﻿note
-	description: "Object that reproduces a bug on hash codes of separate, generic objects"
+	description: "Object that reproduces a bug on {ANY}.out value of separate, generic objects"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
 deferred class
-	SEPARATE_HASH_BUG [A, EQ -> STS_EQUALITY [A] create default_create end]
+	SEPARATE_OUT_BUG [A, EQ -> STS_EQUALITY [A] create default_create end]
 
 inherit
 	UNARY_TESTS [A, EQ]
 
 feature -- Bug
 
-	reproduce_separate_hash_bug
-			-- Reproduce a bug on hash codes of separate objects.
+	reproduce_separate_out_bug
+			-- Reproduce a bug on `out' value of separate, generic objects.
 		local
 			a: A
-			o1, o2: STRING
+			s1, s2: STRING
 		do
 			from
 			until False
 			loop
 				a := some_object_a
-				o1 := object_out (a)
-				o2 := object_out (a)
+				s1 := object_out (a)
+				s2 := object_out (a)
 				check
-					o1.hash_code = o2.hash_code
+					s1.hash_code = s2.hash_code
 				then
 				end
 			end
@@ -50,4 +50,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end

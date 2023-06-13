@@ -22,17 +22,6 @@ inherit
 			test_holds_successively
 		end
 
-	TESTS_N
-		rename
-			element_to_be_tested as equality_to_be_tested
-		undefine
-			on_prepare,
-			equality_to_be_tested
-		redefine
-			properties,
-			test_all
-		end
-
 feature -- Access
 
 	properties: STP_OBJECT_DEEP_EQUALITY_PROPERTIES [NATURAL, STS_OBJECT_DEEP_EQUALITY [NATURAL]];

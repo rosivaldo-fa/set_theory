@@ -14,10 +14,10 @@ feature {NONE} -- Initialization
 	reproduce_bugs
 			-- Reproduce selected known bugs.
 		local
-			shb: SEPARATE_HASH_BUG_DSCR
+			shb: SEPARATE_OUT_BUG_DSCR
 		do
 			create shb
-			shb.reproduce_separate_hash_bug
+			shb.reproduce_separate_out_bug
 		end
 
 note

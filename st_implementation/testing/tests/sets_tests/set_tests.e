@@ -1387,6 +1387,8 @@ feature {NONE} -- Implementation
 
 	object_hash_code (a: A): INTEGER
 			-- Hash code of `a'.`out'; 0 if `a' is Void.
+		note
+			EIS: "name={(separate) A}.out inconsistent results", "protocol=URI", "src=https://support.eiffel.com/report_detail/19890", "tag=separate, bug, compiler, SCOOP"
 		do
 			if a /= Void then
 				Result := a.out.hash_code

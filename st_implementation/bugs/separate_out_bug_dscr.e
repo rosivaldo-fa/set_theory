@@ -1,14 +1,14 @@
 note
-	description: "{SEPARATE_HASH_BUG [detachable separate CHARACTER_REF, ...]}."
+	description: "{SEPARATE_OUT_BUG [detachable separate CHARACTER_REF, ...]}."
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	SEPARATE_HASH_BUG_DSCR
+	SEPARATE_OUT_BUG_DSCR
 
 inherit
-	SEPARATE_HASH_BUG [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
+	SEPARATE_OUT_BUG [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
 		rename
 			some_object_a as some_separate_character_ref,
 			some_immediate_set_a as some_immediate_set_of_references_dscr,
