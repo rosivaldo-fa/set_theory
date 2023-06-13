@@ -1099,6 +1099,50 @@ feature -- Test routines (Quantifier)
 			assert ("does_not_exist_ok", properties.does_not_exist_ok (s, p))
 		end
 
+	test_exists_unique
+			-- Test {SET}.exists_unique.
+		note
+			testing: "covers/{SET}.exists_unique"
+		local
+			a: A
+			s: like set_to_be_tested
+			p: PREDICATE [A]
+		do
+			p := agent (x: A): BOOLEAN
+				do
+					Result := x = Void or else x.out.hash_code \\ 2 = 0
+				end
+			from
+				a := some_object_a
+			until
+				p (a)
+			loop
+				a := some_object_a
+			end
+			s := set_to_be_tested | agent negated (p, ?) & same_object_a (a)
+			assert ("s |∃! p", s |∃! p)
+			assert ("s |∃! p ok", properties.exists_unique_ok (s, p))
+
+			if next_random_item \\ 2 = 0 then
+				s := s / same_object_a (a)
+			else
+				from
+					a := some_other_object_a (s)
+				until
+					p (a)
+				loop
+					a := some_other_object_a (s)
+				end
+				s := s & same_object_a (a)
+			end
+			assert ("not (s |∃! p)", not (s |∃! p))
+			assert ("not (s |∃! p) ok", properties.exists_unique_ok (s, p))
+
+			s := set_to_be_tested
+			assert ("exists_unique", s |∃! p ⇒ True)
+			assert ("exists_unique_ok", properties.exists_unique_ok (s, p))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

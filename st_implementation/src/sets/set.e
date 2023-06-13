@@ -19,6 +19,7 @@ inherit
 			is_proper_subset,
 			is_disjoint,
 			exists,
+			exists_unique,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -327,6 +328,30 @@ feature -- Quantifier
 				cardinality: natural_as_integer (# s)
 			end
 			Result := not s.is_empty
+		end
+
+	exists_unique alias "|∃!" (p: PREDICATE [A]): BOOLEAN
+			-- <Precursor>
+		local
+			s: SET [A, EQ]
+		do
+			from
+				s := Current
+			invariant
+--				not_yet: ((Current ∖ s) | p) ≍ o
+			until
+				s.is_empty or else p (s.any)
+			loop
+				s := s.others
+			variant
+				cardinality: natural_as_integer (# s)
+			end
+			if not s.is_empty then
+					check
+						found: p (s.any) -- loop termination
+					end
+				Result := s.others |∄ p
+			end
 		end
 
 feature -- Operation

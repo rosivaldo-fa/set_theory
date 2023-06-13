@@ -48,7 +48,8 @@ inherit
 			test_is_disjoint,
 			test_intersects,
 			test_exists,
-			test_does_not_exist
+			test_does_not_exist,
+			test_exists_unique
 		end
 
 feature -- Access
@@ -96,6 +97,7 @@ feature -- Test routines (All)
 			test_intersects
 			test_exists
 			test_does_not_exist
+			test_exists_unique
 		end
 
 feature -- Test routines (Primitive)
@@ -381,6 +383,14 @@ feature -- Test routines (Quantifier)
 		note
 			testing: "covers/{STS_SET}.does_not_exist"
 			testing: "covers/{SET}.does_not_exist"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_exists_unique
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.exists_unique"
 		do
 			Precursor {SET_TESTS}
 		end

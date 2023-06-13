@@ -135,8 +135,8 @@ feature -- Properties (Membership)
 			-- Do the properties verified within set theory hold for {STS_SET}.does_not_have?
 		do
 			check
---				definition: s ∌ a = s |∄ agent s.equality_holds (?, a)
---				has_own_elements: s |∄ agent s.does_not_have
+				definition: s ∌ a = s |∄ agent s.equality_holds (?, a)
+				has_own_elements: s |∄ agent s.does_not_have
 				empty_set_has_nothing: o ∌ a
 			then
 				Result := True
@@ -368,13 +368,13 @@ feature -- Properties (Comparison)
 			check
 				u: attached current_universe as u
 				definition: s1.is_not_comparable (s2) = (
-						(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?))
-						and
-						(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
-					)
+							(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?))
+							and
+							(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
+						)
 				lesser_definition: s1.is_not_comparable (s2) = (
-						(s1 |∃ agent s2.does_not_have) and (s2 |∃ agent s1.does_not_have)
-					)
+							(s1 |∃ agent s2.does_not_have) and (s2 |∃ agent s1.does_not_have)
+						)
 				by_inclusion: s1.is_not_comparable (s2) = (s1 ⊈ s2 and s2 ⊈ s1)
 --				proper_symmetric_difference: s1.is_not_comparable (s2) ⇒ (s1 ⊖ s2) ≭ o
 				irreflexive: not s1.is_not_comparable (s1)
@@ -391,9 +391,9 @@ feature -- Properties (Comparison)
 			check
 				u: attached current_universe as u
 				definition: s1 ⊂ s2 = (
-						(u |∀ agent implied (agent s1.has, agent s2.has, ?)) and
-						(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
-					)
+							(u |∀ agent implied (agent s1.has, agent s2.has, ?)) and
+							(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
+						)
 				lesser_definition: s1 ⊂ s2 = ((s1 |∀ agent s2.has) and (s2 |∃ agent s1.does_not_have))
 				by_inclusion: s1 ⊂ s2 = (s1 ⊆ s2 and s2 ⊈ s1)
 				irreflexive: not (s1 ⊂ s1)
@@ -412,9 +412,9 @@ feature -- Properties (Comparison)
 			check
 				u: attached current_universe as u
 				definition: s1 ⊄ s2 = (
-						(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?)) or
-						(u |∀ agent implied (agent s2.has, agent s1.has, ?))
-					)
+							(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?)) or
+							(u |∀ agent implied (agent s2.has, agent s1.has, ?))
+						)
 				lesser_definition: s1 ⊄ s2 = ((s1 |∃ agent s2.does_not_have) or (s2 |∀ agent s1.has))
 				by_inclusion: s1 ⊄ s2 = (s1 ⊈ s2 or s2 ⊆ s1)
 				reflexive: s1 ⊄ s1
@@ -430,9 +430,9 @@ feature -- Properties (Comparison)
 			check
 				u: attached current_universe as u
 				definition: s1 ⊃ s2 = (
-					(u |∀ agent implied (agent s2.has, agent s1.has, ?)) and
-					(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?))
-					)
+							(u |∀ agent implied (agent s2.has, agent s1.has, ?)) and
+							(u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?))
+						)
 				lesser_definition: s1 ⊃ s2 = ((s1 |∃ agent s2.does_not_have) and (s2 |∀ agent s1.has))
 				by_inclusion: s1 ⊃ s2 = (s1 ⊇ s2 and s2 ⊉ s1)
 				irreflexive: not (s1 ⊃ s1)
@@ -451,9 +451,9 @@ feature -- Properties (Comparison)
 			check
 				u: attached current_universe as u
 				definition: s1 ⊅ s2 = (
-						(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?)) or
-						(u |∀ agent implied (agent s1.has, agent s2.has, ?))
-					)
+							(u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?)) or
+							(u |∀ agent implied (agent s1.has, agent s2.has, ?))
+						)
 				lesser_definition: s1 ⊅ s2 = ((s1 |∀ agent s2.has) or (s2 |∃ agent s1.does_not_have))
 				by_inclusion: s1 ⊅ s2 = (s1 ⊉ s2 or s1 ≍ s2)
 				reflexive: s1 ⊅ s1
@@ -518,7 +518,7 @@ feature -- Properties (Comparison)
 			-- Do the properties verified within set theory hold for {STS_SET}.is_disjoint?
 		do
 			check
---				definition: s1.is_disjoint (s2) = s1 |∄ agent s2.has
+				definition: s1.is_disjoint (s2) = s1 |∄ agent s2.has
 				quasi_irreflexive: s1 ≭ o ⇒ not s1.is_disjoint (s1)
 				symmetric: s1.is_disjoint (s2) = s2.is_disjoint (s1)
 				not_transitive: s1.is_disjoint (s2) and s2.is_disjoint (s3) ⇒ s1.is_disjoint (s3) or not s1.is_disjoint (s3)
@@ -562,6 +562,31 @@ feature -- Properties (Quantifier)
 			check
 				definition: s |∄ p = (s |∀ agent negated (p, ?))
 				by_filtering: s |∄ p = (s | p) ≍ o
+			then
+				Result := True
+			end
+		end
+
+	exists_unique_ok (s: STS_SET [A, EQ]; p: PREDICATE [A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.exists_unique?
+		do
+			check
+				definition: s |∃! p = (s |∃ agent (ia_s: STS_SET [A, EQ] ia_p: PREDICATE [A] x: A): BOOLEAN
+					do
+						Result := ia_s |∀ agent ia_s.iff (ia_p, agent ia_s.equality_holds (?, x), ?)
+					end (s, p, ?))
+				by_inequality: s |∃! p = (s |∃ agent (ia_s: STS_SET [A, EQ] ia_p: PREDICATE [A] x: A): BOOLEAN
+					do
+						Result := ia_p (x) and ia_s |∄ agent anded (ia_p, agent negated (agent ia_s.equality_holds (?, x), ?), ?)
+					end (s, p, ?))
+				by_equality: s |∃! p = (s |∃ agent (ia_s: STS_SET [A, EQ] ia_p: PREDICATE [A] x: A): BOOLEAN
+					do
+						Result := ia_p (x) and (ia_s |∀ agent implied (ia_p, agent ia_s.equality_holds (?, x), ?))
+					end (s, p, ?))
+--				by_pairing: s |∃! p = (
+--					(s |∃ p) and (s.for_all_pairs (agent pair_implied (agent (s.element_to_element).anded (p, ?, p, ?), agent s.equality_holds, ?, ?)))
+--					)
+				by_cardinality: s |∃! p = (# (s | p) = 1)
 			then
 				Result := True
 			end
