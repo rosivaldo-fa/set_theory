@@ -51,7 +51,8 @@ inherit
 			test_does_not_exist,
 			test_exists_unique,
 			test_exists_pair,
-			test_does_not_exist_pair
+			test_does_not_exist_pair,
+			test_exists_distinct_pair
 		end
 
 feature -- Access
@@ -102,6 +103,7 @@ feature -- Test routines (All)
 			test_exists_unique
 			test_exists_pair
 			test_does_not_exist_pair
+			test_exists_distinct_pair
 		end
 
 feature -- Test routines (Primitive)
@@ -412,6 +414,14 @@ feature -- Test routines (Quantifier)
 		note
 			testing: "covers/{STS_SET}.does_not_exist_pair"
 			testing: "covers/{SET}.does_not_exist_pair"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_exists_distinct_pair
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.exists_distinct_pair"
 		do
 			Precursor {SET_TESTS}
 		end

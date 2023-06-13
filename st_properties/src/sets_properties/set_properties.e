@@ -614,26 +614,18 @@ feature -- Properties (Quantifier)
 			end
 		end
 
---	exists_distinct_pair_ok (s: STS_SET [A, EQ]; p: PREDICATE [A, A]): BOOLEAN
---			-- Do the properties verified within set theory hold for {STS_SET}.exists_distinct_pair?
---		do
---			check
+	exists_distinct_pair_ok (s: STS_SET [A, EQ]; p: PREDICATE [A, A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.exists_distinct_pair?
+		do
+			check
 --				definition: s.exists_distinct_pair (p) = not s.for_all_distinct_pairs (agent pair_negated(p, ?, ?))
---			then
---			end
---			if (# s ^ 2) ≤ max_elements then
---				check
---					by_filtering: s.exists_distinct_pair (p) = (× s).filtered_xy (p) ⊈ ∆ s
---					by_square: s.exists_distinct_pair (p) = (× s).exist_xy (agent pair_anded (p, agent equality_does_not_hold, ?, ?))
---				then
---				end
---			end
---			check
---				by_inequality: s.exists_distinct_pair (p) = s.exists_pair (agent pair_anded (p, agent equality_does_not_hold, ?, ?))
---			then
---				Result := True
---			end
---		end
+--				by_filtering: s.exists_distinct_pair (p) = (× s).filtered_xy (p) ⊈ ∆ s
+--				by_square: s.exists_distinct_pair (p) = (× s).exist_xy (agent pair_anded (p, agent equality_does_not_hold, ?, ?))
+				by_inequality: s.exists_distinct_pair (p) = s.exists_pair (agent pair_anded (p, agent pair_negated (agent s.equality_holds, ?, ?), ?, ?))
+			then
+				Result := True
+			end
+		end
 
 feature -- Factory
 
@@ -676,6 +668,26 @@ feature -- Predicate
 		ensure
 			class
 			definition: Result = (p1 (x) ⇒ p2 (x))
+		end
+
+	pair_negated (p: PREDICATE [A, A]; x, y: A): BOOLEAN
+			-- Logical negation of `p' (`x', `y'), i.e. is `p' (`x', `y') false?
+			-- TODO: Pull it up?
+		do
+			Result := not p (x, y)
+		ensure
+			class
+			definition: Result = not p (x, y)
+		end
+
+	pair_anded (p1, p2: PREDICATE [A, A]; x, y: A): BOOLEAN
+			-- Do `p1' (`x', `y') and `p2' (`x', `y') hold?
+			-- TODO: Pull it up?
+		do
+			Result := p1 (x, y) and p2 (x, y)
+		ensure
+			class
+			definition: Result = (p1 (x, y) and p2 (x, y))
 		end
 
 feature {NONE} -- Anchor

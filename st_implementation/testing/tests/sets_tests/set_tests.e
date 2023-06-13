@@ -1239,39 +1239,45 @@ feature -- Test routines (Quantifier)
 			assert ("does_not_exist_pair_ok", properties.does_not_exist_pair_ok (s, p))
 		end
 
---	test_exists_distinct_pair
---			-- Test {SET}.exists_distinct_pair.
---		note
---			testing: "covers/{SET}.exists_distinct_pair"
---		local
---			a, b: A
---			s: like set_to_be_tested
---			p: PREDICATE [A, A]
---		do
---			p := agent p_x1_x2
---			from
---				a := some_object_a
---				b := some_object_a
---			until
---				p (a, b) and not eq (a, b)
---			loop
---				a := some_object_a
---				b := some_object_a
---			end
---			s := set_to_be_tested & a & b
---			assert ("s.exists_distinct_pair (p)", s.exists_distinct_pair (p))
---			assert ("s.exists_distinct_pair (p) ok", properties.exists_distinct_pair_ok (s, p))
+	test_exists_distinct_pair
+			-- Test {SET}.exists_distinct_pair.
+		note
+			testing: "covers/{SET}.exists_distinct_pair"
+		local
+			a, b: A
+			s: like set_to_be_tested
+			p: PREDICATE [A, A]
+		do
+			p := agent (x, y: A): BOOLEAN do Result := eq_a (x, y) end
+			s := set_to_be_tested
+			assert ("not s.exists_distinct_pair (p)", not s.exists_distinct_pair (p))
+			assert ("not s.exists_distinct_pair (p) ok", properties.exists_distinct_pair_ok (s, p))
 
---			s := set_to_be_tested
---			p := agent (s.element_to_element).anded (agent s.does_not_have, ?, agent s.does_not_have, ?)
---			assert ("not s.exists_distinct_pair (p)", not s.exists_distinct_pair (p))
---			assert ("not s.exists_distinct_pair (p) ok", properties.exists_distinct_pair_ok (s, p))
+			p := agent (x, y: A): BOOLEAN
+				do
+					if x = Void then
+						Result := y /= Void
+					else
+						Result := y = Void or else x.out.hash_code \\ 2 = y.out.hash_code \\ 2
+					end
+				end
+			from
+				a := some_object_a
+				b := some_object_a
+			until
+				p (a, b) and not eq_a (a, b)
+			loop
+				a := some_object_a
+				b := some_object_a
+			end
+			s := set_to_be_tested & a & b
+			assert ("s.exists_distinct_pair (p)", s.exists_distinct_pair (p))
+			assert ("s.exists_distinct_pair (p) ok", properties.exists_distinct_pair_ok (s, p))
 
---			s := set_to_be_tested
---			p := agent p_x1_x2
---			assert ("exists_distinct_pair", s.exists_distinct_pair (p) ⇒ True)
---			assert ("exists_distinct_pair_ok", properties.exists_distinct_pair_ok (s, p))
---		end
+			s := set_to_be_tested
+			assert ("exists_distinct_pair", s.exists_distinct_pair (p) ⇒ True)
+			assert ("exists_distinct_pair_ok", properties.exists_distinct_pair_ok (s, p))
+		end
 
 feature {NONE} -- Factory (element to be tested)
 
@@ -1324,18 +1330,6 @@ feature {NONE} -- Factory (Set)
 			Result := o.singleton (a)
 		ensure
 			definition: Result ≍ o.singleton (a)
-		end
-
-feature -- Predicate
-
-	binary_anded (p: PREDICATE [A]; x: A; q: PREDICATE [A]; y: A): BOOLEAN
-			-- Does `p' (`x') and `q' (`y') hold?
-			-- TODO: Pull it up?
-		do
-			Result := p (x) and q (y)
-		ensure
-			class
-			definition: Result = (p (x) and q (y))
 		end
 
 note

@@ -355,3 +355,4 @@ APPLICATION         test_all @1
 APPLICATION         root's creation                                     
 <00000000041A65E8>                         Routine failure.              Exit
 -------------------------------------------------------------------------------
+Catcall detected in {FUNCTION}.item for arg#1: expected separate TUPLE [separate CHARACTER_8_REF, separate CHARACTER_8_REF] but got TUPLE [separate CHARACTER_8_REF]

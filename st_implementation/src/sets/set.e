@@ -21,6 +21,7 @@ inherit
 			exists,
 			exists_unique,
 			exists_pair,
+			exists_distinct_pair,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -373,6 +374,38 @@ feature -- Quantifier
 --					not_yet: (singleton (s1.any) × (Current ∖ s2)).do_not_exist_xy (p)
 				until
 					s2.is_empty or else p (s1.any, s2.any)
+				loop
+					s2 := s2.others
+				variant
+					cardinality_2: natural_as_integer (# s2)
+				end
+				Result := not s2.is_empty
+				s1 := s1.others
+			variant
+				cardinality_1: natural_as_integer (# s1)
+			end
+		end
+
+	exists_distinct_pair (p: PREDICATE [A, A]): BOOLEAN
+			-- <Precursor>
+		local
+			s1, s2: like subset_anchor
+			l_eq: EQ
+		do
+			from
+				s1 := Current
+				l_eq := eq -- Better to avoid recreating `eq' over and over.
+			invariant
+--				definition: Result = ((Current ∖ s1) × Current ∖ ∆ (Current ∖ s1)).exist_xy (p)
+			until
+				Result or s1.is_empty
+			loop
+				from
+					s2 := Current
+				invariant
+--					not_yet: (singleton (s1.any) × (Current ∖ s2) ∖ ∆ (Current ∖ s2)).do_not_exist_xy (p)
+				until
+					s2.is_empty or else not l_eq (s1.any, s2.any) and p (s1.any, s2.any)
 				loop
 					s2 := s2.others
 				variant
