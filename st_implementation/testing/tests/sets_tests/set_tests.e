@@ -1042,7 +1042,7 @@ feature -- Test routines (Quantifier)
 		do
 			p := agent (x: A): BOOLEAN
 				do
-					Result := x = Void or else x.out.hash_code \\ 2 = 0
+					Result := object_hash_code (x) \\ 2 = 0
 				end
 			from
 				a := some_object_a
@@ -1077,7 +1077,7 @@ feature -- Test routines (Quantifier)
 		do
 			p := agent (x: A): BOOLEAN
 				do
-					Result := x = Void or else x.out.hash_code \\ 2 = 0
+					Result := object_hash_code (x) \\ 2 = 0
 				end
 			s := set_to_be_tested | agent negated (p, ?)
 			assert ("s |∄ p", s |∄ p)
@@ -1110,7 +1110,7 @@ feature -- Test routines (Quantifier)
 		do
 			p := agent (x: A): BOOLEAN
 				do
-					Result := x = Void or else x.out.hash_code \\ 2 = 0
+					Result := object_hash_code (x) \\ 2 = 0
 				end
 			from
 				a := some_object_a
@@ -1154,11 +1154,7 @@ feature -- Test routines (Quantifier)
 		do
 			p := agent (x, y: A): BOOLEAN
 				do
-					if x = Void then
-						Result := y = Void
-					else
-						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
-					end
+					Result := object_hash_code (x) = object_hash_code (y)
 				end
 			from
 				a := some_object_a
@@ -1175,11 +1171,7 @@ feature -- Test routines (Quantifier)
 
 			p := agent (x, y: A): BOOLEAN
 				do
-					if x = Void then
-						Result := y /= Void
-					else
-						Result := y = Void or else x.out.hash_code \\ 2 /= y.out.hash_code \\ 2
-					end
+					Result := object_hash_code (x) /= object_hash_code (y)
 				end
 			s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, some_object_a, ?)
 			assert ("not s.exists_pair (p)", not s.exists_pair (p))
@@ -1203,11 +1195,7 @@ feature -- Test routines (Quantifier)
 		do
 			p := agent (x, y: A): BOOLEAN
 				do
-					if x = Void then
-						Result := y /= Void
-					else
-						Result := y = Void or else x.out.hash_code \\ 2 /= y.out.hash_code \\ 2
-					end
+					Result := object_hash_code (x) /= object_hash_code (y)
 				end
 			s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, some_object_a, ?)
 			assert ("s.does_not_exist_pair (p)", s.does_not_exist_pair (p))
@@ -1215,11 +1203,7 @@ feature -- Test routines (Quantifier)
 
 			p := agent (x, y: A): BOOLEAN
 				do
-					if x = Void then
-						Result := y = Void
-					else
-						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
-					end
+					Result := object_hash_code (x) = object_hash_code (y)
 				end
 			from
 				a := some_object_a
@@ -1255,11 +1239,7 @@ feature -- Test routines (Quantifier)
 
 			p := agent (x, y: A): BOOLEAN
 				do
-					if x = Void then
-						Result := y = Void
-					else
-						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
-					end
+					Result := object_hash_code (x) = object_hash_code (y)
 				end
 			from
 				a := some_object_a
@@ -1290,7 +1270,7 @@ feature -- Test routines (Quantifier)
 		do
 			p := agent (x: A): BOOLEAN
 				do
-					Result := x = Void or else x.out.hash_code \\ 2 = 0
+					Result := object_hash_code (x) \\ 2 = 0
 				end
 			s := set_to_be_tested | p
 			assert ("s |∀ p", s |∀ p)
@@ -1311,6 +1291,42 @@ feature -- Test routines (Quantifier)
 			assert ("for_all", (s |∀ p) ⇒ True)
 			assert ("for_all_ok", properties.for_all_ok (s, p))
 		end
+
+--	test_for_all_pairs
+--			-- Test {SET}.for_all_pairs.
+--		note
+--			testing: "covers/{SET}.for_all_pairs"
+--		local
+--			s: like set_to_be_tested
+--			p: PREDICATE [A, A]
+--		do
+--			p := agent (x, y: A): BOOLEAN
+--				do
+--					if x = Void then
+--						Result := y = Void
+--					else
+--						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
+--					end
+--				end
+--			s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A):BOOLEAN do Result := ia_p (x, y) end (p, some_object_a, ?)
+--			assert ("s.for_all_pairs (p)", s.for_all_pairs (p))
+--			assert ("s.for_all_pairs (p) ok", properties.for_all_pairs_ok (s, p))
+
+--			p := agent p_x1_x2
+--			from
+--				s := set_to_be_tested
+--			until
+--				s.exists_pair (agent pair_negated (p, ?, ?))
+--			loop
+--				s := set_to_be_tested
+--			end
+--			assert ("not s.for_all_pairs (p)", not s.for_all_pairs (p))
+--			assert ("not s.for_all_pairs (p) ok", properties.for_all_pairs_ok (s, p))
+
+--			s := set_to_be_tested
+--			assert ("for_all_pairs", s.for_all_pairs (p) ⇒ True)
+--			assert ("for_all_pairs_ok", properties.for_all_pairs_ok (s, p))
+--		end
 
 feature {NONE} -- Factory (element to be tested)
 
@@ -1363,6 +1379,19 @@ feature {NONE} -- Factory (Set)
 			Result := o.singleton (a)
 		ensure
 			definition: Result ≍ o.singleton (a)
+		end
+
+feature {NONE} -- Implementation
+
+	object_hash_code (a: A): INTEGER
+			-- Hash code of `a'.`out'; 0 if `a' is Void.
+		do
+			if a /= Void then
+				Result := a.out.hash_code
+			end
+		ensure
+			when_void: a = Void ⇒  Result = 0
+			when_not_void: a /= Void ⇒ Result = a.out.hash_code
 		end
 
 note

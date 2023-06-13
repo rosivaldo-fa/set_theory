@@ -355,6 +355,15 @@ feature -- Quantifier
 			definition: Result = transformer_to_boolean.set_reduction (Current, True, agent cumulative_conjunction (?, p, ?))
 		end
 
+	for_all_pairs (p: PREDICATE [A, A]): BOOLEAN
+			-- Does `p' hold for every pair of elements in current set?
+			--| NOTICE: See comments at `exists' header.
+		do
+--			Result := (× Current).for_all_xy (p)
+		ensure
+--			definition: Result = (× Current).for_all_xy (p)
+		end
+
 feature -- Operation
 
 	filtered alias "|" (p: PREDICATE [A]): like subset_anchor

@@ -23,6 +23,7 @@ inherit
 			exists_pair,
 			exists_distinct_pair,
 			for_all,
+			for_all_pairs,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -436,6 +437,37 @@ feature -- Quantifier
 				cardinality: natural_as_integer (# s)
 			end
 			Result := s.is_empty
+		end
+
+	for_all_pairs (p: PREDICATE [A, A]): BOOLEAN
+			-- <Precursor>
+		local
+			s1, s2: like subset_anchor
+		do
+			from
+				Result := True
+				s1 := Current
+			invariant
+--				definition: Result = ((Current ∖ s1) × Current).for_all_xy (p)
+			until
+				not Result or s1.is_empty
+			loop
+				from
+					s2 := Current
+				invariant
+--					so_far_so_good: (singleton (s1.any) × (Current ∖ s2)).for_all_xy (p)
+				until
+					s2.is_empty or else not p (s1.any, s2.any)
+				loop
+					s2 := s2.others
+				variant
+					cardinality_2: natural_as_integer (# s2)
+				end
+				Result := s2.is_empty
+				s1 := s1.others
+			variant
+				cardinality_1: natural_as_integer (# s1)
+			end
 		end
 
 feature -- Operation
