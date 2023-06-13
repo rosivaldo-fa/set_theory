@@ -124,7 +124,7 @@ feature -- Properties (Membership)
 				u: attached current_universe as u
 				require_non_emptiness: s ∋ a ⇒ not s.is_empty
 				universe_has_everything: u ∋ a
---				uniqueness: s ∋ a = s |∃! agent s.equality_holds (?, a)
+				uniqueness: s ∋ a = s |∃! agent s.equality_holds (?, a)
 				has_own_elements: s |∀ agent s.has
 			then
 				Result := True
