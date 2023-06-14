@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Test suite for {SET [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -61,7 +61,8 @@ inherit
 			test_intersected,
 			test_united,
 			test_subtracted,
-			test_subtracted_symmetricaly
+			test_subtracted_symmetricaly,
+			object_hash_code
 		end
 
 feature -- Access
@@ -517,6 +518,27 @@ feature -- Test routines (Operation)
 			testing: "covers/{SET}.subtracted_symmetricaly"
 		do
 			Precursor {SET_TESTS}
+		end
+
+feature {NONE} -- Implementation
+
+	object_hash_code (c: detachable separate CHARACTER_REF): INTEGER
+			-- Hash code of `c'.`out'; 0 if `a' is Void.
+		note
+			EIS: "name={(separate) A}.out inconsistent results", "protocol=URI", "src=https://support.eiffel.com/report_detail/19890", "tag=separate, bug, compiler, SCOOP"
+		local
+			c_item: CHARACTER
+		do
+			if c /= Void then
+				from
+					c_item := c.item
+				until
+					c_item /= '%U'
+				loop
+					c_item := c.item
+				end
+				Result := c_item.out.hash_code
+			end
 		end
 
 note
