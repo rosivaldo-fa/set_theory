@@ -1,5 +1,5 @@
 note
-	description: "{SEPARATE_OUT_BUG [detachable separate CHARACTER_REF, ...]}."
+	description: "{SEPARATE_OUT_BUG [detachable separate CHARACTER_REF]}."
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -9,11 +9,17 @@ class
 	SEPARATE_OUT_BUG_DSCR
 
 inherit
-	SEPARATE_OUT_BUG [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
-		rename
-			some_object_a as some_separate_character_ref,
-			some_immediate_set_a as some_immediate_set_of_references_dscr,
-			some_set_a as some_set_of_references_dscr
+	SEPARATE_OUT_BUG [detachable separate CHARACTER_REF]
+
+feature {NONE} -- Implementation
+
+	some_object_a: detachable separate CHARACTER_REF
+			-- <Precursor>
+		do
+			create Result
+			separate Result as sep_r do
+				sep_r.set_item ('a')
+			end
 		end
 
 note

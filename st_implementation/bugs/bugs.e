@@ -14,7 +14,7 @@ feature {NONE} -- Initialization
 	reproduce_bugs
 			-- Reproduce selected known bugs.
 		do
-			{SEPARATE_VOID_UNSAFETY}.reproduce_separate_void_unsafety
+			{SEPARATE_OUT_BUG_DSCR}.reproduce_separate_out_bug
 		end
 
 note

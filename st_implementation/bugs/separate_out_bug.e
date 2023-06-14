@@ -6,10 +6,7 @@
 	EIS: "name={(separate) A}.out inconsistent results", "protocol=URI", "src=https://support.eiffel.com/report_detail/19890", "tag=separate, bug, compiler, SCOOP"
 
 deferred class
-	SEPARATE_OUT_BUG [A, EQ -> STS_EQUALITY [A] create default_create end]
-
-inherit
-	UNARY_TESTS [A, EQ]
+	SEPARATE_OUT_BUG [A]
 
 feature -- Bug
 
@@ -32,9 +29,18 @@ feature -- Bug
 				then
 				end
 			end
+		ensure
+			class
 		end
 
 feature {NONE} -- Implementation
+
+	some_object_a: A
+			-- Some object of type {A}
+		deferred
+		ensure
+			class
+		end
 
 	object_out (a: A): STRING
 			-- New string containing terse printable representation of `a'
@@ -44,6 +50,8 @@ feature {NONE} -- Implementation
 			else
 				create Result.make_empty
 			end
+		ensure
+			class
 		end
 
 note
