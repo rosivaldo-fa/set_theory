@@ -47,13 +47,13 @@ feature -- Access
 		do
 			Result := o
 			if not ({A}).is_attached then -- TODO: "Non-separate" Void must be avoided, since it may require a "separate" Void when e.g. mapping via some
-										  -- f (Void).
+					-- f (Void).
 --				if {A} /~ {separate A} then -- TODO: System crashes when an agent gets a "separate" Void actual argument.
-						check
-							has_default: ({A}).has_default -- {A} is a detachable type.
-							does_not_have: Result ∌ ({A}).default -- Result.is_empty
-						end
-					Result := Result.extended (({A}).default)
+				check
+					has_default: ({A}).has_default -- {A} is a detachable type.
+					does_not_have: Result ∌ ({A}).default -- Result.is_empty
+				end
+				Result := Result.extended (({A}).default)
 --				end
 			end
 			a_type_id := ({detachable A}).type_id
@@ -133,22 +133,22 @@ feature -- Access
 --							check_ops := {ISE_RUNTIME}.check_assert (True)
 --						end
 --					else
-if {ISE_RUNTIME}.type_conforms_to (@al.key, ({detachable STS_SET [A, STS_EQUALITY [A]]}).type_id) then
+					if {ISE_RUNTIME}.type_conforms_to (@ al.key, ({detachable STS_SET [A, STS_EQUALITY [A]]}).type_id) then
 						estimated_universe_size := estimated_universe_size + {ELEMENT_TESTS}.Max_count * al.count.as_natural_32
 ----						print (estimated_universe_size) print ('%N')
 --						if estimated_universe_size > {SETS_TESTS_RESOURCES_UNARY_N}.Max_asserted_elements then
 --							check_ops := {ISE_RUNTIME}.check_assert (False)
 --						end
-							across
-								al as x
-							loop
-								check
-									sa: attached {STS_SET [A, STS_EQUALITY [A]]} x as sa
-										-- Every object collected into al.item conforms to {detachable STS_SET [A, STS_EQUALITY [A]]}.
-								then
-									Result := Result ∪ converted_set (sa)
-								end
+						across
+							al as x
+						loop
+							check
+								sa: attached {STS_SET [A, STS_EQUALITY [A]]} x as sa
+								-- Every object collected into al.item conforms to {detachable STS_SET [A, STS_EQUALITY [A]]}.
+							then
+								Result := Result ∪ converted_set (sa)
 							end
+						end
 --						if check_ops then
 --							check_ops := {ISE_RUNTIME}.check_assert (True)
 --						end
@@ -177,21 +177,21 @@ if {ISE_RUNTIME}.type_conforms_to (@al.key, ({detachable STS_SET [A, STS_EQUALIT
 				across
 					mem_map as al
 				loop
-					if {ISE_RUNTIME}.type_conforms_to (@al.key, a_type_id) then
+					if {ISE_RUNTIME}.type_conforms_to (@ al.key, a_type_id) then
 						estimated_universe_size := estimated_universe_size + al.count.as_natural_32
 ----						print (estimated_universe_size) print ('%N')
 						if estimated_universe_size > 1_708 then -- TODO: Magic number!
 							check_ops := {ISE_RUNTIME}.check_assert (False)
 						end
-							across
-								al as x
-							loop
-								check
-									a: attached {A} x as a -- {ISE_RUNTIME}.type_conforms_to (al.key, a_type_id)
-								then
-									Result := Result & a
-								end
+						across
+							al as x
+						loop
+							check
+								a: attached {A} x as a -- {ISE_RUNTIME}.type_conforms_to (al.key, a_type_id)
+							then
+								Result := Result & a
 							end
+						end
 						if check_ops then
 							check_ops := {ISE_RUNTIME}.check_assert (True)
 						end
@@ -214,7 +214,7 @@ feature -- Properties (Membership)
 			if type_is_predefined_expanded (({A}).type_id) then
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
-			Result := Precursor {STP_SET_PROPERTIES}(s, a)
+			Result := Precursor {STP_SET_PROPERTIES} (s, a)
 		end
 
 feature -- Properties (Construction)
@@ -227,7 +227,7 @@ feature -- Properties (Construction)
 			if type_is_predefined_expanded (({A}).type_id) then
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
-			Result := Precursor {STP_SET_PROPERTIES}(s, a)
+			Result := Precursor {STP_SET_PROPERTIES} (s, a)
 		end
 
 	without_ok (s: STS_SET [A, EQ]; a: A): BOOLEAN
@@ -238,7 +238,7 @@ feature -- Properties (Construction)
 			if type_is_predefined_expanded (({A}).type_id) then
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
-			Result := Precursor {STP_SET_PROPERTIES}(s, a)
+			Result := Precursor {STP_SET_PROPERTIES} (s, a)
 		end
 
 feature -- Properties (Operation)
@@ -251,7 +251,7 @@ feature -- Properties (Operation)
 			if type_is_predefined_expanded (({A}).type_id) then
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
-			Result := Precursor {STP_SET_PROPERTIES}(a, s0, s1, s2)
+			Result := Precursor {STP_SET_PROPERTIES} (a, s0, s1, s2)
 		end
 
 	powerset_ok (a: A; s0, s1, s2: STS_SET [A, EQ]): BOOLEAN
@@ -262,7 +262,7 @@ feature -- Properties (Operation)
 			if type_is_predefined_expanded (({A}).type_id) then
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
-			Result := Precursor {STP_SET_PROPERTIES}(a, s0, s1, s2)
+			Result := Precursor {STP_SET_PROPERTIES} (a, s0, s1, s2)
 		end
 
 	intersected_ok (a: A; s1, s2, s3, s4: STS_SET [A, EQ]): BOOLEAN
@@ -273,7 +273,7 @@ feature -- Properties (Operation)
 			if type_is_predefined_expanded (({A}).type_id) then
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
-			Result := Precursor {STP_SET_PROPERTIES}(a, s1, s2, s3, s4)
+			Result := Precursor {STP_SET_PROPERTIES} (a, s1, s2, s3, s4)
 		end
 
 	united_ok (a: A; s1, s2, s3, s4: STS_SET [A, EQ]): BOOLEAN
@@ -284,7 +284,7 @@ feature -- Properties (Operation)
 			if type_is_predefined_expanded (({A}).type_id) then
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
-			Result := Precursor {STP_SET_PROPERTIES}(a, s1, s2, s3, s4)
+			Result := Precursor {STP_SET_PROPERTIES} (a, s1, s2, s3, s4)
 		end
 
 	subtracted_ok (a: A; s1, s2, s3, s4, s5: STS_SET [A, EQ]): BOOLEAN
@@ -295,7 +295,7 @@ feature -- Properties (Operation)
 			if type_is_predefined_expanded (({A}).type_id) then
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
-			Result := Precursor {STP_SET_PROPERTIES}(a, s1, s2, s3, s4, s5)
+			Result := Precursor {STP_SET_PROPERTIES} (a, s1, s2, s3, s4, s5)
 		end
 
 feature -- Conversion
@@ -309,8 +309,8 @@ feature -- Conversion
 				Result := o
 				l_s := s
 			invariant
---				every_element: (s ∖ l_s) |∀ agent Result.has
---				nothing_else: # Result ≤ # (s ∖ l_s)
+				every_element: (s ∖ l_s) |∀ agent Result.has
+				nothing_else: # Result ≤ # (s ∖ l_s)
 			until
 				l_s.is_empty
 			loop
@@ -345,21 +345,21 @@ feature -- Predicate
 				t_id = ({REAL_64}).type_id
 		ensure
 			definition: Result = (
-				t_id = ({POINTER}).type_id or
-				t_id = ({CHARACTER_8}).type_id or
-				t_id = ({CHARACTER_32}).type_id or
-				t_id = ({BOOLEAN}).type_id or
-				t_id = ({INTEGER_8}).type_id or
-				t_id = ({INTEGER_16}).type_id or
-				t_id = ({INTEGER_32}).type_id or
-				t_id = ({INTEGER_64}).type_id or
-				t_id = ({NATURAL_8}).type_id or
-				t_id = ({NATURAL_16}).type_id or
-				t_id = ({NATURAL_32}).type_id or
-				t_id = ({NATURAL_64}).type_id or
-				t_id = ({REAL_32}).type_id or
-				t_id = ({REAL_64}).type_id
-				)
+						t_id = ({POINTER}).type_id or
+						t_id = ({CHARACTER_8}).type_id or
+						t_id = ({CHARACTER_32}).type_id or
+						t_id = ({BOOLEAN}).type_id or
+						t_id = ({INTEGER_8}).type_id or
+						t_id = ({INTEGER_16}).type_id or
+						t_id = ({INTEGER_32}).type_id or
+						t_id = ({INTEGER_64}).type_id or
+						t_id = ({NATURAL_8}).type_id or
+						t_id = ({NATURAL_16}).type_id or
+						t_id = ({NATURAL_32}).type_id or
+						t_id = ({NATURAL_64}).type_id or
+						t_id = ({REAL_32}).type_id or
+						t_id = ({REAL_64}).type_id
+					)
 		end
 
 feature {NONE} -- Anchor
@@ -378,4 +378,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end

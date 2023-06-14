@@ -123,7 +123,7 @@ feature -- Membership
 				s := Current
 				l_eq := eq
 			invariant
---				not_found_yet: (Current ∖ s) |∄ agent equality_holds (a, ?)
+				not_found_yet: (Current ∖ s) |∄ agent equality_holds (a, ?)
 			until
 				s.is_empty or else l_eq (a, s.any)
 			loop
@@ -157,7 +157,7 @@ feature -- Construction
 				s := Current
 				l_eq := eq -- Better to avoid recreating `eq' over and over.
 			invariant
---				building_up: Result ≍ (Current ∖ s)
+				building_up: Result ≍ (Current ∖ s)
 			until
 				s.is_empty or else l_eq (s.any, a)
 			loop
@@ -236,7 +236,7 @@ feature -- Measurement
 			from
 				s := Current
 			invariant
---				counting_up: Result = transformer_to_natural.set_reduction (Current ∖ s, 0, agent cumulative_successor)
+				counting_up: Result = transformer_to_natural.set_reduction (Current ∖ s, 0, agent cumulative_successor)
 			until
 				s.is_empty
 			loop
@@ -294,14 +294,14 @@ feature -- Comparison
 					l_eq := eq -- Better to avoid recreating `eq' over and over.
 					s1 := Current
 				invariant
---					definition: Result = ((Current ∖ s1) ∩ s) ≍ o
+					definition: Result = ((Current ∖ s1) ∩ s) ≍ o
 				until
 					not Result or s1.is_empty
 				loop
 					from
 						s2 := s
 					invariant
---						not_found_yet: (s ∖ s2) ∌ s1.any
+						not_found_yet: (s ∖ s2) ∌ s1.any
 					until
 						s2.is_empty or else l_eq (s1.any, s2.any)
 					loop
@@ -327,7 +327,7 @@ feature -- Quantifier
 			from
 				s := Current
 			invariant
---				not_yet: not transformer_to_boolean.set_reduction (Current ∖ s, False, agent disjunction (?, p, ?))
+				not_yet: not transformer_to_boolean.set_reduction (Current ∖ s, False, agent cumulative_disjunction (?, p, ?))
 			until
 				s.is_empty or else p (s.any)
 			loop
@@ -346,7 +346,7 @@ feature -- Quantifier
 			from
 				s := Current
 			invariant
---				not_yet: ((Current ∖ s) | p) ≍ o
+				not_yet: ((Current ∖ s) | p) ≍ o
 			until
 				s.is_empty or else p (s.any)
 			loop
@@ -432,7 +432,7 @@ feature -- Quantifier
 			from
 				s := Current
 			invariant
---				so_far_so_good: transformer_to_boolean.set_reduction (Current ∖ s, True, agent conjunction (?, p, ?))
+				so_far_so_good: transformer_to_boolean.set_reduction (Current ∖ s, True, agent cumulative_conjunction (?, p, ?))
 			until
 				s.is_empty or else not p (s.any)
 			loop
@@ -664,8 +664,8 @@ feature -- Operation
 				Result := o
 				s := Current
 			invariant
---				every_compliant_element: (Current ∖ s) |∀ agent (Current ∖ s).iff (p, agent Result.has, ?)
---				nothing_else: Result ⊆ (Current ∖ s)
+				every_compliant_element: (Current ∖ s) |∀ agent (Current ∖ s).iff (p, agent Result.has, ?)
+				nothing_else: Result ⊆ (Current ∖ s)
 			until
 				s.is_empty
 			loop
@@ -679,11 +679,11 @@ feature -- Operation
 						last_segment := s
 						s := s.others
 					invariant
---						previous_every_compliant_element: (Current ∖ last_segment) |∀ agent (Current ∖ last_segment).iff (p, agent previous_result.has, ?)
---						previous_nothing_else: previous_result ⊆ (Current ∖ last_segment)
---						compliant_segment: (last_segment ∖ s) |∀ p
---						previous_result_is_disjoint: previous_result.is_disjoint (last_segment ∖ s) -- previous_result ⊆ (Current ∖ last_segment)
---						building_up: Result ≍ previous_result.batch_extended (last_segment ∖ s)
+						previous_every_compliant_element: (Current ∖ last_segment) |∀ agent (Current ∖ last_segment).iff (p, agent previous_result.has, ?)
+						previous_nothing_else: previous_result ⊆ (Current ∖ last_segment)
+						compliant_segment: (last_segment ∖ s) |∀ p
+						previous_result_is_disjoint: previous_result.is_disjoint (last_segment ∖ s) -- previous_result ⊆ (Current ∖ last_segment)
+						building_up: Result ≍ previous_result.batch_extended (last_segment ∖ s)
 					until
 						s.is_empty or else not p (s.any)
 					loop
@@ -839,7 +839,7 @@ feature -- Predicate
 				Result := True
 				l_s1 := s1
 			invariant
---				definition: Result = ((s1 ∖ l_s1) ⊆ s2)
+				definition: Result = ((s1 ∖ l_s1) ⊆ s2)
 			until
 				not Result or l_s1.is_empty
 			loop
@@ -848,7 +848,7 @@ feature -- Predicate
 					Result := False
 					l_s2 := s2
 				invariant
---					not_found_yet: (s2 ∖ l_s2) ∌ a
+					not_found_yet: (s2 ∖ l_s2) ∌ a
 				until
 					l_s2.is_empty or else a_eq (a, l_s2.any)
 				loop

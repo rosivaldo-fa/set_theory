@@ -42,13 +42,13 @@ feature -- Properties (Primitive)
 			check
 				u: attached current_universe as u
 				definition: s.is_empty = (
-					s ≍ (
-						u | agent  (x: A): BOOLEAN
-							do
-								Result := False
-							end
+							s ≍ (
+								u | agent (x: A): BOOLEAN
+									do
+										Result := False
+									end
+							)
 						)
-					)
 				has_nothing: s.is_empty = (u |∀ agent s.does_not_have)
 				no_element: s.is_empty = (# s = 0)
 				uniqueness: s.is_empty = (s ≍ o)
@@ -277,7 +277,7 @@ feature -- Properties (Comparison)
 			check
 				u: attached current_universe as u
 				definition: s1 ⊆ s2 = (u |∀ agent implied (agent s1.has, agent s2.has, ?))
---				by_difference: s1 ⊆ s2 = (s1 ∖ s2) ≍ o
+				by_difference: s1 ⊆ s2 = (s1 ∖ s2) ≍ o
 				reflexive: s1 ⊆ s1
 				transitive: s1 ⊆ s2 and s2 ⊆ s3 ⇒ s1 ⊆ s3
 				antisymmetric: s1 ⊆ s2 and s2 ⊆ s1 ⇒ s1 ≍ s2
@@ -299,7 +299,7 @@ feature -- Properties (Comparison)
 				u: attached current_universe as u
 				definition: s1 ⊈ s2 = (u |∃ agent anded (agent s1.has, agent s2.does_not_have, ?))
 				lesser_definition: s1 ⊈ s2 = (s1 |∃ agent s2.does_not_have)
---				by_difference: s1 ⊈ s2 = (s1 ∖ s2) ≭ o
+				by_difference: s1 ⊈ s2 = (s1 ∖ s2) ≭ o
 				irreflexive: not (s1 ⊈ s1)
 				unequality: s1 ≭ s2 = (s1 ⊈ s2 or s2 ⊈ s1)
 				o_includes_only_o: s1 ⊈ o ⇒ s1 ≭ o
@@ -317,7 +317,7 @@ feature -- Properties (Comparison)
 				u: attached current_universe as u
 				definition: s1 ⊇ s2 = (u |∀ agent implied (agent s2.has, agent s1.has, ?))
 				lesser_definition: s1 ⊇ s2 = (s2 |∀ agent s1.has)
---				by_difference: s1 ⊇ s2 = (s2 ∖ s1) ≍ o
+				by_difference: s1 ⊇ s2 = (s2 ∖ s1) ≍ o
 				reflexive: s1 ⊇ s1
 				transitive: s1 ⊇ s2 and s2 ⊇ s3 ⇒ s1 ⊇ s3
 				antisymmetric: s1 ⊇ s2 and s2 ⊇ s1 ⇒ s1 ≍ s2
@@ -339,7 +339,7 @@ feature -- Properties (Comparison)
 				u: attached current_universe as u
 				definition: s1 ⊉ s2 = (u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
 				lesser_definition: s1 ⊉ s2 = (s2 |∃ agent s1.does_not_have)
---				by_difference: s1 ⊉ s2 = (s1 ∖ s2) ≭ o
+				by_difference: s1 ⊉ s2 = (s1 ≍ o or s1 ∖ s2 ≭ o)
 				irreflexive: not (s1 ⊉ s1)
 				unequality: s1 ≭ s2 = (s1 ⊉ s2 or s2 ⊉ s1)
 				o_includes_only_o: o ⊉ s1 ⇒ s1 ≭ o
@@ -399,7 +399,7 @@ feature -- Properties (Comparison)
 				irreflexive: not (s1 ⊂ s1)
 				transitive: s1 ⊂ s2 and s2 ⊂ s3 ⇒ s1 ⊂ s3
 				asymmetric: s1 ⊂ s2 ⇒ not (s2 ⊂ s1)
---				proper_difference: s1 ⊂ s2 ⇒ (s2 ∖ s1) ≭ o
+				proper_difference: s1 ⊂ s2 ⇒ (s2 ∖ s1) ≭ o
 				cardinality: s1 ⊂ s2 ⇒ # s1 < # s2
 			then
 				Result := True
@@ -438,7 +438,7 @@ feature -- Properties (Comparison)
 				irreflexive: not (s1 ⊃ s1)
 				transitive: s1 ⊃ s2 and s2 ⊃ s3 ⇒ s1 ⊃ s3
 				asymmetric: s1 ⊃ s2 ⇒ not (s2 ⊃ s1)
---				proper_difference: s1 ⊃ s2 ⇒ (s2 ∖ s1) ≭ o
+				proper_difference: s1 ⊃ s2 ⇒ (s2 ∖ s1) ≭ o
 				cardinality: s1 ⊃ s2 ⇒ # s1 > # s2
 			then
 				Result := True
@@ -781,7 +781,7 @@ feature -- Properties (Operation)
 				by_intersection: s | p ≍ (s ∩ (u | p))
 				subset: s | p ⊆ s
 				only_compliant_elements: (s | p) |∀ p
---				nothing_lost: (s ∖ (s | p)) |∄ p
+				nothing_lost: (s ∖ (s | p)) |∄ p
 			then
 				Result := True
 			end
@@ -796,8 +796,8 @@ feature -- Properties (Operation)
 			if s1 ⊆ s2 then
 				check
 					definition: (s1 ∁ s2) ≍ (u | agent anded (agent s2.has, agent s1.does_not_have, ?))
-	--								by_difference: (s1 ∁ s2) ≍ (s2 ∖ s1)
-	--								by_reduction: (s1 ∁ s2) ≍ element_to_set.set_reduction (s1, s2, agent {STS_SET [A, EQ]}.without)
+					by_difference: (s1 ∁ s2) ≍ (s2 ∖ s1)
+						--								by_reduction: (s1 ∁ s2) ≍ element_to_set.set_reduction (s1, s2, agent {STS_SET [A, EQ]}.without)
 					disjoint: (s1 ∁ s2).is_disjoint (s1)
 					is_subset_too: (s1 ∁ s2) ⊆ s2
 					complementary: (s1 ∪ (s1 ∁ s2)) ≍ s2
@@ -817,7 +817,7 @@ feature -- Properties (Operation)
 				reflexive_inclusion: s1 ⊆ s1 -- {STS_SET}.is_subset definition
 			end
 			check
-					empty_complement: (s1 ∁ s1) ≍ o
+				empty_complement: (s1 ∁ s1) ≍ o
 			then
 			end
 			check
@@ -895,9 +895,9 @@ feature -- Properties (Operation)
 				identity: (s1 ∩ u) ≍ s1
 			then
 			end
-				check
-					u_includes_s1: s1 ⊆ u -- Universe includes everything.
-				end
+			check
+				u_includes_s1: s1 ⊆ u -- Universe includes everything.
+			end
 			check
 				disjoint_complement: (s1 ∩ (s1 ∁ u)) ≍ o
 				idempotent: (s1 ∩ s1) ≍ s1
@@ -905,9 +905,9 @@ feature -- Properties (Operation)
 				associative: ((s1 ∩ s2) ∩ s3) ≍ (s1 ∩ (s2 ∩ s3))
 			then
 			end
-				check
-					u_includes_s2: s2 ⊆ u -- Universe includes everything.
-				end
+			check
+				u_includes_s2: s2 ⊆ u -- Universe includes everything.
+			end
 			check
 				with_complement_of_disjoint: (s1 ∩ s2) ≍ o ⇒ (s1 ∩ (s2 ∁ u)) ≍ s1
 				inverted_inclusion: (s1 ∁ u) ⊆ (s2 ∁ u) = (s1 ∩ s2) ≍ s2
@@ -974,13 +974,13 @@ feature -- Properties (Operation)
 				distributed_union: (s1 ∪ (s2 ∩ s3)) ≍ ((s1 ∪ s2) ∩ (s1 ∪ s3))
 			then
 			end
-				check
-						-- Universe includes everything.
-					u_includes_s1: s1 ⊆ u
-					u_includes_s2: s2 ⊆ u
-					u_includes_intersection: (s1 ∩ s2) ⊆ u
-					u_includes_union: (s1 ∪ s2) ⊆ u
-				end
+			check
+					-- Universe includes everything.
+				u_includes_s1: s1 ⊆ u
+				u_includes_s2: s2 ⊆ u
+				u_includes_intersection: (s1 ∩ s2) ⊆ u
+				u_includes_union: (s1 ∪ s2) ⊆ u
+			end
 			check
 				de_morgan_intersection: ((s1 ∩ s2) ∁ u) ≍ ((s1 ∁ u) ∪ (s2 ∁ u))
 				de_morgan_union: ((s1 ∪ s2) ∁ u) ≍ ((s1 ∁ u) ∩ (s2 ∁ u))

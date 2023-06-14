@@ -40,7 +40,7 @@ feature -- Test routines (Primitive)
 				s := set_to_be_tested.o
 			when 2 then
 				s := set_to_be_tested
-				s := s.o -- ∖ same_set_a (s)
+				s := s.o ∖ same_set_a (s)
 			end
 			assert ("s.is_empty", s.is_empty)
 			assert ("s.is_empty ok", properties.is_empty_ok (s))
@@ -976,10 +976,10 @@ feature -- Test routines (Comparison)
 		do
 			if next_random_item \\ 2 = 0 then
 				s := set_to_be_tested
-				s2 := some_set_a --∖ same_set_a (s)
+				s2 := some_set_a ∖ same_set_a (s)
 			else
 				s2 := some_set_a
-				s := set_to_be_tested --∖ same_set_a (s2)
+				s := set_to_be_tested ∖ same_set_a (s2)
 			end
 			assert ("s.is_disjoint (s2)", s.is_disjoint (s2))
 			assert ("s.is_disjoint (s2) ok", properties.is_disjoint_ok (s, s2, some_set_a))
@@ -1015,10 +1015,10 @@ feature -- Test routines (Comparison)
 
 			if next_random_item \\ 2 = 0 then
 				s := set_to_be_tested
-				s2 := some_set_a --∖ same_set_a (s)
+				s2 := some_set_a ∖ same_set_a (s)
 			else
 				s2 := some_set_a
-				s := set_to_be_tested --∖ same_set_a (s2)
+				s := set_to_be_tested ∖ same_set_a (s2)
 			end
 			assert ("not s.intersects (s2)", not s.intersects (s2))
 			assert ("not s.intersects (s2) ok", properties.intersects_ok (s, s2, some_set_a))
