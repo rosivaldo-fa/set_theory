@@ -72,7 +72,8 @@ feature -- Test routines (All)
 	test_all
 			-- Test every routine of {SET}.
 		note
-			testing: "covers/{SET}"
+--			testing: "covers/{SET}"
+			TODO: "Distinguish indivitual tests."
 		do
 			Precursor {SET_TESTS}
 			test_is_empty

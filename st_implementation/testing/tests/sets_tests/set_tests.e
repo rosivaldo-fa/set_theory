@@ -508,7 +508,7 @@ feature -- Test routines (Comparison)
 			s2: like some_set_a
 		do
 			s := set_to_be_tested
-			s2 := some_set_a --∪ same_set_a (s)
+			s2 := some_set_a ∪ same_set_a (s)
 			assert ("s ⊆ s2", s ⊆ s2)
 			assert ("s ⊆ s2 ok", properties.is_subset_ok (s, s2, some_set_a))
 
@@ -542,7 +542,7 @@ feature -- Test routines (Comparison)
 			assert ("s ⊈ s2 ok", properties.is_not_subset_ok (s, s2))
 
 			s := set_to_be_tested
-			s2 := some_set_a --∪ same_set_a (s)
+			s2 := some_set_a ∪ same_set_a (s)
 			assert ("not (s ⊈ s2)", not (s ⊈ s2))
 			assert ("not (s ⊈ s2) ok", properties.is_not_subset_ok (s, s2))
 
@@ -621,7 +621,7 @@ feature -- Test routines (Comparison)
 		do
 			if next_random_item \\ 2 = 0 then
 				s := set_to_be_tested
-				s2 := some_set_a --∪ same_set_a (s)
+				s2 := some_set_a ∪ same_set_a (s)
 			else
 				s := set_to_be_tested
 				s2 := some_set_a ∩ same_set_a (s)
@@ -672,7 +672,7 @@ feature -- Test routines (Comparison)
 
 			if next_random_item \\ 2 = 0 then
 				s := set_to_be_tested
-				s2 := some_set_a --∪ same_set_a (s)
+				s2 := some_set_a ∪ same_set_a (s)
 			else
 				s := set_to_be_tested
 				s2 := some_set_a ∩ same_set_a (s)
@@ -696,7 +696,7 @@ feature -- Test routines (Comparison)
 			s2: like some_set_a
 		do
 			s := set_to_be_tested
-			s2 := some_set_a --∪ same_set_a (s)
+			s2 := some_set_a ∪ same_set_a (s)
 				& some_other_object_a (s)
 			assert ("s ⊂ s2", s ⊂ s2)
 			assert ("s ⊂ s2 ok", properties.is_strict_subset_ok (s, s2, some_set_a))
@@ -741,7 +741,7 @@ feature -- Test routines (Comparison)
 			assert ("s ⊄ s2 ok", properties.is_not_strict_subset_ok (s, s2))
 
 			s := set_to_be_tested
-			s2 := some_set_a --∪ same_set_a (s)
+			s2 := some_set_a ∪ same_set_a (s)
 				& some_other_object_a (s)
 			assert ("not (s ⊄ s2)", not (s ⊄ s2))
 			assert ("not (s ⊄ s2) ok", properties.is_not_strict_subset_ok (s, s2))
@@ -879,7 +879,7 @@ feature -- Test routines (Comparison)
 				s2 := some_set_a & some_other_object_a (s)
 			else
 				s2 := some_set_a & some_object_a
-				s1 := set_to_be_tested --∪ s2
+				s1 := set_to_be_tested ∪ s2
 					& some_other_object_a (s2)
 			end
 			assert ("not s.is_trivial_superset (s2)", not s.is_trivial_superset (s2))
@@ -901,7 +901,7 @@ feature -- Test routines (Comparison)
 			s2: like some_set_a
 		do
 			s := set_to_be_tested & some_object_a
-			s2 := some_set_a & some_other_object_a (s) --∪ same_set_a (s)
+			s2 := some_set_a & some_other_object_a (s) ∪ same_set_a (s)
 			assert ("s.is_proper_subset (s2)", s.is_proper_subset (s2))
 			assert ("s.is_proper_subset (s2) ok", properties.is_proper_subset_ok (s, s2, some_set_a))
 
@@ -939,7 +939,7 @@ feature -- Test routines (Comparison)
 			s2: like some_set_a
 		do
 			s2 := some_set_a & some_object_a
-			s := set_to_be_tested & some_other_object_a (s2) --∪ same_set_a (s2)
+			s := set_to_be_tested & some_other_object_a (s2) ∪ same_set_a (s2)
 			assert ("s.is_proper_superset (s2)", s.is_proper_superset (s2))
 			assert ("s.is_proper_superset (s2) ok", properties.is_proper_superset_ok (s, s2, some_set_a))
 
@@ -950,7 +950,7 @@ feature -- Test routines (Comparison)
 				s := set_to_be_tested
 			when 1 then
 				s2 := some_set_a
-				s := o --∪ same_set_a (s2)
+				s := o ∪ same_set_a (s2)
 			when 2 then
 				a := some_object_a
 				s2 := some_set_a & same_object_a (a)

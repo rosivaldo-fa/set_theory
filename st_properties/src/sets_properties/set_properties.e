@@ -151,7 +151,7 @@ feature -- Properties (Construction)
 			check
 				u: attached current_universe as u
 				definition: (s & a) ≍ (u | agent u.ored (agent s.has, agent u.equality_holds (?, a), ?))
---				by_union: (s & a) ≍ s ∪ singleton (a)
+				by_union: (s & a) ≍ (s ∪ singleton (a))
 				same_cardinality: s ∋ a ⇒ # (s & a) = # s
 				incremented_cardinality: s ∌ a ⇒ # (s & a) = # s + 1
 			then
@@ -800,7 +800,7 @@ feature -- Properties (Operation)
 	--								by_reduction: (s1 ∁ s2) ≍ element_to_set.set_reduction (s1, s2, agent {STS_SET [A, EQ]}.without)
 					disjoint: (s1 ∁ s2).is_disjoint (s1)
 					is_subset_too: (s1 ∁ s2) ⊆ s2
-	--								complementary: (s1 ∪ (s1 ∁ s2)) ≍ s2
+					complementary: (s1 ∪ (s1 ∁ s2)) ≍ s2
 					involutive: ((s1 ∁ s2) ∁ s2) ≍ s1
 					inverted_inclusion: s3 ⊆ s2 ⇒ (s1 ⊆ s3 = ((s1 ∁ s2) ⊇ (s3 ∁ s2)))
 				then
@@ -861,7 +861,7 @@ feature -- Properties (Operation)
 			u := current_universe
 			check
 				definition: (s1 ∩ s2) ≍ (u | agent anded (agent s1.has, agent s2.has, ?))
---				lesser_definition: (s1 ∩ s2) ≍ ((s1 ∪ s2) | agent anded (agent s1.has, agent s2.has, ?))
+				lesser_definition: (s1 ∩ s2) ≍ ((s1 ∪ s2) | agent anded (agent s1.has, agent s2.has, ?))
 --				by_reduction: (s1 ∩ s2) ≍ transformer_to_set.set_reduction (
 --					s1, o, agent (ia_s2, acc: STS_SET [A, EQ]; x: A): STS_SET [A, EQ]
 --						do
@@ -913,7 +913,7 @@ feature -- Properties (Operation)
 				inverted_inclusion: (s1 ∁ u) ⊆ (s2 ∁ u) = (s1 ∩ s2) ≍ s2
 				induced_non_disjointness: (s1 ∩ s2) ≍ s1 and (s1 ∩ s3) ≭ o ⇒ (s2 ∩ s3) ≭ o
 --				pair_equality: paired_sets (s1, s2) ≍ paired_sets (s3, s4) ⇒ (s1 ∩ s2) ≍ (s3 ∩ s4)
---				by_union_and_complement: (s1 ∩ s2) ≍ (s1 ∩ ((s1 ∁ u) ∪ s2))
+				by_union_and_complement: (s1 ∩ s2) ≍ (s1 ∩ ((s1 ∁ u) ∪ s2))
 			then
 				Result := united_and_intersected_ok (s1, s2, s3, s4)
 			end
@@ -968,10 +968,10 @@ feature -- Properties (Operation)
 		do
 			u := current_universe
 			check
---				absorbed_union: (s1 ∩ (s1 ∪ s2)) ≍ s1
---				absorbed_intersection: (s1 ∪ (s1 ∩ s2)) ≍ s1
---				distributed_intersection: (s1 ∩ (s2 ∪ s3)) ≍ ((s1 ∩ s2) ∪ (s1 ∩ s3))
---				distributed_union: (s1 ∪ (s2 ∩ s3)) ≍ ((s1 ∪ s2) ∩ (s1 ∪ s3))
+				absorbed_union: (s1 ∩ (s1 ∪ s2)) ≍ s1
+				absorbed_intersection: (s1 ∪ (s1 ∩ s2)) ≍ s1
+				distributed_intersection: (s1 ∩ (s2 ∪ s3)) ≍ ((s1 ∩ s2) ∪ (s1 ∩ s3))
+				distributed_union: (s1 ∪ (s2 ∩ s3)) ≍ ((s1 ∪ s2) ∩ (s1 ∪ s3))
 			then
 			end
 				check
@@ -979,17 +979,17 @@ feature -- Properties (Operation)
 					u_includes_s1: s1 ⊆ u
 					u_includes_s2: s2 ⊆ u
 					u_includes_intersection: (s1 ∩ s2) ⊆ u
---					u_includes_union: (s1 ∪ s2) ⊆ u
+					u_includes_union: (s1 ∪ s2) ⊆ u
 				end
 			check
---				de_morgan_intersection: ((s1 ∩ s2) ∁ u) ≍ ((s1 ∁ u) ∪ (s2 ∁ u))
---				de_morgan_union: ((s1 ∪ s2) ∁ u) ≍ ((s1 ∁ u) ∩ (s2 ∁ u))
---				successive_inclusion: (s1 ⊆ s2 and s2 ⊆ s3) = ((s1 ∪ s2) ≍ (s2 ∩ s3))
---				equality: (s1 ∪ s2) ≍ (s1 ∩ s2) = (s1 ≍ s2)
---				empty_intersection: (s1 ∩ s2) ≍ o ⇒ (s1 ∪ (s2 ∁ u)) ≍ (s2 ∁ u)
---				intersecting_two_unions: ((s1 ∪ s2) ∩ (s3 ∪ s4)) ≍ ((s1 ∩ s3) ∪ (s1 ∩ s4) ∪ (s2 ∩ s3) ∪ (s2 ∩ s4))
---				uniting_two_intersections: ((s1 ∩ s2) ∪ (s3 ∩ s4)) ≍ ((s1 ∪ s3) ∩ (s1 ∪ s4) ∩ (s2 ∪ s3) ∩ (s2 ∪ s4))
---				union_cardinality: # (s1 ∪ s2) = # s1 + # s2 - # (s1 ∩ s2)
+				de_morgan_intersection: ((s1 ∩ s2) ∁ u) ≍ ((s1 ∁ u) ∪ (s2 ∁ u))
+				de_morgan_union: ((s1 ∪ s2) ∁ u) ≍ ((s1 ∁ u) ∩ (s2 ∁ u))
+				successive_inclusion: (s1 ⊆ s2 and s2 ⊆ s3) = ((s1 ∪ s2) ≍ (s2 ∩ s3))
+				equality: (s1 ∪ s2) ≍ (s1 ∩ s2) = (s1 ≍ s2)
+				empty_intersection: (s1 ∩ s2) ≍ o ⇒ (s1 ∪ (s2 ∁ u)) ≍ (s2 ∁ u)
+				intersecting_two_unions: ((s1 ∪ s2) ∩ (s3 ∪ s4)) ≍ ((s1 ∩ s3) ∪ (s1 ∩ s4) ∪ (s2 ∩ s3) ∪ (s2 ∩ s4))
+				uniting_two_intersections: ((s1 ∩ s2) ∪ (s3 ∩ s4)) ≍ ((s1 ∪ s3) ∩ (s1 ∪ s4) ∩ (s2 ∪ s3) ∩ (s2 ∪ s4))
+				union_cardinality: # (s1 ∪ s2) = # s1 + # s2 - # (s1 ∩ s2)
 			then
 				Result := True
 			end

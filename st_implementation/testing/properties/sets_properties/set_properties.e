@@ -145,7 +145,7 @@ if {ISE_RUNTIME}.type_conforms_to (@al.key, ({detachable STS_SET [A, STS_EQUALIT
 									sa: attached {STS_SET [A, STS_EQUALITY [A]]} x as sa
 										-- Every object collected into al.item conforms to {detachable STS_SET [A, STS_EQUALITY [A]]}.
 								then
---									Result := Result ∪ converted_set (sa)
+									Result := Result ∪ converted_set (sa)
 								end
 							end
 --						if check_ops then
