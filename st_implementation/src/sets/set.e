@@ -506,6 +506,152 @@ feature -- Quantifier
 
 feature -- Operation
 
+--	subsets,
+--	powerset: SUBSET_FAMILY [A, EQ]
+--			-- <Precursor>
+--		local
+--			s: SET [A, EQ]
+--			sf: SUBSET_FAMILY [A, EQ]
+--		do
+--			from
+--				create Result.make_empty (Current)
+--					check
+--						not_in_family: o ∉ Result -- Result.is_empty
+--						already_a_subset: o ⊆ Result.superset -- By definition
+--					end
+--				Result := Result.extended (o)
+--				s := Current
+--			invariant
+--				building_up: Result ≍ {like element_to_sets}.set_reduction
+--					(Current ∖ s, o.as_singleton, agent sets_plus_same_sets_with_element)
+--				superset: Result.superset ≍ Current
+--			until
+--				s.is_empty
+--			loop
+--				from
+--					sf := Result
+--				invariant
+--					preceding: attached {like element_to_sets}.set_reduction
+--						(Current ∖ s, o.as_singleton, agent sets_plus_same_sets_with_element) as preceding
+--					succeeding: Result ≍ (
+--						preceding ∪ {like element_to_sets}.set_reduction
+--							(singleton (s.any), preceding ∖ sf, agent sets_plus_same_sets_with_element)
+--						)
+--					same_superset: Result.superset ≍ Current
+--				until
+--					sf.is_empty
+--				loop
+--						check
+--							does_not_have: sf.any ∌ s.any -- ∀ subset: sf ¦ (subset ⊆ (Current ∖ s)) ⇐ Loops invariants
+--							not_in_family: -- ∀ subset: Result ¦ (subset ∈ (preceding ∖ sf)) ⇐ `succeeding' loop invariant.
+--								sf.any.extended (s.any) ∉ Result
+--							already_a_subset: -- sf.superset = Result.superset = Current and s.any ∈ Current
+--								sf.any.extended (s.any) ⊆ Result.superset
+--						end
+--					Result := Result.extended (sf.any.extended (s.any))
+--					sf := sf.others
+--				variant
+--					sf_cardinality: natural_as_integer (# sf)
+--				end
+--				s := s.others
+--			variant
+--				s_cardinality: natural_as_integer (# s)
+--			end
+--		end
+
+--	trivial_subsets: SUBSET_FAMILY [A, EQ]
+--			-- <Precursor>
+--		do
+--			Result := as_singleton
+--			if not is_empty then
+--					check
+--						does_not_have: Result ∌ o -- Result = {Current} /= {o}
+--						already_a_subset: o ⊆ Result.superset -- o.is_empty
+--					end
+--				Result := Result.extended (o)
+--			end
+--		end
+
+--	proper_subsets: SUBSET_FAMILY [A, EQ]
+--			-- <Precursor>
+--			--| TODO: Clean up the algorithm...
+--		local
+--			s: SET [A, EQ]
+--			place_holder, sf: SUBSET_FAMILY [A, EQ]
+--		do
+--			create Result.make_empty (Current)
+--			s := Current
+--			if not s.others.is_empty then
+--				from
+--						check
+--							s_is_not_empty: not s.is_empty -- not s.others.is_empty																											
+--							not_in_family: singleton (s.any) ∉ Result -- Result ≍ ∅																											
+--							already_a_subset: singleton (s.any) ⊆ Result.superset -- s ≍ Current ≍ Result.superset																			
+--						end
+--					Result := Result.extended (singleton (s.any))
+--					place_holder := Result
+--						check
+--							not_in_family: singleton (s.others.any) ∉ Result -- Result ≍ {`any'}																							
+--							already_a_subset: singleton (s.others.any) ⊆ Result.superset -- s.others ⊂ Current ≍ Result.superset															
+--						end
+--					Result := Result.extended (singleton (s.others.any))
+--					s := s.others
+--				invariant
+--					definition: Result ≍ ((Current ∖ s.others).powerset / (Current ∖ s.others) / o)
+--					superset: Result.superset ≍ Current
+--					outer_place_holder: place_holder ≍ ((Current ∖ s).powerset / o)
+--				until
+--					s.others.is_empty
+--				loop
+--					from
+--						sf := Result
+--							check
+--								place_holder_is_not_empty: not place_holder.is_empty -- place_holder ≍ ((Current ∖ s).powerset / o)															
+--								s_is_not_empty: not s.is_empty -- not s.others.is_empty																										
+--								place_holder_any_does_not_have_s_any: place_holder.any ∌ s.any -- place_holder ⊂ (Current ∖ s).powerset														
+--								not_in_family: -- place_holder.any.extended (s.any) ≍ (Current ∖ s.others) ∉ Result (definition loop invariant)
+--									place_holder.any.extended (s.any) ∉ Result
+--								already_a_subset: place_holder.any.extended (s.any) ⊆ Result.superset -- place_holder ⊂ (Current ∖ s).powerset												
+--							end
+--						Result := Result.extended (place_holder.any.extended (s.any))
+--						place_holder := Result
+--							check
+--								not_in_family: singleton (s.others.any) ∉ Result -- ∀ xs: Result ¦ (xs ⊆ (Current ∖ s.others))															
+--								already_a_subset: singleton (s.others.any) ⊆ Result.superset -- Result.superset ≍ Current																
+--							end
+--						Result := Result.extended (singleton (s.others.any))
+--					invariant
+--						sf: sf ⊆ ((Current ∖ s.others).powerset / (Current ∖ s.others) / o)
+--						inner_place_holder: place_holder ≍ ((Current ∖ s.others).powerset / o)
+--						building_up: Result ≍ (
+--							place_holder & singleton (s.others.any) ∪ (
+--								(place_holder.others ∖ sf) ↦ agent (xs: STS_SET [A, EQ]; a: A): STS_SET [A, EQ]
+--									do
+--										Result := xs & a
+--									end (?, s.others.any)
+--								)
+--							)
+--						same_superset: Result.superset ≍ Current
+--					until
+--						sf.is_empty
+--					loop
+--							check
+--								sf_any_does_not_have: sf.any ∌ s.others.any -- sf loop invariant																								
+--								not_in_family: sf.any.extended (s.others.any) ∉ Result -- building_up loop invariant																					
+--								already_a_subset: sf.any.extended (s.others.any) ⊆ Result.superset -- loop invariant																		
+--							end
+--						Result := Result.extended (sf.any.extended (s.others.any))
+--						sf := sf.others
+--					variant
+--						sf_cardinality: natural_as_integer (# sf)
+--					end
+--					s := s.others
+--				variant
+--					s_others_cardinality: natural_as_integer (# s.others)
+--				end
+--			end
+--		end
+
 	filtered alias "|" (p: PREDICATE [A]): like subset_anchor
 			-- <Precursor>
 		local

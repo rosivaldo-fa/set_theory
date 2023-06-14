@@ -377,6 +377,34 @@ feature -- Quantifier
 
 feature -- Operation
 
+--	subsets,
+--	powerset: SUBSET_FAMILY [A, EQ]
+--			-- Every subset of current set
+--		deferred
+--		ensure
+--			definition: Result ≍
+--				element_to_sets.set_reduction (Current, o.as_singleton, agent sets_plus_same_sets_with_element)
+--			superset: Result.superset ≍ Current
+--		end
+
+--	trivial_subsets: SUBSET_FAMILY [A, EQ]
+--			-- Family with only the empty and the full subsets of current set
+--		do
+--			Result := as_singleton & o
+--		ensure
+--			definition: Result ≍ (as_singleton & o)
+--			superset: Result.superset ≍ Current
+--		end
+
+--	proper_subsets: SUBSET_FAMILY [A, EQ]
+--			-- Every non-trivial subset of current set
+--		do
+--			Result := powerset / Current / o
+--		ensure
+--			definition: Result ≍ (powerset / Current / o)
+--			superset: Result.superset ≍ Current
+--		end
+
 	filtered alias "|" (p: PREDICATE [A]): like subset_anchor
 			-- Every element in current set for which `p' holds
 		deferred

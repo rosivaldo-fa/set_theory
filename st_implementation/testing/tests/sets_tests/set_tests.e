@@ -1371,6 +1371,300 @@ feature -- Test routines (Quantifier)
 			assert ("for_all_distinct_pairs_ok", properties.for_all_distinct_pairs_ok (s, p))
 		end
 
+feature -- Test routines (Operation)
+
+--	test_subsets
+--			-- Test {SET}.subsets.
+--		note
+--			testing: "covers/{SET}.subsets"
+--		local
+--			a, b, c: A
+--			s0: like some_set_a
+--			s: like set_to_be_tested
+--			s2: like some_set_a
+--			n: like some_set.cardinality
+--			chk_tests: BOOLEAN
+--		do
+--			a := some_object_a
+--			s0 := some_set_a.o
+--			s := set_to_be_tested.o
+--			s2 := some_set_a
+--			assert ("{∅}", s.subsets ≍ s.as_singleton)
+--			assert ("{∅} ok", properties.subsets_ok (a, s0, s, s2))
+
+--			s := set_to_be_tested_with_cardinality (1)
+--				check
+--					is_not_empty: not s.is_empty -- # s = 1
+--				end
+--			a := same_set_a (s).any
+--			s0 := some_set_a ∩ same_set_a (s)
+--			s2 := some_set_a ∪ same_set_a (s)
+----			assert ("{∅,{a}}", s.subsets ≍ (s.as_singleton & s.o))
+--			assert ("{∅,{a}}", s.subsets ≍ (s.as_singleton & s.o))
+--			assert ("{∅,{a}} ok", properties.subsets_ok (a, s0, s, s2))
+
+--			s := set_to_be_tested_with_cardinality (2)
+--				check
+--					is_not_empty: not s.is_empty -- # s = 2
+--				end
+--			a := same_set_a (s).any
+--				check
+--					is_not_empty: not (s / a).is_empty -- # s = 2
+--				end
+--			b := same_set_a (s / a).any
+--			s0 := some_set_a ∩ same_set_a (s)
+--			s2 := some_set_a ∪ same_set_a (s)
+--			assert ("{∅,{a},{b},{a,b}}", s.subsets ≍ (s.as_singleton & (s / a) & (s / b) & s.o))
+--			assert ("{∅,{a},{b},{a,b}} ok", properties.subsets_ok (a, s0, s, s2))
+
+--			s := set_to_be_tested_with_cardinality (3)
+--				check
+--					is_not_empty: not s.is_empty -- # s = 3
+--				end
+--			a := same_set_a (s).any
+--				check
+--					is_not_empty: not (s / a).is_empty -- # s = 3
+--				end
+--			b := same_set_a (s / a).any
+--				check
+--					is_not_empty: not (s / a / b).is_empty -- # s = 3
+--				end
+--			c := same_set_a (s / a / b).any
+--			s0 := some_set_a ∩ same_set_a (s)
+--			s2 := some_set_a ∪ same_set_a (s)
+--			assert (
+--				"{∅,{a},{b},{c},{a,b},{a,c},{b,c},{a,b,c}}", s.subsets ≍
+--				(s.as_singleton & (s / a) & (s / b) & (s / c) & (s / a / b) & (s / a / c) & (s / b / c) & s.o)
+--				)
+--			assert ("{∅,{a},{b},{c},{a,b},{a,c},{b,c},{a,b,c}} ok", properties.subsets_ok (a, s0, s, s2))
+
+--			a := some_object_a
+--			s0 := some_set_a
+--			s := set_to_be_tested
+--			s2 := some_set_a
+--			n := # s
+--			if (2 ^ n) ≤ max_subsets then
+--				if 2 ^ n > max_asserted_subsets then
+--					chk_tests := {ISE_RUNTIME}.check_assert (False)
+--				end
+--					assert ("subsets", attached s.subsets)
+--				if chk_tests then
+--					chk_tests := {ISE_RUNTIME}.check_assert (True)
+--				end
+--			end
+--			assert ("subsets_ok", properties.subsets_ok (a, s0, s, s2))
+--		end
+
+--	test_powerset
+--			-- Test {SET}.powerset.
+--		note
+--			testing: "covers/{SET}.powerset"
+--		local
+--			a, b, c: A
+--			s0: like some_set_a
+--			s: like set_to_be_tested
+--			s2: like some_set_a
+--			n: like some_set.cardinality
+--			chk_tests: BOOLEAN
+--		do
+--			a := some_object_a
+--			s0 := some_set_a.o
+--			s := set_to_be_tested.o
+--			s2 := some_set_a
+--			assert ("{∅}", s.powerset ≍ s.as_singleton)
+--			assert ("{∅} ok", properties.powerset_ok (a, s0, s, s2))
+
+--			s := set_to_be_tested_with_cardinality (1)
+--				check
+--					is_not_empty: not s.is_empty -- # s = 1
+--				end
+--			a := same_set_a (s).any
+--			s0 := some_set_a ∩ same_set_a (s)
+--			s2 := some_set_a ∪ same_set_a (s)
+--			assert ("{∅,{a}}", s.powerset ≍ (s.as_singleton & s.o))
+--			assert ("{∅,{a}} ok", properties.powerset_ok (a, s0, s, s2))
+
+--			s := set_to_be_tested_with_cardinality (2)
+--				check
+--					is_not_empty: not s.is_empty -- # s = 2
+--				end
+--			a := same_set_a (s).any
+--				check
+--					is_not_empty: not (s / a).is_empty -- # s = 2
+--				end
+--			b := same_set_a (s / a).any
+--			s0 := some_set_a ∩ same_set_a (s)
+--			s2 := some_set_a ∪ same_set_a (s)
+--			assert ("{∅,{a},{b},{a,b}}", s.powerset ≍ (s.as_singleton & (s / a) & (s / b) & s.o))
+--			assert ("{∅,{a},{b},{a,b}} ok", properties.powerset_ok (a, s0, s, s2))
+
+--			s := set_to_be_tested_with_cardinality (3)
+--				check
+--					is_not_empty: not s.is_empty -- # s = 3
+--				end
+--			a := same_set_a (s).any
+--				check
+--					is_not_empty: not (s / a).is_empty -- # s = 3
+--				end
+--			b := same_set_a (s / a).any
+--				check
+--					is_not_empty: not (s / a / b).is_empty -- # s = 3
+--				end
+--			c := same_set_a (s / a / b).any
+--			s0 := some_set_a ∩ same_set_a (s)
+--			s2 := some_set_a ∪ same_set_a (s)
+--			assert (
+--				"{∅,{a},{b},{c},{a,b},{a,c},{b,c},{a,b,c}}", s.powerset ≍
+--				(s.as_singleton & (s / a) & (s / b) & (s / c) & (s / a / b) & (s / a / c) & (s / b / c) & s.o)
+--				)
+--			assert ("{∅,{a},{b},{c},{a,b},{a,c},{b,c},{a,b,c}} ok", properties.powerset_ok (a, s0, s, s2))
+
+--			a := some_object_a
+--			s0 := some_set_a
+--			s := set_to_be_tested
+--			s2 := some_set_a
+--			n := # s
+--			if (2 ^ n) ≤ max_subsets then
+--				if 2 ^ n > max_asserted_subsets then
+--					chk_tests := {ISE_RUNTIME}.check_assert (False)
+--				end
+--					assert ("powerset", attached s.powerset)
+--				if chk_tests then
+--					chk_tests := {ISE_RUNTIME}.check_assert (True)
+--				end
+--			end
+--			assert ("powerset_ok", properties.powerset_ok (a, s0, s, s2))
+--		end
+
+--	test_trivial_subsets
+--			-- Test {SET}.trivial_subsets.
+--		note
+--			testing: "covers/{SET}.trivial_subsets"
+--		local
+--			s: like set_to_be_tested
+--		do
+--			s := set_to_be_tested.o
+--			assert ("{∅}", s.trivial_subsets ≍ s.o.as_singleton)
+--			assert ("{∅} ok", properties.trivial_subsets_ok (s))
+
+--			from
+--				s := set_to_be_tested
+--			until
+--				not s.is_empty
+--			loop
+--				s := set_to_be_tested
+--			end
+--			assert ("{∅,s}", s.trivial_subsets ≍ (s.o.as_singleton & s))
+--			assert ("{∅,s} ok", properties.trivial_subsets_ok (s))
+
+--			s := set_to_be_tested
+--			assert ("trivial_subsets", attached s.trivial_subsets)
+--			assert ("trivial_subsets_ok", properties.trivial_subsets_ok (s))
+--		end
+
+--	test_proper_subsets
+--			-- Test {SET}.proper_subsets.
+--		note
+--			testing: "covers/{SET}.proper_subsets"
+--		local
+--			a, b, c: A
+--			s: like set_to_be_tested
+--			n: like some_set.cardinality
+--			chk_tests: BOOLEAN
+--		do
+--			a := some_object_a
+--			from
+--				s := set_to_be_tested
+--			until
+--				s.others.is_empty
+--			loop
+--				s := s.others
+--			variant
+--				cardinality: {like new_set_a}.natural_as_integer (# s)
+--			end
+--				check
+--					s.is_empty or s.is_singleton
+--				end
+--			assert ("{}", s.proper_subsets.is_empty)
+--			assert ("{} ok", properties.proper_subsets_ok (s))
+
+--			s := set_to_be_tested_with_cardinality (2)
+--				check
+--					is_not_empty: not s.is_empty -- # s = 2
+--				end
+--			a := same_set_a (s).any
+--				check
+--					is_not_empty: not (s / a).is_empty -- # s = 2
+--				end
+--			b := same_set_a (s / a).any
+--			assert ("{{a},{b}}", s.proper_subsets ≍ ((s / a).as_singleton & (s / b)))
+--			assert ("{{a},{b}} ok", properties.proper_subsets_ok (s))
+
+--			s := set_to_be_tested_with_cardinality (3)
+--				check
+--					is_not_empty: not s.is_empty -- # s = 3
+--				end
+--			a := same_set_a (s).any
+--				check
+--					is_not_empty: not (s / a).is_empty -- # s = 3
+--				end
+--			b := same_set_a (s / a).any
+--				check
+--					is_not_empty: not (s / a / b).is_empty -- # s = 3
+--				end
+--			c := same_set_a (s / a / b).any
+--			assert (
+--				"{{a},{b},{c},{a,b},{a,c},{b,c}}", s.proper_subsets ≍
+--				((s / a).as_singleton & (s / b) & (s / c) & (s / a / b) & (s / a / c) & (s / b / c))
+--				)
+--			assert ("{{a},{b},{c},{a,b},{a,c},{b,c}} ok", properties.proper_subsets_ok (s))
+
+--			s := set_to_be_tested_with_cardinality (4)
+--			assert ("{a,b,c,d}", # s.proper_subsets = 14)
+--			assert ("{a,b,c,d} ok", properties.proper_subsets_ok (s))
+
+--			s := set_to_be_tested_with_cardinality (5)
+--			assert ("{a,b,c,d,e}", # s.proper_subsets = 30)
+--			assert ("{a,b,c,d,e} ok", properties.proper_subsets_ok (s))
+
+--			s := set_to_be_tested
+--			n := # s
+--			if (2 ^ n - 2) ≤ max_subsets then
+--				if (2 ^ n - 2) > max_asserted_subsets then
+--					chk_tests := {ISE_RUNTIME}.check_assert (False)
+--				end
+--					assert ("proper_subsets", attached s.proper_subsets)
+--				if chk_tests then
+--					chk_tests := {ISE_RUNTIME}.check_assert (True)
+--				end
+--			end
+--			assert ("proper_subsets_ok", properties.proper_subsets_ok (s))
+--		end
+
+	test_filtered
+			-- Test {SET}.filtered.
+		note
+			testing: "covers/{SET}.filtered"
+		local
+			s: like set_to_be_tested
+			p: PREDICATE [A]
+		do
+			s := set_to_be_tested
+			assert ("s", (s | agent s.has) ≍ s)
+			assert ("s ok", properties.filtered_ok (s, agent s.has))
+
+			s := set_to_be_tested
+			assert ("∅", (s | agent s.does_not_have) ≍ o)
+			assert ("∅ ok", properties.filtered_ok (s, agent s.does_not_have))
+
+			p := agent (x: A): BOOLEAN
+				do
+					Result := object_hash_code (x) \\ 2 = 0
+				end
+			assert ("filtered", attached (s | p))
+			assert ("filtered_ok", properties.filtered_ok (s, p))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

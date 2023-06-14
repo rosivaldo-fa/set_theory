@@ -14,6 +14,8 @@ inherit
 			has_ok,
 			with_ok,
 			without_ok,
+			subsets_ok,
+			powerset_ok,
 			o_anchor,
 			universe_anchor
 		end
@@ -234,6 +236,30 @@ feature -- Properties (Construction)
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
 			Result := Precursor {STP_SET_PROPERTIES}(s, a)
+		end
+
+feature -- Properties (Operation)
+
+	subsets_ok (a: A; s0, s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- <Precursor>
+		local
+			sa: STS_SET [A, EQ]
+		do
+			if type_is_predefined_expanded (({A}).type_id) then
+				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
+			end
+			Result := Precursor {STP_SET_PROPERTIES}(a, s0, s1, s2)
+		end
+
+	powerset_ok (a: A; s0, s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- <Precursor>
+		local
+			sa: STS_SET [A, EQ]
+		do
+			if type_is_predefined_expanded (({A}).type_id) then
+				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
+			end
+			Result := Precursor {STP_SET_PROPERTIES}(a, s0, s1, s2)
 		end
 
 feature -- Conversion

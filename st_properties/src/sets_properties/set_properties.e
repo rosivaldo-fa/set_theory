@@ -662,6 +662,131 @@ feature -- Properties (Quantifier)
 			end
 		end
 
+feature -- Properties (Operation)
+
+	subsets_ok (a: A; s0, s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.subsets?
+		do
+--			Result := powersets_properties_ok (a, s0, s1, s2, s1.subsets, s2.subsets)
+		end
+
+	powerset_ok (a: A; s0, s1, s2: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.powerset?
+		do
+--			Result := powersets_properties_ok (a, s0, s1, s2, s1.powerset, s2.powerset)
+		end
+
+--	powersets_properties_ok (a: A; s0, s1, s2: STS_SET [A, EQ]; s1_ps, s2_ps: STS_SUBSET_FAMILY [A, EQ]): BOOLEAN
+--			-- Do the properties verified within set theory hold for the powersets of `s1' and `s2'?
+--		require
+--			s1_powerset: s1_ps ≍ s1.powerset
+--			s2_powerset: s2_ps ≍ s2.powerset
+--		do
+--			check
+--				u: attached current_universe as u
+--				u_ps_card: attached (2 ^ # u) as u_ps_card
+--				checked_u_ps: attached {ISE_RUNTIME}.check_assert (u_ps_card ≤ max_asserted_subsets) as checked_u_ps
+--					definition: u_ps_card ≤ max_subsets ⇒ s1_ps ≍ (u.powerset | agent s1.is_superset)
+--				checked_u_ps_restored: attached {ISE_RUNTIME}.check_assert (checked_u_ps)
+--				s1_ps_card: attached (2 ^ # s1) as s1_ps_card
+--				checked_s1_ps: attached {ISE_RUNTIME}.check_assert (s1_ps_card ≤ max_asserted_subsets) as checked_s1_ps
+--					s1_ps_card ≤ max_subsets ⇒ (
+--						agent (ia_a: A; ia_s0, ia_s1: STS_SET [A, EQ]; ia_s1_ps: STS_SUBSET_FAMILY [A, EQ]): BOOLEAN
+--							do
+--								check
+--									by_reducing_without: ia_s1_ps ≍ element_to_sets.set_reduction (
+--										ia_s1, ia_s1.as_singleton, agent (acc: STS_SET [STS_SET [A, EQ], STS_SET_EQUALITY [A, EQ]]; x: A):
+--											STS_SET [STS_SET [A, EQ], STS_SET_EQUALITY [A, EQ]]
+--											do
+--												Result := acc ∪ (acc ↦ agent {STS_SET [A, EQ]}.without (x))
+--											end
+--										)
+--									has_base_set: ia_s1 ∈ ia_s1_ps
+--									includes_lesser_powerset: ia_s1.others.powerset ⊆ ia_s1_ps
+--									includes_extended_powerset: not ia_s1.is_empty ⇒
+--										(ia_s1.others.powerset ↦ agent {STS_SET [A, EQ]}.with (ia_s1.any)) ⊆ ia_s1_ps
+--									cardinality: # ia_s1_ps = 2 ^ (# ia_s1)
+--									subset_membership: (ia_s0 ⊆ ia_s1) = ia_s0 ∈ ia_s1_ps
+--									induced_membership: ia_s1 ∋ ia_a = singleton (ia_a) ∈ ia_s1_ps
+--									has_empty_set: o ∈ ia_s1_ps
+--								then
+--									Result := True
+--								end
+--							end
+--						).item (a, s0, s1, s1_ps)
+--					s2_ps_card: attached (2 ^ # s2) as s2_ps_card
+--					checked_s2_ps: attached {ISE_RUNTIME}.check_assert ((s1_ps_card ∨ s2_ps_card) ≤ max_asserted_subsets) as checked_s2_ps
+--						(s1_ps_card ∨ s2_ps_card) ≤ max_subsets ⇒ (
+--							agent (ia_s1, ia_s2: STS_SET [A, EQ]; ia_s1_ps, ia_s2_ps: STS_SUBSET_FAMILY [A, EQ]): BOOLEAN
+--								do
+--									check
+--										induced_inclusion: (ia_s1 ⊆ ia_s2) = (ia_s1_ps ⊆ ia_s2_ps)
+--										induced_equality: ia_s1 ≍ ia_s2 = ia_s1_ps ≍ ia_s2_ps
+--										disjointness_consequence: (ia_s1 ∩ ia_s2) ≍ o ⇒ (ia_s1_ps ∩ ia_s2_ps) ≍ o.as_singleton
+--										induced_intersection: (ia_s1 ∩ ia_s2).powerset ≍ (ia_s1_ps ∩ ia_s2_ps)
+--										quasi_included_difference: (ia_s1 ∖ ia_s2).powerset ⊆ ((ia_s1_ps ∖ ia_s2_ps) ∪ o.as_singleton)
+--									then
+--										Result := True
+--									end
+--								end
+--							).item (s1, s2, s1_ps, s2_ps)
+--						s1_uni_s2_ps_card: attached (2 ^ # (s1 ∪ s2)) as s1_uni_s2_ps_card
+--						checked_s1_uni_s2_ps: attached {ISE_RUNTIME}.check_assert
+--							(s1_uni_s2_ps_card ≤ max_asserted_subsets) as checked_s1_uni_s2_ps
+--							included_union: s1_uni_s2_ps_card ≤ max_subsets ⇒ (s1_ps ∪ s2_ps) ⊆ (s1 ∪ s2).powerset
+--						checked_s1_uni_s2_ps_restored: attached {ISE_RUNTIME}.check_assert (checked_s1_uni_s2_ps)
+--					checked_s2_ps_restored: attached {ISE_RUNTIME}.check_assert (checked_s2_ps)
+--				checked_s1_ps_restored: attached {ISE_RUNTIME}.check_assert (checked_s1_ps)
+--			then
+--				Result := True
+--			end
+--		end
+
+--	trivial_subsets_ok (s: STS_SET [A, EQ]): BOOLEAN
+--			-- Do the properties verified within set theory hold for {STS_SET}.trivial_subsets?
+--		do
+--			if s.is_empty then
+--				check
+--					one_subset: # s.trivial_subsets = 1
+--				then
+--				end
+--			else
+--				check
+--					two_subsets: # s.trivial_subsets = 2
+--				then
+--				end
+--			end
+--			Result := True
+--		end
+
+--	proper_subsets_ok (s: STS_SET [A, EQ]): BOOLEAN
+--			-- Do the properties verified within set theory hold for {STS_SET}.proper_subsets?
+--		do
+--			if (2 ^ # s) ≤ max_subsets then
+--				check
+--					no_proper_subset: # s < 2 ⇒ # s.proper_subsets = 0
+--					some_proper_subset: # s ≥ 2 ⇒ # s.proper_subsets = 2 ^ (# s) - 2
+--				then
+--				end
+--			end
+--			Result := True
+--		end
+
+	filtered_ok (s: STS_SET [A, EQ]; p: PREDICATE [A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.filtered?
+		do
+			check
+				u: attached current_universe as u
+				definition: s | p ≍ (u | agent anded (p, agent s.has, ?))
+				by_intersection: s | p ≍ (s ∩ (u | p))
+				subset: s | p ⊆ s
+				only_compliant_elements: (s | p) |∀ p
+--				nothing_lost: (s ∖ (s | p)) |∄ p
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
