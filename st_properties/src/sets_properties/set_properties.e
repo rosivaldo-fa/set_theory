@@ -810,7 +810,7 @@ feature -- Properties (Operation)
 				everything_includes_o: o ⊆ s1 -- {STS_SET}.is_subset definition
 			end
 			check
-				full_complement: (o ∁ s3) ≍ s3
+				full_complement: (o ∁ s1) ≍ s1
 			then
 			end
 			check
