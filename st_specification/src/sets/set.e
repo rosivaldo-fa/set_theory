@@ -431,6 +431,23 @@ feature -- Operation
 			definition: Result ≍ (Current | agent s.has)
 		end
 
+	united alias "∪" (s: SET [A, EQ]): like superset_anchor
+			-- Union of current set and `s', i.e. every element that is in current set or in `s'.
+		deferred
+		ensure
+			every_element_here: Current ⊆ Result
+			every_element_there: s ⊆ Result
+			nothing_else: Result |∀ agent ored (agent has, agent s.has, ?)
+		end
+
+	subtracted alias "∖" (s: SET [A, EQ]): like subset_anchor
+			-- Difference of current set and `s', i.e. every element that is in current set but not in `s'.
+		do
+			Result := Current | agent s.does_not_have
+		ensure
+			definition: Result ≍ (Current | agent s.does_not_have)
+		end
+
 feature -- Factory
 
 	o,

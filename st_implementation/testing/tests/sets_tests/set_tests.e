@@ -1753,6 +1753,53 @@ feature -- Test routines (Operation)
 			assert ("intersected_ok", properties.intersected_ok (some_object_a, s, s2, some_set_a, some_set_a))
 		end
 
+	test_united
+			-- Test {SET}.united.
+		note
+			testing: "covers/{SET}.united"
+		local
+			a, b, c: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			s := o
+			s2 := same_set_a (o)
+			assert ("s ∪ s2 ≍ ∅", s ∪ s2 ≍ o)
+			assert ("s ∪ s2 ≍ ∅ ok", properties.united_ok (some_object_a, s, s2, some_set_a, some_set_a))
+
+			a := some_object_a
+			if next_random_item \\ 2 = 0 then
+				s := s & same_object_a (a)
+			else
+				s2 := s2 & same_object_a (a)
+			end
+			assert ("s ∪ s2 ≍ {a}", s ∪ s2 ≍ singleton (a))
+			assert ("s ∪ s2 ≍ {a} ok", properties.united_ok (some_object_a, s, s2, some_set_a, some_set_a))
+
+			b := some_object_a
+			if next_random_item \\ 2 = 0 then
+				s := s & same_object_a (b)
+			else
+				s2 := s2 & same_object_a (b)
+			end
+			assert ("s ∪ s2 ≍ {a,b}", s ∪ s2 ≍ (singleton (a) & b))
+			assert ("s ∪ s2 ≍ {a,b} ok", properties.united_ok (some_object_a, s, s2, some_set_a, some_set_a))
+
+			c := some_object_a
+			if next_random_item \\ 2 = 0 then
+				s := s & same_object_a (c)
+			else
+				s2 := s2 & same_object_a (c)
+			end
+			assert ("s ∪ s2 ≍ {a,b,c}", s ∪ s2 ≍ (singleton (a) & b & c))
+			assert ("s ∪ s2 ≍ {a,b,c} ok", properties.united_ok (some_object_a, s, s2, some_set_a, some_set_a))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("united", attached (s ∪ s2))
+			assert ("united_ok", properties.united_ok (some_object_a, s, s2, some_set_a, some_set_a))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

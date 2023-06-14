@@ -919,6 +919,48 @@ feature -- Properties (Operation)
 			end
 		end
 
+	united_ok (a: A; s1, s2, s3, s4: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.united?
+		local
+			u: STS_SET [A, EQ]
+		do
+			u := current_universe
+			check
+				definition: (s1 ∪ s2) ≍ (u | agent u.ored (agent s1.has, agent s2.has, ?))
+--				by_reduction: (s1 ∪ s2) ≍ transformer_to_set.set_reduction (s1, s2, agent {STS_SET [A, EQ]}.with)
+--				by_alternate_reduction: (s1 ∪ s2) ≍ transformer_to_set.set_reduction (s2, s1, agent {STS_SET [A, EQ]}.with)
+				membership: (s1 ∪ s2) ∋ a = (s1 ∋ a or s2 ∋ a)
+				includes_s1: s1 ⊆ (s1 ∪ s2)
+				includes_s2: s2 ⊆ (s1 ∪ s2)
+				keeps_superset: s1 ⊆ s2 = ((s1 ∪ s2) ≍ s2)
+				superset: (s1 ⊆ s3 and s2 ⊆ s3) = ((s1 ∪ s2) ⊆ s3)
+				subset: s3 ⊆ s1 or s3 ⊆ s2 ⇒ s3 ⊆ (s1 ∪ s2)
+				induced_inclusion: s1 ⊆ s2 ⇒ (s1 ∪ s3) ⊆ (s2 ∪ s3)
+				subunion: s1 ⊆ s2 and s3 ⊆ s4 ⇒ (s1 ∪ s3) ⊆ (s2 ∪ s4)
+			then
+			end
+			check
+					-- Universe includes everything.
+				u_includes_s1: s1 ⊆ u
+				u_includes_s2: s2 ⊆ u
+			end
+			check
+				inverted_inclusion: (s1 ∁ u) ⊆ (s2 ∁ u) = ((s1 ∪ s2) ≍ s1)
+				identity: (o ∪ s1) ≍ s1
+				absorption: (s1 ∪ u) ≍ u
+				partitioned_universe: (s1 ∪ (s1 ∁ u)) ≍ u
+				idempotent: (s1 ∪ s1) ≍ s1
+				commutative: (s1 ∪ s2) ≍ (s2 ∪ s1)
+				associative: ((s1 ∪ s2) ∪ s3) ≍ (s1 ∪ (s2 ∪ s3))
+				universal_union: (s1 ∪ s2) ≍ u ⇒ (s1 ∁ u) ⊆ s2
+				empty_union: (s1 ∪ s2) ≍ o = (s1 ≍ o and s2 ≍ o)
+--				pair_equality: paired_sets (s1, s2) ≍ paired_sets (s3, s4) ⇒ (s1 ∪ s2) ≍ (s3 ∪ s4)
+				by_intersection_and_complement: (s1 ∪ s2) ≍ (s1 ∪ ((s1 ∁ u) ∩ s2))
+			then
+				Result := united_and_intersected_ok (s1, s2, s3, s4)
+			end
+		end
+
 	united_and_intersected_ok (s1, s2, s3, s4: STS_SET [A, EQ]): BOOLEAN
 			-- Do the properties verified within set theory hold for {STS_SET}.united and {STS_SET}.intersected together?
 		local

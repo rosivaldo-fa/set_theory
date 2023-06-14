@@ -27,6 +27,7 @@ inherit
 			for_all_distinct_pairs,
 			complemented,
 			intersected,
+			subtracted,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -728,6 +729,28 @@ feature -- Operation
 		do
 			if s.is_empty then
 				Result := o
+			else
+				Result := Precursor {STS_SET}(s)
+			end
+		end
+
+	united alias "∪" (s: STS_SET [A, EQ]): like superset_anchor
+			-- <Precursor>
+		local
+			diff: STS_SET [A, EQ]
+		do
+			diff := s ∖ Current
+				check
+					is_disjoint: is_disjoint (diff) -- diff = s ∖ Current
+				end
+			Result := batch_extended (diff)
+		end
+
+	subtracted alias "∖" (s: STS_SET [A, EQ]): like subset_anchor
+			-- <Precursor>
+		do
+			if s.is_empty then
+				Result := Current
 			else
 				Result := Precursor {STS_SET}(s)
 			end

@@ -17,6 +17,7 @@ inherit
 			subsets_ok,
 			powerset_ok,
 			intersected_ok,
+			united_ok,
 			o_anchor,
 			universe_anchor
 		end
@@ -264,6 +265,17 @@ feature -- Properties (Operation)
 		end
 
 	intersected_ok (a: A; s1, s2, s3, s4: STS_SET [A, EQ]): BOOLEAN
+			-- <Precursor>
+		local
+			sa: STS_SET [A, EQ]
+		do
+			if type_is_predefined_expanded (({A}).type_id) then
+				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
+			end
+			Result := Precursor {STP_SET_PROPERTIES}(a, s1, s2, s3, s4)
+		end
+
+	united_ok (a: A; s1, s2, s3, s4: STS_SET [A, EQ]): BOOLEAN
 			-- <Precursor>
 		local
 			sa: STS_SET [A, EQ]
