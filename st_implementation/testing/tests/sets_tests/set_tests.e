@@ -863,12 +863,11 @@ feature -- Test routines (Comparison)
 			testing: "covers/{SET}.is_trivial_superset"
 		local
 			s: like set_to_be_tested
-			s1 -- TODO: Why?
-			, s2: like some_set_a
+			s2: like some_set_a
 		do
 			s := set_to_be_tested
 			if next_random_item \\ 2 = 0 then
-				s2 := some_set_a.o
+				s2 := same_set_a (o)
 			else
 				s2 := same_set_a (s)
 			end
@@ -880,8 +879,7 @@ feature -- Test routines (Comparison)
 				s2 := some_set_a & some_other_object_a (s)
 			else
 				s2 := some_set_a & some_object_a
-				s1 := set_to_be_tested ∪ s2
-					& some_other_object_a (s2)
+				s := set_to_be_tested ∪ s2 & some_other_object_a (s2)
 			end
 			assert ("not s.is_trivial_superset (s2)", not s.is_trivial_superset (s2))
 			assert ("not s.is_trivial_superset (s2) ok", properties.is_trivial_superset_ok (s, s2, some_set_a))
