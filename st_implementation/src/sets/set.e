@@ -25,6 +25,7 @@ inherit
 			for_all,
 			for_all_pairs,
 			for_all_distinct_pairs,
+			complemented,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -175,7 +176,7 @@ feature -- Construction
 				s := s.others
 				if not s.is_empty then
 					check
---							is_disjoint: s.is_disjoint (Result) -- Result ≍ ((Current ∖ s) / a)
+						is_disjoint: s.is_disjoint (Result) -- Result ≍ ((Current ∖ s) / a)
 					end
 					Result := s.batch_extended (Result)
 				end
@@ -711,6 +712,16 @@ feature -- Operation
 			end
 		end
 
+	complemented alias "∁" (s: STS_SET [A, EQ]): like set_anchor
+			-- <Precursor>
+		do
+			if is_empty then
+				Result := converted (s)
+			else
+				Result := Precursor {STS_SET}(s)
+			end
+		end
+
 feature -- Conversion
 
 	natural_as_integer (n: like natural_anchor): INTEGER_64
@@ -767,7 +778,7 @@ feature -- Factory
 				Result := cs
 			else
 				check
---						is_disjoint: o.is_disjoint (s) -- o.is_empty
+					is_disjoint: o.is_disjoint (s) -- o.is_empty
 				end
 				Result := o.batch_extended (s)
 			end

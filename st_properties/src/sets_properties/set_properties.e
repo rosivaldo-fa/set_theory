@@ -787,6 +787,47 @@ feature -- Properties (Operation)
 			end
 		end
 
+	complemented_ok (s01, s02, s: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.complemented?
+		do
+			check
+				u: attached current_universe as u
+				s01 ⊆ s and s02 ⊆ s ⇒ (
+					agent (ia_s01, ia_s02, ia_s, ia_u: STS_SET [A, EQ]): BOOLEAN
+						do
+							check
+								definition: (ia_s01 ∁ ia_s) ≍ (ia_u | agent anded (agent ia_s.has, agent ia_s01.does_not_have, ?))
+--								by_difference: (ia_s01 ∁ ia_s) ≍ (ia_s ∖ ia_s01)
+--								by_reduction: (ia_s01 ∁ ia_s) ≍ element_to_set.set_reduction (ia_s01, ia_s, agent {STS_SET [A, EQ]}.without)
+								disjoint: (ia_s01 ∁ ia_s).is_disjoint (ia_s01)
+								is_subset_too: (ia_s01 ∁ ia_s) ⊆ ia_s
+--								complementary: (ia_s01 ∪ (ia_s01 ∁ ia_s)) ≍ ia_s
+								involutive: ((ia_s01 ∁ ia_s) ∁ ia_s) ≍ ia_s01
+								inverted_inclusion: ia_s01 ⊆ ia_s02 = ((ia_s01 ∁ ia_s) ⊇ (ia_s02 ∁ ia_s))
+							then
+								Result := True
+							end
+						end
+					).item (s01, s02, s, u)
+					everything_includes_o: o ⊆ s -- {STS_SET}.is_subset definition
+				full_complement: (o ∁ s) ≍ s
+					reflexive_inclusion: s ⊆ s -- {STS_SET}.is_subset definition
+				empty_complement: (s ∁ s) ≍ o
+					u_includes_o: o ⊆ u -- {STS_SET}.is_subset definition
+				dual_of_o: (o ∁ u) ≍ u
+					u_includes_u: u ⊆ u -- {STS_SET}.is_subset definition
+				dual_of_u: (u ∁ u) ≍ o
+						-- Universe includes everything.
+					u_includes_s01: s01 ⊆ u
+					u_includes_c_s01: (s01 ∁ u) ⊆ u
+				absolutely_involutive: ((s01 ∁ u) ∁ u) ≍ s01
+					u_includes_s02: s02 ⊆ u -- Universe includes everything.
+				dual_inclusion: s01 ⊆ s02 = ((s01 ∁ u) ⊇ (s02 ∁ u))
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]

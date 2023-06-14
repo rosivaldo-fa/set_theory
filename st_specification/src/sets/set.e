@@ -413,6 +413,16 @@ feature -- Operation
 			nothing_else: Result ⊆ Current
 		end
 
+	complemented alias "∁" (s: SET [A, EQ]): like set_anchor
+			-- Complement of current set relative to `s', i.e. every element in `s' that is not in current set.
+		require
+			is_subset: Current ⊆ s
+		do
+			Result := s | agent does_not_have
+		ensure
+			definition: Result ≍ (s | agent does_not_have)
+		end
+
 	intersected alias "∩" (s: SET [A, EQ]): like subset_anchor
 			-- Intersection of current set and `s', i.e. every element in current set that is in `s'.
 		do
@@ -533,6 +543,11 @@ feature -- Transformer
 			-- Transformer of objects whose types derive from {A} to objects whose types derive from {like natural_anchor}
 		deferred
 		end
+
+--	transformer_to_set: TRANSFORMER [A, SET [A, EQ], SET_EQUALITY [A]]
+--			-- Transformer of objects whose types derive from {A} to objects whose types derive from {SET [A, EQ]}
+--		deferred
+--		end
 
 feature -- Anchor
 

@@ -1665,6 +1665,84 @@ feature -- Test routines (Operation)
 			assert ("filtered_ok", properties.filtered_ok (s, p))
 		end
 
+	test_complemented
+			-- Test {SET}.complemented.
+		note
+			testing: "covers/{SET}.complemented"
+		local
+			a, b, c: A
+			s: like set_to_be_tested
+			s1, s2: like some_set_a
+		do
+			s := set_to_be_tested.o
+			s1 := some_set_a
+			s2 := some_set_a--∪ same_set_a (s1)
+				check
+					is_subset: s ⊆ s1 -- s ≍ ∅
+				end
+			assert ("∅ ∁ s1 ≍ s1", s ∁ s1 ≍ s1)
+			assert ("∅ ⊆ s1 ⊆ s2 ok", properties.complemented_ok (s, s1, s2))
+
+			s := set_to_be_tested_with_cardinality (1)
+				check
+					is_not_empty: not s.is_empty -- # s = 1
+				end
+			a := s.any
+			s1 := some_set_a & same_object_a (a)
+			s2 := some_set_a--∪ same_set_a (s1)
+				check
+					is_subset: s ⊆ s1 -- s ≍ {a} ⊆ {a,...} ≍ s1
+				end
+			assert ("({a} ∁ s1) ≍ (s1 / a)", s ∁ s1 ≍ (s1 / a))
+			assert ("{a} ⊆ s1 ⊆ s2 ok", properties.complemented_ok (s, s1, s2))
+
+			s := set_to_be_tested_with_cardinality (2)
+				check
+					s_is_not_empty: not s.is_empty -- # s = 2
+					s_others_is_not_empty: not s.others.is_empty -- # s = 2
+				end
+			a := s.any
+			b := s.others.any
+			s1 := some_set_a & same_object_a (a) & same_object_a (b)
+			s2 := some_set_a--∪ same_set_a (s1)
+				check
+					is_subset: s ⊆ s1 -- s ≍ {a,b} ⊆ {a,b,...} ≍ s1
+				end
+			assert ("({a,b} ∁ s1) ≍ (s1 / a / b)", s ∁ s1 ≍ (s1 / a / b))
+			assert ("{a,b} ⊆ s1 ⊆ s2 ok", properties.complemented_ok (s, s1, s2))
+
+			s := set_to_be_tested_with_cardinality (3)
+				check
+					s_is_not_empty: not s.is_empty -- # s = 3
+					s_others_is_not_empty: not s.others.is_empty -- # s = 3
+					s_others_others_is_not_empty: not s.others.others.is_empty -- # s = 3
+				end
+			a := s.any
+			b := s.others.any
+			c := s.others.others.any
+			s1 := some_set_a & same_object_a (a) & same_object_a (b) & same_object_a (c)
+			s2 := some_set_a--∪ same_set_a (s1)
+				check
+					is_subset: s ⊆ s1 -- s ≍ {a,b,c} ⊆ {a,b,c,...} ≍ s1
+				end
+			assert ("({a,b,c} ∁ s1) ≍ (s1 / a / b / c)", s ∁ s1 ≍ (s1 / a / b / c))
+			assert ("{a,b,c} ⊆ s1 ⊆ s2 ok", properties.complemented_ok (s, s1, s2))
+
+			s := set_to_be_tested
+			s1 := some_set_a--∪ same_set_a (s)
+			s2 := some_set_a--∪ same_set_a (s1)
+				check
+					is_subset: s ⊆ s1 -- s1 ≍ ... ∪ s
+				end
+			assert ("s ∁ s1", attached (s ∁ s1))
+			assert ("s ∁ s1 ok", properties.complemented_ok (s, s1, s2))
+
+			s := set_to_be_tested
+			s1 := some_set_a
+			assert ("complemented", s ⊆ s2 ⇒ attached (s ∁ s2))
+			assert ("complemented_ok", properties.complemented_ok (s, s1, some_set_a))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

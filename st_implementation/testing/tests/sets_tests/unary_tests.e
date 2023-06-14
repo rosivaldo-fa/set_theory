@@ -150,9 +150,9 @@ feature -- Factory (Set)
 				inspect
 					next_random_item \\ 2
 				when 0 then
-						check
---							is_disjoint: tmp_result.is_disjoint (s) -- tmp_result.is_empty
-						end
+					check
+						is_disjoint: tmp_result.is_disjoint (s) -- tmp_result.is_empty
+					end
 					Result := tmp_result.batch_extended (s)
 				when 1 then
 					from
@@ -163,9 +163,9 @@ feature -- Factory (Set)
 					until
 						l_s.is_empty
 					loop
-							check
-								does_not_have: tmp_result ∌ l_s.any -- tmp_result ≍ (s ∖ l_s)
-							end
+						check
+							does_not_have: tmp_result ∌ l_s.any -- tmp_result ≍ (s ∖ l_s)
+						end
 						tmp_result := tmp_result.extended (same_object_a (l_s.any))
 						l_s := l_s.others
 					variant
@@ -213,17 +213,17 @@ feature -- Factory (Set)
 		do
 			check
 				ss: attached {SET [STS_SET [A, EQ], STS_REFERENCE_EQUALITY [STS_SET [A, EQ]]]} some_immediate_instance (
-					agent: SET [STS_SET [A, EQ], STS_REFERENCE_EQUALITY [STS_SET [A, EQ]]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_set_a
-							end
-						end
-					) as ss -- `some_immediate_instance' definition
+							agent: SET [STS_SET [A, EQ], STS_REFERENCE_EQUALITY [STS_SET [A, EQ]]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_set_a
+									end
+								end
+						) as ss -- `some_immediate_instance' definition
 			then
 				Result := cropped_set (ss)
 			end
@@ -248,17 +248,17 @@ feature -- Factory (Set)
 		do
 			check
 				ss: attached {SET [STS_SET [A, EQ], STS_OBJECT_STANDARD_EQUALITY [STS_SET [A, EQ]]]} some_immediate_instance (
-					agent: SET [STS_SET [A, EQ], STS_OBJECT_STANDARD_EQUALITY [STS_SET [A, EQ]]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_set_a
-							end
-						end
-					) as ss -- `some_immediate_instance' definition
+							agent: SET [STS_SET [A, EQ], STS_OBJECT_STANDARD_EQUALITY [STS_SET [A, EQ]]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_set_a
+									end
+								end
+						) as ss -- `some_immediate_instance' definition
 			then
 				Result := cropped_set (ss)
 			end
@@ -283,17 +283,17 @@ feature -- Factory (Set)
 		do
 			check
 				ss: attached {SET [STS_SET [A, EQ], STS_OBJECT_EQUALITY [STS_SET [A, EQ]]]} some_immediate_instance (
-					agent: SET [STS_SET [A, EQ], STS_OBJECT_EQUALITY [STS_SET [A, EQ]]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_set_a
-							end
-						end
-					) as ss -- `some_immediate_instance' definition
+							agent: SET [STS_SET [A, EQ], STS_OBJECT_EQUALITY [STS_SET [A, EQ]]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_set_a
+									end
+								end
+						) as ss -- `some_immediate_instance' definition
 			then
 				Result := cropped_set (ss)
 			end
@@ -318,17 +318,17 @@ feature -- Factory (Set)
 		do
 			check
 				ss: attached {SET [STS_SET [A, EQ], STS_OBJECT_DEEP_EQUALITY [STS_SET [A, EQ]]]} some_immediate_instance (
-					agent: SET [STS_SET [A, EQ], STS_OBJECT_DEEP_EQUALITY [STS_SET [A, EQ]]]
-						do
-							across
-								1 |..| some_count.as_integer_32 as i
-							from
-								create Result.make_empty
-							loop
-								Result := Result & some_set_a
-							end
-						end
-					) as ss -- `some_immediate_instance' definition
+							agent: SET [STS_SET [A, EQ], STS_OBJECT_DEEP_EQUALITY [STS_SET [A, EQ]]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result.make_empty
+									loop
+										Result := Result & some_set_a
+									end
+								end
+						) as ss -- `some_immediate_instance' definition
 			then
 				Result := cropped_set (ss)
 			end
@@ -355,4 +355,5 @@ note
 		(see http://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: ""
+
 end
