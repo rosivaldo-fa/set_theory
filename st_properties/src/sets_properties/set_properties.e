@@ -339,7 +339,7 @@ feature -- Properties (Comparison)
 				u: attached current_universe as u
 				definition: s1 ⊉ s2 = (u |∃ agent anded (agent s2.has, agent s1.does_not_have, ?))
 				lesser_definition: s1 ⊉ s2 = (s2 |∃ agent s1.does_not_have)
-				by_difference: s1 ⊉ s2 = (s1 ≍ o or s1 ∖ s2 ≭ o)
+				by_difference: s1 ⊉ s2 = (s2 ∖ s1) ≭ o
 				irreflexive: not (s1 ⊉ s1)
 				unequality: s1 ≭ s2 = (s1 ⊉ s2 or s2 ⊉ s1)
 				o_includes_only_o: o ⊉ s1 ⇒ s1 ≭ o

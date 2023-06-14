@@ -12,6 +12,7 @@ inherit
 		redefine
 			has,
 			cardinality,
+			out,
 			equals,
 			is_subset,
 			is_strict_subset,
@@ -32,6 +33,13 @@ inherit
 			set_anchor,
 			subset_anchor,
 			superset_anchor
+		end
+
+	DEBUG_OUTPUT
+		rename
+			debug_output as out
+		redefine
+			out
 		end
 
 create
@@ -247,6 +255,60 @@ feature -- Measurement
 			end
 		end
 
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+			-- 	TODO: Remove.
+		local
+			s: STS_SET [A, EQ]
+		do
+			Result := "{"
+			if not is_empty then
+				from
+					Result.append (element_out (any))
+					s := others
+				invariant
+--					building_up: Result ~ {TRANSFORMER [A, STRING, EQ, STS_OBJECT_EQUALITY [STRING]]}.tuple_indexed_left_reduction (right_trimmed (s.n), "", 1, agent appending_term_out)
+				until
+					s.is_empty
+				loop
+					Result.append_character (',')
+					check
+						other_arguments_not_void: element_out (s.any) /= Void -- `element_out' definition
+					end
+					Result.append (element_out (s.any))
+					s := s.others
+				variant
+					n: natural_as_integer (# s)
+				end
+			end
+			Result.append_character ('}')
+		ensure then
+--			definition: Result ~ "{" + as_tuple.terms_out + "}"
+		end
+
+	element_out (a: A): STRING
+			-- Terse printable representation of `a'
+			-- 	TODO: Remove.
+		do
+			if attached a then
+				check
+					other_not_void: a.out /= Void -- {ANY}.out definition
+				end
+				create Result.make_from_separate (a.out)
+			else
+				Result := "Void"
+			end
+		ensure
+			class
+			definition: if attached a then
+					Result ~ a.out
+				else
+					Result ~ "Void"
+				end
+		end
+
 feature -- Comparison
 
 	equals alias "≍" (s: STS_SET [A, EQ]): BOOLEAN
@@ -355,9 +417,9 @@ feature -- Quantifier
 				cardinality: natural_as_integer (# s)
 			end
 			if not s.is_empty then
-					check
-						found: p (s.any) -- loop termination
-					end
+				check
+					found: p (s.any) -- loop termination
+				end
 				Result := s.others |∄ p
 			end
 		end
@@ -587,15 +649,15 @@ feature -- Operation
 --			if not s.others.is_empty then
 --				from
 --						check
---							s_is_not_empty: not s.is_empty -- not s.others.is_empty																											
---							not_in_family: singleton (s.any) ∉ Result -- Result ≍ ∅																											
---							already_a_subset: singleton (s.any) ⊆ Result.superset -- s ≍ Current ≍ Result.superset																			
+--							s_is_not_empty: not s.is_empty -- not s.others.is_empty
+--							not_in_family: singleton (s.any) ∉ Result -- Result ≍ ∅
+--							already_a_subset: singleton (s.any) ⊆ Result.superset -- s ≍ Current ≍ Result.superset
 --						end
 --					Result := Result.extended (singleton (s.any))
 --					place_holder := Result
 --						check
---							not_in_family: singleton (s.others.any) ∉ Result -- Result ≍ {`any'}																							
---							already_a_subset: singleton (s.others.any) ⊆ Result.superset -- s.others ⊂ Current ≍ Result.superset															
+--							not_in_family: singleton (s.others.any) ∉ Result -- Result ≍ {`any'}
+--							already_a_subset: singleton (s.others.any) ⊆ Result.superset -- s.others ⊂ Current ≍ Result.superset
 --						end
 --					Result := Result.extended (singleton (s.others.any))
 --					s := s.others
@@ -609,18 +671,18 @@ feature -- Operation
 --					from
 --						sf := Result
 --							check
---								place_holder_is_not_empty: not place_holder.is_empty -- place_holder ≍ ((Current ∖ s).powerset / o)															
---								s_is_not_empty: not s.is_empty -- not s.others.is_empty																										
---								place_holder_any_does_not_have_s_any: place_holder.any ∌ s.any -- place_holder ⊂ (Current ∖ s).powerset														
+--								place_holder_is_not_empty: not place_holder.is_empty -- place_holder ≍ ((Current ∖ s).powerset / o)
+--								s_is_not_empty: not s.is_empty -- not s.others.is_empty
+--								place_holder_any_does_not_have_s_any: place_holder.any ∌ s.any -- place_holder ⊂ (Current ∖ s).powerset
 --								not_in_family: -- place_holder.any.extended (s.any) ≍ (Current ∖ s.others) ∉ Result (definition loop invariant)
 --									place_holder.any.extended (s.any) ∉ Result
---								already_a_subset: place_holder.any.extended (s.any) ⊆ Result.superset -- place_holder ⊂ (Current ∖ s).powerset												
+--								already_a_subset: place_holder.any.extended (s.any) ⊆ Result.superset -- place_holder ⊂ (Current ∖ s).powerset
 --							end
 --						Result := Result.extended (place_holder.any.extended (s.any))
 --						place_holder := Result
 --							check
---								not_in_family: singleton (s.others.any) ∉ Result -- ∀ xs: Result ¦ (xs ⊆ (Current ∖ s.others))															
---								already_a_subset: singleton (s.others.any) ⊆ Result.superset -- Result.superset ≍ Current																
+--								not_in_family: singleton (s.others.any) ∉ Result -- ∀ xs: Result ¦ (xs ⊆ (Current ∖ s.others))
+--								already_a_subset: singleton (s.others.any) ⊆ Result.superset -- Result.superset ≍ Current
 --							end
 --						Result := Result.extended (singleton (s.others.any))
 --					invariant
@@ -639,9 +701,9 @@ feature -- Operation
 --						sf.is_empty
 --					loop
 --							check
---								sf_any_does_not_have: sf.any ∌ s.others.any -- sf loop invariant																								
---								not_in_family: sf.any.extended (s.others.any) ∉ Result -- building_up loop invariant																					
---								already_a_subset: sf.any.extended (s.others.any) ⊆ Result.superset -- loop invariant																		
+--								sf_any_does_not_have: sf.any ∌ s.others.any -- sf loop invariant
+--								not_in_family: sf.any.extended (s.others.any) ∉ Result -- building_up loop invariant
+--								already_a_subset: sf.any.extended (s.others.any) ⊆ Result.superset -- loop invariant
 --							end
 --						Result := Result.extended (sf.any.extended (s.others.any))
 --						sf := sf.others
@@ -672,9 +734,9 @@ feature -- Operation
 				if p (s.any) then
 					from
 						previous_result := Result
-							check
-								does_not_have: Result ∌ s.any -- Result ⊆ (Current ∖ s)
-							end
+						check
+							does_not_have: Result ∌ s.any -- Result ⊆ (Current ∖ s)
+						end
 						Result := Result.extended (s.any)
 						last_segment := s
 						s := s.others
@@ -687,20 +749,20 @@ feature -- Operation
 					until
 						s.is_empty or else not p (s.any)
 					loop
-							check
-								loop_does_not_have: Result ∌ s.any
-									-- previous_result.is_disjoint (last_segment ∖ s)
-									-- Result ≍ previous_result.batch_extended (last_segment ∖ s)
-							end
+						check
+							loop_does_not_have: Result ∌ s.any
+							-- previous_result.is_disjoint (last_segment ∖ s)
+							-- Result ≍ previous_result.batch_extended (last_segment ∖ s)
+						end
 						Result := Result.extended (s.any)
 						s := s.others
 					variant
 						inner_cardinality: natural_as_integer (# s)
 					end
 					if s.is_empty then
-							check
-								last_segment_is_disjoint: last_segment.is_disjoint (previous_result) -- previous_result.is_disjoint (last_segment ∖ s)
-							end
+						check
+							last_segment_is_disjoint: last_segment.is_disjoint (previous_result) -- previous_result.is_disjoint (last_segment ∖ s)
+						end
 							-- (last_segment ∖ s) |∀ p)
 						Result := last_segment.batch_extended (previous_result)
 					else
@@ -720,7 +782,7 @@ feature -- Operation
 			if is_empty then
 				Result := converted (s)
 			else
-				Result := Precursor {STS_SET}(s)
+				Result := Precursor {STS_SET} (s)
 			end
 		end
 
@@ -730,7 +792,7 @@ feature -- Operation
 			if s.is_empty then
 				Result := o
 			else
-				Result := Precursor {STS_SET}(s)
+				Result := Precursor {STS_SET} (s)
 			end
 		end
 
@@ -740,9 +802,9 @@ feature -- Operation
 			diff: STS_SET [A, EQ]
 		do
 			diff := s ∖ Current
-				check
-					is_disjoint: is_disjoint (diff) -- diff = s ∖ Current
-				end
+			check
+				is_disjoint: is_disjoint (diff) -- diff = s ∖ Current
+			end
 			Result := batch_extended (diff)
 		end
 
@@ -752,7 +814,7 @@ feature -- Operation
 			if s.is_empty then
 				Result := Current
 			else
-				Result := Precursor {STS_SET}(s)
+				Result := Precursor {STS_SET} (s)
 			end
 		end
 
