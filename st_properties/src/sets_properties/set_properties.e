@@ -438,7 +438,7 @@ feature -- Properties (Comparison)
 				irreflexive: not (s1 ⊃ s1)
 				transitive: s1 ⊃ s2 and s2 ⊃ s3 ⇒ s1 ⊃ s3
 				asymmetric: s1 ⊃ s2 ⇒ not (s2 ⊃ s1)
-				proper_difference: s1 ⊃ s2 ⇒ (s2 ∖ s1) ≭ o
+				proper_difference: s1 ⊃ s2 ⇒ (s1 ∖ s2) ≭ o
 				cardinality: s1 ⊃ s2 ⇒ # s1 > # s2
 			then
 				Result := True
