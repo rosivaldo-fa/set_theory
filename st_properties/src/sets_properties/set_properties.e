@@ -638,16 +638,16 @@ feature -- Properties (Quantifier)
 			end
 		end
 
---	for_all_pairs_ok (s: STS_SET [A, EQ]; p: PREDICATE [A, A]): BOOLEAN
---			-- Do the properties verified within set theory hold for {STS_SET}.for_all_pairs?
---		do
---			check
---				definition: s.for_all_pairs (p) = s.does_not_exist_pair (agent pair_negated (p, ?, ?))
---				by_filtering: (# s ^ 2) ≤ max_elements ⇒ s.for_all_pairs (p) = ((× s).filtered_xy (p) ≍ (× s))
---			then
---				Result := True
---			end
---		end
+	for_all_pairs_ok (s: STS_SET [A, EQ]; p: PREDICATE [A, A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.for_all_pairs?
+		do
+			check
+				definition: s.for_all_pairs (p) = s.does_not_exist_pair (agent pair_negated (p, ?, ?))
+--				by_filtering: s.for_all_pairs (p) = ((× s).filtered_xy (p) ≍ (× s))
+			then
+				Result := True
+			end
+		end
 
 feature -- Factory
 
