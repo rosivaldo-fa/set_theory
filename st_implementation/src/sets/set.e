@@ -26,6 +26,7 @@ inherit
 			for_all_pairs,
 			for_all_distinct_pairs,
 			complemented,
+			intersected,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -717,6 +718,16 @@ feature -- Operation
 		do
 			if is_empty then
 				Result := converted (s)
+			else
+				Result := Precursor {STS_SET}(s)
+			end
+		end
+
+	intersected alias "∩" (s: STS_SET [A, EQ]): like subset_anchor
+			-- <Precursor>
+		do
+			if s.is_empty then
+				Result := o
 			else
 				Result := Precursor {STS_SET}(s)
 			end

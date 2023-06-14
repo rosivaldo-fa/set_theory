@@ -1715,6 +1715,44 @@ feature -- Test routines (Operation)
 			assert ("complemented_ok", properties.complemented_ok (s, s2, some_set_a))
 		end
 
+	test_intersected
+			-- Test {SET}.intersected.
+		note
+			testing: "covers/{SET}.intersected"
+		local
+			a, b, c: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			s := o
+			s2 := some_set_a
+			assert ("∅ ∩ {...} ≍ ∅", s ∩ s2 ≍ o)
+			assert ("∅ ∩ {...} ≍ ∅ ok", properties.intersected_ok (some_object_a, s, s2, some_set_a, some_set_a))
+
+			a := some_object_a
+			s := s & same_object_a (a)
+			s2 := some_set_a & same_object_a (a)
+			assert ("{a} ∩ {a,...} ≍ {a}", s ∩ s2 ≍ singleton (a))
+			assert ("{a} ∩ {a,...} ≍ {a} ok", properties.intersected_ok (some_object_a, s, s2, some_set_a, some_set_a))
+
+			b := some_object_a
+			s := s & same_object_a (b)
+			s2 := some_set_a & same_object_a (a) & same_object_a (b)
+			assert ("{a,b} ∩ {a,b,...} ≍ {a,b}", s ∩ s2 ≍ (singleton (a) & b))
+			assert ("{a,b} ∩ {a,b,...} ≍ {a,b} ok", properties.intersected_ok (some_object_a, s, s2, some_set_a, some_set_a))
+
+			c := some_object_a
+			s := s & same_object_a (c)
+			s2 := some_set_a & same_object_a (a) & same_object_a (b) & same_object_a (c)
+			assert ("{a,b,c} ∩ {a,b,c,...} ≍ {a,b,c}", s ∩ s2 ≍ (singleton (a) & b & c))
+			assert ("{a,b,c} ∩ {a,b,c,...} ≍ {a,b,c} ok", properties.intersected_ok (some_object_a, s, s2, some_set_a, some_set_a))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("intersected", attached (s ∩ s2))
+			assert ("intersected_ok", properties.intersected_ok (some_object_a, s, s2, some_set_a, some_set_a))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

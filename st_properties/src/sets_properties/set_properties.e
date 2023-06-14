@@ -853,6 +853,106 @@ feature -- Properties (Operation)
 			end
 		end
 
+	intersected_ok (a: A; s1, s2, s3, s4: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.intersected?
+		local
+			u: like current_universe
+		do
+			u := current_universe
+			check
+				definition: (s1 ∩ s2) ≍ (u | agent anded (agent s1.has, agent s2.has, ?))
+--				lesser_definition: (s1 ∩ s2) ≍ ((s1 ∪ s2) | agent anded (agent s1.has, agent s2.has, ?))
+--				by_reduction: (s1 ∩ s2) ≍ transformer_to_set.set_reduction (
+--					s1, o, agent (ia_s2, acc: STS_SET [A, EQ]; x: A): STS_SET [A, EQ]
+--						do
+--							if ia_s2 ∋ x then
+--								Result := acc & x
+--							else
+--								Result := acc
+--							end
+--						end (s2, ?, ?)
+--					)
+--				by_alternate_reduction: (s1 ∩ s2) ≍ transformer_to_set.set_reduction (
+--					s2, o, agent (ia_s1, acc: STS_SET [A, EQ]; x: A): STS_SET [A, EQ]
+--						do
+--							if ia_s1 ∋ x then
+--								Result := acc & x
+--							else
+--								Result := acc
+--							end
+--						end (s1, ?, ?)
+--					)
+				right_filtered: (s1 ∩ s2) ≍ (s2 | agent s1.has)
+				membership: (s1 ∩ s2) ∋ a = (s1 ∋ a and s2 ∋ a)
+				is_subset_of_s1: (s1 ∩ s2) ⊆ s1
+				is_subset_of_s2: (s1 ∩ s2) ⊆ s2
+				keeps_subset: s1 ⊆ s2 = (s1 ∩ s2) ≍ s1
+				subset: (s3 ⊆ s1 and s3 ⊆ s2) = (s3 ⊆ (s1 ∩ s2))
+				superset: s1 ⊆ s3 and s2 ⊆ s3 ⇒ (s1 ∩ s2) ⊆ s3
+				induced_inclusion: s1 ⊆ s2 ⇒ (s1 ∩ s3) ⊆ (s2 ∩ s3)
+				subintersection: s1 ⊆ s2 and s3 ⊆ s4 ⇒ (s1 ∩ s3) ⊆ (s2 ∩ s4)
+				absorption: (o ∩ s1) ≍ o
+				identity: (s1 ∩ u) ≍ s1
+			then
+			end
+				check
+					u_includes_s1: s1 ⊆ u -- Universe includes everything.
+				end
+			check
+				disjoint_complement: (s1 ∩ (s1 ∁ u)) ≍ o
+				idempotent: (s1 ∩ s1) ≍ s1
+				commutative: (s1 ∩ s2) ≍ (s2 ∩ s1)
+				associative: ((s1 ∩ s2) ∩ s3) ≍ (s1 ∩ (s2 ∩ s3))
+			then
+			end
+				check
+					u_includes_s2: s2 ⊆ u -- Universe includes everything.
+				end
+			check
+				with_complement_of_disjoint: (s1 ∩ s2) ≍ o ⇒ (s1 ∩ (s2 ∁ u)) ≍ s1
+				inverted_inclusion: (s1 ∁ u) ⊆ (s2 ∁ u) = (s1 ∩ s2) ≍ s2
+				induced_non_disjointness: (s1 ∩ s2) ≍ s1 and (s1 ∩ s3) ≭ o ⇒ (s2 ∩ s3) ≭ o
+--				pair_equality: paired_sets (s1, s2) ≍ paired_sets (s3, s4) ⇒ (s1 ∩ s2) ≍ (s3 ∩ s4)
+--				by_union_and_complement: (s1 ∩ s2) ≍ (s1 ∩ ((s1 ∁ u) ∪ s2))
+			then
+				Result := united_and_intersected_ok (s1, s2, s3, s4)
+			end
+		end
+
+	united_and_intersected_ok (s1, s2, s3, s4: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.united and {STS_SET}.intersected together?
+		local
+			u: like current_universe
+		do
+			u := current_universe
+			check
+--				absorbed_union: (s1 ∩ (s1 ∪ s2)) ≍ s1
+--				absorbed_intersection: (s1 ∪ (s1 ∩ s2)) ≍ s1
+--				distributed_intersection: (s1 ∩ (s2 ∪ s3)) ≍ ((s1 ∩ s2) ∪ (s1 ∩ s3))
+--				distributed_union: (s1 ∪ (s2 ∩ s3)) ≍ ((s1 ∪ s2) ∩ (s1 ∪ s3))
+			then
+			end
+				check
+						-- Universe includes everything.
+					u_includes_s1: s1 ⊆ u
+					u_includes_s2: s2 ⊆ u
+					u_includes_intersection: (s1 ∩ s2) ⊆ u
+--					u_includes_union: (s1 ∪ s2) ⊆ u
+				end
+			check
+--				de_morgan_intersection: ((s1 ∩ s2) ∁ u) ≍ ((s1 ∁ u) ∪ (s2 ∁ u))
+--				de_morgan_union: ((s1 ∪ s2) ∁ u) ≍ ((s1 ∁ u) ∩ (s2 ∁ u))
+--				successive_inclusion: (s1 ⊆ s2 and s2 ⊆ s3) = ((s1 ∪ s2) ≍ (s2 ∩ s3))
+--				equality: (s1 ∪ s2) ≍ (s1 ∩ s2) = (s1 ≍ s2)
+--				empty_intersection: (s1 ∩ s2) ≍ o ⇒ (s1 ∪ (s2 ∁ u)) ≍ (s2 ∁ u)
+--				intersecting_two_unions: ((s1 ∪ s2) ∩ (s3 ∪ s4)) ≍ ((s1 ∩ s3) ∪ (s1 ∩ s4) ∪ (s2 ∩ s3) ∪ (s2 ∩ s4))
+--				uniting_two_intersections: ((s1 ∩ s2) ∪ (s3 ∩ s4)) ≍ ((s1 ∪ s3) ∩ (s1 ∪ s4) ∩ (s2 ∪ s3) ∩ (s2 ∪ s4))
+--				union_cardinality: # (s1 ∪ s2) = # s1 + # s2 - # (s1 ∩ s2)
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
@@ -863,6 +963,14 @@ feature -- Factory
 		ensure
 			definition: Result ≍ o.singleton (a)
 		end
+
+--	paired_sets (s1, s2: STS_SET [A, EQ]): STS_SET [STS_SET [A, EQ], STS_SET_EQUALITY [A, EQ]]
+--			-- The sets `s1' and `s2' put into a set, i.e. {`s1', `s2'}
+--		do
+--			Result := s1.as_singleton & s2
+--		ensure
+--			definition: Result ≍ (s1.as_singleton & s2)
+--		end
 
 feature -- Predicate
 
