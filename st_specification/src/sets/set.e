@@ -448,6 +448,14 @@ feature -- Operation
 			definition: Result ≍ (Current | agent s.does_not_have)
 		end
 
+	subtracted_symmetricaly alias "⊖" (s: SET [A, EQ]): like set_anchor
+			-- Symmetric difference of current set and `s', i.e. every element that is in current set or in `s' but not in both.
+		do
+			Result := (Current ∪ s) | agent xored (agent has, agent s.has, ?)
+		ensure
+			definition: Result ≍ ((Current ∪ s) | agent xored (agent has, agent s.has, ?))
+		end
+
 feature -- Factory
 
 	o,

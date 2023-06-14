@@ -29,6 +29,7 @@ inherit
 			complemented,
 			intersected,
 			subtracted,
+			subtracted_symmetricaly,
 			equality_holds,
 			set_anchor,
 			subset_anchor,
@@ -816,6 +817,15 @@ feature -- Operation
 			else
 				Result := Precursor {STS_SET} (s)
 			end
+		end
+
+	subtracted_symmetricaly alias "⊖" (s: STS_SET [A, EQ]): like set_anchor
+			-- <Precursor>
+		do
+				check
+					is_disjoint: (Current ∖ s).is_disjoint (s ∖ Current) -- (Current ∖ s) ⊆ Current and Current.is_disjoint (s ∖ Current)
+				end
+			Result := (Current ∖ s).batch_extended (s ∖ Current)
 		end
 
 feature -- Conversion

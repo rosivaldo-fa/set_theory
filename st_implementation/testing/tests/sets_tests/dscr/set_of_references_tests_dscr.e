@@ -60,7 +60,8 @@ inherit
 			test_complemented,
 			test_intersected,
 			test_united,
-			test_subtracted
+			test_subtracted,
+			test_subtracted_symmetricaly
 		end
 
 feature -- Access
@@ -121,6 +122,7 @@ feature -- Test routines (All)
 			test_intersected
 			test_united
 			test_subtracted
+			test_subtracted_symmetricaly
 		end
 
 feature -- Test routines (Primitive)
@@ -505,6 +507,14 @@ feature -- Test routines (Operation)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.subtracted"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_subtracted_symmetricaly
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.subtracted_symmetricaly"
 		do
 			Precursor {SET_TESTS}
 		end

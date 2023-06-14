@@ -19,6 +19,7 @@ inherit
 			intersected_ok,
 			united_ok,
 			subtracted_ok,
+			subtracted_symmetricaly_ok,
 			o_anchor,
 			universe_anchor
 		end
@@ -296,6 +297,17 @@ feature -- Properties (Operation)
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
 			Result := Precursor {STP_SET_PROPERTIES} (a, s1, s2, s3, s4, s5)
+		end
+
+	subtracted_symmetricaly_ok (a: A; s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
+			-- <Precursor>
+		local
+			sa: STS_SET [A, EQ]
+		do
+			if type_is_predefined_expanded (({A}).type_id) then
+				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
+			end
+			Result := Precursor {STP_SET_PROPERTIES}(a, s1, s2, s3)
 		end
 
 feature -- Conversion

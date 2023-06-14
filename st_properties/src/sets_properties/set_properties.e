@@ -1066,6 +1066,84 @@ feature -- Properties (Operation)
 			end
 		end
 
+	subtracted_symmetricaly_ok (a: A; s1, s2, s3: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.subtracted_symmetricaly?
+		local
+			u: like current_universe
+		do
+			u := current_universe
+			check
+				definition: (s1 ⊖ s2) ≍ (u | agent u.xored (agent s1.has, agent s2.has, ?))
+--				by_reduction: (s1 ⊖ s2) ≍ transformer_to_set.set_reduction (
+--					s1, s2, agent (acc: STS_SET [A, EQ]; x: A): STS_SET [A, EQ]
+--						do
+--							if acc ∋ x then
+--								Result := acc / x
+--							else
+--								Result := acc & x
+--							end
+--						end
+--					)
+--				by_alternate_reduction: (s1 ⊖ s2) ≍ transformer_to_set.set_reduction (
+--					s2, s1, agent  (acc: STS_SET [A, EQ]; x: A): STS_SET [A, EQ]
+--						do
+--							if acc ∋ x then
+--								Result := acc / x
+--							else
+--								Result := acc & x
+--							end
+--						end
+--					)
+				symmetric_definition: (s1 ⊖ s2) ≍ ((s1 ∖ s2) ∪ (s2 ∖ s1))
+				union_minus_intersection: (s1 ⊖ s2) ≍ ((s1 ∪ s2) ∖ (s1 ∩ s2))
+				membership: (s1 ⊖ s2) ∋ a = (s1 ∋ a xor s2 ∋ a)
+				subtract_o: (s1 ⊖ o) ≍ s1
+			then
+			end
+			check
+				u_includes_s1: s1 ⊆ u -- Universe includes everything.
+			end
+			check
+				subtract_u: (s1 ⊖ u) ≍ (s1 ∁ u)
+				subtract_complement: (s1 ⊖ (s1 ∁ u)) ≍ u
+				self_symmetric_difference: (s1 ⊖ s1) ≍ o
+				commutative: (s1 ⊖ s2) ≍ (s2 ⊖ s1)
+			then
+			end
+			check
+					 -- Universe includes everything.
+				u_includes_s2: s2 ⊆ u
+				u_includes_symmetric_difference: (s1 ⊖ s2) ⊆ u
+			end
+			check
+				complemented: ((s1 ⊖ s2) ∁ u) ≍ ((s1 ∩ s2) ∪ ((s1 ∁ u) ∩ (s2 ∁ u)))
+				associative: ((s1 ⊖ s2) ⊖ s3) ≍ (s1 ⊖ (s2 ⊖ s3))
+				distributive_intersection: (s1 ∩ (s2 ⊖ s3)) ≍ ((s1 ∩ s2) ⊖ (s1 ∩ s3))
+				non_distributive_union: (s1 ∪ (s2 ⊖ s3)) ≍ ((s1 ∪ s2 ∪ s3) ∖ ((s1 ∁ u) ∩ s2 ∩ s3))
+				distributive_right_difference: ((s1 ⊖ s2) ∖ s3) ≍ ((s1 ∖ s3) ⊖ (s2 ∖ s3))
+			then
+			end
+			check
+				u_includes_s3: s3 ⊆ u -- Universe includes everything.
+			end
+			check
+				non_distributive_left_difference: (s1 ∖ (s2 ⊖ s3)) ≍ ((s1 ∩ s2 ∩ s3) ∪ (s1 ∩ (s2 ∁ u) ∩ (s3 ∁ u)))
+				symdiff_of_complements: (s1 ⊖ s2) ≍ ((s1 ∁ u) ⊖ (s2 ∁ u))
+				simply_complemented: ((s1 ⊖ s2) ∁ u) ≍ (s1 ⊖ (s2 ∁ u))
+				difference: (s1 ∖ s2) ≍ (s1 ⊖ (s1 ∩ s2))
+				disjoint_intersection: ((s1 ∩ s2) ∩ (s1 ⊖ s2)) ≍ o
+				union: ((s1 ⊖ s2) ⊖ (s1 ∩ s2)) ≍ (s1 ∪ s2)
+				minus_something: ((s1 ∪ s3) ⊖ (s2 ∪ s3)) ≍ ((s1 ⊖ s2) ∖ s3)
+				subset_of_union: (s1 ⊖ s2) ⊆ (s1 ∪ s2)
+				includes_difference: (s1 ∖ s2) ⊆ (s1 ⊖ s2)
+				equality: (s1 ⊖ s2) ≍ o = s1 ≍ s2
+				regular: (s1 ⊖ s3) ≍ (s2 ⊖ s3) ⇒ s1 ≍ s2
+				equal_unions: (s1 ∪ s3) ≍ (s2 ∪ s3) = ((s1 ⊖ s2) ⊆ s3)
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
