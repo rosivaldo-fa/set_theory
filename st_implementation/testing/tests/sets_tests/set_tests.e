@@ -564,7 +564,7 @@ feature -- Test routines (Comparison)
 			s2: like some_set_a
 		do
 			s := set_to_be_tested
-			s2 := some_set_a--∩ same_set_a (s)
+			s2 := some_set_a ∩ same_set_a (s)
 			assert ("s ⊇ s2", s ⊇ s2)
 			assert ("s ⊇ s2 ok", properties.is_superset_ok (s, s2, some_set_a))
 
@@ -598,7 +598,7 @@ feature -- Test routines (Comparison)
 			assert ("s ⊉ s2 ok", properties.is_not_superset_ok (s, s2))
 
 			s := set_to_be_tested
-			s2 := some_set_a--∩ same_set_a (s)
+			s2 := some_set_a ∩ same_set_a (s)
 			assert ("not (s ⊉ s2)", not (s ⊉ s2))
 			assert ("not (s ⊉ s2) ok", properties.is_not_superset_ok (s, s2))
 
@@ -624,7 +624,7 @@ feature -- Test routines (Comparison)
 				s2 := some_set_a --∪ same_set_a (s)
 			else
 				s := set_to_be_tested
-				s2 := some_set_a--∩ same_set_a (s)
+				s2 := some_set_a ∩ same_set_a (s)
 			end
 			assert ("s.is_comparable (s2)", s.is_comparable (s2))
 			assert ("s.is_comparable (s2) ok", properties.is_comparable_ok (s, s2, some_set_a))
@@ -675,7 +675,7 @@ feature -- Test routines (Comparison)
 				s2 := some_set_a --∪ same_set_a (s)
 			else
 				s := set_to_be_tested
-				s2 := some_set_a--∩ same_set_a (s)
+				s2 := some_set_a ∩ same_set_a (s)
 			end
 			assert ("not s.is_not_comparable (s2)", not s.is_not_comparable (s2))
 			assert ("not s.is_not_comparable (s2) ok", properties.is_not_comparable_ok (s, s2, some_set_a))
@@ -696,8 +696,8 @@ feature -- Test routines (Comparison)
 			s2: like some_set_a
 		do
 			s := set_to_be_tested
-			s2 := some_set_a--∪ same_set_a (s)
-			 & some_other_object_a (s)
+			s2 := some_set_a --∪ same_set_a (s)
+				& some_other_object_a (s)
 			assert ("s ⊂ s2", s ⊂ s2)
 			assert ("s ⊂ s2 ok", properties.is_strict_subset_ok (s, s2, some_set_a))
 
@@ -741,8 +741,8 @@ feature -- Test routines (Comparison)
 			assert ("s ⊄ s2 ok", properties.is_not_strict_subset_ok (s, s2))
 
 			s := set_to_be_tested
-			s2 := some_set_a--∪ same_set_a (s)
-			 & some_other_object_a (s)
+			s2 := some_set_a --∪ same_set_a (s)
+				& some_other_object_a (s)
 			assert ("not (s ⊄ s2)", not (s ⊄ s2))
 			assert ("not (s ⊄ s2) ok", properties.is_not_strict_subset_ok (s, s2))
 
@@ -766,7 +766,7 @@ feature -- Test routines (Comparison)
 			a := some_object_a
 			s := set_to_be_tested & same_object_a (a)
 			s2 := some_set_a / same_object_a (a)
-			s2 := s2--∩ same_set_a (s)
+			s2 := s2 ∩ same_set_a (s)
 			assert ("s ⊃ s2", s ⊃ s2)
 			assert ("s ⊃ s2 ok", properties.is_strict_superset_ok (s, s2, some_set_a))
 
@@ -812,7 +812,7 @@ feature -- Test routines (Comparison)
 			a := some_object_a
 			s := set_to_be_tested & same_object_a (a)
 			s2 := some_set_a / same_object_a (a)
-			s2 := s2--∩ same_set_a (s)
+			s2 := s2 ∩ same_set_a (s)
 			assert ("not (s ⊅ s2)", not (s ⊅ s2))
 			assert ("not (s ⊅ s2) ok", properties.is_not_strict_superset_ok (s, s2))
 
@@ -842,7 +842,7 @@ feature -- Test routines (Comparison)
 
 			s := set_to_be_tested & some_object_a
 			if next_random_item \\ 2 = 0 then
-				s2 := some_set_a--∩ same_set_a (s).others
+				s2 := some_set_a ∩ same_set_a (s).others
 			else
 				s2 := some_set_a & some_other_object_a (s)
 			end
@@ -879,8 +879,8 @@ feature -- Test routines (Comparison)
 				s2 := some_set_a & some_other_object_a (s)
 			else
 				s2 := some_set_a & some_object_a
-				s1 := set_to_be_tested--∪ s2
-				 & some_other_object_a (s2)
+				s1 := set_to_be_tested --∪ s2
+					& some_other_object_a (s2)
 			end
 			assert ("not s.is_trivial_superset (s2)", not s.is_trivial_superset (s2))
 			assert ("not s.is_trivial_superset (s2) ok", properties.is_trivial_superset_ok (s, s2, some_set_a))
@@ -939,7 +939,7 @@ feature -- Test routines (Comparison)
 			s2: like some_set_a
 		do
 			s2 := some_set_a & some_object_a
-			s := set_to_be_tested & some_other_object_a (s2) --∪ same_set_a (s2)			
+			s := set_to_be_tested & some_other_object_a (s2) --∪ same_set_a (s2)
 			assert ("s.is_proper_superset (s2)", s.is_proper_superset (s2))
 			assert ("s.is_proper_superset (s2) ok", properties.is_proper_superset_ok (s, s2, some_set_a))
 
@@ -950,7 +950,7 @@ feature -- Test routines (Comparison)
 				s := set_to_be_tested
 			when 1 then
 				s2 := some_set_a
-				s := o--∪ same_set_a (s2)
+				s := o --∪ same_set_a (s2)
 			when 2 then
 				a := some_object_a
 				s2 := some_set_a & same_object_a (a)
@@ -976,10 +976,10 @@ feature -- Test routines (Comparison)
 		do
 			if next_random_item \\ 2 = 0 then
 				s := set_to_be_tested
-				s2 := some_set_a--∖ same_set_a (s)
+				s2 := some_set_a --∖ same_set_a (s)
 			else
 				s2 := some_set_a
-				s := set_to_be_tested--∖ same_set_a (s2)
+				s := set_to_be_tested --∖ same_set_a (s2)
 			end
 			assert ("s.is_disjoint (s2)", s.is_disjoint (s2))
 			assert ("s.is_disjoint (s2) ok", properties.is_disjoint_ok (s, s2, some_set_a))
@@ -1015,10 +1015,10 @@ feature -- Test routines (Comparison)
 
 			if next_random_item \\ 2 = 0 then
 				s := set_to_be_tested
-				s2 := some_set_a--∖ same_set_a (s)
+				s2 := some_set_a --∖ same_set_a (s)
 			else
 				s2 := some_set_a
-				s := set_to_be_tested--∖ same_set_a (s2)
+				s := set_to_be_tested --∖ same_set_a (s2)
 			end
 			assert ("not s.intersects (s2)", not s.intersects (s2))
 			assert ("not s.intersects (s2) ok", properties.intersects_ok (s, s2, some_set_a))
@@ -1041,9 +1041,9 @@ feature -- Test routines (Quantifier)
 			p: PREDICATE [A]
 		do
 			p := agent (x: A): BOOLEAN
-				do
-					Result := object_hash_code (x) \\ 2 = 0
-				end
+					do
+						Result := object_hash_code (x) \\ 2 = 0
+					end
 			from
 				a := some_object_a
 			until
@@ -1076,9 +1076,9 @@ feature -- Test routines (Quantifier)
 			p: PREDICATE [A]
 		do
 			p := agent (x: A): BOOLEAN
-				do
-					Result := object_hash_code (x) \\ 2 = 0
-				end
+					do
+						Result := object_hash_code (x) \\ 2 = 0
+					end
 			s := set_to_be_tested | agent negated (p, ?)
 			assert ("s |∄ p", s |∄ p)
 			assert ("s |∄ p ok", properties.does_not_exist_ok (s, p))
@@ -1109,9 +1109,9 @@ feature -- Test routines (Quantifier)
 			p: PREDICATE [A]
 		do
 			p := agent (x: A): BOOLEAN
-				do
-					Result := object_hash_code (x) \\ 2 = 0
-				end
+					do
+						Result := object_hash_code (x) \\ 2 = 0
+					end
 			from
 				a := some_object_a
 			until
@@ -1155,9 +1155,9 @@ feature -- Test routines (Quantifier)
 			p: PREDICATE [A, A]
 		do
 			p := agent (x, y: A): BOOLEAN
-				do
-					Result := object_hash_code (x) = object_hash_code (y)
-				end
+					do
+						Result := object_hash_code (x) = object_hash_code (y)
+					end
 			from
 				a := some_object_a
 				b := some_object_a
@@ -1172,9 +1172,9 @@ feature -- Test routines (Quantifier)
 			assert ("s.exists_pair (p) ok", properties.exists_pair_ok (s, p))
 
 			p := agent (x, y: A): BOOLEAN
-				do
-					Result := object_hash_code (x) /= object_hash_code (y)
-				end
+					do
+						Result := object_hash_code (x) /= object_hash_code (y)
+					end
 			s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, some_object_a, ?)
 			assert ("not s.exists_pair (p)", not s.exists_pair (p))
 			assert ("not s.exists_pair (p) ok", properties.exists_pair_ok (s, p))
@@ -1196,17 +1196,17 @@ feature -- Test routines (Quantifier)
 			p: PREDICATE [A, A]
 		do
 			p := agent (x, y: A): BOOLEAN
-				do
-					Result := object_hash_code (x) /= object_hash_code (y)
-				end
+					do
+						Result := object_hash_code (x) /= object_hash_code (y)
+					end
 			s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := not ia_p (x, y) end (p, some_object_a, ?)
 			assert ("s.does_not_exist_pair (p)", s.does_not_exist_pair (p))
 			assert ("s.does_not_exist_pair (p) ok", properties.does_not_exist_pair_ok (s, p))
 
 			p := agent (x, y: A): BOOLEAN
-				do
-					Result := object_hash_code (x) = object_hash_code (y)
-				end
+					do
+						Result := object_hash_code (x) = object_hash_code (y)
+					end
 			from
 				a := some_object_a
 				b := some_object_a
@@ -1240,9 +1240,9 @@ feature -- Test routines (Quantifier)
 			assert ("not s.exists_distinct_pair (p) ok", properties.exists_distinct_pair_ok (s, p))
 
 			p := agent (x, y: A): BOOLEAN
-				do
-					Result := object_hash_code (x) = object_hash_code (y)
-				end
+					do
+						Result := object_hash_code (x) = object_hash_code (y)
+					end
 			from
 				a := some_object_a
 				b := some_object_a
@@ -1271,9 +1271,9 @@ feature -- Test routines (Quantifier)
 			p: PREDICATE [A]
 		do
 			p := agent (x: A): BOOLEAN
-				do
-					Result := object_hash_code (x) \\ 2 = 0
-				end
+					do
+						Result := object_hash_code (x) \\ 2 = 0
+					end
 			s := set_to_be_tested | p
 			assert ("s |∀ p", s |∀ p)
 			assert ("s |∀ p ok", properties.for_all_ok (s, p))
@@ -1304,14 +1304,14 @@ feature -- Test routines (Quantifier)
 			p: PREDICATE [A, A]
 		do
 			p := agent (x, y: A): BOOLEAN
-				do
-					if x = Void then
-						Result := y = Void
-					else
-						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
+					do
+						if x = Void then
+							Result := y = Void
+						else
+							Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
+						end
 					end
-				end
-			s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A):BOOLEAN do Result := ia_p (x, y) end (p, some_object_a, ?)
+			s := set_to_be_tested | agent (ia_p: PREDICATE [A, A]; x, y: A): BOOLEAN do Result := ia_p (x, y) end (p, some_object_a, ?)
 			assert ("s.for_all_pairs (p)", s.for_all_pairs (p))
 			assert ("s.for_all_pairs (p) ok", properties.for_all_pairs_ok (s, p))
 
@@ -1347,13 +1347,13 @@ feature -- Test routines (Quantifier)
 			assert ("s.for_all_distinct_pairs (p) ok", properties.for_all_distinct_pairs_ok (s, p))
 
 			p := agent (x, y: A): BOOLEAN
-				do
-					if x = Void then
-						Result := y = Void
-					else
-						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
+					do
+						if x = Void then
+							Result := y = Void
+						else
+							Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
+						end
 					end
-				end
 			from
 				a := some_object_a
 				b := some_object_a
@@ -1658,9 +1658,9 @@ feature -- Test routines (Operation)
 			assert ("∅ ok", properties.filtered_ok (s, agent s.does_not_have))
 
 			p := agent (x: A): BOOLEAN
-				do
-					Result := object_hash_code (x) \\ 2 = 0
-				end
+					do
+						Result := object_hash_code (x) \\ 2 = 0
+					end
 			assert ("filtered", attached (s | p))
 			assert ("filtered_ok", properties.filtered_ok (s, p))
 		end
@@ -1676,36 +1676,36 @@ feature -- Test routines (Operation)
 		do
 			s := o
 			s2 := some_set_a
-				check
-					is_subset: s ⊆ s2 -- s ≍ ∅
-				end
+			check
+				is_subset: s ⊆ s2 -- s ≍ ∅
+			end
 			assert ("∅ ∁ {...} ≍ {...}", s ∁ s2 ≍ s2)
 			assert ("∅ ∁ {...} ≍ {...} ok", properties.complemented_ok (s, s2, some_set_a))
 
 			a := some_object_a
 			s := s & same_object_a (a)
 			s2 := some_set_a & same_object_a (a)
-				check
-					is_subset_2: s ⊆ s2 -- s ≍ {a} ⊆ {a,...} ≍ s2
-				end
+			check
+				is_subset_2: s ⊆ s2 -- s ≍ {a} ⊆ {a,...} ≍ s2
+			end
 			assert ("{a} ∁ {a,...} ≍ ({a,...} / a)", s ∁ s2 ≍ (s2 / a))
 			assert ("{a} ∁ {a,...} ≍ ({a,...} / a) ok", properties.complemented_ok (s, s2, some_set_a))
 
 			b := some_object_a
 			s := s & same_object_a (b)
 			s2 := some_set_a & same_object_a (a) & same_object_a (b)
-				check
-					is_subset_3: s ⊆ s2 -- s ≍ {a,b} ⊆ {a,b,...} ≍ s2
-				end
+			check
+				is_subset_3: s ⊆ s2 -- s ≍ {a,b} ⊆ {a,b,...} ≍ s2
+			end
 			assert ("{a,b} ∁ {a,b,...} ≍ ({a,b,...} / a / b)", s ∁ s2 ≍ (s2 / a / b))
 			assert ("{a,b} ∁ {a,b,...} ≍ ({a,b,...} / a / b) ok", properties.complemented_ok (s, s2, some_set_a))
 
 			c := some_object_a
 			s := s & same_object_a (c)
 			s2 := some_set_a & same_object_a (a) & same_object_a (b) & same_object_a (c)
-				check
-					is_subset_4: s ⊆ s2 -- s ≍ {a,b,c} ⊆ {a,b,c,...} ≍ s2
-				end
+			check
+				is_subset_4: s ⊆ s2 -- s ≍ {a,b,c} ⊆ {a,b,c,...} ≍ s2
+			end
 			assert ("{a,b,c} ∁ {a,b,c,...} ≍ ({a,b,c,...} / a / b / c)", s ∁ s2 ≍ (s2 / a / b / c))
 			assert ("{a,b,c} ∁ {a,b,c,...} ≍ ({a,b,c,...} / a / b / c) ok", properties.complemented_ok (s, s2, some_set_a))
 
