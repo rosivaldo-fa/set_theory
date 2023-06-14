@@ -41,14 +41,14 @@ feature -- Properties (Primitive)
 		do
 			check
 				u: attached current_universe as u
---				definition: s.is_empty = (
---					s ≍ (
---						u | agent  (x: A): BOOLEAN
---							do
---								Result := False
---							end
---						)
---					)
+				definition: s.is_empty = (
+					s ≍ (
+						u | agent  (x: A): BOOLEAN
+							do
+								Result := False
+							end
+						)
+					)
 				has_nothing: s.is_empty = (u |∀ agent s.does_not_have)
 				no_element: s.is_empty = (# s = 0)
 				uniqueness: s.is_empty = (s ≍ o)
@@ -150,7 +150,7 @@ feature -- Properties (Construction)
 		do
 			check
 				u: attached current_universe as u
---				definition: (s & a) ≍ (u | agent u.ored (agent s.has, agent u.equality_holds (?, a), ?))
+				definition: (s & a) ≍ (u | agent u.ored (agent s.has, agent u.equality_holds (?, a), ?))
 --				by_union: (s & a) ≍ s ∪ singleton (a)
 				same_cardinality: s ∋ a ⇒ # (s & a) = # s
 				incremented_cardinality: s ∌ a ⇒ # (s & a) = # s + 1
@@ -164,7 +164,7 @@ feature -- Properties (Construction)
 		do
 			check
 				u: attached current_universe as u
---				definition: (s / a) ≍ (u | agent anded (agent s.has, agent negated (agent s.equality_holds (?, a), ?), ?))
+				definition: (s / a) ≍ (u | agent anded (agent s.has, agent negated (agent s.equality_holds (?, a), ?), ?))
 				excluded: (s / a) ∌ a
 				every_other_element: s |∀ agent implied (agent negated (agent s.equality_holds (?, a), ?), agent (s / a).has, ?)
 				nothing_else: (s / a) ⊆ s
