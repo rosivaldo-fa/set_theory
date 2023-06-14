@@ -56,7 +56,8 @@ inherit
 			test_for_all,
 			test_for_all_pairs,
 			test_for_all_distinct_pairs,
-			test_filtered
+			test_filtered,
+			test_complemented
 		end
 
 feature -- Access
@@ -112,6 +113,7 @@ feature -- Test routines (All)
 			test_for_all_pairs
 			test_for_all_distinct_pairs
 			test_filtered
+			test_complemented
 		end
 
 feature -- Test routines (Primitive)
@@ -462,6 +464,16 @@ feature -- Test routines (Quantifier)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.filtered"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Operation)
+
+	test_complemented
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.complemented"
 		do
 			Precursor {SET_TESTS}
 		end
