@@ -1800,6 +1800,43 @@ feature -- Test routines (Operation)
 			assert ("united_ok", properties.united_ok (some_object_a, s, s2, some_set_a, some_set_a))
 		end
 
+	test_subtracted
+			-- Test {SET}.subtracted.
+		note
+			testing: "covers/{SET}.subtracted"
+		local
+			a, b, c: A
+			s: like set_to_be_tested
+			s2: like some_set_a
+		do
+			s := o
+			s2 := some_set_a
+			assert ("s ∖ s2 ≍ ∅", s ∖ s2 ≍ o)
+			assert ("s ∖ s2 ≍ ∅ ok", properties.subtracted_ok (some_object_a, s, s2, some_set_a, some_set_a, some_set_a))
+
+			a := some_object_a
+			s := s & same_object_a (a)
+			s2 := s2 / same_object_a (a)
+			assert ("s ∖ s2 ≍ {a}", s ∖ s2 ≍ singleton (a))
+			assert ("s ∖ s2 ≍ {a} ok", properties.subtracted_ok (some_object_a, s, s2, some_set_a, some_set_a, some_set_a))
+
+			b := some_other_object_a (s)
+			s2 := s2 & same_object_a (b)
+			assert ("s ∖ s2 ≍ {a}: 2", s ∖ s2 ≍ singleton (a))
+			assert ("s ∖ s2 ≍ {a}: 2 ok", properties.subtracted_ok (some_object_a, s, s2, some_set_a, some_set_a, some_set_a))
+
+			c := some_object_a
+			s := s & same_object_a (c)
+			s2 := s2 / same_object_a (c)
+			assert ("s ∖ s2 ≍ {a,c}", s ∖ s2 ≍ (singleton (a) & c))
+			assert ("s ∖ s2 ≍ {a,c} ok", properties.subtracted_ok (some_object_a, s, s2, some_set_a, some_set_a, some_set_a))
+
+			s := set_to_be_tested
+			s2 := some_set_a
+			assert ("subtracted", attached (s ∖ s2))
+			assert ("subtracted_ok", properties.subtracted_ok (some_object_a, s, s2, some_set_a, some_set_a, some_set_a))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

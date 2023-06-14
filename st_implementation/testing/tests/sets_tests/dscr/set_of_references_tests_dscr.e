@@ -59,7 +59,8 @@ inherit
 			test_filtered,
 			test_complemented,
 			test_intersected,
-			test_united
+			test_united,
+			test_subtracted
 		end
 
 feature -- Access
@@ -119,6 +120,7 @@ feature -- Test routines (All)
 			test_complemented
 			test_intersected
 			test_united
+			test_subtracted
 		end
 
 feature -- Test routines (Primitive)
@@ -495,6 +497,14 @@ feature -- Test routines (Operation)
 			-- <Precursor>
 		note
 			testing: "covers/{SET}.united"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_subtracted
+			-- <Precursor>
+		note
+			testing: "covers/{SET}.subtracted"
 		do
 			Precursor {SET_TESTS}
 		end

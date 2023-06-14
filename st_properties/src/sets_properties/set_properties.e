@@ -995,6 +995,77 @@ feature -- Properties (Operation)
 			end
 		end
 
+	subtracted_ok (a: A; s1, s2, s3, s4, s5: STS_SET [A, EQ]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.subtracted?
+		local
+			u: like current_universe
+		do
+			u := current_universe
+			check
+				definition: (s1 ∖ s2) ≍ (u | agent anded (agent s1.has, agent s2.does_not_have, ?))
+--				by_reduction: (s1 ∖ s2) ≍ transformer_to_set.set_reduction (s2, s1, agent {STS_SET [A, EQ]}.without)
+				membership: (s1 ∖ s2) ∋ a = (s1 ∋ a and s2 ∌ a)
+				is_subset: (s1 ∖ s2) ⊆ s1
+				by_complement: s2 ⊆ s1 ⇒ (s1 ∖ s2) ≍ (s2 ∁ s1)
+				by_intersection: s1 ⊆ s5 and s2 ⊆ s5 ⇒ (s1 ∖ s2) ≍ (s1 ∩ (s2 ∁ s5))
+			then
+			end
+			check
+				u_includes_s2: s2 ⊆ u -- Universe includes everything.
+			end
+			check
+				by_absolute_complement: (s1 ∖ s2) ≍ (s1 ∩ (s2 ∁ u))
+				subtract_o: (s1 ∖ o) ≍ s1
+				subtract_from_o: (o ∖ s1) ≍ o
+				subtract_u: (s1 ∖ u) ≍ o
+			then
+			end
+			check
+				u_includes_s1: s1 ⊆ u -- Universe includes everything.
+			end
+			check
+				subtract_from_u: (u ∖ s1) ≍ (s1 ∁ u)
+				self_difference: (s1 ∖ s1) ≍ o
+				subtract_complement: (s1 ∖ (s1 ∁ u)) ≍ s1
+			then
+			end
+			check
+				u_includes_difference: (s1 ∖ s2) ⊆ u -- Universe includes everything.
+			end
+			check
+				complemented_difference: ((s1 ∖ s2) ∁ u) ≍ ((s1 ∁ u) ∪ s2)
+				reverted_difference: (s1 ∖ s2) ≍ ((s2 ∁ u) ∖ (s1 ∁ u))
+				non_left_associative: ((s1 ∖ s2) ∖ s3) ≍ (s1 ∖ (s2 ∪ s3))
+				non_right_associative: (s1 ∖ (s2 ∖ s3)) ≍ ((s1 ∖ s2) ∪ (s1 ∩ s3))
+				no_union_distribution: (s1 ∪ (s2 ∖ s3)) ≍ ((s1 ∪ s2) ∖ (s3 ∖ s1))
+				intersection_distributed: (s1 ∩ (s2 ∖ s3)) ≍ ((s1 ∩ s2) ∖ (s1 ∩ s3))
+				no_left_distribution_over_union: (s1 ∖ (s2 ∪ s3)) ≍ ((s1 ∖ s2) ∩ (s1 ∖ s3))
+				no_left_distribution_over_intersection: (s1 ∖ (s2 ∩ s3)) ≍ ((s1 ∖ s2) ∪ (s1 ∖ s3))
+				right_distribution_over_union: ((s1 ∪ s2) ∖ s3) ≍ ((s1 ∖ s3) ∪ (s2 ∖ s3))
+				right_distribution_over_intersection: ((s1 ∩ s2) ∖ s3) ≍ ((s1 ∖ s3) ∩ (s2 ∖ s3))
+				subtracted_difference: (s1 ∖ (s1 ∖ s2)) ≍ (s1 ∩ s2)
+				subtracted_from_difference: ((s1 ∖ s2) ∖ s2) ≍ (s1 ∖ s2)
+				subset_of_union: (s1 ∖ s2) ⊆ (s1 ∪ s2)
+				equality: s1 ≍ s2 = (s1 ∖ s2) ≍ (s2 ∖ s1)
+				inclusion: s1 ⊆ s2 = ((s1 ∖ s2) ≍ o)
+				disjointness: (s1 ∩ s2) ≍ o = (s1 ∖ s2) ≍ s1
+				mutual_complement: s1 ⊆ s2 and s3 ≍ (s2 ∖ s1) ⇒ s1 ≍ (s2 ∖ s3)
+				disjoint_complement: (s1 ∩ s2) ≍ o and (s1 ∪ s2) ≍ s3 ⇒ s1 ≍ (s3 ∖ s2)
+				disjoint_to_right: ((s1 ∖ s2) ∩ s2) ≍ o
+				united_to_right: ((s1 ∖ s2) ∪ s2) ≍ (s1 ∪ s2)
+				right_subtracted_from_union: ((s1 ∪ s2) ∖ s2) ≍ (s1 ∖ s2)
+				right_subtracted_from_intersection: ((s1 ∩ s2) ∖ s2) ≍ o
+				left_minus_intersection: (s1 ∖ (s1 ∩ s2)) ≍ (s1 ∖ s2)
+				left_intersected_with_difference: (s1 ∩ (s1 ∖ s2)) ≍ (s1 ∖ s2)
+				disjoint_intersection_and_difference: ((s1 ∩ s2) ∩ (s1 ∖ s2)) ≍ o
+				disjoint_mutual_differences: ((s1 ∖ s2) ∩ (s2 ∖ s1)) ≍ o
+				symmetric_difference: ((s1 ∖ s2) ∪ (s2 ∖ s1)) ≍ ((s1 ∪ s2) ∖ (s1 ∩ s2))
+				intersected_differences: ((s1 ∖ s2) ∩ (s3 ∖ s4)) ≍ ((s1 ∩ s3) ∖ (s2 ∪ s4))
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
