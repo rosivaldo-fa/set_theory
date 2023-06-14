@@ -376,7 +376,7 @@ feature -- Properties (Comparison)
 							(s1 |∃ agent s2.does_not_have) and (s2 |∃ agent s1.does_not_have)
 						)
 				by_inclusion: s1.is_not_comparable (s2) = (s1 ⊈ s2 and s2 ⊈ s1)
---				proper_symmetric_difference: s1.is_not_comparable (s2) ⇒ (s1 ⊖ s2) ≭ o
+				proper_symmetric_difference: s1.is_not_comparable (s2) ⇒ (s1 ⊖ s2) ≭ o
 				irreflexive: not s1.is_not_comparable (s1)
 				symmetric: s1.is_not_comparable (s2) ⇒ s2.is_not_comparable (s1)
 				not_transitive: s1.is_not_comparable (s2) and s2.is_not_comparable (s3) ⇒ s1.is_not_comparable (s3) or not s1.is_not_comparable (s3)
