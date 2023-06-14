@@ -367,7 +367,8 @@ feature -- Quantifier
 
 	for_all_distinct_pairs (p: PREDICATE [A, A]): BOOLEAN
 			-- Does `p' hold for every pair of distinct elements in current set?
-			--| NOTICE: See comments at `exists' header.
+		note
+			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
 		do
 --			Result := (× Current ∖ ∆ Current).for_all_xy (p)
 		ensure

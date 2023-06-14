@@ -572,20 +572,20 @@ feature -- Properties (Quantifier)
 		do
 			check
 				definition: s |∃! p = (s |∃ agent (ia_s: STS_SET [A, EQ] ia_p: PREDICATE [A] x: A): BOOLEAN
-					do
-						Result := ia_s |∀ agent ia_s.iff (ia_p, agent ia_s.equality_holds (?, x), ?)
-					end (s, p, ?))
+								do
+									Result := ia_s |∀ agent ia_s.iff (ia_p, agent ia_s.equality_holds (?, x), ?)
+								end (s, p, ?))
 				by_inequality: s |∃! p = (s |∃ agent (ia_s: STS_SET [A, EQ] ia_p: PREDICATE [A] x: A): BOOLEAN
-					do
-						Result := ia_p (x) and ia_s |∄ agent anded (ia_p, agent negated (agent ia_s.equality_holds (?, x), ?), ?)
-					end (s, p, ?))
+								do
+									Result := ia_p (x) and ia_s |∄ agent anded (ia_p, agent negated (agent ia_s.equality_holds (?, x), ?), ?)
+								end (s, p, ?))
 				by_equality: s |∃! p = (s |∃ agent (ia_s: STS_SET [A, EQ] ia_p: PREDICATE [A] x: A): BOOLEAN
-					do
-						Result := ia_p (x) and (ia_s |∀ agent implied (ia_p, agent ia_s.equality_holds (?, x), ?))
-					end (s, p, ?))
+								do
+									Result := ia_p (x) and (ia_s |∀ agent implied (ia_p, agent ia_s.equality_holds (?, x), ?))
+								end (s, p, ?))
 				by_pairing: s |∃! p = (
-					(s |∃ p) and (s.for_all_pairs (agent pair_implied (agent binary_anded (p, ?, p, ?), agent s.equality_holds, ?, ?)))
-					)
+							(s |∃ p) and (s.for_all_pairs (agent pair_implied (agent binary_anded (p, ?, p, ?), agent s.equality_holds, ?, ?)))
+						)
 				by_cardinality: s |∃! p = (# (s | p) = 1)
 			then
 				Result := True
@@ -618,7 +618,7 @@ feature -- Properties (Quantifier)
 			-- Do the properties verified within set theory hold for {STS_SET}.exists_distinct_pair?
 		do
 			check
---				definition: s.exists_distinct_pair (p) = not s.for_all_distinct_pairs (agent pair_negated(p, ?, ?))
+				definition: s.exists_distinct_pair (p) = not s.for_all_distinct_pairs (agent pair_negated (p, ?, ?))
 --				by_filtering: s.exists_distinct_pair (p) = (× s).filtered_xy (p) ⊈ ∆ s
 --				by_square: s.exists_distinct_pair (p) = (× s).exist_xy (agent pair_anded (p, agent equality_does_not_hold, ?, ?))
 				by_inequality: s.exists_distinct_pair (p) = s.exists_pair (agent pair_anded (p, agent pair_negated (agent s.equality_holds, ?, ?), ?, ?))
