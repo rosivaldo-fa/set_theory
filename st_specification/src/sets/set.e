@@ -357,7 +357,8 @@ feature -- Quantifier
 
 	for_all_pairs (p: PREDICATE [A, A]): BOOLEAN
 			-- Does `p' hold for every pair of elements in current set?
-			--| NOTICE: See comments at `exists' header.
+		note
+			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
 		do
 --			Result := (× Current).for_all_xy (p)
 		ensure

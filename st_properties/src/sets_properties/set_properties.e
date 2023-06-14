@@ -583,9 +583,9 @@ feature -- Properties (Quantifier)
 					do
 						Result := ia_p (x) and (ia_s |∀ agent implied (ia_p, agent ia_s.equality_holds (?, x), ?))
 					end (s, p, ?))
---				by_pairing: s |∃! p = (
---					(s |∃ p) and (s.for_all_pairs (agent pair_implied (agent (s.element_to_element).anded (p, ?, p, ?), agent s.equality_holds, ?, ?)))
---					)
+				by_pairing: s |∃! p = (
+					(s |∃ p) and (s.for_all_pairs (agent pair_implied (agent binary_anded (p, ?, p, ?), agent s.equality_holds, ?, ?)))
+					)
 				by_cardinality: s |∃! p = (# (s | p) = 1)
 			then
 				Result := True
@@ -596,7 +596,7 @@ feature -- Properties (Quantifier)
 			-- Do the properties verified within set theory hold for {STS_SET}.exists_pair?
 		do
 			check
---				definition: s.exists_pair (p) = not s.for_all_pairs (agent pair_negated (p, ?, ?))
+				definition: s.exists_pair (p) = not s.for_all_pairs (agent pair_negated (p, ?, ?))
 --				by_filtering: s.exists_pair (p) = ((× s).filtered_xy (p)) ≭ (× o)
 			then
 				Result := True
@@ -607,7 +607,7 @@ feature -- Properties (Quantifier)
 			-- Do the properties verified within set theory hold for {STS_SET}.does_not_exist_pair?
 		do
 			check
---				definition: s.does_not_exist_pair (p) = s.for_all_pairs (agent pair_negated (p, ?, ?))
+				definition: s.does_not_exist_pair (p) = s.for_all_pairs (agent pair_negated (p, ?, ?))
 --				by_filtering: s.does_not_exist_pair (p) = ((× s).filtered_xy (p)) ≍ (× o)
 			then
 				Result := True
@@ -710,6 +710,25 @@ feature -- Predicate
 		ensure
 			class
 			definition: Result = (p1 (x, y) and p2 (x, y))
+		end
+
+	pair_implied (p1, p2: PREDICATE [A, A]; x, y: A): BOOLEAN
+			-- If `p1' (`x', `y') holds, does `p2' (`x', `y') hold too, i.e. does `p1' (`x', `y') imply `p2' (`x', `y')?
+			-- TODO: Pull it up?
+		do
+			Result := p1 (x, y) ⇒ p2 (x, y)
+		ensure
+			class
+			definition: Result = (p1 (x, y) ⇒ p2 (x, y))
+		end
+
+	binary_anded (p: PREDICATE [A]; x: A; q: PREDICATE [A]; y: A): BOOLEAN
+			-- Does `p' (`x') and `q' (`y') hold?
+		do
+			Result := p (x) and q (y)
+		ensure
+			class
+			definition: Result = (p (x) and q (y))
 		end
 
 feature {NONE} -- Anchor
