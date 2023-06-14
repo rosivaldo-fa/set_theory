@@ -365,6 +365,15 @@ feature -- Quantifier
 --			definition: Result = (× Current).for_all_xy (p)
 		end
 
+	for_all_distinct_pairs (p: PREDICATE [A, A]): BOOLEAN
+			-- Does `p' hold for every pair of distinct elements in current set?
+			--| NOTICE: See comments at `exists' header.
+		do
+--			Result := (× Current ∖ ∆ Current).for_all_xy (p)
+		ensure
+--			definition: Result = (× Current ∖ ∆ Current).for_all_xy (p)
+		end
+
 feature -- Operation
 
 	filtered alias "|" (p: PREDICATE [A]): like subset_anchor

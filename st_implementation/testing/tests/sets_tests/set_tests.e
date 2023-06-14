@@ -1332,6 +1332,45 @@ feature -- Test routines (Quantifier)
 			assert ("for_all_pairs_ok", properties.for_all_pairs_ok (s, p))
 		end
 
+	test_for_all_distinct_pairs
+			-- Test {SET}.for_all_distinct_pairs.
+		note
+			testing: "covers/{SET}.for_all_distinct_pairs"
+		local
+			a, b: A
+			s: like set_to_be_tested
+			p: PREDICATE [A, A]
+		do
+			p := agent (x, y: A): BOOLEAN do Result := not eq_a (x, y) end
+			s := set_to_be_tested
+			assert ("s.for_all_distinct_pairs (p)", s.for_all_distinct_pairs (p))
+			assert ("s.for_all_distinct_pairs (p) ok", properties.for_all_distinct_pairs_ok (s, p))
+
+			p := agent (x, y: A): BOOLEAN
+				do
+					if x = Void then
+						Result := y = Void
+					else
+						Result := y /= Void and then (x.out.hash_code \\ 2 = y.out.hash_code \\ 2)
+					end
+				end
+			from
+				a := some_object_a
+				b := some_object_a
+			until
+				not p (a, b)
+			loop
+				b := some_object_a
+			end
+			s := set_to_be_tested & same_object_a (a) & same_object_a (b)
+			assert ("not s.for_all_distinct_pairs (p)", not s.for_all_distinct_pairs (p))
+			assert ("not s.for_all_distinct_pairs (p) ok", properties.for_all_distinct_pairs_ok (s, p))
+
+			s := set_to_be_tested
+			assert ("for_all_distinct_pairs", s.for_all_distinct_pairs (p) ⇒ True)
+			assert ("for_all_distinct_pairs_ok", properties.for_all_distinct_pairs_ok (s, p))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

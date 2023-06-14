@@ -649,6 +649,19 @@ feature -- Properties (Quantifier)
 			end
 		end
 
+	for_all_distinct_pairs_ok (s: STS_SET [A, EQ]; p: PREDICATE [A, A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.for_all_distinct_pairs?
+		do
+			check
+				definition: s.for_all_distinct_pairs (p) = not s.exists_distinct_pair (agent pair_negated (p, ?, ?))
+--				by_filtering: s.for_all_distinct_pairs (p) = ((× s).filtered_xy (agent pair_negated(p, ?, ?)) ⊆ ∆ s)
+--				by_square: s.for_all_distinct_pairs (p) = (× s).for_all_xy (agent pair_implied (agent pair_negated (p, ?, ?), agent s.equality_holds, ?, ?))
+				by_equality: s.for_all_distinct_pairs (p) = s.for_all_pairs (agent pair_implied (agent pair_negated (p, ?, ?), agent s.equality_holds, ?, ?))
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
@@ -724,6 +737,7 @@ feature -- Predicate
 
 	binary_anded (p: PREDICATE [A]; x: A; q: PREDICATE [A]; y: A): BOOLEAN
 			-- Does `p' (`x') and `q' (`y') hold?
+			-- TODO: Pull it up?
 		do
 			Result := p (x) and q (y)
 		ensure
