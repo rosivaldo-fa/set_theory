@@ -1,0 +1,19 @@
+package set_theory
+
+project
+	st_specification = "st_specification/st_specification.ecf"
+	st_properties = "st_properties/st_properties.ecf"
+	st_implementation = "st_implementation/st_implementation.ecf"
+
+note
+	title: Set Theory
+	description: "Eiffel classes modeled upon the concepts of set theory"
+
+	tags: specification,set,model
+	license: Eiffel Forum License v2 
+	copyright: 2012-2023, Rosivaldo F Alves
+	link[doc]: "Documentation" https://www.eiffel.org/blog/rosivaldo/2017/09/set-theory
+	link[source]: "GitHub" https://github.com/rosivaldo-fa/Set-Theory
+	link[license]: https://www.eiffel.com/licensing/forum.txt
+
+end
