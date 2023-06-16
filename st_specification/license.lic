@@ -1,7 +1,0 @@
-${NOTE_KEYWORD}
-	copyright: "Copyright (c) 2012-${YEAR}, Rosivaldo F Alves"
-	license: "[
-		Eiffel Forum License v2
-		(see https://www.eiffel.com/licensing/forum.txt)
-		]"
-	source: "https://github.com/rosivaldo-fa/Set-Theory"

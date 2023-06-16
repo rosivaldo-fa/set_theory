@@ -18,6 +18,7 @@
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
 		<setting name="console_application" value="true"/>
+		<setting name="library_root" value=".\st_implementation"/>
 		<setting name="dead_code_removal" value="feature"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
 			<option>
@@ -25,7 +26,7 @@
 			</option>
 			<renaming old_name="SET" new_name="EB_SET"/>
 		</library>
-		<library name="st_specification" location="..\st_specification\st_specification.ecf" readonly="false" prefix="STS_">
+		<library name="st_specification" location="..\st_specification.ecf" readonly="false" prefix="STS_">
 			<option>
 				<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 			</option>
@@ -48,7 +49,7 @@
 		</option>
 		<setting name="console_application" value="true"/>
 		<precompile name="base-scoop-safe_precompile" location="$ISE_PRECOMP\base-scoop-safe.ecf"/>
-		<library name="st_properties" location="..\st_properties\st_properties.ecf" readonly="false" prefix="STP_">
+		<library name="st_properties" location="..\st_properties.ecf" readonly="false" prefix="STP_">
 			<option>
 				<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 			</option>

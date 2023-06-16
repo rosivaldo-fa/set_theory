@@ -9,7 +9,7 @@ note
 	title: Set Theory
 	description: "Eiffel classes modeled upon the concepts of set theory"
 
-	tags: specification,set,model
+	tags: specification,set theory,model
 	license: Eiffel Forum License v2 
 	copyright: 2012-2023, Rosivaldo F Alves
 	link[doc]: "Documentation" https://www.eiffel.org/blog/rosivaldo/2017/09/set-theory

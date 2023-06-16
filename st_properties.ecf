@@ -17,9 +17,10 @@
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
 		<setting name="console_application" value="true"/>
+		<setting name="library_root" value=".\st_properties"/>
 		<setting name="dead_code_removal" value="feature"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
-		<library name="st_specification" location="..\st_specification\st_specification.ecf" readonly="false" prefix="STS_">
+		<library name="st_specification" location="..\st_specification.ecf" readonly="false" prefix="STS_">
 			<option>
 				<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 			</option>
