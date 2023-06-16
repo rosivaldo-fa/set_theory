@@ -456,6 +456,61 @@ feature -- Operation
 			definition: Result ≍ ((Current ∪ s) | agent xored (agent has, agent s.has, ?))
 		end
 
+--	crossed alias "×" (s: SET [A, EQ]): like product_anchor
+--			-- The cartesian product of current set and `s'
+--		do
+--			Result := element_to_element.cartesian_product (Current, s)
+--		ensure
+--			definition: Result ≍ element_to_element.cartesian_product (Current, s)
+--		end
+
+--	squared alias "×": like square_anchor
+--			-- Current set crossed with itself
+--			--| Of course, it would be better to express such a square with an s², but Eiffel does not have postfixed operators.
+--		do
+--			Result := Current × Current
+--		ensure
+--			definition: Result ≍ (Current × Current)
+--		end
+
+--	diagonal alias "∆": like diagonal_anchor
+--			-- Every element x in current set, mapped to the respective identical pair (x, x).
+--			--| Indeed the alias of this feature should be the Greek capital letter delta ("Δ", or "%u0x0394", as in
+--			--| https://proofwiki.org/w/index.php?title=Symbols:Greek/Delta&oldid=454484), but Eiffel is going to accept Greek letters as part of identifiers, so
+--			--| the alias was changed to "%u0x2206".
+--		do
+--			Result := (× Current).filtered_xy (agent equality_holds)
+--		ensure
+--			definition: Result ≍ (× Current).filtered_xy (agent equality_holds)
+--		end
+
+--	raised alias "^" (n: NATURAL): like n_tuple_set_anchor
+--			-- The cartesian product of `n' instances of current set
+--		do
+--			Result := ∏ n_times (n)
+--		ensure
+--			definition: Result ≍ (∏ n_times (n))
+--		end
+
+--	crossed_tuples (ts: SET [N_TUPLE [A, EQ], N_TUPLE_EQUALITY [A, EQ]]): like n_tuple_set_anchor
+--			-- Current set "crossed" with `ts', i.e. set with every tuple in `ts' preceded by every element in current set.
+--		do
+--			Result := tuple_extensor.set_map (element_to_tuple.cartesian_product (Current, ts), agent second_after_first)
+--		ensure
+--			definition: Result ≍ tuple_extensor.set_map (element_to_tuple.cartesian_product (Current, ts), agent second_after_first)
+--		end
+
+feature -- Transformation
+
+	mapped alias "↦" (f: FUNCTION [A, A]): like set_map_anchor
+			-- Current set mapped by `f' to a set of the same kind
+			--| TODO: Make it a {SET_FAMILY} in {SET_OF_SETS}?
+		do
+			Result := transformer_to_element.set_map (Current, f)
+		ensure
+			definition: Result ≍ transformer_to_element.set_map (Current, f)
+		end
+
 feature -- Factory
 
 	o,
@@ -559,6 +614,11 @@ feature -- Reduction
 
 feature -- Transformer
 
+	transformer_to_element: TRANSFORMER [A, A, EQ]
+			-- Transformer between types derived from {A}
+		deferred
+		end
+
 	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, OBJECT_EQUALITY [BOOLEAN]]
 			-- Transformer of objects whose types derive from {A} to objects whose types derive from {BOOLEAN}
 		deferred
@@ -586,20 +646,42 @@ feature -- Anchor
 
 	set_anchor: SET [A, EQ]
 			-- Anchor for sets like current one
-		do
-			Result := Current
+		deferred
 		end
 
 	subset_anchor: SET [A, EQ]
 			-- Anchor for subsets of current set
-		do
-			Result := Current
+		deferred
 		end
 
 	superset_anchor: SET [A, EQ]
 			-- Anchor for supersets of current set
-		do
-			Result := Current
+		deferred
+		end
+
+--	product_anchor: SET_OF_ORDERED_PAIRS [A, A, EQ, EQ]
+--			-- Anchor for Cartesian products
+--		deferred
+--		end
+
+--	square_anchor: SET_OF_ORDERED_PAIRS [A, A, EQ, EQ]
+--			-- Anchor for Cartesian squares
+--		deferred
+--		end
+
+--	diagonal_anchor: SET_OF_ORDERED_PAIRS [A, A, EQ, EQ]
+--			-- Anchor for Cartesian diagonals
+--		deferred
+--		end
+
+--	n_tuple_set_anchor: SET [N_TUPLE [A, EQ], N_TUPLE_EQUALITY [A, EQ]]
+--			-- Set of n-tuples of terms like the elements in this set
+--		deferred
+--		end
+
+	set_map_anchor: SET [A, EQ]
+			-- Anchor for set maps
+		deferred
 		end
 
 invariant
@@ -610,8 +692,8 @@ note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
-		(see http://www.eiffel.com/licensing/forum.txt)
+		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: ""
+	source: "https://github.com/rosivaldo-fa/Set-Theory"
 
 end

@@ -30,10 +30,7 @@ inherit
 			intersected,
 			subtracted,
 			subtracted_symmetricaly,
-			equality_holds,
-			set_anchor,
-			subset_anchor,
-			superset_anchor
+			equality_holds
 		end
 
 	DEBUG_OUTPUT
@@ -940,6 +937,14 @@ feature -- Predicate
 
 feature -- Transformer
 
+	transformer_to_element: TRANSFORMER [A, A, EQ]
+			-- <Precursor>
+		do
+			create Result
+		ensure then
+			class
+		end
+
 	transformer_to_boolean: TRANSFORMER [A, BOOLEAN, STS_OBJECT_EQUALITY [BOOLEAN]]
 			-- <Precursor>
 		do
@@ -968,7 +973,8 @@ feature -- Anchor
 
 	set_anchor,
 	subset_anchor,
-	superset_anchor: SET [A, EQ]
+	superset_anchor,
+	set_map_anchor: SET [A, EQ]
 			-- <Precursor>
 		do
 			Result := Current
@@ -987,8 +993,8 @@ note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
-		(see http://www.eiffel.com/licensing/forum.txt)
+		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: ""
+	source: "https://github.com/rosivaldo-fa/Set-Theory"
 
 end

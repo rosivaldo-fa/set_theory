@@ -1144,6 +1144,34 @@ feature -- Properties (Operation)
 			end
 		end
 
+feature -- Properties (Transformation)
+
+	mapped_ok (s: STS_SET [A, EQ]; f: FUNCTION [A, A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.mapped?
+		do
+			check
+				u: attached current_universe as u
+				definition: (s ↦ f) ≍ (
+					u | agent (ia_y: A ia_s: STS_SET [A, EQ] ia_f: FUNCTION [A, A]): BOOLEAN
+						do
+							Result := ia_s |∃ agent (x, y: A i2a_f: FUNCTION [A, A]): BOOLEAN
+								do
+									Result := eq (y, i2a_f (x))
+								end (?, ia_y, ia_f)
+						end (?, s, f)
+					)
+--				by_reduction: (s ↦ f) ≍ transformer_to_set.set_reduction (
+--					s, o, agent (acc: STS_SET [A, EQ] x: A; ia_f: FUNCTION [A, A]): STS_SET [A, EQ]
+--						do
+--							Result := acc & ia_f (x)
+--						end (?, ?, f)
+--					)
+				cardinality: # (s ↦ f) ≤ # s
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
@@ -1235,6 +1263,13 @@ feature -- Predicate
 			definition: Result = (p (x) and q (y))
 		end
 
+feature -- Transformer
+
+--	transformer_to_set: STS_TRANSFORMER [A, STS_SET [A, EQ], EQ, STS_SET_EQUALITY [A, EQ]]
+--			-- Transformer between types derived from {A} and {STS_SET [A, EQ]}
+--		deferred
+--		end
+
 feature {NONE} -- Anchor
 
 	o_anchor: STS_SET [A, EQ]
@@ -1253,8 +1288,8 @@ note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
-		(see http://www.eiffel.com/licensing/forum.txt)
+		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: ""
+	source: "https://github.com/rosivaldo-fa/Set-Theory"
 
 end

@@ -62,6 +62,7 @@ inherit
 			test_united,
 			test_subtracted,
 			test_subtracted_symmetricaly,
+			test_mapped,
 			object_hash_code
 		end
 
@@ -124,6 +125,7 @@ feature -- Test routines (All)
 			test_united
 			test_subtracted
 			test_subtracted_symmetricaly
+			test_mapped
 		end
 
 feature -- Test routines (Primitive)
@@ -520,6 +522,31 @@ feature -- Test routines (Operation)
 			Precursor {SET_TESTS}
 		end
 
+feature -- Test routines (Transformation)
+
+	test_mapped
+			-- <Precursor>
+		note
+			testing: "covers/{STS_SET}.mapped"
+			testing: "covers/{SET}.mapped"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Mapping
+
+	f_x (x: detachable separate CHARACTER_REF): detachable separate CHARACTER_REF
+			-- <Precursor>
+		do
+			if attached x then
+					check
+							-- class invariant: (Min_character.natural_32_code + Max_count - 1).is_valid_character_code
+						valid_character: ((x |-| Min_character + 2) \\ Max_count.as_integer_32 + Min_character.code).is_valid_character_8_code
+					end
+				Result := ((x |-| Min_character + 2) \\ Max_count.as_integer_32 + Min_character.code).to_character_8
+			end
+		end
+
 feature {NONE} -- Implementation
 
 	object_hash_code (c: detachable separate CHARACTER_REF): INTEGER
@@ -545,8 +572,8 @@ note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
-		(see http://www.eiffel.com/licensing/forum.txt)
+		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: ""
+	source: "https://github.com/rosivaldo-fa/Set-Theory"
 
 end

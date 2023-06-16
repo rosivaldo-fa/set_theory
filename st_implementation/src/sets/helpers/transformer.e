@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Implementation of {STS_TRANSFORMER}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -27,6 +27,29 @@ feature -- Access
 		end
 
 feature -- Transformation
+
+	set_map (xs: STS_SET [A, STS_EQUALITY [A]]; f: FUNCTION [A, B]): like set_map_anchor
+			-- <Precursor>
+		local
+			l_xs: STS_SET [A, STS_EQUALITY [A]]
+		do
+			from
+				create Result.make_empty
+				l_xs := xs
+			invariant
+				maps_everything: (xs ∖ l_xs) |∀ agent transformer.target_set_has_value(Result, f, ?)
+				nothing_else: Result |∀ agent transformer.source_set_has_argument(f, xs ∖ l_xs, ?)
+			until
+				l_xs.is_empty
+			loop
+				Result := Result & f (l_xs.any)
+				l_xs := l_xs.others
+			variant
+				cardinality: natural_as_integer (# l_xs)
+			end
+		ensure then
+			class
+		end
 
 	set_reduction (xs: STS_SET [A, STS_EQUALITY [A]]; start: B; f: FUNCTION [B, A, B]): B
 			-- <Precursor>
@@ -61,6 +84,14 @@ feature -- Conversion
 			definition: Result = n.as_integer_64
 		end
 
+feature -- Transformer
+
+	transformer: like Current
+			-- <Precursor>
+		do
+			create Result
+		end
+
 feature -- Anchor
 
 	natural_anchor: NATURAL
@@ -71,11 +102,19 @@ feature -- Anchor
 			class
 		end
 
+	set_map_anchor: SET [B, EQ_B]
+			-- <Precursor>
+		do
+			create Result.make_empty
+		ensure then
+			class
+		end
+
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
-		(see http://www.eiffel.com/licensing/forum.txt)
+		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: ""
+	source: "https://github.com/rosivaldo-fa/Set-Theory"
 end

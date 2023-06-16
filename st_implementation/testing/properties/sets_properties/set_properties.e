@@ -20,6 +20,7 @@ inherit
 			united_ok,
 			subtracted_ok,
 			subtracted_symmetricaly_ok,
+			mapped_ok,
 			o_anchor,
 			universe_anchor
 		end
@@ -310,6 +311,17 @@ feature -- Properties (Operation)
 			Result := Precursor {STP_SET_PROPERTIES}(a, s1, s2, s3)
 		end
 
+feature -- Properties (Transformation)
+
+	mapped_ok (s: STS_SET [A, EQ]; f: FUNCTION [A, A]): BOOLEAN
+			-- <Precursor>
+		local
+			sa: STS_SET [A, EQ]
+		do
+			sa := s ↦ f -- This makes `f' (x) collectible by `current_universe', for every x ∈ `s'.
+			Result := Precursor {STP_SET_PROPERTIES}(s, f)
+		end
+
 feature -- Conversion
 
 	converted_set (s: STS_SET [A, STS_EQUALITY [A]]): SET [A, EQ]
@@ -374,6 +386,16 @@ feature -- Predicate
 					)
 		end
 
+feature -- Transformer
+
+--	transformer_to_set: TRANSFORMER [A, STS_SET [A, EQ], EQ, STS_SET_EQUALITY [A, EQ]]
+--			-- <Precursor>
+--		do
+--			create Result
+--		ensure then
+--			class
+--		end
+
 feature {NONE} -- Anchor
 
 	o_anchor,
@@ -387,8 +409,8 @@ note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
-		(see http://www.eiffel.com/licensing/forum.txt)
+		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: ""
+	source: "https://github.com/rosivaldo-fa/Set-Theory"
 
 end

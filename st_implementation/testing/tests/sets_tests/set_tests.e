@@ -1883,6 +1883,44 @@ feature -- Test routines (Operation)
 			assert ("subtracted_symmetricaly_ok", properties.subtracted_symmetricaly_ok (some_object_a, s, s2, some_set_a))
 		end
 
+feature -- Test routines (Transformation)
+
+	test_mapped
+			-- Test {STS_SET}.mapped.
+			-- Test {SET}.mapped.
+		note
+			testing: "covers/{STS_SET}.mapped"
+			testing: "covers/{SET}.mapped"
+		local
+			a, b, c: A
+			s: like set_to_be_tested
+			f: FUNCTION [A, A]
+		do
+			f := agent f_x
+			s := o
+			assert ("∅ ↦ f", (s ↦ f) ≍ o)
+			assert ("∅ ↦ f ok", properties.mapped_ok (s, f))
+
+			a := some_object_a
+			s := s & same_object_a (a)
+			assert ("{a} ↦ f ≍ {f (a)}", (s ↦ f) ≍ singleton (f (a)))
+			assert ("{a} ↦ f ≍ {f (a)} ok", properties.mapped_ok (s, f))
+
+			b := some_object_a
+			s := s & same_object_a (b)
+			assert ("{a,b} ↦ f ≍ {f (a),f (b)}", (s ↦ f) ≍ (singleton (f (a)) & f (b)))
+			assert ("{a,b} ↦ f ≍ {f (a),f (b)} ok", properties.mapped_ok (s, f))
+
+			c := some_object_a
+			s := s & same_object_a (c)
+			assert ("{a,b,c} ↦ f ≍ {f (a),f (b),f (c)}", (s ↦ f) ≍ (singleton (f (a)) & f (b) & f (c)))
+			assert ("{a,b,c} ↦ f ≍ {f (a),f (b),f (c)} ok", properties.mapped_ok (s, f))
+
+			s := set_to_be_tested
+			assert ("mapped", attached (s ↦ f))
+			assert ("mapped_ok", properties.mapped_ok (s, f))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
@@ -1936,6 +1974,13 @@ feature {NONE} -- Factory (Set)
 			definition: Result ≍ o.singleton (a)
 		end
 
+feature -- Mapping
+
+	f_x (x: A): A
+			-- Function that maps `x' to a value of same kind
+		deferred
+		end
+
 feature {NONE} -- Implementation
 
 	object_hash_code (a: A): INTEGER
@@ -1955,8 +2000,8 @@ note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
-		(see http://www.eiffel.com/licensing/forum.txt)
+		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: ""
+	source: "https://github.com/rosivaldo-fa/Set-Theory"
 
 end
