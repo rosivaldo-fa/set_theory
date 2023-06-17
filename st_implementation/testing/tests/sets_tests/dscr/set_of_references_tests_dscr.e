@@ -63,6 +63,7 @@ inherit
 			test_subtracted,
 			test_subtracted_symmetricaly,
 			test_mapped,
+			test_reduced,
 			object_hash_code
 		end
 
@@ -126,6 +127,7 @@ feature -- Test routines (All)
 			test_subtracted
 			test_subtracted_symmetricaly
 			test_mapped
+			test_reduced
 		end
 
 feature -- Test routines (Primitive)
@@ -533,6 +535,15 @@ feature -- Test routines (Transformation)
 			Precursor {SET_TESTS}
 		end
 
+	test_reduced
+			-- <Precursor>
+		note
+			testing: "covers/{STS_SET}.reduced"
+			testing: "covers/{SET}.reduced"
+		do
+			Precursor {SET_TESTS}
+		end
+
 feature -- Mapping
 
 	f_x (x: detachable separate CHARACTER_REF): detachable separate CHARACTER_REF
@@ -544,6 +555,20 @@ feature -- Mapping
 						valid_character: ((x |-| Min_character + 2) \\ Max_count.as_integer_32 + Min_character.code).is_valid_character_8_code
 					end
 				Result := ((x |-| Min_character + 2) \\ Max_count.as_integer_32 + Min_character.code).to_character_8
+			end
+		end
+
+feature -- Reduction
+
+	f_acc_x (acc, x: detachable separate CHARACTER_REF): detachable separate CHARACTER_REF
+			-- <Precursor>
+		do
+			if attached acc and attached x then
+					check
+							-- class invariant: (Min_character.natural_32_code + Max_count - 1).is_valid_character_code
+						valid_character: ((acc |-| x.item).abs \\ Max_count.as_integer_32 + Min_character.code).is_valid_character_8_code
+					end
+				Result := ((acc |-| x.item).abs \\ Max_count.as_integer_32 + Min_character.code).to_character_8
 			end
 		end
 

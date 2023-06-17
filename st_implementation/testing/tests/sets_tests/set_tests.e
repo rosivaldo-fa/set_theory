@@ -1921,6 +1921,44 @@ feature -- Test routines (Transformation)
 			assert ("mapped_ok", properties.mapped_ok (s, f))
 		end
 
+	test_reduced
+			-- Test {STS_SET}.reduced.
+			-- Test {SET}.reduced.
+		note
+			testing: "covers/{STS_SET}.reduced"
+			testing: "covers/{SET}.reduced"
+		local
+			s: like set_to_be_tested
+			leftmost, a, b, c: A
+			f: FUNCTION [A, A, A]
+		do
+			f := agent f_acc_x
+			s := o
+			leftmost := some_object_a
+			assert ("∅ reduced", eq_a (s.reduced (leftmost, f), leftmost))
+			assert ("∅ reduced ok", properties.reduced_ok (s, leftmost, f))
+
+			a := some_object_a
+			s := s & same_object_a (a)
+			assert ("{a} reduced", eq_a (s.reduced (leftmost, f), f (leftmost, a)))
+			assert ("{a} reduced ok", properties.reduced_ok (s, leftmost, f))
+
+			b := some_other_object_a (s)
+			s := s & same_object_a (b)
+			assert ("{a,b} reduced", eq_a (s.reduced (leftmost, f), f (f (leftmost, a), b)))
+			assert ("{a,b} reduced ok", properties.reduced_ok (s, leftmost, f))
+
+			c := some_other_object_a (s)
+			s := s & same_object_a (c)
+			assert ("{a,b,c} reduced", eq_a (s.reduced (leftmost, f), f (f (f (leftmost, a), b), c)))
+			assert ("{a,b,c} reduced ok", properties.reduced_ok (s, leftmost, f))
+
+			s := set_to_be_tested
+			leftmost := some_object_a
+			assert ("reduced", attached s.reduced (leftmost, f) ⇒ True)
+			assert ("reduced_ok", properties.reduced_ok (s, leftmost, f))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a
@@ -1978,6 +2016,13 @@ feature -- Mapping
 
 	f_x (x: A): A
 			-- Function that maps `x' to a value of same kind
+		deferred
+		end
+
+feature -- Reduction
+
+	f_acc_x (acc, x: A): A
+			-- Function that reduces (`acc', `x') to a value of same kind
 		deferred
 		end
 

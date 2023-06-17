@@ -511,6 +511,18 @@ feature -- Transformation
 			definition: Result ≍ transformer_to_element.set_map (Current, f)
 		end
 
+	reduced (left_most: A; f: FUNCTION [A, A, A]): A
+			-- Current set reduced by `f' to a value like `left_most'
+			-- NOTICE: Since the order of the elements in a set is irrelevant, the value of `reduced' may differ for two equal sets,
+			-- unless `f' is commutative. Indeed, since an implementation set is free to iterate over its elements differently at
+			-- different times, even the same set may produce different results for different applications of
+			-- {SET}.reduced (`left_most', `f'), where `left_most' and `f' are the same.
+		do
+			Result := transformer_to_element.set_reduction (Current, left_most, f)
+		ensure
+			definition: eq (Result, transformer_to_element.set_reduction (Current, left_most, f))
+		end
+
 feature -- Factory
 
 	o,

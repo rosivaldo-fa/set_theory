@@ -322,6 +322,18 @@ feature -- Properties (Transformation)
 			Result := Precursor {STP_SET_PROPERTIES}(s, f)
 		end
 
+	reduced_ok (s: SET [A, EQ]; left_most: A; f: FUNCTION [A, A, A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STI_SET}.reduced?
+		do
+			check
+--				definition: eq (s.reduced (left_most, f), s.as_tuple.left_reduced (left_most, f))
+					-- NOTICE: This property applies to {SET}.reduced implementation; other implementations need not comply to such a property. Please see
+					-- the comment at {STS_SET}.reduced header.
+			then
+				Result := True
+			end
+		end
+
 feature -- Conversion
 
 	converted_set (s: STS_SET [A, STS_EQUALITY [A]]): SET [A, EQ]
