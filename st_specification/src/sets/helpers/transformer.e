@@ -32,7 +32,7 @@ feature -- Transformation
 		end
 
 	set_reduction (xs: SET [A, EQUALITY [A]]; leftmost: B; f: FUNCTION [B, A, B]): B
-			-- `xs' reduced by `f' to a value like `start'
+			-- `xs' reduced by `f' to a value like `leftmost'
 			-- NOTICE: Since the order of the elements in a set is irrelevant, the value of `set_reduction' may differ for two equal sets, unless `f' is
 			-- "commutative", as explained at "Painfully detailed information about ambiguous folds" (https://preview.tinyurl.com/y4qp7zre). Additionally, please
 			-- see the comment at {SET}.reduced header.

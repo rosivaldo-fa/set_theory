@@ -308,7 +308,7 @@ feature -- Properties (Operation)
 			if type_is_predefined_expanded (({A}).type_id) then
 				sa := singleton (a) -- This makes `a' collectible by `current_universe'.
 			end
-			Result := Precursor {STP_SET_PROPERTIES}(a, s1, s2, s3)
+			Result := Precursor {STP_SET_PROPERTIES} (a, s1, s2, s3)
 		end
 
 feature -- Properties (Transformation)
@@ -319,16 +319,16 @@ feature -- Properties (Transformation)
 			sa: STS_SET [A, EQ]
 		do
 			sa := s ↦ f -- This makes `f' (x) collectible by `current_universe', for every x ∈ `s'.
-			Result := Precursor {STP_SET_PROPERTIES}(s, f)
+			Result := Precursor {STP_SET_PROPERTIES} (s, f)
 		end
 
-	reduced_ok (s: SET [A, EQ]; left_most: A; f: FUNCTION [A, A, A]): BOOLEAN
+	reduced_ok (s: SET [A, EQ]; leftmost: A; f: FUNCTION [A, A, A]): BOOLEAN
 			-- Do the properties verified within set theory hold for {STI_SET}.reduced?
 		do
 			check
---				definition: eq (s.reduced (left_most, f), s.as_tuple.left_reduced (left_most, f))
-					-- NOTICE: This property applies to {SET}.reduced implementation; other implementations need not comply to such a property. Please see
-					-- the comment at {STS_SET}.reduced header.
+--				definition: eq (s.reduced (leftmost, f), s.as_tuple.left_reduced (leftmost, f))
+				-- NOTICE: This property applies to {SET}.reduced implementation; other implementations need not comply to such a property. Please see
+				-- the comment at {STS_SET}.reduced header.
 			then
 				Result := True
 			end
