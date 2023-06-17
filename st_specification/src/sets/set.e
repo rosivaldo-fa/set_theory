@@ -523,6 +523,17 @@ feature -- Transformation
 			definition: eq (Result, transformer_to_element.set_reduction (Current, leftmost, f))
 		end
 
+	proper_reduced (f: FUNCTION [A, A, A]): A
+			-- Current non-empty set reduced by `f' to a value like {A}
+			-- NOTICE: Please see the notice at `reduced' header.
+		require
+			is_not_empty: not is_empty
+		do
+			Result := others.reduced (any, f)
+		ensure
+			definition: eq (Result, others.reduced (any, f))
+		end
+
 feature -- Factory
 
 	o,

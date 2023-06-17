@@ -119,12 +119,12 @@ feature -- Test routines (Primitive)
 		end
 
 	test_eq
-			-- Test {SET}.eq.
+			-- Test {SET}.eq_a.
 		note
-			testing: "covers/{SET}.eq"
+			testing: "covers/{SET}.eq_a"
 		do
-			assert ("eq", attached set_to_be_tested.eq)
-			assert ("class: eq", attached {like set_to_be_tested}.eq)
+			assert ("eq_a", attached set_to_be_tested.eq)
+			assert ("class: eq_a", attached {like set_to_be_tested}.eq)
 		end
 
 feature -- Test routines (Membership)
@@ -1957,6 +1957,38 @@ feature -- Test routines (Transformation)
 			leftmost := some_object_a
 			assert ("reduced", attached s.reduced (leftmost, f) ⇒ True)
 			assert ("reduced_ok", properties.reduced_ok (s, leftmost, f))
+		end
+
+	test_proper_reduced
+			-- Test {STS_SET}.proper_reduced.
+			-- Test {SET}.proper_reduced.
+		note
+			testing: "covers/{STS_SET}.proper_reduced"
+			testing: "covers/{SET}.proper_reduced"
+		local
+			s: like set_to_be_tested
+			a, b, c: A
+			f: FUNCTION [A, A, A]
+		do
+			f := agent f_acc_x
+			a := some_object_a
+			s := o & same_object_a (a)
+			assert ("{a} proper_reduced", eq_a (s.proper_reduced (f), a))
+			assert ("{a} proper_reduced ok", properties.proper_reduced_ok (s, f))
+
+			b := some_other_object_a (s)
+			s := s & same_object_a (b)
+			assert ("{a,b} proper_reduced", eq_a (s.proper_reduced (f), f (a, b)))
+			assert ("{a,b} proper_reduced ok", properties.proper_reduced_ok (s, f))
+
+			c := some_other_object_a (s)
+			s := s & same_object_a (c)
+			assert ("{a,b,c} proper_reduced", eq_a (s.proper_reduced (f), f (f (a, b), c)))
+			assert ("{a,b,c} proper_reduced ok", properties.proper_reduced_ok (s, f))
+
+			s := set_to_be_tested
+			assert ("proper_reduced", not s.is_empty ⇒ (attached s.proper_reduced (f) ⇒ True))
+			assert ("proper_reduced_ok", properties.proper_reduced_ok (s, f))
 		end
 
 feature {NONE} -- Factory (element to be tested)

@@ -64,6 +64,7 @@ inherit
 			test_subtracted_symmetricaly,
 			test_mapped,
 			test_reduced,
+			test_proper_reduced,
 			object_hash_code
 		end
 
@@ -128,6 +129,7 @@ feature -- Test routines (All)
 			test_subtracted_symmetricaly
 			test_mapped
 			test_reduced
+			test_proper_reduced
 		end
 
 feature -- Test routines (Primitive)
@@ -540,6 +542,15 @@ feature -- Test routines (Transformation)
 		note
 			testing: "covers/{STS_SET}.reduced"
 			testing: "covers/{SET}.reduced"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_proper_reduced
+			-- <Precursor>
+		note
+			testing: "covers/{STS_SET}.proper_reduced"
+			testing: "covers/{SET}.proper_reduced"
 		do
 			Precursor {SET_TESTS}
 		end

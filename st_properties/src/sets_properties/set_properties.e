@@ -1172,6 +1172,21 @@ feature -- Properties (Transformation)
 			end
 		end
 
+	proper_reduced_ok (s: STS_SET [A, EQ]; f: FUNCTION [A, A, A]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.proper_reduced?
+		do
+			if not s.is_empty then
+				check
+--					is_not_unit: not s.as_tuple.is_unit -- not s.is_empty
+				end
+				check
+--					definition: eq (s.proper_reduced (f), s.as_tuple.proper_left_reduced (f))
+				then
+				end
+			end
+			Result := True
+		end
+
 feature -- Factory
 
 	singleton (a: A): STS_SET [A, EQ]
