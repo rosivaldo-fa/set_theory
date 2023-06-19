@@ -552,16 +552,6 @@ feature -- Factory
 			nothing_else: Result.is_singleton
 		end
 
-feature -- Type adjustment
-
-	current_set: like set_anchor
-			-- Current set itself
-		do
-			Result := Current
-		ensure
-			itself: Result = Current
-		end
-
 feature -- Predicate
 
 	equality_holds (x1, x2: A): BOOLEAN

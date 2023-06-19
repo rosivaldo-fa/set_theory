@@ -163,7 +163,7 @@ feature -- Anchor
 	set_anchor,
 	subset_anchor,
 	superset_anchor,
-	set_map_anchor: STI_SET [A, EQ]
+	set_map_anchor: STS_SET [A, EQ]
 			-- <Precursor>
 		do
 			Result := o
