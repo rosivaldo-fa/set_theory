@@ -1991,6 +1991,37 @@ feature -- Test routines (Transformation)
 			assert ("proper_reduced_ok", properties.proper_reduced_ok (s, f))
 		end
 
+feature -- Test routines (Type adjustment)
+
+	test_current_set
+			-- Test {STS_SET}.current_set.
+			-- Test {SET}.current_set.
+		note
+			testing: "covers/{STS_SET}.current_set"
+			testing: "covers/{SET}.current_set"
+		local
+			s: like set_to_be_tested
+			a, b, c: A
+		do
+			s := o
+			assert ("∅", s.current_set ≍ o)
+
+			a := some_object_a
+			s := o & same_object_a (a)
+			assert ("{a}", s.current_set ≍ (o & a))
+
+			b := some_object_a
+			s := s & same_object_a (b)
+			assert ("{a,b}", s.current_set ≍ (o & a & b))
+
+			c := some_object_a
+			s := s & same_object_a (c)
+			assert ("{a,b}", s.current_set ≍ (o & a & b & c))
+
+			s := set_to_be_tested
+			assert ("current_set", attached s.current_set)
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_set_a

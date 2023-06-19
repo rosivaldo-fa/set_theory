@@ -65,6 +65,7 @@ inherit
 			test_mapped,
 			test_reduced,
 			test_proper_reduced,
+			test_current_set,
 			object_hash_code
 		end
 
@@ -130,6 +131,7 @@ feature -- Test routines (All)
 			test_mapped
 			test_reduced
 			test_proper_reduced
+			test_current_set
 		end
 
 feature -- Test routines (Primitive)
@@ -551,6 +553,17 @@ feature -- Test routines (Transformation)
 		note
 			testing: "covers/{STS_SET}.proper_reduced"
 			testing: "covers/{SET}.proper_reduced"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Type adjustment)
+
+	test_current_set
+			-- <Precursor>
+		note
+			testing: "covers/{STS_SET}.current_set"
+			testing: "covers/{SET}.current_set"
 		do
 			Precursor {SET_TESTS}
 		end
