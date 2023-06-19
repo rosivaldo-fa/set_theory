@@ -410,7 +410,7 @@ feature -- Operation
 		deferred
 		ensure
 			every_compliant_element: Current |∀ agent iff (p, agent Result.has, ?)
-			nothing_else: Result ⊆ Current
+			nothing_else: Current ⊇ Result
 		end
 
 	complemented alias "∁" (s: SET [A, EQ]): like set_anchor
