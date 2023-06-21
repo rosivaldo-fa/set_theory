@@ -51,16 +51,16 @@ feature -- Transformation
 			class
 		end
 
-	set_reduction (xs: STS_SET [A, STS_EQUALITY [A]]; start: B; f: FUNCTION [B, A, B]): B
+	set_reduction (xs: STS_SET [A, STS_EQUALITY [A]]; leftmost: B; f: FUNCTION [B, A, B]): B
 			-- <Precursor>
 		local
 			l_xs: STS_SET [A, STS_EQUALITY [A]]
 		do
 			from
-				Result := start
+				Result := leftmost
 				l_xs := xs
 			invariant
---				building_up: eq_b (Result, tuple_left_reduction (xs.as_tuple.right_trimmed (# l_xs), start, f))
+--				building_up: eq_b (Result, tuple_left_reduction (xs.as_tuple.right_trimmed (# l_xs), leftmost, f))
 					-- NOTICE: This invariant assumes that `xs'.`as_tuple' is implemented like in {STI_SET}.
 			until
 				l_xs.is_empty
