@@ -14,7 +14,6 @@ feature -- Initialization
 	make
 			-- Run application.
 		do
-			print (create {MUTABLE_SET_N}.make_singleton (0))
 		end
 
 note

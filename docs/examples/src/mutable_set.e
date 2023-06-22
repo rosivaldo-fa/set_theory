@@ -144,16 +144,16 @@ feature -- Construction
 				create xs.make_empty (elements.count)
 				i := 0
 			invariant
-				does_not_have_a: not ∃ x: xs ¦ eq (x, a)
-				nothing_lost: Current |∀ agent xored (
-							agent (ia_xs: SPECIAL [A]; x: A): BOOLEAN do Result := ∃ y: ia_xs ¦ eq (x, y) end (xs, ?),
-							agent equality_holds (a, ?), ?
-						)
-				nothing_else: ∀ x: xs ¦ has (x)
+				xs.count = i
+				building_up: ∀ j: 0 |..| (i - 1) ¦ (xs.valid_index (j) and elements.valid_index (j)) and then eq (xs [j], elements [j])
 			until
 				i = elements.count or else eq (elements [i], a)
 			loop
-				xs.force (elements [i], i)
+					check
+						valid_index: elements.valid_index (i) -- 0 ≤ i < elements.count
+						count_small_enough: xs.count < xs.capacity -- xs.count = i < elements.count = xs.capacity
+					end
+				xs.extend (elements [i])
 				i := i + 1
 			variant
 				elements.count - i
