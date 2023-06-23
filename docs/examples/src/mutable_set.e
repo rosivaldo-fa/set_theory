@@ -10,6 +10,10 @@ class
 inherit
 	STS_SET [A, EQ]
 		redefine
+			exists_pair,
+			exists_distinct_pair,
+			for_all_pairs,
+			for_all_distinct_pairs,
 			complemented,
 			mapped
 		end
@@ -162,15 +166,15 @@ feature -- Construction
 				Result := Current
 			else
 				check
-					source_index_non_negative: i + 1 >= 0 -- Loop termination: i >= 0
-					destination_index_non_negative: i >= 0 -- Loop termination
-					destination_index_in_bound: i <= xs.count -- i <= elements.count >= xs.count
-					n_non_negative: elements.count - i >= 0 -- 0 <= i <= elements.count
-					n_is_small_enough_for_source: i + 1 + elements.count - i <= elements.count
-					n_is_small_enough_for_destination: i + elements.count - i <= xs.capacity -- elements.count = xs.capacity
+					source_index_non_negative: i + 1 >= 0 -- 0 ≤ i < elements.count
+					destination_index_non_negative: i >= 0 -- 0 ≤ i < elements.count
+					destination_index_in_bound: i <= xs.count -- xs.count = i
+					n_non_negative: elements.count - (i + 1) >= 0 -- 0 ≤ i < elements.count
+					n_is_small_enough_for_source: i + 1 + elements.count - (i + 1) <= elements.count -- Algebra
+					n_is_small_enough_for_destination: i + elements.count - (i + 1) <= xs.capacity -- xs.capacity = elements.count - 1
 					same_type: elements.conforms_to (xs) -- By definition?
 				end
-				xs.copy_data (elements, i + 1, i, elements.count - i)
+				xs.copy_data (elements, i + 1, i, elements.count - (i + 1))
 				check
 					n_non_negative: xs.count >= 0 -- {SPECIAL}.count definition
 				end
@@ -181,6 +185,32 @@ feature -- Construction
 				end
 				create Result.make_from_special (xs)
 			end
+		end
+
+feature -- Quantifier
+
+	exists_pair (p: PREDICATE [A, A]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := ∃ x: elements ¦ ∃ y: elements ¦ p (x, y)
+		end
+
+	exists_distinct_pair (p: PREDICATE [A, A]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := ∃ x: elements ¦ ∃ y: elements ¦ p (x, y) and not eq (x, y)
+		end
+
+	for_all_pairs (p: PREDICATE [A, A]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := ∀ x: elements ¦ ∀ y: elements ¦ p (x, y)
+		end
+
+	for_all_distinct_pairs (p: PREDICATE [A, A]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := ∀ x: elements ¦ ∀ y: elements ¦ not eq (x, y) ⇒ p (x, y)
 		end
 
 feature -- Operation
