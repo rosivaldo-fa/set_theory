@@ -23,6 +23,117 @@ feature -- Access
 	properties: SET_PROPERTIES [A, EQ]
 			-- Object that checks the set-theory properties of {MUTABLE_SET}
 
+feature -- Test routines (Initialization)
+
+	test_make_from_special
+			-- Test {MUTABLE_SET}.make_from_special
+		note
+			testing: "covers/{MUTABLE_SET}.make_from_special"
+		local
+			a, b, c: A
+			n: INTEGER
+			xs: SPECIAL [A]
+			s_cell: CELL [EXPOSED_MUTABLE_SET [A, EQ]]
+			created: PREDICATE [SPECIAL [A], CELL [EXPOSED_MUTABLE_SET [A, EQ]]]
+			s: EXPOSED_MUTABLE_SET [A, EQ]
+		do
+			created := agent (ia_xs: SPECIAL [A]; ia_s_cell: CELL [EXPOSED_MUTABLE_SET [A, EQ]]): BOOLEAN
+					do
+						ia_s_cell.put (create {EXPOSED_MUTABLE_SET [A, EQ]}.make_from_special (ia_xs))
+						Result := True
+					end
+			create s_cell.put (create {EXPOSED_MUTABLE_SET [A, EQ]}.make_empty)
+
+			create xs.make_empty (0)
+			assert ("xs: count = 0, capacity = 0", created (xs, s_cell))
+			s := s_cell.item
+			assert ("xs: count = 0, capacity = 0; ∅", s ≍ o)
+			assert ("xs: count = 0, capacity = 0; count = 0", s.elements.count = 0)
+			assert ("xs: count = 0, capacity = 0; capacity = 0", s.elements.capacity = 0)
+
+			n := some_integer_up_to (max_count.as_integer_32)
+			check
+				non_negative_argument: n >= 0 -- 0 < some_integer_up_to (...)
+			end
+			create xs.make_empty (n)
+			assert ("xs: count = 0, capacity > 0", created (xs, s_cell))
+			s := s_cell.item
+			assert ("xs: count = 0, capacity > 0; ∅", s ≍ o)
+			assert ("xs: count = 0, capacity > 0; count = 0", s.elements.count = 0)
+			assert ("xs: count = 0, capacity > 0; capacity = 0", s.elements.capacity = 0)
+
+			a := some_object_a
+			check
+				count_small_enough: xs.count < xs.capacity -- xs.count = 0 < n = xs.capacity
+			end
+			xs.extend (same_object_a (a))
+			assert ("xs: count = 1, capacity > 0", created (xs, s_cell))
+			s := s_cell.item
+			assert ("xs: count = 1, capacity > 0; {a}", s ≍ singleton (a))
+			assert ("xs: count = 1, capacity > 0; count = 1", s.elements.count = 1)
+			assert ("xs: count = 1, capacity > 0; capacity = 1", s.elements.capacity = 1)
+
+			xs := xs.aliased_resized_area (3)
+			check
+				count_small_enough_2: xs.count < xs.capacity -- xs.count = 1 < 3 = xs.capacity
+			end
+			xs.extend (same_object_a (a))
+			check
+				count_small_enough_3: xs.count < xs.capacity -- xs.count = 2 < 3 = xs.capacity
+			end
+			xs.extend (same_object_a (a))
+			assert ("xs: count = 3, capacity = 3", created (xs, s_cell))
+			s := s_cell.item
+			assert ("xs: count = 3, capacity = 3; {a}", s ≍ singleton (a))
+			assert ("xs: count = 3, capacity = 3; count = 1", s.elements.count = 1)
+			assert ("xs: count = 3, capacity = 3; capacity = 1", s.elements.capacity = 1)
+
+			b := some_other_object_a (s)
+			xs := xs.aliased_resized_area (5)
+			check
+				count_small_enough_4: xs.count < xs.capacity -- xs.count = 3 < 5 = xs.capacity
+			end
+			xs.extend (same_object_a (b))
+			assert ("xs: count = 4, capacity = 5", created (xs, s_cell))
+			s := s_cell.item
+			assert ("xs: count = 4, capacity = 5; {a,b}", s ≍ (singleton (a) & b))
+			assert ("xs: count = 4, capacity = 5; count = 2", s.elements.count = 2)
+			assert ("xs: count = 4, capacity = 5; capacity = 2", s.elements.capacity = 2)
+
+			c := some_other_object_a (s)
+			check
+				count_small_enough_5: xs.count < xs.capacity -- xs.count = 4 < 5 = xs.capacity
+			end
+			xs.extend (same_object_a (c))
+			assert ("xs: count = 5, capacity = 5", created (xs, s_cell))
+			s := s_cell.item
+			assert ("xs: count = 5, capacity = 5; {a,b,c}", s ≍ (singleton (a) & b & c))
+			assert ("xs: count = 5, capacity = 5; count = 3", s.elements.count = 3)
+			assert ("xs: count = 5, capacity = 5; capacity = 3", s.elements.capacity = 3)
+
+			xs := xs.aliased_resized_area (8)
+			check
+				count_small_enough_6: xs.count < xs.capacity -- xs.count = 5 < 8 = xs.capacity
+			end
+			xs.extend (same_object_a (b))
+			check
+				count_small_enough_7: xs.count < xs.capacity -- xs.count = 6 < 8 = xs.capacity
+			end
+			xs.extend (same_object_a (a))
+			check
+				count_small_enough_8: xs.count < xs.capacity -- xs.count = 7 < 8 = xs.capacity
+			end
+			xs.extend (same_object_a (c))
+			assert ("xs: count = 8, capacity = 8", created (xs, s_cell))
+			s := s_cell.item
+			assert ("xs: count = 8, capacity = 8; {a,b,c}", s ≍ (singleton (a) & b & c))
+			assert ("xs: count = 8, capacity = 8; count = 3", s.elements.count = 3)
+			assert ("xs: count = 8, capacity = 8; capacity = 3", s.elements.capacity = 3)
+
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ xs.extend (some_object_a) ⟲ -- TODO: What about `extend' precondition?
+			assert ("make_from_special", attached (create {EXPOSED_MUTABLE_SET [A, EQ]}.make_from_special (xs)))
+		end
+
 feature -- Test routines (Primitive)
 
 	test_is_empty

@@ -47,13 +47,64 @@ feature {NONE} -- Initialization
 
 	make_from_special (xs: SPECIAL [A])
 			-- Create a set with every element in `xs'.
-		require
-			no_waste: xs.count = xs.capacity
-			no_repetition: ∀ x: xs ¦ occurrences (x, xs) = 1
+		local
+			i, j: INTEGER
 		do
-			elements := xs
+			from
+				elements := xs.twin
+				i := 0
+			invariant
+				valid_outer_k: ∀ k: 0 |..| (i - 1) ¦ elements.valid_index (k) -- 0 ≤ k < i < elements.count
+				no_repetition: ∀ k: 0 |..| (i - 1) ¦ occurrences (elements [k], elements) = 1
+			until
+				i = elements.count
+			loop
+				from
+					j := i + 1
+				invariant
+					valid_i: elements.valid_index (i) -- 0 ≤ i < elements.count
+					valid_inner_k: ∀ k: (i + 1) |..| (j - 1) ¦ elements.valid_index (k) -- 0 ≤ i < k < j < elements.count
+					repetitions_pruned: ∀ k: (i + 1) |..| (j - 1) ¦ not eq (elements [i], elements [k])
+				until
+					j = elements.count
+				loop
+					check
+						valid_index: elements.valid_index (j) -- 0 ≤ i < j < elements.count
+					end
+					if eq (elements [i], elements [j]) then
+						check
+							source_index_non_negative: j + 1 >= 0 -- 0 ≤ i < j
+							destination_index_non_negative: j >= 0 -- 0 ≤ i < j
+							destination_index_in_bound: j <= elements.count -- 0 ≤ i < j < elements.count
+							n_non_negative: elements.count - (j + 1) >= 0 -- 0 ≤ i < j < elements.count
+							n_is_small_enough_for_source: j + 1 + elements.count - (j + 1) <= elements.count -- Algebra
+							n_is_small_enough_for_destination: j + elements.count - (j + 1) <= elements.capacity -- 0 ≤ i < j < elements.count ≤ elements.capacity
+						end
+						elements.move_data (j + 1, j, elements.count - (j + 1))
+						check
+							less_than_count: 1 <= elements.count -- elements.count > 0 ⇐ 0 ≤ i < j < elements.count
+						end
+						elements.remove_tail (1)
+					else
+						j := j + 1
+					end
+				variant
+					elements.count - j
+				end
+				i := i + 1
+			variant
+				elements.count - i
+			end
+				check
+					n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
+				end
+			elements := elements.aliased_resized_area (elements.count)
 		ensure
-			implementation: elements = xs
+			source_unchanged: xs ~ old xs.twin
+			nothing_lost: ∀ x: xs ¦ ∃ y: elements ¦ eq (x, y)
+			nothing_else: ∀ x: elements ¦ ∃ y: xs ¦ eq (x, y)
+			no_repetition: ∀ x: elements ¦ occurrences (x, elements) = 1
+			no_waste: elements.count = elements.capacity
 		end
 
 feature -- Primitive
@@ -153,10 +204,10 @@ feature -- Construction
 			until
 				i = elements.count or else eq (elements [i], a)
 			loop
-					check
-						valid_index: elements.valid_index (i) -- 0 ≤ i < elements.count
-						count_small_enough: xs.count < xs.capacity -- xs.count = i < elements.count = xs.capacity
-					end
+				check
+					valid_index: elements.valid_index (i) -- 0 ≤ i < elements.count
+					count_small_enough: xs.count < xs.capacity -- xs.count = i < elements.count = xs.capacity
+				end
 				xs.extend (elements [i])
 				i := i + 1
 			variant
@@ -312,7 +363,7 @@ feature -- Operation
 			check
 				no_waste: xs.count = xs.capacity -- {SPECIAL}.aliased_resized_area definition
 				no_repetition: ∀ x: xs ¦ occurrences (x, xs) = 1 -- xs.same_items (elements, 0, 0, elements.count);
-																  -- above: if not ∃ x: xs ¦ eq (x, l_s.any) then... prevents repetitions within xs.
+				-- above: if not ∃ x: xs ¦ eq (x, l_s.any) then... prevents repetitions within xs.
 			end
 			create Result.make_from_special (xs)
 		end
@@ -411,15 +462,15 @@ feature {NONE} -- Implementation
 			⟲
 		ensure
 			definition: Result = special_reduction (
-				xs, agent (ia_x, y: A; acc: like natural_anchor): like natural_anchor
-					do
-						Result := acc
-						if eq (ia_x, y) then
-							Result := Result + 1
-						end
-					end (x, ?, ?),
-				0
-				)
+							xs, agent (ia_x, y: A; acc: like natural_anchor): like natural_anchor
+								do
+									Result := acc
+									if eq (ia_x, y) then
+										Result := Result + 1
+									end
+								end (x, ?, ?),
+							0
+						)
 		end
 
 	special_reduction (xs: SPECIAL [A]; f: FUNCTION [A, like natural_anchor, like natural_anchor]; rightmost: like natural_anchor): like natural_anchor
@@ -435,7 +486,6 @@ feature {NONE} -- Implementation
 			base: xs.count = 0 ⇒ Result = rightmost
 			induction: xs.count > 0 ⇒ Result = special_reduction (xs.aliased_resized_area (xs.count - 1), f, f (xs [xs.count - 1], rightmost))
 		end
-
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

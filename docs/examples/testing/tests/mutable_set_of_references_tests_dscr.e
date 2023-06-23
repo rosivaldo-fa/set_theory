@@ -6,7 +6,7 @@ note
 	testing: "type/manual"
 
 class
-	SET_OF_REFERENCES_TESTS_DSCR
+	MUTABLE_SET_OF_REFERENCES_TESTS_DSCR
 
 inherit
 	MUTABLE_SET_TESTS [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
@@ -17,6 +17,7 @@ inherit
 		redefine
 			properties,
 			test_all,
+			test_make_from_special,
 			test_is_empty,
 			test_any,
 			test_others,
@@ -82,6 +83,7 @@ feature -- Test routines (All)
 			TODO: "Distinguish indivitual tests."
 		do
 			Precursor {MUTABLE_SET_TESTS}
+			test_make_from_special
 			test_is_empty
 			test_any
 			test_others
@@ -130,6 +132,16 @@ feature -- Test routines (All)
 			test_mapped
 			test_reduced
 			test_proper_reduced
+		end
+
+feature -- Test routines (Initialization)
+
+	test_make_from_special
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.make_from_special"
+		do
+			Precursor {MUTABLE_SET_TESTS}
 		end
 
 feature -- Test routines (Primitive)
