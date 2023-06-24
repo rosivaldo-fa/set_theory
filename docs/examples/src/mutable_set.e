@@ -306,14 +306,6 @@ feature -- Operation
 			variant
 				cardinality: {STI_SET [A, EQ]}.natural_as_integer (# l_s)
 			end
-			check
-				n_non_negative: xs.count >= 0 -- {SPECIAL}.count definition
-			end
-			xs := xs.aliased_resized_area (xs.count)
-			check
-				no_waste: xs.count = xs.capacity -- {SPECIAL}.aliased_resized_area definition
-				no_repetition: ∀ x: xs ¦ occurrences (x, xs) = 1 -- xs is built by iterating on elements of `s'.
-			end
 			create Result.make_from_special (xs)
 		end
 
