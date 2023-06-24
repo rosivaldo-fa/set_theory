@@ -95,9 +95,9 @@ feature {NONE} -- Initialization
 			variant
 				elements.count - i
 			end
-				check
-					n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
-				end
+			check
+				n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
+			end
 			elements := elements.aliased_resized_area (elements.count)
 		ensure
 			source_unchanged: xs ~ old xs.twin
@@ -139,10 +139,9 @@ feature -- Primitive
 			else
 				xs := elements.twin
 				check
-					non_negative_argument: xs.count - 1 >= 0 -- xs.count = elements.count > 0
-					less_than_count: xs.count - 1 <= xs.count -- Algebra
+					no_more_than_count: 1 <= xs.count -- 0 < xs.count
 				end
-				xs.keep_tail (xs.count - 1)
+				xs.remove_head (1)
 				create Result.make_from_special (xs)
 			end
 		end
@@ -182,19 +181,13 @@ feature -- Construction
 			xs: SPECIAL [A]
 		do
 			from
-				create xs.make_empty (elements.count)
-				i := 0
 			invariant
-				xs.count = i
-				building_up: ∀ j: 0 |..| (i - 1) ¦ (xs.valid_index (j) and elements.valid_index (j)) and then eq (xs [j], elements [j])
+				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (i)
+				not_found_yet: ∀ j: 0 |..| (i - 1) ¦ not eq (elements [j], a)
+				valid_index: i /= elements.count ⇒ elements.valid_index (i) -- 0 <= i < elements.count
 			until
 				i = elements.count or else eq (elements [i], a)
 			loop
-				check
-					valid_index: elements.valid_index (i) -- 0 ≤ i < elements.count
-					count_small_enough: xs.count < xs.capacity -- xs.count = i < elements.count = xs.capacity
-				end
-				xs.extend (elements [i])
 				i := i + 1
 			variant
 				elements.count - i
@@ -202,24 +195,20 @@ feature -- Construction
 			if i = elements.count then
 				Result := Current
 			else
+				xs := elements.twin
 				check
-					source_index_non_negative: i + 1 >= 0 -- 0 ≤ i < elements.count
-					destination_index_non_negative: i >= 0 -- 0 ≤ i < elements.count
-					destination_index_in_bound: i <= xs.count -- xs.count = i
-					n_non_negative: elements.count - (i + 1) >= 0 -- 0 ≤ i < elements.count
-					n_is_small_enough_for_source: i + 1 + elements.count - (i + 1) <= elements.count -- Algebra
-					n_is_small_enough_for_destination: i + elements.count - (i + 1) <= xs.capacity -- xs.capacity = elements.count - 1
-					same_type: elements.conforms_to (xs) -- By definition?
+					source_index_non_negative: i + 1 >= 0 -- 0 <= i < elements.count
+					destination_index_non_negative: i >= 0 -- 0 <= i < elements.count
+					destination_index_in_bound: i <= xs.count -- 0 <= i < elements.count = xs.xount
+					n_non_negative: xs.count - (i + 1) >= 0 -- 0 <= i < elements.count = xs.xount
+					n_is_small_enough_for_source: i + 1 + xs.count - (i + 1) <= xs.count -- Algebra
+					n_is_small_enough_for_destination: i + xs.count - (i + 1) <= xs.capacity -- xs.count <= xs.capacity
 				end
-				xs.copy_data (elements, i + 1, i, elements.count - (i + 1))
+				xs.move_data (i + 1, i, xs.count - (i + 1))
 				check
-					n_non_negative: xs.count >= 0 -- {SPECIAL}.count definition
+					no_more_than_count: 1 <= xs.count -- 0 <= i < elements.count = xs.xount
 				end
-				xs := xs.aliased_resized_area (xs.count)
-				check
-					no_waste: xs.count = xs.capacity -- {SPECIAL}.aliased_resized_area definition
-					no_repetition: ∀ x: xs ¦ occurrences (x, xs) = 1 -- xs.count = elements.count - 1 and ∀ x: elements ¦ eq (x, a) xor ∃ y: xs ¦ eq (x, y)
-				end
+				xs.remove_tail (1)
 				create Result.make_from_special (xs)
 			end
 		end
