@@ -164,17 +164,13 @@ feature -- Construction
 				Result := Current
 			else
 				check
-					n_non_negative: elements.count + 1 >= 0 -- elements.count ≥ 0 ⇐ {SPECIAL}.count definition
+					n_non_negative: elements.count + 1 >= 0 -- elements.count >= 0
 				end
 				xs := elements.resized_area (elements.count + 1)
 				check
-					count_small_enough: xs.count < xs.capacity -- xs.capacity = xs.count + 1 = elements.count + 1
+					count_small_enough: xs.count < xs.capacity -- xs.count = elements.count < elements.count + 1 = xs.capacity
 				end
 				xs.extend (a)
-				check
-					no_waste: xs.count = xs.capacity -- xs := elements.resized_area (elements.count + 1); xs.extend (a)
-					no_repetition: ∀ x: xs ¦ occurrences (x, xs) = 1 -- ∀ x: elements ¦ occurrences (x, elements) = 1 and not eq (x, a)
-				end
 				create Result.make_from_special (xs)
 			end
 		end
@@ -476,6 +472,10 @@ feature {NONE} -- Implementation
 			base: xs.count = 0 ⇒ Result = rightmost
 			induction: xs.count > 0 ⇒ Result = special_reduction (xs.aliased_resized_area (xs.count - 1), f, f (xs [xs.count - 1], rightmost))
 		end
+
+invariant
+	no_repetition: ∀ x: elements ¦ occurrences (x, elements) = 1
+	no_waste: elements.count = elements.capacity
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
