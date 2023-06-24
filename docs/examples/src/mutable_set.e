@@ -134,25 +134,15 @@ feature -- Primitive
 		local
 			xs: SPECIAL [A]
 		do
-			if is_empty then
+			if elements.count = 0 then
 				Result := Current
 			else
+				xs := elements.twin
 				check
-					non_negative_argument: elements.count - 1 >= 0 -- not is_empty
+					non_negative_argument: xs.count - 1 >= 0 -- xs.count = elements.count > 0
+					less_than_count: xs.count - 1 <= xs.count -- Algebra
 				end
-				create xs.make_empty (elements.count - 1)
-				check
-					destination_index_in_bound: 0 <= xs.count -- {SPECIAL}.count definition
-					n_non_negative: elements.count - 1 >= 0 -- elements.count ≥ 1 ⇐ not is_empty
-					n_is_small_enough_for_source: 1 + elements.count - 1 <= elements.count -- By definition
-					n_is_small_enough_for_destination: 0 + elements.count - 1 <= xs.capacity -- xs.capacity = elements.count - 1
-					same_type: elements.conforms_to (xs) -- By definition?
-				end
-				xs.copy_data (elements, 1, 0, elements.count - 1)
-				check
-					no_waste: xs.count = xs.capacity -- create xs.make_empty (elements.count - 1); xs.copy_data (elements, 1, 0, elements.count - 1)
-					no_repetition: ∀ x: xs ¦ occurrences (x, xs) = 1 -- xs.same_items (elements, 1, 0 elements.count - 1)
-				end
+				xs.keep_tail (xs.count - 1)
 				create Result.make_from_special (xs)
 			end
 		end
