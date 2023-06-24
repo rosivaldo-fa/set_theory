@@ -182,7 +182,7 @@ feature -- Construction
 		do
 			from
 			invariant
-				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (i)
+				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (j)
 				not_found_yet: ∀ j: 0 |..| (i - 1) ¦ not eq (elements [j], a)
 				valid_index: i /= elements.count ⇒ elements.valid_index (i) -- 0 <= i < elements.count
 			until
