@@ -345,23 +345,14 @@ feature -- Transformation
 			-- <Precursor>
 		local
 			xs: SPECIAL [A]
-			y: A
 		do
 			create xs.make_empty (elements.count)
 			⟳ x: elements ¦
-				y := f (x)
-				if not (∃ z: xs ¦ eq (y, z)) then
-					check
-						count_small_enough: xs.count < xs.capacity -- xs.count < elements.count = xs.capacity
-					end
-					xs.extend (y)
+				check
+					count_small_enough: xs.count < xs.capacity -- xs.count < elements.count = xs.capacity
 				end
+				xs.extend (f (x))
 			⟲
-			xs := xs.aliased_resized_area (xs.count)
-			check
-				no_waste: xs.count = xs.capacity -- {SPECIAL}.aliased_resized_area definition
-				no_repetition: ∀ x: xs ¦ occurrences (x, xs) = 1 -- Above: if not (∃ z: xs ¦ eq (y, z)) then... prevents repetitions within xs.
-			end
 			create Result.make_from_special (xs)
 		end
 feature -- Factory

@@ -543,7 +543,6 @@ feature -- Test routines (Transformation)
 	test_mapped
 			-- <Precursor>
 		note
-			testing: "covers/{STS_SET}.mapped"
 			testing: "covers/{MUTABLE_SET}.mapped"
 		do
 			Precursor {MUTABLE_SET_TESTS}

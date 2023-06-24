@@ -1996,10 +1996,8 @@ feature -- Test routines (Operation)
 feature -- Test routines (Transformation)
 
 	test_mapped
-			-- Test {STS_SET}.mapped.
 			-- Test {MUTABLE_SET}.mapped.
 		note
-			testing: "covers/{STS_SET}.mapped"
 			testing: "covers/{MUTABLE_SET}.mapped"
 		local
 			a, b, c: A
