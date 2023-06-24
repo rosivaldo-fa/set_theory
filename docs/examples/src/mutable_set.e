@@ -328,24 +328,13 @@ feature -- Operation
 			until
 				l_s.is_empty
 			loop
-				if not ∃ x: xs ¦ eq (x, l_s.any) then
-					check
-						count_small_enough: xs.count < xs.capacity -- xs.count < elements.count + # s = xs.capacity
-					end
-					xs.extend (l_s.any)
+				check
+					count_small_enough: xs.count < xs.capacity -- xs.count < elements.count + # s = xs.capacity
 				end
+				xs.extend (l_s.any)
 				l_s := l_s.others
 			variant
 				cardinality: {STI_SET [A, EQ]}.natural_as_integer (# l_s)
-			end
-			check
-				n_non_negative: xs.count >= 0 -- {SPECIAL}.count definition
-			end
-			xs := xs.aliased_resized_area (xs.count)
-			check
-				no_waste: xs.count = xs.capacity -- {SPECIAL}.aliased_resized_area definition
-				no_repetition: ∀ x: xs ¦ occurrences (x, xs) = 1 -- xs.same_items (elements, 0, 0, elements.count);
-				-- above: if not ∃ x: xs ¦ eq (x, l_s.any) then... prevents repetitions within xs.
 			end
 			create Result.make_from_special (xs)
 		end
