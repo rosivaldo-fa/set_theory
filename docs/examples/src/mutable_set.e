@@ -182,7 +182,7 @@ feature -- Construction
 		do
 			from
 			invariant
-				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (j)
+				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (j) -- 0 <= j < i < elements.count
 				not_found_yet: ∀ j: 0 |..| (i - 1) ¦ not eq (elements [j], a)
 				valid_index: i /= elements.count ⇒ elements.valid_index (i) -- 0 <= i < elements.count
 			until
@@ -245,23 +245,38 @@ feature -- Operation
 			-- <Precursor>
 		local
 			xs: SPECIAL [A]
+			i: INTEGER
 		do
-			create xs.make_empty (elements.count)
-			⟳ x: elements ¦
-				if p (x) then
+			from
+				xs := elements.twin
+			invariant
+				decrescent: xs.count ≤ elements.count
+				valid_elements_indices: ∀ j: 0 |..| (i - 1 + (elements.count - xs.count)) ¦ elements.valid_index (j) -- 0 <= j < i + (elements.count - xs.count) < elements.count
+				valid_xs_indices: ∀ k: 0 |..| (i - 1) ¦ xs.valid_index (k) -- 0 <= k < i < xs.count
+				every_compliant_element: ∀ j: 0 |..| (i - 1 + (elements.count - xs.count)) ¦ p (elements [j]) = ∃ k: 0 |..| (i - 1) ¦ eq (elements [j], xs [k])
+				nothing_else: ∀ k: 0 |..| (i - 1) ¦ ∃ j: 0 |..| (i - 1 + (elements.count - xs.count)) ¦ eq (xs [k], elements [j])
+			until
+				i = xs.count
+			loop
+				if p (xs [i]) then
+					i := i + 1
+				else
 					check
-						count_small_enough: xs.count < xs.capacity -- xs.count <= elements.count = xs.capacity
+						source_index_non_negative: i + 1 >= 0 -- 0 <= i < xs.count
+						destination_index_non_negative: i >= 0 -- 0 <= i < xs.count
+						destination_index_in_bound: i <= xs.count -- 0 <= i < xs.count
+						n_non_negative: xs.count - (i + 1) >= 0 -- 0 <= i < xs.count
+						n_is_small_enough_for_source: i + 1 + xs.count - (i + 1) <= xs.count -- Algebra
+						n_is_small_enough_for_destination: i + xs.count - (i + 1) <= xs.capacity -- xs.count <= xs.capacity
 					end
-					xs.extend (x)
+					xs.move_data (i + 1, i, xs.count - (i + 1))
+					check
+						no_more_than_count: 1 <= xs.count -- 0 <= i < xs.xount
+					end
+					xs.remove_tail (1)
 				end
-			⟲
-			check
-				n_non_negative: xs.count >= 0 -- {SPECIAL}.count definition
-			end
-			xs := xs.aliased_resized_area (xs.count)
-			check
-				no_waste: xs.count = xs.capacity -- {SPECIAL}.aliased_resized_area definition
-				no_repetition: ∀ x: xs ¦ occurrences (x, xs) = 1 -- xs is built by iterating on elements of `Current'.
+			variant
+				xs.count - i
 			end
 			create Result.make_from_special (xs)
 		end
