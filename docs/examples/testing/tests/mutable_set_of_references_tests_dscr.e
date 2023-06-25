@@ -31,6 +31,7 @@ inherit
 			test_is_singleton,
 			test_cardinality,
 			test_put,
+			test_extend,
 			test_equals,
 			test_unequals,
 			test_is_subset,
@@ -98,6 +99,7 @@ feature -- Test routines (All)
 			test_is_singleton
 			test_cardinality
 			test_put
+			test_extend
 			test_equals
 			test_unequals
 			test_is_subset
@@ -262,6 +264,14 @@ feature -- Test routines (Element change)
 			-- <Precursor>
 		note
 			testing: "covers/{MUTABLE_SET}.put"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+	test_extend
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.extend"
 		do
 			Precursor {MUTABLE_SET_TESTS}
 		end
