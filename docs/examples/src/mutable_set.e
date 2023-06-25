@@ -270,7 +270,7 @@ feature -- Removal
 			loop
 				i := i + 1
 			variant
-				elements.count - 1
+				elements.count - i
 			end
 			if i /= elements.count then
 				check

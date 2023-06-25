@@ -32,6 +32,7 @@ inherit
 			test_cardinality,
 			test_put,
 			test_extend,
+			test_prune,
 			test_equals,
 			test_unequals,
 			test_is_subset,
@@ -100,6 +101,7 @@ feature -- Test routines (All)
 			test_cardinality
 			test_put
 			test_extend
+			test_prune
 			test_equals
 			test_unequals
 			test_is_subset
@@ -272,6 +274,16 @@ feature -- Test routines (Element change)
 			-- <Precursor>
 		note
 			testing: "covers/{MUTABLE_SET}.extend"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+feature -- Test routines (Removal)
+
+	test_prune
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.prune"
 		do
 			Precursor {MUTABLE_SET_TESTS}
 		end

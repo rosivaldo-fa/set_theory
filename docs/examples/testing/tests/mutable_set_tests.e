@@ -471,7 +471,7 @@ feature -- Test routines (Construction)
 			assert ("{a,b,c} / c ok", properties.without_ok (s, c))
 
 			s := set_to_be_tested
-			assert ("withou", attached (s / a))
+			assert ("without", attached (s / a))
 			assert ("without_ok", properties.without_ok (s, a))
 		end
 
@@ -701,6 +701,103 @@ feature -- Test routines (Element change)
 						do
 							Result := set_to_be_tested
 							Result.extend (some_object_a)
+						end
+					).item
+				)
+		end
+
+feature -- Test routines (Removal)
+
+	test_prune
+			-- Test {MUTABLE_SET}.prune.
+		note
+			testing: "covers/{MUTABLE_SET}.prune"
+		local
+			s: like set_to_be_tested
+			a, b, c: A
+		do
+			s := o
+			a := some_object_a
+			assert (
+				"∅ / a",
+				(
+					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+						do
+							ia_s.prune (ia_a)
+							Result := ia_s
+						end
+					).item (s, a) ≍ o
+				)
+
+			s.put (same_object_a (a))
+			assert (
+				"{a} / a",
+				(
+					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+						do
+							ia_s.prune (ia_a)
+							Result := ia_s
+						end
+					).item (s, a) ≍ o
+				)
+
+			s.put (same_object_a (a))
+			b := some_other_object_a (s)
+			assert (
+				"{a} / b",
+				(
+					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+						do
+							ia_s.prune (ia_b)
+							Result := ia_s
+						end
+					).item (s, b) ≍ singleton (a)
+				)
+
+			s.put (same_object_a (b))
+			assert (
+				"{a,b} / b",
+				(
+					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+						do
+							ia_s.prune (ia_b)
+							Result := ia_s
+						end
+					).item (s, b) ≍ singleton (a)
+				)
+
+			s.put (same_object_a (b))
+			c := some_other_object_a (s)
+			assert (
+				"{a,b} / c",
+				(
+					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+						do
+							ia_s.prune (ia_c)
+							Result := ia_s
+						end
+					).item (s, c) ≍ (singleton (a) & b)
+				)
+
+			s.put (same_object_a (c))
+			assert (
+				"{a,b,c} / c",
+				(
+					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+						do
+							ia_s.prune (ia_c)
+							Result := ia_s
+						end
+					).item (s, c) ≍ (singleton (a) & b)
+				)
+
+			assert (
+				"prune",
+				attached (
+					agent: like set_to_be_tested
+						do
+							Result := set_to_be_tested
+							Result.prune (some_object_a)
 						end
 					).item
 				)
