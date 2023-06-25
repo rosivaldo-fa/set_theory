@@ -33,6 +33,7 @@ inherit
 			test_put,
 			test_extend,
 			test_prune,
+			test_wipe_out,
 			test_equals,
 			test_unequals,
 			test_is_subset,
@@ -102,6 +103,7 @@ feature -- Test routines (All)
 			test_put
 			test_extend
 			test_prune
+			test_wipe_out
 			test_equals
 			test_unequals
 			test_is_subset
@@ -284,6 +286,14 @@ feature -- Test routines (Removal)
 			-- <Precursor>
 		note
 			testing: "covers/{MUTABLE_SET}.prune"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+	test_wipe_out
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.wipe_out"
 		do
 			Precursor {MUTABLE_SET_TESTS}
 		end

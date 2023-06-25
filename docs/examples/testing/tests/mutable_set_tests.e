@@ -803,6 +803,59 @@ feature -- Test routines (Removal)
 				)
 		end
 
+	test_wipe_out
+			-- Test {MUTABLE_SET}.wipe_out.
+		note
+			testing: "covers/{MUTABLE_SET}.wipe_out"
+		local
+			s: like set_to_be_tested
+		do
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				s := o
+			when 1 then
+				s := set_to_be_tested.o
+			when 2 then
+				s := set_to_be_tested
+				s := s.o ∖ same_set_a (s)
+			end
+			assert (
+				"∅.wipe_out",
+				(
+					agent (ia_s: like set_to_be_tested): BOOLEAN
+						do
+							ia_s.wipe_out
+							Result := ia_s.is_empty
+						end
+					).item (s)
+				)
+
+			s := set_to_be_tested & some_object_a
+			assert (
+				"{a,...}.wipe_out",
+				(
+					agent (ia_s: like set_to_be_tested): BOOLEAN
+						do
+							ia_s.wipe_out
+							Result := ia_s.is_empty
+						end
+					).item (s)
+				)
+
+			s := set_to_be_tested
+			assert (
+				"wipe_out",
+				(
+					agent (ia_s: like set_to_be_tested): BOOLEAN
+						do
+							ia_s.wipe_out
+							Result := ia_s.is_empty
+						end
+					).item (s)
+				)
+		end
+
 feature -- Test routines (Comparison)
 
 	test_equals
