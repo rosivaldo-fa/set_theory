@@ -538,6 +538,91 @@ feature -- Test routines (Measurement)
 			assert ("cardinality_ok", properties.cardinality_ok (s))
 		end
 
+feature -- Test routines (Element change)
+
+	test_put
+			-- Test {MUTABLE_SET}.put.
+		note
+			testing: "covers/{MUTABLE_SET}.put"
+		local
+			s: like set_to_be_tested
+			a, b, c: A
+		do
+			s := o
+			a := some_object_a
+			assert (
+				"∅ & a", (
+					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+						do
+							ia_s.put (ia_a)
+							Result := ia_s
+						end
+					).item (s, a) ≍ singleton (a)
+				)
+
+			assert (
+				"{a} & a", (
+					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+						do
+							ia_s.put (ia_a)
+							Result := ia_s
+						end
+					).item (s, a) ≍ singleton (a)
+				)
+
+			b := some_object_a
+			assert (
+				"{a} & b", (
+					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+						do
+							ia_s.put (ia_b)
+							Result := ia_s
+						end
+					).item (s, b) ≍ (singleton (a) & b)
+				)
+
+			assert ("{a,b} & b", (
+					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+						do
+							ia_s.put (ia_b)
+							Result := ia_s
+						end
+					).item (s, b) ≍ (singleton (a) & b)
+				)
+
+			c := some_object_a
+			assert (
+				"{a,b} & c", (
+					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+						do
+							ia_s.put (ia_c)
+							Result := ia_s
+						end
+					).item (s, c) ≍ (singleton (a) & b & c)
+				)
+
+			assert (
+				"{a,b,c} & c", (
+					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+						do
+							ia_s.put (ia_c)
+							Result := ia_s
+						end
+					).item (s, c) ≍ (singleton (a) & b & c)
+				)
+
+			assert (
+				"put",
+				attached (
+					agent: like set_to_be_tested
+						do
+							Result := set_to_be_tested
+							Result.put (some_object_a)
+						end
+					).item
+				)
+		end
+
 feature -- Test routines (Comparison)
 
 	test_equals

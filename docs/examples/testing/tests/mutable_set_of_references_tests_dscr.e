@@ -30,6 +30,7 @@ inherit
 			test_without,
 			test_is_singleton,
 			test_cardinality,
+			test_put,
 			test_equals,
 			test_unequals,
 			test_is_subset,
@@ -96,6 +97,7 @@ feature -- Test routines (All)
 			test_without
 			test_is_singleton
 			test_cardinality
+			test_put
 			test_equals
 			test_unequals
 			test_is_subset
@@ -250,6 +252,16 @@ feature -- Test routines (Measurement)
 			-- <Precursor>
 		note
 			testing: "covers/{MUTABLE_SET}.cardinality"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+feature -- Test routines (Element change)
+
+	test_put
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.put"
 		do
 			Precursor {MUTABLE_SET_TESTS}
 		end
@@ -572,10 +584,10 @@ feature -- Mapping
 			-- <Precursor>
 		do
 			if attached x then
-					check
-							-- class invariant: (Min_character.natural_32_code + Max_count - 1).is_valid_character_code
-						valid_character: ((x |-| Min_character + 2) \\ Max_count.as_integer_32 + Min_character.code).is_valid_character_8_code
-					end
+				check
+						-- class invariant: (Min_character.natural_32_code + Max_count - 1).is_valid_character_code
+					valid_character: ((x |-| Min_character + 2) \\ Max_count.as_integer_32 + Min_character.code).is_valid_character_8_code
+				end
 				Result := ((x |-| Min_character + 2) \\ Max_count.as_integer_32 + Min_character.code).to_character_8
 			end
 		end
@@ -586,10 +598,10 @@ feature -- Reduction
 			-- <Precursor>
 		do
 			if attached acc and attached x then
-					check
-							-- class invariant: (Min_character.natural_32_code + Max_count - 1).is_valid_character_code
-						valid_character: ((acc |-| x.item).abs \\ Max_count.as_integer_32 + Min_character.code).is_valid_character_8_code
-					end
+				check
+						-- class invariant: (Min_character.natural_32_code + Max_count - 1).is_valid_character_code
+					valid_character: ((acc |-| x.item).abs \\ Max_count.as_integer_32 + Min_character.code).is_valid_character_8_code
+				end
 				Result := ((acc |-| x.item).abs \\ Max_count.as_integer_32 + Min_character.code).to_character_8
 			end
 		end

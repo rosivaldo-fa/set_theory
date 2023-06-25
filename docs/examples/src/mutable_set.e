@@ -18,6 +18,11 @@ inherit
 			mapped
 		end
 
+	COLLECTION [A]
+		rename
+			has as has alias "∋"
+		end
+
 create
 	make_empty,
 	make_singleton
@@ -184,7 +189,7 @@ feature -- Construction
 			invariant
 				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (j) -- 0 <= j < i < elements.count
 				not_found_yet: ∀ j: 0 |..| (i - 1) ¦ not eq (elements [j], a)
-				valid_index: i /= elements.count ⇒ elements.valid_index (i) -- 0 <= i < elements.count
+				valid_index: i /= elements.count ⇒ elements.valid_index (i) -- 0 <= i <= elements.count
 			until
 				i = elements.count or else eq (elements [i], a)
 			loop
@@ -199,18 +204,101 @@ feature -- Construction
 				check
 					source_index_non_negative: i + 1 >= 0 -- 0 <= i < elements.count
 					destination_index_non_negative: i >= 0 -- 0 <= i < elements.count
-					destination_index_in_bound: i <= xs.count -- 0 <= i < elements.count = xs.xount
-					n_non_negative: xs.count - (i + 1) >= 0 -- 0 <= i < elements.count = xs.xount
+					destination_index_in_bound: i <= xs.count -- 0 <= i < elements.count = xs.count
+					n_non_negative: xs.count - (i + 1) >= 0 -- 0 <= i < elements.count = xs.count
 					n_is_small_enough_for_source: i + 1 + xs.count - (i + 1) <= xs.count -- Algebra
 					n_is_small_enough_for_destination: i + xs.count - (i + 1) <= xs.capacity -- xs.count <= xs.capacity
 				end
 				xs.move_data (i + 1, i, xs.count - (i + 1))
 				check
-					no_more_than_count: 1 <= xs.count -- 0 <= i < elements.count = xs.xount
+					no_more_than_count: 1 <= xs.count -- 0 <= i < elements.count = xs.count
 				end
 				xs.remove_tail (1)
 				create Result.make_from_special (xs)
 			end
+		end
+
+feature -- Access
+
+	new_cursor: ITERATION_CURSOR [A]
+			-- <Precursor>
+		do
+			Result := elements.new_cursor
+		end
+
+feature -- Status report
+
+	extendible: BOOLEAN = True
+			-- <Precursor>
+
+	prunable: BOOLEAN = True
+			-- <Precursor>
+
+feature -- Element change
+
+	put, extend (v: A)
+			-- <Precursor>
+		do
+			if not ∃ x: elements ¦ eq (x, v) then
+				check
+					n_non_negative: elements.count + 1 >= 0 -- elements.count >= 0
+				end
+				elements := elements.aliased_resized_area (elements.count + 1)
+				check
+					count_small_enough: elements.count < elements.capacity -- elements.count = elements.capacity - 1
+				end
+				elements.extend (v)
+			end
+		ensure then
+			element_inserted: Current ≍ old (Current & v)
+		end
+
+feature -- Removal
+
+	prune (v: A)
+			-- <Precursor>
+		local
+			i: INTEGER
+		do
+			from
+			invariant
+				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (j) -- 0 <= j < i < elements.count
+				not_found_yet: ∀ j: 0 |..| (i - 1) ¦ not eq (elements [j], v)
+				valid_index: i /= elements.count ⇒ elements.valid_index (i) -- 0 <= i <= elements.count
+			until
+				i = elements.count or else eq (elements [i], v)
+			loop
+				i := i + 1
+			variant
+				elements.count - 1
+			end
+			if i /= elements.count then
+				check
+					source_index_non_negative: i + 1 >= 0 -- 0 <= i < elements.count
+					destination_index_non_negative: i >= 0 -- 0 <= i < elements.count
+					destination_index_in_bound: i <= elements.count -- 0 <= i < elements.count
+					n_non_negative: elements.count - (i + 1) >= 0 -- 0 <= i < elements.count
+					n_is_small_enough_for_source: i + 1 + elements.count - (i + 1) <= elements.count -- Algebra
+					n_is_small_enough_for_destination: i + elements.count - (i + 1) <= elements.capacity -- elements.count <= elements.capacity
+				end
+				elements.move_data (i + 1, i, elements.count - (i + 1))
+				check
+					no_more_than_count: 1 <= elements.count -- 0 <= i < elements.count
+				end
+				elements.remove_tail (1)
+					check
+						n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
+					end
+				elements := elements.aliased_resized_area (elements.count)
+			end
+		ensure then
+			removed: Current ≍ old (Current / v)
+		end
+
+	wipe_out
+			-- <Precursor>
+		do
+			elements := elements.aliased_resized_area (0)
 		end
 
 feature -- Quantifier
@@ -339,6 +427,15 @@ feature -- Operation
 			create Result.make_from_special (xs)
 		end
 
+feature -- Basic operations
+
+	unite (s: STS_SET [A, EQ])
+			-- Add all items of `s'.
+		do
+		ensure
+			united: Current ≍ old (Current ∪ s)
+		end
+
 feature -- Transformation
 
 	mapped alias "↦" (f: FUNCTION [A, A]): like set_map_anchor
@@ -355,6 +452,14 @@ feature -- Transformation
 			⟲
 			create Result.make_from_special (xs)
 		end
+feature -- Conversion
+
+	linear_representation: LINEAR [A]
+			-- <Precursor>
+		do
+			create {ARRAYED_LIST [A]} Result.make_from_iterable (Current)
+		end
+
 feature -- Factory
 
 	o: like subset_anchor
