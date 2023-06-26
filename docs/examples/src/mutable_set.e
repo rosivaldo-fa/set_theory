@@ -286,9 +286,9 @@ feature -- Removal
 					no_more_than_count: 1 <= elements.count -- 0 <= i < elements.count
 				end
 				elements.remove_tail (1)
-					check
-						n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
-					end
+				check
+					n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
+				end
 				elements := elements.aliased_resized_area (elements.count)
 			end
 		ensure then
@@ -428,6 +428,47 @@ feature -- Operation
 		end
 
 feature -- Basic operations
+
+	do_filter (p: PREDICATE [A])
+			-- Keep in current set only its elements `p` holds
+		local
+			i: INTEGER
+		do
+			from
+			invariant
+				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (j) -- 0 <= k < i <= elements.count
+				just_compliant_elements: ∀ j: 0 |..| (i - 1) ¦ p (elements [j])
+				valid_index: i /= elements.count ⇒ elements.valid_index (i) -- 0 <= i <= elements.count
+			until
+				i = elements.count
+			loop
+				if p (elements [i]) then
+					i := i + 1
+				else
+					check
+						source_index_non_negative: i + 1 >= 0 -- 0 <= i < elements.count
+						destination_index_non_negative: i >= 0 -- 0 <= i < elements.count
+						destination_index_in_bound: i <= elements.count -- 0 <= i < elements.count
+						n_non_negative: elements.count - (i + 1) >= 0 -- 0 <= i < elements.count
+						n_is_small_enough_for_source: (i + 1) + elements.count - (i + 1) <= elements.count -- Algebra
+						n_is_small_enough_for_destination: i + elements.count - (i + 1) <= elements.capacity -- elements.count <= elements.capacity
+					end
+					elements.move_data (i + 1, i, elements.count - (i + 1))
+					check
+						no_more_than_count: 1 <= elements.count -- 0 < elements.count ⇐ 0 <= i < elements.count
+					end
+					elements.remove_tail (1)
+				end
+			variant
+				elements.count - i
+			end
+			check
+				n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
+			end
+			elements := elements.aliased_resized_area (elements.count)
+		ensure
+			filtered: Current ≍ old (Current | p)
+		end
 
 	do_complement (s: STS_SET [A, EQ])
 			-- Turn current set into its complement relative to `s'.

@@ -2313,6 +2313,60 @@ feature -- Test routines (Operation)
 
 feature -- Test routines (Basic operations)
 
+	test_do_filter
+			-- Test {MUTABLE_SET}.do_filter.
+		note
+			testing: "covers/{MUTABLE_SET}.do_filter"
+		do
+			assert (
+				"s",
+				(
+					agent: BOOLEAN
+						local
+							s0, s: like set_to_be_tested
+						do
+							s0 := set_to_be_tested
+							s := s0
+							s.do_filter (agent s.has)
+							Result := s ≍ s0
+						end
+					).item
+				)
+
+			assert (
+				"∅",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+						do
+							s := set_to_be_tested
+							s.do_filter (agent s.does_not_have)
+							Result := s ≍ o
+						end
+					).item
+				)
+
+			assert (
+				"do_filter",
+				(
+					agent: BOOLEAN
+						local
+							p: PREDICATE [A]
+							s: like set_to_be_tested
+						do
+							p := agent (x: A): BOOLEAN
+									do
+										Result := object_hash_code (x) \\ 2 = 0
+									end
+							s := set_to_be_tested
+							s.do_filter (p)
+							Result := attached s
+						end
+					).item
+				)
+		end
+
 	test_do_complement
 			-- Test {MUTABLE_SET}.do_complement.
 		note

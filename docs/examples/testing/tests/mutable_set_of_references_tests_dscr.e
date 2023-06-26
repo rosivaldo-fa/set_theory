@@ -67,6 +67,7 @@ inherit
 			test_united,
 			test_subtracted,
 			test_subtracted_symmetricaly,
+			test_do_filter,
 			test_do_complement,
 			test_mapped,
 			test_reduced,
@@ -138,6 +139,7 @@ feature -- Test routines (All)
 			test_united
 			test_subtracted
 			test_subtracted_symmetricaly
+			test_do_filter
 			test_do_complement
 			test_mapped
 			test_reduced
@@ -585,6 +587,14 @@ feature -- Test routines (Operation)
 		end
 
 feature -- Test routines (Basic operations)
+
+	test_do_filter
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.do_filter"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
 
 	test_do_complement
 			-- <Precursor>
