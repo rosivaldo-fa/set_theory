@@ -551,74 +551,74 @@ feature -- Test routines (Element change)
 			s := o
 			a := some_object_a
 			assert (
-				"∅ & a", (
-					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
-						do
-							ia_s.put (ia_a)
-							Result := ia_s
-						end
+					"∅ & a", (
+						agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+							do
+								ia_s.put (ia_a)
+								Result := ia_s
+							end
 					).item (s, a) ≍ singleton (a)
 				)
 
 			assert (
-				"{a} & a", (
-					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
-						do
-							ia_s.put (ia_a)
-							Result := ia_s
-						end
+					"{a} & a", (
+						agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+							do
+								ia_s.put (ia_a)
+								Result := ia_s
+							end
 					).item (s, a) ≍ singleton (a)
 				)
 
 			b := some_object_a
 			assert (
-				"{a} & b", (
-					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
-						do
-							ia_s.put (ia_b)
-							Result := ia_s
-						end
+					"{a} & b", (
+						agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+							do
+								ia_s.put (ia_b)
+								Result := ia_s
+							end
 					).item (s, b) ≍ (singleton (a) & b)
 				)
 
 			assert ("{a,b} & b", (
-					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
-						do
-							ia_s.put (ia_b)
-							Result := ia_s
-						end
+						agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+							do
+								ia_s.put (ia_b)
+								Result := ia_s
+							end
 					).item (s, b) ≍ (singleton (a) & b)
 				)
 
 			c := some_object_a
 			assert (
-				"{a,b} & c", (
-					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
-						do
-							ia_s.put (ia_c)
-							Result := ia_s
-						end
+					"{a,b} & c", (
+						agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+							do
+								ia_s.put (ia_c)
+								Result := ia_s
+							end
 					).item (s, c) ≍ (singleton (a) & b & c)
 				)
 
 			assert (
-				"{a,b,c} & c", (
-					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
-						do
-							ia_s.put (ia_c)
-							Result := ia_s
-						end
+					"{a,b,c} & c", (
+						agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+							do
+								ia_s.put (ia_c)
+								Result := ia_s
+							end
 					).item (s, c) ≍ (singleton (a) & b & c)
 				)
 
 			assert (
-				"put",
-				attached (
-					agent: like set_to_be_tested
-						do
-							Result := set_to_be_tested
-							Result.put (some_object_a)
-						end
+					"put",
+					attached (
+						agent: like set_to_be_tested
+							do
+								Result := set_to_be_tested
+								Result.put (some_object_a)
+							end
 					).item
 				)
 		end
@@ -634,74 +634,74 @@ feature -- Test routines (Element change)
 			s := o
 			a := some_object_a
 			assert (
-				"∅ & a", (
-					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
-						do
-							ia_s.extend (ia_a)
-							Result := ia_s
-						end
+					"∅ & a", (
+						agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+							do
+								ia_s.extend (ia_a)
+								Result := ia_s
+							end
 					).item (s, a) ≍ singleton (a)
 				)
 
 			assert (
-				"{a} & a", (
-					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
-						do
-							ia_s.extend (ia_a)
-							Result := ia_s
-						end
+					"{a} & a", (
+						agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+							do
+								ia_s.extend (ia_a)
+								Result := ia_s
+							end
 					).item (s, a) ≍ singleton (a)
 				)
 
 			b := some_object_a
 			assert (
-				"{a} & b", (
-					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
-						do
-							ia_s.extend (ia_b)
-							Result := ia_s
-						end
+					"{a} & b", (
+						agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+							do
+								ia_s.extend (ia_b)
+								Result := ia_s
+							end
 					).item (s, b) ≍ (singleton (a) & b)
 				)
 
 			assert ("{a,b} & b", (
-					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
-						do
-							ia_s.extend (ia_b)
-							Result := ia_s
-						end
+						agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+							do
+								ia_s.extend (ia_b)
+								Result := ia_s
+							end
 					).item (s, b) ≍ (singleton (a) & b)
 				)
 
 			c := some_object_a
 			assert (
-				"{a,b} & c", (
-					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
-						do
-							ia_s.extend (ia_c)
-							Result := ia_s
-						end
+					"{a,b} & c", (
+						agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+							do
+								ia_s.extend (ia_c)
+								Result := ia_s
+							end
 					).item (s, c) ≍ (singleton (a) & b & c)
 				)
 
 			assert (
-				"{a,b,c} & c", (
-					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
-						do
-							ia_s.extend (ia_c)
-							Result := ia_s
-						end
+					"{a,b,c} & c", (
+						agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+							do
+								ia_s.extend (ia_c)
+								Result := ia_s
+							end
 					).item (s, c) ≍ (singleton (a) & b & c)
 				)
 
 			assert (
-				"extend",
-				attached (
-					agent: like set_to_be_tested
-						do
-							Result := set_to_be_tested
-							Result.extend (some_object_a)
-						end
+					"extend",
+					attached (
+						agent: like set_to_be_tested
+							do
+								Result := set_to_be_tested
+								Result.extend (some_object_a)
+							end
 					).item
 				)
 		end
@@ -719,86 +719,86 @@ feature -- Test routines (Removal)
 			s := o
 			a := some_object_a
 			assert (
-				"∅ / a",
-				(
-					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
-						do
-							ia_s.prune (ia_a)
-							Result := ia_s
-						end
+					"∅ / a",
+					(
+						agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+							do
+								ia_s.prune (ia_a)
+								Result := ia_s
+							end
 					).item (s, a) ≍ o
 				)
 
 			s.put (same_object_a (a))
 			assert (
-				"{a} / a",
-				(
-					agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
-						do
-							ia_s.prune (ia_a)
-							Result := ia_s
-						end
+					"{a} / a",
+					(
+						agent (ia_s: like set_to_be_tested; ia_a: A): like set_to_be_tested
+							do
+								ia_s.prune (ia_a)
+								Result := ia_s
+							end
 					).item (s, a) ≍ o
 				)
 
 			s.put (same_object_a (a))
 			b := some_other_object_a (s)
 			assert (
-				"{a} / b",
-				(
-					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
-						do
-							ia_s.prune (ia_b)
-							Result := ia_s
-						end
+					"{a} / b",
+					(
+						agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+							do
+								ia_s.prune (ia_b)
+								Result := ia_s
+							end
 					).item (s, b) ≍ singleton (a)
 				)
 
 			s.put (same_object_a (b))
 			assert (
-				"{a,b} / b",
-				(
-					agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
-						do
-							ia_s.prune (ia_b)
-							Result := ia_s
-						end
+					"{a,b} / b",
+					(
+						agent (ia_s: like set_to_be_tested; ia_b: A): like set_to_be_tested
+							do
+								ia_s.prune (ia_b)
+								Result := ia_s
+							end
 					).item (s, b) ≍ singleton (a)
 				)
 
 			s.put (same_object_a (b))
 			c := some_other_object_a (s)
 			assert (
-				"{a,b} / c",
-				(
-					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
-						do
-							ia_s.prune (ia_c)
-							Result := ia_s
-						end
+					"{a,b} / c",
+					(
+						agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+							do
+								ia_s.prune (ia_c)
+								Result := ia_s
+							end
 					).item (s, c) ≍ (singleton (a) & b)
 				)
 
 			s.put (same_object_a (c))
 			assert (
-				"{a,b,c} / c",
-				(
-					agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
-						do
-							ia_s.prune (ia_c)
-							Result := ia_s
-						end
+					"{a,b,c} / c",
+					(
+						agent (ia_s: like set_to_be_tested; ia_c: A): like set_to_be_tested
+							do
+								ia_s.prune (ia_c)
+								Result := ia_s
+							end
 					).item (s, c) ≍ (singleton (a) & b)
 				)
 
 			assert (
-				"prune",
-				attached (
-					agent: like set_to_be_tested
-						do
-							Result := set_to_be_tested
-							Result.prune (some_object_a)
-						end
+					"prune",
+					attached (
+						agent: like set_to_be_tested
+							do
+								Result := set_to_be_tested
+								Result.prune (some_object_a)
+							end
 					).item
 				)
 		end
@@ -821,37 +821,37 @@ feature -- Test routines (Removal)
 				s := s.o ∖ same_set_a (s)
 			end
 			assert (
-				"∅.wipe_out",
-				(
-					agent (ia_s: like set_to_be_tested): BOOLEAN
-						do
-							ia_s.wipe_out
-							Result := ia_s.is_empty
-						end
+					"∅.wipe_out",
+					(
+						agent (ia_s: like set_to_be_tested): BOOLEAN
+							do
+								ia_s.wipe_out
+								Result := ia_s.is_empty
+							end
 					).item (s)
 				)
 
 			s := set_to_be_tested & some_object_a
 			assert (
-				"{a,...}.wipe_out",
-				(
-					agent (ia_s: like set_to_be_tested): BOOLEAN
-						do
-							ia_s.wipe_out
-							Result := ia_s.is_empty
-						end
+					"{a,...}.wipe_out",
+					(
+						agent (ia_s: like set_to_be_tested): BOOLEAN
+							do
+								ia_s.wipe_out
+								Result := ia_s.is_empty
+							end
 					).item (s)
 				)
 
 			s := set_to_be_tested
 			assert (
-				"wipe_out",
-				(
-					agent (ia_s: like set_to_be_tested): BOOLEAN
-						do
-							ia_s.wipe_out
-							Result := ia_s.is_empty
-						end
+					"wipe_out",
+					(
+						agent (ia_s: like set_to_be_tested): BOOLEAN
+							do
+								ia_s.wipe_out
+								Result := ia_s.is_empty
+							end
 					).item (s)
 				)
 		end
@@ -2309,6 +2309,117 @@ feature -- Test routines (Operation)
 			s2 := some_set_a
 			assert ("subtracted_symmetricaly", attached (s ⊖ s2))
 			assert ("subtracted_symmetricaly_ok", properties.subtracted_symmetricaly_ok (some_object_a, s, s2, some_set_a))
+		end
+
+feature -- Test routines (Basic operations)
+
+	test_do_complement
+			-- Test {MUTABLE_SET}.do_complement.
+		note
+			testing: "covers/{MUTABLE_SET}.do_complement"
+		do
+			assert (
+				"∅ ∁ {...} ≍ {...}",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							s := o
+							s2 := some_set_a
+							check
+								is_subset: s ⊆ s2 -- s ≍ ∅
+							end
+							s.do_complement (s2)
+							Result := s ≍ s2
+						end
+					).item
+				)
+
+			assert (
+				"{a} ∁ {a,...} ≍ ({a,...} / a)",
+				(
+					agent: BOOLEAN
+						local
+							a: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o & same_object_a (a)
+							s2 := some_set_a & same_object_a (a)
+							check
+								is_subset_2: s ⊆ s2 -- s ≍ {a} ⊆ {a,...} ≍ s2
+							end
+							s.do_complement (s2)
+							Result := s ≍ (s2 / a)
+						end
+					).item
+				)
+
+			assert (
+				"{a,b} ∁ {a,b,...} ≍ ({a,b,...} / a / b)",
+				(
+					agent: BOOLEAN
+						local
+							a, b: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							b := some_object_a
+							s := o & same_object_a (a) & same_object_a (b)
+							s2 := some_set_a & same_object_a (a) & same_object_a (b)
+							check
+								is_subset_3: s ⊆ s2 -- s ≍ {a,b} ⊆ {a,b,...} ≍ s2
+							end
+							s.do_complement (s2)
+							Result := s ≍ (s2 / a / b)
+						end
+					).item
+				)
+
+			assert (
+				"{a,b,c} ∁ {a,b,c,...} ≍ ({a,b,c,...} / a / b / c)",
+				(
+					agent: BOOLEAN
+						local
+							a, b, c: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							b := some_object_a
+							c := some_object_a
+							s := o & same_object_a (a) & same_object_a (b) & same_object_a (c)
+							s2 := some_set_a & same_object_a (a) & same_object_a (b) & same_object_a (c)
+							check
+								is_subset_4: s ⊆ s2 -- s ≍ {a,b,c} ⊆ {a,b,c,...} ≍ s2
+							end
+							s.do_complement (s2)
+							Result := s ≍ (s2 / a / b / c)
+						end
+					).item
+				)
+
+			assert (
+				"do_complement",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							s := set_to_be_tested
+							s2 := some_set_a
+							if s ⊆ s2 then
+								s.do_complement (s2)
+							end
+							Result := attached s
+						end
+					).item
+				)
 		end
 
 feature -- Test routines (Transformation)

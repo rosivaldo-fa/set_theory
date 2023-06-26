@@ -429,11 +429,43 @@ feature -- Operation
 
 feature -- Basic operations
 
-	unite (s: STS_SET [A, EQ])
-			-- Add all items of `s'.
+	do_complement (s: STS_SET [A, EQ])
+			-- Turn current set into its complement relative to `s'.
+		require
+			is_subset: Current ⊆ s
+		local
+			xs: SPECIAL [A]
+			l_s: STS_SET [A, EQ]
 		do
+			from
+				check
+					non_negative_argument: (# s).as_integer_32 >= 0 -- {STS_SET}.cardinality definition
+				end
+				create xs.make_empty ((# s).as_integer_32)
+				l_s := s
+			invariant
+				nothing_lost:
+					(s ∖ l_s) |∀ agent (ia_xs: SPECIAL [A]; y: A): BOOLEAN do Result := (∃ x: ia_xs ¦ eq (x, y)) = does_not_have (y) end (xs, ?)
+				nothing_else: ∀ x: xs ¦ (s ∖ l_s) ∋ x
+			until
+				l_s.is_empty
+			loop
+				if not ∃ x: elements ¦ eq (x, l_s.any) then
+					check
+						count_small_enough: xs.count < xs.capacity -- xs.count < # s = xs.capacity
+					end
+					xs.extend (l_s.any)
+				end
+				l_s := l_s.others
+			variant
+				cardinality: {STI_SET [A, EQ]}.natural_as_integer (# l_s)
+			end
+			check
+				n_non_negative: xs.count >= 0 -- {SPECIAL}.count definition
+			end
+			elements := xs.aliased_resized_area (xs.count)
 		ensure
-			united: Current ≍ old (Current ∪ s)
+			complemented: Current ≍ old (Current ∁ s)
 		end
 
 feature -- Transformation
