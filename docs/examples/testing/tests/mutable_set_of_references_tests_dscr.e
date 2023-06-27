@@ -69,6 +69,7 @@ inherit
 			test_subtracted_symmetricaly,
 			test_do_filter,
 			test_do_complement,
+			test_intersect,
 			test_mapped,
 			test_reduced,
 			test_proper_reduced,
@@ -141,6 +142,7 @@ feature -- Test routines (All)
 			test_subtracted_symmetricaly
 			test_do_filter
 			test_do_complement
+			test_intersect
 			test_mapped
 			test_reduced
 			test_proper_reduced
@@ -600,6 +602,14 @@ feature -- Test routines (Basic operations)
 			-- <Precursor>
 		note
 			testing: "covers/{MUTABLE_SET}.do_complement"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+	test_intersect
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.intersect"
 		do
 			Precursor {MUTABLE_SET_TESTS}
 		end

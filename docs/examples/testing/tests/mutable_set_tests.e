@@ -2476,6 +2476,105 @@ feature -- Test routines (Basic operations)
 				)
 		end
 
+	test_intersect
+			-- Test {MUTABLE_SET}.intersect.
+		note
+			testing: "covers/{MUTABLE_SET}.intersect"
+		do
+			assert (
+				"∅ ∩ {...} ≍ ∅",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							s := o
+							s2 := some_set_a
+							s.intersect (s2)
+							Result := s ≍ o
+						end
+					).item
+				)
+
+			assert (
+				"{a} ∩ {a,...} ≍ {a}",
+				(
+					agent: BOOLEAN
+						local
+							a: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s.extend (same_object_a (a))
+							s2 := some_set_a & same_object_a (a)
+							s.intersect (s2)
+							Result := s ≍ singleton (a)
+						end
+					).item
+				)
+
+			assert (
+				"{a,b} ∩ {a,b,...} ≍ {a,b}",
+				(
+					agent: BOOLEAN
+						local
+							a, b: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							b := some_object_a
+							s := o
+							s.extend (same_object_a (a))
+							s.extend (same_object_a (b))
+							s2 := some_set_a & same_object_a (a) & same_object_a (b)
+							s.intersect (s2)
+							Result := s ≍ (singleton (a) & b)
+						end
+					).item
+				)
+
+			assert (
+				"{a,b,c} ∩ {a,b,c,...} ≍ {a,b,c}",
+				(
+					agent: BOOLEAN
+						local
+							a, b, c: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							b := some_object_a
+							c := some_object_a
+							s := o
+							s.extend (same_object_a (a))
+							s.extend (same_object_a (b))
+							s.extend (same_object_a (c))
+							s2 := some_set_a & same_object_a (a) & same_object_a (b) & same_object_a (c)
+							s.intersect (s2)
+							Result := s ≍ (singleton (a) & b & c)
+						end
+					).item
+				)
+
+			assert (
+				"intersect",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+						do
+							s := set_to_be_tested
+							s.intersect (some_set_a)
+							Result := attached s
+						end
+					).item
+				)
+		end
+
 feature -- Test routines (Transformation)
 
 	test_mapped

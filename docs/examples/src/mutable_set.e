@@ -436,7 +436,7 @@ feature -- Basic operations
 		do
 			from
 			invariant
-				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (j) -- 0 <= k < i <= elements.count
+				valid_indices: ∀ j: 0 |..| (i - 1) ¦ elements.valid_index (j) -- 0 <= j < i <= elements.count
 				just_compliant_elements: ∀ j: 0 |..| (i - 1) ¦ p (elements [j])
 				valid_index: i /= elements.count ⇒ elements.valid_index (i) -- 0 <= i <= elements.count
 			until
@@ -507,6 +507,14 @@ feature -- Basic operations
 			elements := xs.aliased_resized_area (xs.count)
 		ensure
 			complemented: Current ≍ old (Current ∁ s)
+		end
+
+	intersect (s: STS_SET [A, EQ])
+			-- Remove all items not in `s'.
+		do
+			do_filter (agent s.has)
+		ensure
+			intersected: Current ≍ old (Current ∩ s)
 		end
 
 feature -- Transformation
