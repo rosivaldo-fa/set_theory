@@ -2575,6 +2575,246 @@ feature -- Test routines (Basic operations)
 				)
 		end
 
+	test_merge
+			-- Test {MUTABLE_SET}.merge.
+		note
+			testing: "covers/{MUTABLE_SET}.merge"
+		do
+			assert (
+				"s ∪ s2 ≍ ∅",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							s := o
+							s2 := same_set_a (o)
+							s.merge (s2)
+							Result := s ≍ o
+						end
+					).item
+				)
+
+			assert (
+				"s ∪ s2 ≍ {a}",
+				(
+					agent: BOOLEAN
+						local
+							a: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s2 := same_set_a (o)
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (a))
+							else
+								s2 := s2 & same_object_a (a)
+							end
+							s.merge (s2)
+							Result := s ≍ singleton (a)
+						end
+					).item
+				)
+
+			assert ("s ∪ s2 ≍ {a,b}",
+				(
+					agent: BOOLEAN
+						local
+							a, b: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s2 := same_set_a (o)
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (a))
+							else
+								s2 := s2 & same_object_a (a)
+							end
+							b := some_object_a
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (b))
+							else
+								s2 := s2 & same_object_a (b)
+							end
+							s.merge (s2)
+							Result := s ≍ (singleton (a) & b)
+						end
+					).item
+				)
+
+			assert ("s ∪ s2 ≍ {a,b,c}",
+				(
+					agent: BOOLEAN
+						local
+							a, b, c: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s2 := same_set_a (o)
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (a))
+							else
+								s2 := s2 & same_object_a (a)
+							end
+							b := some_object_a
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (b))
+							else
+								s2 := s2 & same_object_a (b)
+							end
+							c := some_object_a
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (c))
+							else
+								s2 := s2 & same_object_a (c)
+							end
+							s.merge (s2)
+							Result := s ≍ (singleton (a) & b & c)
+						end
+					).item
+				)
+
+			assert ("merge",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+						do
+							s := set_to_be_tested
+							s.merge (some_set_a)
+							Result := attached s
+						end
+					).item
+				)
+		end
+
+	test_unite
+			-- Test {MUTABLE_SET}.unite.
+		note
+			testing: "covers/{MUTABLE_SET}.unite"
+		do
+			assert (
+				"s ∪ s2 ≍ ∅",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							s := o
+							s2 := same_set_a (o)
+							s.unite (s2)
+							Result := s ≍ o
+						end
+					).item
+				)
+
+			assert (
+				"s ∪ s2 ≍ {a}",
+				(
+					agent: BOOLEAN
+						local
+							a: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s2 := same_set_a (o)
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (a))
+							else
+								s2 := s2 & same_object_a (a)
+							end
+							s.unite (s2)
+							Result := s ≍ singleton (a)
+						end
+					).item
+				)
+
+			assert ("s ∪ s2 ≍ {a,b}",
+				(
+					agent: BOOLEAN
+						local
+							a, b: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s2 := same_set_a (o)
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (a))
+							else
+								s2 := s2 & same_object_a (a)
+							end
+							b := some_object_a
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (b))
+							else
+								s2 := s2 & same_object_a (b)
+							end
+							s.unite (s2)
+							Result := s ≍ (singleton (a) & b)
+						end
+					).item
+				)
+
+			assert ("s ∪ s2 ≍ {a,b,c}",
+				(
+					agent: BOOLEAN
+						local
+							a, b, c: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s2 := same_set_a (o)
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (a))
+							else
+								s2 := s2 & same_object_a (a)
+							end
+							b := some_object_a
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (b))
+							else
+								s2 := s2 & same_object_a (b)
+							end
+							c := some_object_a
+							if next_random_item \\ 2 = 0 then
+								s.extend (same_object_a (c))
+							else
+								s2 := s2 & same_object_a (c)
+							end
+							s.unite (s2)
+							Result := s ≍ (singleton (a) & b & c)
+						end
+					).item
+				)
+
+			assert ("unite",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+						do
+							s := set_to_be_tested
+							s.unite (some_set_a)
+							Result := attached s
+						end
+					).item
+				)
+		end
+
 feature -- Test routines (Transformation)
 
 	test_mapped

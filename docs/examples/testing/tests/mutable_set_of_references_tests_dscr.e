@@ -70,6 +70,8 @@ inherit
 			test_do_filter,
 			test_do_complement,
 			test_intersect,
+			test_merge,
+			test_unite,
 			test_mapped,
 			test_reduced,
 			test_proper_reduced,
@@ -143,6 +145,8 @@ feature -- Test routines (All)
 			test_do_filter
 			test_do_complement
 			test_intersect
+			test_merge
+			test_unite
 			test_mapped
 			test_reduced
 			test_proper_reduced
@@ -610,6 +614,22 @@ feature -- Test routines (Basic operations)
 			-- <Precursor>
 		note
 			testing: "covers/{MUTABLE_SET}.intersect"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+	test_merge
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.merge"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+	test_unite
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.unite"
 		do
 			Precursor {MUTABLE_SET_TESTS}
 		end

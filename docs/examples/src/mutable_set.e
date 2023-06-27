@@ -510,11 +510,45 @@ feature -- Basic operations
 		end
 
 	intersect (s: STS_SET [A, EQ])
-			-- Remove all items not in `s'.
+			-- Remove all elements not in `s'.
 		do
 			do_filter (agent s.has)
 		ensure
 			intersected: Current ≍ old (Current ∩ s)
+		end
+
+	merge, unite (s: STS_SET [A, EQ])
+			-- Add all element of `s'.
+		local
+			l_s: STS_SET [A, EQ]
+		do
+			from
+				check
+					n_non_negative: elements.count + (# s).as_integer_32 >= 0 -- elements.count >=0 and # s >= 0
+				end
+				elements := elements.aliased_resized_area (elements.count + (# s).as_integer_32)
+				l_s := s
+			invariant
+				count_small_enough: elements.count ≤ elements.capacity -- elements.capacity >= elements.count + # (s ∖ l_s)
+			until
+				l_s.is_empty
+			loop
+				if not ∃ x: elements ¦ eq (x, l_s.any) then
+					check
+						count_small_enough: elements.count < elements.capacity -- elements.capacity > elements.count + # (s ∖ l_s)
+					end
+					elements.extend (l_s.any)
+				end
+				l_s := l_s.others
+			variant
+				cardinality: {STI_SET [A, EQ]}.natural_as_integer (# l_s)
+			end
+			check
+				n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
+			end
+			elements := elements.aliased_resized_area (elements.count)
+		ensure
+			united: Current ≍ old (Current ∪ s)
 		end
 
 feature -- Transformation
