@@ -2311,854 +2311,6 @@ feature -- Test routines (Operation)
 			assert ("subtracted_symmetricaly_ok", properties.subtracted_symmetricaly_ok (some_object_a, s, s2, some_set_a))
 		end
 
-feature -- Test routines (Basic operations)
-
-	test_do_filter
-			-- Test {MUTABLE_SET}.do_filter.
-		note
-			testing: "covers/{MUTABLE_SET}.do_filter"
-		do
-			assert (
-				"s",
-				(
-					agent: BOOLEAN
-						local
-							s0, s: like set_to_be_tested
-						do
-							s0 := set_to_be_tested
-							s := s0
-							s.do_filter (agent s.has)
-							Result := s ≍ s0
-						end
-					).item
-				)
-
-			assert (
-				"∅",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-						do
-							s := set_to_be_tested
-							s.do_filter (agent s.does_not_have)
-							Result := s ≍ o
-						end
-					).item
-				)
-
-			assert (
-				"do_filter",
-				(
-					agent: BOOLEAN
-						local
-							p: PREDICATE [A]
-							s: like set_to_be_tested
-						do
-							p := agent (x: A): BOOLEAN
-									do
-										Result := object_hash_code (x) \\ 2 = 0
-									end
-							s := set_to_be_tested
-							s.do_filter (p)
-							Result := attached s
-						end
-					).item
-				)
-		end
-
-	test_do_complement
-			-- Test {MUTABLE_SET}.do_complement.
-		note
-			testing: "covers/{MUTABLE_SET}.do_complement"
-		do
-			assert (
-				"∅ ∁ {...} ≍ {...}",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := some_set_a
-							check
-								is_subset: s ⊆ s2 -- s ≍ ∅
-							end
-							s.do_complement (s2)
-							Result := s ≍ s2
-						end
-					).item
-				)
-
-			assert (
-				"{a} ∁ {a,...} ≍ ({a,...} / a)",
-				(
-					agent: BOOLEAN
-						local
-							a: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o & same_object_a (a)
-							s2 := some_set_a & same_object_a (a)
-							check
-								is_subset_2: s ⊆ s2 -- s ≍ {a} ⊆ {a,...} ≍ s2
-							end
-							s.do_complement (s2)
-							Result := s ≍ (s2 / a)
-						end
-					).item
-				)
-
-			assert (
-				"{a,b} ∁ {a,b,...} ≍ ({a,b,...} / a / b)",
-				(
-					agent: BOOLEAN
-						local
-							a, b: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							b := some_object_a
-							s := o & same_object_a (a) & same_object_a (b)
-							s2 := some_set_a & same_object_a (a) & same_object_a (b)
-							check
-								is_subset_3: s ⊆ s2 -- s ≍ {a,b} ⊆ {a,b,...} ≍ s2
-							end
-							s.do_complement (s2)
-							Result := s ≍ (s2 / a / b)
-						end
-					).item
-				)
-
-			assert (
-				"{a,b,c} ∁ {a,b,c,...} ≍ ({a,b,c,...} / a / b / c)",
-				(
-					agent: BOOLEAN
-						local
-							a, b, c: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							b := some_object_a
-							c := some_object_a
-							s := o & same_object_a (a) & same_object_a (b) & same_object_a (c)
-							s2 := some_set_a & same_object_a (a) & same_object_a (b) & same_object_a (c)
-							check
-								is_subset_4: s ⊆ s2 -- s ≍ {a,b,c} ⊆ {a,b,c,...} ≍ s2
-							end
-							s.do_complement (s2)
-							Result := s ≍ (s2 / a / b / c)
-						end
-					).item
-				)
-
-			assert (
-				"do_complement",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := set_to_be_tested
-							s2 := some_set_a
-							if s ⊆ s2 then
-								s.do_complement (s2)
-							end
-							Result := attached s
-						end
-					).item
-				)
-		end
-
-	test_intersect
-			-- Test {MUTABLE_SET}.intersect.
-		note
-			testing: "covers/{MUTABLE_SET}.intersect"
-		do
-			assert (
-				"∅ ∩ {...} ≍ ∅",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := some_set_a
-							s.intersect (s2)
-							Result := s ≍ o
-						end
-					).item
-				)
-
-			assert (
-				"{a} ∩ {a,...} ≍ {a}",
-				(
-					agent: BOOLEAN
-						local
-							a: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s.extend (same_object_a (a))
-							s2 := some_set_a & same_object_a (a)
-							s.intersect (s2)
-							Result := s ≍ singleton (a)
-						end
-					).item
-				)
-
-			assert (
-				"{a,b} ∩ {a,b,...} ≍ {a,b}",
-				(
-					agent: BOOLEAN
-						local
-							a, b: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							b := some_object_a
-							s := o
-							s.extend (same_object_a (a))
-							s.extend (same_object_a (b))
-							s2 := some_set_a & same_object_a (a) & same_object_a (b)
-							s.intersect (s2)
-							Result := s ≍ (singleton (a) & b)
-						end
-					).item
-				)
-
-			assert (
-				"{a,b,c} ∩ {a,b,c,...} ≍ {a,b,c}",
-				(
-					agent: BOOLEAN
-						local
-							a, b, c: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							b := some_object_a
-							c := some_object_a
-							s := o
-							s.extend (same_object_a (a))
-							s.extend (same_object_a (b))
-							s.extend (same_object_a (c))
-							s2 := some_set_a & same_object_a (a) & same_object_a (b) & same_object_a (c)
-							s.intersect (s2)
-							Result := s ≍ (singleton (a) & b & c)
-						end
-					).item
-				)
-
-			assert (
-				"intersect",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-						do
-							s := set_to_be_tested
-							s.intersect (some_set_a)
-							Result := attached s
-						end
-					).item
-				)
-		end
-
-	test_merge
-			-- Test {MUTABLE_SET}.merge.
-		note
-			testing: "covers/{MUTABLE_SET}.merge"
-		do
-			assert (
-				"s ∪ s2 ≍ ∅",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							s.merge (s2)
-							Result := s ≍ o
-						end
-					).item
-				)
-
-			assert (
-				"s ∪ s2 ≍ {a}",
-				(
-					agent: BOOLEAN
-						local
-							a: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s2 := same_set_a (o)
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							s.merge (s2)
-							Result := s ≍ singleton (a)
-						end
-					).item
-				)
-
-			assert ("s ∪ s2 ≍ {a,b}",
-				(
-					agent: BOOLEAN
-						local
-							a, b: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s2 := same_set_a (o)
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							b := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (b))
-							else
-								s2 := s2 & same_object_a (b)
-							end
-							s.merge (s2)
-							Result := s ≍ (singleton (a) & b)
-						end
-					).item
-				)
-
-			assert ("s ∪ s2 ≍ {a,b,c}",
-				(
-					agent: BOOLEAN
-						local
-							a, b, c: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s2 := same_set_a (o)
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							b := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (b))
-							else
-								s2 := s2 & same_object_a (b)
-							end
-							c := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (c))
-							else
-								s2 := s2 & same_object_a (c)
-							end
-							s.merge (s2)
-							Result := s ≍ (singleton (a) & b & c)
-						end
-					).item
-				)
-
-			assert ("merge",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-						do
-							s := set_to_be_tested
-							s.merge (some_set_a)
-							Result := attached s
-						end
-					).item
-				)
-		end
-
-	test_unite
-			-- Test {MUTABLE_SET}.unite.
-		note
-			testing: "covers/{MUTABLE_SET}.unite"
-		do
-			assert (
-				"s ∪ s2 ≍ ∅",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							s.unite (s2)
-							Result := s ≍ o
-						end
-					).item
-				)
-
-			assert (
-				"s ∪ s2 ≍ {a}",
-				(
-					agent: BOOLEAN
-						local
-							a: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s2 := same_set_a (o)
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							s.unite (s2)
-							Result := s ≍ singleton (a)
-						end
-					).item
-				)
-
-			assert ("s ∪ s2 ≍ {a,b}",
-				(
-					agent: BOOLEAN
-						local
-							a, b: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s2 := same_set_a (o)
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							b := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (b))
-							else
-								s2 := s2 & same_object_a (b)
-							end
-							s.unite (s2)
-							Result := s ≍ (singleton (a) & b)
-						end
-					).item
-				)
-
-			assert ("s ∪ s2 ≍ {a,b,c}",
-				(
-					agent: BOOLEAN
-						local
-							a, b, c: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s2 := same_set_a (o)
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							b := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (b))
-							else
-								s2 := s2 & same_object_a (b)
-							end
-							c := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (c))
-							else
-								s2 := s2 & same_object_a (c)
-							end
-							s.unite (s2)
-							Result := s ≍ (singleton (a) & b & c)
-						end
-					).item
-				)
-
-			assert ("unite",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-						do
-							s := set_to_be_tested
-							s.unite (some_set_a)
-							Result := attached s
-						end
-					).item
-				)
-		end
-
-	test_subtract
-			-- Test {MUTABLE_SET}.subtract.
-		note
-			testing: "covers/{MUTABLE_SET}.subtract"
-		do
-			assert (
-				"s ∖ s2 ≍ ∅",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := some_set_a
-							s.subtract (s2)
-							Result := s ≍ o
-						end
-					).item
-				)
-
-			assert (
-				"s ∖ s2 ≍ {a}",
-				(
-					agent: BOOLEAN
-						local
-							a: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s.extend (same_object_a (a))
-							s2 := some_set_a / same_object_a (a)
-							s.subtract (s2)
-							Result := s ≍ singleton (a)
-						end
-					).item
-				)
-
-			assert (
-				"s ∖ s2 ≍ {a}: 2",
-				(
-					agent: BOOLEAN
-						local
-							a, b: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s.extend (same_object_a (a))
-							s2 := some_set_a / same_object_a (a)
-							b := some_other_object_a (s)
-							s2 := s2 & same_object_a (b)
-							s.subtract (s2)
-							Result := s ≍ singleton (a)
-						end
-					).item
-				)
-
-			assert (
-				"s ∖ s2 ≍ {a,c}",
-				(
-					agent: BOOLEAN
-						local
-							a, b, c: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							a := some_object_a
-							s := o
-							s.extend (same_object_a (a))
-							s2 := some_set_a / same_object_a (a)
-							b := some_other_object_a (s)
-							s2 := s2 & same_object_a (b)
-							c := some_object_a
-							s.extend (same_object_a (c))
-							s2 := s2 / same_object_a (c)
-							s.subtract (s2)
-							Result := s ≍ (singleton (a) & c)
-						end
-					).item
-				)
-
-			assert (
-				"subtract",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-						do
-							s := set_to_be_tested
-							s.subtract (some_set_a)
-							Result := attached s
-						end
-					).item
-				)
-		end
-
-	test_symdif
-			-- Test {MUTABLE_SET}.symdif.
-		note
-			testing: "covers/{MUTABLE_SET}.symdif"
-		do
-			assert (
-				"s ⊖ s2 ≍ ∅",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							s.symdif (s2)
-							Result := s ≍ o
-						end
-					).item
-				)
-
-			assert (
-				"s ⊖ s2 ≍ {a}",
-				(
-					agent: BOOLEAN
-						local
-							a: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							a := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							s.symdif (s2)
-							Result := s ≍ singleton (a)
-						end
-					).item
-				)
-
-			assert (
-				"s ⊖ s2 ≍ {a,b}",
-				(
-					agent: BOOLEAN
-						local
-							a, b: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							a := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							b := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (b))
-							else
-								s2 := s2 & same_object_a (b)
-							end
-							s.symdif (s2)
-							Result := s ≍ (singleton (a) & b)
-						end
-					).item
-				)
-
-			assert ("s ⊖ s2 ≍ {a,b,c}",
-				(
-					agent: BOOLEAN
-						local
-							a, b, c: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							a := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							b := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (b))
-							else
-								s2 := s2 & same_object_a (b)
-							end
-							c := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (c))
-							else
-								s2 := s2 & same_object_a (c)
-							end
-							s.symdif (s2)
-							Result := s ≍ (singleton (a) & b & c)
-						end
-					).item
-				)
-
-			assert (
-				"symdif",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-						do
-							s := set_to_be_tested
-							s.symdif (some_set_a)
-							Result := attached s
-						end
-					).item
-				)
-		end
-
-	test_subtract_symmetricaly
-			-- Test {MUTABLE_SET}.subtract_symmetricaly.
-		note
-			testing: "covers/{MUTABLE_SET}.subtract_symmetricaly"
-		do
-			assert (
-				"s ⊖ s2 ≍ ∅",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							s.subtract_symmetricaly (s2)
-							Result := s ≍ o
-						end
-					).item
-				)
-
-			assert (
-				"s ⊖ s2 ≍ {a}",
-				(
-					agent: BOOLEAN
-						local
-							a: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							a := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							s.subtract_symmetricaly (s2)
-							Result := s ≍ singleton (a)
-						end
-					).item
-				)
-
-			assert (
-				"s ⊖ s2 ≍ {a,b}",
-				(
-					agent: BOOLEAN
-						local
-							a, b: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							a := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							b := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (b))
-							else
-								s2 := s2 & same_object_a (b)
-							end
-							s.subtract_symmetricaly (s2)
-							Result := s ≍ (singleton (a) & b)
-						end
-					).item
-				)
-
-			assert ("s ⊖ s2 ≍ {a,b,c}",
-				(
-					agent: BOOLEAN
-						local
-							a, b, c: A
-							s: like set_to_be_tested
-							s2: like some_set_a
-						do
-							s := o
-							s2 := same_set_a (o)
-							a := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (a))
-							else
-								s2 := s2 & same_object_a (a)
-							end
-							b := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (b))
-							else
-								s2 := s2 & same_object_a (b)
-							end
-							c := some_object_a
-							if next_random_item \\ 2 = 0 then
-								s.extend (same_object_a (c))
-							else
-								s2 := s2 & same_object_a (c)
-							end
-							s.subtract_symmetricaly (s2)
-							Result := s ≍ (singleton (a) & b & c)
-						end
-					).item
-				)
-
-			assert (
-				"subtract_symmetricaly",
-				(
-					agent: BOOLEAN
-						local
-							s: like set_to_be_tested
-						do
-							s := set_to_be_tested
-							s.subtract_symmetricaly (some_set_a)
-							Result := attached s
-						end
-					).item
-				)
-		end
-
 feature -- Test routines (Transformation)
 
 	test_mapped
@@ -3263,6 +2415,952 @@ feature -- Test routines (Transformation)
 			s := set_to_be_tested
 			assert ("proper_reduced", not s.is_empty ⇒ (attached s.proper_reduced (f) ⇒ True))
 			assert ("proper_reduced_ok", properties.proper_reduced_ok (s, f))
+		end
+
+feature -- Test routines (Basic operations)
+
+	test_do_filter
+			-- Test {MUTABLE_SET}.do_filter.
+		note
+			testing: "covers/{MUTABLE_SET}.do_filter"
+		do
+			assert (
+					"s",
+					(
+						agent: BOOLEAN
+							local
+								s0, s: like set_to_be_tested
+							do
+								s0 := set_to_be_tested
+								s := s0
+								s.do_filter (agent s.has)
+								Result := s ≍ s0
+							end
+					).item
+				)
+
+			assert (
+					"∅",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+							do
+								s := set_to_be_tested
+								s.do_filter (agent s.does_not_have)
+								Result := s ≍ o
+							end
+					).item
+				)
+
+			assert (
+					"do_filter",
+					(
+						agent: BOOLEAN
+							local
+								p: PREDICATE [A]
+								s: like set_to_be_tested
+							do
+								p := agent (x: A): BOOLEAN
+										do
+											Result := object_hash_code (x) \\ 2 = 0
+										end
+								s := set_to_be_tested
+								s.do_filter (p)
+								Result := attached s
+							end
+					).item
+				)
+		end
+
+	test_do_complement
+			-- Test {MUTABLE_SET}.do_complement.
+		note
+			testing: "covers/{MUTABLE_SET}.do_complement"
+		do
+			assert (
+					"∅ ∁ {...} ≍ {...}",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := some_set_a
+								check
+									is_subset: s ⊆ s2 -- s ≍ ∅
+								end
+								s.do_complement (s2)
+								Result := s ≍ s2
+							end
+					).item
+				)
+
+			assert (
+					"{a} ∁ {a,...} ≍ ({a,...} / a)",
+					(
+						agent: BOOLEAN
+							local
+								a: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o & same_object_a (a)
+								s2 := some_set_a & same_object_a (a)
+								check
+									is_subset_2: s ⊆ s2 -- s ≍ {a} ⊆ {a,...} ≍ s2
+								end
+								s.do_complement (s2)
+								Result := s ≍ (s2 / a)
+							end
+					).item
+				)
+
+			assert (
+					"{a,b} ∁ {a,b,...} ≍ ({a,b,...} / a / b)",
+					(
+						agent: BOOLEAN
+							local
+								a, b: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								b := some_object_a
+								s := o & same_object_a (a) & same_object_a (b)
+								s2 := some_set_a & same_object_a (a) & same_object_a (b)
+								check
+									is_subset_3: s ⊆ s2 -- s ≍ {a,b} ⊆ {a,b,...} ≍ s2
+								end
+								s.do_complement (s2)
+								Result := s ≍ (s2 / a / b)
+							end
+					).item
+				)
+
+			assert (
+					"{a,b,c} ∁ {a,b,c,...} ≍ ({a,b,c,...} / a / b / c)",
+					(
+						agent: BOOLEAN
+							local
+								a, b, c: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								b := some_object_a
+								c := some_object_a
+								s := o & same_object_a (a) & same_object_a (b) & same_object_a (c)
+								s2 := some_set_a & same_object_a (a) & same_object_a (b) & same_object_a (c)
+								check
+									is_subset_4: s ⊆ s2 -- s ≍ {a,b,c} ⊆ {a,b,c,...} ≍ s2
+								end
+								s.do_complement (s2)
+								Result := s ≍ (s2 / a / b / c)
+							end
+					).item
+				)
+
+			assert (
+					"do_complement",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := set_to_be_tested
+								s2 := some_set_a
+								if s ⊆ s2 then
+									s.do_complement (s2)
+								end
+								Result := attached s
+							end
+					).item
+				)
+		end
+
+	test_intersect
+			-- Test {MUTABLE_SET}.intersect.
+		note
+			testing: "covers/{MUTABLE_SET}.intersect"
+		do
+			assert (
+					"∅ ∩ {...} ≍ ∅",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := some_set_a
+								s.intersect (s2)
+								Result := s ≍ o
+							end
+					).item
+				)
+
+			assert (
+					"{a} ∩ {a,...} ≍ {a}",
+					(
+						agent: BOOLEAN
+							local
+								a: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s.extend (same_object_a (a))
+								s2 := some_set_a & same_object_a (a)
+								s.intersect (s2)
+								Result := s ≍ singleton (a)
+							end
+					).item
+				)
+
+			assert (
+					"{a,b} ∩ {a,b,...} ≍ {a,b}",
+					(
+						agent: BOOLEAN
+							local
+								a, b: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								b := some_object_a
+								s := o
+								s.extend (same_object_a (a))
+								s.extend (same_object_a (b))
+								s2 := some_set_a & same_object_a (a) & same_object_a (b)
+								s.intersect (s2)
+								Result := s ≍ (singleton (a) & b)
+							end
+					).item
+				)
+
+			assert (
+					"{a,b,c} ∩ {a,b,c,...} ≍ {a,b,c}",
+					(
+						agent: BOOLEAN
+							local
+								a, b, c: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								b := some_object_a
+								c := some_object_a
+								s := o
+								s.extend (same_object_a (a))
+								s.extend (same_object_a (b))
+								s.extend (same_object_a (c))
+								s2 := some_set_a & same_object_a (a) & same_object_a (b) & same_object_a (c)
+								s.intersect (s2)
+								Result := s ≍ (singleton (a) & b & c)
+							end
+					).item
+				)
+
+			assert (
+					"intersect",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+							do
+								s := set_to_be_tested
+								s.intersect (some_set_a)
+								Result := attached s
+							end
+					).item
+				)
+		end
+
+	test_merge
+			-- Test {MUTABLE_SET}.merge.
+		note
+			testing: "covers/{MUTABLE_SET}.merge"
+		do
+			assert (
+					"s ∪ s2 ≍ ∅",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								s.merge (s2)
+								Result := s ≍ o
+							end
+					).item
+				)
+
+			assert (
+					"s ∪ s2 ≍ {a}",
+					(
+						agent: BOOLEAN
+							local
+								a: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s2 := same_set_a (o)
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								s.merge (s2)
+								Result := s ≍ singleton (a)
+							end
+					).item
+				)
+
+			assert ("s ∪ s2 ≍ {a,b}",
+					(
+						agent: BOOLEAN
+							local
+								a, b: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s2 := same_set_a (o)
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								b := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (b))
+								else
+									s2 := s2 & same_object_a (b)
+								end
+								s.merge (s2)
+								Result := s ≍ (singleton (a) & b)
+							end
+					).item
+				)
+
+			assert ("s ∪ s2 ≍ {a,b,c}",
+					(
+						agent: BOOLEAN
+							local
+								a, b, c: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s2 := same_set_a (o)
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								b := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (b))
+								else
+									s2 := s2 & same_object_a (b)
+								end
+								c := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (c))
+								else
+									s2 := s2 & same_object_a (c)
+								end
+								s.merge (s2)
+								Result := s ≍ (singleton (a) & b & c)
+							end
+					).item
+				)
+
+			assert ("merge",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+							do
+								s := set_to_be_tested
+								s.merge (some_set_a)
+								Result := attached s
+							end
+					).item
+				)
+		end
+
+	test_unite
+			-- Test {MUTABLE_SET}.unite.
+		note
+			testing: "covers/{MUTABLE_SET}.unite"
+		do
+			assert (
+					"s ∪ s2 ≍ ∅",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								s.unite (s2)
+								Result := s ≍ o
+							end
+					).item
+				)
+
+			assert (
+					"s ∪ s2 ≍ {a}",
+					(
+						agent: BOOLEAN
+							local
+								a: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s2 := same_set_a (o)
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								s.unite (s2)
+								Result := s ≍ singleton (a)
+							end
+					).item
+				)
+
+			assert ("s ∪ s2 ≍ {a,b}",
+					(
+						agent: BOOLEAN
+							local
+								a, b: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s2 := same_set_a (o)
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								b := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (b))
+								else
+									s2 := s2 & same_object_a (b)
+								end
+								s.unite (s2)
+								Result := s ≍ (singleton (a) & b)
+							end
+					).item
+				)
+
+			assert ("s ∪ s2 ≍ {a,b,c}",
+					(
+						agent: BOOLEAN
+							local
+								a, b, c: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s2 := same_set_a (o)
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								b := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (b))
+								else
+									s2 := s2 & same_object_a (b)
+								end
+								c := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (c))
+								else
+									s2 := s2 & same_object_a (c)
+								end
+								s.unite (s2)
+								Result := s ≍ (singleton (a) & b & c)
+							end
+					).item
+				)
+
+			assert ("unite",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+							do
+								s := set_to_be_tested
+								s.unite (some_set_a)
+								Result := attached s
+							end
+					).item
+				)
+		end
+
+	test_subtract
+			-- Test {MUTABLE_SET}.subtract.
+		note
+			testing: "covers/{MUTABLE_SET}.subtract"
+		do
+			assert (
+					"s ∖ s2 ≍ ∅",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := some_set_a
+								s.subtract (s2)
+								Result := s ≍ o
+							end
+					).item
+				)
+
+			assert (
+					"s ∖ s2 ≍ {a}",
+					(
+						agent: BOOLEAN
+							local
+								a: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s.extend (same_object_a (a))
+								s2 := some_set_a / same_object_a (a)
+								s.subtract (s2)
+								Result := s ≍ singleton (a)
+							end
+					).item
+				)
+
+			assert (
+					"s ∖ s2 ≍ {a}: 2",
+					(
+						agent: BOOLEAN
+							local
+								a, b: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s.extend (same_object_a (a))
+								s2 := some_set_a / same_object_a (a)
+								b := some_other_object_a (s)
+								s2 := s2 & same_object_a (b)
+								s.subtract (s2)
+								Result := s ≍ singleton (a)
+							end
+					).item
+				)
+
+			assert (
+					"s ∖ s2 ≍ {a,c}",
+					(
+						agent: BOOLEAN
+							local
+								a, b, c: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								a := some_object_a
+								s := o
+								s.extend (same_object_a (a))
+								s2 := some_set_a / same_object_a (a)
+								b := some_other_object_a (s)
+								s2 := s2 & same_object_a (b)
+								c := some_object_a
+								s.extend (same_object_a (c))
+								s2 := s2 / same_object_a (c)
+								s.subtract (s2)
+								Result := s ≍ (singleton (a) & c)
+							end
+					).item
+				)
+
+			assert (
+					"subtract",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+							do
+								s := set_to_be_tested
+								s.subtract (some_set_a)
+								Result := attached s
+							end
+					).item
+				)
+		end
+
+	test_symdif
+			-- Test {MUTABLE_SET}.symdif.
+		note
+			testing: "covers/{MUTABLE_SET}.symdif"
+		do
+			assert (
+					"s ⊖ s2 ≍ ∅",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								s.symdif (s2)
+								Result := s ≍ o
+							end
+					).item
+				)
+
+			assert (
+					"s ⊖ s2 ≍ {a}",
+					(
+						agent: BOOLEAN
+							local
+								a: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								a := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								s.symdif (s2)
+								Result := s ≍ singleton (a)
+							end
+					).item
+				)
+
+			assert (
+					"s ⊖ s2 ≍ {a,b}",
+					(
+						agent: BOOLEAN
+							local
+								a, b: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								a := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								b := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (b))
+								else
+									s2 := s2 & same_object_a (b)
+								end
+								s.symdif (s2)
+								Result := s ≍ (singleton (a) & b)
+							end
+					).item
+				)
+
+			assert ("s ⊖ s2 ≍ {a,b,c}",
+					(
+						agent: BOOLEAN
+							local
+								a, b, c: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								a := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								b := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (b))
+								else
+									s2 := s2 & same_object_a (b)
+								end
+								c := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (c))
+								else
+									s2 := s2 & same_object_a (c)
+								end
+								s.symdif (s2)
+								Result := s ≍ (singleton (a) & b & c)
+							end
+					).item
+				)
+
+			assert (
+					"symdif",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+							do
+								s := set_to_be_tested
+								s.symdif (some_set_a)
+								Result := attached s
+							end
+					).item
+				)
+		end
+
+	test_subtract_symmetricaly
+			-- Test {MUTABLE_SET}.subtract_symmetricaly.
+		note
+			testing: "covers/{MUTABLE_SET}.subtract_symmetricaly"
+		do
+			assert (
+					"s ⊖ s2 ≍ ∅",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								s.subtract_symmetricaly (s2)
+								Result := s ≍ o
+							end
+					).item
+				)
+
+			assert (
+					"s ⊖ s2 ≍ {a}",
+					(
+						agent: BOOLEAN
+							local
+								a: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								a := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								s.subtract_symmetricaly (s2)
+								Result := s ≍ singleton (a)
+							end
+					).item
+				)
+
+			assert (
+					"s ⊖ s2 ≍ {a,b}",
+					(
+						agent: BOOLEAN
+							local
+								a, b: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								a := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								b := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (b))
+								else
+									s2 := s2 & same_object_a (b)
+								end
+								s.subtract_symmetricaly (s2)
+								Result := s ≍ (singleton (a) & b)
+							end
+					).item
+				)
+
+			assert ("s ⊖ s2 ≍ {a,b,c}",
+					(
+						agent: BOOLEAN
+							local
+								a, b, c: A
+								s: like set_to_be_tested
+								s2: like some_set_a
+							do
+								s := o
+								s2 := same_set_a (o)
+								a := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (a))
+								else
+									s2 := s2 & same_object_a (a)
+								end
+								b := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (b))
+								else
+									s2 := s2 & same_object_a (b)
+								end
+								c := some_object_a
+								if next_random_item \\ 2 = 0 then
+									s.extend (same_object_a (c))
+								else
+									s2 := s2 & same_object_a (c)
+								end
+								s.subtract_symmetricaly (s2)
+								Result := s ≍ (singleton (a) & b & c)
+							end
+					).item
+				)
+
+			assert (
+					"subtract_symmetricaly",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+							do
+								s := set_to_be_tested
+								s.subtract_symmetricaly (some_set_a)
+								Result := attached s
+							end
+					).item
+				)
+		end
+
+	test_do_map
+			-- Test {MUTABLE_SET}.do_map.
+		note
+			testing: "covers/{MUTABLE_SET}.do_map"
+		do
+			assert (
+				"∅ ↦ f",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+								f: FUNCTION [A, A]
+							do
+								f := agent f_x
+								s := o
+								s.do_map (f)
+								Result := s ≍ o
+							end
+					).item
+				)
+
+			assert (
+				"{a} ↦ f ≍ {f (a)}",
+					(
+						agent: BOOLEAN
+							local
+								a: A
+								s: like set_to_be_tested
+								f: FUNCTION [A, A]
+							do
+								f := agent f_x
+								s := o
+								a := some_object_a
+								s.extend (same_object_a (a))
+								s.do_map (f)
+								Result := s ≍ singleton (f (a))
+							end
+					).item
+				)
+
+			assert (
+				"{a,b} ↦ f ≍ {f (a),f (b)}",
+					(
+						agent: BOOLEAN
+							local
+								a, b: A
+								s: like set_to_be_tested
+								f: FUNCTION [A, A]
+							do
+								f := agent f_x
+								s := o
+								a := some_object_a
+								s.extend (same_object_a (a))
+								b := some_object_a
+								s.extend (same_object_a (b))
+								s.do_map (f)
+								Result := s ≍ (singleton (f (a)) & f (b))
+							end
+					).item
+				)
+
+			assert (
+				"{a,b,c} ↦ f ≍ {f (a),f (b),f (c)}",
+					(
+						agent: BOOLEAN
+							local
+								a, b, c: A
+								s: like set_to_be_tested
+								f: FUNCTION [A, A]
+							do
+								f := agent f_x
+								s := o
+								a := some_object_a
+								s.extend (same_object_a (a))
+								b := some_object_a
+								s.extend (same_object_a (b))
+								c := some_object_a
+								s.extend (same_object_a (c))
+								s.do_map (f)
+								Result := s ≍ (singleton (f (a)) & f (b) & f (c))
+							end
+					).item
+				)
+
+			assert ("do_map",
+					(
+						agent: BOOLEAN
+							local
+								s: like set_to_be_tested
+							do
+								s := set_to_be_tested
+								s.do_map (agent f_x)
+								Result := attached s
+							end
+					).item
+				)
 		end
 
 feature {NONE} -- Factory (element to be tested)

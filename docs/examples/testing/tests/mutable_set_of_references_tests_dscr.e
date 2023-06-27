@@ -67,6 +67,9 @@ inherit
 			test_united,
 			test_subtracted,
 			test_subtracted_symmetricaly,
+			test_mapped,
+			test_reduced,
+			test_proper_reduced,
 			test_do_filter,
 			test_do_complement,
 			test_intersect,
@@ -75,9 +78,7 @@ inherit
 			test_subtract,
 			test_symdif,
 			test_subtract_symmetricaly,
-			test_mapped,
-			test_reduced,
-			test_proper_reduced,
+			test_do_map,
 			object_hash_code
 		end
 
@@ -145,6 +146,9 @@ feature -- Test routines (All)
 			test_united
 			test_subtracted
 			test_subtracted_symmetricaly
+			test_mapped
+			test_reduced
+			test_proper_reduced
 			test_do_filter
 			test_do_complement
 			test_intersect
@@ -153,9 +157,7 @@ feature -- Test routines (All)
 			test_subtract
 			test_symdif
 			test_subtract_symmetricaly
-			test_mapped
-			test_reduced
-			test_proper_reduced
+			test_do_map
 		end
 
 feature -- Test routines (Initialization)
@@ -660,6 +662,14 @@ feature -- Test routines (Basic operations)
 			-- <Precursor>
 		note
 			testing: "covers/{MUTABLE_SET}.subtract_symmetricaly"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+	test_do_map
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.do_map"
 		do
 			Precursor {MUTABLE_SET_TESTS}
 		end
