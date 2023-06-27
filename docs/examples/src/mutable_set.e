@@ -52,58 +52,9 @@ feature {NONE} -- Initialization
 
 	make_from_special (xs: SPECIAL [A])
 			-- Create a set with every element in `xs'.
-		local
-			i, j: INTEGER
 		do
-			from
-				elements := xs.twin
-				i := 0
-			invariant
-				valid_outer_k: ∀ k: 0 |..| (i - 1) ¦ elements.valid_index (k) -- 0 ≤ k < i < elements.count
-				no_repetition: ∀ k: 0 |..| (i - 1) ¦ occurrences (elements [k], elements) = 1
-			until
-				i = elements.count
-			loop
-				from
-					j := i + 1
-				invariant
-					valid_i: elements.valid_index (i) -- 0 ≤ i < elements.count
-					valid_inner_k: ∀ k: (i + 1) |..| (j - 1) ¦ elements.valid_index (k) -- 0 ≤ i < k < j < elements.count
-					repetitions_pruned: ∀ k: (i + 1) |..| (j - 1) ¦ not eq (elements [i], elements [k])
-				until
-					j = elements.count
-				loop
-					check
-						valid_index: elements.valid_index (j) -- 0 ≤ i < j < elements.count
-					end
-					if eq (elements [i], elements [j]) then
-						check
-							source_index_non_negative: j + 1 >= 0 -- 0 ≤ i < j
-							destination_index_non_negative: j >= 0 -- 0 ≤ i < j
-							destination_index_in_bound: j <= elements.count -- 0 ≤ i < j < elements.count
-							n_non_negative: elements.count - (j + 1) >= 0 -- 0 ≤ i < j < elements.count
-							n_is_small_enough_for_source: j + 1 + elements.count - (j + 1) <= elements.count -- Algebra
-							n_is_small_enough_for_destination: j + elements.count - (j + 1) <= elements.capacity -- 0 ≤ i < j < elements.count ≤ elements.capacity
-						end
-						elements.move_data (j + 1, j, elements.count - (j + 1))
-						check
-							less_than_count: 1 <= elements.count -- elements.count > 0 ⇐ 0 ≤ i < j < elements.count
-						end
-						elements.remove_tail (1)
-					else
-						j := j + 1
-					end
-				variant
-					elements.count - j
-				end
-				i := i + 1
-			variant
-				elements.count - i
-			end
-			check
-				n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
-			end
-			elements := elements.aliased_resized_area (elements.count)
+			elements := xs.twin
+			remove_duplicates
 		ensure
 			source_unchanged: xs ~ old xs.twin
 			nothing_lost: ∀ x: xs ¦ ∃ y: elements ¦ eq (x, y)
@@ -427,6 +378,23 @@ feature -- Operation
 			create Result.make_from_special (xs)
 		end
 
+feature -- Transformation
+
+	mapped alias "↦" (f: FUNCTION [A, A]): like set_map_anchor
+			-- <Precursor>
+		local
+			xs: SPECIAL [A]
+		do
+			create xs.make_empty (elements.count)
+			⟳ x: elements ¦
+				check
+					count_small_enough: xs.count < xs.capacity -- xs.count < elements.count = xs.capacity
+				end
+				xs.extend (f (x))
+			⟲
+			create Result.make_from_special (xs)
+		end
+
 feature -- Basic operations
 
 	do_filter (p: PREDICATE [A])
@@ -570,23 +538,16 @@ feature -- Basic operations
 		ensure
 			subtracted_symmetricaly: Current ≍ old (Current ⊖ s)
 		end
-		
-feature -- Transformation
 
-	mapped alias "↦" (f: FUNCTION [A, A]): like set_map_anchor
-			-- <Precursor>
-		local
-			xs: SPECIAL [A]
+	do_map (f: FUNCTION [A, A])
+			-- Map every element x in current set to `f' (x).
 		do
-			create xs.make_empty (elements.count)
-			⟳ x: elements ¦
-				check
-					count_small_enough: xs.count < xs.capacity -- xs.count < elements.count = xs.capacity
-				end
-				xs.extend (f (x))
-			⟲
-			create Result.make_from_special (xs)
+			⟳ i: 0 |..| (elements.count - 1) ¦ elements.put (f (elements [i]), i) ⟲
+			remove_duplicates
+		ensure
+			mapped: Current ≍ old (Current ↦ f)
 		end
+
 feature -- Conversion
 
 	linear_representation: LINEAR [A]
@@ -687,6 +648,65 @@ feature {NONE} -- Implementation
 			class
 			base: xs.count = 0 ⇒ Result = rightmost
 			induction: xs.count > 0 ⇒ Result = special_reduction (xs.aliased_resized_area (xs.count - 1), f, f (xs [xs.count - 1], rightmost))
+		end
+
+	remove_duplicates
+			-- Remove all duplicates within `elements'
+		local
+			i, j: INTEGER
+		do
+			from
+			invariant
+				valid_outer_k: ∀ k: 0 |..| (i - 1) ¦ elements.valid_index (k) -- 0 ≤ k < i < elements.count
+				no_repetition: ∀ k: 0 |..| (i - 1) ¦ occurrences (elements [k], elements) = 1
+			until
+				i = elements.count
+			loop
+				from
+					j := i + 1
+				invariant
+					valid_i: elements.valid_index (i) -- 0 ≤ i < elements.count
+					valid_inner_k: ∀ k: (i + 1) |..| (j - 1) ¦ elements.valid_index (k) -- 0 ≤ i < k < j < elements.count
+					repetitions_pruned: ∀ k: (i + 1) |..| (j - 1) ¦ not eq (elements [i], elements [k])
+				until
+					j = elements.count
+				loop
+					check
+						valid_index: elements.valid_index (j) -- 0 ≤ i < j < elements.count
+					end
+					if eq (elements [i], elements [j]) then
+						check
+							source_index_non_negative: j + 1 >= 0 -- 0 ≤ i < j
+							destination_index_non_negative: j >= 0 -- 0 ≤ i < j
+							destination_index_in_bound: j <= elements.count -- 0 ≤ i < j < elements.count
+							n_non_negative: elements.count - (j + 1) >= 0 -- 0 ≤ i < j < elements.count
+							n_is_small_enough_for_source: j + 1 + elements.count - (j + 1) <= elements.count -- Algebra
+							n_is_small_enough_for_destination: j + elements.count - (j + 1) <= elements.capacity -- 0 ≤ i < j < elements.count ≤ elements.capacity
+						end
+						elements.move_data (j + 1, j, elements.count - (j + 1))
+						check
+							less_than_count: 1 <= elements.count -- elements.count > 0 ⇐ 0 ≤ i < j < elements.count
+						end
+						elements.remove_tail (1)
+					else
+						j := j + 1
+					end
+				variant
+					elements.count - j
+				end
+				i := i + 1
+			variant
+				elements.count - i
+			end
+			check
+				n_non_negative: elements.count >= 0 -- {SPECIAL}.count definition
+			end
+			elements := elements.aliased_resized_area (elements.count)
+		ensure
+			nothing_lost: ∀ x: (old elements) ¦ ∃ y: elements ¦ eq (x, y)
+			nothing_else: ∀ x: elements ¦ ∃ y: (old elements) ¦ eq (x, y)
+			no_repetition: ∀ x: elements ¦ occurrences (x, elements) = 1
+			no_waste: elements.count = elements.capacity
 		end
 
 invariant

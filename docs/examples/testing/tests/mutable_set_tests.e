@@ -2925,7 +2925,6 @@ feature -- Test routines (Basic operations)
 				(
 					agent: BOOLEAN
 						local
-							a, b, c: A
 							s: like set_to_be_tested
 							s2: like some_set_a
 						do
@@ -2942,7 +2941,7 @@ feature -- Test routines (Basic operations)
 				(
 					agent: BOOLEAN
 						local
-							a, b, c: A
+							a: A
 							s: like set_to_be_tested
 							s2: like some_set_a
 						do
@@ -2965,7 +2964,7 @@ feature -- Test routines (Basic operations)
 				(
 					agent: BOOLEAN
 						local
-							a, b, c: A
+							a, b: A
 							s: like set_to_be_tested
 							s2: like some_set_a
 						do
@@ -3048,7 +3047,6 @@ feature -- Test routines (Basic operations)
 				(
 					agent: BOOLEAN
 						local
-							a, b, c: A
 							s: like set_to_be_tested
 							s2: like some_set_a
 						do
@@ -3065,7 +3063,7 @@ feature -- Test routines (Basic operations)
 				(
 					agent: BOOLEAN
 						local
-							a, b, c: A
+							a: A
 							s: like set_to_be_tested
 							s2: like some_set_a
 						do
@@ -3088,7 +3086,7 @@ feature -- Test routines (Basic operations)
 				(
 					agent: BOOLEAN
 						local
-							a, b, c: A
+							a, b: A
 							s: like set_to_be_tested
 							s2: like some_set_a
 						do
