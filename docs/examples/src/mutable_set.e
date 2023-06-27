@@ -559,6 +559,18 @@ feature -- Basic operations
 			subtracted: Current ≍ old (Current ∖ s)
 		end
 
+	symdif, subtract_symmetricaly (s: STS_SET [A, EQ])
+			-- Remove all elements also in `s', and add all elements of `s' not already present.
+		local
+			intersection: STS_SET [A, EQ]
+		do
+			intersection := Current ∩ s
+			unite (s)
+			subtract (intersection)
+		ensure
+			subtracted_symmetricaly: Current ≍ old (Current ⊖ s)
+		end
+		
 feature -- Transformation
 
 	mapped alias "↦" (f: FUNCTION [A, A]): like set_map_anchor

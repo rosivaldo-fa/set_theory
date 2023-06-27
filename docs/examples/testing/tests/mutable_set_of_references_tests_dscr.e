@@ -73,6 +73,8 @@ inherit
 			test_merge,
 			test_unite,
 			test_subtract,
+			test_symdif,
+			test_subtract_symmetricaly,
 			test_mapped,
 			test_reduced,
 			test_proper_reduced,
@@ -149,6 +151,8 @@ feature -- Test routines (All)
 			test_merge
 			test_unite
 			test_subtract
+			test_symdif
+			test_subtract_symmetricaly
 			test_mapped
 			test_reduced
 			test_proper_reduced
@@ -640,6 +644,22 @@ feature -- Test routines (Basic operations)
 			-- <Precursor>
 		note
 			testing: "covers/{MUTABLE_SET}.subtract"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+	test_symdif
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.symdif"
+		do
+			Precursor {MUTABLE_SET_TESTS}
+		end
+
+	test_subtract_symmetricaly
+			-- <Precursor>
+		note
+			testing: "covers/{MUTABLE_SET}.subtract_symmetricaly"
 		do
 			Precursor {MUTABLE_SET_TESTS}
 		end
