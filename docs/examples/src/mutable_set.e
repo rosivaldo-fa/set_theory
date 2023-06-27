@@ -551,6 +551,14 @@ feature -- Basic operations
 			united: Current ≍ old (Current ∪ s)
 		end
 
+	subtract (s: STS_SET [A, EQ])
+			-- Remove all elements also in `s'.
+		do
+			do_filter (agent s.does_not_have)
+		ensure
+			subtracted: Current ≍ old (Current ∖ s)
+		end
+
 feature -- Transformation
 
 	mapped alias "↦" (f: FUNCTION [A, A]): like set_map_anchor

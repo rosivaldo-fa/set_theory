@@ -2815,6 +2815,106 @@ feature -- Test routines (Basic operations)
 				)
 		end
 
+	test_subtract
+			-- Test {MUTABLE_SET}.subtract.
+		note
+			testing: "covers/{MUTABLE_SET}.subtract"
+		do
+			assert (
+				"s ∖ s2 ≍ ∅",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							s := o
+							s2 := some_set_a
+							s.subtract (s2)
+							Result := s ≍ o
+						end
+					).item
+				)
+
+			assert (
+				"s ∖ s2 ≍ {a}",
+				(
+					agent: BOOLEAN
+						local
+							a: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s.extend (same_object_a (a))
+							s2 := some_set_a / same_object_a (a)
+							s.subtract (s2)
+							Result := s ≍ singleton (a)
+						end
+					).item
+				)
+
+			assert (
+				"s ∖ s2 ≍ {a}: 2",
+				(
+					agent: BOOLEAN
+						local
+							a, b: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s.extend (same_object_a (a))
+							s2 := some_set_a / same_object_a (a)
+							b := some_other_object_a (s)
+							s2 := s2 & same_object_a (b)
+							s.subtract (s2)
+							Result := s ≍ singleton (a)
+						end
+					).item
+				)
+
+			assert (
+				"s ∖ s2 ≍ {a,c}",
+				(
+					agent: BOOLEAN
+						local
+							a, b, c: A
+							s: like set_to_be_tested
+							s2: like some_set_a
+						do
+							a := some_object_a
+							s := o
+							s.extend (same_object_a (a))
+							s2 := some_set_a / same_object_a (a)
+							b := some_other_object_a (s)
+							s2 := s2 & same_object_a (b)
+							c := some_object_a
+							s.extend (same_object_a (c))
+							s2 := s2 / same_object_a (c)
+							s.subtract (s2)
+							Result := s ≍ (singleton (a) & c)
+						end
+					).item
+				)
+
+			assert (
+				"subtract",
+				(
+					agent: BOOLEAN
+						local
+							s: like set_to_be_tested
+						do
+							s := set_to_be_tested
+							s.subtract (some_set_a)
+							Result := attached s
+						end
+					).item
+				)
+		end
+
 feature -- Test routines (Transformation)
 
 	test_mapped
