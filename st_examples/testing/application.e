@@ -19,6 +19,9 @@ feature -- Initialization
 
 	show_mutable_set_of_separate_references
 			-- Do some operations upon a mutable set of separate references.
+		note
+			EIS: "name=Bug: separate clause defeats void-safety", "protocol=URI", "src=https://support.eiffel.com/report_detail/19891", "tag=bug, compiler, void-safety"
+			EIS: "name=Bug: Unexpected syntax error on descendant of ITERABLE", "protocol=URI", "src=https://groups.google.com/g/eiffel-users/c/J_sGnOIqCJM", "tag=bug, compiler, iteration"
 		local
 			c1: separate CHARACTER_REF
 			c2: CHARACTER_REF
