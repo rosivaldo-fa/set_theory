@@ -8,6 +8,11 @@ Copyright (c) 2012-2023, Rosivaldo F Alves
 license: Eiffel Forum License v2 (see https://www.eiffel.com/licensing/forum.txt)
 
 ## Change history
+### v0.1.3
+- Added examples of using set theory classes:
+	- st_examples.ecf
+	- st_examples\src\mutable_set.e
+	- st_examples\testing\application.e
 ### v0.1.2
 - Set transformations:
     - {STS_SET}.mapped

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-22-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-22-0 http://www.eiffel.com/developers/xml/configuration-1-22-0.xsd" name="st_examples" uuid="D1C58BF4-BF33-4FAC-A847-1983F4FB01CD" library_target="st_examples">
-	<description>Examples of using set theory classes,  as specified by st_specification and st_properties, and implemented by st_implementation.</description>
+	<description>Examples of using set theory classes, as specified by st_specification and st_properties, and implemented by st_implementation.</description>
 	<target name="st_examples">
 		<note>
 			<eis name="Unnamed" protocol="URI" src="file://$(system_path)/docs/EIS/st_examples.html"/>
@@ -24,8 +24,6 @@
 		<library name="st_specification" location="..\st_specification.ecf" prefix="STS_"/>
 		<cluster name="src" location=".\src\" recursive="true">
 			<description>Examples of using set theory classes, as specified by st_specification and st_properties, and implemented by st_implementation.</description>
-			<option>
-			</option>
 		</cluster>
 	</target>
 	<target name="st_examples_tests" extends="st_examples">
@@ -43,8 +41,6 @@
 		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
 		<cluster name="test" location=".\testing\">
 			<description>Tests for set theory classes, as implemented by st_examples</description>
-			<option>
-			</option>
 			<tests name="tests" location=".\testing\tests\"/>
 		</cluster>
 	</target>
