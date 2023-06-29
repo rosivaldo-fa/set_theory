@@ -1,8 +1,9 @@
 ﻿note
-	description: "Mutable implementation of the concept of a mathematical set"
+	description: "Example of a mutable implementation of {STS_SET}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	EIS: "name=Unnamed", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_examples.html#MUTABLE_SET"
 
 class
 	MUTABLE_SET [A, EQ -> STS_EQUALITY [A] create default_create end]
@@ -10,6 +11,7 @@ class
 inherit
 	STS_SET [A, EQ]
 		redefine
+			out,
 			exists_pair,
 			exists_distinct_pair,
 			for_all_pairs,
@@ -21,6 +23,8 @@ inherit
 	COLLECTION [A]
 		rename
 			has as has alias "∋"
+		redefine
+			out
 		end
 
 create
@@ -252,6 +256,60 @@ feature -- Removal
 			elements := elements.aliased_resized_area (0)
 		end
 
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+			-- 	TODO: Remove.
+		local
+			s: STS_SET [A, EQ]
+		do
+			Result := "{"
+			if not is_empty then
+				from
+					Result.append (element_out (any))
+					s := others
+				invariant
+--					building_up: Result ~ {TRANSFORMER [A, STRING, EQ, STS_OBJECT_EQUALITY [STRING]]}.tuple_indexed_left_reduction (right_trimmed (s.n), "", 1, agent appending_term_out)
+				until
+					s.is_empty
+				loop
+					Result.append_character (',')
+					check
+						other_arguments_not_void: element_out (s.any) /= Void -- `element_out' definition
+					end
+					Result.append (element_out (s.any))
+					s := s.others
+				variant
+					n: {STI_SET [A, EQ]}.natural_as_integer (# s)
+				end
+			end
+			Result.append_character ('}')
+		ensure then
+--			definition: Result ~ "{" + as_tuple.terms_out + "}"
+		end
+
+	element_out (a: A): STRING
+			-- Terse printable representation of `a'
+			-- 	TODO: Remove.
+		do
+			if attached a then
+				check
+					other_not_void: a.out /= Void -- {ANY}.out definition
+				end
+				create Result.make_from_separate (a.out)
+			else
+				Result := "Void"
+			end
+		ensure
+			class
+			definition: if attached a then
+					Result ~ a.out
+				else
+					Result ~ "Void"
+				end
+		end
+
 feature -- Quantifier
 
 	exists_pair (p: PREDICATE [A, A]): BOOLEAN
@@ -398,7 +456,7 @@ feature -- Transformation
 feature -- Basic operations
 
 	do_filter (p: PREDICATE [A])
-			-- Keep in current set only its elements `p` holds
+			-- Keep in current set only its elements for which `p` holds
 		local
 			i: INTEGER
 		do
