@@ -19,7 +19,8 @@ inherit
 			some_immediate_set_a as some_immediate_set_of_references_dscr,
 			some_set_a as some_set_of_references_dscr
 		redefine
-			test_make
+			test_make,
+			test_model_set
 		end
 
 feature -- Test routines (Initialization)
@@ -28,6 +29,16 @@ feature -- Test routines (Initialization)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.make"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+feature -- Test routines (Model)
+
+	test_model_set
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.model_set"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

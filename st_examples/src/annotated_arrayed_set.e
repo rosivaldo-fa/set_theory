@@ -33,8 +33,7 @@ feature -- Initialization
 		do
 			Precursor {ARRAYED_SET} (n)
 		ensure then
-			empty_reference_set: not object_comparison ⇒ reference_set_model.is_empty
-			empty_object_set: object_comparison ⇒ object_set_model.is_empty
+			empty_set: not object_comparison ⇒ model_set.is_empty
 		end
 
 	make_filled (n: INTEGER)
@@ -42,10 +41,8 @@ feature -- Initialization
 		do
 			Precursor {ARRAYED_SET} (n)
 		ensure then
-			empty_reference_set: n = 0 and not object_comparison ⇒ reference_set_model.is_empty
-			empty_object_set: n = 0 and object_comparison ⇒ object_set_model.is_empty
-			singleton_reference: n > 0 and not object_comparison ⇒ reference_set_model ≍ reference_set_model.singleton (({G}).default)
-			singleton_object: n > 0 and object_comparison ⇒ object_set_model ≍ object_set_model.singleton (({G}).default)
+			empty_reference_set: n = 0 and not object_comparison ⇒ model_set.is_empty
+			singleton_reference: n > 0 and not object_comparison ⇒ model_set ≍ model_set.singleton (({G}).default)
 		end
 
 feature {NONE} -- Initialization
@@ -56,8 +53,8 @@ feature {NONE} -- Initialization
 			Precursor {ARRAYED_SET} (a)
 		ensure then
 			compare_references: not object_comparison -- Default value
-			nothing_lost: ∀ x: a ¦ reference_set_model ∋ x -- TODO: Repeated creation?
-			nothing_else: reference_set_model |∀ agent a.has
+			nothing_lost: ∀ x: a ¦ model_set ∋ x -- TODO: Repeated creation?
+			nothing_else: model_set |∀ agent a.has
 		end
 
 	make_from_iterable (other: ITERABLE [G])
@@ -66,30 +63,20 @@ feature {NONE} -- Initialization
 			Precursor {ARRAYED_SET} (other)
 		ensure then
 			compare_references: not object_comparison -- Default value
-			nothing_lost: ∀ x: other ¦ reference_set_model ∋ x -- TODO: Repeated creation?
-			nothing_else: reference_set_model |∀ agent (ia_other: ITERABLE [G]; y: G): BOOLEAN do Result := ∃ x: ia_other ¦ x = y end (other, ?) -- TODO: Don't use an inline agent?
+			nothing_lost: ∀ x: other ¦ model_set ∋ x -- TODO: Repeated creation?
+			nothing_else: model_set |∀ agent (ia_other: ITERABLE [G]; y: G): BOOLEAN do Result := ∃ x: ia_other ¦ x = y end (other, ?) -- TODO: Don't use an inline agent?
 		end
 
 feature -- Model
 
-	reference_set_model: STI_SET [G, STS_REFERENCE_EQUALITY [G]]
-			-- Representation of current arrayed set as a set of references
-		require
-			compare_references: not object_comparison
+	model_set: STS_SET [G, STS_EQUALITY [G]]
+			-- Representation of current arrayed set as a mathematical set
 		do
-			create Result.make_empty
-			⟳ x: Current ¦ Result := Result & x ⟲
-		ensure
-			nothing_lost: ∀ x: Current ¦ Result ∋ x
-			nothing_else: Result |∀ agent has
-		end
-
-	object_set_model: STI_SET [G, STS_OBJECT_EQUALITY [G]]
-			-- Representation of current arrayed set as a set of objects
-		require
-			compare_objects: object_comparison
-		do
-			create Result.make_empty
+			if not object_comparison then
+				create {STI_SET [G, STS_REFERENCE_EQUALITY [G]]} Result.make_empty
+			else
+				create {STI_SET [G, STS_OBJECT_EQUALITY [G]]} Result.make_empty
+			end
 			⟳ x: Current ¦ Result := Result & x ⟲
 		ensure
 			nothing_lost: ∀ x: Current ¦ Result ∋ x
@@ -103,9 +90,12 @@ feature -- Access
 		do
 			Result := area_v2.item (i - 1)
 		ensure then
-			valid_reference: not object_comparison ⇒ reference_set_model ∋ Result
-			valid_object: object_comparison ⇒ object_set_model ∋ Result
+			valid_element: model_set ∋ Result
 		end
+
+invariant
+	reference_equality: not object_comparison ⇒ model_set.eq.generating_type <= {detachable STS_REFERENCE_EQUALITY [G]}
+	object_equality: object_comparison ⇒ model_set.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
