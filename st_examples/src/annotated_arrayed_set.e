@@ -42,7 +42,7 @@ feature -- Initialization
 			Precursor {ARRAYED_SET} (n)
 		ensure then
 			empty_set: n = 0 ⇒ model_set.is_empty
-			singleton: n > 0 model_set ≍ model_set.singleton (({G}).default)
+			singleton: n > 0 ⇒ model_set ≍ model_set.singleton (({G}).default)
 		end
 
 feature {NONE} -- Initialization

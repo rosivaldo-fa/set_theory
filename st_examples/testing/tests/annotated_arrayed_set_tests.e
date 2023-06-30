@@ -182,6 +182,28 @@ feature -- Test routines (Initialization)
 							end
 					).item
 				)
+
+			assert (
+					"make_filled",
+					(
+						agent: BOOLEAN
+							local
+								n: INTEGER
+							do
+								if ({G}).has_default then
+									n := some_count.as_integer_32
+									check
+										valid_number_of_items: n >= 0 -- some_count definition
+									end
+									check
+										make_filled: attached (create {ANNOTATED_ARRAYED_SET [G]}.make_filled (n))
+									then
+									end
+								end
+								Result := True
+							end
+					).item
+				)
 		end
 
 feature -- Test routines (Model)
