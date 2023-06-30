@@ -1,7 +1,9 @@
 ﻿note
-	description: "test application root class"
-	date: "$Date: 2019-09-11 18:27:54 +0000 (Wed, 11 Sep 2019) $"
-	revision: "$Revision: 103504 $"
+	description: "Examples of how to use classes made upon st_specification and st_implementation libraries"
+	author: "Rosivaldo F Alves"
+	date: "$Date$"
+	revision: "$Revision$"
+	EIS: "name=Examples of set_theory use", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_examples.html#APPLICATION", "tag=example, documentation"
 
 class
 	APPLICATION

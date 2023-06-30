@@ -7,7 +7,7 @@
 	<meta name="author" content="Rosivaldo Fernandes Alves"/>
 	<meta name="created" content="2023-05-28T11:56:03.868000000"/>
 	<meta name="changedby" content="Rosivaldo Fernandes Alves"/>
-	<meta name="changed" content="2023-06-29T11:19:41.870000000"/>
+	<meta name="changed" content="2023-06-30T15:54:36.303000000"/>
 	<meta name="classification" content="Examples of using set theory classes,  as specified by st_specification and st_properties, and implemented by st_implementation."/>
 	<meta name="keywords" content="set theory, specification, implementation, example"/>
 	<style type="text/css">
@@ -25,18 +25,18 @@
 	</style>
 </head>
 <body lang="en-US" dir="ltr"><h1 class="western"><span style="background: #c0c0c0"><sdfield type=DOCINFO subtype=TITLE>Set Theory: Examples</sdfield></span></h1>
-<p>Examples of using set theory classes,  as specified by
-<a href="./st_specification.html/"><font face="Liberation Mono, monospace">st_specification</font></a>
-and <a href="./st_properties.html"><font face="Liberation Mono, monospace">st_properties</font></a>,
-and implemented by <a href="./st_implementation.html"><font face="Liberation Mono, monospace">st_implementation</font></a>.</p>
+<p>Examples of using set theory classes, as specified by
+<a href="st_specification.html"><font face="Liberation Mono, monospace">st_specification</font></a>
+and <a href="st_properties.html"><font face="Liberation Mono, monospace">st_properties</font></a>,
+and implemented by <a href="st_implementation.html"><font face="Liberation Mono, monospace">st_implementation</font></a>.</p>
 <h2 class="western">How to use <font face="Liberation Mono, monospace">st_specification</font></h2>
-<h3 class="western">Class <font face="Liberation Mono, monospace">APPLICATION</font></h3>
+<h3 class="western"><a name="APPLICATION"></a>Class <font face="Liberation Mono, monospace">APPLICATION</font></h3>
 <p>The target <a href="#st_examples_tests"><font face="Liberation Mono, monospace">st_examples_tests</font></a>
 of <font face="Liberation Mono, monospace">st_examples</font> has a
 class <font face="Liberation Mono, monospace">APPLICATION</font>
 where are shown examples of how to use classes made upon
-<a href="./st_specification.html"><font face="Liberation Mono, monospace">st_specification</font></a>
-and <a href="./st_implementation.html"><font face="Liberation Mono, monospace">st_implementation</font></a>
+<a href="st_specification.html"><font face="Liberation Mono, monospace">st_specification</font></a>
+and <a href="st_implementation.html"><font face="Liberation Mono, monospace">st_implementation</font></a>
 libraries.</p>
 <h3 class="western"><a name="MUTABLE_SET"></a>Class <font face="Liberation Mono, monospace">MUTABLE_SET</font></h3>
 <p>This class shows how to use <font face="Liberation Mono, monospace">st_specification.SET</font>
@@ -45,39 +45,52 @@ as the specification of a class that models the mathematical concept
 of a set. It is a simple implementation of <font face="Liberation Mono, monospace">STS_SET</font><font face="Liberation Serif, serif">,
 i.e. it does only the bare minimum to implement the deferred features
 of </font><font face="Liberation Mono, monospace">STS_SET</font><font face="Liberation Serif, serif">.
-Additionally, it inherits from </font><font face="Liberation Mono, monospace">base.COLLECTION</font><font face="Liberation Serif, serif">
-in order to leverage the latter’s features, besides to be used by
-possible clients of </font><font face="Liberation Mono, monospace">base.CONTAINER</font><font face="Liberation Serif, serif">
-and </font><font face="Liberation Mono, monospace">base.ITERABLE</font><font face="Liberation Serif, serif">.
-Notice also that </font><font face="Liberation Mono, monospace">MUTABLE_SET</font><font face="Liberation Serif, serif">
-does not inherit from </font><font face="Liberation Mono, monospace">implementation.SET</font><font face="Liberation Serif, serif">,
+Additionally, it inherits from </font><font face="Liberation Mono, monospace">base.COLLECTION</font>
+<font face="Liberation Serif, serif">in order to leverage the
+latter’s features, besides to be used by possible clients of
+</font><font face="Liberation Mono, monospace">base.CONTAINER</font>
+<font face="Liberation Serif, serif">and </font><font face="Liberation Mono, monospace">base.ITERABLE</font><font face="Liberation Serif, serif">.
+Notice also that </font><font face="Liberation Mono, monospace">MUTABLE_SET</font>
+<font face="Liberation Serif, serif">does not inherit from
+</font><a href="st_implementation.html"><font face="Liberation Mono, monospace">st_</font><font face="Liberation Mono, monospace">i</font><font face="Liberation Mono, monospace">mplementation</font></a><font face="Liberation Mono, monospace">.SET</font><font face="Liberation Serif, serif">,
 since the former’s purpose is to show </font><font face="Liberation Serif, serif"><i>how
-to implement</i></font><font face="Liberation Serif, serif"> </font><font face="Liberation Mono, monospace">STS_SET</font><font face="Liberation Serif, serif">,
+to implement</i></font> <font face="Liberation Mono, monospace">STS_SET</font><font face="Liberation Serif, serif">,
 whatever the way one prefers to do such an implementation. Other
 purpose is to show how the “complete” specification of </font><font face="Liberation Mono, monospace">STS_SET</font><font face="Liberation Serif, serif">,
 which is “immutable”, eases the specification of features that
-make in-place changes in </font><font face="Liberation Mono, monospace">MUTABLE_SET</font><font face="Liberation Serif, serif">
-objects. Please see the example of </font><font face="Liberation Mono, monospace">{MUTABLE_SET}.intersect</font><font face="Liberation Serif, serif">’s
+make in-place changes in </font><font face="Liberation Mono, monospace">MUTABLE_SET</font>
+<font face="Liberation Serif, serif">objects. Please see the example
+of </font><font face="Liberation Mono, monospace">{MUTABLE_SET}.intersect</font>’<font face="Liberation Serif, serif">s
 contract:</font></p>
 <pre class="western">        intersect (s: STS_SET [A, EQ])
                         -- Remove all elements not in s.
                 ensure
-                        intersected: Current ≍ old (Current ∩ s)
-</pre><p>
+                        intersected: Current ≍ old (Current ∩ s)</pre><p>
 Since <font face="Liberation Mono, monospace">{STS_SET}.intersected</font>
 (<font face="Liberation Mono, monospace">alias “∩”</font>)
 already specifies what a set intersection is, turning a (mutable) set
 into its intersection with another set is rather straightforward.</p>
+<h3 class="western"><a name="ANNOTATED_ARRAYED_SET"></a>Class
+<font face="Liberation Mono, monospace">ANNOTATED_ARRAYED_SET</font></h3>
+<p>This class shows how to use <font face="Liberation Mono, monospace">st_i</font><font face="Liberation Mono, monospace">mplementation.SET</font><font face="Liberation Serif, serif">
+(renamed here to </font><font face="Liberation Mono, monospace">STI_SET</font><font face="Liberation Serif, serif">)
+in order to specify the features and invariant of a class like
+</font><font face="Liberation Mono, monospace">base.ARRAYED_SET</font><font face="Liberation Serif, serif">.
+</font><font face="Liberation Mono, monospace">ANNOTATED_ARRAYED_SET</font><font face="Liberation Serif, serif">
+inherits from </font><font face="Liberation Mono, monospace">base.ARRAYED_SET</font><font face="Liberation Serif, serif">
+and redefines the latter’s features just to add to them set-theory
+related constraints. A brand-new class may rely directly on </font><font face="Liberation Mono, monospace">STI_SET</font><font face="Liberation Serif, serif">
+in order to specify its own features and invariant.</font></p>
 <h3 class="western"><a name="st_examples_tests"></a>Target
 <font face="Liberation Mono, monospace">st_examples_tests</font></h3>
 <p><font face="Liberation Serif, serif">Please notice that the
-</font><font face="Liberation Mono, monospace">st_examples_tests</font><font face="Liberation Serif, serif">
-target of this project is highly redundant when compared to
-</font><font face="Liberation Mono, monospace"><a href="./st_implementation.html">st_implementation</a>.st_implementation_tests</font><font face="Liberation Serif, serif">.
+</font><font face="Liberation Mono, monospace">st_examples_tests</font>
+<font face="Liberation Serif, serif">target of this project is highly
+redundant when compared to </font><font face="Liberation Mono, monospace"><a href="st_implementation.html">st_implementation</a>.st_implementation_tests</font><font face="Liberation Serif, serif">.
 That is so because the latter is a rather improvised “framework”
-for testing </font><a href="./st_specification.html"><font face="Liberation Mono, monospace">st_specification</font></a><font face="Liberation Serif, serif">,
-</font><a href="./st_properties.html"><font face="Liberation Mono, monospace">st_properties</font></a><font face="Liberation Serif, serif">
-and </font><a href="./st_implementation.html"><font face="Liberation Mono, monospace">st_implementation</font></a><font face="Liberation Serif, serif">,
+for testing </font><a href="st_specification.html"><font face="Liberation Mono, monospace">st_specification</font></a><font face="Liberation Serif, serif">,
+</font><a href="st_properties.html"><font face="Liberation Mono, monospace">st_properties</font></a>
+<font face="Liberation Serif, serif">and </font><a href="st_implementation.html"><font face="Liberation Mono, monospace">st_implementation</font></a><font face="Liberation Serif, serif">,
 so it is not well crafted for reuse “as it is”.</font></p>
 </body>
 </html>

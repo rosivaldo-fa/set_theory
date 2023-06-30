@@ -3,6 +3,7 @@
 	author: "Rosivaldo F Alves, based on ARRAYED_SET of EiffelBase"
 	date: "$Date$"
 	revision: "$Revision$"
+	EIS: "name=Unnamed", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_examples.html#ANNOTATED_ARRAYED_SET"
 
 class ANNOTATED_ARRAYED_SET [G]
 
