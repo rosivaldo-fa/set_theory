@@ -91,17 +91,23 @@ feature -- Test routines (Model)
 			create s.make (n)
 			assert ("∅", s.model_set.is_empty)
 
+			if next_random_item \\ 2 = 0 then
+				check
+					changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+				end
+				s.compare_objects
+			end
 			a := some_object_a
-			s.extend (same_object_a (a)) -- TODO: Consider s.model_set.eq.
-			assert ("{a}", s.model_set ≍ s.model_set.singleton (a)) -- TODO: Make an {ANNOTATED_ARRAYED_SET}.singleton.
+			s.extend (same_object_s_a (s, a))
+			assert ("{a}", s.model_set ≍ singleton (s, a))
 
 			b := some_object_a
-			s.extend (b)
-			assert ("{a,b}", s.model_set ≍ (s.model_set.singleton (a) & b)) -- TODO: Make an {ANNOTATED_ARRAYED_SET}.singleton.
+			s.extend (same_object_s_a (s, b))
+			assert ("{a,b}", s.model_set ≍ (singleton (s, a) & b))
 
 			c := some_object_a
-			s.extend (c)
-			assert ("{a,b,c}", s.model_set ≍ (s.model_set.singleton (a) & b & c)) -- TODO: Make an {ANNOTATED_ARRAYED_SET}.singleton.
+			s.extend (same_object_s_a (s, c))
+			assert ("{a,b,c}", s.model_set ≍ (singleton (s, a) & b & c))
 
 			n := some_count.as_integer_32
 			check
@@ -114,6 +120,26 @@ feature -- Test routines (Model)
 			assert ("model_set", attached s.model_set)
 		end
 
+feature -- Factory (Object)
+
+	same_object_s_a (s: ANNOTATED_ARRAYED_SET [G]; a: G): G
+			-- Randomly-fetched object equal to `a'
+		do
+			Result := a
+			if s.object_comparison then
+				if next_random_item \\ 2 = 0 then
+					separate a as sep_a do -- BEWARE: Not void-safe!
+						if attached sep_a then
+							Result := sep_a.twin
+						end
+					end
+				end
+			end
+		ensure
+			same_value: Result ~ a
+			possibly_same_reference: not s.object_comparison ⇒ Result = a
+		end
+
 feature {NONE} -- Factory (Set)
 
 	reference_o: STI_SET [G, STS_REFERENCE_EQUALITY [G]]
@@ -123,11 +149,20 @@ feature {NONE} -- Factory (Set)
 			create Result.make_empty
 		end
 
-	object_o: STI_SET [G, STS_OBJECT_EQUALITY [G]]
-			-- The empty set, i.e. {} or ∅, with elements compared by object values
-			--| TODO: Make it once? An attribute?
+	singleton (s: ANNOTATED_ARRAYED_SET [G]; a: G): STS_SET [G, STS_EQUALITY [G]]
+			-- Singleton in the form {`a'}
+			--| TODO: DRY.
 		do
-			create Result.make_empty
+			if not s.object_comparison then
+				create {STI_SET [G, STS_REFERENCE_EQUALITY [G]]} Result.make_singleton (a)
+			else
+				create {STI_SET [G, STS_OBJECT_EQUALITY [G]]} Result.make_singleton (a)
+			end
+		ensure
+			reference_equality: not s.object_comparison ⇒ Result.eq.generating_type <= {detachable STS_REFERENCE_EQUALITY [G]}
+			object_equality: s.object_comparison ⇒ Result.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
+			singleton: Result.is_singleton
+			sole_element: Result ∋ a
 		end
 
 note

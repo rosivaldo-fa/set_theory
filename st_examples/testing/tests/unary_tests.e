@@ -35,7 +35,7 @@ feature -- Factory (Object)
 		end
 
 	same_object_a (a: A): A
-			-- Randomly-fetched object like {A}
+			-- Randomly-fetched object equal to `a'
 		do
 			Result := a
 		ensure
@@ -354,6 +354,6 @@ note
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: "https://github.com/rosivaldo-fa/Set-Theory"
+	source: "https://github.com/rosivaldo-fa/set_theory"
 
 end
