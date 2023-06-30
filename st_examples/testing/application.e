@@ -15,7 +15,10 @@ feature -- Initialization
 			-- Run application.
 		do
 			show_mutable_set_of_separate_references
+			show_mutable_set_of_references
 		end
+
+feature -- Example
 
 	show_mutable_set_of_separate_references
 			-- Do some operations upon a mutable set of separate references.
@@ -94,8 +97,7 @@ feature -- Initialization
 			print (cs1)
 			io.new_line
 
-			⟳
-				c: cs1 ¦
+			⟳ c: cs1 ¦
 				separate c as sep_c do -- BEWARE: Not void-safe! Please see https://support.eiffel.com/report_detail/19891
 					if attached sep_c then
 						print (create {STRING}.make_from_separate (sep_c.out))
@@ -110,6 +112,75 @@ feature -- Initialization
 				-- Unexpected syntax errors (https://groups.google.com/g/eiffel-users/c/J_sGnOIqCJM)
 --			∃ c: cs1 ¦ c = Void
 --			∀ c: cs1 ¦ c = c
+			io.new_line
+		end
+
+	show_mutable_set_of_references
+			-- Do some operations upon a mutable set of references.
+		note
+			EIS: "name=Bug: Unexpected syntax error on descendant of ITERABLE", "protocol=URI", "src=https://groups.google.com/g/eiffel-users/c/J_sGnOIqCJM", "tag=bug, compiler, iteration"
+		local
+			i1: INTEGER_REF
+			i2: INTEGER
+			is1: MUTABLE_SET [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
+			is2: STI_SET [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
+		do
+			create is1.make_singleton (Void)
+			check
+				void_inserted: # is1 = 1
+			end
+			create i1
+			i1.set_item (0)
+			is1.put (i1)
+			check
+				i1_inserted: # is1 = 2
+			end
+			i2 := 0
+			is1.put (i2)
+			check
+				i2_inserted: # is1 = 3
+			end
+			is1.put (i1)
+			is1.put (i1.item)
+			is1.put (i2)
+			is1.put (0)
+			is1.put (i1.twin)
+			is1.put (i2.twin)
+			is1.put (i2.to_reference)
+			check
+				no_change: # is1 = 3
+			end
+			print (is1)
+			io.new_line
+
+			create is2.make_empty
+			is2 := is2 & i1 & i2
+			print (is1 ∩ is2)
+			io.new_line
+			print (is2 ∩ is1)
+			io.new_line
+			print (is1)
+			io.new_line
+			print (is2)
+			io.new_line
+			is1.intersect (is2)
+			print (is1)
+			io.new_line
+
+			⟳ i: is1 ¦
+				if attached i then
+					print (i)
+				else
+					print ("Void")
+				end
+				print (' ')
+			⟲
+			io.new_line
+
+				-- Unexpected syntax errors (https://groups.google.com/g/eiffel-users/c/J_sGnOIqCJM)
+--			∃ i: is1 ¦ i = Void
+--			∀ i: is1 ¦ i = c
+			io.new_line
 		end
 
 note
@@ -118,6 +189,6 @@ note
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: "https://github.com/rosivaldo-fa/Set-Theory"
+	source: "https://github.com/rosivaldo-fa/set_theory"
 
 end
