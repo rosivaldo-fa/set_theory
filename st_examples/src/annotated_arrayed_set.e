@@ -41,8 +41,8 @@ feature -- Initialization
 		do
 			Precursor {ARRAYED_SET} (n)
 		ensure then
-			empty_reference_set: n = 0 and not object_comparison ⇒ model_set.is_empty
-			singleton_reference: n > 0 and not object_comparison ⇒ model_set ≍ model_set.singleton (({G}).default)
+			empty_set: n = 0 ⇒ model_set.is_empty
+			singleton: n > 0 model_set ≍ model_set.singleton (({G}).default)
 		end
 
 feature {NONE} -- Initialization

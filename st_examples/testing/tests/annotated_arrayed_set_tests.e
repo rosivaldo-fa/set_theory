@@ -77,6 +77,111 @@ feature -- Test routines (Initialization)
 							end
 					).item
 				)
+			assert (
+					"make",
+					(
+						agent: BOOLEAN
+							local
+								n: INTEGER
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								n := some_count.as_integer_32
+								check
+									valid_number_of_items: n >= 0 -- some_count definition
+								end
+								create s.make (n)
+								Result := attached s
+							end
+					).item
+				)
+		end
+
+	test_make_filled
+			-- Test {ANNOTATED_ARRAYED_SET}.make_filled
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.make_filled"
+		do
+			assert (
+					"no element",
+					(
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								if ({G}).has_default then
+									create s.make_filled (0)
+									if next_random_item \\ 2 = 0 then
+										check
+											changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+										end
+										s.compare_objects
+									end
+									check
+										is_empty: s.model_set.is_empty
+									then
+									end
+								end
+								Result := True
+							end
+					).item
+				)
+			assert (
+					"singleton",
+					(
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								if ({G}).has_default then
+									create s.make_filled (1)
+									check
+										is_singleton: s.model_set.is_singleton
+										default_element: s ∋ ({G}).default
+									then
+									end
+								end
+								Result := True
+							end
+					).item
+				)
+			assert (
+					"discard elements",
+					(
+						agent: BOOLEAN
+							local
+								n1, n2: INTEGER
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								if ({G}).has_default then
+									n1 := some_count.as_integer_32
+									check
+										valid_number_of_items_1: n1 >= 0 -- some_count definition
+									end
+									create s.make_filled (n1)
+									⟳ i: 1 |..| some_count.as_integer_32 ¦
+										s.extend (some_object_a)
+									⟲
+									n2 := some_count.as_integer_32
+									check
+										valid_number_of_items_2: n2 >= 0 -- some_count definition
+									end
+									s.make_filled (n2)
+									if next_random_item \\ 2 = 0 and n2 = 0 then
+										check
+											changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+										end
+										s.compare_objects
+									end
+									check
+										is_empty: n2 = 0 ⇒ s.model_set.is_empty
+										is_singleton: n2 > 0 ⇒ s.model_set.is_singleton
+									then
+									end
+								end
+								Result := True
+							end
+					).item
+				)
 		end
 
 feature -- Test routines (Model)
@@ -92,7 +197,7 @@ feature -- Test routines (Model)
 		do
 			n := some_count.as_integer_32
 			check
-				valid_number_of_items: n >= 0 -- some_count definition
+				valid_number_of_items_1: n >= 0 -- some_count definition
 			end
 			create s.make (n)
 			assert ("∅", s.model_set.is_empty)
@@ -117,7 +222,7 @@ feature -- Test routines (Model)
 
 			n := some_count.as_integer_32
 			check
-				valid_number_of_items: n >= 0 -- some_count definition
+				valid_number_of_items_2: n >= 0 -- some_count definition
 			end
 			create s.make (n)
 			⟳ i: 1 |..| some_count.as_integer_32 ¦
