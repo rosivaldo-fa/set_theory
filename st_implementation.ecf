@@ -7,7 +7,7 @@
 		</note>
 		<description>Implementation of set theory classes, as specified by st_specification.</description>
 		<root all_classes="true"/>
-		<version major="0" minor="1" release="3" build="0" company="Rosivaldo F Alves" product="st_implementation" trademark="set_theory" copyright="Rosivaldo F Alves"/>
+		<version major="0" minor="1" release="4" build="0" company="Rosivaldo F Alves" product="st_implementation" trademark="set_theory" copyright="Rosivaldo F Alves"/>
 		<file_rule>
 			<exclude>/CVS$</exclude>
 			<exclude>/EIFGENs$</exclude>
