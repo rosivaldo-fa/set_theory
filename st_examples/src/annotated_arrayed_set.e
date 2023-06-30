@@ -33,7 +33,7 @@ feature -- Initialization
 		do
 			Precursor {ARRAYED_SET} (n)
 		ensure then
-			empty_set: not object_comparison ⇒ model_set.is_empty
+			empty_set: model_set.is_empty
 		end
 
 	make_filled (n: INTEGER)

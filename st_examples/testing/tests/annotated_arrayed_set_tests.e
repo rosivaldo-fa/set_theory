@@ -24,50 +24,56 @@ feature -- Test routines (Initialization)
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.make"
 		do
 			assert (
-					"no reference",
+					"no element",
 					(
 						agent: BOOLEAN
 							local
 								n: INTEGER
-								xs: ANNOTATED_ARRAYED_SET [G]
+								s: ANNOTATED_ARRAYED_SET [G]
 							do
 								n := some_count.as_integer_32
 								check
 									valid_number_of_items: n >= 0 -- some_count definition
 								end
-								create xs.make (n)
-								check
-									compare_references: not xs.object_comparison -- Default value
+								create s.make (n)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
 								end
-								Result := xs.model_set ≍ reference_o
+								Result := s.model_set.is_empty
 							end
 					).item
 				)
 			assert (
-					"discarded references",
+					"discarded elements",
 					(
 						agent: BOOLEAN
 							local
 								n1, n2: INTEGER
-								xs: ANNOTATED_ARRAYED_SET [G]
+								s: ANNOTATED_ARRAYED_SET [G]
 							do
 								n1 := some_count.as_integer_32
 								check
 									valid_number_of_items_1: n1 >= 0 -- some_count definition
 								end
-								create xs.make (n1)
+								create s.make (n1)
 								⟳ i: 1 |..| some_count.as_integer_32 ¦
-									xs.extend (some_object_a)
+									s.extend (some_object_a)
 								⟲
 								n2 := some_count.as_integer_32
 								check
 									valid_number_of_items_2: n2 >= 0 -- some_count definition
 								end
-								xs.make (n2)
-								check
-									compare_references: not xs.object_comparison -- Default value
+								s.make (n2)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
 								end
-								Result := xs.model_set ≍ reference_o
+								Result := s.model_set.is_empty
 							end
 					).item
 				)
