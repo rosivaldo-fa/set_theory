@@ -16,6 +16,7 @@ feature -- Initialization
 		do
 			show_mutable_set_of_separate_references
 			show_mutable_set_of_references
+			show_mutable_set_of_objects
 		end
 
 feature -- Example
@@ -121,7 +122,8 @@ feature -- Example
 			EIS: "name=Bug: Unexpected syntax error on descendant of ITERABLE", "protocol=URI", "src=https://groups.google.com/g/eiffel-users/c/J_sGnOIqCJM", "tag=bug, compiler, iteration"
 		local
 			i1: INTEGER_REF
-			i2: INTEGER
+			i2: INTEGER_REF
+			i3: INTEGER
 			is1: MUTABLE_SET [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
 			is2: STI_SET [detachable INTEGER_REF, STS_OBJECT_EQUALITY [detachable INTEGER_REF]]
 		do
@@ -135,18 +137,35 @@ feature -- Example
 			check
 				i1_inserted: # is1 = 2
 			end
-			i2 := 0
+			create i2
+			i2.set_item (0)
 			is1.put (i2)
 			check
-				i2_inserted: # is1 = 3
+				no_change: # is1 = 2
+			end
+			i3 := 0
+			is1.put (i3)
+			check
+				i3_inserted: # is1 = 3
 			end
 			is1.put (i1)
 			is1.put (i1.item)
 			is1.put (i2)
+			is1.put (i2.item)
+			is1.put (i3)
 			is1.put (0)
+			check
+				no_change: # is1 = 3
+			end
 			is1.put (i1.twin)
+			check
+				no_change: # is1 = 3
+			end
 			is1.put (i2.twin)
-			is1.put (i2.to_reference)
+			check
+				no_change: # is1 = 3
+			end
+			is1.put (i3.to_reference)
 			check
 				no_change: # is1 = 3
 			end
@@ -154,7 +173,7 @@ feature -- Example
 			io.new_line
 
 			create is2.make_empty
-			is2 := is2 & i1 & i2
+			is2 := is2 & i1 & i2 & i3
 			print (is1 ∩ is2)
 			io.new_line
 			print (is2 ∩ is1)
@@ -177,9 +196,95 @@ feature -- Example
 			⟲
 			io.new_line
 
-				-- Unexpected syntax errors (https://groups.google.com/g/eiffel-users/c/J_sGnOIqCJM)
+				-- Unexpected syntax errors (https://groups.google.com/g/eiffel-users/i/J_sGnOIqCJM)
 --			∃ i: is1 ¦ i = Void
---			∀ i: is1 ¦ i = c
+--			∀ i: is1 ¦ i = i
+			io.new_line
+		end
+
+	show_mutable_set_of_objects
+			-- Do some operations upon a mutable set of objects.
+		note
+			EIS: "name=Bug: Unexpected syntax error on descendant of ITERABLE", "protocol=URI", "src=https://groups.google.com/g/eiffel-users/c/J_sGnOIqCJM", "tag=bug, compiler, iteration"
+		local
+			n1: NATURAL
+			n2: NATURAL
+			n3: NATURAL
+			ns1: MUTABLE_SET [NATURAL, STS_OBJECT_EQUALITY [NATURAL]]
+			ns2: STI_SET [NATURAL, STS_OBJECT_EQUALITY [NATURAL]]
+		do
+			create ns1.make_singleton (0)
+			check
+				void_inserted: # ns1 = 1
+			end
+			create n1
+			n1.set_item (0)
+			ns1.put (n1)
+			check
+				no_change: # ns1 = 1
+			end
+			create n2
+			n2.set_item (0)
+			ns1.put (n2)
+			check
+				no_change: # ns1 = 1
+			end
+			n3 := 0
+			ns1.put (n3)
+			check
+				no_change: # ns1 = 1
+			end
+			ns1.put (n1)
+			ns1.put (n1.item)
+			ns1.put (n2)
+			ns1.put (n2.item)
+			ns1.put (n3)
+			ns1.put (0)
+			check
+				no_change: # ns1 = 1
+			end
+			ns1.put (n1.twin)
+			check
+				no_change: # ns1 = 1
+			end
+			ns1.put (n2.twin)
+			check
+				no_change: # ns1 = 1
+			end
+			ns1.put (n3.to_reference) -- NOTICE: There is a conversion here.
+			check
+				no_change: # ns1 = 1
+			end
+			print (ns1)
+			io.new_line
+
+			create ns2.make_empty
+			ns2 := ns2 & n1 & n2 & n3
+			print (ns1 ∩ ns2)
+			io.new_line
+			print (ns2 ∩ ns1)
+			io.new_line
+			print (ns1)
+			io.new_line
+			print (ns2)
+			io.new_line
+			ns1.intersect (ns2)
+			print (ns1)
+			io.new_line
+
+			⟳ n: ns1 ¦
+				if attached n then
+					print (n)
+				else
+					print ("Void")
+				end
+				print (' ')
+			⟲
+			io.new_line
+
+				-- Unexpected syntax errors (https://groups.google.com/g/eiffel-users/n/J_sGnOIqCJM)
+--			∃ n: ns1 ¦ n = Void
+--			∀ n: ns1 ¦ n = n
 			io.new_line
 		end
 
