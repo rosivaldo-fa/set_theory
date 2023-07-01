@@ -52,9 +52,9 @@ feature {NONE} -- Initialization
 		do
 			Precursor {ARRAYED_SET} (a)
 		ensure then
-			compare_references: not object_comparison -- Default value
-			nothing_lost: ∀ x: a ¦ model_set ∋ x -- TODO: Repeated creation?
-			nothing_else: model_set |∀ agent a.has
+			s: attached model_set as s
+			nothing_lost: ∀ x: a ¦ s ∋ x
+			nothing_else: s |∀ agent a.has
 		end
 
 	make_from_iterable (other: ITERABLE [G])

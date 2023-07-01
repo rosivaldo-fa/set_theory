@@ -21,6 +21,7 @@ inherit
 		redefine
 			test_make,
 			test_make_filled,
+			test_make_from_array,
 			test_model_set
 		end
 
@@ -38,6 +39,14 @@ feature -- Test routines (Initialization)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.make_filled"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_make_from_array
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.make_from_array"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
