@@ -251,7 +251,6 @@ feature -- Test routines (Initialization)
 						agent: BOOLEAN
 							local
 								v1, v2: G
-								a: ARRAY [G]
 								s: ANNOTATED_ARRAYED_SET [G]
 							do
 								v1 := some_object_a
@@ -267,7 +266,6 @@ feature -- Test routines (Initialization)
 						agent: BOOLEAN
 							local
 								v1, v2, v3: G
-								a: ARRAY [G]
 								s: ANNOTATED_ARRAYED_SET [G]
 							do
 								v1 := some_object_a
@@ -288,6 +286,91 @@ feature -- Test routines (Initialization)
 								create a.make_empty
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ a.force (some_object_a, a.count + 1) ⟲
 								Result := attached (create {ANNOTATED_ARRAYED_SET [G]}.make_from_array (a))
+							end
+					).item
+				)
+		end
+
+	test_make_from_iterable
+			-- Test {ANNOTATED_ARRAYED_SET}.make_from_iterable
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.make_from_iterable"
+		do
+			assert (
+					"∅",
+					(
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make_from_iterable (<<>>)
+								Result := s.model_set.is_empty
+							end
+					).item
+				)
+			assert (
+					"{v}",
+					(
+						agent: BOOLEAN
+							local
+								v: G
+								a: ARRAY [G]
+								s: ANNOTATED_ARRAYED_SET [G]
+								min_index, max_index: INTEGER
+							do
+								v := some_object_a
+								min_index := some_integer
+								max_index := min_index + some_count.as_integer_32
+								check
+									valid_bounds: min_index <= max_index + 1 -- min_index <= max_index
+								end
+								create a.make_filled (v, min_index, max_index)
+								create s.make_from_iterable (a)
+								Result := s.model_set ≍ singleton (s, v)
+							end
+					).item
+				)
+			assert (
+					"{v1,v2}",
+					(
+						agent: BOOLEAN
+							local
+								v1, v2: G
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								v1 := some_object_a
+								v2 := some_object_a
+								create s.make_from_iterable (<<v1, v2>>)
+								Result := s.model_set ≍ (singleton (s, v1) & v2)
+							end
+					).item
+				)
+			assert (
+					"{v1,v2,v3}",
+					(
+						agent: BOOLEAN
+							local
+								v1, v2, v3: G
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								v1 := some_object_a
+								v2 := some_object_a
+								v3 := some_object_a
+								create s.make_from_iterable (<<v1, v2, v3>>)
+								Result := s.model_set ≍ (singleton (s, v1) & v2 & v3)
+							end
+					).item
+				)
+			assert (
+					"make_from_iterable",
+					(
+						agent: BOOLEAN
+							local
+								a: ARRAY [G]
+							do
+								create a.make_empty
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ a.force (some_object_a, a.count + 1) ⟲
+								Result := attached (create {ANNOTATED_ARRAYED_SET [G]}.make_from_iterable (a))
 							end
 					).item
 				)

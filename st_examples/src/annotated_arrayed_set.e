@@ -62,9 +62,9 @@ feature {NONE} -- Initialization
 		do
 			Precursor {ARRAYED_SET} (other)
 		ensure then
-			compare_references: not object_comparison -- Default value
-			nothing_lost: ∀ x: other ¦ model_set ∋ x -- TODO: Repeated creation?
-			nothing_else: model_set |∀ agent (ia_other: ITERABLE [G]; y: G): BOOLEAN do Result := ∃ x: ia_other ¦ x = y end (other, ?) -- TODO: Don't use an inline agent?
+			s: attached model_set as s
+			nothing_lost: ∀ x: other ¦ s ∋ x
+			nothing_else: model_set |∀ agent iterable_has_element_reference (other, ?)
 		end
 
 feature -- Model
@@ -93,6 +93,18 @@ feature -- Access
 			Result := area_v2.item (i - 1)
 		ensure then
 			valid_element: model_set ∋ Result
+		end
+
+feature -- Predicate
+
+	iterable_has_element_reference (ys: ITERABLE [G]; x: G): BOOLEAN
+			-- Does `ys' contain `x' as an element (compared by reference)?
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Result := ∃ y: ys ¦ x = y
+		ensure
+			definition: Result = ∃ y: ys ¦ x = y
 		end
 
 note
