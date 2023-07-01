@@ -14,6 +14,7 @@ inherit
 			make_filled,
 			make_from_array,
 			make_from_iterable,
+			area,
 			i_th, at
 		end
 
@@ -41,8 +42,9 @@ feature -- Initialization
 		do
 			Precursor {ARRAYED_SET} (n)
 		ensure then
-			empty_set: n = 0 ⇒ model_set.is_empty
-			singleton: n > 0 ⇒ model_set ≍ model_set.singleton (({G}).default)
+			s: attached model_set as s
+			empty_set: n = 0 ⇒ s.is_empty
+			singleton: n > 0 ⇒ s ≍ s.singleton (({G}).default)
 		end
 
 feature {NONE} -- Initialization
@@ -64,7 +66,7 @@ feature {NONE} -- Initialization
 		ensure then
 			s: attached model_set as s
 			nothing_lost: ∀ x: other ¦ s ∋ x
-			nothing_else: model_set |∀ agent iterable_has_element_reference (other, ?)
+			nothing_else: s |∀ agent iterable_has_element_reference (other, ?)
 		end
 
 feature -- Model
@@ -87,6 +89,16 @@ feature -- Model
 
 feature -- Access
 
+	area: SPECIAL [G]
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}
+		ensure then
+			s: attached model_set as s
+			nothing_lost: ∀ x: Result ¦ s ∋ x
+			nothing_else: s |∀ agent iterable_has_element (Result, s.eq, ?)
+		end
+
 	i_th alias "[]", at alias "@" (i: INTEGER): like item assign put_i_th
 			-- <Precursor>
 		do
@@ -105,6 +117,16 @@ feature -- Predicate
 			Result := ∃ y: ys ¦ x = y
 		ensure
 			definition: Result = ∃ y: ys ¦ x = y
+		end
+
+	iterable_has_element (ys: ITERABLE [G]; eq: STS_EQUALITY [G]; x: G): BOOLEAN
+			-- Does `ys' contain `x' as an element (compared by `eq')?
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Result := ∃ y: ys ¦ eq (x, y)
+		ensure
+			definition: Result = ∃ y: ys ¦ eq (x, y)
 		end
 
 note

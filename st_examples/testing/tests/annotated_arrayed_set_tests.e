@@ -423,6 +423,20 @@ feature -- Test routines (Model)
 			assert ("model_set", attached s.model_set)
 		end
 
+feature -- Test routines (Access)
+
+	test_area
+			-- Test {ANNOTATED_ARRAYED_SET}.area
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.area"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			assert ("area", attached s.area)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
