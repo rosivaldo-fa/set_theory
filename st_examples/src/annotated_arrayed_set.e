@@ -79,6 +79,8 @@ feature -- Model
 			end
 			⟳ x: Current ¦ Result := Result & x ⟲
 		ensure
+			reference_equality: not object_comparison ⇒ Result.eq.generating_type <= {detachable STS_REFERENCE_EQUALITY [G]}
+			object_equality: object_comparison ⇒ Result.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
 			nothing_lost: ∀ x: Current ¦ Result ∋ x
 			nothing_else: Result |∀ agent has
 		end
@@ -92,10 +94,6 @@ feature -- Access
 		ensure then
 			valid_element: model_set ∋ Result
 		end
-
-invariant
-	reference_equality: not object_comparison ⇒ model_set.eq.generating_type <= {detachable STS_REFERENCE_EQUALITY [G]}
-	object_equality: object_comparison ⇒ model_set.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
