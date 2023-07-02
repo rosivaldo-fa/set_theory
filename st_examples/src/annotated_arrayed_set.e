@@ -36,6 +36,7 @@ feature -- Initialization
 			Precursor {ARRAYED_SET} (n)
 		ensure then
 			empty_set: model_set.is_empty
+			empty_indices: model_indices.is_empty
 		end
 
 	make_filled (n: INTEGER)
@@ -94,7 +95,7 @@ feature -- Model
 			create Result.make_empty
 			⟳ i: 0 |..| (count - 1) ¦ Result := Result.extended (i) ⟲
 		ensure
-			nothing_lost: ∀ i: 0 |..| (count - 1) ¦ Result ∋ i 
+			nothing_lost: ∀ i: 0 |..| (count - 1) ¦ Result ∋ i
 			nothing_else: Result |∀ agent (0 |..| (count - 1)).has
 		end
 

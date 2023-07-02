@@ -42,7 +42,12 @@ feature -- Test routines (Initialization)
 									end
 									s.compare_objects
 								end
-								Result := s.model_set.is_empty
+								check
+									empty_set: s.model_set.is_empty
+									empty_indices: s.model_indices.is_empty
+								then
+									Result := s.model_set.is_empty
+								end
 							end
 					).item
 				)
@@ -73,7 +78,12 @@ feature -- Test routines (Initialization)
 									end
 									s.compare_objects
 								end
-								Result := s.model_set.is_empty
+								check
+									empty_set: s.model_set.is_empty
+									empty_indices: s.model_indices.is_empty
+								then
+									Result := s.model_set.is_empty
+								end
 							end
 					).item
 				)
