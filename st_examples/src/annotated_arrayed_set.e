@@ -15,6 +15,7 @@ inherit
 			make_from_array,
 			make_from_iterable,
 			area,
+			array_at,
 			i_th, at
 		end
 
@@ -87,6 +88,16 @@ feature -- Model
 			nothing_else: Result |∀ agent has
 		end
 
+	model_indices: STI_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]
+			-- Representation of current arrayed set's indices a mathematical set
+		do
+			create Result.make_empty
+			⟳ i: 0 |..| (count - 1) ¦ Result := Result.extended (i) ⟲
+		ensure
+			nothing_lost: ∀ i: 0 |..| (count - 1) ¦ Result ∋ i 
+			nothing_else: Result |∀ agent (0 |..| (count - 1)).has
+		end
+
 feature -- Access
 
 	area: SPECIAL [G]
@@ -97,6 +108,14 @@ feature -- Access
 			s: attached model_set as s
 			nothing_lost: ∀ x: Result ¦ s ∋ x
 			nothing_else: s |∀ agent iterable_has_element (Result, s.eq, ?)
+		end
+
+	array_at (i: INTEGER): G assign array_put
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}(i)
+		ensure then
+			valid_element: model_set ∋ Result
 		end
 
 	i_th alias "[]", at alias "@" (i: INTEGER): like item assign put_i_th
@@ -128,6 +147,11 @@ feature -- Predicate
 		ensure
 			definition: Result = ∃ y: ys ¦ eq (x, y)
 		end
+
+invariant
+	s: attached model_set as s
+	area_v2_nothing_lost: ∀ x: area_v2 ¦ s ∋ x
+	area_v2_nothing_else: s |∀ agent iterable_has_element (area_v2, s.eq, ?)
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

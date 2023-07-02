@@ -423,6 +423,18 @@ feature -- Test routines (Model)
 			assert ("model_set", attached s.model_set)
 		end
 
+	test_model_indices
+			-- Test {ANNOTATED_ARRAYED_SET}.model_indices
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.model_indices"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			assert ("model_indices", attached s.model_indices)
+		end
+
 feature -- Test routines (Access)
 
 	test_area
@@ -437,10 +449,29 @@ feature -- Test routines (Access)
 			assert ("area", attached s.area)
 		end
 
+	test_array_at
+			-- Test {ANNOTATED_ARRAYED_SET}.array_at
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_at"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+			j: INTEGER
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			if s.count > 0 then
+				j := next_random_item \\ s.count
+				check
+					valid_index: s.array_valid_index (j) -- 0 <= j < s.count
+				end
+			end
+			assert ("area", s.count > 0 ⇒ attached s.array_at (j) ⇒ True)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
-			-- Randomly-fetched object equal to `a'
+			-- Randomly-fetched object equal to `a', compared according to `s'.`object_comparison'
 		do
 			Result := a
 			if s.object_comparison then
