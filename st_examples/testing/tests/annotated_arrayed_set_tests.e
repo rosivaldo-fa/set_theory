@@ -475,6 +475,25 @@ feature -- Test routines (Access)
 			assert ("i_th", s.count > 0 ⇒ attached (s [i]) ⇒ True)
 		end
 
+	test_at
+			-- Test {ANNOTATED_ARRAYED_SET}.at
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.at"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+			i: INTEGER
+		do
+			create s.make (0)
+			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			if s.count > 0 then
+				i := (next_random_item \\ s.count) + 1
+				check
+					valid_index: s.valid_index (i) -- 1 <= i <= s.count
+				end
+			end
+			assert ("at", s.count > 0 ⇒ attached (s @ i) ⇒ True)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

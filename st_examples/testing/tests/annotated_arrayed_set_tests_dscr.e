@@ -26,7 +26,8 @@ inherit
 			test_model_set,
 			test_area,
 			test_array_at,
-			test_i_th
+			test_i_th,
+			test_at
 		end
 
 feature -- Test routines (Initialization)
@@ -95,6 +96,14 @@ feature -- Test routines (Access)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.i_th"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_at
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.at"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
