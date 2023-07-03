@@ -42,12 +42,7 @@ feature -- Test routines (Initialization)
 									end
 									s.compare_objects
 								end
-								check
-									empty_set: s.model_set.is_empty
-									empty_indices: s.model_indices.is_empty
-								then
-									Result := s.model_set.is_empty
-								end
+								Result := s.model_set.is_empty
 							end
 					).item
 				)
@@ -78,12 +73,7 @@ feature -- Test routines (Initialization)
 									end
 									s.compare_objects
 								end
-								check
-									empty_set: s.model_set.is_empty
-									empty_indices: s.model_indices.is_empty
-								then
-									Result := s.model_set.is_empty
-								end
+								Result := s.model_set.is_empty
 							end
 					).item
 				)
@@ -433,18 +423,6 @@ feature -- Test routines (Model)
 			assert ("model_set", attached s.model_set)
 		end
 
-	test_model_indices
-			-- Test {ANNOTATED_ARRAYED_SET}.model_indices
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.model_indices"
-		local
-			s: ANNOTATED_ARRAYED_SET [G]
-		do
-			create s.make (0)
-			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-			assert ("model_indices", attached s.model_indices)
-		end
-
 feature -- Test routines (Access)
 
 	test_area
@@ -465,17 +443,36 @@ feature -- Test routines (Access)
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_at"
 		local
 			s: ANNOTATED_ARRAYED_SET [G]
-			j: INTEGER
+			i: INTEGER
 		do
 			create s.make (0)
-			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 			if s.count > 0 then
-				j := next_random_item \\ s.count
+				i := next_random_item \\ s.count
 				check
-					valid_index: s.array_valid_index (j) -- 0 <= j < s.count
+					valid_index: s.array_valid_index (i) -- 0 <= i < s.count
 				end
 			end
-			assert ("area", s.count > 0 ⇒ attached s.array_at (j) ⇒ True)
+			assert ("array_at", s.count > 0 ⇒ attached s.array_at (i) ⇒ True)
+		end
+
+	test_i_th
+			-- Test {ANNOTATED_ARRAYED_SET}.i_th
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.i_th"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+			i: INTEGER
+		do
+			create s.make (0)
+			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			if s.count > 0 then
+				i := next_random_item \\ s.count
+				check
+					valid_index: s.array_valid_index (i) -- 0 <= i < s.count
+				end
+			end
+			assert ("i_th", s.count > 0 ⇒ attached s.i_th (i) ⇒ True)
 		end
 
 feature -- Factory (Object)

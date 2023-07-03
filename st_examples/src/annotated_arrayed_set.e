@@ -36,7 +36,6 @@ feature -- Initialization
 			Precursor {ARRAYED_SET} (n)
 		ensure then
 			empty_set: model_set.is_empty
-			empty_indices: model_indices.is_empty
 		end
 
 	make_filled (n: INTEGER)
@@ -87,16 +86,6 @@ feature -- Model
 			object_equality: object_comparison ⇒ Result.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
 			nothing_lost: ∀ x: Current ¦ Result ∋ x
 			nothing_else: Result |∀ agent has
-		end
-
-	model_indices: STI_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]
-			-- Representation of current arrayed set's indices a mathematical set
-		do
-			create Result.make_empty
-			⟳ i: 0 |..| (count - 1) ¦ Result := Result.extended (i) ⟲
-		ensure
-			nothing_lost: ∀ i: 0 |..| (count - 1) ¦ Result ∋ i
-			nothing_else: Result |∀ agent (0 |..| (count - 1)).has
 		end
 
 feature -- Access
