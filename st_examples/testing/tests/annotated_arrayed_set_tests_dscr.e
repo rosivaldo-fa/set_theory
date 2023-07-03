@@ -25,7 +25,8 @@ inherit
 			test_make_from_iterable,
 			test_model_set,
 			test_area,
-			test_array_at
+			test_array_at,
+			test_i_th
 		end
 
 feature -- Test routines (Initialization)
@@ -86,6 +87,14 @@ feature -- Test routines (Access)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_at"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_i_th
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.i_th"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

@@ -467,12 +467,12 @@ feature -- Test routines (Access)
 			create s.make (0)
 			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 			if s.count > 0 then
-				i := next_random_item \\ s.count
+				i := (next_random_item \\ s.count) + 1
 				check
-					valid_index: s.array_valid_index (i) -- 0 <= i < s.count
+					valid_index: s.valid_index (i) -- 1 <= i <= s.count
 				end
 			end
-			assert ("i_th", s.count > 0 ⇒ attached s.i_th (i) ⇒ True)
+			assert ("i_th", s.count > 0 ⇒ attached (s [i]) ⇒ True)
 		end
 
 feature -- Factory (Object)
