@@ -435,6 +435,22 @@ feature -- Test routines (Model)
 			assert ("model_indices", attached s.model_indices)
 		end
 
+	test_cursor
+			-- Test {ANNOTATED_ARRAYED_SET}.cursor
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.cursor"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			s.start
+			if s.count > 0 then
+				⟳ i: 1 |..| (next_random_item \\ s.count) ¦ s.forth ⟲
+			end
+			assert ("model_indices", attached s.model_indices)
+		end
+
 feature -- Test routines (Access)
 
 	test_area

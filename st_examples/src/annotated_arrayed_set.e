@@ -16,7 +16,8 @@ inherit
 			make_from_iterable,
 			area,
 			array_at,
-			i_th, at
+			i_th, at,
+			cursor
 		end
 
 create
@@ -124,6 +125,16 @@ feature -- Access
 			Result := area_v2.item (i - 1)
 		ensure then
 			valid_element: model_set ∋ Result
+		end
+
+	cursor: ARRAYED_LIST_CURSOR
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}
+		ensure then
+			before: before ⇒ Result.index = 0
+			after: after ⇒ Result.index = count + 1
+			inside: not (before or after) ⇒ model_indices ∋ Result.index
 		end
 
 feature -- Predicate
