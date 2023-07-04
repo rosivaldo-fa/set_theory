@@ -134,9 +134,7 @@ feature -- Access
 		do
 			Result := Precursor {ARRAYED_SET}
 		ensure then
-			before: before ⇒ Result.index = 0
-			after: after ⇒ Result.index = count + 1
-			inside: not (before or after) ⇒ model_indices ∋ Result.index
+			valid_index: model_indices ∋ Result.index
 		end
 
 	first: like item

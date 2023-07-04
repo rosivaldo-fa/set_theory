@@ -446,7 +446,7 @@ feature -- Test routines (Model)
 			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 			s.start
 			if s.count > 0 then
-				⟳ i: 1 |..| (next_random_item \\ s.count) ¦ s.forth ⟲
+				⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦ s.forth ⟲
 			end
 			assert ("cursor", attached s.cursor)
 		end
