@@ -20,7 +20,8 @@ inherit
 			cursor,
 			first,
 			has,
-			index_of
+			index_of,
+			item
 		end
 
 create
@@ -160,6 +161,14 @@ feature -- Access
 			Result := Precursor {ARRAYED_SET}(v, i)
 		ensure then
 			valid_index: model_indices ∋ Result
+		end
+
+	item: G
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}
+		ensure then
+			valid_element: model_set ∋ Result
 		end
 
 feature -- Predicate
