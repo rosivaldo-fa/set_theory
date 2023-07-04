@@ -88,6 +88,16 @@ feature -- Model
 			nothing_else: Result |∀ agent has
 		end
 
+	model_indices: STI_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]
+			-- Representation of current arrayed set's indices as a mathematical set
+		do
+			create Result.make_empty
+			⟳ i: 1 |..| count ¦ Result := Result.extended (i) ⟲
+		ensure
+			nothing_lost: ∀ i: 1 |..| count ¦ Result ∋ i
+			nothing_else: Result |∀ agent (1 |..| count).has
+		end
+
 feature -- Access
 
 	area: SPECIAL [G]

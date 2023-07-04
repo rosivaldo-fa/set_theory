@@ -24,6 +24,7 @@ inherit
 			test_make_from_array,
 			test_make_from_iterable,
 			test_model_set,
+			test_model_indices,
 			test_area,
 			test_array_at,
 			test_i_th,
@@ -70,6 +71,14 @@ feature -- Test routines (Model)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.model_set"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_model_indices
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.model_indices"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
