@@ -141,7 +141,7 @@ feature -- Access
 	first: like item
 			-- <Precursor>
 		do
-			Result := area_v2.item (0)
+			Result := Precursor {ARRAYED_SET}
 		ensure then
 			valid_element: model_set ∋ Result
 		end

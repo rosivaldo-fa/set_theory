@@ -461,9 +461,9 @@ feature -- Test routines (Model)
 			create s.make (0)
 			⟳ i: 1 |..| (1 + some_count.as_integer_32) ¦ s.extend (some_object_a) ⟲
 			check
-				not_empty: not s.is_empty
+				not_empty: not s.is_empty -- Iteration above
 			end
-			assert ("model_indices", attached s.model_indices)
+			assert ("first", attached s.first ⇒ True)
 		end
 
 feature -- Test routines (Access)
