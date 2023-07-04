@@ -478,6 +478,18 @@ feature -- Test routines (Model)
 			assert ("has", s ∋ some_object_a ⇒ True)
 		end
 
+	test_index_of
+			-- Test {ANNOTATED_ARRAYED_SET}.index_of
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.index_of"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			assert ("index_of", attached s.index_of (some_object_a, 1))
+		end
+
 feature -- Test routines (Access)
 
 	test_area

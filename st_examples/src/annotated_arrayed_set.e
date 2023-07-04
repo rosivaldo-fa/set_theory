@@ -19,7 +19,8 @@ inherit
 			i_th, at,
 			cursor,
 			first,
-			has
+			has,
+			index_of
 		end
 
 create
@@ -153,6 +154,14 @@ feature -- Access
 			definition: Result = model_set ∋ v
 		end
 
+	index_of (v: like item; i: INTEGER): INTEGER
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}(v, i)
+		ensure then
+			valid_index: model_indices ∋ Result
+		end
+
 feature -- Predicate
 
 	iterable_has_element_reference (ys: ITERABLE [G]; x: G): BOOLEAN
@@ -179,6 +188,7 @@ invariant
 	s: attached model_set as s
 	area_v2_nothing_lost: ∀ x: area_v2 ¦ s ∋ x
 	area_v2_nothing_else: s |∀ agent iterable_has_element (area_v2, s.eq, ?)
+	valid_index: model_indices ∋ index
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
