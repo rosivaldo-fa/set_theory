@@ -18,7 +18,8 @@ inherit
 			array_at,
 			i_th, at,
 			cursor,
-			first
+			first,
+			has
 		end
 
 create
@@ -94,10 +95,10 @@ feature -- Model
 			-- Representation of current arrayed set's indices as a mathematical set
 		do
 			create Result.make_empty
-			⟳ i: 1 |..| count ¦ Result := Result.extended (i) ⟲
+			⟳ i: 0 |..| (count + 1) ¦ Result := Result.extended (i) ⟲
 		ensure
-			nothing_lost: ∀ i: 1 |..| count ¦ Result ∋ i
-			nothing_else: Result |∀ agent (1 |..| count).has
+			nothing_lost: ∀ i: 0 |..| (count + 1) ¦ Result ∋ i
+			nothing_else: Result |∀ agent (0 |..| (count + 1)).has
 		end
 
 feature -- Access
@@ -115,7 +116,7 @@ feature -- Access
 	array_at (i: INTEGER): G assign array_put
 			-- <Precursor>
 		do
-			Result := Precursor {ARRAYED_SET}(i)
+			Result := Precursor {ARRAYED_SET} (i)
 		ensure then
 			valid_element: model_set ∋ Result
 		end
@@ -144,6 +145,14 @@ feature -- Access
 			Result := Precursor {ARRAYED_SET}
 		ensure then
 			valid_element: model_set ∋ Result
+		end
+
+	has alias "∋" (v: like item): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET} (v)
+		ensure then
+			definition: Result = model_set ∋ v
 		end
 
 feature -- Predicate

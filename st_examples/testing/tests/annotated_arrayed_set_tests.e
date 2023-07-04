@@ -466,6 +466,18 @@ feature -- Test routines (Model)
 			assert ("first", attached s.first ⇒ True)
 		end
 
+	test_has
+			-- Test {ANNOTATED_ARRAYED_SET}.has
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.has"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			assert ("has", s ∋ some_object_a ⇒ True)
+		end
+
 feature -- Test routines (Access)
 
 	test_area
