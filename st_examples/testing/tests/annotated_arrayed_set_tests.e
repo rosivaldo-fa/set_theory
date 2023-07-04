@@ -506,6 +506,22 @@ feature -- Test routines (Model)
 			assert ("item", not s.off ⇒ attached s.item ⇒ True)
 		end
 
+	test_array_item
+			-- Test {ANNOTATED_ARRAYED_SET}.array_item
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_item"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+			j: INTEGER
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			if s.count > 0 then
+				j := next_random_item \\ s.count
+			end
+			assert ("array_item", s.array_valid_index (j) ⇒ attached s.array_item (j) ⇒ True)
+		end
+
 feature -- Test routines (Access)
 
 	test_area

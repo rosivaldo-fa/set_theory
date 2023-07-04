@@ -21,7 +21,8 @@ inherit
 			first,
 			has,
 			index_of,
-			item
+			item,
+			array_item
 		end
 
 create
@@ -167,6 +168,14 @@ feature -- Access
 			-- <Precursor>
 		do
 			Result := Precursor {ARRAYED_SET}
+		ensure then
+			valid_element: model_set ∋ Result
+		end
+
+	array_item (i: INTEGER): G assign array_put
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}(i)
 		ensure then
 			valid_element: model_set ∋ Result
 		end
