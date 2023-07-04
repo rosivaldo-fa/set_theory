@@ -17,7 +17,8 @@ inherit
 			area,
 			array_at,
 			i_th, at,
-			cursor
+			cursor,
+			first
 		end
 
 create
@@ -135,6 +136,14 @@ feature -- Access
 			before: before ⇒ Result.index = 0
 			after: after ⇒ Result.index = count + 1
 			inside: not (before or after) ⇒ model_indices ∋ Result.index
+		end
+
+	first: like item
+			-- <Precursor>
+		do
+			Result := area_v2.item (0)
+		ensure then
+			valid_element: model_set ∋ Result
 		end
 
 feature -- Predicate
