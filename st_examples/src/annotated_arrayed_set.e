@@ -22,7 +22,8 @@ inherit
 			has,
 			index_of,
 			item,
-			array_item
+			array_item,
+			item_for_iteration
 		end
 
 create
@@ -159,7 +160,7 @@ feature -- Access
 	index_of (v: like item; i: INTEGER): INTEGER
 			-- <Precursor>
 		do
-			Result := Precursor {ARRAYED_SET}(v, i)
+			Result := Precursor {ARRAYED_SET} (v, i)
 		ensure then
 			valid_index: model_indices ∋ Result
 		end
@@ -175,7 +176,15 @@ feature -- Access
 	array_item (i: INTEGER): G assign array_put
 			-- <Precursor>
 		do
-			Result := Precursor {ARRAYED_SET}(i)
+			Result := Precursor {ARRAYED_SET} (i)
+		ensure then
+			valid_element: model_set ∋ Result
+		end
+
+	item_for_iteration: G
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}
 		ensure then
 			valid_element: model_set ∋ Result
 		end

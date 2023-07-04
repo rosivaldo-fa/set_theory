@@ -34,7 +34,8 @@ inherit
 			test_has,
 			test_index_of,
 			test_item,
-			test_array_item
+			test_array_item,
+			test_item_for_iteration
 		end
 
 feature -- Test routines (Initialization)
@@ -167,6 +168,14 @@ feature -- Test routines (Access)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_item"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_item_for_iteration
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.item_for_iteration"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

@@ -522,6 +522,22 @@ feature -- Test routines (Model)
 			assert ("array_item", s.array_valid_index (j) ⇒ attached s.array_item (j) ⇒ True)
 		end
 
+	test_item_for_iteration
+			-- Test {ANNOTATED_ARRAYED_SET}.item_for_iteration
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.item_for_iteration"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			s.start
+			if s.count > 0 then
+				⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦ s.forth ⟲
+			end
+			assert ("item_for_iteration", not s.off ⇒ attached s.item_for_iteration ⇒ True)
+		end
+
 feature -- Test routines (Access)
 
 	test_area
@@ -590,7 +606,7 @@ feature -- Test routines (Access)
 					valid_index: s.valid_index (i) -- 1 <= i <= s.count
 				end
 			end
-			assert ("at", s.count > 0 ⇒ attached (s @ i) ⇒ True)
+			assert ("at", s.count > 0 ⇒ attached s.at (i) ⇒ True)
 		end
 
 feature -- Factory (Object)
