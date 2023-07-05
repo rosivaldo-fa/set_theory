@@ -25,7 +25,8 @@ inherit
 			array_item,
 			item_for_iteration,
 			last,
-			new_cursor
+			new_cursor,
+			to_array
 		end
 
 create
@@ -90,11 +91,6 @@ feature -- Model
 				create {STI_SET [G, STS_OBJECT_EQUALITY [G]]} Result.make_empty
 			end
 			⟳ x: Current ¦ Result := Result & x ⟲
-		ensure
-			reference_equality: not object_comparison ⇒ Result.eq.generating_type <= {detachable STS_REFERENCE_EQUALITY [G]}
-			object_equality: object_comparison ⇒ Result.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
-			nothing_lost: ∀ x: Current ¦ Result ∋ x
-			nothing_else: Result |∀ agent has
 		end
 
 	model_indices: STI_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]
@@ -214,6 +210,16 @@ feature -- Access
 			last_index: (mi / 0 / (count + 1)) |∀ agent (last_index, i: INTEGER): BOOLEAN do Result := i ≤ last_index end (Result.last_index, ?)
 		end
 
+	to_array: ARRAY [G]
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}
+		ensure then
+			s: attached model_set as s
+			nothing_lost: s |∀ agent iterable_has_element_reference (Result, ?)
+			nothing_else: ∀ x: Result ¦ s.has (x)
+		end
+
 feature -- Predicate
 
 	iterable_has_element_reference (ys: ITERABLE [G]; x: G): BOOLEAN
@@ -238,6 +244,11 @@ feature -- Predicate
 
 invariant
 	s: attached model_set as s
+	model_set_reference_equality: not object_comparison ⇒ s.eq.generating_type <= {detachable STS_REFERENCE_EQUALITY [G]}
+	model_set_object_equality: object_comparison ⇒ s.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
+	model_set_nothing_lost: ∀ x: Current ¦ s ∋ x
+	model_set_nothing_else: s |∀ agent has
+
 	area_v2_nothing_lost: ∀ x: area_v2 ¦ s ∋ x
 	area_v2_nothing_else: s |∀ agent iterable_has_element (area_v2, s.eq, ?)
 	valid_index: model_indices ∋ index

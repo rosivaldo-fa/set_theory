@@ -378,51 +378,6 @@ feature -- Test routines (Initialization)
 
 feature -- Test routines (Model)
 
-	test_model_set
-			-- Test {ANNOTATED_ARRAYED_SET}.model_set
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.model_set"
-		local
-			n: INTEGER
-			s: ANNOTATED_ARRAYED_SET [G]
-			a, b, c: G
-		do
-			n := some_count.as_integer_32
-			check
-				valid_number_of_items_1: n >= 0 -- some_count definition
-			end
-			create s.make (n)
-			assert ("∅", s.model_set.is_empty)
-
-			if next_random_item \\ 2 = 0 then
-				check
-					changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
-				end
-				s.compare_objects
-			end
-			a := some_object_a
-			s.extend (same_object_s_a (s, a))
-			assert ("{a}", s.model_set ≍ singleton (s, a))
-
-			b := some_object_a
-			s.extend (same_object_s_a (s, b))
-			assert ("{a,b}", s.model_set ≍ (singleton (s, a) & b))
-
-			c := some_object_a
-			s.extend (same_object_s_a (s, c))
-			assert ("{a,b,c}", s.model_set ≍ (singleton (s, a) & b & c))
-
-			n := some_count.as_integer_32
-			check
-				valid_number_of_items_2: n >= 0 -- some_count definition
-			end
-			create s.make (n)
-			⟳ i: 1 |..| some_count.as_integer_32 ¦
-				s.extend (some_object_a)
-			⟲
-			assert ("model_set", attached s.model_set)
-		end
-
 	test_model_indices
 			-- Test {ANNOTATED_ARRAYED_SET}.model_indices
 		note
@@ -433,6 +388,77 @@ feature -- Test routines (Model)
 			create s.make (0)
 			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 			assert ("model_indices", attached s.model_indices)
+		end
+
+feature -- Test routines (Access)
+
+	test_area
+			-- Test {ANNOTATED_ARRAYED_SET}.area
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.area"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			assert ("area", attached s.area)
+		end
+
+	test_array_at
+			-- Test {ANNOTATED_ARRAYED_SET}.array_at
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_at"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+			i: INTEGER
+		do
+			create s.make (0)
+			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			if s.count > 0 then
+				i := next_random_item \\ s.count
+				check
+					valid_index: s.array_valid_index (i) -- 0 <= i < s.count
+				end
+			end
+			assert ("array_at", s.count > 0 ⇒ attached s.array_at (i) ⇒ True)
+		end
+
+	test_i_th
+			-- Test {ANNOTATED_ARRAYED_SET}.i_th
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.i_th"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+			i: INTEGER
+		do
+			create s.make (0)
+			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			if s.count > 0 then
+				i := (next_random_item \\ s.count) + 1
+				check
+					valid_index: s.valid_index (i) -- 1 <= i <= s.count
+				end
+			end
+			assert ("i_th", s.count > 0 ⇒ attached (s [i]) ⇒ True)
+		end
+
+	test_at
+			-- Test {ANNOTATED_ARRAYED_SET}.at
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.at"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+			i: INTEGER
+		do
+			create s.make (0)
+			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			if s.count > 0 then
+				i := (next_random_item \\ s.count) + 1
+				check
+					valid_index: s.valid_index (i) -- 1 <= i <= s.count
+				end
+			end
+			assert ("at", s.count > 0 ⇒ attached s.at (i) ⇒ True)
 		end
 
 	test_cursor
@@ -563,77 +589,6 @@ feature -- Test routines (Model)
 			create s.make (0)
 			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 			assert ("new_cursor", attached s.new_cursor)
-		end
-
-feature -- Test routines (Access)
-
-	test_area
-			-- Test {ANNOTATED_ARRAYED_SET}.area
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.area"
-		local
-			s: ANNOTATED_ARRAYED_SET [G]
-		do
-			create s.make (0)
-			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-			assert ("area", attached s.area)
-		end
-
-	test_array_at
-			-- Test {ANNOTATED_ARRAYED_SET}.array_at
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_at"
-		local
-			s: ANNOTATED_ARRAYED_SET [G]
-			i: INTEGER
-		do
-			create s.make (0)
-			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-			if s.count > 0 then
-				i := next_random_item \\ s.count
-				check
-					valid_index: s.array_valid_index (i) -- 0 <= i < s.count
-				end
-			end
-			assert ("array_at", s.count > 0 ⇒ attached s.array_at (i) ⇒ True)
-		end
-
-	test_i_th
-			-- Test {ANNOTATED_ARRAYED_SET}.i_th
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.i_th"
-		local
-			s: ANNOTATED_ARRAYED_SET [G]
-			i: INTEGER
-		do
-			create s.make (0)
-			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-			if s.count > 0 then
-				i := (next_random_item \\ s.count) + 1
-				check
-					valid_index: s.valid_index (i) -- 1 <= i <= s.count
-				end
-			end
-			assert ("i_th", s.count > 0 ⇒ attached (s [i]) ⇒ True)
-		end
-
-	test_at
-			-- Test {ANNOTATED_ARRAYED_SET}.at
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.at"
-		local
-			s: ANNOTATED_ARRAYED_SET [G]
-			i: INTEGER
-		do
-			create s.make (0)
-			⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-			if s.count > 0 then
-				i := (next_random_item \\ s.count) + 1
-				check
-					valid_index: s.valid_index (i) -- 1 <= i <= s.count
-				end
-			end
-			assert ("at", s.count > 0 ⇒ attached s.at (i) ⇒ True)
 		end
 
 feature -- Factory (Object)
