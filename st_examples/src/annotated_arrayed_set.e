@@ -23,7 +23,8 @@ inherit
 			index_of,
 			item,
 			array_item,
-			item_for_iteration
+			item_for_iteration,
+			last
 		end
 
 create
@@ -182,6 +183,14 @@ feature -- Access
 		end
 
 	item_for_iteration: G
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}
+		ensure then
+			valid_element: model_set ∋ Result
+		end
+
+	last: like first
 			-- <Precursor>
 		do
 			Result := Precursor {ARRAYED_SET}

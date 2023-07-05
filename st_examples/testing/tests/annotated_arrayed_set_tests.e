@@ -538,6 +538,21 @@ feature -- Test routines (Model)
 			assert ("item_for_iteration", not s.off ⇒ attached s.item_for_iteration ⇒ True)
 		end
 
+	test_last
+			-- Test {ANNOTATED_ARRAYED_SET}.last
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.last"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| (1 + some_count.as_integer_32) ¦ s.extend (some_object_a) ⟲
+			check
+				not_empty: not s.is_empty -- Iteration above
+			end
+			assert ("last", attached s.last ⇒ True)
+		end
+
 feature -- Test routines (Access)
 
 	test_area
