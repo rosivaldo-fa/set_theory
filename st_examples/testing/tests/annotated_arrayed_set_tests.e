@@ -376,20 +376,6 @@ feature -- Test routines (Initialization)
 				)
 		end
 
-feature -- Test routines (Model)
-
-	test_model_indices
-			-- Test {ANNOTATED_ARRAYED_SET}.model_indices
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.model_indices"
-		local
-			s: ANNOTATED_ARRAYED_SET [G]
-		do
-			create s.make (0)
-			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-			assert ("model_indices", attached s.model_indices)
-		end
-
 feature -- Test routines (Access)
 
 	test_area

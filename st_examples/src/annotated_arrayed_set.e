@@ -98,9 +98,6 @@ feature -- Model
 		do
 			create Result.make_empty
 			⟳ i: 0 |..| (count + 1) ¦ Result := Result.extended (i) ⟲
-		ensure
-			nothing_lost: ∀ i: 0 |..| (count + 1) ¦ Result ∋ i
-			nothing_else: Result |∀ agent (0 |..| (count + 1)).has
 		end
 
 feature -- Access
@@ -249,9 +246,13 @@ invariant
 	model_set_nothing_lost: ∀ x: Current ¦ s ∋ x
 	model_set_nothing_else: s |∀ agent has
 
+	mi: attached model_indices as mi
+	model_indices_nothing_lost: ∀ i: 0 |..| (count + 1) ¦ mi ∋ i
+	model_indices_nothing_else: mi |∀ agent (0 |..| (count + 1)).has
+
 	area_v2_nothing_lost: ∀ x: area_v2 ¦ s ∋ x
 	area_v2_nothing_else: s |∀ agent iterable_has_element (area_v2, s.eq, ?)
-	valid_index: model_indices ∋ index
+	valid_index: mi ∋ index
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
