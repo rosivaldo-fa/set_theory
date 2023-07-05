@@ -16,7 +16,6 @@ inherit
 			make_from_iterable,
 			array_at,
 			i_th, at,
-			cursor,
 			first,
 			has,
 			index_of,
@@ -115,14 +114,6 @@ feature -- Access
 			Result := area_v2.item (i - 1)
 		ensure then
 			valid_element: model_set ∋ Result
-		end
-
-	cursor: ARRAYED_LIST_CURSOR
-			-- <Precursor>
-		do
-			Result := Precursor {ARRAYED_SET}
-		ensure then
-			valid_index: model_indices ∋ Result.index
 		end
 
 	first: like item
@@ -244,7 +235,9 @@ invariant
 
 	area_v2_nothing_lost: ∀ x: area_v2 ¦ s ∋ x
 	area_v2_nothing_else: s |∀ agent iterable_has_element (area_v2, s.eq, ?)
+
 	valid_index: mi ∋ index
+	cursor_valid_index: mi ∋ cursor.index
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

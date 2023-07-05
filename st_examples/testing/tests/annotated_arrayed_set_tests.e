@@ -435,22 +435,6 @@ feature -- Test routines (Access)
 			assert ("at", s.count > 0 ⇒ attached s.at (i) ⇒ True)
 		end
 
-	test_cursor
-			-- Test {ANNOTATED_ARRAYED_SET}.cursor
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.cursor"
-		local
-			s: ANNOTATED_ARRAYED_SET [G]
-		do
-			create s.make (0)
-			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-			s.start
-			if s.count > 0 then
-				⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦ s.forth ⟲
-			end
-			assert ("cursor", attached s.cursor)
-		end
-
 	test_first
 			-- Test {ANNOTATED_ARRAYED_SET}.first
 		note
