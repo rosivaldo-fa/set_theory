@@ -14,7 +14,6 @@ inherit
 			make_filled,
 			make_from_array,
 			make_from_iterable,
-			area,
 			array_at,
 			i_th, at,
 			cursor,
@@ -101,16 +100,6 @@ feature -- Model
 		end
 
 feature -- Access
-
-	area: SPECIAL [G]
-			-- <Precursor>
-		do
-			Result := Precursor {ARRAYED_SET}
-		ensure then
-			s: attached model_set as s
-			nothing_lost: ∀ x: Result ¦ s ∋ x
-			nothing_else: s |∀ agent iterable_has_element (Result, s.eq, ?)
-		end
 
 	array_at (i: INTEGER): G assign array_put
 			-- <Precursor>
@@ -249,6 +238,9 @@ invariant
 	mi: attached model_indices as mi
 	model_indices_nothing_lost: ∀ i: 0 |..| (count + 1) ¦ mi ∋ i
 	model_indices_nothing_else: mi |∀ agent (0 |..| (count + 1)).has
+
+	area_nothing_lost: ∀ x: area ¦ s ∋ x
+	area_nothing_else: s |∀ agent iterable_has_element (area, s.eq, ?)
 
 	area_v2_nothing_lost: ∀ x: area_v2 ¦ s ∋ x
 	area_v2_nothing_else: s |∀ agent iterable_has_element (area_v2, s.eq, ?)
