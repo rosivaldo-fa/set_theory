@@ -134,6 +134,8 @@ feature -- Access
 			valid_element: model_set ∋ Result
 		end
 
+feature -- Measurement
+
 feature -- Predicate
 
 	iterable_has_element_reference (ys: ITERABLE [G]; x: G): BOOLEAN
@@ -187,7 +189,9 @@ invariant
 
 	to_array_nothing_lost: s |∀ agent iterable_has_element_reference (to_array, ?)
 	to_array_nothing_else: ∀ x: to_array ¦ s.has (x)
-	
+
+	count_definition: count = (# mi - 2).as_integer_32
+
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
