@@ -19,7 +19,6 @@ inherit
 			has,
 			index_of,
 			array_item,
-			new_cursor,
 			to_array
 		end
 
@@ -136,21 +135,6 @@ feature -- Access
 			valid_element: model_set ∋ Result
 		end
 
-	new_cursor: ARRAYED_LIST_ITERATION_CURSOR [G]
-			-- <Precursor>
-		note
-			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
-		do
-			Result := Precursor {ARRAYED_SET}
-		ensure then
-			s: attached model_set as s
-			nothing_lost: model_set |∀ agent iterable_has_element (Result, s.eq, ?)
-			nothing_else: ∀ x: Result ¦ s.has (x)
-			mi: attached model_indices as mi
-			first_index: (mi / 0 / (count + 1)) |∀ agent (first_index, i: INTEGER): BOOLEAN do Result := first_index ≤ i end (Result.first_index, ?)
-			last_index: (mi / 0 / (count + 1)) |∀ agent (last_index, i: INTEGER): BOOLEAN do Result := i ≤ last_index end (Result.last_index, ?)
-		end
-
 	to_array: ARRAY [G]
 			-- <Precursor>
 		do
@@ -206,6 +190,11 @@ invariant
 	item_valid_element: readable or not off or valid_index (index) ⇒ s ∋ item
 	item_for_iteration_valid_element: not off ⇒ s ∋ item_for_iteration
 	last_valid_element: not is_empty ⇒ s ∋ last
+
+	new_cursor_nothing_lost: s |∀ agent iterable_has_element (new_cursor, s.eq, ?)
+	new_cursor_nothing_else: ∀ x: new_cursor ¦ s.has (x)
+	new_cursor_first_index: (mi / 0 / (count + 1)) |∀ agent (first_index, i: INTEGER): BOOLEAN do Result := first_index ≤ i end (new_cursor.first_index, ?) -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
+	new_cursor_last_index: (mi / 0 / (count + 1)) |∀ agent (last_index, i: INTEGER): BOOLEAN do Result := i ≤ last_index end (new_cursor.last_index, ?) -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
