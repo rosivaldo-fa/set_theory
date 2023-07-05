@@ -18,7 +18,6 @@ inherit
 			i_th, at,
 			has,
 			index_of,
-			item,
 			array_item,
 			item_for_iteration,
 			last,
@@ -131,14 +130,6 @@ feature -- Access
 			valid_index: model_indices ∋ Result
 		end
 
-	item: G
-			-- <Precursor>
-		do
-			Result := Precursor {ARRAYED_SET}
-		ensure then
-			valid_element: model_set ∋ Result
-		end
-
 	array_item (i: INTEGER): G assign array_put
 			-- <Precursor>
 		do
@@ -231,6 +222,8 @@ invariant
 	cursor_valid_index: mi ∋ cursor.index
 
 	first_valid_element: not is_empty ⇒ s ∋ first
+
+	item_valid_element: readable or not off or valid_index (index) ⇒ s ∋ item
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

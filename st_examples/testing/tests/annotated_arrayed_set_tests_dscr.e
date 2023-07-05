@@ -28,7 +28,6 @@ inherit
 			test_at,
 			test_has,
 			test_index_of,
-			test_item,
 			test_array_item,
 			test_item_for_iteration,
 			test_last,
@@ -107,14 +106,6 @@ feature -- Test routines (Access)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.index_of"
-		do
-			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
-		end
-
-	test_item
-			-- <Precursor>
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.item"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

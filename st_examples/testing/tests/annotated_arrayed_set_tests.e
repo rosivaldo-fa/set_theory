@@ -459,22 +459,6 @@ feature -- Test routines (Access)
 			assert ("index_of", attached s.index_of (some_object_a, 1))
 		end
 
-	test_item
-			-- Test {ANNOTATED_ARRAYED_SET}.item
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.item"
-		local
-			s: ANNOTATED_ARRAYED_SET [G]
-		do
-			create s.make (0)
-			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-			s.start
-			if s.count > 0 then
-				⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦ s.forth ⟲
-			end
-			assert ("item", not s.off ⇒ attached s.item ⇒ True)
-		end
-
 	test_array_item
 			-- Test {ANNOTATED_ARRAYED_SET}.array_item
 		note
