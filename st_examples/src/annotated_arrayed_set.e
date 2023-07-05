@@ -16,7 +16,6 @@ inherit
 			make_from_iterable,
 			array_at,
 			i_th, at,
-			first,
 			has,
 			index_of,
 			item,
@@ -112,14 +111,6 @@ feature -- Access
 			-- <Precursor>
 		do
 			Result := area_v2.item (i - 1)
-		ensure then
-			valid_element: model_set ∋ Result
-		end
-
-	first: like item
-			-- <Precursor>
-		do
-			Result := Precursor {ARRAYED_SET}
 		ensure then
 			valid_element: model_set ∋ Result
 		end
@@ -238,6 +229,8 @@ invariant
 
 	valid_index: mi ∋ index
 	cursor_valid_index: mi ∋ cursor.index
+
+	first_valid_element: not is_empty ⇒ s ∋ first
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

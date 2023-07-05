@@ -435,21 +435,6 @@ feature -- Test routines (Access)
 			assert ("at", s.count > 0 ⇒ attached s.at (i) ⇒ True)
 		end
 
-	test_first
-			-- Test {ANNOTATED_ARRAYED_SET}.first
-		note
-			testing: "covers/{ANNOTATED_ARRAYED_SET}.first"
-		local
-			s: ANNOTATED_ARRAYED_SET [G]
-		do
-			create s.make (0)
-			⟳ i: 1 |..| (1 + some_count.as_integer_32) ¦ s.extend (some_object_a) ⟲
-			check
-				not_empty: not s.is_empty -- Iteration above
-			end
-			assert ("first", attached s.first ⇒ True)
-		end
-
 	test_has
 			-- Test {ANNOTATED_ARRAYED_SET}.has
 		note
