@@ -24,7 +24,8 @@ inherit
 			item,
 			array_item,
 			item_for_iteration,
-			last
+			last,
+			new_cursor
 		end
 
 create
@@ -196,6 +197,21 @@ feature -- Access
 			Result := Precursor {ARRAYED_SET}
 		ensure then
 			valid_element: model_set ∋ Result
+		end
+
+	new_cursor: ARRAYED_LIST_ITERATION_CURSOR [G]
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Result := Precursor {ARRAYED_SET}
+		ensure then
+			s: attached model_set as s
+			nothing_lost: model_set |∀ agent iterable_has_element (Result, s.eq, ?)
+			nothing_else: ∀ x: Result ¦ s.has (x)
+			mi: attached model_indices as mi
+			first_index: (mi / 0 / (count + 1)) |∀ agent (first_index, i: INTEGER): BOOLEAN do Result := first_index ≤ i end (Result.first_index, ?)
+			last_index: (mi / 0 / (count + 1)) |∀ agent (last_index, i: INTEGER): BOOLEAN do Result := i ≤ last_index end (Result.last_index, ?)
 		end
 
 feature -- Predicate

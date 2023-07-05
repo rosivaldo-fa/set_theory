@@ -553,6 +553,18 @@ feature -- Test routines (Model)
 			assert ("last", attached s.last ⇒ True)
 		end
 
+	test_new_cursor
+			-- Test {ANNOTATED_ARRAYED_SET}.new_cursor
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.new_cursor"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			assert ("new_cursor", attached s.new_cursor)
+		end
+
 feature -- Test routines (Access)
 
 	test_area
