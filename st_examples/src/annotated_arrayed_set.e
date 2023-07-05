@@ -18,7 +18,8 @@ inherit
 			i_th, at,
 			has,
 			index_of,
-			array_item
+			array_item,
+			occurrences
 		end
 
 create
@@ -135,6 +136,22 @@ feature -- Access
 		end
 
 feature -- Measurement
+
+	occurrences (v: like item): INTEGER
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET} (v)
+		ensure then
+			s: attached model_set as s
+			not_found: s ∌ v ⇒ Result = 0
+			found: s ∋ v ⇒ Result > 0
+			definition: Result.as_natural_32 = # (
+							(model_indices / 0 / (count + 1)) | agent (eq: STS_EQUALITY [G]; ia_v: like item; i: INTEGER): BOOLEAN
+								do
+									Result := valid_index (i) and then eq (ia_v, Current [i])
+								end (s.eq, v, ?)
+						)
+		end
 
 feature -- Predicate
 

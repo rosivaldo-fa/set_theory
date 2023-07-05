@@ -475,6 +475,20 @@ feature -- Test routines (Access)
 			assert ("array_item", s.array_valid_index (j) ⇒ attached s.array_item (j) ⇒ True)
 		end
 
+feature -- Test routines (Measurement)
+
+	test_occurrences
+			-- Test {ANNOTATED_ARRAYED_SET}.occurrences
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.occurrences"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			assert ("occurrences", attached s.occurrences (some_object_a))
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
