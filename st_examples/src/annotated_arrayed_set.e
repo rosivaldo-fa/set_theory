@@ -18,8 +18,7 @@ inherit
 			i_th, at,
 			has,
 			index_of,
-			array_item,
-			to_array
+			array_item
 		end
 
 create
@@ -135,16 +134,6 @@ feature -- Access
 			valid_element: model_set ∋ Result
 		end
 
-	to_array: ARRAY [G]
-			-- <Precursor>
-		do
-			Result := Precursor {ARRAYED_SET}
-		ensure then
-			s: attached model_set as s
-			nothing_lost: s |∀ agent iterable_has_element_reference (Result, ?)
-			nothing_else: ∀ x: Result ¦ s.has (x)
-		end
-
 feature -- Predicate
 
 	iterable_has_element_reference (ys: ITERABLE [G]; x: G): BOOLEAN
@@ -196,6 +185,9 @@ invariant
 	new_cursor_first_index: (mi / 0 / (count + 1)) |∀ agent (first_index, i: INTEGER): BOOLEAN do Result := first_index ≤ i end (new_cursor.first_index, ?) -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 	new_cursor_last_index: (mi / 0 / (count + 1)) |∀ agent (last_index, i: INTEGER): BOOLEAN do Result := i ≤ last_index end (new_cursor.last_index, ?) -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 
+	to_array_nothing_lost: s |∀ agent iterable_has_element_reference (to_array, ?)
+	to_array_nothing_else: ∀ x: to_array ¦ s.has (x)
+	
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
 	license: "[
