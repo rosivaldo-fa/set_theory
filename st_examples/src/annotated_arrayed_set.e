@@ -19,7 +19,6 @@ inherit
 			has,
 			index_of,
 			array_item,
-			item_for_iteration,
 			last,
 			new_cursor,
 			to_array
@@ -138,14 +137,6 @@ feature -- Access
 			valid_element: model_set ∋ Result
 		end
 
-	item_for_iteration: G
-			-- <Precursor>
-		do
-			Result := Precursor {ARRAYED_SET}
-		ensure then
-			valid_element: model_set ∋ Result
-		end
-
 	last: like first
 			-- <Precursor>
 		do
@@ -222,8 +213,8 @@ invariant
 	cursor_valid_index: mi ∋ cursor.index
 
 	first_valid_element: not is_empty ⇒ s ∋ first
-
 	item_valid_element: readable or not off or valid_index (index) ⇒ s ∋ item
+	item_for_iteration_valid_element: not off ⇒ s ∋ item_for_iteration
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
