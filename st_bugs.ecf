@@ -22,16 +22,11 @@
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
 			<option warning="none">
 			</option>
+			<class_option class="ARRAYED_SET">
+				<assertions precondition="true"/>
+				<warning name="obsolete_feature" value="all"/>
+			</class_option>
 		</library>
-		<library name="st_examples" location="..\st_examples.ecf">
-			<option warning="none">
-			</option>
-		</library>
-		<library name="st_specification" location="..\st_specification.ecf">
-			<option warning="none">
-			</option>
-		</library>
-		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
 		<cluster name="st_bugs" location=".\" recursive="true">
 			<option warning="none" is_obsolete_iteration="true" manifest_array_type="mismatch_warning">
 			</option>

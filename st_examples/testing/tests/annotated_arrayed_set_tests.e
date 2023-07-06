@@ -495,14 +495,28 @@ feature -- Test routines (Measurement)
 			-- Test {ANNOTATED_ARRAYED_SET}.disjoint.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.disjoint"
+			EIS: "name=Error within implementation of {ARRAYED_SET}.disjoint", "protocol=URI", "src=https://support.eiffel.com/report_detail/19894", "tag=Bug, EiffelBase"
 		local
 			s1, s2: ANNOTATED_ARRAYED_SET [G]
 		do
 			create s1.make (0)
-			create s2.make (0)
+			if next_random_item \\ 2 = 0 then
+				s1.compare_objects
+			end
 			⟳ i: 1 |..| some_count.as_integer_32 ¦ s1.extend (some_object_a) ⟲
+			create s2.make (0)
+			if s1.object_comparison then
+				s2.compare_objects
+			end
 			⟳ i: 1 |..| some_count.as_integer_32 ¦ s2.extend (some_object_a) ⟲
 			assert ("disjoint", attached s1.disjoint (s2))
+		rescue
+			if attached {PRECONDITION_VIOLATION} {EXCEPTION_MANAGER}.last_exception as pv then
+				if pv.description ~ "item_exists" and pv.recipient_name ~ "subset_strategy" then
+						-- https://support.eiffel.com/report_detail/19894
+					retry
+				end
+			end
 		end
 
 feature -- Factory (Object)

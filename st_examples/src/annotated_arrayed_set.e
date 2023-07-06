@@ -158,6 +158,8 @@ feature -- Comparison
 
 	disjoint (other: TRAVERSABLE_SUBSET [G]): BOOLEAN
 			-- <Precursor>
+		note
+			EIS: "name=Error within implementation of {ARRAYED_SET}.disjoint", "protocol=URI", "src=https://support.eiffel.com/report_detail/19894", "tag=Bug, EiffelBase"
 		do
 			Result := Precursor {ARRAYED_SET}(other)
 		ensure then

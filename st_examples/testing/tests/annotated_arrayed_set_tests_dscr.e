@@ -11,8 +11,8 @@ class
 
 inherit
 	ANNOTATED_ARRAYED_SET_TESTS [
-		detachable separate CHARACTER_REF,
-		STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF] -- Ad hoc equality. Please see file://$(system_path)/docs/EIS/st_examples.html#st_examples_tests.
+	detachable separate CHARACTER_REF,
+	STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF] -- Ad hoc equality. Please see file://$(system_path)/docs/EIS/st_examples.html#st_examples_tests.
 	]
 		rename
 			some_object_a as some_separate_character_ref,
