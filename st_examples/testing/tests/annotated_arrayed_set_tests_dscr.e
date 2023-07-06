@@ -29,7 +29,8 @@ inherit
 			test_has,
 			test_index_of,
 			test_array_item,
-			test_occurrences
+			test_occurrences,
+			test_disjoint
 		end
 
 feature -- Test routines (Initialization)
@@ -122,6 +123,16 @@ feature -- Test routines (Measurement)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.occurrences"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+feature -- Test routines (Measurement)
+
+	test_disjoint
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.disjoint"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

@@ -489,6 +489,22 @@ feature -- Test routines (Measurement)
 			assert ("occurrences", attached s.occurrences (some_object_a))
 		end
 
+feature -- Test routines (Measurement)
+
+	test_disjoint
+			-- Test {ANNOTATED_ARRAYED_SET}.disjoint.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.disjoint"
+		local
+			s1, s2: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s1.make (0)
+			create s2.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s1.extend (some_object_a) ⟲
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s2.extend (some_object_a) ⟲
+			assert ("disjoint", attached s1.disjoint (s2))
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

@@ -19,7 +19,8 @@ inherit
 			has,
 			index_of,
 			array_item,
-			occurrences
+			occurrences,
+			disjoint
 		end
 
 create
@@ -151,6 +152,17 @@ feature -- Measurement
 									Result := valid_index (i) and then eq (ia_v, Current [i])
 								end (s.eq, v, ?)
 						)
+		end
+
+feature -- Comparison
+
+	disjoint (other: TRAVERSABLE_SUBSET [G]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}(other)
+		ensure then
+			s: attached model_set as s
+			definition: Result = ∀ x: other ¦ s ∌ x
 		end
 
 feature -- Predicate
