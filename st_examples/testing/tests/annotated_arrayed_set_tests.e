@@ -19,7 +19,7 @@ inherit
 feature -- Test routines (Initialization)
 
 	test_make
-			-- Test {ANNOTATED_ARRAYED_SET}.make
+			-- Test {ANNOTATED_ARRAYED_SET}.make.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.make"
 		do
@@ -97,7 +97,7 @@ feature -- Test routines (Initialization)
 		end
 
 	test_make_filled
-			-- Test {ANNOTATED_ARRAYED_SET}.make_filled
+			-- Test {ANNOTATED_ARRAYED_SET}.make_filled.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.make_filled"
 		do
@@ -207,7 +207,7 @@ feature -- Test routines (Initialization)
 		end
 
 	test_make_from_array
-			-- Test {ANNOTATED_ARRAYED_SET}.make_from_array
+			-- Test {ANNOTATED_ARRAYED_SET}.make_from_array.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.make_from_array"
 		do
@@ -292,7 +292,7 @@ feature -- Test routines (Initialization)
 		end
 
 	test_make_from_iterable
-			-- Test {ANNOTATED_ARRAYED_SET}.make_from_iterable
+			-- Test {ANNOTATED_ARRAYED_SET}.make_from_iterable.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.make_from_iterable"
 		do
@@ -379,7 +379,7 @@ feature -- Test routines (Initialization)
 feature -- Test routines (Access)
 
 	test_array_at
-			-- Test {ANNOTATED_ARRAYED_SET}.array_at
+			-- Test {ANNOTATED_ARRAYED_SET}.array_at.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_at"
 		local
@@ -398,7 +398,7 @@ feature -- Test routines (Access)
 		end
 
 	test_i_th
-			-- Test {ANNOTATED_ARRAYED_SET}.i_th
+			-- Test {ANNOTATED_ARRAYED_SET}.i_th.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.i_th"
 		local
@@ -417,7 +417,7 @@ feature -- Test routines (Access)
 		end
 
 	test_at
-			-- Test {ANNOTATED_ARRAYED_SET}.at
+			-- Test {ANNOTATED_ARRAYED_SET}.at.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.at"
 		local
@@ -436,7 +436,7 @@ feature -- Test routines (Access)
 		end
 
 	test_has
-			-- Test {ANNOTATED_ARRAYED_SET}.has
+			-- Test {ANNOTATED_ARRAYED_SET}.has.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.has"
 		local
@@ -448,7 +448,7 @@ feature -- Test routines (Access)
 		end
 
 	test_index_of
-			-- Test {ANNOTATED_ARRAYED_SET}.index_of
+			-- Test {ANNOTATED_ARRAYED_SET}.index_of.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.index_of"
 		local
@@ -460,7 +460,7 @@ feature -- Test routines (Access)
 		end
 
 	test_array_item
-			-- Test {ANNOTATED_ARRAYED_SET}.array_item
+			-- Test {ANNOTATED_ARRAYED_SET}.array_item.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_item"
 		local
@@ -478,7 +478,7 @@ feature -- Test routines (Access)
 feature -- Test routines (Measurement)
 
 	test_occurrences
-			-- Test {ANNOTATED_ARRAYED_SET}.occurrences
+			-- Test {ANNOTATED_ARRAYED_SET}.occurrences.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.occurrences"
 		local

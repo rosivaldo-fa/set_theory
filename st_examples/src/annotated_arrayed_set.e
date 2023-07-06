@@ -208,7 +208,8 @@ invariant
 	to_array_nothing_else: ∀ x: to_array ¦ s.has (x)
 
 	count_definition: count = (# mi - 2).as_integer_32
-	Lower_valid_index: mi ∋ Lower
+	lower_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER ):BOOLEAN do Result := lower ≤ i end
+	upper_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER ):BOOLEAN do Result := i ≤ upper end
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
