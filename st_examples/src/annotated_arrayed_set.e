@@ -177,16 +177,16 @@ feature -- Comparison
 		do
 			Result := Precursor {ARRAYED_SET} (other)
 		ensure then
-			mi: attached model_indices as mi
-			same_indices: Result ⇒ mi ≍ other.model_indices
-			same_equality: Result ⇒ object_comparison = other.object_comparison
 			s: attached model_set as s
+			mi: attached model_indices as mi
+			same_equality: Result ⇒ object_comparison = other.object_comparison
 			same_elements: object_comparison = other.object_comparison ⇒ (Result ⇒ s ≍ other.model_set)
-			same_sequence: object_comparison = other.object_comparison ⇒
-				Result = (mi / 0 / (count + 1)) |∀ agent (ia_other: ANNOTATED_ARRAYED_SET [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+			same_sequence: object_comparison = other.object_comparison ⇒ Result = (
+				mi ≍ other.model_indices and (mi / 0 / (count + 1)) |∀ agent (ia_other: ANNOTATED_ARRAYED_SET [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 						do
-							Result := (array_valid_index (i) and ia_other.array_valid_index (i)) and then eq (Current [i], ia_other [i])
+							Result := (valid_index (i) and ia_other.valid_index (i)) and then eq (Current [i], ia_other [i])
 						end (other, s.eq, ?)
+				)
 		end
 
 	is_subset alias "⊆" (other: TRAVERSABLE_SUBSET [G]): BOOLEAN
