@@ -489,7 +489,7 @@ feature -- Test routines (Measurement)
 			assert ("occurrences", attached s.occurrences (some_object_a))
 		end
 
-feature -- Test routines (Measurement)
+feature -- Test routines (Comparison)
 
 	test_disjoint
 			-- Test {ANNOTATED_ARRAYED_SET}.disjoint.

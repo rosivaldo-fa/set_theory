@@ -130,7 +130,7 @@ feature -- Test routines (Measurement)
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
 
-feature -- Test routines (Measurement)
+feature -- Test routines (Comparison)
 
 	test_disjoint
 			-- <Precursor>

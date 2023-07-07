@@ -261,8 +261,9 @@ invariant
 	to_array_nothing_else: ∀ x: to_array ¦ s.has (x)
 
 	count_definition: count = (# mi - 2).as_integer_32
-	lower_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := lower ≤ i end
-	upper_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ upper end
+	lower_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := lower ≤ i end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
+	upper_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ upper end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
+	after_definition: after = mi |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
