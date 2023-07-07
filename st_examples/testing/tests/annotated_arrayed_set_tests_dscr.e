@@ -32,7 +32,8 @@ inherit
 			test_occurrences,
 			test_disjoint,
 			test_is_equal,
-			test_is_subset
+			test_is_subset,
+			test_is_superset
 		end
 
 feature -- Test routines (Initialization)
@@ -151,6 +152,14 @@ feature -- Test routines (Measurement)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.is_subset"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_is_superset
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.is_superset"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

@@ -22,7 +22,8 @@ inherit
 			occurrences,
 			disjoint,
 			is_equal,
-			is_subset
+			is_subset,
+			is_superset
 		end
 
 create
@@ -191,9 +192,18 @@ feature -- Comparison
 	is_subset alias "⊆" (other: TRAVERSABLE_SUBSET [G]): BOOLEAN
 			-- <Precursor>
 		do
-			Result := Precursor {ARRAYED_SET}(other)
+			Result := Precursor {ARRAYED_SET} (other)
 		ensure then
 			definition: Result = model_set |∀ agent other.has
+		end
+
+	is_superset alias "⊇" (other: SUBSET [G]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET} (other)
+		ensure then
+			s: attached model_set as s
+			definition: Result = ∀ x: other ¦ s ∋ x
 		end
 
 feature -- Predicate
