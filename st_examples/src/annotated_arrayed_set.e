@@ -20,7 +20,8 @@ inherit
 			index_of,
 			array_item,
 			occurrences,
-			disjoint
+			disjoint,
+			is_equal
 		end
 
 create
@@ -161,10 +162,29 @@ feature -- Comparison
 		note
 			EIS: "name=Error within implementation of {ARRAYED_SET}.disjoint", "protocol=URI", "src=https://support.eiffel.com/report_detail/19894", "tag=Bug, EiffelBase"
 		do
-			Result := Precursor {ARRAYED_SET}(other)
+			Result := Precursor {ARRAYED_SET} (other)
 		ensure then
 			s: attached model_set as s
 			definition: Result = ∀ x: other ¦ s ∌ x
+		end
+
+	is_equal (other: ANNOTATED_ARRAYED_SET [G]): BOOLEAN
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Result := Precursor {ARRAYED_SET} (other)
+		ensure then
+			mi: attached model_indices as mi
+			same_indices: Result ⇒ mi ≍ other.model_indices
+			same_equality: Result ⇒ object_comparison = other.object_comparison
+			s: attached model_set as s
+			same_elements: object_comparison = other.object_comparison ⇒ (Result ⇒ s ≍ other.model_set)
+			same_sequence: object_comparison = other.object_comparison ⇒
+				Result = (mi / 0 / count) |∀ agent (ia_other: ANNOTATED_ARRAYED_SET [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+						do
+							Result := (array_valid_index (i) and ia_other.array_valid_index (i)) and then eq (Current [i], ia_other [i])
+						end (other, s.eq, ?)
 		end
 
 feature -- Predicate
@@ -222,8 +242,8 @@ invariant
 	to_array_nothing_else: ∀ x: to_array ¦ s.has (x)
 
 	count_definition: count = (# mi - 2).as_integer_32
-	lower_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER ):BOOLEAN do Result := lower ≤ i end
-	upper_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER ):BOOLEAN do Result := i ≤ upper end
+	lower_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := lower ≤ i end
+	upper_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ upper end
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"

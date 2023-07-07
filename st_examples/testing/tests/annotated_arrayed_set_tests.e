@@ -519,6 +519,26 @@ feature -- Test routines (Measurement)
 			end
 		end
 
+	test_is_equal
+			-- Test {ANNOTATED_ARRAYED_SET}.is_equal.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.is_equal"
+		local
+			s1, s2: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s1.make (0)
+			if next_random_item \\ 2 = 0 then
+				s1.compare_objects
+			end
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s1.extend (some_object_a) ⟲
+			create s2.make (0)
+			if s1.object_comparison then
+				s2.compare_objects
+			end
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s2.extend (some_object_a) ⟲
+			assert ("is_equal", attached s1.is_equal (s2))
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
