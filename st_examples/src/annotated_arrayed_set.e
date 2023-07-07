@@ -21,7 +21,8 @@ inherit
 			array_item,
 			occurrences,
 			disjoint,
-			is_equal
+			is_equal,
+			is_subset
 		end
 
 create
@@ -185,6 +186,14 @@ feature -- Comparison
 						do
 							Result := (array_valid_index (i) and ia_other.array_valid_index (i)) and then eq (Current [i], ia_other [i])
 						end (other, s.eq, ?)
+		end
+
+	is_subset alias "⊆" (other: TRAVERSABLE_SUBSET [G]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}(other)
+		ensure then
+			definition: Result = model_set |∀ agent other.has
 		end
 
 feature -- Predicate
