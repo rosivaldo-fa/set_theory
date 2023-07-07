@@ -183,7 +183,7 @@ feature -- Comparison
 			s: attached model_set as s
 			same_elements: object_comparison = other.object_comparison ⇒ (Result ⇒ s ≍ other.model_set)
 			same_sequence: object_comparison = other.object_comparison ⇒
-				Result = (mi / 0 / count) |∀ agent (ia_other: ANNOTATED_ARRAYED_SET [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				Result = (mi / 0 / (count + 1)) |∀ agent (ia_other: ANNOTATED_ARRAYED_SET [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 						do
 							Result := (array_valid_index (i) and ia_other.array_valid_index (i)) and then eq (Current [i], ia_other [i])
 						end (other, s.eq, ?)
@@ -264,6 +264,7 @@ invariant
 	lower_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := lower ≤ i end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 	upper_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ upper end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 	after_definition: after = mi |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
+	all_default_definition: ({G}).has_default ⇒ all_default = s |∀ agent (s.eq).holds (?, ({G}).default)
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
