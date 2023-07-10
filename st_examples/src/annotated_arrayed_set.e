@@ -23,7 +23,8 @@ inherit
 			disjoint,
 			is_equal,
 			is_subset,
-			is_superset
+			is_superset,
+			is_inserted
 		end
 
 create
@@ -211,6 +212,16 @@ feature -- Comparison
 		ensure then
 			s: attached model_set as s
 			definition: Result = ∀ x: other ¦ s ∋ x
+		end
+
+feature -- Status report
+
+	is_inserted (v: G): BOOLEAN
+			-- Precursor
+		do
+			Result := has (v)
+		ensure then
+			definition: Result ⇒ model_set ∋ v
 		end
 
 feature -- Predicate

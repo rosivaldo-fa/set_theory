@@ -579,6 +579,20 @@ feature -- Test routines (Comparison)
 			assert ("is_superset", attached (s1 ⊇ s2))
 		end
 
+feature -- Test routines (Status report)
+
+	test_is_inserted
+			-- Test {ANNOTATED_ARRAYED_SET}.is_inserted.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.is_inserted"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			assert ("is_inserted", s.is_inserted (some_object_a) ⇒ True)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
