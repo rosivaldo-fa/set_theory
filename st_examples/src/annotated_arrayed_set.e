@@ -157,7 +157,7 @@ feature -- Measurement
 			not_found: s ∌ v ⇒ Result = 0
 			found: s ∋ v ⇒ Result > 0
 			definition: Result.as_natural_32 = # (
-							(model_indices / 0 / (count + 1)) | agent (eq: STS_EQUALITY [G]; ia_v: like item; i: INTEGER): BOOLEAN
+							model_indices | agent (eq: STS_EQUALITY [G]; ia_v: like item; i: INTEGER): BOOLEAN
 								do
 									Result := valid_index (i) and then eq (ia_v, Current [i])
 								end (s.eq, v, ?)
@@ -246,14 +246,17 @@ invariant
 	model_indices_nothing_lost: ∀ i: 1 |..| count ¦ mi ∋ i
 	model_indices_nothing_else: mi |∀ agent (1 |..| count).has
 
+	mxi: attached model_extended_indices as mxi
+	model_extended_indices_definition: mxi ≍ (mi & 0 & (count + 1))
+
 	area_nothing_lost: ∀ x: area ¦ s ∋ x
 	area_nothing_else: s |∀ agent iterable_has_element (area, s.eq, ?)
 
 	area_v2_nothing_lost: ∀ x: area_v2 ¦ s ∋ x
 	area_v2_nothing_else: s |∀ agent iterable_has_element (area_v2, s.eq, ?)
 
-	extended_valid_index: model_extended_indices ∋ index
-	cursor_extended_valid_index: model_extended_indices ∋ cursor.index
+	extended_valid_index: mxi ∋ index
+	cursor_extended_valid_index: mxi ∋ cursor.index
 	first_valid_element: not is_empty ⇒ s ∋ first
 	item_valid_element: readable or not off or valid_index (index) ⇒ s ∋ item
 	item_for_iteration_valid_element: not off ⇒ s ∋ item_for_iteration
@@ -270,10 +273,10 @@ invariant
 	count_definition: count = (# mi).as_integer_32
 	lower_definition: mi |∀ agent (i: INTEGER): BOOLEAN do Result := lower ≤ i end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 	upper_definition: mi |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ upper end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
-	before_definition: before = model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
-	after_definition: after = model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
+	before_definition: before = mxi |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
+	after_definition: after = mxi |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 	all_default_definition: ({G}).has_default ⇒ all_default = s |∀ agent (s.eq).holds (?, ({G}).default)
-	exhausted_quasi_definition: exhausted ⇒ (model_extended_indices ∖ mi) ∋ index
+	exhausted_quasi_definition: exhausted ⇒ (mxi ∖ mi) ∋ index
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
