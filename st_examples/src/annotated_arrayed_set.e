@@ -189,7 +189,7 @@ feature -- Comparison
 			same_equality: Result ⇒ object_comparison = other.object_comparison
 			same_elements: object_comparison = other.object_comparison ⇒ (Result ⇒ s ≍ other.model_set)
 			same_sequence: object_comparison = other.object_comparison ⇒ Result = (
-				mi ≍ other.model_indices and (mi / 0 / (count + 1)) |∀ agent (ia_other: ANNOTATED_ARRAYED_SET [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				mi ≍ other.model_indices and mi |∀ agent (ia_other: ANNOTATED_ARRAYED_SET [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 						do
 							Result := (valid_index (i) and ia_other.valid_index (i)) and then eq (Current [i], ia_other [i])
 						end (other, s.eq, ?)
