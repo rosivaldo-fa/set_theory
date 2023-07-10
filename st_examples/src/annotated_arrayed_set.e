@@ -291,6 +291,7 @@ invariant
 	full_definition: full = ((# mi).as_integer_32 = capacity)
 	is_empty_definition: is_empty = s.is_empty
 	isfirst_definition: isfirst = (mi ∋ index and mi |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end) -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
+	islast_definition: islast = (mi ∋ index and mi |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end) -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
