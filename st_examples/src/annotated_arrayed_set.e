@@ -278,6 +278,7 @@ invariant
 	all_default_definition: ({G}).has_default ⇒ all_default = s |∀ agent (s.eq).holds (?, ({G}).default)
 	exhausted_quasi_definition: exhausted ⇒ (mxi ∖ mi) ∋ index
 	full_definition: full = ((# mi).as_integer_32 = capacity)
+	is_empty_definition: is_empty = s.is_empty
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
