@@ -91,7 +91,14 @@ feature -- Model
 		end
 
 	model_indices: STI_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]
-			-- Representation of current arrayed set's indices as a mathematical set
+			-- Representation, as a mathematical set, of all indices valid for accessing items in current arrayed set
+		do
+			create Result.make_empty
+			⟳ i: 1 |..| count ¦ Result := Result.extended (i) ⟲
+		end
+
+	model_extended_indices: STI_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]
+			-- Representation, as a mathematical set, of all indices used to traverse current arrayed set
 		do
 			create Result.make_empty
 			⟳ i: 0 |..| (count + 1) ¦ Result := Result.extended (i) ⟲
@@ -128,7 +135,7 @@ feature -- Access
 		do
 			Result := Precursor {ARRAYED_SET} (v, i)
 		ensure then
-			valid_index: model_indices ∋ Result
+			valid_extended_index: model_extended_indices ∋ Result
 		end
 
 	array_item (i: INTEGER): G assign array_put
@@ -236,8 +243,8 @@ invariant
 	model_set_nothing_else: s |∀ agent has
 
 	mi: attached model_indices as mi
-	model_indices_nothing_lost: ∀ i: 0 |..| (count + 1) ¦ mi ∋ i
-	model_indices_nothing_else: mi |∀ agent (0 |..| (count + 1)).has
+	model_indices_nothing_lost: ∀ i: 1 |..| count ¦ mi ∋ i
+	model_indices_nothing_else: mi |∀ agent (1 |..| count).has
 
 	area_nothing_lost: ∀ x: area ¦ s ∋ x
 	area_nothing_else: s |∀ agent iterable_has_element (area, s.eq, ?)
@@ -245,8 +252,8 @@ invariant
 	area_v2_nothing_lost: ∀ x: area_v2 ¦ s ∋ x
 	area_v2_nothing_else: s |∀ agent iterable_has_element (area_v2, s.eq, ?)
 
-	valid_index: mi ∋ index
-	cursor_valid_index: mi ∋ cursor.index
+	extended_valid_index: model_extended_indices ∋ index
+	cursor_extended_valid_index: model_extended_indices ∋ cursor.index
 	first_valid_element: not is_empty ⇒ s ∋ first
 	item_valid_element: readable or not off or valid_index (index) ⇒ s ∋ item
 	item_for_iteration_valid_element: not off ⇒ s ∋ item_for_iteration
@@ -260,13 +267,13 @@ invariant
 	to_array_nothing_lost: s |∀ agent iterable_has_element_reference (to_array, ?)
 	to_array_nothing_else: ∀ x: to_array ¦ s.has (x)
 
-	count_definition: count = (# mi - 2).as_integer_32
+	count_definition: count = (# mi).as_integer_32
 	lower_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := lower ≤ i end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 	upper_definition: (mi / 0 / (count + 1)) |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ upper end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 	before_definition: before = mi |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
-	after_definition: after = mi |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
+	after_definition: after = model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 	all_default_definition: ({G}).has_default ⇒ all_default = s |∀ agent (s.eq).holds (?, ({G}).default)
-	exhausted_quasi_definition: exhausted ⇒ (mi ∖ (mi / 0 / (count + 1))) ∋ index
+	exhausted_quasi_definition: exhausted ⇒ (model_extended_indices ∖ mi) ∋ index
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
