@@ -218,7 +218,7 @@ feature -- Test routines (Initialization)
 							local
 								s: ANNOTATED_ARRAYED_SET [G]
 							do
-								create s.make_from_array (<<>>)
+								create s.make_from_array ({ARRAY [G]} <<>>)
 								Result := s.model_set.is_empty
 							end
 					).item
