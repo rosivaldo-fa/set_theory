@@ -199,6 +199,7 @@ feature -- Test routines (Status report)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.valid_index"
+			EIS: "name=Wrong post-condition of {ARRAYED_SET}.valid_index", "protocol=URI", "src=https://support.eiffel.com/report_detail/19895", "tag=Bug, EiffelBase"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

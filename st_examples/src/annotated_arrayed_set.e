@@ -246,6 +246,8 @@ feature -- Status report
 
 	valid_index (i: INTEGER): BOOLEAN
 			-- <Precursor>
+		note
+			EIS: "name=Wrong post-condition of {ARRAYED_SET}.valid_index", "protocol=URI", "src=https://support.eiffel.com/report_detail/19895", "tag=Bug, EiffelBase"
 		do
 			Result := Precursor {ARRAYED_SET} (i)
 		ensure then

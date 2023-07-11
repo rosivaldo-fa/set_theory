@@ -44,6 +44,8 @@ feature {NONE} -- Bug
 
 	reproduce_arrayed_set_valid_index_bug
 			-- Reproduce the bug in {ARRAYED_SET}.valid_index feature.
+		note
+			EIS: "name=Wrong post-condition of {ARRAYED_SET}.valid_index", "protocol=URI", "src=https://support.eiffel.com/report_detail/19895", "tag=Bug, EiffelBase"
 		local
 			s: ANNOTATED_ARRAYED_SET [INTEGER]
 		do
@@ -52,7 +54,7 @@ feature {NONE} -- Bug
 
 				s.valid_index (2)
 				not s.valid_index (5) -- {ARRAYED_SET}.valid_index's post-condition index_valid: 0 <= i and i <= count + 1 (from LINEAR_SUBSET) is violated.
-									  -- It seems that the post-condition should read index_valid: Result (0 <= i and i <= count + 1).
+									  -- It seems that the post-condition should read index_valid: Result = (0 <= i and i <= count + 1).
 			then
 			end
 		end
