@@ -24,7 +24,8 @@ inherit
 			is_equal,
 			is_subset,
 			is_superset,
-			is_inserted
+			is_inserted,
+			valid_cursor
 		end
 
 create
@@ -222,6 +223,14 @@ feature -- Status report
 			Result := Precursor {ARRAYED_SET} (v)
 		ensure then
 			definition: Result ⇒ model_set ∋ v
+		end
+
+	valid_cursor (p: CURSOR): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET} (p)
+		ensure then
+			definition: Result = (attached {ARRAYED_LIST_CURSOR} p as al_c and then model_extended_indices ∋ al_c.index)
 		end
 
 feature -- Predicate

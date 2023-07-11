@@ -34,7 +34,8 @@ inherit
 			test_is_equal,
 			test_is_subset,
 			test_is_superset,
-			test_is_inserted
+			test_is_inserted,
+			test_valid_cursor
 		end
 
 feature -- Test routines (Initialization)
@@ -171,6 +172,14 @@ feature -- Test routines (Status report)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.is_inserted"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_valid_cursor
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.valid_cursor"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

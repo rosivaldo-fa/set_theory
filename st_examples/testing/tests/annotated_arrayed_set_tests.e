@@ -593,6 +593,24 @@ feature -- Test routines (Status report)
 			assert ("is_inserted", s.is_inserted (some_object_a) ⇒ True)
 		end
 
+	test_valid_cursor
+			-- Test {ANNOTATED_ARRAYED_SET}.valid_cursor.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.valid_cursor"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+			p: CURSOR
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			if s.count > 0 then
+				⟳ i: 1 |..| (next_random_item \\ s.count) ¦ s.forth ⟲
+			end
+			p := s.cursor
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.prune (some_object_a) ⟲
+			assert ("valid_cursor", s.valid_cursor (p) ⇒ True)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
