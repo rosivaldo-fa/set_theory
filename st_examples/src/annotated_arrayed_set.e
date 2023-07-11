@@ -27,7 +27,8 @@ inherit
 			is_inserted,
 			valid_cursor,
 			valid_cursor_index,
-			valid_index
+			valid_index,
+			array_valid_index
 		end
 
 create
@@ -243,12 +244,20 @@ feature -- Status report
 			definition: Result = model_extended_indices ∋ i
 		end
 
-	valid_index (i: INTEGER_32): BOOLEAN
+	valid_index (i: INTEGER): BOOLEAN
 			-- <Precursor>
 		do
 			Result := Precursor {ARRAYED_SET} (i)
 		ensure then
 			definition: Result = model_indices ∋ i
+		end
+
+	array_valid_index (i: INTEGER): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET} (i)
+		ensure then
+			definition: Result = (model_extended_indices / count / (count - 1)) ∋ i
 		end
 
 feature -- Predicate
