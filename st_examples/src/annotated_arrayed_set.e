@@ -330,6 +330,7 @@ invariant
 	islast_definition: islast = (mi ∋ index and mi |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end) -- file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures
 	off_definition: off = (mxi ∖ mi) ∋ index
 	readable_definition: readable = mi ∋ index
+	writable_definition: writable = mi ∋ index
 
 note
 	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
