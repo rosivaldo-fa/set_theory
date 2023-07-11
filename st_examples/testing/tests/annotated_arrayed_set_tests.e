@@ -623,6 +623,18 @@ feature -- Test routines (Status report)
 			assert ("valid_cursor_index", s.valid_cursor_index (some_integer + some_integer) ⇒ True)
 		end
 
+	test_valid_index
+			-- Test {ANNOTATED_ARRAYED_SET}.valid_index.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.valid_index"
+		local
+			s: ANNOTATED_ARRAYED_SET [G]
+		do
+			create s.make (0)
+			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+			assert ("valid_index", s.valid_index (some_integer + some_integer) ⇒ True)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

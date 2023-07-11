@@ -26,7 +26,8 @@ inherit
 			is_superset,
 			is_inserted,
 			valid_cursor,
-			valid_cursor_index
+			valid_cursor_index,
+			valid_index
 		end
 
 create
@@ -240,6 +241,14 @@ feature -- Status report
 			Result := Precursor {ARRAYED_SET} (i)
 		ensure then
 			definition: Result = model_extended_indices ∋ i
+		end
+
+	valid_index (i: INTEGER_32): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET} (i)
+		ensure then
+			definition: Result = model_indices ∋ i
 		end
 
 feature -- Predicate
