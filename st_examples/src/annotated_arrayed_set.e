@@ -257,7 +257,7 @@ feature -- Status report
 		do
 			Result := Precursor {ARRAYED_SET} (i)
 		ensure then
-			definition: Result = (model_extended_indices / count / (count - 1)) ∋ i
+			definition: Result = (model_extended_indices / (count + 1) / count) ∋ i
 		end
 
 feature -- Predicate
