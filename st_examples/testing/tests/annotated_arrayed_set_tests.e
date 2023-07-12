@@ -711,7 +711,7 @@ feature -- Test routines (Cursor movement)
 								end
 								s.go_i_th (s.count + 1)
 								⟳
-									i: 1 |..| (s.count + 1) ¦
+ i: 1 |..| (s.count + 1) ¦
 									check not_before: not s.before end -- 1 ≤ s.index ≤ s.count + 1
 									s.back
 								⟲
@@ -735,7 +735,7 @@ feature -- Test routines (Cursor movement)
 								create s.make (0)
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								⟳
-									i: 1 |..| (s.count + 1) ¦
+ i: 1 |..| (s.count + 1) ¦
 									check not_after: not s.after end -- 0 ≤ s.index ≤ s.count
 									s.forth
 								⟲
@@ -759,6 +759,34 @@ feature -- Test routines (Cursor movement)
 								create s.make (0)
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								s.finish
+								Result := True
+							end
+					).item
+				)
+		end
+
+	test_go_i_th
+			-- Test {ANNOTATED_ARRAYED_SET}.go_i_th.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.go_i_th"
+		do
+			assert (
+					"go_i_th", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+								i: INTEGER
+							do
+								create s.make (0)
+								⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								check
+									good_divisor: s.count + 2 /= 0 -- 0 ≤ s.count
+								end
+								i := next_random_item \\ (s.count + 2)
+								check
+									valid_cursor_index: s.valid_cursor_index (i) -- 0 ≤ i ≤ s.count + 1
+								end
+								s.go_i_th (i)
 								Result := True
 							end
 					).item

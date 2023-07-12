@@ -33,7 +33,8 @@ inherit
 			compare_references,
 			back,
 			forth,
-			finish
+			finish,
+			go_i_th
 		end
 
 create
@@ -341,6 +342,14 @@ feature -- Cursor movement
 			s: attached model_set as s
 			when_empty: s.is_empty ⇒ model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
 			when_not_empty: not s.is_empty ⇒ model_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
+		end
+
+	go_i_th (i: INTEGER)
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET}(i)
+		ensure then
+			valid_extended_index: model_extended_indices ∋ index
 		end
 
 feature -- Predicate
