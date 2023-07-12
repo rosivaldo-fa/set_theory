@@ -322,12 +322,12 @@ feature -- Cursor movement
 			old_mxi: attached old model_extended_indices as old_mxi
 			mxi: attached model_extended_indices as mxi
 			old_cut: attached {TUPLE [lower_slice, upper_slice: like model_extended_indices]} [
-				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := i < old_index end (old index, ?),
-				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := old_index ≤ i end (old index, ?)
+				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := i ≤ old_index end (old index, ?),
+				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := old_index < i end (old index, ?)
 				] as old_cut
 			new_cut: attached {TUPLE [lower_slice, upper_slice: like model_extended_indices]} [
-				mxi | agent (i: INTEGER): BOOLEAN do Result := i < index end,
-				mxi | agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
+				mxi | agent (i: INTEGER): BOOLEAN do Result := i ≤ index end,
+				mxi | agent (i: INTEGER): BOOLEAN do Result := index < i end
 				] as new_cut
 			lower_slice: new_cut.lower_slice ∖ old_cut.lower_slice ≍ mxi.singleton (index)
 			upper_slice: old_cut.upper_slice ∖ new_cut.upper_slice ≍ mxi.singleton (index)

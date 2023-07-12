@@ -734,12 +734,11 @@ feature -- Test routines (Cursor movement)
 							do
 								create s.make (0)
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-								if s.count > 0 then
-									⟳ i: 1 |..| (next_random_item \\ s.count) ¦ s.forth ⟲
-								end
-								if not s.after then
+								⟳
+									i: 1 |..| (s.count + 1) ¦
+									check not_after: not s.after end -- 0 ≤ s.index ≤ s.count
 									s.forth
-								end
+								⟲
 								Result := True
 							end
 					).item
