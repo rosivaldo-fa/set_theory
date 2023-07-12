@@ -41,6 +41,7 @@ inherit
 			test_array_valid_index,
 			test_compare_objects,
 			test_compare_references,
+			test_start,
 			test_back,
 			test_forth,
 			test_finish,
@@ -240,6 +241,14 @@ feature -- Test routines (Status setting)
 		end
 
 feature -- Test routines (Cursor movement)
+
+	test_start
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.start"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
 
 	test_back
 			-- <Precursor>

@@ -31,6 +31,7 @@ inherit
 			array_valid_index,
 			compare_objects,
 			compare_references,
+			start,
 			back,
 			forth,
 			finish,
@@ -291,27 +292,16 @@ feature -- Status setting
 
 feature -- Cursor movement
 
-	back
+	start
 			-- <Precursor>
-			-- The post-condition is rather convoluted and somewhat unnecessary, but the intent is just to show how index moving relates to slicing
-			-- `model_extended_indices'.
 		note
 			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Precursor {ARRAYED_SET}
 		ensure then
-			old_mxi: attached old model_extended_indices as old_mxi
-			mxi: attached model_extended_indices as mxi
-			old_cut: attached {TUPLE [lower_slice, upper_slice: like model_extended_indices]} [
-				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := i < old_index end (old index, ?),
-				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := old_index ≤ i end (old index, ?)
-				] as old_cut
-			new_cut: attached {TUPLE [lower_slice, upper_slice: like model_extended_indices]} [
-				mxi | agent (i: INTEGER): BOOLEAN do Result := i < index end,
-				mxi | agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
-				] as new_cut
-			lower_slice: old_cut.lower_slice ∖ new_cut.lower_slice ≍ mxi.singleton (index)
-			upper_slice: new_cut.upper_slice ∖ old_cut.upper_slice ≍ mxi.singleton (index)
+			s: attached model_set as s
+			when_empty: s.is_empty ⇒ model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
+			when_not_empty: not s.is_empty ⇒ model_indices |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
 		end
 
 	forth
@@ -347,6 +337,29 @@ feature -- Cursor movement
 			s: attached model_set as s
 			when_empty: s.is_empty ⇒ model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
 			when_not_empty: not s.is_empty ⇒ model_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
+		end
+
+	back
+			-- <Precursor>
+			-- The post-condition is rather convoluted and somewhat unnecessary, but the intent is just to show how index moving relates to slicing
+			-- `model_extended_indices'.
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET}
+		ensure then
+			old_mxi: attached old model_extended_indices as old_mxi
+			mxi: attached model_extended_indices as mxi
+			old_cut: attached {TUPLE [lower_slice, upper_slice: like model_extended_indices]} [
+				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := i < old_index end (old index, ?),
+				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := old_index ≤ i end (old index, ?)
+				] as old_cut
+			new_cut: attached {TUPLE [lower_slice, upper_slice: like model_extended_indices]} [
+				mxi | agent (i: INTEGER): BOOLEAN do Result := i < index end,
+				mxi | agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
+				] as new_cut
+			lower_slice: old_cut.lower_slice ∖ new_cut.lower_slice ≍ mxi.singleton (index)
+			upper_slice: new_cut.upper_slice ∖ old_cut.upper_slice ≍ mxi.singleton (index)
 		end
 
 	go_i_th (i: INTEGER)

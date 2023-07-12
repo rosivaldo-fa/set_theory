@@ -693,6 +693,26 @@ feature -- Test routines (Status setting)
 
 feature -- Test routines (Cursor movement)
 
+	test_start
+			-- Test {ANNOTATED_ARRAYED_SET}.start.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.start"
+		do
+			assert (
+					"start", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								s.start
+								Result := True
+							end
+					).item
+				)
+		end
+
 	test_back
 			-- Test {ANNOTATED_ARRAYED_SET}.back.
 		note
