@@ -38,7 +38,8 @@ inherit
 			test_valid_cursor,
 			test_valid_cursor_index,
 			test_valid_index,
-			test_array_valid_index
+			test_array_valid_index,
+			test_compare_objects
 		end
 
 feature -- Test routines (Initialization)
@@ -208,6 +209,16 @@ feature -- Test routines (Status report)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.array_valid_index"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+feature -- Test routines (Status report)
+
+	test_compare_objects
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.compare_objects"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

@@ -28,7 +28,8 @@ inherit
 			valid_cursor,
 			valid_cursor_index,
 			valid_index,
-			array_valid_index
+			array_valid_index,
+			compare_objects
 		end
 
 create
@@ -260,6 +261,16 @@ feature -- Status report
 			Result := Precursor {ARRAYED_SET} (i)
 		ensure then
 			definition: Result = (model_extended_indices / (count + 1) / count) ∋ i
+		end
+
+feature -- Status setting
+
+	compare_objects
+			-- <Precursor>
+		do
+			object_comparison := True
+		ensure then
+			object_equality: model_set.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
 		end
 
 feature -- Predicate

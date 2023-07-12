@@ -657,6 +657,24 @@ feature -- Test routines (Status report)
 			assert ("array_valid_index", s.array_valid_index (some_integer + some_integer) ⇒ True)
 		end
 
+feature -- Test routines (Status report)
+
+	test_compare_objects
+			-- Test {ANNOTATED_ARRAYED_SET}.compare_objects.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.compare_objects"
+		do
+			assert (
+				"compare_objects", (
+					agent: BOOLEAN
+						do
+							(create {ANNOTATED_ARRAYED_SET [G]}.make (0)).compare_objects
+							Result := True
+						end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
