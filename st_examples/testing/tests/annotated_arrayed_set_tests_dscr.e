@@ -42,6 +42,7 @@ inherit
 			test_compare_objects,
 			test_compare_references,
 			test_back,
+			test_forth,
 			test_finish
 		end
 
@@ -240,6 +241,14 @@ feature -- Test routines (Cursor movement)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.back"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_forth
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.forth"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

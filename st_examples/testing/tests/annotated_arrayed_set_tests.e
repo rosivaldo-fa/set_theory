@@ -706,11 +706,39 @@ feature -- Test routines (Cursor movement)
 							do
 								create s.make (0)
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								check
+									valid_index: s.valid_cursor_index (s.count + 1) -- By definition
+								end
+								s.go_i_th (s.count + 1)
+								⟳
+									i: 1 |..| (s.count + 1) ¦
+									check not_before: not s.before end -- 1 ≤ s.index ≤ s.count + 1
+									s.back
+								⟲
+								Result := True
+							end
+					).item
+				)
+		end
+
+	test_forth
+			-- Test {ANNOTATED_ARRAYED_SET}.forth.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.forth"
+		do
+			assert (
+					"forth", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								if s.count > 0 then
 									⟳ i: 1 |..| (next_random_item \\ s.count) ¦ s.forth ⟲
 								end
-								if not s.before then
-									s.back
+								if not s.after then
+									s.forth
 								end
 								Result := True
 							end
