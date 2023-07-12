@@ -30,7 +30,8 @@ inherit
 			valid_index,
 			array_valid_index,
 			compare_objects,
-			compare_references
+			compare_references,
+			back
 		end
 
 create
@@ -280,6 +281,31 @@ feature -- Status setting
 			Precursor {ARRAYED_SET}
 		ensure then
 			reference_equality: model_set.eq.generating_type <= {detachable STS_REFERENCE_EQUALITY [G]}
+		end
+
+feature -- Cursor movement
+
+	back
+			-- <Precursor>
+			-- The post-condition is rather convoluted and somewhat unnecessary, but the intent is just to show how index moving relates to slicing
+			-- `model_extended_indices'.
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET}
+		ensure then
+			old_mxi: attached old model_extended_indices as old_mxi
+			mxi: attached model_extended_indices as mxi
+			old_cut: attached {TUPLE [lower_slice, upper_slice: like model_extended_indices]} [
+				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := i < old_index end (old index, ?),
+				old_mxi | agent (old_index, i: INTEGER): BOOLEAN do Result := old_index ≤ i end (old index, ?)
+				] as old_cut
+			new_cut: attached {TUPLE [lower_slice, upper_slice: like model_extended_indices]} [
+				mxi | agent (i: INTEGER): BOOLEAN do Result := i < index end,
+				mxi | agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
+				] as new_cut
+			lower_slice: old_cut.lower_slice ∖ new_cut.lower_slice ≍ mxi.singleton (index)
+			upper_slice: new_cut.upper_slice ∖ old_cut.upper_slice ≍ mxi.singleton (index)
 		end
 
 feature -- Predicate

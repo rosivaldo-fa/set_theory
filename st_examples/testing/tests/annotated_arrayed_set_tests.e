@@ -657,7 +657,7 @@ feature -- Test routines (Status report)
 			assert ("array_valid_index", s.array_valid_index (some_integer + some_integer) ⇒ True)
 		end
 
-feature -- Test routines (Status report)
+feature -- Test routines (Status setting)
 
 	test_compare_objects
 			-- Test {ANNOTATED_ARRAYED_SET}.compare_objects.
@@ -665,12 +665,12 @@ feature -- Test routines (Status report)
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.compare_objects"
 		do
 			assert (
-				"compare_objects", (
-					agent: BOOLEAN
-						do
-							(create {ANNOTATED_ARRAYED_SET [G]}.make (0)).compare_objects
-							Result := True
-						end
+					"compare_objects", (
+						agent: BOOLEAN
+							do
+								(create {ANNOTATED_ARRAYED_SET [G]}.make (0)).compare_objects
+								Result := True
+							end
 					).item
 				)
 		end
@@ -681,12 +681,39 @@ feature -- Test routines (Status report)
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.compare_references"
 		do
 			assert (
-				"compare_references", (
-					agent: BOOLEAN
-						do
-							(create {ANNOTATED_ARRAYED_SET [G]}.make (0)).compare_references
-							Result := True
-						end
+					"compare_references", (
+						agent: BOOLEAN
+							do
+								(create {ANNOTATED_ARRAYED_SET [G]}.make (0)).compare_references
+								Result := True
+							end
+					).item
+				)
+		end
+
+feature -- Test routines (Cursor movement)
+
+	test_back
+			-- Test {ANNOTATED_ARRAYED_SET}.back.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.back"
+		do
+			assert (
+					"back", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								if s.count > 0 then
+									⟳ i: 1 |..| (next_random_item \\ s.count) ¦ s.forth ⟲
+								end
+								if not s.before then
+									s.back
+								end
+								Result := True
+							end
 					).item
 				)
 		end
