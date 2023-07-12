@@ -29,7 +29,8 @@ inherit
 			valid_cursor_index,
 			valid_index,
 			array_valid_index,
-			compare_objects
+			compare_objects,
+			compare_references
 		end
 
 create
@@ -271,6 +272,14 @@ feature -- Status setting
 			Precursor {ARRAYED_SET}
 		ensure then
 			object_equality: model_set.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
+		end
+
+	compare_references
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET}
+		ensure then
+			reference_equality: model_set.eq.generating_type <= {detachable STS_REFERENCE_EQUALITY [G]}
 		end
 
 feature -- Predicate

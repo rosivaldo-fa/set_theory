@@ -675,6 +675,22 @@ feature -- Test routines (Status report)
 				)
 		end
 
+	test_compare_references
+			-- Test {ANNOTATED_ARRAYED_SET}.compare_references.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.compare_references"
+		do
+			assert (
+				"compare_references", (
+					agent: BOOLEAN
+						do
+							(create {ANNOTATED_ARRAYED_SET [G]}.make (0)).compare_references
+							Result := True
+						end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
