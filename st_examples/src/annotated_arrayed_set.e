@@ -268,7 +268,7 @@ feature -- Status setting
 	compare_objects
 			-- <Precursor>
 		do
-			object_comparison := True
+			Precursor {ARRAYED_SET}
 		ensure then
 			object_equality: model_set.eq.generating_type <= {detachable STS_OBJECT_EQUALITY [G]}
 		end
