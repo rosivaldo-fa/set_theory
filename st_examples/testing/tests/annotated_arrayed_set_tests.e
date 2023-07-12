@@ -793,6 +793,37 @@ feature -- Test routines (Cursor movement)
 				)
 		end
 
+	test_go_to
+			-- Test {ANNOTATED_ARRAYED_SET}.go_to.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.go_to"
+		do
+			assert (
+					"go_to", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+								p: CURSOR
+							do
+								create s.make (0)
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦
+									check
+										not_after: not s.after -- 0 ≤ s.index < (s.count + 1)
+									end
+									s.forth
+								⟲
+								p := s.cursor
+								check
+									cursor_position_valid: s.valid_cursor (p) -- 0 ≤ p.index < (s.count + 1)
+								end
+								s.go_to (p)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

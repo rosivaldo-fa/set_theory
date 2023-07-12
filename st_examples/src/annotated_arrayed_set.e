@@ -34,7 +34,8 @@ inherit
 			back,
 			forth,
 			finish,
-			go_i_th
+			go_i_th,
+			go_to
 		end
 
 create
@@ -349,6 +350,16 @@ feature -- Cursor movement
 		do
 			Precursor {ARRAYED_SET}(i)
 		ensure then
+			valid_extended_index: model_extended_indices ∋ index
+		end
+
+	go_to (p: CURSOR)
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET}(p)
+		ensure then
+			al_c: attached {ARRAYED_LIST_CURSOR} p as al_c -- Precondition: valid_cursor (p)
+			new_index: index = al_c.index
 			valid_extended_index: model_extended_indices ∋ index
 		end
 
