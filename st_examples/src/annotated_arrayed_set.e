@@ -36,7 +36,8 @@ inherit
 			finish,
 			go_i_th,
 			go_to,
-			move
+			move,
+			search
 		end
 
 create
@@ -338,6 +339,8 @@ feature -- Cursor movement
 
 	finish
 			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Precursor {ARRAYED_SET}
 		ensure then
@@ -366,6 +369,8 @@ feature -- Cursor movement
 
 	move (i: INTEGER)
 			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Precursor {ARRAYED_SET} (i)
 		ensure then
@@ -376,6 +381,29 @@ feature -- Cursor movement
 				mi |∀ agent (j: INTEGER): BOOLEAN do Result := index < j end
 			after: mi |∀ agent (old_index, ia_i, j: INTEGER): BOOLEAN do Result := j < old_index + ia_i end (old index, i, ?) ⇒
 				mi |∀ agent (j: INTEGER): BOOLEAN do Result := j < index end
+		end
+
+	search (v: like item)
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			s: attached model_set as s
+			mi: attached model_indices as mi
+			no_look_back: index ≥ old index
+			first_occurrence: mi | agent (old_index, i: INTEGER): BOOLEAN
+				do
+					Result := old_index ≤ i and i < index
+				end (old index, ?) |∄ agent (ia_v: like item; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := valid_index (i) and then eq (Current [i], ia_v)
+					end (v, s.eq, ?)
+			found: mi ∋ index ⇒ valid_index (index) and then s.eq (v, Current [index])
+			consistent_found: mi ∋ index ⇒ s ∋ v
+			not_found: mi ∌ index ⇒ (model_extended_indices ∖ mi) ∋ index
+			consistent_not_found: s ∌ v ⇒ mi ∌ index
 		end
 
 feature -- Predicate

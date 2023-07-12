@@ -850,6 +850,32 @@ feature -- Test routines (Cursor movement)
 				)
 		end
 
+	test_search
+			-- Test {ANNOTATED_ARRAYED_SET}.search.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.search"
+		do
+			assert (
+					"search", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦
+									check
+										not_after: not s.after -- 0 ≤ s.index < (s.count + 1)
+									end
+									s.forth
+								⟲
+								s.search (some_object_a)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

@@ -46,7 +46,8 @@ inherit
 			test_finish,
 			test_go_i_th,
 			test_go_to,
-			test_move
+			test_move,
+			test_search
 		end
 
 feature -- Test routines (Initialization)
@@ -284,6 +285,14 @@ feature -- Test routines (Cursor movement)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.move"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_search
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.search"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
