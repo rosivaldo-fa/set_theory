@@ -41,7 +41,8 @@ inherit
 			test_array_valid_index,
 			test_compare_objects,
 			test_compare_references,
-			test_back
+			test_back,
+			test_finish
 		end
 
 feature -- Test routines (Initialization)
@@ -239,6 +240,14 @@ feature -- Test routines (Cursor movement)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.back"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_finish
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.finish"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

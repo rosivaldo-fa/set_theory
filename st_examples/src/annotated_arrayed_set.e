@@ -31,7 +31,8 @@ inherit
 			array_valid_index,
 			compare_objects,
 			compare_references,
-			back
+			back,
+			finish
 		end
 
 create
@@ -306,6 +307,16 @@ feature -- Cursor movement
 				] as new_cut
 			lower_slice: old_cut.lower_slice ∖ new_cut.lower_slice ≍ mxi.singleton (index)
 			upper_slice: new_cut.upper_slice ∖ old_cut.upper_slice ≍ mxi.singleton (index)
+		end
+
+	finish
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET}
+		ensure then
+			s: attached model_set as s
+			when_empty: s.is_empty ⇒ model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
+			when_not_empty: not s.is_empty ⇒ model_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
 		end
 
 feature -- Predicate

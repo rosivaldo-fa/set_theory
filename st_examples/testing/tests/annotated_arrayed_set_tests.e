@@ -718,6 +718,26 @@ feature -- Test routines (Cursor movement)
 				)
 		end
 
+	test_finish
+			-- Test {ANNOTATED_ARRAYED_SET}.finish.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.finish"
+		do
+			assert (
+					"finish", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								s.finish
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
