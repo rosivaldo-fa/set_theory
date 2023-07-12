@@ -35,7 +35,8 @@ inherit
 			forth,
 			finish,
 			go_i_th,
-			go_to
+			go_to,
+			move
 		end
 
 create
@@ -348,7 +349,7 @@ feature -- Cursor movement
 	go_i_th (i: INTEGER)
 			-- <Precursor>
 		do
-			Precursor {ARRAYED_SET}(i)
+			Precursor {ARRAYED_SET} (i)
 		ensure then
 			valid_extended_index: model_extended_indices ∋ index
 		end
@@ -356,11 +357,25 @@ feature -- Cursor movement
 	go_to (p: CURSOR)
 			-- <Precursor>
 		do
-			Precursor {ARRAYED_SET}(p)
+			Precursor {ARRAYED_SET} (p)
 		ensure then
 			al_c: attached {ARRAYED_LIST_CURSOR} p as al_c -- Precondition: valid_cursor (p)
 			new_index: index = al_c.index
 			valid_extended_index: model_extended_indices ∋ index
+		end
+
+	move (i: INTEGER)
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET} (i)
+		ensure then
+			mi: attached model_indices as mi
+			not_off: mi ∋ (old index + i) ⇒ mi ∋ index
+			off: mi ∌ (old index + i) implies (model_extended_indices ∖ mi) ∋ index
+			before: mi |∀ agent (old_index, ia_i, j: INTEGER): BOOLEAN do Result := old_index + ia_i < j end (old index, i, ?) ⇒
+				mi |∀ agent (j: INTEGER): BOOLEAN do Result := index < j end
+			after: mi |∀ agent (old_index, ia_i, j: INTEGER): BOOLEAN do Result := j < old_index + ia_i end (old index, i, ?) ⇒
+				mi |∀ agent (j: INTEGER): BOOLEAN do Result := j < index end
 		end
 
 feature -- Predicate
