@@ -40,7 +40,8 @@ inherit
 			move,
 			search,
 			append,
-			extend
+			extend,
+			al_extend
 		end
 
 create
@@ -453,7 +454,16 @@ feature -- Element change
 			Precursor {ARRAYED_SET} (v)
 		ensure then
 			elements: model_set ≍ old (model_set & v)
-			indices: # model_indices ≤ (old # model_indices + 1)
+			indices: # model_indices ≤ old (# model_indices + 1)
+		end
+
+	al_extend (v: like item)
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			elements: model_set ≍ old (model_set & v)
+			indices: # model_indices = old (# model_indices + 1)
 		end
 
 feature -- Predicate

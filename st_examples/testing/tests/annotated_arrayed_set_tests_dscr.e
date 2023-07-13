@@ -50,7 +50,8 @@ inherit
 			test_move,
 			test_search,
 			test_append,
-			test_extend
+			test_extend,
+			test_al_extend
 		end
 
 feature -- Test routines (Initialization)
@@ -322,6 +323,14 @@ feature -- Test routines (Element change)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.extend"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_al_extend
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.al_extend"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
