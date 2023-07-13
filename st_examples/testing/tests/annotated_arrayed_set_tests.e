@@ -933,6 +933,26 @@ feature -- Test routines (Element change)
 				)
 		end
 
+	test_extend
+			-- Test {ANNOTATED_ARRAYED_SET}.extend.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.extend"
+		do
+			assert (
+					"extend", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								s.extend (some_object_a)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

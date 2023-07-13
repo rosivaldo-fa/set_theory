@@ -39,7 +39,8 @@ inherit
 			go_to,
 			move,
 			search,
-			append
+			append,
+			extend
 		end
 
 create
@@ -406,7 +407,6 @@ feature -- Cursor movement
 		ensure then
 			s: attached model_set as s
 			mi: attached model_indices as mi
-			mxi: attached model_extended_indices as mxi
 			never_look_back: index ≥ old index
 			when_found: mi ∋ index ⇒ mi | agent (old_index, i: INTEGER): BOOLEAN
 				do
@@ -445,6 +445,15 @@ feature -- Element change
 						⟳ j: 1 |..| (i - old_count - 1) ¦ p.forth ⟲
 						Result := (valid_index (i) and not ia_s.after) and then eq (Current [i], p.item)
 					end (s, ms.eq, old count, ?)
+		end
+
+	extend (v: G)
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			elements: model_set ≍ old (model_set & v)
+			indices: # model_indices ≤ (old # model_indices + 1)
 		end
 
 feature -- Predicate
