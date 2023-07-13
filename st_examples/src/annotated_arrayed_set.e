@@ -406,18 +406,18 @@ feature -- Cursor movement
 		ensure then
 			s: attached model_set as s
 			mi: attached model_indices as mi
-			no_look_back: index ≥ old index
-			first_occurrence: mi | agent (old_index, i: INTEGER): BOOLEAN
+			mxi: attached model_extended_indices as mxi
+			never_look_back: index ≥ old index
+			when_found: mi ∋ index ⇒ mi | agent (old_index, i: INTEGER): BOOLEAN
 				do
-					Result := old_index ≤ i and i < index
-				end (old index, ?) |∄ agent (ia_v: like item; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					Result := old_index ≤ i and i ≤ index
+				end (old index, ?) |∀ agent (ia_v: like item; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 					do
-						Result := valid_index (i) and then eq (Current [i], ia_v)
+						Result := valid_index (i) and then (eq (Current [i], ia_v) = (i = index))
 					end (v, s.eq, ?)
-			found: mi ∋ index ⇒ valid_index (index) and then s.eq (v, Current [index])
-			consistent_found: mi ∋ index ⇒ s ∋ v
-			not_found: mi ∌ index ⇒ (model_extended_indices ∖ mi) ∋ index
-			consistent_not_found: s ∌ v ⇒ mi ∌ index
+			consistent_when_found: mi ∋ index ⇒ s ∋ v
+			when_not_found: mi ∌ index ⇒ (model_extended_indices ∖ mi) ∋ index and index > count
+			consistent_when_not_found: s ∌ v ⇒ mi ∌ index
 		end
 
 feature -- Element change
@@ -434,17 +434,17 @@ feature -- Element change
 			mi: attached model_indices as mi
 			appended_indices: # mi = (# old_mi + s.count.as_natural_32)
 			prefix: old_mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
-				end (old twin, ms.eq, ?)
+					do
+						Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+					end (old twin, ms.eq, ?)
 			suffix: (mi ∖ old_mi) |∀ agent (ia_s: SEQUENCE [G]; eq: STS_EQUALITY [G]; old_count, i: INTEGER): BOOLEAN
-				local
-					p: ITERATION_CURSOR [G]
-				do
-					p := ia_s.new_cursor
-					⟳ j: 1 |..| (i - old_count - 1) ¦ p.forth ⟲
-					Result := (valid_index (i) and not ia_s.after) and then eq (Current [i], p.item)
-				end (s, ms.eq, old count, ?)
+					local
+						p: ITERATION_CURSOR [G]
+					do
+						p := ia_s.new_cursor
+						⟳ j: 1 |..| (i - old_count - 1) ¦ p.forth ⟲
+						Result := (valid_index (i) and not ia_s.after) and then eq (Current [i], p.item)
+					end (s, ms.eq, old count, ?)
 		end
 
 feature -- Predicate
