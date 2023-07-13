@@ -38,7 +38,8 @@ inherit
 			go_i_th,
 			go_to,
 			move,
-			search
+			search,
+			append
 		end
 
 create
@@ -417,6 +418,33 @@ feature -- Cursor movement
 			consistent_found: mi ∋ index ⇒ s ∋ v
 			not_found: mi ∌ index ⇒ (model_extended_indices ∖ mi) ∋ index
 			consistent_not_found: s ∌ v ⇒ mi ∌ index
+		end
+
+feature -- Element change
+
+	append (s: SEQUENCE [G])
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (s)
+		ensure then
+			old_mi: attached old model_indices as old_mi
+			s: attached model_set as ms
+			mi: attached model_indices as mi
+			appended_indices: # mi = (# old_mi + s.count.as_natural_32)
+			prefix: old_mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				do
+					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+				end (old twin, ms.eq, ?)
+			suffix: (mi ∖ old_mi) |∀ agent (ia_s: SEQUENCE [G]; eq: STS_EQUALITY [G]; old_count, i: INTEGER): BOOLEAN
+				local
+					p: ITERATION_CURSOR [G]
+				do
+					p := ia_s.new_cursor
+					⟳ j: 1 |..| (i - old_count - 1) ¦ p.forth ⟲
+					Result := (valid_index (i) and not ia_s.after) and then eq (Current [i], p.item)
+				end (s, ms.eq, old count, ?)
 		end
 
 feature -- Predicate

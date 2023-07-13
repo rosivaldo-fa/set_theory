@@ -896,6 +896,43 @@ feature -- Test routines (Cursor movement)
 				)
 		end
 
+feature -- Test routines (Element change)
+
+	test_append
+			-- Test {ANNOTATED_ARRAYED_SET}.append.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.append"
+		do
+			assert (
+					"append", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+								seq: SEQUENCE [G]
+							do
+								create s.make (0)
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								inspect
+									next_random_item \\ 5
+								when 0 then
+									create {LINKED_LIST [G]} seq.make
+								when 1 then
+									create {ARRAYED_LIST [G]} seq.make (0)
+								when 2 then
+									create {ARRAYED_STACK [G]} seq.make (0)
+								when 3 then
+									create {ARRAYED_SET [G]} seq.make (0)
+								when 4 then
+									create {ANNOTATED_ARRAYED_SET [G]} seq.make (0)
+								end
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ seq.extend (some_object_a) ⟲
+								s.append (seq)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
