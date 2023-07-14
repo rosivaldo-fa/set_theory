@@ -466,6 +466,11 @@ feature -- Cursor movement
 			consistent_when_found: mi ∋ index ⇒ s ∋ v
 			when_not_found: mi ∌ index ⇒ (model_extended_indices ∖ mi) ∋ index and index > count
 			consistent_when_not_found: s ∌ v ⇒ mi ∌ index
+			same_indices: mi ≍ old model_indices
+			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				do
+					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+				end (old twin, s.eq, ?)
 		end
 
 feature -- Element change
