@@ -42,7 +42,8 @@ inherit
 			append,
 			extend,
 			al_extend,
-			fill
+			fill,
+			force
 		end
 
 create
@@ -306,6 +307,12 @@ feature -- Cursor movement
 			s: attached model_set as s
 			when_empty: s.is_empty ⇒ model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
 			when_not_empty: not s.is_empty ⇒ model_indices |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
+			mi: attached model_indices as mi
+			same_indices: mi ≍ old model_indices
+			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				do
+					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+				end (old twin, s.eq, ?)
 		end
 
 	forth
@@ -478,6 +485,13 @@ feature -- Element change
 			other_nothing_lost: ∀ v: other ¦ s ∋ v
 			nothing_else: s |∀ agent s.ored (agent old_s.has, agent other.has, ?)
 			indices: # model_indices = old (# model_indices) + (# s - # old_s)
+		end
+
+	force (v: like item)
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
 		end
 
 feature -- Predicate
