@@ -397,6 +397,12 @@ feature -- Cursor movement
 			Precursor {ARRAYED_SET} (i)
 		ensure then
 			valid_extended_index: model_extended_indices ∋ index
+			mi: attached model_indices as mi
+			same_indices: mi ≍ old model_indices
+			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; j: INTEGER): BOOLEAN
+				do
+					Result := (old_twin.valid_index (j) and valid_index (j)) and then eq (old_twin [j], Current [j])
+				end (old twin, model_set.eq, ?)
 		end
 
 	go_to (p: CURSOR)
