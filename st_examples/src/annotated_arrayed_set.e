@@ -336,6 +336,12 @@ feature -- Cursor movement
 				] as new_cut
 			lower_slice: new_cut.lower_slice ∖ old_cut.lower_slice ≍ mxi.singleton (index)
 			upper_slice: old_cut.upper_slice ∖ new_cut.upper_slice ≍ mxi.singleton (index)
+			mi: attached model_indices as mi
+			same_indices: mi ≍ old model_indices
+			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				do
+					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+				end (old twin, model_set.eq, ?)
 		end
 
 	finish
