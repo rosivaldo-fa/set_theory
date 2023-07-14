@@ -305,9 +305,9 @@ feature -- Cursor movement
 			Precursor {ARRAYED_SET}
 		ensure then
 			s: attached model_set as s
-			when_empty: s.is_empty ⇒ model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
-			when_not_empty: not s.is_empty ⇒ model_indices |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
 			mi: attached model_indices as mi
+			when_empty: s.is_empty ⇒ model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
+			when_not_empty: not s.is_empty ⇒ mi |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
 			same_indices: mi ≍ old model_indices
 			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 				do
@@ -352,8 +352,14 @@ feature -- Cursor movement
 			Precursor {ARRAYED_SET}
 		ensure then
 			s: attached model_set as s
+			mi: attached model_indices as mi
 			when_empty: s.is_empty ⇒ model_extended_indices |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
-			when_not_empty: not s.is_empty ⇒ model_indices |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
+			when_not_empty: not s.is_empty ⇒ mi |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
+			same_indices: mi ≍ old model_indices
+			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				do
+					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+				end (old twin, s.eq, ?)
 		end
 
 	back
