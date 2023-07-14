@@ -41,7 +41,8 @@ inherit
 			search,
 			append,
 			extend,
-			al_extend
+			al_extend,
+			fill
 		end
 
 create
@@ -464,6 +465,19 @@ feature -- Element change
 		ensure then
 			elements: model_set ≍ old (model_set & v)
 			indices: # model_indices = old (# model_indices + 1)
+		end
+
+	fill (other: CONTAINER [G])
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET} (other)
+		ensure then
+			old_s: attached old model_set as old_s
+			s: attached model_set as s
+			current_nothing_lost: old_s |∀ agent s.has
+			other_nothing_lost: ∀ v: other ¦ s ∋ v
+			nothing_else: s |∀ agent s.ored (agent old_s.has, agent other.has, ?)
+			indices: # model_indices = old (# model_indices) + (# s - # old_s)
 		end
 
 feature -- Predicate
