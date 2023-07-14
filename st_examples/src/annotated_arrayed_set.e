@@ -393,6 +393,8 @@ feature -- Cursor movement
 
 	go_i_th (i: INTEGER)
 			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Precursor {ARRAYED_SET} (i)
 		ensure then
@@ -407,6 +409,8 @@ feature -- Cursor movement
 
 	go_to (p: CURSOR)
 			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Precursor {ARRAYED_SET} (p)
 		ensure then
@@ -435,6 +439,11 @@ feature -- Cursor movement
 				mi |∀ agent (j: INTEGER): BOOLEAN do Result := index < j end
 			after: mi |∀ agent (old_index, ia_i, j: INTEGER): BOOLEAN do Result := j < old_index + ia_i end (old index, i, ?) ⇒
 				mi |∀ agent (j: INTEGER): BOOLEAN do Result := j < index end
+			same_indices: mi ≍ old model_indices
+			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; j: INTEGER): BOOLEAN
+				do
+					Result := (old_twin.valid_index (j) and valid_index (j)) and then eq (old_twin [j], Current [j])
+				end (old twin, model_set.eq, ?)
 		end
 
 	search (v: like item)
