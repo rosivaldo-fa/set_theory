@@ -413,6 +413,12 @@ feature -- Cursor movement
 			al_c: attached {ARRAYED_LIST_CURSOR} p as al_c -- Precondition: valid_cursor (p)
 			new_index: index = al_c.index
 			valid_extended_index: model_extended_indices ∋ index
+			mi: attached model_indices as mi
+			same_indices: mi ≍ old model_indices
+			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				do
+					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+				end (old twin, model_set.eq, ?)
 		end
 
 	move (i: INTEGER)
