@@ -310,9 +310,9 @@ feature -- Cursor movement
 			when_not_empty: not s.is_empty ⇒ mi |∀ agent (i: INTEGER): BOOLEAN do Result := index ≤ i end
 			same_indices: mi ≍ old model_indices
 			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
-				end (old twin, s.eq, ?)
+					do
+						Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+					end (old twin, s.eq, ?)
 		end
 
 	forth
@@ -339,9 +339,9 @@ feature -- Cursor movement
 			mi: attached model_indices as mi
 			same_indices: mi ≍ old model_indices
 			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
-				end (old twin, model_set.eq, ?)
+					do
+						Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+					end (old twin, model_set.eq, ?)
 		end
 
 	finish
@@ -357,9 +357,9 @@ feature -- Cursor movement
 			when_not_empty: not s.is_empty ⇒ mi |∀ agent (i: INTEGER): BOOLEAN do Result := i ≤ index end
 			same_indices: mi ≍ old model_indices
 			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
-				end (old twin, s.eq, ?)
+					do
+						Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+					end (old twin, s.eq, ?)
 		end
 
 	back
@@ -386,9 +386,9 @@ feature -- Cursor movement
 			mi: attached model_indices as mi
 			same_indices: mi ≍ old model_indices
 			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
-				end (old twin, model_set.eq, ?)
+					do
+						Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+					end (old twin, model_set.eq, ?)
 		end
 
 	go_i_th (i: INTEGER)
@@ -402,9 +402,9 @@ feature -- Cursor movement
 			mi: attached model_indices as mi
 			same_indices: mi ≍ old model_indices
 			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; j: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (j) and valid_index (j)) and then eq (old_twin [j], Current [j])
-				end (old twin, model_set.eq, ?)
+					do
+						Result := (old_twin.valid_index (j) and valid_index (j)) and then eq (old_twin [j], Current [j])
+					end (old twin, model_set.eq, ?)
 		end
 
 	go_to (p: CURSOR)
@@ -420,9 +420,9 @@ feature -- Cursor movement
 			mi: attached model_indices as mi
 			same_indices: mi ≍ old model_indices
 			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
-				end (old twin, model_set.eq, ?)
+					do
+						Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+					end (old twin, model_set.eq, ?)
 		end
 
 	move (i: INTEGER)
@@ -441,9 +441,9 @@ feature -- Cursor movement
 				mi |∀ agent (j: INTEGER): BOOLEAN do Result := j < index end
 			same_indices: mi ≍ old model_indices
 			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; j: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (j) and valid_index (j)) and then eq (old_twin [j], Current [j])
-				end (old twin, model_set.eq, ?)
+					do
+						Result := (old_twin.valid_index (j) and valid_index (j)) and then eq (old_twin [j], Current [j])
+					end (old twin, model_set.eq, ?)
 		end
 
 	search (v: like item)
@@ -457,9 +457,9 @@ feature -- Cursor movement
 			mi: attached model_indices as mi
 			never_look_back: index ≥ old index
 			when_found: mi ∋ index ⇒ mi | agent (old_index, i: INTEGER): BOOLEAN
-				do
-					Result := old_index ≤ i and i ≤ index
-				end (old index, ?) |∀ agent (ia_v: like item; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := old_index ≤ i and i ≤ index
+					end (old index, ?) |∀ agent (ia_v: like item; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 					do
 						Result := valid_index (i) and then (eq (Current [i], ia_v) = (i = index))
 					end (v, s.eq, ?)
@@ -468,9 +468,9 @@ feature -- Cursor movement
 			consistent_when_not_found: s ∌ v ⇒ mi ∌ index
 			same_indices: mi ≍ old model_indices
 			same_sequence: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
-				end (old twin, s.eq, ?)
+					do
+						Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+					end (old twin, s.eq, ?)
 		end
 
 feature -- Element change
@@ -512,32 +512,47 @@ feature -- Element change
 			old_mi: attached old model_indices as old_mi
 			mi: attached model_indices as mi
 			elements: s ≍ (old_s & v)
-			indices: # mi ≤ (# old_s + 1)
 			same_indices: old_s ∋ v ⇒ mi ≍ old_mi
 			same_sequence: old_s ∋ v ⇒ mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
-				end (old twin, s.eq, ?)
+					do
+						Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+					end (old twin, s.eq, ?)
 			extended_indices: old_s ∌ v ⇒ (mi ∖ old_mi) ≍ mi.singleton ((# mi).as_integer_32)
 			extended_sequence: old_s ∌ v ⇒ mi |∀ agent (ia_v: G; old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					if valid_index (i) then -- Always true, indeed.
-						if old_twin.valid_index (i) then
-							Result := eq (old_twin [i], Current [i])
-						else
-							Result := eq (Current [i], ia_v)
+					do
+						if valid_index (i) then -- Always true, indeed.
+							if old_twin.valid_index (i) then
+								Result := eq (old_twin [i], Current [i])
+							else
+								Result := eq (Current [i], ia_v)
+							end
 						end
-					end
-				end (v, old twin, s.eq, ?)
+					end (v, old twin, s.eq, ?)
 		end
 
 	al_extend (v: like item)
 			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Precursor {ARRAYED_SET} (v)
 		ensure then
-			elements: model_set ≍ old (model_set & v)
-			indices: # model_indices = old (# model_indices + 1)
+			old_s: attached old model_set as old_s
+			s: attached model_set as s
+			old_mi: attached old model_indices as old_mi
+			mi: attached model_indices as mi
+			elements: s ≍ (old_s & v)
+			extended_indices: # mi = (# old_mi + 1)
+			extended_sequence: mi |∀ agent (ia_v: like item; old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						if valid_index (i) then -- Always true, indeed.
+							if old_twin.valid_index (i) then
+								Result := eq (old_twin [i], Current [i])
+							else
+								Result := eq (Current [i], ia_v)
+							end
+						end
+					end (v, old twin, s.eq, ?)
 		end
 
 	fill (other: CONTAINER [G])
