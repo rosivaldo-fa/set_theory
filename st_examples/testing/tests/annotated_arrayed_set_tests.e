@@ -650,6 +650,12 @@ feature -- Test routines (Status report)
 			p: CURSOR
 		do
 			create s.make (0)
+			if next_random_item \\ 2 = 0 then
+				check
+					changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+				end
+				s.compare_objects
+			end
 			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 			if s.count > 0 then
 				⟳ i: 1 |..| (next_random_item \\ s.count) ¦ s.forth ⟲
