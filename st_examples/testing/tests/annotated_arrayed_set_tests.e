@@ -479,6 +479,12 @@ feature -- Test routines (Access)
 			s: ANNOTATED_ARRAYED_SET [G]
 		do
 			create s.make (0)
+			if next_random_item \\ 2 = 0 then
+				check
+					changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+				end
+				s.compare_objects
+			end
 			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 			assert ("index_of", attached s.index_of (some_object_a, 1))
 		end
