@@ -561,11 +561,21 @@ feature -- Element change
 			Precursor {ARRAYED_SET} (other)
 		ensure then
 			old_s: attached old model_set as old_s
+			old_mi: attached old model_indices as old_mi
 			s: attached model_set as s
+			mi: attached model_indices as mi
 			current_nothing_lost: old_s |∀ agent s.has
 			other_nothing_lost: ∀ v: other ¦ s ∋ v
 			nothing_else: s |∀ agent s.ored (agent old_s.has, agent other.has, ?)
-			indices: # model_indices = old (# model_indices) + (# s - # old_s)
+			extended_indices: # mi = # old_mi + (# s - # old_s)
+			prefix: old_mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := (old_twin.valid_index (i) and valid_index (i)) and then eq (old_twin [i], Current [i])
+					end (old twin, s.eq, ?)
+			suffix: (mi ∖ old_mi) |∀ agent (old_twin: like twin; ia_other: CONTAINER [G]; i: INTEGER): BOOLEAN
+					do
+						Result := valid_index (i) and then (not (old_twin ∋ Current [i]) and ia_other.has (Current [i]))
+					end (old twin, other, ?)
 		end
 
 	force (v: like item)
