@@ -1275,58 +1275,100 @@ feature -- Test routines (Element change)
 									next_random_item \\ 14
 								when 0 then
 									create ll.make
+									if s.object_comparison then
+										ll.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ ll.extend (some_object_a) ⟲
 									cont := ll
 								when 1 then
 									create ls.make
+									if s.object_comparison then
+										ls.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ ls.extend (some_object_a) ⟲
 									cont := ls
 								when 2 then
 									create al.make (0)
+									if s.object_comparison then
+										al.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ al.extend (some_object_a) ⟲
 									cont := al
 								when 3 then
 									create arrayed_stack.make (0)
+									if s.object_comparison then
+										arrayed_stack.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ arrayed_stack.extend (some_object_a) ⟲
 									cont := arrayed_stack
 								when 4 then
 									create arrayed_set.make (0)
+									if s.object_comparison then
+										arrayed_set.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ arrayed_set.extend (some_object_a) ⟲
 									cont := arrayed_set
 								when 5 then
 									create aas.make (0)
+									if s.object_comparison then
+										aas.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ aas.extend (some_object_a) ⟲
 									cont := aas
 								when 6 then
 									create a.make_empty
+									if s.object_comparison then
+										a.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ a.force (some_object_a, a.upper + 1) ⟲
 									cont := a
 								when 7 then
 									create aq.make (0)
+									if s.object_comparison then
+										aq.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ aq.extend (some_object_a) ⟲
 									cont := aq
 								when 8 then
 									create ht.make (0)
+									if s.object_comparison then
+										ht.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ ht.extend (some_object_a, i) ⟲
 									cont := ht
 								when 9 then
 									create st.make (0)
+									if s.object_comparison then
+										st.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ st.extend (some_object_a, i.out) ⟲
 									cont := st
 								when 10 then
 									create msr.make_empty
+									if msr.object_comparison then
+										msr.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ msr.extend (some_object_a) ⟲
 									cont := msr
 								when 11 then
 									create msos.make_empty
+									if s.object_comparison then
+										msos.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ msos.extend (some_object_a) ⟲
 									cont := msos
 								when 12 then
 									create mso.make_empty
+									if s.object_comparison then
+										mso.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ mso.extend (some_object_a) ⟲
 									cont := mso
 								when 13 then
 									create msod.make_empty
+									if s.object_comparison then
+										msod.compare_objects
+									end
 									⟳ i: 1 |..| some_count.as_integer_32 ¦ msod.extend (some_object_a) ⟲
 									cont := msod
 								end

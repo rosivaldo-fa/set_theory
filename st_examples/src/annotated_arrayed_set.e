@@ -44,7 +44,8 @@ inherit
 			al_extend,
 			fill,
 			force,
-			merge
+			merge,
+			merge_left
 		end
 
 create
@@ -626,6 +627,15 @@ feature -- Element change
 					do
 						Result := valid_index (i) and then (not (old_twin ∋ Current [i]) and ia_other.has (Current [i]))
 					end (old twin, other, ?)
+		end
+
+	merge_left (other: ARRAYED_LIST [G])
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (other)
+		ensure then
 		end
 
 feature -- Predicate
