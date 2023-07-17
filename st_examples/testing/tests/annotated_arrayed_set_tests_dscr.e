@@ -53,7 +53,8 @@ inherit
 			test_extend,
 			test_al_extend,
 			test_fill,
-			test_force
+			test_force,
+			test_merge
 		end
 
 feature -- Test routines (Initialization)
@@ -349,6 +350,14 @@ feature -- Test routines (Element change)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.force"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_merge
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.merge"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

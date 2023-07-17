@@ -1237,6 +1237,106 @@ feature -- Test routines (Element change)
 				)
 		end
 
+	test_merge
+			-- Test {ANNOTATED_ARRAYED_SET}.merge.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.merge"
+		do
+			assert (
+					"merge", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+								ll: LINKED_LIST [G]
+								ls: LINKED_SET [G]
+								al: ARRAYED_LIST [G]
+								arrayed_stack: ARRAYED_STACK [G]
+								arrayed_set: ARRAYED_SET [G]
+								aas: ANNOTATED_ARRAYED_SET [G]
+								a: ARRAY [G]
+								aq: ARRAYED_QUEUE [G]
+								ht: HASH_TABLE [G, INTEGER]
+								st: STRING_TABLE [G]
+								msr: MUTABLE_SET [G, STS_REFERENCE_EQUALITY [G]]
+								msos: MUTABLE_SET [G, STS_OBJECT_STANDARD_EQUALITY [G]]
+								mso: MUTABLE_SET [G, STS_OBJECT_EQUALITY [G]]
+								msod: MUTABLE_SET [G, STS_OBJECT_DEEP_EQUALITY [G]]
+								cont: CONTAINER [G]
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								inspect
+									next_random_item \\ 14
+								when 0 then
+									create ll.make
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ ll.extend (some_object_a) ⟲
+									cont := ll
+								when 1 then
+									create ls.make
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ ls.extend (some_object_a) ⟲
+									cont := ls
+								when 2 then
+									create al.make (0)
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ al.extend (some_object_a) ⟲
+									cont := al
+								when 3 then
+									create arrayed_stack.make (0)
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ arrayed_stack.extend (some_object_a) ⟲
+									cont := arrayed_stack
+								when 4 then
+									create arrayed_set.make (0)
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ arrayed_set.extend (some_object_a) ⟲
+									cont := arrayed_set
+								when 5 then
+									create aas.make (0)
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ aas.extend (some_object_a) ⟲
+									cont := aas
+								when 6 then
+									create a.make_empty
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ a.force (some_object_a, a.upper + 1) ⟲
+									cont := a
+								when 7 then
+									create aq.make (0)
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ aq.extend (some_object_a) ⟲
+									cont := aq
+								when 8 then
+									create ht.make (0)
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ ht.extend (some_object_a, i) ⟲
+									cont := ht
+								when 9 then
+									create st.make (0)
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ st.extend (some_object_a, i.out) ⟲
+									cont := st
+								when 10 then
+									create msr.make_empty
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ msr.extend (some_object_a) ⟲
+									cont := msr
+								when 11 then
+									create msos.make_empty
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ msos.extend (some_object_a) ⟲
+									cont := msos
+								when 12 then
+									create mso.make_empty
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ mso.extend (some_object_a) ⟲
+									cont := mso
+								when 13 then
+									create msod.make_empty
+									⟳ i: 1 |..| some_count.as_integer_32 ¦ msod.extend (some_object_a) ⟲
+									cont := msod
+								end
+								s.merge (cont)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
