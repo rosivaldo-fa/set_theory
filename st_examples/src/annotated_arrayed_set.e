@@ -43,7 +43,8 @@ inherit
 			extend,
 			al_extend,
 			fill,
-			force
+			force,
+			merge
 		end
 
 create
@@ -587,11 +588,10 @@ feature -- Element change
 		do
 			Precursor {ARRAYED_SET} (v)
 		ensure then
-			old_s: attached old model_set as old_s
 			old_mi: attached old model_indices as old_mi
 			s: attached model_set as s
 			mi: attached model_indices as mi
-			inserted: model_set ∋ v
+			extended: s ≍ old (model_set & v)
 			extended_indices: # mi = # old_mi + 1
 			front: old_mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 					do
@@ -601,6 +601,16 @@ feature -- Element change
 					do
 						Result := valid_index (i) and then eq (Current [i], ia_v)
 					end (v, s.eq, ?)
+		end
+
+	merge (other: CONTAINER [G])
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (other)
+		ensure then
+--			old_s
 		end
 
 feature -- Predicate
