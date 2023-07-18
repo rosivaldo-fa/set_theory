@@ -688,10 +688,10 @@ feature -- Element change
 					do
 						Result := (valid_index (i) and old_twin.valid_index (i)) and then eq (Current [i], old_twin [i])
 					end (old twin, s.eq, ?)
-			middle: mi | agent (old_other_twin: ARRAYED_LIST [G]; i: INTEGER): BOOLEAN
+			middle: mi | agent (old_other_count, i: INTEGER): BOOLEAN
 					do
-						Result := index < i and i ≤ (index + old_other_twin.count)
-					end (old other.twin, ?) |∀ agent (old_other_twin: ARRAYED_LIST [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+						Result := index < i and i ≤ (index + old_other_count)
+					end (old other.count, ?) |∀ agent (old_other_twin: ARRAYED_LIST [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 					do
 						Result := (valid_index (i) and old_other_twin.valid_index (i - index)) and then eq (Current [i], old_other_twin [i - index])
 					end (old other.twin, s.eq, ?)
