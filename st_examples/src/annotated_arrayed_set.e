@@ -45,7 +45,8 @@ inherit
 			fill,
 			force,
 			merge,
-			merge_left
+			merge_left,
+			merge_right
 		end
 
 create
@@ -660,10 +661,47 @@ feature -- Element change
 			suffix: mi | agent (i: INTEGER): BOOLEAN
 					do
 						Result := index ≤ i and i ≤ count
-					end |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; old_index, i: INTEGER): BOOLEAN
+					end |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; old_other_count, i: INTEGER): BOOLEAN
 					do
-						Result := (valid_index (i) and old_twin.valid_index (i - (index - old_index))) and then eq (Current [i], old_twin [i - (index - old_index)])
-					end (old twin, s.eq, old index, ?)
+						Result := (valid_index (i) and old_twin.valid_index (i - old_other_count)) and then eq (Current [i], old_twin [i - old_other_count])
+					end (old twin, s.eq, old other.count, ?)
+		end
+
+	merge_right (other: ARRAYED_LIST [G])
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (other)
+		ensure then
+			old_s: attached old model_set as old_s
+			s: attached model_set as s
+			mi: attached model_indices as mi
+			current_nothing_lost: old_s ⊆ s
+			other_nothing_lost: ∀ v: old other.twin ¦ s ∋ v
+			nothing_else: s |∀ agent s.ored (agent old_s.has, agent (old other.twin).has, ?)
+			extended_indices: # mi = old (# model_indices + other.count.as_natural_32)
+			prefix: mi | agent (i: INTEGER): BOOLEAN
+					do
+						Result := i ≤ index
+					end |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := (valid_index (i) and old_twin.valid_index (i)) and then eq (Current [i], old_twin [i])
+					end (old twin, s.eq, ?)
+			middle: mi | agent (old_other_twin: ARRAYED_LIST [G]; i: INTEGER): BOOLEAN
+					do
+						Result := index < i and i ≤ (index + old_other_twin.count)
+					end (old other.twin, ?) |∀ agent (old_other_twin: ARRAYED_LIST [G]; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := (valid_index (i) and old_other_twin.valid_index (i - index)) and then eq (Current [i], old_other_twin [i - index])
+					end (old other.twin, s.eq, ?)
+			suffix: mi | agent (old_other_count, i: INTEGER): BOOLEAN
+					do
+						Result := index + old_other_count < i and i ≤ count
+					end (old other.count, ?) |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; old_other_count, i: INTEGER): BOOLEAN
+					do
+						Result := (valid_index (i) and old_twin.valid_index (i - old_other_count)) and then eq (Current [i], old_twin [i - old_other_count])
+					end (old twin, s.eq, old other.count, ?)
 		end
 
 feature -- Predicate
