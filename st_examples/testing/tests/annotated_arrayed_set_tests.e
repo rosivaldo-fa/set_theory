@@ -1379,6 +1379,56 @@ feature -- Test routines (Element change)
 				)
 		end
 
+	test_merge_left
+			-- Test {ANNOTATED_ARRAYED_SET}.merge_left.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.merge_left"
+		do
+			assert (
+					"merge_left", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+								al: ARRAYED_LIST [G]
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								inspect
+									next_random_item \\ 4
+								when 0 then
+									create al.make (0)
+								when 1 then
+									create {ARRAYED_STACK [G]} al.make (0)
+								when 2 then
+									create {ARRAYED_SET [G]} al.make (0)
+								when 3 then
+									create {ANNOTATED_ARRAYED_SET [G]} al.make (0)
+								end
+								if s.object_comparison then
+									al.compare_objects
+								end
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ al.extend (some_object_a) ⟲
+								s.start
+								⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦
+									check not_after: not s.after end -- 1 ≤ s.index ≤ s.count + 1
+									s.forth
+								⟲
+								check
+									not_before: not s.before -- 1 ≤ s.index ≤ s.count + 1
+								end
+								s.merge_left (al)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

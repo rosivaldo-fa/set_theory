@@ -636,6 +636,34 @@ feature -- Element change
 		do
 			Precursor {ARRAYED_SET} (other)
 		ensure then
+			old_s: attached old model_set as old_s
+			s: attached model_set as s
+			mi: attached model_indices as mi
+			current_nothing_lost: old_s ⊆ s
+			other_nothing_lost: ∀ v: old other.twin ¦ s ∋ v
+			nothing_else: s |∀ agent s.ored (agent old_s.has, agent (old other.twin).has, ?)
+			extended_indices: # mi = old (# model_indices + other.count.as_natural_32)
+			prefix: mi | agent (old_index, i: INTEGER): BOOLEAN
+					do
+						Result := i < old_index
+					end (old index, ?) |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := (valid_index (i) and old_twin.valid_index (i)) and then eq (Current [i], old_twin [i])
+					end (old twin, s.eq, ?)
+			middle: mi | agent (old_index, i: INTEGER): BOOLEAN
+					do
+						Result := old_index ≤ i and i < index
+					end (old index, ?) |∀ agent (old_other_twin: ARRAYED_LIST [G]; eq: STS_EQUALITY [G]; old_index, i: INTEGER): BOOLEAN
+					do
+						Result := (valid_index (i) and old_other_twin.valid_index (i - old_index + 1)) and then eq (Current [i], old_other_twin [i - old_index + 1])
+					end (old other.twin, s.eq, old index, ?)
+			suffix: mi | agent (i: INTEGER): BOOLEAN
+					do
+						Result := index ≤ i and i ≤ count
+					end |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; old_index, i: INTEGER): BOOLEAN
+					do
+						Result := (valid_index (i) and old_twin.valid_index (i - (index - old_index))) and then eq (Current [i], old_twin [i - (index - old_index)])
+					end (old twin, s.eq, old index, ?)
 		end
 
 feature -- Predicate
