@@ -1479,6 +1479,40 @@ feature -- Test routines (Element change)
 				)
 		end
 
+	test_move_item
+			-- Test {ANNOTATED_ARRAYED_SET}.move_item.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.move_item"
+		do
+			assert (
+					"move_item", (
+						agent: BOOLEAN
+							local
+								v: G
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								v := some_object_a
+								s.extend (v)
+								⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦
+									check not_after: not s.after end -- 0 ≤ s.index ≤ s.count
+									s.forth
+								⟲
+								check item_in_set: s.has (v) end -- Above: s.extend (v)
+								s.move_item (v)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

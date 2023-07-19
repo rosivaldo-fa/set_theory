@@ -46,7 +46,8 @@ inherit
 			force,
 			merge,
 			merge_left,
-			merge_right
+			merge_right,
+			move_item
 		end
 
 create
@@ -702,6 +703,74 @@ feature -- Element change
 					do
 						Result := (valid_index (i) and old_twin.valid_index (i - old_other_count)) and then eq (Current [i], old_twin [i - old_other_count])
 					end (old twin, s.eq, old other.count, ?)
+		end
+
+	move_item (v: G)
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			s: attached model_set as s
+			mi: attached model_indices as mi
+			same_set: s ≍ old model_set
+			same_indices: mi ≍ old model_indices
+			new_index: index = old index + 1
+			valid_old_index: valid_index (index - 1) -- same_indices
+			new_position: s.eq (Current [index - 1], v)
+
+			old_twin: attached old twin as old_twin
+			v_positions: attached (
+					mi | agent (ia_old_twin: like twin; ia_v: G; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+						do
+							Result := ia_old_twin.valid_index (i) and then eq (ia_old_twin [i], ia_v)
+						end (old_twin, v, s.eq, ?)
+				) as v_positions
+			first_v_position_set: attached (
+					mi | agent (ia_v_positions: STI_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]; ind: INTEGER): BOOLEAN
+						do
+							Result := ia_v_positions |∀ agent (i, j: INTEGER): BOOLEAN
+									do
+										Result := i ≤ j
+									end (ind, ?)
+						end (v_positions, ?)
+				) as first_v_position_set
+			first_v_position_set_is_not_empty: not first_v_position_set.is_empty -- Precondition: has (v)
+			first_v_position: attached first_v_position_set.any as first_v_position
+
+			below_index_first_segment: first_v_position < index ⇒ mi |∀ agent
+						(ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_first_v_position, i: INTEGER): BOOLEAN
+					do
+						Result := i < ia_first_v_position ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, first_v_position, ?)
+			below_index_second_segment: first_v_position < index ⇒ mi |∀ agent
+						(ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_first_v_position, i: INTEGER): BOOLEAN
+					do
+						Result := ia_first_v_position ≤ i and i < index - 1 ⇒ (valid_index (i) and ia_old_twin.valid_index (i + 1)) and then
+							eq (Current [i], ia_old_twin [i + 1])
+					end (old_twin, s.eq, first_v_position, ?)
+			below_index_last_segment: first_v_position < index ⇒ mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := index ≤ i and i ≤ count ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, ?)
+
+			above_old_index_first_segment: index - 1 < first_v_position ⇒ mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := 1 ≤ i and i < index - 1 ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, ?)
+			above_old_index_penultimate_segment: index - 1 < first_v_position ⇒ mi |∀ agent
+						(ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_first_v_position, i: INTEGER): BOOLEAN
+					do
+						Result := index ≤ i and i ≤ ia_first_v_position ⇒ (valid_index (i) and ia_old_twin.valid_index (i - 1)) and then
+							eq (Current [i], ia_old_twin [i - 1])
+					end (old_twin, s.eq, first_v_position, ?)
+			above_old_index_last_segment: index - 1 < first_v_position ⇒ mi |∀ agent
+				(ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_first_v_position, i: INTEGER): BOOLEAN
+					do
+						Result := ia_first_v_position < i and i ≤ count ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then
+							eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, first_v_position, ?)
 		end
 
 feature -- Predicate

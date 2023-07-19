@@ -56,7 +56,8 @@ inherit
 			test_force,
 			test_merge,
 			test_merge_left,
-			test_merge_right
+			test_merge_right,
+			test_move_item
 		end
 
 feature -- Test routines (Initialization)
@@ -376,6 +377,14 @@ feature -- Test routines (Element change)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.merge_right"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_move_item
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.move_item"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
