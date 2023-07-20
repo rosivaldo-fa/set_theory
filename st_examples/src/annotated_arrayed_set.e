@@ -48,7 +48,8 @@ inherit
 			merge_left,
 			merge_right,
 			move_item,
-			put
+			put,
+			array_put
 		end
 
 create
@@ -767,7 +768,7 @@ feature -- Element change
 							eq (Current [i], ia_old_twin [i - 1])
 					end (old_twin, s.eq, first_v_position, ?)
 			above_old_index_last_segment: index - 1 < first_v_position ⇒ mi |∀ agent
-				(ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_first_v_position, i: INTEGER): BOOLEAN
+						(ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_first_v_position, i: INTEGER): BOOLEAN
 					do
 						Result := ia_first_v_position < i and i ≤ count ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then
 							eq (Current [i], ia_old_twin [i])
@@ -802,6 +803,30 @@ feature -- Element change
 							end
 						end
 					end (v, old twin, s.eq, ?)
+		end
+
+	array_put (v: G; i: INTEGER)
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (v, i)
+		ensure then
+			old_twin: attached old twin as old_twin
+			s: attached model_set as s
+			inserted: s ∋ v
+			mxi: attached model_extended_indices as mxi
+			same_indices: mxi ≍ old model_extended_indices
+			same_prefix: mxi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G] ia_i, j: INTEGER): BOOLEAN
+					do
+						Result := j < ia_i ⇒ (array_valid_index (j) and ia_old_twin.array_valid_index (j)) and then eq (array_item (j), ia_old_twin.array_item (j))
+					end (old_twin, s.eq, i, ?)
+			new_item: s.eq (array_item (i), v)
+			same_suffix: mxi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G] ia_i, j: INTEGER): BOOLEAN
+					do
+						Result := ia_i < j and j < count ⇒ (array_valid_index (j) and ia_old_twin.array_valid_index (j)) and then
+							eq (array_item (j), ia_old_twin.array_item (j))
+					end (old_twin, s.eq, i, ?)
 		end
 
 feature -- Predicate
