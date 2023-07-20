@@ -890,6 +890,7 @@ feature -- Element change
 			mi: attached model_indices as mi
 			inserted: s ≍ old (model_set & v)
 			extended_indices: # mi = old (# model_indices + 1)
+			new_index: index = old index + 1
 			valid_index: valid_index (1) -- count > 0
 			first: s.eq (Current [1], v)
 			tail: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; i: INTEGER): BOOLEAN
