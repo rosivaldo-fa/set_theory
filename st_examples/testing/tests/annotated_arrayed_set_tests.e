@@ -1604,6 +1604,32 @@ feature -- Test routines (Element change)
 				)
 		end
 
+	test_sequence_put
+			-- Test {ANNOTATED_ARRAYED_SET}.sequence_put.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.sequence_put"
+		do
+			assert (
+					"sequence_put", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								s.sequence_put (some_object_a)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

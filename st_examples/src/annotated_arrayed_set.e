@@ -50,7 +50,8 @@ inherit
 			move_item,
 			put,
 			array_put,
-			al_put
+			al_put,
+			sequence_put
 		end
 
 create
@@ -852,6 +853,29 @@ feature -- Element change
 					do
 						Result := index < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
 					end (old_twin, s.eq, ?)
+		end
+
+	sequence_put (v: like item)
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			s: attached model_set as s
+			mi: attached model_indices as mi
+			elements: s ≍ old (model_set & v)
+			extended_indices: # mi = old (# model_indices + 1)
+			extended_sequence: mi |∀ agent (ia_v: like item; old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						if valid_index (i) then -- Always true, indeed.
+							if old_twin.valid_index (i) then
+								Result := eq (old_twin [i], Current [i])
+							else
+								Result := eq (Current [i], ia_v)
+							end
+						end
+					end (v, old twin, s.eq, ?)
 		end
 
 feature -- Predicate

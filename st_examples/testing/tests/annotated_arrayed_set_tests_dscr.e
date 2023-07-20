@@ -60,7 +60,8 @@ inherit
 			test_move_item,
 			test_put,
 			test_array_put,
-			test_al_put
+			test_al_put,
+			test_sequence_put
 		end
 
 feature -- Test routines (Initialization)
@@ -412,6 +413,14 @@ feature -- Test routines (Element change)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.al_put"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_sequence_put
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.sequence_put"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
