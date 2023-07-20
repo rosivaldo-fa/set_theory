@@ -49,7 +49,8 @@ inherit
 			merge_right,
 			move_item,
 			put,
-			array_put
+			array_put,
+			al_put
 		end
 
 create
@@ -817,16 +818,40 @@ feature -- Element change
 			inserted: s ∋ v
 			mxi: attached model_extended_indices as mxi
 			same_indices: mxi ≍ old model_extended_indices
-			same_prefix: mxi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G] ia_i, j: INTEGER): BOOLEAN
+			same_prefix: mxi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_i, j: INTEGER): BOOLEAN
 					do
 						Result := j < ia_i ⇒ (array_valid_index (j) and ia_old_twin.array_valid_index (j)) and then eq (array_item (j), ia_old_twin.array_item (j))
 					end (old_twin, s.eq, i, ?)
-			new_item: s.eq (array_item (i), v)
-			same_suffix: mxi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G] ia_i, j: INTEGER): BOOLEAN
+			replaced_item: s.eq (array_item (i), v)
+			same_suffix: mxi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_i, j: INTEGER): BOOLEAN
 					do
 						Result := ia_i < j and j < count ⇒ (array_valid_index (j) and ia_old_twin.array_valid_index (j)) and then
 							eq (array_item (j), ia_old_twin.array_item (j))
 					end (old_twin, s.eq, i, ?)
+		end
+
+	al_put (v: like item)
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			old_twin: attached old twin as old_twin
+			s: attached model_set as s
+			inserted: s ∋ v
+			mi: attached model_indices as mi
+			same_indices: mi ≍ old model_indices
+			same_prefix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := i < index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, ?)
+			valid_index: valid_index (index) -- Precondition: writable
+			replaced_item: s.eq (Current [index], v)
+			same_suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := index < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, ?)
 		end
 
 feature -- Predicate
