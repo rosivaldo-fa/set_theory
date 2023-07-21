@@ -54,7 +54,8 @@ inherit
 			sequence_put,
 			put_front,
 			put_i_th,
-			put_left
+			put_left,
+			put_right
 		end
 
 create
@@ -937,15 +938,39 @@ feature -- Element change
 			inserted: s ∋ v
 			extended_indices: # mi = old (# model_indices + 1)
 			prefix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; old_index, i: INTEGER): BOOLEAN
-				do
-					Result := i < old_index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
-				end (old_twin, s.eq, old index, ?)
+					do
+						Result := i < old_index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, old index, ?)
 			valid_index: valid_index (old index) -- 1 ≤ old index ≤ old count + 1 ≤ count
 			new_item: s.eq (Current [old index], v)
 			suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; old_index, i: INTEGER): BOOLEAN
-				do
-					Result := old_index < 1 ⇒ (valid_index (i) and ia_old_twin.valid_index (i - 1)) and then eq (Current [i], ia_old_twin [i - 1])
-				end (old_twin, s.eq, old index, ?)
+					do
+						Result := old_index < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i - 1)) and then eq (Current [i], ia_old_twin [i - 1])
+					end (old_twin, s.eq, old index, ?)
+		end
+
+	put_right (v: like item)
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			old_twin: attached old twin as old_twin
+			s: attached model_set as s
+			mi: attached model_indices as mi
+			inserted: s ∋ v
+			extended_indices: # mi = old (# model_indices + 1)
+			prefix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := i ≤ index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, ?)
+			valid_index: valid_index (index + 1) -- 1 ≤ index + 1 ≤ old count + 1 = count
+			new_item: s.eq (Current [index + 1], v)
+			suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := index + 1 < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i - 1)) and then eq (Current [i], ia_old_twin [i - 1])
+					end (old_twin, s.eq, ?)
 		end
 
 feature -- Predicate

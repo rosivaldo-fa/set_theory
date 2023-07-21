@@ -64,7 +64,8 @@ inherit
 			test_sequence_put,
 			test_put_front,
 			test_put_i_th,
-			test_put_left
+			test_put_left,
+			test_put_right
 		end
 
 feature -- Test routines (Initialization)
@@ -448,6 +449,14 @@ feature -- Test routines (Element change)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.put_left"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_put_right
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.put_right"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
