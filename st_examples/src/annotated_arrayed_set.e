@@ -55,7 +55,8 @@ inherit
 			put_front,
 			put_i_th,
 			put_left,
-			put_right
+			put_right,
+			replace
 		end
 
 create
@@ -970,6 +971,30 @@ feature -- Element change
 			suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 					do
 						Result := index + 1 < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i - 1)) and then eq (Current [i], ia_old_twin [i - 1])
+					end (old_twin, s.eq, ?)
+		end
+
+	replace (v: like first)
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			old_twin: attached old twin as old_twin
+			s: attached model_set as s
+			inserted: s ∋ v
+			mi: attached model_indices as mi
+			same_indices: mi ≍ old model_indices
+			same_prefix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := i < index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, ?)
+			valid_index: valid_index (index) -- Precondition: writable
+			replaced_item: s.eq (Current [index], v)
+			same_suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := index < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
 					end (old_twin, s.eq, ?)
 		end
 
