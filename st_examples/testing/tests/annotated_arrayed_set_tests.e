@@ -1656,6 +1656,41 @@ feature -- Test routines (Element change)
 				)
 		end
 
+	test_put_i_th
+			-- Test {ANNOTATED_ARRAYED_SET}.put_i_th.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.put_i_th"
+		do
+			assert (
+					"put_i_th", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+								i: INTEGER
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ j: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								s.extend (some_object_a)
+								check
+									good_divisor: s.count /= 0 -- s.count > 0
+								end
+								i := 1 + next_random_item \\ s.count
+								check
+									valid_key: s.valid_index (i) -- 1 ≤ i ≤ s.count
+								end
+								s.put_i_th (some_object_a, i)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
