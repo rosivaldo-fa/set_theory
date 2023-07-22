@@ -66,7 +66,8 @@ inherit
 			test_put_i_th,
 			test_put_left,
 			test_put_right,
-			test_replace
+			test_replace,
+			test_prune
 		end
 
 feature -- Test routines (Initialization)
@@ -466,6 +467,16 @@ feature -- Test routines (Element change)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.replace"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+feature -- Test routines (Removal)
+
+	test_prune
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.prune"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
