@@ -57,7 +57,8 @@ inherit
 			put_left,
 			put_right,
 			replace,
-			prune
+			prune,
+			al_prune
 		end
 
 create
@@ -1023,28 +1024,65 @@ feature -- Removal
 					end (old_twin, s.eq, ?)
 
 			one_index_less: old_s ∋ v ⇒ # mi = # old_mi - 1
-			first_v_occurrence: attached old_mi.reduced (0, agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; acc, i: INTEGER): INTEGER
-				do
-					if acc = 0 or acc > i then
-						if ia_old_twin.valid_index (i) then -- Always true, indeed.
-							if eq (ia_old_twin [i], ia_v) then
-								Result := i
-							end
-						end
-					end
-				end (old_twin, s.eq, v, ?, ?)
-				) as first_v_occurrence
-			same_prefix: first_v_occurrence > 0 ⇒
+			first_v_occurrence: attached old_mi.reduced (
+						old count + 1, agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; acc, i: INTEGER): INTEGER
+							do
+								if i < acc then
+									if ia_old_twin.valid_index (i) then -- Always true, indeed.
+										if eq (ia_old_twin [i], ia_v) then
+											Result := i
+										end
+									end
+								end
+							end (old_twin, s.eq, v, ?, ?)
+					) as first_v_occurrence
+			same_prefix: first_v_occurrence ≤ old count ⇒
 				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_first_v_occurrence, i: INTEGER): BOOLEAN
 					do
 						Result := i < ia_first_v_occurrence ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
 					end (old_twin, s.eq, v, first_v_occurrence, ?)
-			shifted_suffix: first_v_occurrence > 0 ⇒
+			shifted_suffix: old count < first_v_occurrence ⇒
 				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_first_v_occurrence, i: INTEGER): BOOLEAN
 					do
 						Result := ia_first_v_occurrence ≤ i ⇒
 							(valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
 					end (old_twin, s.eq, v, first_v_occurrence, ?)
+		end
+
+	al_prune (v: like item)
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			old_twin: attached old twin as old_twin
+			old_mi: attached old model_indices as old_mi
+			s: attached model_set as s
+			mi: attached model_indices as mi
+			next_v_occurrence: attached old_mi.reduced
+					(0, agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; old_index, acc, i: INTEGER): INTEGER
+							do
+								if acc = 0 or acc > i then
+									if ia_old_twin.valid_index (i) then -- Always true, indeed.
+										if eq (ia_old_twin [i], ia_v) then
+											Result := i
+										end
+									end
+								end
+							end (old_twin, s.eq, v, old index, ?, ?)
+					) as next_v_occurrence
+			same_prefix: next_v_occurrence > 0 ⇒
+				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_first_v_occurrence, i: INTEGER): BOOLEAN
+					do
+						Result := i < ia_first_v_occurrence ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, v, next_v_occurrence, ?)
+			shifted_suffix: next_v_occurrence > 0 ⇒
+				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_first_v_occurrence, i: INTEGER): BOOLEAN
+					do
+						Result := ia_first_v_occurrence ≤ i ⇒
+							(valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
+					end (old_twin, s.eq, v, next_v_occurrence, ?)
 		end
 
 feature -- Predicate
