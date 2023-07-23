@@ -7,22 +7,11 @@ note
 class
 	APPLICATION
 
-inherit
-	ARGUMENTS_32
-
 create
-	make,
 	reproduce_arrayed_set_disjoint_bug,
-	reproduce_arrayed_set_valid_index_bug
-
-feature {NONE} -- Initialization
-
-	make
-			-- Run application.
-		do
-			reproduce_arrayed_set_disjoint_bug
-			reproduce_arrayed_set_valid_index_bug
-		end
+	reproduce_arrayed_set_valid_index_bug,
+	reproduce_arrayed_set_move_item_bug,
+	reproduce_another_arrayed_set_move_item_bug
 
 feature {NONE} -- Bug
 
@@ -57,6 +46,32 @@ feature {NONE} -- Bug
 									  -- It seems that the post-condition should read index_valid: Result = (0 <= i and i <= count + 1).
 			then
 			end
+		end
+
+	reproduce_arrayed_set_move_item_bug
+			-- Reproduce the bug in {ARRAYED_SET}.move_item feature.
+		note
+			EIS: "name={ARRAYED_SET}.move_item does not fulfill {ARRAYED_SET}.put_left precondition.", "protocol=URI", "src=https://support.eiffel.com/report_detail/19896", "tag=Bug, EiffelBase"
+		local
+			s: ARRAYED_SET [CHARACTER]
+		do
+			create s.make (0)
+			s.extend ('a')
+			s.move_item ('a') -- Exception here!
+		end
+
+	reproduce_another_arrayed_set_move_item_bug
+			-- Reproduce another bug in {ARRAYED_SET}.move_item feature.
+		note
+			EIS: "name={ARRAYED_SET}.move_item does not fulfill {ARRAYED_SET}.go_i_th precondition.", "protocol=URI", "src=https://support.eiffel.com/report_detail/19897", "tag=Bug, EiffelBase"
+		local
+			s: ARRAYED_SET [CHARACTER]
+		do
+			create s.make (0)
+			s.extend ('a')
+			s.finish
+			s.forth
+			s.move_item ('a') -- Exception here!
 		end
 
 note

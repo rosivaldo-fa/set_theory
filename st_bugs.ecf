@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <system xmlns="http://www.eiffel.com/developers/xml/configuration-1-22-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-22-0 http://www.eiffel.com/developers/xml/configuration-1-22-0.xsd" name="st_bugs" uuid="C9034B6A-416D-4548-975B-175999600554">
-	<target name="st_bugs">
+	<target name="st_bugs" abstract="true">
 		<root class="APPLICATION" feature="make"/>
 		<file_rule>
 			<exclude>/CVS$</exclude>
@@ -35,5 +35,11 @@
 	</target>
 	<target name="reproduce_arrayed_set_valid_index_bug" extends="st_bugs">
 		<root class="APPLICATION" feature="reproduce_arrayed_set_valid_index_bug"/>
+	</target>
+	<target name="reproduce_arrayed_set_move_item_bug" extends="st_bugs">
+		<root class="APPLICATION" feature="reproduce_arrayed_set_move_item_bug"/>
+	</target>
+	<target name="reproduce_another_arrayed_set_move_item_bug" extends="st_bugs">
+		<root class="APPLICATION" feature="reproduce_another_arrayed_set_move_item_bug"/>
 	</target>
 </system>
