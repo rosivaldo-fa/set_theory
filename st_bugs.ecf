@@ -36,10 +36,13 @@
 	<target name="reproduce_arrayed_set_valid_index_bug" extends="st_bugs">
 		<root class="APPLICATION" feature="reproduce_arrayed_set_valid_index_bug"/>
 	</target>
-	<target name="reproduce_arrayed_set_move_item_bug" extends="st_bugs">
-		<root class="APPLICATION" feature="reproduce_arrayed_set_move_item_bug"/>
+	<target name="reproduce_arrayed_set_move_item_bug_19896" extends="st_bugs">
+		<root class="APPLICATION" feature="reproduce_arrayed_set_move_item_bug_19896"/>
 	</target>
-	<target name="reproduce_another_arrayed_set_move_item_bug" extends="st_bugs">
-		<root class="APPLICATION" feature="reproduce_another_arrayed_set_move_item_bug"/>
+	<target name="reproduce_arrayed_set_move_item_bug_19897" extends="st_bugs">
+		<root class="APPLICATION" feature="reproduce_arrayed_set_move_item_bug_19897"/>
+	</target>
+	<target name="reproduce_arrayed_set_move_item_bug_item_exists" extends="st_bugs">
+		<root class="APPLICATION" feature="reproduce_arrayed_set_move_item_bug_item_exists"/>
 	</target>
 </system>

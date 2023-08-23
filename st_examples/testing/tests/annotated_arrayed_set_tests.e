@@ -1483,6 +1483,9 @@ feature -- Test routines (Element change)
 			-- Test {ANNOTATED_ARRAYED_SET}.move_item.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.move_item"
+			EIS: "name={ARRAYED_SET}.move_item does not fulfill {ARRAYED_SET}.put_left precondition.", "protocol=URI", "src=https://support.eiffel.com/report_detail/19896", "tag=Bug, EiffelBase"
+			EIS: "name={ARRAYED_SET}.move_item does not fulfill {ARRAYED_SET}.go_i_th precondition.", "protocol=URI", "src=https://support.eiffel.com/report_detail/19897", "tag=Bug, EiffelBase"
+			EIS: "name=Possibly unnecessary precondition in {ARRAYED_SET}.move_item: item_exists", "protocol=URI", "src=https://support.eiffel.com/report_detail/19898", "tag=Bug, EiffelBase"
 		do
 			assert (
 					"move_item", (
@@ -1498,16 +1501,41 @@ feature -- Test routines (Element change)
 									end
 									s.compare_objects
 								end
-								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-								v := some_object_a
+								⟳ i: 1 |..| some_count.as_integer_32 ¦
+									from
+										v := some_object_a
+									until
+										v /= Void
+									loop
+										v := some_object_a
+									end
+									s.extend (v)
+								⟲
+								from
+									v := some_object_a
+								until
+									v /= Void
+								loop
+									v := some_object_a
+								end
 								s.extend (v)
 								⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦
 									check not_after: not s.after end -- 0 ≤ s.index ≤ s.count
 									s.forth
 								⟲
-								check item_in_set: s.has (v) end -- Above: s.extend (v)
+								check
+									item_exists: v /= Void -- Loops above
+									item_in_set: s.has (v) -- Above: s.extend (v)
+								end
 								s.move_item (v)
 								Result := True
+							rescue
+								if
+									attached {PRECONDITION_VIOLATION} {EXCEPTION_MANAGER}.last_exception as pv and then
+									(pv.recipient_name ~ "move_item" and (pv.description ~ "valid_index" or pv.description ~ "not_before"))
+								then
+									retry
+								end
 							end
 					).item
 				)

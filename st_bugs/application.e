@@ -10,8 +10,9 @@ class
 create
 	reproduce_arrayed_set_disjoint_bug,
 	reproduce_arrayed_set_valid_index_bug,
-	reproduce_arrayed_set_move_item_bug,
-	reproduce_another_arrayed_set_move_item_bug
+	reproduce_arrayed_set_move_item_bug_19896,
+	reproduce_arrayed_set_move_item_bug_19897,
+	reproduce_arrayed_set_move_item_bug_item_exists
 
 feature {NONE} -- Bug
 
@@ -48,8 +49,8 @@ feature {NONE} -- Bug
 			end
 		end
 
-	reproduce_arrayed_set_move_item_bug
-			-- Reproduce the bug in {ARRAYED_SET}.move_item feature.
+	reproduce_arrayed_set_move_item_bug_19896
+			-- Reproduce bug in {ARRAYED_SET}.move_item feature: {ARRAYED_SET}.put_left precondition violated.
 		note
 			EIS: "name={ARRAYED_SET}.move_item does not fulfill {ARRAYED_SET}.put_left precondition.", "protocol=URI", "src=https://support.eiffel.com/report_detail/19896", "tag=Bug, EiffelBase"
 		local
@@ -60,8 +61,8 @@ feature {NONE} -- Bug
 			s.move_item ('a') -- Exception here!
 		end
 
-	reproduce_another_arrayed_set_move_item_bug
-			-- Reproduce another bug in {ARRAYED_SET}.move_item feature.
+	reproduce_arrayed_set_move_item_bug_19897
+			-- Reproduce bug in {ARRAYED_SET}.move_item feature: {ARRAYED_SET}.go_i_th precondition violated.
 		note
 			EIS: "name={ARRAYED_SET}.move_item does not fulfill {ARRAYED_SET}.go_i_th precondition.", "protocol=URI", "src=https://support.eiffel.com/report_detail/19897", "tag=Bug, EiffelBase"
 		local
@@ -72,6 +73,39 @@ feature {NONE} -- Bug
 			s.finish
 			s.forth
 			s.move_item ('a') -- Exception here!
+		end
+
+	reproduce_arrayed_set_move_item_bug_item_exists
+			-- Reproduce bug in {ARRAYED_SET}.move_item feature: item_exists precondition is possibly unnecessary.
+		note
+			EIS: "name=Possibly unnecessary precondition in {ARRAYED_SET}.move_item: item_exists", "protocol=URI", "src=https://support.eiffel.com/report_detail/19898", "tag=Bug, EiffelBase"
+		local
+			s1: BUG_EXPOSER_ARRAYED_SET [detachable CHARACTER_REF]
+			s2: ARRAYED_SET [detachable CHARACTER_REF]
+		do
+			create s1.make (0)
+			s1.extend (Void)
+			s1.extend ('a')
+			s1.finish
+			s1.move_item (Void) -- No problem
+			s1.wipe_out
+			s1.compare_objects
+			s1.extend (Void)
+			s1.extend ('a')
+			s1.finish
+			s1.move_item (Void) -- Still no problem
+
+			create s2.make (0)
+			s2.extend (Void)
+			s2.extend ('a')
+			s2.finish
+--			s2.move_item (Void) -- Precondition violated: item_exists: v /= Void
+			s2.wipe_out
+			s2.compare_objects
+			s2.extend (Void)
+			s2.extend ('a')
+			s2.finish
+			s2.move_item (Void) -- Precondition violated: item_exists: v /= Void
 		end
 
 note
