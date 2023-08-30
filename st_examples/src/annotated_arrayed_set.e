@@ -1015,9 +1015,10 @@ feature -- Removal
 			old_mi: attached old model_indices as old_mi
 			s: attached model_set as s
 			mi: attached model_indices as mi
-			one_occurrence_less: occurrences (v) = (0 ∨ old (occurrences (v) - 1))
-			some_other_v: old occurrences (v) > 1 ⇒ s ∋ v
-			no_more_v: old occurrences (v) ≤ 1 ⇒ s ∌ v
+			old_occurrences_v: attached old occurrences (v) as old_occurrences_v
+			one_occurrence_less: old_occurrences_v = (0 ∨ old (occurrences (v) - 1))
+			some_other_v: old_occurrences_v > 1 ⇒ s ∋ v
+			no_more_v: old_occurrences_v ≤ 1 ⇒ s ∌ v
 			same_indices: old_s ∌ v ⇒ # mi = # old_mi
 			same_sequence: old_s ∌ v ⇒ mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 					do
@@ -1025,8 +1026,9 @@ feature -- Removal
 					end (old_twin, s.eq, ?)
 
 			one_index_less: old_s ∋ v ⇒ # mi = # old_mi - 1
+			old_count: attached old count as old_count
 			first_v_occurrence: attached old_mi.reduced (
-						old count + 1, agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; acc, i: INTEGER): INTEGER
+						old_count + 1, agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; acc, i: INTEGER): INTEGER
 							do
 								Result := acc
 								if i < Result then
@@ -1038,12 +1040,12 @@ feature -- Removal
 								end
 							end (old_twin, s.eq, v, ?, ?)
 					) as first_v_occurrence
-			same_prefix: first_v_occurrence ≤ old count ⇒
+			same_prefix: first_v_occurrence ≤ old_count ⇒
 				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_first_v_occurrence, i: INTEGER): BOOLEAN
 					do
 						Result := i < ia_first_v_occurrence ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
 					end (old_twin, s.eq, v, first_v_occurrence, ?)
-			shifted_suffix: old count < first_v_occurrence ⇒
+			shifted_suffix: old_count < first_v_occurrence ⇒
 				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_first_v_occurrence, i: INTEGER): BOOLEAN
 					do
 						Result := ia_first_v_occurrence ≤ i ⇒
@@ -1062,10 +1064,12 @@ feature -- Removal
 			old_mi: attached old model_indices as old_mi
 			s: attached model_set as s
 			mi: attached model_indices as mi
-			next_v_occurrence: attached old_mi.reduced
-					(0, agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; old_index, acc, i: INTEGER): INTEGER
+			old_count: attached old count as old_count
+			next_v_occurrence: attached old_mi.reduced (
+						old_count + 1, agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_old_index, acc, i: INTEGER): INTEGER
 							do
-								if acc = 0 or acc > i then
+								Result := acc
+								if ia_old_index ≤ i and i < Result then
 									if ia_old_twin.valid_index (i) then -- Always true, indeed.
 										if eq (ia_old_twin [i], ia_v) then
 											Result := i
@@ -1074,7 +1078,7 @@ feature -- Removal
 								end
 							end (old_twin, s.eq, v, old index, ?, ?)
 					) as next_v_occurrence
-			same_prefix: next_v_occurrence > 0 ⇒
+			same_prefix: next_v_occurrence ≤ old_count ⇒
 				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_first_v_occurrence, i: INTEGER): BOOLEAN
 					do
 						Result := i < ia_first_v_occurrence ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
