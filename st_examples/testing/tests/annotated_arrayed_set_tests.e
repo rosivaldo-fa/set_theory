@@ -1855,6 +1855,12 @@ feature -- Test routines (Removal)
 									s.compare_objects
 								end
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦
+									check
+										not_after: not s.after -- 0 ≤ s.index < (s.count + 1)
+									end
+									s.forth
+								⟲
 								s.al_prune (some_object_a)
 								Result := True
 							end

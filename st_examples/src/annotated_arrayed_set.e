@@ -1019,7 +1019,7 @@ feature -- Removal
 			one_occurrence_less: old_occurrences_v = (0 ∨ old (occurrences (v) - 1))
 			some_other_v: old_occurrences_v > 1 ⇒ s ∋ v
 			no_more_v: old_occurrences_v ≤ 1 ⇒ s ∌ v
-			same_indices: old_s ∌ v ⇒ # mi = # old_mi
+			same_indices: old_s ∌ v ⇒ mi ≍ old_mi
 			same_sequence: old_s ∌ v ⇒ mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 					do
 						Result := (ia_old_twin.valid_index (i) and valid_index (i)) and then eq (ia_old_twin [i], Current [i])
@@ -1061,10 +1061,12 @@ feature -- Removal
 			Precursor {ARRAYED_SET} (v)
 		ensure then
 			old_twin: attached old twin as old_twin
+			old_s: attached old model_set as old_s
 			old_mi: attached old model_indices as old_mi
+			old_count: attached old count as old_count
+			old_index: attached old index as old_index
 			s: attached model_set as s
 			mi: attached model_indices as mi
-			old_count: attached old count as old_count
 			next_v_occurrence: attached old_mi.reduced (
 						old_count + 1, agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_old_index, acc, i: INTEGER): INTEGER
 							do
@@ -1076,17 +1078,24 @@ feature -- Removal
 										end
 									end
 								end
-							end (old_twin, s.eq, v, old index, ?, ?)
+							end (old_twin, s.eq, v, old_index, ?, ?)
 					) as next_v_occurrence
+			same_indices: next_v_occurrence > old_count ⇒ mi ≍ old_mi
+			same_sequence: next_v_occurrence > old_count ⇒ mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := (ia_old_twin.valid_index (i) and valid_index (i)) and then eq (ia_old_twin [i], Current [i])
+					end (old_twin, s.eq, ?)
+
+			one_index_less: next_v_occurrence ≤ old_count ⇒ # mi = # old_mi - 1
 			same_prefix: next_v_occurrence ≤ old_count ⇒
-				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_first_v_occurrence, i: INTEGER): BOOLEAN
+				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_next_v_occurrence, i: INTEGER): BOOLEAN
 					do
-						Result := i < ia_first_v_occurrence ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+						Result := i < ia_next_v_occurrence ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
 					end (old_twin, s.eq, v, next_v_occurrence, ?)
-			shifted_suffix: next_v_occurrence > 0 ⇒
-				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_first_v_occurrence, i: INTEGER): BOOLEAN
+			shifted_suffix: old_count < next_v_occurrence ⇒
+				mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_v: like item; ia_next_v_occurrence, i: INTEGER): BOOLEAN
 					do
-						Result := ia_first_v_occurrence ≤ i ⇒
+						Result := ia_next_v_occurrence ≤ i ⇒
 							(valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
 					end (old_twin, s.eq, v, next_v_occurrence, ?)
 		end
