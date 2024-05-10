@@ -1868,6 +1868,38 @@ feature -- Test routines (Removal)
 				)
 		end
 
+	test_prune_all
+			-- Test {ANNOTATED_ARRAYED_SET}.prune_all.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.prune_all"
+		do
+			assert (
+					"prune_all", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								⟳ i: 1 |..| (next_random_item \\ (s.count + 1)) ¦
+									check
+										not_after: not s.after -- 0 ≤ s.index < (s.count + 1)
+									end
+									s.forth
+								⟲
+								s.prune_all (some_object_a)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
@@ -1914,7 +1946,7 @@ feature {NONE} -- Factory (Set)
 		end
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2024, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

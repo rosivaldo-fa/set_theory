@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-22-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-22-0 http://www.eiffel.com/developers/xml/configuration-1-22-0.xsd" name="st_implementation" uuid="DF7E41FE-8039-4A8C-8B8A-2C75D721101A" library_target="st_implementation">
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-23-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-23-0 http://www.eiffel.com/developers/xml/configuration-1-23-0.xsd" name="st_implementation" uuid="DF7E41FE-8039-4A8C-8B8A-2C75D721101A" library_target="st_implementation">
 	<description>Implementation of set theory classes, as specified by st_specification.</description>
 	<target name="st_implementation">
 		<note>
@@ -83,7 +83,7 @@
 		</cluster>
 	</target>
 	<target name="st_implementation_bugs" extends="st_implementation_tests">
-		<description>Bugs found within set theory classes, as implemented by st_implementation, and they respective properties, as stated by st_properties.</description>
+		<description>Bugs found within set theory classes, as implemented by st_implementation, and their respective properties, as stated by st_properties.</description>
 		<root class="BUGS" feature="reproduce_bugs"/>
 		<cluster name="bugs" location=".\bugs\" recursive="true"/>
 	</target>

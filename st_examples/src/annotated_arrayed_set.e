@@ -58,7 +58,8 @@ inherit
 			put_right,
 			replace,
 			prune,
-			al_prune
+			al_prune,
+			prune_all
 		end
 
 create
@@ -1100,6 +1101,33 @@ feature -- Removal
 					end (old_twin, s.eq, v, next_v_occurrence, ?)
 		end
 
+	prune_all (v: like item)
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET} (v)
+		ensure then
+			old_twin: attached old twin as old_twin
+			old_s: attached old model_set as old_s
+			s: attached model_set as s
+			old_mi: attached old model_indices as old_mi
+			mi: attached model_indices as mi
+
+			pruned: s ∌ v
+			same_set: old_s ∌ v ⇒ s ≍ old_s
+			same_indices: old_s ∌ v ⇒ mi ≍ old_mi
+			same_sequence: old_s ∌ v ⇒ mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+					do
+						Result := (ia_old_twin.valid_index (i) and valid_index (i)) and then eq (ia_old_twin [i], Current [i])
+					end (old_twin, s.eq, ?)
+
+			pruned_set: old_s ∋ v ⇒ s ≍ (old_s / v)
+			pruned_indices: old_s ∋ v ⇒ # mi = (# old_mi - old occurrences (v).as_natural_32)
+
+			items_order_kept: -- TODO: Wait for n-tuples...
+		end
+
 feature -- Predicate
 
 	iterable_has_element_reference (ys: ITERABLE [G]; x: G): BOOLEAN
@@ -1173,7 +1201,7 @@ invariant
 	writable_definition: writable = mi ∋ index
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2024, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

@@ -68,7 +68,8 @@ inherit
 			test_put_right,
 			test_replace,
 			test_prune,
-			test_al_prune
+			test_al_prune,
+			test_prune_all
 		end
 
 feature -- Test routines (Initialization)
@@ -492,6 +493,14 @@ feature -- Test routines (Removal)
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
 
+	test_prune_all
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.prune_all"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
 feature -- Mapping
 
 	f_x (x: detachable separate CHARACTER_REF): detachable separate CHARACTER_REF
@@ -521,7 +530,7 @@ feature -- Reduction
 		end
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2024, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)
