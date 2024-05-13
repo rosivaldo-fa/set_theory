@@ -1118,14 +1118,23 @@ feature -- Removal
 			same_set: old_s ∌ v ⇒ s ≍ old_s
 			same_indices: old_s ∌ v ⇒ mi ≍ old_mi
 			same_sequence: old_s ∌ v ⇒ mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-					do
-						Result := (ia_old_twin.valid_index (i) and valid_index (i)) and then eq (ia_old_twin [i], Current [i])
-					end (old_twin, s.eq, ?)
+				do
+					Result := (ia_old_twin.valid_index (i) and valid_index (i)) and then eq (ia_old_twin [i], Current [i])
+				end (old_twin, s.eq, ?)
 
 			pruned_set: old_s ∋ v ⇒ s ≍ (old_s / v)
 			pruned_indices: old_s ∋ v ⇒ # mi = (# old_mi - old occurrences (v).as_natural_32)
+			exausted_and_after: index.as_natural_32 = # mi + 1
 
-			items_order_kept: -- TODO: Wait for n-tuples...
+			items_order_kept: mi |∀ agent
+				(ia_old_twin: like twin; ia_old_mi: STS_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]; ia_eq: STS_EQUALITY [G]; ia_i: INTEGER): BOOLEAN
+				do
+					Result := ia_old_mi | agent (i, j: INTEGER): BOOLEAN do Result := i ≤ j end (ia_i, ?) |∃ agent
+						(i2a_old_twin: like twin; eq: STS_EQUALITY [G]; i, j: INTEGER): BOOLEAN
+						do
+							Result := (valid_index (i) and i2a_old_twin.valid_index (j)) and then eq (Current [i], i2a_old_twin [j])
+						end (ia_old_twin, ia_eq, ia_i, ?)
+				end (old_twin, old_mi, s.eq, ?)
 		end
 
 feature -- Predicate
