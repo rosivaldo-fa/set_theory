@@ -1937,6 +1937,37 @@ feature -- Test routines (Removal)
 				)
 		end
 
+	test_remove_i_th
+			-- Test {ANNOTATED_ARRAYED_SET}.remove_i_th.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.remove_i_th"
+		do
+			assert (
+					"remove_i_th", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+								i: INTEGER
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ j: 1 |..| some_index.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								i := (next_random_item \\ s.count) + 1
+									check
+										valid_index: s.valid_index (i) -- 1 <= i <= s.count
+									end
+								s.remove_i_th (i)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

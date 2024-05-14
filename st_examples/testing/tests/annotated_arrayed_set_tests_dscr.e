@@ -70,7 +70,8 @@ inherit
 			test_prune,
 			test_al_prune,
 			test_prune_all,
-			test_remove
+			test_remove,
+			test_remove_i_th
 		end
 
 feature -- Test routines (Initialization)
@@ -506,6 +507,14 @@ feature -- Test routines (Removal)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.remove"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_remove_i_th
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.remove_i_th"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

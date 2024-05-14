@@ -1381,19 +1381,19 @@ feature {NONE} -- Implementation
 		ensure
 			class
 			positive: 0 < Result
-			upper_bound: Result <= Max_count
+			upper_bound: Result ≤ Max_count
 		end
 
 invariant
 	valid_characters: (Min_character.natural_32_code + Max_count - 1).is_valid_character_8_code
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2024, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: "https://github.com/rosivaldo-fa/Set-Theory"
+	source: "https://github.com/rosivaldo-fa/set_theory"
 
 end
 
