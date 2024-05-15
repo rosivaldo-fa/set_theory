@@ -62,7 +62,8 @@ inherit
 			prune_all,
 			remove,
 			remove_i_th,
-			remove_left
+			remove_left,
+			remove_right
 		end
 
 create
@@ -1206,6 +1207,28 @@ feature -- Removal
 			shifted_suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 				do
 					Result := index ≤ i ⇒ (valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
+				end (old_twin, s.eq, ?)
+		end
+
+	remove_right
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET}
+		ensure then
+			old_twin: attached old twin as old_twin
+			s: attached model_set as s
+			old_mi: attached old model_indices as old_mi
+			mi: attached model_indices as mi
+			one_less: # mi = # old_mi - 1
+			same_prefix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				do
+					Result := i ≤ index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+				end (old_twin, s.eq, ?)
+			shifted_suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+				do
+					Result := index < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
 				end (old_twin, s.eq, ?)
 		end
 

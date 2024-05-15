@@ -1958,9 +1958,9 @@ feature -- Test routines (Removal)
 								end
 								⟳ j: 1 |..| some_index.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								i := (next_random_item \\ s.count) + 1
-									check
-										valid_index: s.valid_index (i) -- 1 <= i <= s.count
-									end
+								check
+									valid_index: s.valid_index (i) -- 1 <= i <= s.count
+								end
 								s.remove_i_th (i)
 								Result := True
 							end
@@ -1989,10 +1989,41 @@ feature -- Test routines (Removal)
 								⟳ i: 1 |..| some_index.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								s.start
 								⟳ i: 1 |..| ((next_random_item \\ s.count) + 1) ¦ s.forth ⟲
-									check
-										left_exists: s.index > 1 -- 1 < s.index ≤ s.count + 1
-									end
+								check
+									left_exists: s.index > 1 -- 1 < s.index ≤ s.count + 1
+								end
 								s.remove_left
+								Result := True
+							end
+					).item
+				)
+		end
+
+	test_remove_right
+			-- Test {ANNOTATED_ARRAYED_SET}.remove_right.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.remove_right"
+		do
+			assert (
+					"remove_right", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ i: 1 |..| some_index.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								s.finish
+								⟳ i: 1 |..| ((next_random_item \\ s.count) + 1) ¦ s.back ⟲
+								check
+									right_exists: s.index < s.count -- 0 ≤ s.index < s.count
+								end
+								s.remove_right
 								Result := True
 							end
 					).item
