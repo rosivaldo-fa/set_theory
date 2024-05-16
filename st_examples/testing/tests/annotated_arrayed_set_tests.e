@@ -2030,6 +2030,33 @@ feature -- Test routines (Removal)
 				)
 		end
 
+	test_wipe_out
+			-- Test {ANNOTATED_ARRAYED_SET}.wipe_out.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.wipe_out"
+		do
+			assert (
+					"wipe_out", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								⟳ i: 1 |..| (next_random_item \\ (s.count + 2)) ¦ s.forth ⟲
+								s.wipe_out
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

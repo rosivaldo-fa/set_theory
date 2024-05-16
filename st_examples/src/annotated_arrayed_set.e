@@ -63,7 +63,8 @@ inherit
 			remove,
 			remove_i_th,
 			remove_left,
-			remove_right
+			remove_right,
+			wipe_out
 		end
 
 create
@@ -1230,6 +1231,14 @@ feature -- Removal
 				do
 					Result := index < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
 				end (old_twin, s.eq, ?)
+		end
+
+	wipe_out
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET}
+		ensure then
+			empty_set: model_set.is_empty
 		end
 
 feature -- Predicate
