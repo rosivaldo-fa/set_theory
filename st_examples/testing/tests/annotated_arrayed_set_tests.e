@@ -851,7 +851,7 @@ feature -- Test routines (Cursor movement)
 								end
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								⟳
- i: 1 |..| (s.count + 1) ¦
+ 									i: 1 |..| (s.count + 1) ¦
 									check not_after: not s.after end -- 0 ≤ s.index ≤ s.count
 									s.forth
 								⟲
@@ -1744,6 +1744,7 @@ feature -- Test routines (Element change)
 									s.compare_objects
 								end
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								check not_after: not s.after end -- s.index = 0
 								s.forth
 								check not_before: not s.before end -- Above: s.forth
 								s.put_left (some_object_a)
