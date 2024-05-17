@@ -851,7 +851,7 @@ feature -- Test routines (Cursor movement)
 								end
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								⟳
- 									i: 1 |..| (s.count + 1) ¦
+ i: 1 |..| (s.count + 1) ¦
 									check not_after: not s.after end -- 0 ≤ s.index ≤ s.count
 									s.forth
 								⟲
@@ -1994,7 +1994,7 @@ feature -- Test routines (Removal)
 								⟳ i: 1 |..| some_index.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								s.start
 								⟳
-									i: 1 |..| ((next_random_item \\ s.count) + 1) ¦
+ i: 1 |..| ((next_random_item \\ s.count) + 1) ¦
 									check
 										not_after: not s.after -- 0 < s.index ≤ s.count
 									end
@@ -2060,7 +2060,15 @@ feature -- Test routines (Removal)
 									s.compare_objects
 								end
 								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-								⟳ i: 1 |..| (next_random_item \\ (s.count + 2)) ¦ s.forth ⟲
+								check
+									good_divisor: s.count + 2 /= 0 -- 0 ≤ s.count
+								end
+								⟳ i: 1 |..| (next_random_item \\ (s.count + 2)) ¦
+									check
+										not_after: not s.after -- 0 < s.index ≤ s.count
+									end
+									s.forth
+								⟲
 								s.wipe_out
 								Result := True
 							end
