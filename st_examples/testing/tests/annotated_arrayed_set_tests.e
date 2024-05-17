@@ -820,8 +820,7 @@ feature -- Test routines (Cursor movement)
 									valid_index: s.valid_cursor_index (s.count + 1) -- By definition
 								end
 								s.go_i_th (s.count + 1)
-								⟳
- i: 1 |..| (s.count + 1) ¦
+								⟳ i: 1 |..| (s.count + 1) ¦
 									check not_before: not s.before end -- 1 ≤ s.index ≤ s.count + 1
 									s.back
 								⟲
@@ -1993,8 +1992,7 @@ feature -- Test routines (Removal)
 								end
 								⟳ i: 1 |..| some_index.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								s.start
-								⟳
- i: 1 |..| ((next_random_item \\ s.count) + 1) ¦
+								⟳ i: 1 |..| ((next_random_item \\ s.count) + 1) ¦
 									check
 										not_after: not s.after -- 0 < s.index ≤ s.count
 									end
@@ -2030,7 +2028,12 @@ feature -- Test routines (Removal)
 								end
 								⟳ i: 1 |..| some_index.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								s.finish
-								⟳ i: 1 |..| ((next_random_item \\ s.count) + 1) ¦ s.back ⟲
+								⟳ i: 1 |..| ((next_random_item \\ s.count) + 1) ¦
+									check
+										not_before: not s.before -- 0 < s.index ≤ s.count
+									end
+									s.back
+								⟲
 								check
 									right_exists: s.index < s.count -- 0 ≤ s.index < s.count
 								end
