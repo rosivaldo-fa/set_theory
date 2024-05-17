@@ -1993,7 +1993,13 @@ feature -- Test routines (Removal)
 								end
 								⟳ i: 1 |..| some_index.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								s.start
-								⟳ i: 1 |..| ((next_random_item \\ s.count) + 1) ¦ s.forth ⟲
+								⟳
+									i: 1 |..| ((next_random_item \\ s.count) + 1) ¦
+									check
+										not_after: not s.after -- 0 < s.index ≤ s.count
+									end
+									s.forth
+								⟲
 								check
 									left_exists: s.index > 1 -- 1 < s.index ≤ s.count + 1
 								end
