@@ -64,7 +64,8 @@ inherit
 			remove_i_th,
 			remove_left,
 			remove_right,
-			wipe_out
+			wipe_out,
+			swap
 		end
 
 create
@@ -1123,23 +1124,23 @@ feature -- Removal
 			same_set: old_s ∌ v ⇒ s ≍ old_s
 			same_indices: old_s ∌ v ⇒ mi ≍ old_mi
 			same_sequence: old_s ∌ v ⇒ mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (ia_old_twin.valid_index (i) and valid_index (i)) and then eq (ia_old_twin [i], Current [i])
-				end (old_twin, s.eq, ?)
+					do
+						Result := (ia_old_twin.valid_index (i) and valid_index (i)) and then eq (ia_old_twin [i], Current [i])
+					end (old_twin, s.eq, ?)
 
 			pruned_set: old_s ∋ v ⇒ s ≍ (old_s / v)
 			pruned_indices: old_s ∋ v ⇒ # mi = (# old_mi - old occurrences (v).as_natural_32)
 			exausted_and_after: index.as_natural_32 = # mi + 1
 
 			items_order_kept: mi |∀ agent
-				(ia_old_twin: like twin; ia_old_mi: STS_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]; ia_eq: STS_EQUALITY [G]; ia_i: INTEGER): BOOLEAN
-				do
-					Result := ia_old_mi | agent (i, j: INTEGER): BOOLEAN do Result := i ≤ j end (ia_i, ?) |∃ agent
-						(i2a_old_twin: like twin; eq: STS_EQUALITY [G]; i, j: INTEGER): BOOLEAN
-						do
-							Result := (valid_index (i) and i2a_old_twin.valid_index (j)) and then eq (Current [i], i2a_old_twin [j])
-						end (ia_old_twin, ia_eq, ia_i, ?)
-				end (old_twin, old_mi, s.eq, ?)
+						(ia_old_twin: like twin; ia_old_mi: STS_SET [INTEGER, STS_OBJECT_EQUALITY [INTEGER]]; ia_eq: STS_EQUALITY [G]; ia_i: INTEGER): BOOLEAN
+					do
+						Result := ia_old_mi | agent (i, j: INTEGER): BOOLEAN do Result := i ≤ j end (ia_i, ?) |∃ agent
+									(i2a_old_twin: like twin; eq: STS_EQUALITY [G]; i, j: INTEGER): BOOLEAN
+								do
+									Result := (valid_index (i) and i2a_old_twin.valid_index (j)) and then eq (Current [i], i2a_old_twin [j])
+								end (ia_old_twin, ia_eq, ia_i, ?)
+					end (old_twin, old_mi, s.eq, ?)
 		end
 
 	remove
@@ -1156,11 +1157,11 @@ feature -- Removal
 
 			one_index_less: # mi = # old_mi - 1
 			same_prefix: mi | agent (i: INTEGER): BOOLEAN do Result := i < index end |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
-				end (old_twin, s.eq, ?)
+					do
+						Result := (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, ?)
 			shifted_suffix: mi | agent (i: INTEGER): BOOLEAN do Result := index ≤ i end |∀ agent
-				(ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
+						(ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
 					do
 						Result := (valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
 					end (old_twin, s.eq, ?)
@@ -1180,13 +1181,14 @@ feature -- Removal
 			mi: attached model_indices as mi
 			one_less: # mi = # old_mi - 1
 			same_prefix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G] ia_i, j: INTEGER): BOOLEAN
-				do
-					Result := j < ia_i ⇒ (valid_index (j) and ia_old_twin.valid_index (j)) and then eq (Current [j], ia_old_twin [j])
-				end (old_twin, s.eq, i, ?)
+					do
+						Result := j < ia_i ⇒ (valid_index (j) and ia_old_twin.valid_index (j)) and then eq (Current [j], ia_old_twin [j])
+					end (old_twin, s.eq, i, ?)
 			shifted_suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; ia_i, j: INTEGER): BOOLEAN
-				do
-					Result := ia_i ≤ j ⇒ (valid_index (j) and ia_old_twin.valid_index (j + 1)) and then eq (Current [j], ia_old_twin [j + 1])
-				end (old_twin, s.eq, i, ?)
+					do
+--						Result := ia_i ≤ j ⇒ (valid_index (j) and ia_old_twin.valid_index (j + 1)) and then eq (Current [j], ia_old_twin [j + 1])
+						Result := ia_i ≤ j ⇒ (valid_index (j) and ia_old_twin.valid_index (j + 1)) and then eq (Current [j], ia_old_twin [j + 1])
+					end (old_twin, s.eq, i, ?)
 		end
 
 	remove_left
@@ -1202,13 +1204,13 @@ feature -- Removal
 			mi: attached model_indices as mi
 			one_less: # mi = # old_mi - 1
 			same_prefix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := i < index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
-				end (old_twin, s.eq, ?)
+					do
+						Result := i < index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, ?)
 			shifted_suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := index ≤ i ⇒ (valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
-				end (old_twin, s.eq, ?)
+					do
+						Result := index ≤ i ⇒ (valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
+					end (old_twin, s.eq, ?)
 		end
 
 	remove_right
@@ -1224,13 +1226,13 @@ feature -- Removal
 			mi: attached model_indices as mi
 			one_less: # mi = # old_mi - 1
 			same_prefix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := i ≤ index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
-				end (old_twin, s.eq, ?)
+					do
+						Result := i ≤ index ⇒ (valid_index (i) and ia_old_twin.valid_index (i)) and then eq (Current [i], ia_old_twin [i])
+					end (old_twin, s.eq, ?)
 			shifted_suffix: mi |∀ agent (ia_old_twin: like twin; eq: STS_EQUALITY [G]; i: INTEGER): BOOLEAN
-				do
-					Result := index < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
-				end (old_twin, s.eq, ?)
+					do
+						Result := index < i ⇒ (valid_index (i) and ia_old_twin.valid_index (i + 1)) and then eq (Current [i], ia_old_twin [i + 1])
+					end (old_twin, s.eq, ?)
 		end
 
 	wipe_out
@@ -1239,6 +1241,27 @@ feature -- Removal
 			Precursor {ARRAYED_SET}
 		ensure then
 			empty_set: model_set.is_empty
+		end
+
+feature -- Transformation
+
+	swap (i: INTEGER)
+			-- <Precursor>
+		do
+			Precursor {ARRAYED_SET} (i)
+		ensure then
+			s: attached model_set as s
+			mi: attached model_indices as mi
+
+			same_elements: s ≍ old model_set
+			same_indices: mi ≍ old model_indices
+
+			to_item: s.eq (item, old i_th (i))
+			from_item: s.eq (i_th (i), old item)
+			unchanged_items: mi |∀ agent (old_twin: like twin; eq: STS_EQUALITY [G]; ia_i, j: INTEGER): BOOLEAN
+					do
+						Result := j /= index and j /= ia_i ⇒ (valid_index (j) and old_twin.valid_index (j)) and then eq (Current [j], old_twin [j])
+					end (old twin, s.eq, i, ?)
 		end
 
 feature -- Predicate

@@ -657,9 +657,15 @@ feature -- Test routines (Status report)
 				s.compare_objects
 			end
 			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
-			if s.count > 0 then
-				⟳ i: 1 |..| (next_random_item \\ s.count) ¦ s.forth ⟲
+			check
+				good_divisor: s.count + 2 /= 0 -- 0 ≤ s
 			end
+			⟳ i: 1 |..| (next_random_item \\ (s.count + 2)) ¦
+				check
+					not_after: not s.after -- 0 ≤ s.index < s.count
+				end
+				s.forth
+			⟲
 			p := s.cursor
 			⟳ i: 1 |..| some_count.as_integer_32 ¦ s.prune (some_object_a) ⟲
 			assert ("valid_cursor", s.valid_cursor (p) ⇒ True)
