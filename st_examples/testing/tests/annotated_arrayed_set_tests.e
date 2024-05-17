@@ -1925,15 +1925,13 @@ feature -- Test routines (Removal)
 									end
 									s.compare_objects
 								end
-								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								s.extend (some_object_a)
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
 								s.start
-								s.forth
+								check good_divisor: s.count /= 0 end -- 0 < s.count
 								⟳ i: 1 |..| (next_random_item \\ s.count) ¦
 									check
-										prunable: s.prunable -- By definition
-										not_off: not s.off -- 1 ≤ s.index ≤ s.count
-										writable: s.writable -- not s.off
+										not_after: not s.after -- 0 < s.index ≤ s.count
 									end
 									s.forth
 								⟲
