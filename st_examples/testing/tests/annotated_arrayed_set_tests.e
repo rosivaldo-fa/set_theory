@@ -2079,6 +2079,48 @@ feature -- Test routines (Removal)
 				)
 		end
 
+feature -- Test routines (Transformation)
+
+	test_swap
+			-- Test {ANNOTATED_ARRAYED_SET}.swap.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.swap"
+		do
+			assert (
+					"swap", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+								i: INTEGER
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ j: 1 |..| some_index.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								check
+									good_divisor: s.count /= 0 -- 0 < s.count
+								end
+								⟳ j: 1 |..| (next_random_item \\ s.count + 1) ¦
+									check
+										not_after: not s.after -- 0 ≤ s.index < s.count
+									end
+									s.forth
+								⟲
+								i := (next_random_item \\ s.count) + 1
+								check
+									valid_index: s.valid_index (i) -- 1 ≤ i ≤ s.count
+								end
+								s.swap (i)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
