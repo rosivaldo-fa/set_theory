@@ -2205,6 +2205,47 @@ feature -- Test routines (Basic operations)
 				)
 		end
 
+	test_symdif
+			-- Test {ANNOTATED_ARRAYED_SET}.symdif.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.symdif"
+		do
+			assert (
+					"symdif", (
+						agent: BOOLEAN
+							local
+								s1: ANNOTATED_ARRAYED_SET [G]
+								s2: ARRAYED_SET [G]
+							do
+								create s2.make (0)
+								create s1.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion_1: s1.changeable_comparison_criterion -- s1.is_empty
+										changeable_comparison_criterion_2: s2.changeable_comparison_criterion -- s2.is_empty
+									end
+									s1.compare_objects
+									s2.compare_objects
+								end
+								⟳ i: 1 |..| some_index.as_integer_32 ¦ s1.extend (some_object_a) ⟲
+								⟳ i: 1 |..| some_index.as_integer_32 ¦ s2.extend (some_object_a) ⟲
+								check
+									good_divisor_1: s1.count + 2 /= 0 -- 0 ≤ s1.count
+									valid_cursor_index_1: -- By definition
+										((next_random_item \\ (s1.count + 2) >= 0) and (next_random_item \\ (s1.count + 2) <= s1.count + 1))
+									good_divisor_2: s2.count + 2 /= 0 -- 0 ≤ s2.count
+									valid_cursor_index_2: -- By definition
+										((next_random_item \\ (s2.count + 2) >= 0) and (next_random_item \\ (s2.count + 2) <= s2.count + 1))
+								end
+								s1.go_i_th (next_random_item \\ (s1.count + 2))
+								s2.go_i_th (next_random_item \\ (s2.count + 2))
+								s1.symdif (s2)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G
