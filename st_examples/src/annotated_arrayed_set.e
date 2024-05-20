@@ -65,7 +65,8 @@ inherit
 			remove_left,
 			remove_right,
 			wipe_out,
-			swap
+			swap,
+			intersect
 		end
 
 create
@@ -1247,6 +1248,8 @@ feature -- Transformation
 
 	swap (i: INTEGER)
 			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
 			Precursor {ARRAYED_SET} (i)
 		ensure then
@@ -1262,6 +1265,23 @@ feature -- Transformation
 					do
 						Result := j /= index and j /= ia_i ⇒ (valid_index (j) and old_twin.valid_index (j)) and then eq (Current [j], old_twin [j])
 					end (old twin, s.eq, i, ?)
+		end
+
+feature -- Basic operations
+
+	intersect (other: TRAVERSABLE_SUBSET [G])
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET}(other)
+		ensure then
+			definition: model_set ≍ (
+				old model_set | agent (ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
+					do
+						Result := ia_other ∋ x
+					end (other, ?)
+				)
 		end
 
 feature -- Predicate
