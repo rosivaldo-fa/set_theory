@@ -76,7 +76,8 @@ inherit
 			test_remove_right,
 			test_wipe_out,
 			test_swap,
-			test_intersect
+			test_intersect,
+			test_subtract
 		end
 
 feature -- Test routines (Initialization)
@@ -564,6 +565,14 @@ feature -- Test routines (Basic operations)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.intersect"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_subtract
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.subtract"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

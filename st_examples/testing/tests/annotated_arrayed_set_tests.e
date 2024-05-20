@@ -2164,6 +2164,47 @@ feature -- Test routines (Basic operations)
 				)
 		end
 
+	test_subtract
+			-- Test {ANNOTATED_ARRAYED_SET}.subtract.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.subtract"
+		do
+			assert (
+					"subtract", (
+						agent: BOOLEAN
+							local
+								s1: ANNOTATED_ARRAYED_SET [G]
+								s2: ARRAYED_SET [G]
+							do
+								create s1.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s1.changeable_comparison_criterion -- s.is_empty
+									end
+									s1.compare_objects
+								end
+								⟳ i: 1 |..| some_index.as_integer_32 ¦ s1.extend (some_object_a) ⟲
+								check
+									good_divisor: s1.count + 2 /= 0 -- 0 ≤ s1.count
+									valid_cursor_index_1: -- By definition
+										((next_random_item \\ (s1.count + 2) >= 0) and (next_random_item \\ (s1.count + 2) <= s1.count + 1))
+								end
+								s1.go_i_th (next_random_item \\ (s1.count + 2))
+								create s2.make (0)
+								⟳ i: 1 |..| some_index.as_integer_32 ¦ s2.extend (some_object_a) ⟲
+								check
+									good_divisor: s2.count + 2 /= 0 -- 0 ≤ s2.count
+									valid_cursor_index_2: -- By definition
+										((next_random_item \\ (s2.count + 2) >= 0) and (next_random_item \\ (s2.count + 2) <= s2.count + 1))
+								end
+								s2.go_i_th (next_random_item \\ (s2.count + 2))
+								s2.subtract (s2)
+								Result := True
+							end
+					).item
+				)
+		end
+
 feature -- Factory (Object)
 
 	same_object_s_a (s: CONTAINER [G]; a: G): G

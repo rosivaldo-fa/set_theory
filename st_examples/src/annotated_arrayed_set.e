@@ -66,7 +66,8 @@ inherit
 			remove_right,
 			wipe_out,
 			swap,
-			intersect
+			intersect,
+			subtract
 		end
 
 create
@@ -1280,6 +1281,21 @@ feature -- Basic operations
 				old model_set | agent (ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
 					do
 						Result := ia_other ∋ x
+					end (other, ?)
+				)
+		end
+
+	subtract (other: TRAVERSABLE_SUBSET [G])
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET}(other)
+		ensure then
+			definition: model_set ≍ (
+				old model_set | agent (ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
+					do
+						Result := not (ia_other ∋ x)
 					end (other, ?)
 				)
 		end
