@@ -67,7 +67,8 @@ inherit
 			wipe_out,
 			swap,
 			intersect,
-			subtract
+			subtract,
+			symdif
 		end
 
 create
@@ -1298,6 +1299,24 @@ feature -- Basic operations
 						Result := not (ia_other ∋ x)
 					end (other, ?)
 				)
+		end
+
+	symdif (other: TRAVERSABLE_SUBSET [G])
+			-- <Precursor>
+		note
+			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+		do
+			Precursor {ARRAYED_SET}(other)
+		ensure then
+			exclusive_elements_here: old model_set |∀ agent (ia_other: TRAVERSABLE_SUBSET [G]; s: like model_set; x: G): BOOLEAN
+				do
+					Result := not (ia_other ∋ x) = s ∋ x
+				end (other, model_set, ?)
+			exclusive_elements_there: ∀ x: other ¦ (old model_set ∌ x) = (model_set ∋ x)
+			nothing_else: model_set |∀ agent (old_s: like model_set; ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
+				do
+					Result := old_s ∋ x xor ia_other ∋ x
+				end (old model_set, other, ?)
 		end
 
 feature -- Predicate
