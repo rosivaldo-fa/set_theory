@@ -2135,8 +2135,8 @@ feature -- Test routines (Basic operations)
 								s1: ANNOTATED_ARRAYED_SET [G]
 								s2: ARRAYED_SET [G]
 							do
-								create s2.make (0)
 								create s1.make (0)
+								create s2.make (0)
 								if next_random_item \\ 2 = 0 then
 									check
 										changeable_comparison_criterion_1: s1.changeable_comparison_criterion -- s1.is_empty
@@ -2176,8 +2176,8 @@ feature -- Test routines (Basic operations)
 								s1: ANNOTATED_ARRAYED_SET [G]
 								s2: ARRAYED_SET [G]
 							do
-								create s2.make (0)
 								create s1.make (0)
+								create s2.make (0)
 								if next_random_item \\ 2 = 0 then
 									check
 										changeable_comparison_criterion_1: s1.changeable_comparison_criterion -- s1.is_empty
@@ -2209,16 +2209,18 @@ feature -- Test routines (Basic operations)
 			-- Test {ANNOTATED_ARRAYED_SET}.symdif.
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.symdif"
+			EIS: "name=Bug: wrong implementation of {ARRAYED_SET}.symdif", "protocol=URI", "src=https://support.eiffel.com/report_detail/19921", "tag=bug, library, EiffelBase"
 		do
 			assert (
 					"symdif", (
 						agent: BOOLEAN
 							local
 								s1: ANNOTATED_ARRAYED_SET [G]
-								s2: ARRAYED_SET [G]
+								s2: ANNOTATED_ARRAYED_SET [G]
+--								s2: ARRAYED_SET [G]
 							do
-								create s2.make (0)
 								create s1.make (0)
+								create s2.make (0)
 								if next_random_item \\ 2 = 0 then
 									check
 										changeable_comparison_criterion_1: s1.changeable_comparison_criterion -- s1.is_empty

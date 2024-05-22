@@ -1276,13 +1276,13 @@ feature -- Basic operations
 		note
 			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
-			Precursor {ARRAYED_SET}(other)
+			Precursor {ARRAYED_SET} (other)
 		ensure then
 			definition: model_set ≍ (
-				old model_set | agent (ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
-					do
-						Result := ia_other ∋ x
-					end (other, ?)
+					old model_set | agent (ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
+						do
+							Result := ia_other ∋ x
+						end (other, ?)
 				)
 		end
 
@@ -1291,13 +1291,13 @@ feature -- Basic operations
 		note
 			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 		do
-			Precursor {ARRAYED_SET}(other)
+			Precursor {ARRAYED_SET} (other)
 		ensure then
 			definition: model_set ≍ (
-				old model_set | agent (ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
-					do
-						Result := not (ia_other ∋ x)
-					end (other, ?)
+					old model_set | agent (ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
+						do
+							Result := not (ia_other ∋ x)
+						end (other, ?)
 				)
 		end
 
@@ -1305,18 +1305,21 @@ feature -- Basic operations
 			-- <Precursor>
 		note
 			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
+			EIS: "name=Bug: wrong implementation of {ARRAYED_SET}.symdif", "protocol=URI", "src=https://support.eiffel.com/report_detail/19921", "tag=bug, library, EiffelBase"
 		do
-			Precursor {ARRAYED_SET}(other)
+			Precursor {ARRAYED_SET} (other)
 		ensure then
-			exclusive_elements_here: old model_set |∀ agent (ia_other: TRAVERSABLE_SUBSET [G]; s: like model_set; x: G): BOOLEAN
-				do
-					Result := not (ia_other ∋ x) = s ∋ x
-				end (other, model_set, ?)
-			exclusive_elements_there: ∀ x: other ¦ (old model_set ∌ x) = (model_set ∋ x)
-			nothing_else: model_set |∀ agent (old_s: like model_set; ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
-				do
-					Result := old_s ∋ x xor ia_other ∋ x
-				end (old model_set, other, ?)
+			old_s: attached old model_set as old_s
+			s: attached model_set as s
+			exclusive_elements_here: old_s |∀ agent (ia_other: TRAVERSABLE_SUBSET [G]; ia_s: like model_set; x: G): BOOLEAN
+					do
+						Result := not (ia_other ∋ x) = ia_s ∋ x
+					end (other, s, ?)
+			exclusive_elements_there: ∀ x: other ¦ (old_s ∌ x) = (s ∋ x)
+			nothing_else: s |∀ agent (ia_old_s: like model_set; ia_other: TRAVERSABLE_SUBSET [G]; x: G): BOOLEAN
+					do
+						Result := ia_old_s ∋ x xor ia_other ∋ x
+					end (old_s, other, ?)
 		end
 
 feature -- Predicate

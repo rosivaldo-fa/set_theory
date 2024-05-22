@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Test suite for {ANNOTATED_ARRAYED_SET [detachable separate CHARACTER_REF]}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -582,7 +582,24 @@ feature -- Test routines (Basic operations)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.symdif"
+			EIS: "name=Bug: wrong implementation of {ARRAYED_SET}.symdif", "protocol=URI", "src=https://support.eiffel.com/report_detail/19921", "tag=bug, library, EiffelBase"
 		do
+			assert (
+					"symdif", (
+						agent: BOOLEAN
+							local
+								s1: ANNOTATED_ARRAYED_SET [detachable separate CHARACTER_REF]
+								s2: ANNOTATED_ARRAYED_SET [detachable separate CHARACTER_REF]
+							do
+								create s1.make (0)
+								create s2.make (0)
+								s1.extend ('a')
+								s2.extend (('a').to_reference)
+								s1.symdif (s2)
+								Result := True
+							end
+					).item
+				)
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
 
