@@ -1306,8 +1306,13 @@ feature -- Basic operations
 		note
 			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 			EIS: "name=Bug: wrong implementation of {ARRAYED_SET}.symdif", "protocol=URI", "src=https://support.eiffel.com/report_detail/19921", "tag=bug, library, EiffelBase"
+		local
+			int: like Current
 		do
-			Precursor {ARRAYED_SET} (other)
+			int := twin
+			int.intersect (other)
+			merge (other)
+			subtract (int)
 		ensure then
 			old_s: attached old model_set as old_s
 			s: attached model_set as s
