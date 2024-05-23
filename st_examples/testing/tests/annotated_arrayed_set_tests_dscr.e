@@ -584,6 +584,11 @@ feature -- Test routines (Basic operations)
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.symdif"
 			EIS: "name=Bug: wrong implementation of {ARRAYED_SET}.symdif", "protocol=URI", "src=https://support.eiffel.com/report_detail/19921", "tag=bug, library, EiffelBase"
 		do
+			from
+
+			until
+				false
+			loop
 			assert (
 					"symdif", (
 						agent: BOOLEAN
@@ -601,6 +606,8 @@ feature -- Test routines (Basic operations)
 					).item
 				)
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+
+			end
 		end
 
 feature -- Mapping

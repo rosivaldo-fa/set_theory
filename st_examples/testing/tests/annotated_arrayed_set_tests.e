@@ -2216,8 +2216,7 @@ feature -- Test routines (Basic operations)
 						agent: BOOLEAN
 							local
 								s1: ANNOTATED_ARRAYED_SET [G]
-								s2: ANNOTATED_ARRAYED_SET [G]
---								s2: ARRAYED_SET [G]
+								s2: ARRAYED_SET [G]
 							do
 								create s1.make (0)
 								create s2.make (0)
