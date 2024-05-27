@@ -2210,6 +2210,7 @@ feature -- Test routines (Basic operations)
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.symdif"
 			EIS: "name=Bug: wrong implementation of {ARRAYED_SET}.symdif", "protocol=URI", "src=https://support.eiffel.com/report_detail/19921", "tag=bug, library, EiffelBase"
+			EIS: "name=Bug: Unexpected exception from {ARRAYED_SET} set operations", "protocol=URI", "src=https://support.eiffel.com/report_detail/19922", "tag=bug, library, EiffelBase"
 		do
 			assert (
 					"symdif", (

@@ -1306,13 +1306,17 @@ feature -- Basic operations
 		note
 			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
 			EIS: "name=Bug: wrong implementation of {ARRAYED_SET}.symdif", "protocol=URI", "src=https://support.eiffel.com/report_detail/19921", "tag=bug, library, EiffelBase"
+			EIS: "name=Bug: Unexpected exception from {ARRAYED_SET} set operations", "protocol=URI", "src=https://support.eiffel.com/report_detail/19922", "tag=bug, library, EiffelBase"
 		local
-			int: like Current
+			s1: like twin
+			union: SPECIAL [G]
 		do
-			int := twin
-			int.intersect (other)
-			merge (other)
-			subtract (int)
+			s1 := twin
+			create union.make_empty (count + other.count)
+			⟳ x: Current ¦ union.extend (x) ⟲
+			⟳ x: other ¦ union.extend (x) ⟲
+			wipe_out
+			⟳ x: union ¦ if not (s1 ∋ x) or not (other ∋ x) then extend (x) end ⟲
 		ensure then
 			old_s: attached old model_set as old_s
 			s: attached model_set as s
