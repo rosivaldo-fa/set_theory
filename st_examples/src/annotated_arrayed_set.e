@@ -69,7 +69,8 @@ inherit
 			intersect,
 			subtract,
 			symdif,
-			for_all
+			for_all,
+			there_exists
 		end
 
 create
@@ -1340,6 +1341,14 @@ feature -- Iteration
 			Result := Precursor {ARRAYED_SET}(test)
 		ensure then
 			definition: Result = model_set |∀ test
+		end
+
+	there_exists (test: FUNCTION [G, BOOLEAN]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}(test)
+		ensure then
+			definition: Result = model_set |∃ test
 		end
 
 feature -- Predicate

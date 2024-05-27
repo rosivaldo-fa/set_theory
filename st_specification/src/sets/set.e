@@ -285,7 +285,7 @@ feature -- Relationship
 
 feature -- Quantifier
 
-	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
+	exists alias "|∃" (p: FUNCTION [A, BOOLEAN]): BOOLEAN
 			-- Existential quantifier: does `p' hold for some element in current set?
 		note
 			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
@@ -602,7 +602,7 @@ feature -- Predicate
 
 feature -- Reduction
 
-	cumulative_disjunction (acc: BOOLEAN; p: PREDICATE [A]; x: A): BOOLEAN
+	cumulative_disjunction (acc: BOOLEAN; p: FUNCTION [A, BOOLEAN]; x: A): BOOLEAN
 			-- Logical disjunction of `acc' and `p' (`x'), i.e. `acc' or `p' (`x').
 		note
 			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"

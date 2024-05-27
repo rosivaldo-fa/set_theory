@@ -79,7 +79,8 @@ inherit
 			test_intersect,
 			test_subtract,
 			test_symdif,
-			test_for_all
+			test_for_all,
+			test_there_exists
 		end
 
 feature -- Test routines (Initialization)
@@ -611,6 +612,14 @@ feature -- Factory (Iteration)
 			-- <Precursor>
 		note
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.for_all"
+		do
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+	test_there_exists
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.there_exists"
 		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end

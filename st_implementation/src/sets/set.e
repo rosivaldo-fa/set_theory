@@ -379,7 +379,7 @@ feature -- Comparison
 
 feature -- Quantifier
 
-	exists alias "|∃" (p: PREDICATE [A]): BOOLEAN
+	exists alias "|∃" (p: FUNCTION [A, BOOLEAN]): BOOLEAN
 			-- <Precursor>
 		local
 			s: SET [A, EQ]

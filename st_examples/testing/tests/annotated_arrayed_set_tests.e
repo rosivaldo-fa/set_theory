@@ -2256,7 +2256,7 @@ feature -- Factory (Iteration)
 			testing: "covers/{ANNOTATED_ARRAYED_SET}.for_all"
 		do
 			assert (
-					"subtract", (
+					"for_all", (
 						agent: BOOLEAN
 							local
 								s: ANNOTATED_ARRAYED_SET [G]
@@ -2276,6 +2276,37 @@ feature -- Factory (Iteration)
 								end
 								s.go_i_th (next_random_item \\ (s.count + 2))
 								Result := s.for_all (agent (x: G): BOOLEAN do Result := x ~ x end)
+							end
+					).item
+				)
+		end
+
+	test_there_exists
+			-- Test {ANNOTATED_ARRAYED_SET}.there_exists.
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.there_exists"
+		do
+			assert (
+					"there_exists", (
+						agent: BOOLEAN
+							local
+								s: ANNOTATED_ARRAYED_SET [G]
+							do
+								create s.make (0)
+								if next_random_item \\ 2 = 0 then
+									check
+										changeable_comparison_criterion: s.changeable_comparison_criterion -- s.is_empty
+									end
+									s.compare_objects
+								end
+								⟳ i: 1 |..| some_count.as_integer_32 ¦ s.extend (some_object_a) ⟲
+								check
+									good_divisor: s.count + 2 /= 0 -- 0 ≤ s.count
+									valid_cursor_index: -- By definition
+										((next_random_item \\ (s.count + 2) >= 0) and (next_random_item \\ (s.count + 2) <= s.count + 1))
+								end
+								s.go_i_th (next_random_item \\ (s.count + 2))
+								Result := s.there_exists (agent (x: G): BOOLEAN do Result := x ~ x end) ⇒ True
 							end
 					).item
 				)
