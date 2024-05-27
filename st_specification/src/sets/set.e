@@ -345,7 +345,7 @@ feature -- Quantifier
 --			definition: Result = (× Current ∖ ∆ Current).exist_xy (p)
 		end
 
-	for_all alias "|∀" (p: PREDICATE [A]): BOOLEAN
+	for_all alias "|∀" (p: FUNCTION [A, BOOLEAN]): BOOLEAN
 			-- Universal quantifier: does `p' hold for every element in current set?
 		note
 			EIS: "name=Quantifiers", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#quantifiers", "tag=operator, syntax"
@@ -613,7 +613,7 @@ feature -- Reduction
 			definition: Result = (acc or p (x))
 		end
 
-	cumulative_conjunction (acc: BOOLEAN; p: PREDICATE [A]; x: A): BOOLEAN
+	cumulative_conjunction (acc: BOOLEAN; p: FUNCTION [A, BOOLEAN]; x: A): BOOLEAN
 			-- Logical conjunction of `acc' and `p' (`x'), i.e. `acc' and `p' (`x').
 		note
 			EIS: "name=Agent-only features", "protocol=URI", "src=file://$(system_path)/docs/EIS/st_specification.html#agentonlyfeatures", "tag=agent, contract view, EiffelStudio, specification"
@@ -712,11 +712,11 @@ invariant
 	no_repetition: not is_empty ⇒ others ∌ any
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2024, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: "https://github.com/rosivaldo-fa/Set-Theory"
+	source: "https://github.com/rosivaldo-fa/set_theory"
 
 end

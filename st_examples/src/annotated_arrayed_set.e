@@ -68,7 +68,8 @@ inherit
 			swap,
 			intersect,
 			subtract,
-			symdif
+			symdif,
+			for_all
 		end
 
 create
@@ -1329,6 +1330,16 @@ feature -- Basic operations
 					do
 						Result := ia_old_s ∋ x xor ia_other ∋ x
 					end (old_s, other, ?)
+		end
+
+feature -- Iteration
+
+	for_all (test: FUNCTION [G, BOOLEAN]): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {ARRAYED_SET}(test)
+		ensure then
+			definition: Result = model_set |∀ test
 		end
 
 feature -- Predicate

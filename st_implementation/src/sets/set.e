@@ -484,7 +484,7 @@ feature -- Quantifier
 			end
 		end
 
-	for_all alias "|∀" (p: PREDICATE [A]): BOOLEAN
+	for_all alias "|∀" (p: FUNCTION [A, BOOLEAN]): BOOLEAN
 			-- <Precursor>
 		local
 			s: like subset_anchor
@@ -990,11 +990,11 @@ feature {NONE} -- Implementation
 		end
 
 note
-	copyright: "Copyright (c) 2012-2023, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2024, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	source: "https://github.com/rosivaldo-fa/Set-Theory"
+	source: "https://github.com/rosivaldo-fa/set_theory"
 
 end

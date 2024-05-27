@@ -78,7 +78,8 @@ inherit
 			test_swap,
 			test_intersect,
 			test_subtract,
-			test_symdif
+			test_symdif,
+			test_for_all
 		end
 
 feature -- Test routines (Initialization)
@@ -601,6 +602,16 @@ feature -- Test routines (Basic operations)
 							end
 					).item
 				)
+			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
+		end
+
+feature -- Factory (Iteration)
+
+	test_for_all
+			-- <Precursor>
+		note
+			testing: "covers/{ANNOTATED_ARRAYED_SET}.for_all"
+		do
 			Precursor {ANNOTATED_ARRAYED_SET_TESTS}
 		end
 
