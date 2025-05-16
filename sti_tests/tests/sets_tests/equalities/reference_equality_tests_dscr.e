@@ -23,6 +23,7 @@ inherit
 			some_set_g as some_set_dscr,
 			some_immediate_set_g as some_immediate_set_dscr
 		undefine
+			default_create,
 			test_is_in
 		redefine
 			test_holds,

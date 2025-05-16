@@ -9,6 +9,11 @@ deferred class
 
 inherit
 	UNARY_TESTS [G]
+		rename
+			element_to_be_tested as set_to_be_tested
+		redefine
+			set_to_be_tested
+		end
 
 feature -- Test routines (Membership)
 
