@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-23-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-23-0 http://www.eiffel.com/developers/xml/configuration-1-23-0.xsd" name="sts_tests" uuid="5A391922-9430-49BC-B067-17C7690B989B" library_target="sts_tests">
+	<description>Tests for set theory classes, as specified by st_specification</description>
+	<target name="sts_tests">
+		<description>Tests for set theory classes, as specified by st_specification</description>
+		<root all_classes="true"/>
+		<file_rule>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/\..*$</exclude>
+		</file_rule>
+		<option warning="warning">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<setting name="library_root" value=".\sts_tests\"/>
+		<setting name="dead_code_removal" value="feature"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
+			<renaming old_name="SET" new_name="EB_SET"/>
+		</library>
+		<library name="st_specification" location="..\st_specification.ecf" readonly="false" prefix="STS_"/>
+		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
+		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
+		<cluster name="properties" location=".\properties\">
+			<description>Properties of concepts of set theory, as specified by st_specification</description>
+			<cluster name="sets_properties" location=".\properties\sets_properties\" recursive="true">
+				<description>Properties of sets and other core concepts of set theory, as specified by st_specification</description>
+			</cluster>
+		</cluster>
+		<tests name="tests" location=".\tests\">
+			<description>Repository of tests for classes of set theory, as specified by st_specification</description>
+			<tests name="sets_tests" location=".\tests\sets_tests\" recursive="true">
+				<description>Tests for sets and others core-concept classes of set theory, as specified by st_specification</description>
+			</tests>
+		</tests>
+	</target>
+</system>

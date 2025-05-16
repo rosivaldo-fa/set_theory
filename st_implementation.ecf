@@ -1,90 +1,30 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-23-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-23-0 http://www.eiffel.com/developers/xml/configuration-1-23-0.xsd" name="st_implementation" uuid="DF7E41FE-8039-4A8C-8B8A-2C75D721101A" library_target="st_implementation">
-	<description>Implementation of set theory classes, as specified by st_specification.</description>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-23-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-23-0 http://www.eiffel.com/developers/xml/configuration-1-23-0.xsd" name="st_implementation" uuid="563E9D36-05E7-42E0-A8A1-54FCBE042AE3" library_target="st_implementation">
+	<description>Implementation of set theory classes, as specified by st_specification</description>
 	<target name="st_implementation">
-		<note>
-			<eis name="Unnamed" protocol="URI" src="$(system_path)\docs\EIS\st_implementation.html"/>
-		</note>
-		<description>Implementation of set theory classes, as specified by st_specification.</description>
+		<description>Implementation of set theory classes, as specified by st_specification</description>
 		<root all_classes="true"/>
-		<version major="0" minor="1" release="4" build="0" company="Rosivaldo F Alves" product="st_implementation" trademark="set_theory" copyright="Rosivaldo F Alves"/>
 		<file_rule>
-			<exclude>/CVS$</exclude>
 			<exclude>/EIFGENs$</exclude>
-			<exclude>/\.git$</exclude>
-			<exclude>/\.svn$</exclude>
+			<exclude>/\..*$</exclude>
 		</file_rule>
-		<option warning="warning" is_obsolete_iteration="false" manifest_array_type="mismatch_error">
-			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
-		</option>
-		<setting name="console_application" value="true"/>
-		<setting name="library_root" value=".\st_implementation"/>
-		<setting name="dead_code_removal" value="feature"/>
-		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
-			<option>
-				<assertions/>
-			</option>
-			<renaming old_name="SET" new_name="EB_SET"/>
-		</library>
-		<library name="st_specification" location="..\st_specification.ecf" readonly="false" prefix="STS_">
-			<option>
-				<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
-			</option>
-		</library>
-		<cluster name="src" location=".\src\">
-			<description>Source code of implementation of set theory classes, as specified by st_specification.</description>
-			<cluster name="sets" location=".\src\sets\" recursive="true">
-				<description>Implementation of sets and other core concepts of set theory, as specified by st_specification.</description>
-			</cluster>
-		</cluster>
-	</target>
-	<target name="st_implementation_tests" extends="st_implementation">
-		<note>
-			<eis name="Unnamed" protocol="URI" src="file://$(system_path)/docs/EIS/st_implementation_tests.html"/>
-		</note>
-		<description>Tests for set theory classes, as implemented by st_implementation, and they respective properties, as stated by st_properties.</description>
-		<root class="APPLICATION" feature="test_all"/>
 		<option warning="warning">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
 		<setting name="console_application" value="true"/>
-		<precompile name="base-scoop-safe_precompile" location="$ISE_PRECOMP\base-scoop-safe.ecf"/>
-		<library name="st_properties" location="..\st_properties.ecf" readonly="false" prefix="STP_">
+		<setting name="library_root" value=".\st_implementation"/>
+		<setting name="total_order_on_reals" value="false"/>
+		<setting name="dead_code_removal" value="feature"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
+			<renaming old_name="SET" new_name="EB_SET"/>
+		</library>
+		<library name="st_specification" location="C:\Users\rosiv\OneDrive\Documents\Eiffel User Files\25.02\projects\set_theory\st_specification.ecf" readonly="false" prefix="STS_">
 			<option>
 				<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 			</option>
 		</library>
-		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf">
-			<class_option class="EQA_TEST_SET">
-				<warning name="obsolete_feature" value="all"/>
-			</class_option>
-		</library>
-		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
-		<cluster name="test" location=".\testing\">
-			<description>Tests for set theory classes, as implemented by st_implementation, and they respective properties, as stated by st_properties.</description>
-			<tests name="tests" location=".\testing\tests\">
-				<description>Repository of tests for classes of set theory, as implemented by st_implementation.</description>
-				<tests name="sets_tests" location=".\testing\tests\sets_tests\" recursive="true">
-					<description>Tests for sets and others core-concept classes of set theory, as implemented by st_implementation.</description>
-				</tests>
-			</tests>
-			<cluster name="adaptation" location=".\testing\adaptation\">
-				<description>Possible adaptations of classes to be tested, e.g. classes derived from generic ones, exposition of access-restricted features to tests etc.</description>
-				<cluster name="test_sets" location=".\testing\adaptation\test_sets\" recursive="true">
-					<description>Classes of sets and other core concepts of set theory, adapted to allow AutoTest working on them.</description>
-				</cluster>
-			</cluster>
-			<cluster name="properties" location=".\testing\properties\">
-				<description>Implementation or deferred classes specified by st_properties</description>
-				<cluster name="sets_properties" location=".\testing\properties\sets_properties\" recursive="true">
-					<description>Implementation of classes with properties of sets and other core concepts of set theory, as specified by st_properties.</description>
-				</cluster>
-			</cluster>
+		<cluster name="sets" location=".\sets\" recursive="true">
+			<description>Implementation of sets and other core concepts of set theory, as specified by st_specification.</description>
 		</cluster>
-	</target>
-	<target name="st_implementation_bugs" extends="st_implementation_tests">
-		<description>Bugs found within set theory classes, as implemented by st_implementation, and their respective properties, as stated by st_properties.</description>
-		<root class="BUGS" feature="reproduce_bugs"/>
-		<cluster name="bugs" location=".\bugs\" recursive="true"/>
 	</target>
 </system>

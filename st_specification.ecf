@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-22-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-22-0 http://www.eiffel.com/developers/xml/configuration-1-22-0.xsd" name="st_specification" uuid="854E42A9-D4F2-487D-BFB0-55734F472BC8" library_target="st_specification">
-	<description>Specification of set theory.</description>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-23-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-23-0 http://www.eiffel.com/developers/xml/configuration-1-23-0.xsd" name="st_specification" uuid="6CF6E345-E438-40DA-A881-F9785602784F" library_target="st_specification">
+	<description>Specification of set theory</description>
 	<target name="st_specification">
-		<note>
-			<eis name="Unnamed" protocol="URI" src="file://$(system_path)\docs\EIS\st_specification.html"/>
-			<eis name="Language options not saved in Project Settings" protocol="URI" src="file://$(system_path)/docs/EIS/st_specification.html#bug19883" tag="bug, EiffelStudio"/>
-		</note>
+		<description>Specification of set theory</description>
 		<root all_classes="true"/>
 		<file_rule>
-			<exclude>/CVS$</exclude>
 			<exclude>/EIFGENs$</exclude>
-			<exclude>/\.git$</exclude>
-			<exclude>/\.svn$</exclude>
+			<exclude>/\..*$</exclude>
 		</file_rule>
-		<option warning="warning" is_obsolete_iteration="false" manifest_array_type="mismatch_error">
+		<option warning="warning">
 			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 		</option>
 		<setting name="console_application" value="true"/>
-		<setting name="library_root" value=".\st_specification"/>
+		<setting name="library_root" value=".\st_specification\"/>
 		<setting name="dead_code_removal" value="feature"/>
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
 			<renaming old_name="SET" new_name="EB_SET"/>
 		</library>
-		<cluster name="src" location=".\src\">
-			<description>Source code of specification of set theory</description>
-			<cluster name="sets" location=".\src\sets\" recursive="true">
-				<description>Specification of sets and some other core concepts of set theory</description>
-			</cluster>
+		<cluster name="sets" location=".\sets\" recursive="true">
+			<description>Specification of sets and some other core concepts of set theory</description>
 		</cluster>
 	</target>
 </system>

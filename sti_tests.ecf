@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-23-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-23-0 http://www.eiffel.com/developers/xml/configuration-1-23-0.xsd" name="sti_tests" uuid="54EE26AB-2AAF-44F3-9726-B77BF0997453" library_target="sti_tests">
+	<description>Tests for set theory classes, as implemented by st_implementation</description>
+	<target name="sti_tests">
+		<description>Tests for set theory classes, as implemented by st_implementation</description>
+		<root all_classes="true"/>
+		<file_rule>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/\..*$</exclude>
+		</file_rule>
+		<option warning="warning">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<setting name="library_root" value=".\sti_tests\"/>
+		<setting name="dead_code_removal" value="feature"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
+			<renaming old_name="SET" new_name="EB_SET"/>
+		</library>
+		<library name="st_implementation" location="..\st_implementation.ecf" readonly="false" prefix="STI_"/>
+		<library name="st_specification" location="..\st_specification.ecf" readonly="false" prefix="STS_"/>
+		<library name="sts_tests" location="C:\Users\rosiv\OneDrive\Documents\Eiffel User Files\25.02\projects\set_theory\sts_tests.ecf" readonly="false" prefix="STST_"/>
+		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
+		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
+		<cluster name="properties" location=".\properties\">
+			<description>Properties of concepts of set theory, as implemented by st_implementation</description>
+			<cluster name="sets_properties" location=".\properties\sets_properties\" recursive="true">
+				<description>Properties of sets and other core concepts of set theory, as implemented by st_implementation</description>
+			</cluster>
+		</cluster>
+		<tests name="tests" location=".\tests\">
+			<description>Repository of tests for classes of set theory, as implemented by st_implementation</description>
+			<tests name="sets_tests" location=".\tests\sets_tests\" recursive="true">
+				<description>Tests for sets and others core-concept classes of set theory, as implemented by st_implementation</description>
+			</tests>
+		</tests>
+	</target>
+	<target name="sti_runnable_tests" extends="sti_tests">
+		<description>Runnable tests for set theory classes, as implemented by st_implementation</description>
+		<root class="APPLICATION" feature="test_all"/>
+		<precompile name="base_pre" location="$ISE_PRECOMP\base-scoop-safe.ecf"/>
+		<cluster name="app" location=".\"/>
+	</target>
+</system>
