@@ -17,6 +17,7 @@ feature {NONE} -- Initialization
 		do
 			(create {ELEMENT_TESTS}).test_all;
 			(create {REFERENCE_EQUALITY_TESTS_DSCR}).test_all;
+			(create {OBJECT_STANDARD_EQUALITY_TESTS_DSCR}).test_all;
 			(create {SET_TESTS_DSCR}).test_all;
 		end
 
