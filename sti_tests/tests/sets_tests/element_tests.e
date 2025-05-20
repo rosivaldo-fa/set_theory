@@ -197,6 +197,18 @@ feature -- Factory (Equality)
 			end
 		end
 
+	some_object_standard_equality_dscr: STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]
+			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
+		do
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance
+						(agent: STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]}
+			then
+				Result := eq
+			end
+		end
+
 feature -- Factory (Set)
 
 	some_set_dscr: STS_SET [detachable separate CHARACTER_REF]
@@ -256,6 +268,42 @@ feature -- Factory (Set)
 --			small_enough: # Result ≤ Max_count
 --			no_change: # s ≤ Max_count implies Result ≍ s
 --			cropped: Result ⊆ s
+		end
+
+	some_set_of_standard_objects_dscr: STS_SET [detachable separate CHARACTER_REF]
+			-- Randomly-fetched polymorphic set of separate character references
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_set_of_standard_objects_dscr
+			when 1 then
+				Result := some_immediate_set_of_standard_objects_dscr
+			end
+		end
+
+	some_immediate_set_of_standard_objects_dscr: STI_SET [detachable separate CHARACTER_REF]
+			-- Randomly-fetched monomorphic set of separate character references
+		do
+			check
+				s: attached {STI_SET [detachable separate CHARACTER_REF]} some_immediate_instance (
+							agent: STI_SET [detachable separate CHARACTER_REF]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result
+									loop
+										Result := Result.extended (some_separate_character_ref, some_equality_dscr)
+									end
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_SET [detachable separate CHARACTER_REF]}
+			then
+				Result := cropped_set (s)
+			end
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STI_SET [detachable separate CHARACTER_REF]}
 		end
 
 note

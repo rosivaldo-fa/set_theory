@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Pool of features available for test classes that need one generic parameter and its respective equality type"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -15,6 +15,19 @@ feature -- Factory (Object)
 	some_object_g: G
 			-- Randomly-fetched object like {G}
 		deferred
+		end
+
+	object_standard_twin_g (a: G): G
+			-- Object equal (according to `standard_equal') to `a'
+		do
+			if attached a then
+				Result := a.standard_twin
+			else
+				Result := a
+			end
+		ensure
+			attached_a: attached a ⇒ attached Result and then Result ≜ a
+			detached_a: not attached a ⇒ not attached Result
 		end
 
 feature -- Factory (Set)
