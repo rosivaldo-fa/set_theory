@@ -1,5 +1,5 @@
 ﻿note
-	description: "Test suite for {SET}"
+	description: "Test suite for {STS_SET}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -12,7 +12,19 @@ inherit
 		rename
 			element_to_be_tested as set_to_be_tested
 		redefine
+			test_all,
 			set_to_be_tested
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {STS_SET}.
+		note
+			testing: "covers/{STS_SET}"
+		do
+			Precursor {UNARY_TESTS}
+			test_has
 		end
 
 feature -- Test routines (Membership)

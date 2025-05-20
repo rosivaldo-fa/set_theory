@@ -12,10 +12,21 @@ inherit
 		undefine
 			default_create
 		redefine
+			test_all,
 			test_is_in
 		end
 
 	EQA_TEST_SET
+
+feature -- Test routines (All)
+
+	test_all
+			-- <Precursor>
+		note
+			testing: "covers/{STS_ELEMENT}"
+		do
+			Precursor {STST_ELEMENT_TESTS}
+		end
 
 feature -- Test routines (Membership)
 
@@ -24,6 +35,7 @@ feature -- Test routines (Membership)
 		note
 			testing: "covers/{STS_ELEMENT}.is_in"
 		do
+			Precursor {STST_ELEMENT_TESTS}
 		end
 
 feature -- Factory (Separate character reference)

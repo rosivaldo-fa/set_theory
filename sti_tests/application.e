@@ -16,6 +16,7 @@ feature {NONE} -- Initialization
 			-- Run every available test.
 		do
 			(create {ELEMENT_TESTS}).test_all;
+			(create {REFERENCE_EQUALITY_TESTS_DSCR}).test_all;
 			(create {SET_TESTS_DSCR}).test_all;
 		end
 

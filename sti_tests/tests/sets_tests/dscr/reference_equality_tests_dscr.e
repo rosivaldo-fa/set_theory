@@ -14,9 +14,11 @@ inherit
 			element_to_be_tested as equality_to_be_tested
 		undefine
 			equality_to_be_tested
+		redefine
+			test_all
 		end
 
-	STST_REFERENCE_EQUALITY_TESTS [detachable separate CHARACTER_REF, STS_REFERENCE_EQUALITY [detachable separate CHARACTER_REF]]
+	STST_REFERENCE_EQUALITY_TESTS [detachable separate CHARACTER_REF]
 		rename
 			some_object_g as some_separate_character_ref,
 			some_immediate_equality_g as some_reference_equality_dscr,
@@ -26,8 +28,19 @@ inherit
 			default_create,
 			test_is_in
 		redefine
+			test_all,
 			test_holds,
 			test_holds_successively
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {STS_REFERENCE_EQUALITY}.
+		note
+			testing: "covers/{STS_REFERENCE_EQUALITY}"
+		do
+			Precursor {STST_REFERENCE_EQUALITY_TESTS}
 		end
 
 feature -- Test routines (Relationship)

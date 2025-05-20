@@ -5,19 +5,32 @@
 	revision: "$Revision$"
 
 deferred class
-	EQUALITY_TESTS [A, EQ -> STS_EQUALITY [A] create default_create end]
+	EQUALITY_TESTS [G]
 
 inherit
-	EQUALITY_PROPERTIES [A, EQ]
+	EQUALITY_PROPERTIES [G]
 		undefine
 			default_create
 		end
 
-	UNARY_TESTS [A]
+	UNARY_TESTS [G]
 		rename
 			element_to_be_tested as equality_to_be_tested
 		redefine
+			test_all,
 			equality_to_be_tested
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {STS_EQUALITY}.
+		note
+			testing: "covers/{STS_EQUALITY}"
+		do
+			Precursor {UNARY_TESTS}
+			test_holds
+			test_holds_successively
 		end
 
 feature -- Test routines (Relationship)
@@ -28,7 +41,7 @@ feature -- Test routines (Relationship)
 			testing: "covers/{STS_EQUALITY}.holds"
 		local
 			eq: like equality_to_be_tested
-			a1, a2: A
+			a1, a2: G
 		do
 			eq := equality_to_be_tested
 			a1 := some_object_g
@@ -47,7 +60,7 @@ feature -- Test routines (Relationship)
 			testing: "covers/{STS_EQUALITY}.holds_successively"
 		local
 			eq: like equality_to_be_tested
-			a1, a2, a3: A
+			a1, a2, a3: G
 		do
 			eq := equality_to_be_tested
 			a1 := some_object_g
@@ -68,7 +81,7 @@ feature -- Test routines (Relationship)
 
 feature {NONE} -- Factory (Element to be tested)
 
-	equality_to_be_tested: EQ
+	equality_to_be_tested: like some_immediate_equality_g
 			-- Equality meant to be under tests
 		do
 			Result := some_immediate_equality_g
@@ -76,7 +89,7 @@ feature {NONE} -- Factory (Element to be tested)
 
 feature -- Factory (Equality)
 
-	some_immediate_equality_g: EQ
+	some_immediate_equality_g: STS_EQUALITY [G]
 			-- Some monomorphic equality of type {EQ}
 		deferred
 		end

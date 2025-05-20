@@ -1,5 +1,5 @@
 note
-	description: "Test suite for {SET [detachable separate CHARACTER_REF]}"
+	description: "Test suite for {STI_SET [detachable separate CHARACTER_REF]}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -17,6 +17,7 @@ inherit
 		undefine
 			default_create
 		redefine
+			test_all,
 			test_is_in
 		end
 
@@ -26,7 +27,18 @@ inherit
 		undefine
 			set_to_be_tested
 		redefine
+			test_all,
 			test_is_in
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {STI_SET}.
+		note
+			testing: "covers/{STI_SET}"
+		do
+			Precursor {STST_SET_TESTS}
 		end
 
 feature -- Test routines (Membership)

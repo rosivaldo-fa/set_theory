@@ -5,10 +5,10 @@ note
 	revision: "$Revision$"
 
 deferred class
-	REFERENCE_EQUALITY_TESTS [A, EQ -> STS_REFERENCE_EQUALITY [A] create default_create end]
+	REFERENCE_EQUALITY_TESTS [G]
 
 inherit
-	EQUALITY_TESTS [A, EQ]
+	EQUALITY_TESTS [G]
 		redefine
 			test_holds,
 			test_holds_successively
@@ -22,7 +22,7 @@ feature -- Test routines (Relationship)
 			testing: "covers/{STS_REFERENCE_EQUALITY}.holds"
 		local
 			eq: like equality_to_be_tested
-			a1, a2: A
+			a1, a2: G
 		do
 			Precursor {EQUALITY_TESTS}
 
@@ -46,7 +46,7 @@ feature -- Test routines (Relationship)
 			testing: "covers/{STS_REFERENCE_EQUALITY}.holds_successively"
 		local
 			eq: like equality_to_be_tested
-			a1, a2, a3: A
+			a1, a2, a3: G
 		do
 			Precursor {EQUALITY_TESTS}
 

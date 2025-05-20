@@ -5,14 +5,14 @@ note
 	revision: "$Revision$"
 
 deferred class
-	EQUALITY_PROPERTIES [G, EQ -> STS_EQUALITY [G]]
+	EQUALITY_PROPERTIES [G]
 
 inherit
 	STS_ELEMENT
 
 feature -- Properties (Relationship)
 
-	holds_successively_ok (a, b, c: G; eq: EQ): BOOLEAN
+	holds_successively_ok (a, b, c: G; eq: STS_EQUALITY [G]): BOOLEAN
 			-- Do the properties verified within set theory hold for {STS_EQUALITY}.holds_successively?
 		do
 			check
