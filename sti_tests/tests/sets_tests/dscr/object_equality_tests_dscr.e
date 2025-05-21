@@ -24,7 +24,8 @@ inherit
 			default_create,
 			test_is_in
 		redefine
-			test_holds
+			test_holds,
+			test_holds_successively
 		end
 
 feature -- Test routines (Relationship)
@@ -33,6 +34,15 @@ feature -- Test routines (Relationship)
 			-- <Precursor>
 		note
 			testing: "covers/{STS_OBJECT_EQUALITY}.holds"
+		do
+			Precursor {STST_OBJECT_EQUALITY_TESTS}
+		end
+
+	test_holds_successively
+			-- <Precursor>
+		note
+			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
+			testing: "covers/{STS_OBJECT_EQUALITY}.holds_successively"
 		do
 			Precursor {STST_OBJECT_EQUALITY_TESTS}
 		end
