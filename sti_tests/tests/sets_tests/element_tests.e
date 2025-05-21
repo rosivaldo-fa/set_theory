@@ -209,6 +209,18 @@ feature -- Factory (Equality)
 			end
 		end
 
+	some_object_equality_dscr: STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]
+			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
+		do
+			check
+				eq: attached {STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance
+						(agent: STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [detachable separate CHARACTER_REF]}
+			then
+				Result := eq
+			end
+		end
+
 feature -- Factory (Set)
 
 	some_set_dscr: STS_SET [detachable separate CHARACTER_REF]
@@ -270,17 +282,15 @@ feature -- Factory (Set)
 --			cropped: Result ⊆ s
 		end
 
-	some_set_of_standard_objects_dscr: STS_SET [detachable separate CHARACTER_REF]
-			-- Randomly-fetched polymorphic set of separate character references
-		do
-			inspect
-				next_random_item \\ 2
-			when 0 then
-				Result := some_immediate_set_of_standard_objects_dscr
-			when 1 then
-				Result := some_immediate_set_of_standard_objects_dscr
-			end
-		end
+--	some_set_of_standard_objects_dscr: STS_SET [detachable separate CHARACTER_REF]
+--			-- Randomly-fetched polymorphic set of separate character references
+--		do
+--			inspect
+--				next_random_item \\ 1
+--			when 0 then
+--				Result := some_immediate_set_of_standard_objects_dscr
+--			end
+--		end
 
 	some_immediate_set_of_standard_objects_dscr: STI_SET [detachable separate CHARACTER_REF]
 			-- Randomly-fetched monomorphic set of separate character references
@@ -304,6 +314,18 @@ feature -- Factory (Set)
 			end
 		ensure
 			monomorphic: Result.generating_type ~ {detachable STI_SET [detachable separate CHARACTER_REF]}
+		end
+
+	some_set_of_objects_dscr: STS_SET [detachable separate CHARACTER_REF]
+			-- Randomly-fetched polymorphic set of separate character references
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_set_of_standard_objects_dscr
+			when 1 then
+				Result := some_immediate_set_of_standard_objects_dscr
+			end
 		end
 
 note

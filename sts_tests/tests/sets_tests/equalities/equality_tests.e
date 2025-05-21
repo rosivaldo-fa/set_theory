@@ -90,7 +90,7 @@ feature {NONE} -- Factory (Element to be tested)
 feature -- Factory (Equality)
 
 	some_immediate_equality_g: STS_EQUALITY [G]
-			-- Some monomorphic equality of type {EQ}
+			-- Some monomorphic equality for {G} objects
 		deferred
 		end
 

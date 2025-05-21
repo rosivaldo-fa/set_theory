@@ -21,9 +21,7 @@ inherit
 	STST_REFERENCE_EQUALITY_TESTS [detachable separate CHARACTER_REF]
 		rename
 			some_object_g as some_separate_character_ref,
-			some_immediate_equality_g as some_reference_equality_dscr,
-			some_set_g as some_set_dscr,
-			some_immediate_set_g as some_immediate_set_dscr
+			some_immediate_equality_g as some_reference_equality_dscr
 		undefine
 			default_create,
 			test_is_in
