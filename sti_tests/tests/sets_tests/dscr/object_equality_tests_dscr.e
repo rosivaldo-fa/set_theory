@@ -13,8 +13,9 @@ inherit
 		rename
 			element_to_be_tested as equality_to_be_tested
 		undefine
-			test_all,
 			equality_to_be_tested
+		redefine
+			test_all
 		end
 	STST_OBJECT_EQUALITY_TESTS [detachable separate CHARACTER_REF]
 		rename
@@ -24,8 +25,19 @@ inherit
 			default_create,
 			test_is_in
 		redefine
+			test_all,
 			test_holds,
 			test_holds_successively
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {STS_OBJECT_EQUALITY}.
+		note
+			testing: "covers/{STS_OBJECT_EQUALITY}"
+		do
+			Precursor {STST_OBJECT_EQUALITY_TESTS}
 		end
 
 feature -- Test routines (Relationship)
@@ -43,6 +55,7 @@ feature -- Test routines (Relationship)
 		note
 			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
 			testing: "covers/{STS_OBJECT_EQUALITY}.holds_successively"
+			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952"
 		do
 			Precursor {STST_OBJECT_EQUALITY_TESTS}
 		end

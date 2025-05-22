@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-23-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-23-0 http://www.eiffel.com/developers/xml/configuration-1-23-0.xsd" name="sti_bugs" uuid="AE728FDE-80AA-4941-BBA6-91EF50471017">
+	<description>Bugs found within set theory classes, as implemented by st_implementation and tested by sti_tests</description>
+	<target name="sti_bugs">
+		<description>Bugs found within set theory classes, as implemented by st_implementation and tested by sti_tests</description>
+		<root class="APPLICATION" feature="reproduce_bugs"/>
+		<file_rule>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/\..*$</exclude>
+		</file_rule>
+		<option warning="warning">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<setting name="library_root" value=".\sti_bugs"/>
+		<precompile name="base_pre" location="$ISE_PRECOMP\base-scoop-safe.ecf"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
+		<cluster name="sti_bugs" location=".\" recursive="true">
+			<description>Bugs found within set theory classes, as implemented by st_implementation and tested by sti_tests</description>
+		</cluster>
+	</target>
+</system>
