@@ -42,6 +42,19 @@ feature -- Factory (Object)
 			definition: Result ~ a
 		end
 
+	object_deep_twin_g (a: G): G
+			-- Object equal (according to `deep_equal') to `a'
+		do
+			if attached a then
+				Result := a.deep_twin
+			else
+				Result := a
+			end
+		ensure
+			attached_a: attached a ⇒ attached Result and then Result ≡≡≡ a
+			detached_a: not attached a ⇒ not attached Result
+		end
+
 feature -- Factory (Set)
 
 --	some_set_g: STS_SET [G]
