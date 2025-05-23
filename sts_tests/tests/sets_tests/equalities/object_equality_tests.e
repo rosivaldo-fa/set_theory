@@ -9,6 +9,8 @@ deferred class
 
 inherit
 	EQUALITY_TESTS [G]
+		undefine
+			holds_successively_ok
 		redefine
 			test_holds,
 			test_holds_successively
