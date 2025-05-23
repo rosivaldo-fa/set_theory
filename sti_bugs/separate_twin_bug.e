@@ -12,7 +12,7 @@ feature -- Bug
 	reproduce_separate_twin_bug
 			-- Reproduce a bug on `twin' value of separate, generic objects.
 		note
-			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952"
+			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		local
 			a, b: G
 		do
@@ -37,6 +37,8 @@ feature {NONE} -- Implementation
 
 	object_twin_g (a: G): G
 			-- Object equal (by value) to `a'
+		note
+			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		do
 			if attached a then
 				Result := a.twin
