@@ -7,13 +7,13 @@
 deferred class
 	OBJECT_DEEP_EQUALITY_TESTS [G]
 
---inherit
---	EQUALITY_TESTS [G]
+inherit
+	EQUALITY_TESTS [G]
 --		redefine
 --			test_holds
 --		end
 
---	OBJECT_DEEP_EQUALITY_PROPERTIES [G]
+	OBJECT_DEEP_EQUALITY_PROPERTIES [G]
 
 --feature -- Test routines (Relationship)
 

@@ -221,6 +221,18 @@ feature -- Factory (Equality)
 			end
 		end
 
+	some_object_deep_equality_dscr: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]
+			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]}
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]} some_immediate_instance
+						(agent: STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]}
+			then
+				Result := eq
+			end
+		end
+
 feature -- Factory (Set)
 
 	some_set_dscr: STS_SET [detachable separate CHARACTER_REF]

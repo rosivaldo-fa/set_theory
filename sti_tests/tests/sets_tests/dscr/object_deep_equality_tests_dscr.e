@@ -8,36 +8,36 @@ note
 class
 	OBJECT_DEEP_EQUALITY_TESTS_DSCR
 
---inherit
---	ELEMENT_TESTS
---		rename
---			element_to_be_tested as equality_to_be_tested
---		undefine
---			equality_to_be_tested
---		redefine
---			test_all
---		end
---	STST_OBJECT_DEEP_EQUALITY_TESTS [detachable separate CHARACTER_REF]
---		rename
---			some_object_g as some_separate_character_ref,
---			some_immediate_equality_g as some_object_deep_equality_dscr
---		undefine
---			default_create,
---			test_is_in
---		redefine
---			test_all,
+inherit
+	ELEMENT_TESTS
+		rename
+			element_to_be_tested as equality_to_be_tested
+		undefine
+			equality_to_be_tested
+		redefine
+			test_all
+		end
+	STST_OBJECT_DEEP_EQUALITY_TESTS [detachable separate CHARACTER_REF]
+		rename
+			some_object_g as some_separate_character_ref,
+			some_immediate_equality_g as some_object_deep_equality_dscr
+		undefine
+			default_create,
+			test_is_in
+		redefine
+			test_all
 --			test_holds
---		end
+		end
 
---feature -- Test routines (All)
+feature -- Test routines (All)
 
---	test_all
---			-- Test every routine of {STS_OBJECT_DEEP_EQUALITY}.
---		note
---			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}"
---		do
---			Precursor {STST_OBJECT_DEEP_EQUALITY_TESTS}
---		end
+	test_all
+			-- Test every routine of {STS_OBJECT_DEEP_EQUALITY}.
+		note
+			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}"
+		do
+			Precursor {STST_OBJECT_DEEP_EQUALITY_TESTS}
+		end
 
 --feature -- Test routines (Relationship)
 
