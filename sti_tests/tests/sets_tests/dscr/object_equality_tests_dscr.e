@@ -55,7 +55,6 @@ feature -- Test routines (Relationship)
 		note
 			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
 			testing: "covers/{STS_OBJECT_EQUALITY}.holds_successively"
-			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		do
 			Precursor {STST_OBJECT_EQUALITY_TESTS}
 		end

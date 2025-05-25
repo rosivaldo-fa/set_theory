@@ -32,6 +32,8 @@ feature -- Factory (Object)
 
 	object_twin_g (a: G): G
 			-- Object equal (by value) to `a'
+		note
+			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		do
 			if attached a then
 				Result := a.twin
@@ -40,6 +42,10 @@ feature -- Factory (Object)
 			end
 		ensure
 			definition: Result ~ a
+		rescue
+			if Result /~ a then -- Please have a look at EIS entry above.
+				retry
+			end
 		end
 
 	object_deep_twin_g (a: G): G
