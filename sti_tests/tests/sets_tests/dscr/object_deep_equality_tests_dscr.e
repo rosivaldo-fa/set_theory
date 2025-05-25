@@ -25,8 +25,8 @@ inherit
 			default_create,
 			test_is_in
 		redefine
-			test_all
---			test_holds
+			test_all,
+			test_holds
 		end
 
 feature -- Test routines (All)
@@ -39,15 +39,15 @@ feature -- Test routines (All)
 			Precursor {STST_OBJECT_DEEP_EQUALITY_TESTS}
 		end
 
---feature -- Test routines (Relationship)
+feature -- Test routines (Relationship)
 
---	test_holds
---			-- <Precursor>
---		note
---			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds"
---		do
---			Precursor {STST_OBJECT_DEEP_EQUALITY_TESTS}
---		end
+	test_holds
+			-- <Precursor>
+		note
+			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds"
+		do
+			Precursor {STST_OBJECT_DEEP_EQUALITY_TESTS}
+		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

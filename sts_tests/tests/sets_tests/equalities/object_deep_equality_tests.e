@@ -9,45 +9,45 @@ deferred class
 
 inherit
 	EQUALITY_TESTS [G]
---		redefine
---			test_holds
---		end
+		redefine
+			test_holds
+		end
 
 	OBJECT_DEEP_EQUALITY_PROPERTIES [G]
 
---feature -- Test routines (Relationship)
+feature -- Test routines (Relationship)
 
---	test_holds
---			-- Test {STS_OBJECT_DEEP_EQUALITY}.holds.
---		note
---			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds"
---		local
---			eq: like equality_to_be_tested
---			a1, a2: G
---		do
---			Precursor {EQUALITY_TESTS}
+	test_holds
+			-- Test {STS_OBJECT_DEEP_EQUALITY}.holds.
+		note
+			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds"
+		local
+			eq: like equality_to_be_tested
+			a1, a2: G
+		do
+			Precursor {EQUALITY_TESTS}
 
---			eq := equality_to_be_tested
---			a1 := some_object_g
---			a2 := object_deep_twin_g (a1)
---			assert ("a1 ≡≡≡ a2", eq (a1, a2))
---			assert ("a1 ≡≡≡ a2 ok", holds_ok (a1, a2, eq))
+			eq := equality_to_be_tested
+			a1 := some_object_g
+			a2 := object_deep_twin_g (a1)
+			assert ("a1 ≡≡≡ a2", eq (a1, a2))
+			assert ("a1 ≡≡≡ a2 ok", holds_ok (a1, a2, eq))
 
---			separate a1 as sep_a1 do
---				from
---					a2 := some_object_g
---				until
---					if attached sep_a1 then
---						not attached a2 or else not (sep_a1 ≡≡≡ a2)
---					else
---						attached a2
---					end
---				loop
---					a2 := some_object_g
---				end
---			end
---			assert ("not (a1 ≡≡≡ a2)", not eq (a1, a2))
---		end
+			separate a1 as sep_a1 do
+				from
+					a2 := some_object_g
+				until
+					if attached sep_a1 then
+						not attached a2 or else not (sep_a1 ≡≡≡ a2)
+					else
+						attached a2
+					end
+				loop
+					a2 := some_object_g
+				end
+			end
+			assert ("not (a1 ≡≡≡ a2)", not eq (a1, a2))
+		end
 
 --feature -- Factory (Object)
 
@@ -65,12 +65,12 @@ inherit
 --			end
 --		end
 
---feature -- Factory (Equality)
+feature -- Factory (Equality)
 
---	some_immediate_equality_g: STS_OBJECT_DEEP_EQUALITY [G]
---			-- Some monomorphic object deep equality for {G} objects
---		deferred
---		end
+	some_immediate_equality_g: STS_OBJECT_DEEP_EQUALITY [G]
+			-- Some monomorphic object deep equality for {G} objects
+		deferred
+		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
