@@ -9,6 +9,16 @@ Copyright (c) 2012-2025, Rosivaldo F Alves
 license: Eiffel Forum License v2 (see https://www.eiffel.com/licensing/forum.txt)
 
 ## Change history
+### v0.1.6
+- Classes specified, implemented and tested:
+	- ELEMENT
+	- EQUALITY
+	- INSTANCE_FREE_EQUALITY
+	- REFERENCE_EQUALITY
+	- STANDARD_OBJECT_EQUALITY
+	- OBJECT_EQUALITY
+	- OBJECT_DEEP_EQUALITY
+	
 ### v0.1.5
 - Restarted (almost) from scratch
 	
