@@ -9,18 +9,11 @@ class
 	OBJECT_EQUALITY_TESTS_DSCR
 
 inherit
-	ELEMENT_TESTS
-		rename
-			element_to_be_tested as equality_to_be_tested
-		undefine
-			equality_to_be_tested
-		redefine
-			test_all
-		end
 	STST_OBJECT_EQUALITY_TESTS [detachable separate CHARACTER_REF]
 		rename
 			some_object_g as some_separate_character_ref,
-			some_immediate_equality_g as some_object_equality_dscr
+			some_immediate_equality_g as some_object_equality_dscr,
+			some_immediate_set_g as some_immediate_set_dscr
 		undefine
 			default_create,
 			test_is_in
@@ -28,6 +21,15 @@ inherit
 			test_all,
 			test_holds,
 			test_holds_successively
+		end
+
+	UNARY_TESTS_DSCR
+		rename
+			element_to_be_tested as equality_to_be_tested
+		undefine
+			equality_to_be_tested
+		redefine
+			test_all
 		end
 
 feature -- Test routines (All)

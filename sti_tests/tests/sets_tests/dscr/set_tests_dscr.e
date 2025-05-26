@@ -8,38 +8,39 @@ note
 class
 	SET_TESTS_DSCR
 
---inherit
---	STST_SET_TESTS [detachable separate CHARACTER_REF]
---		rename
---			some_object_g as some_separate_character_ref,
+inherit
+	STST_SET_TESTS [detachable separate CHARACTER_REF]
+		rename
+			some_object_g as some_separate_character_ref,
 --			some_set_g as some_set_dscr,
---			some_immediate_set_g as some_immediate_set_dscr
---		undefine
---			default_create
---		redefine
---			test_all,
+			some_immediate_set_g as some_immediate_set_dscr
+		undefine
+			default_create
+		redefine
+			test_all
 --			test_is_in
---		end
+		end
 
---	ELEMENT_TESTS
---		rename
---			element_to_be_tested as set_to_be_tested
---		undefine
---			set_to_be_tested
---		redefine
---			test_all,
+	ELEMENT_TESTS
+		rename
+			element_to_be_tested as set_to_be_tested
+		undefine
+			test_is_in,
+			set_to_be_tested
+		redefine
+			test_all
 --			test_is_in
---		end
+		end
 
---feature -- Test routines (All)
+feature -- Test routines (All)
 
---	test_all
---			-- Test every routine of {STI_SET}.
---		note
---			testing: "covers/{STI_SET}"
---		do
---			Precursor {STST_SET_TESTS}
---		end
+	test_all
+			-- Test every routine of {STI_SET}.
+		note
+			testing: "covers/{STI_SET}"
+		do
+			Precursor {STST_SET_TESTS}
+		end
 
 --feature -- Test routines (Membership)
 

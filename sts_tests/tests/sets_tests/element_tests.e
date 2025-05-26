@@ -100,9 +100,15 @@ feature -- Factory (Equality)
 			-- Randomly-fetched polymorphic equality for comparing {STS_ELEMENT} instances
 		do
 			inspect
-				next_random_item \\ 1
+				next_random_item \\ 4
 			when 0 then
 				Result := some_element_reference_equality
+			when 1 then
+				Result := some_element_object_standard_equality
+			when 2 then
+				Result := some_element_object_equality
+			when 3 then
+				Result := some_element_object_deep_equality
 			end
 		end
 
@@ -116,7 +122,42 @@ feature -- Factory (Equality)
 			then
 				Result := eq
 			end
+		end
 
+	some_element_object_standard_equality: STS_OBJECT_STANDARD_EQUALITY [STS_ELEMENT]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_ELEMENT} object standard value
+		do
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [STS_ELEMENT]} some_immediate_instance
+						(agent: STS_OBJECT_STANDARD_EQUALITY [STS_ELEMENT] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [STS_ELEMENT]}
+			then
+				Result := eq
+			end
+		end
+
+	some_element_object_equality: STS_OBJECT_EQUALITY [STS_ELEMENT]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_ELEMENT} object value
+		do
+			check
+				eq: attached {STS_OBJECT_EQUALITY [STS_ELEMENT]} some_immediate_instance
+						(agent: STS_OBJECT_EQUALITY [STS_ELEMENT] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [STS_ELEMENT]}
+			then
+				Result := eq
+			end
+		end
+
+	some_element_object_deep_equality: STS_OBJECT_DEEP_EQUALITY [STS_ELEMENT]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_ELEMENT} object deep value
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [STS_ELEMENT]} some_immediate_instance
+						(agent: STS_OBJECT_DEEP_EQUALITY [STS_ELEMENT] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [STS_ELEMENT]}
+			then
+				Result := eq
+			end
 		end
 
 feature {NONE} -- Implementation

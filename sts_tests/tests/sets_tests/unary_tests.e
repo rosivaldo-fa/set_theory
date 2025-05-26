@@ -68,12 +68,12 @@ feature -- Factory (Set)
 --		deferred
 --		end
 
---	some_immediate_set_g: STS_SET [G]
---			-- Some monomorphic set of elements like {G}
---		deferred
---		ensure
---			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_g}
---		end
+	some_immediate_set_g: STS_SET [G]
+			-- Some monomorphic set of elements like {G}
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_g}
+		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

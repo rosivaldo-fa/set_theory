@@ -20,7 +20,7 @@ feature {NONE} -- Initialization
 			(create {OBJECT_STANDARD_EQUALITY_TESTS_DSCR}).test_all;
 			(create {OBJECT_EQUALITY_TESTS_DSCR}).test_all;
 			(create {OBJECT_DEEP_EQUALITY_TESTS_DSCR}).test_all;
---			(create {SET_TESTS_DSCR}).test_all;
+			(create {SET_TESTS_DSCR}).test_all;
 		end
 
 note
