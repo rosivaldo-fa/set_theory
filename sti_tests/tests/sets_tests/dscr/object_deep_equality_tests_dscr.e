@@ -26,7 +26,8 @@ inherit
 			test_is_in
 		redefine
 			test_all,
-			test_holds
+			test_holds,
+			test_holds_successively
 		end
 
 feature -- Test routines (All)
@@ -45,6 +46,15 @@ feature -- Test routines (Relationship)
 			-- <Precursor>
 		note
 			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds"
+		do
+			Precursor {STST_OBJECT_DEEP_EQUALITY_TESTS}
+		end
+
+	test_holds_successively
+			-- <Precursor>
+		note
+			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
+			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds_successively"
 		do
 			Precursor {STST_OBJECT_DEEP_EQUALITY_TESTS}
 		end

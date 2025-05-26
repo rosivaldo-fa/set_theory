@@ -9,12 +9,13 @@ deferred class
 
 inherit
 	EQUALITY_TESTS [G]
-		undefine
-			holds_successively_ok
+		rename
+			holds_successively_ok as eq_holds_successively_ok
 		redefine
 			test_holds,
 			test_holds_successively
 		end
+
 	OBJECT_EQUALITY_PROPERTIES [G]
 
 feature -- Test routines (Relationship)

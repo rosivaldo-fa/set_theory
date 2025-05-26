@@ -9,6 +9,9 @@ deferred class
 
 inherit
 	EQUALITY_PROPERTIES [G]
+		rename
+			holds_successively_ok as eq_holds_successively_ok
+		end
 
 feature -- Properties (Relationship)
 
@@ -17,6 +20,17 @@ feature -- Properties (Relationship)
 		do
 			check
 				consistent: {STS_OBJECT_STANDARD_EQUALITY [G]}.holds (a, b) implies eq (a, b)
+			then
+				Result := True
+			end
+		end
+
+	holds_successively_ok (a, b, c: G; eq: STS_OBJECT_DEEP_EQUALITY [G]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_OBJECT_DEEP_EQUALITY}.holds_successively?
+		do
+			check
+				precursor_holds: eq_holds_successively_ok (a, b, c, eq)
+				consistent: {STS_OBJECT_STANDARD_EQUALITY [G]}.holds_successively (a, b, c) implies eq.holds_successively (a, b, c)
 			then
 				Result := True
 			end

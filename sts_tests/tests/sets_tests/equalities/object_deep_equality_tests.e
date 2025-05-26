@@ -9,8 +9,11 @@ deferred class
 
 inherit
 	EQUALITY_TESTS [G]
+		rename
+			holds_successively_ok as eq_holds_successively_ok
 		redefine
-			test_holds
+			test_holds,
+			test_holds_successively
 		end
 
 	OBJECT_DEEP_EQUALITY_PROPERTIES [G]
@@ -49,21 +52,45 @@ feature -- Test routines (Relationship)
 			assert ("not (a1 ≡≡≡ a2)", not eq (a1, a2))
 		end
 
---feature -- Factory (Object)
+	test_holds_successively
+			-- Test {STS_INSTANCE_FREE_EQUALITY}.holds_successively.
+			-- Test {STS_OBJECT_DEEP_EQUALITY}.holds_successively.
+		note
+			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
+			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds_successively"
+		local
+			eq: like equality_to_be_tested
+			a1, a2, a3: G
+		do
+			Precursor {EQUALITY_TESTS}
 
---	same_object_g (a: G): G
---			-- Randomly-fetched object like {G}
---		do
---			inspect
---				next_random_item \\ 3
---			when 0 then
---				Result := a
---			when 1 then
---				Result := object_standard_twin_g (a)
---			when 2 then
---				Result := object_deep_twin_g (a)
---			end
---		end
+			eq := equality_to_be_tested
+			a1 := some_object_g
+			a2 := object_deep_twin_g (a1)
+			a3 := object_deep_twin_g (a2)
+			assert ("a1 ≡≡≡ a2 ≡≡≡ a3", eq.holds_successively (a1, a2, a3))
+			assert ("a1 ≡≡≡ a2 ≡≡≡ a3 ok", holds_successively_ok (a1, a2, a3, eq))
+
+			from
+				a2 := some_object_g
+				a3 := some_object_g
+			until (
+					agent (ia_a1, ia_a2, ia_a3: G): BOOLEAN
+						do
+							Result := if attached ia_a1 then
+									not (attached ia_a2 and attached ia_a3) or else not (ia_a1 ≡≡≡ ia_a2 and ia_a2 ≡≡≡ ia_a3)
+								else
+									attached ia_a2 or attached ia_a3
+								end
+						end
+				).item (a1, a2, a3)
+			loop
+				a2 := some_object_g
+				a3 := some_object_g
+			end
+			assert ("not (a1 ≡≡≡ a2 ≡≡≡ a3)", not eq.holds_successively (a1, a2, a3))
+			assert ("not (a1 ≡≡≡ a2 ≡≡≡ a3) ok", holds_successively_ok (a1, a2, a3, eq))
+		end
 
 feature -- Factory (Equality)
 

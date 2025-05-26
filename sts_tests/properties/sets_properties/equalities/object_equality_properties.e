@@ -9,8 +9,8 @@ deferred class
 
 inherit
 	EQUALITY_PROPERTIES [G]
-		redefine
-			holds_successively_ok
+		rename
+			holds_successively_ok as eq_holds_successively_ok
 		end
 
 feature -- Properties (Relationship)
@@ -29,7 +29,7 @@ feature -- Properties (Relationship)
 			-- Do the properties verified within set theory hold for {STS_OBJECT_EQUALITY}.holds_successively?
 		do
 			check
-				precursor_holds: Precursor (a, b, c, eq)
+				precursor_holds: eq_holds_successively_ok (a, b, c, eq)
 				consistent: {STS_OBJECT_STANDARD_EQUALITY [G]}.holds_successively (a, b, c) implies eq.holds_successively (a, b, c)
 			then
 				Result := True
