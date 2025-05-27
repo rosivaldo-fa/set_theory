@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Test suite for {STI_SET [detachable separate CHARACTER_REF]}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -17,8 +17,8 @@ inherit
 		undefine
 			default_create
 		redefine
-			test_all
---			test_is_in
+			test_all,
+			test_has
 		end
 
 	ELEMENT_TESTS
@@ -30,7 +30,6 @@ inherit
 			some_element
 		redefine
 			test_all
---			test_is_in
 		end
 
 feature -- Test routines (All)
@@ -43,17 +42,15 @@ feature -- Test routines (All)
 			Precursor {STST_SET_TESTS}
 		end
 
---feature -- Test routines (Membership)
+feature -- Test routines (Membership)
 
---	test_is_in
---			-- <Precursor>
---		note
---			testing: "covers/{STS_ELEMENT}.is_in"
---			testing: "covers/{STS_SET}.is_in"
---			testing: "covers/{SET}.is_in"
---		do
---			Precursor {STST_SET_TESTS}
---		end
+	test_has
+			-- Test {STI_SET}.has.
+		note
+			testing: "covers/{STI_SET}.has"
+		do
+			Precursor {STST_SET_TESTS}
+		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

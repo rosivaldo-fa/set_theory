@@ -179,9 +179,15 @@ feature -- Factory (Equality)
 			-- Randomly-fetched polymorphic equality for comparing {detachable separate CHARACTER_REF} instances
 		do
 			inspect
-				next_random_item \\ 1
+				next_random_item \\ 4
 			when 0 then
 				Result := some_reference_equality_dscr
+			when 1 then
+				Result := some_object_standard_equality_dscr
+			when 2 then
+				Result := some_object_equality_dscr
+			when 3 then
+				Result := some_object_deep_equality_dscr
 			end
 		end
 
