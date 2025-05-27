@@ -59,11 +59,7 @@ feature -- Factory (Element)
 	some_element: STS_ELEMENT
 			-- Randomly-fetched polymorphic element
 		do
-			inspect
-				next_random_item \\ 1
-			when 0 then
-				Result := some_immediate_element
-			end
+			Result := some_immediate_element
 		end
 
 	some_immediate_element: like some_element

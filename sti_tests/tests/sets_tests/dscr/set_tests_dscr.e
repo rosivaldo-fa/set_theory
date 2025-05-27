@@ -26,7 +26,8 @@ inherit
 			element_to_be_tested as set_to_be_tested
 		undefine
 			test_is_in,
-			set_to_be_tested
+			set_to_be_tested,
+			some_element
 		redefine
 			test_all
 --			test_is_in

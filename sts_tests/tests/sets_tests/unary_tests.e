@@ -9,6 +9,9 @@ deferred class
 
 inherit
 	ELEMENT_TESTS
+		redefine
+			some_element
+		end
 
 feature -- Factory (Object)
 
@@ -61,12 +64,95 @@ feature -- Factory (Object)
 			detached_a: not attached a ⇒ not attached Result
 		end
 
+feature -- Factory (Element)
+
+	some_element: STS_ELEMENT
+			-- Randomly-fetched polymorphic element
+		do
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				Result := Precursor {ELEMENT_TESTS}
+			when 1 then
+				Result := some_equality_g
+			when 2 then
+				Result := some_set_g
+			end
+		end
+
+feature -- Factory (Equality)
+
+	some_equality_g: STS_EQUALITY [G]
+			-- Randomly-fetched polymorphic equality for comparing objects like {G}
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_reference_equality_g
+			when 1 then
+				Result := some_object_standard_equality_g
+			when 2 then
+				Result := some_object_equality_g
+			when 3 then
+				Result := some_object_deep_equality_g
+			end
+		end
+
+	some_reference_equality_g: STS_REFERENCE_EQUALITY [G]
+			-- Randomly-fetched instance of {STS_REFERENCE_EQUALITY [G]}
+		do
+			check
+				eq: attached {STS_REFERENCE_EQUALITY [G]} some_immediate_instance
+						(agent: STS_REFERENCE_EQUALITY [G] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [G]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_standard_equality_g: STS_OBJECT_STANDARD_EQUALITY [G]
+			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [G]}
+		do
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [G]} some_immediate_instance
+						(agent: STS_OBJECT_STANDARD_EQUALITY [G] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [G]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_equality_g: STS_OBJECT_EQUALITY [G]
+			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [G]}
+		do
+			check
+				eq: attached {STS_OBJECT_EQUALITY [G]} some_immediate_instance
+						(agent: STS_OBJECT_EQUALITY [G] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [G]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_deep_equality_g: STS_OBJECT_DEEP_EQUALITY [G]
+			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [G]}
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [G]} some_immediate_instance
+						(agent: STS_OBJECT_DEEP_EQUALITY [G] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [G]}
+			then
+				Result := eq
+			end
+		end
+
 feature -- Factory (Set)
 
---	some_set_g: STS_SET [G]
---			-- Randomly-fetched polymorphic set of elements like {G}, whose equality is checked by {EQ}
---		deferred
---		end
+	some_set_g: STS_SET [G]
+			-- Randomly-fetched polymorphic set of elements like {G}, whose equality is checked by {EQ}
+		do
+			Result := some_immediate_set_g
+		end
 
 	some_immediate_set_g: STS_SET [G]
 			-- Some monomorphic set of elements like {G}

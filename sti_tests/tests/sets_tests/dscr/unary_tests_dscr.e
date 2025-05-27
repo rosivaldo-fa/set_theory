@@ -19,7 +19,8 @@ inherit
 	ELEMENT_TESTS
 		undefine
 			test_all,
-			test_is_in
+			test_is_in,
+			some_element
 		end
 
 note
