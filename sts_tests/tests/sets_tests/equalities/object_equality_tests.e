@@ -79,22 +79,6 @@ feature -- Test routines (Relationship)
 			assert ("not (a1 ~ a2 ~ a3) ok", holds_successively_ok (a1, a2, a3, eq))
 		end
 
-feature -- Factory (Object)
-
-	same_object_g (a: G): G
-			-- Randomly-fetched object like {G}
-		do
-			inspect
-				next_random_item \\ 3
-			when 0 then
-				Result := a
-			when 1 then
-				Result := object_standard_twin_g (a)
-			when 2 then
-				Result := object_twin_g (a)
-			end
-		end
-
 feature -- Factory (Equality)
 
 	some_immediate_equality_g: STS_OBJECT_EQUALITY [G]

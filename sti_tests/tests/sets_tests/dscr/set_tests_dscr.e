@@ -18,7 +18,8 @@ inherit
 			default_create
 		redefine
 			test_all,
-			test_has
+			test_has,
+			test_extended
 		end
 
 	ELEMENT_TESTS
@@ -48,6 +49,16 @@ feature -- Test routines (Membership)
 			-- Test {STI_SET}.has.
 		note
 			testing: "covers/{STI_SET}.has"
+		do
+			Precursor {STST_SET_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {STI_SET}.extended.
+		note
+			testing: "covers/{STI_SET}.extended"
 		do
 			Precursor {STST_SET_TESTS}
 		end

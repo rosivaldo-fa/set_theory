@@ -87,20 +87,6 @@ feature -- Test routines (Relationship)
 			assert ("not (a1 ≜ a2 ≜ a3) ok", holds_successively_ok (a1, a2, a3, eq))
 		end
 
-feature -- Factory (Object)
-
-	same_object_g (a: G): G
-			-- Randomly-fetched object like {G}
-		do
-			inspect
-				next_random_item \\ 2
-			when 0 then
-				Result := a
-			when 1 then
-				Result := object_standard_twin_g (a)
-			end
-		end
-
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

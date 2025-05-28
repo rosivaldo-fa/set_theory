@@ -64,6 +64,31 @@ feature -- Factory (Object)
 			detached_a: not attached a ⇒ not attached Result
 		end
 
+	same_object_g (a: G; eq: STS_EQUALITY [G]): G
+			-- Randomly-fetched object equal to `a' according to `eq'
+		do
+			Result := a
+			if next_random_item \\ 2 = 0 then
+				if {ISE_RUNTIME}.type_conforms_to (eq.generating_type.type_id, ({STS_OBJECT_STANDARD_EQUALITY [G]}).type_id) then
+					Result := object_standard_twin_g (a)
+				elseif {ISE_RUNTIME}.type_conforms_to (eq.generating_type.type_id, ({STS_OBJECT_EQUALITY [G]}).type_id) then
+					Result := object_twin_g (a)
+				elseif {ISE_RUNTIME}.type_conforms_to (eq.generating_type.type_id, ({STS_OBJECT_DEEP_EQUALITY [G]}).type_id) then
+					Result := object_deep_twin_g (a)
+				end
+			end
+		ensure
+			when_detached_a: not attached a ⇒ a = Result
+			when_object_standard_equality: attached a and
+				{ISE_RUNTIME}.type_conforms_to (eq.generating_type.type_id, ({STS_OBJECT_STANDARD_EQUALITY [G]}).type_id) ⇒
+				attached Result and then a ≜ Result
+			when_object_equality: attached a and
+				{ISE_RUNTIME}.type_conforms_to (eq.generating_type.type_id, ({STS_OBJECT_EQUALITY [G]}).type_id) ⇒ a ~ Result
+			when_object_deep_equality: attached a and
+				{ISE_RUNTIME}.type_conforms_to (eq.generating_type.type_id, ({STS_OBJECT_DEEP_EQUALITY [G]}).type_id) ⇒
+				attached Result and then a ≡≡≡ Result
+		end
+
 feature -- Factory (Element)
 
 	some_element: STS_ELEMENT

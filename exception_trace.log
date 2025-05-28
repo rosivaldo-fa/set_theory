@@ -87,3 +87,7 @@ APPLICATION         reproduce_bugs @1
 APPLICATION         root's creation                                     
 <0000000004A89098>                         Routine failure.              Exit
 -------------------------------------------------------------------------------
+Catcall detected in {TYPE}.is_conforming_to for arg#1: expected TYPE [OBJECT_EQUALITY [separate CHARACTER_8_REF]] but got TYPE [!OBJECT_STANDARD_EQUALITY [separate CHARACTER_8_REF]]
+Catcall detected in {TYPE}.is_conforming_to for arg#1: expected TYPE [OBJECT_EQUALITY [separate CHARACTER_8_REF]] but got TYPE [!OBJECT_DEEP_EQUALITY [separate CHARACTER_8_REF]]
+Catcall detected in {TYPE}.is_conforming_to for arg#1: expected TYPE [OBJECT_STANDARD_EQUALITY [separate CHARACTER_8_REF]] but got TYPE [!OBJECT_EQUALITY [separate CHARACTER_8_REF]]
+Catcall detected in {TYPE}.is_conforming_to for arg#1: expected TYPE [OBJECT_STANDARD_EQUALITY [separate CHARACTER_8_REF]] but got TYPE [!OBJECT_DEEP_EQUALITY [separate CHARACTER_8_REF]]

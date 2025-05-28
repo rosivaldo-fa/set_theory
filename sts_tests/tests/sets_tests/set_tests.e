@@ -25,6 +25,7 @@ feature -- Test routines (All)
 		do
 			Precursor {UNARY_TESTS}
 			test_has
+			test_extended
 		end
 
 feature -- Test routines (Membership)
@@ -40,6 +41,24 @@ feature -- Test routines (Membership)
 			a := some_object_g
 			s := set_to_be_tested
 			assert ("has", s ∋ a ⇒ True)
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {STS_SET}.extended.
+		note
+			testing: "covers/{STS_SET}.extended"
+		local
+			s: like set_to_be_tested
+			a, b, c: G
+			eq: like some_equality_g
+		do
+			s := set_to_be_tested
+			a := some_object_g
+			eq := some_equality_g
+			s := s.extended (same_object_g (a, eq), eq)
+			assert ("{a, ...}", s ∋ a)
 		end
 
 feature {NONE} -- Factory (element to be tested)
