@@ -49,6 +49,22 @@ feature -- Construction
 			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
 
+	prunned (a: G): like subset_anchor
+			-- <Precursor>
+		do
+			if not attached eq then
+				Result := Current
+			elseif eq (a, given_element) then
+				Result := subset.prunned (a)
+			else
+				Result := subset.prunned (a).extended (given_element, eq)
+			end
+		ensure then
+			when_empty: not attached eq ⇒ Result = Current -- TODO: Use set equality instead.
+--			when_found: attached eq and then eq (a, given_element) ⇒ Result ≍ subset.prunned (a)
+--			when_not_found: attached eq and then not eq (a, given_element) ⇒ Result ≍ subset.prunned (a).extended (given_element, eq)
+		end
+
 feature -- Anchor
 
 	subset_anchor,

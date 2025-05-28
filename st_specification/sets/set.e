@@ -38,6 +38,13 @@ feature -- Construction
 			has_a: Result ∋ a
 		end
 
+	prunned (a: G): like subset_anchor
+			-- Set with every element of current set but any element regarded equal to `a'
+		deferred
+		ensure
+			does_not_have_a: Result ∌ a
+		end
+
 feature -- Anchor
 
 	subset_anchor: SET [G]

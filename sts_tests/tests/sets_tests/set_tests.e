@@ -27,6 +27,7 @@ feature -- Test routines (All)
 			test_has
 			test_does_not_have
 			test_extended
+			test_prunned
 		end
 
 feature -- Test routines (Membership)
@@ -73,6 +74,20 @@ feature -- Test routines (Construction)
 			eq := some_equality_g
 			s := s.extended (same_object_g (a, eq), eq)
 			assert ("{a, ...}", s ∋ a)
+		end
+
+	test_prunned
+			-- Test {STS_SET}.prunned.
+		note
+			testing: "covers/{STS_SET}.prunned"
+		local
+			s: like set_to_be_tested
+			a: G
+		do
+			s := set_to_be_tested
+			a := some_object_g
+			s := s.prunned (a)
+			assert (" s ∖ {a}", s ∌ a)
 		end
 
 feature {NONE} -- Factory (element to be tested)

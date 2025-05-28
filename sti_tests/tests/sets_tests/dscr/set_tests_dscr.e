@@ -20,7 +20,8 @@ inherit
 			test_all,
 			test_has,
 			test_does_not_have,
-			test_extended
+			test_extended,
+			test_prunned
 		end
 
 	ELEMENT_TESTS
@@ -70,6 +71,14 @@ feature -- Test routines (Construction)
 			-- Test {STI_SET}.extended.
 		note
 			testing: "covers/{STI_SET}.extended"
+		do
+			Precursor {STST_SET_TESTS}
+		end
+
+	test_prunned
+			-- Test {STI_SET}.prunned.
+		note
+			testing: "covers/{STI_SET}.prunned"
 		do
 			Precursor {STST_SET_TESTS}
 		end
