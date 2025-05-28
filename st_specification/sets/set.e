@@ -21,6 +21,14 @@ feature -- Membership
 		deferred
 		end
 
+	does_not_have alias "∌" (a: G): BOOLEAN
+			-- Does not current set have `a'?
+		do
+			Result := not (Current ∋ a)
+		ensure
+			definition: Result = not (Current ∋ a)
+		end
+
 feature -- Construction
 
 	extended (a: G; eq: EQUALITY [G]): like superset_anchor

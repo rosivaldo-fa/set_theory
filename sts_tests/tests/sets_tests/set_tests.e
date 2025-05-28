@@ -25,6 +25,7 @@ feature -- Test routines (All)
 		do
 			Precursor {UNARY_TESTS}
 			test_has
+			test_does_not_have
 			test_extended
 		end
 
@@ -43,6 +44,19 @@ feature -- Test routines (Membership)
 			assert ("has", s ∋ a ⇒ True)
 		end
 
+	test_does_not_have
+			-- Test {STS_SET}.does_not_have.
+		note
+			testing: "covers/{STS_SET}.does_not_have"
+		local
+			a: G
+			s: like set_to_be_tested
+		do
+			a := some_object_g
+			s := set_to_be_tested
+			assert ("does_not_have", s ∌ a ⇒ True)
+		end
+
 feature -- Test routines (Construction)
 
 	test_extended
@@ -51,7 +65,7 @@ feature -- Test routines (Construction)
 			testing: "covers/{STS_SET}.extended"
 		local
 			s: like set_to_be_tested
-			a, b, c: G
+			a: G
 			eq: like some_equality_g
 		do
 			s := set_to_be_tested

@@ -19,6 +19,7 @@ inherit
 		redefine
 			test_all,
 			test_has,
+			test_does_not_have,
 			test_extended
 		end
 
@@ -49,6 +50,16 @@ feature -- Test routines (Membership)
 			-- Test {STI_SET}.has.
 		note
 			testing: "covers/{STI_SET}.has"
+		do
+			Precursor {STST_SET_TESTS}
+		end
+
+	test_does_not_have
+			-- <Precursor>
+			-- Test {STI_SET}.does_not_have.
+		note
+			testing: "covers/{STS_SET}.does_not_have"
+			testing: "covers/{STI_SET}.does_not_have"
 		do
 			Precursor {STST_SET_TESTS}
 		end
