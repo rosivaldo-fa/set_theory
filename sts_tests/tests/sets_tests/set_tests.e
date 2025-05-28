@@ -12,20 +12,20 @@ inherit
 		rename
 			element_to_be_tested as set_to_be_tested
 		redefine
---			test_all,
+			test_all,
 			set_to_be_tested
 		end
 
---feature -- Test routines (All)
+feature -- Test routines (All)
 
---	test_all
---			-- Test every routine of {STS_SET}.
---		note
---			testing: "covers/{STS_SET}"
---		do
---			Precursor {UNARY_TESTS}
---			test_has
---		end
+	test_all
+			-- Test every routine of {STS_SET}.
+		note
+			testing: "covers/{STS_SET}"
+		do
+			Precursor {UNARY_TESTS}
+			test_has
+		end
 
 feature -- Test routines (Membership)
 
