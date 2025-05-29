@@ -87,7 +87,7 @@ feature -- Test routines (Construction)
 			s := set_to_be_tested
 			a := some_object_g
 			s := s.prunned (a)
-			assert (" s ∖ {a}", s ∌ a)
+			assert ("s ∖ {a}", s ∌ a)
 		end
 
 feature {NONE} -- Factory (element to be tested)

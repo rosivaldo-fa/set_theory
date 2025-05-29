@@ -71,8 +71,23 @@ feature -- Test routines (Construction)
 			-- Test {STI_SET}.extended.
 		note
 			testing: "covers/{STI_SET}.extended"
+		local
+			a: detachable separate CHARACTER_REF
+			s: STI_SET [detachable separate CHARACTER_REF]
+			ref_eq: like some_reference_equality_g
 		do
 			Precursor {STST_SET_TESTS}
+			if next_random_item \\ 2 = 0 then
+				a := some_immediate_separate_character_ref
+			else
+				a := some_immediate_character_ref
+			end
+			create s
+			ref_eq := some_reference_equality_g
+			s := s.extended (object_standard_twin_g (a), ref_eq)
+			s := s.extended (object_twin_g (a), ref_eq)
+			s := s.extended (object_deep_twin_g (a), ref_eq)
+			assert ("Beware equalities!", s ∌ a)
 		end
 
 	test_prunned
