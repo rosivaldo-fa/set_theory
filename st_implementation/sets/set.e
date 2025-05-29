@@ -9,6 +9,16 @@ class
 
 inherit
 	STS_SET [G]
+		redefine
+			out
+		end
+
+	DEBUG_OUTPUT
+		rename
+			debug_output as out
+		redefine
+			out
+		end
 
 create
 	default_create,
@@ -63,6 +73,56 @@ feature -- Construction
 			when_empty: not attached eq ⇒ Result = Current -- TODO: Use set equality instead.
 --			when_found: attached eq and then eq (a, given_element) ⇒ Result ≍ subset.prunned (a)
 --			when_not_found: attached eq and then not eq (a, given_element) ⇒ Result ≍ subset.prunned (a).extended (given_element, eq)
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		local
+			s: SET [G]
+		do
+			Result := "{"
+			if Current /= subset then
+				from
+					Result.append (element_out (given_element))
+					s := subset
+				invariant
+--					building_up: Result ~ {TRANSFORMER [A, STRING, EQ, STS_OBJECT_EQUALITY [STRING]]}.tuple_indexed_left_reduction (right_trimmed (s.n), "", 1, agent appending_term_out)
+				until
+					Current = subset
+				loop
+					Result.append_character (',')
+					check
+						other_arguments_not_void: element_out (s.given_element) /= Void -- `element_out' definition
+					end
+					Result.append (element_out (s.given_element))
+					s := s.subset
+--				variant
+--					n: natural_as_integer (# s)
+				end
+			end
+			Result.append_character ('}')
+		ensure then
+			base: Current = subset ⇒ Result ~ "{}"
+			induction: Current /= subset ⇒ Result ~ "{" + element_out (given_element) + "," + subset.out.substring (2, subset.out.count)
+		end
+
+	element_out (a: G): STRING
+			-- Terse printable representation of `a'
+		do
+			if attached a then
+				check
+					other_not_void: a.out /= Void -- {ANY}.out definition
+				end
+				create Result.make_from_separate (a.out)
+			else
+				Result := "Void"
+			end
+		ensure
+			class
+			when_attached: attached a ⇒ Result ~ a.out
+			when_detached: not attached a ⇒ Result ~ "Void"
 		end
 
 feature -- Anchor
