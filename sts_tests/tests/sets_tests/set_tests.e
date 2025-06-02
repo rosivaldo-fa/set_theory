@@ -17,6 +17,8 @@ inherit
 			set_to_be_tested
 		end
 
+	SET_PROPERTIES [G]
+
 feature -- Test routines (All)
 
 	test_all
@@ -28,6 +30,7 @@ feature -- Test routines (All)
 			test_has
 			test_does_not_have
 			test_is_in
+			test_is_not_in
 			test_extended
 			test_prunned
 		end
@@ -77,6 +80,28 @@ feature -- Test routines (Membership)
 
 			ss := some_set_sg
 			assert ("is_in", s ∈ ss ⇒ True)
+		end
+
+	test_is_not_in
+			-- Test {STS_SET}.is_not_in.
+		note
+			testing: "covers/{STS_SET}.is_not_in"
+		local
+			s: like set_to_be_tested
+			ss: like some_set_sg
+		do
+			s := set_to_be_tested
+			ss := some_set_sg.prunned (s)
+			assert ("s ∉ ss", s ∉ ss)
+			assert ("s ∉ ss ok", is_not_in_ok (s, ss))
+
+			ss := some_set_sg.extended (s, some_equality_sg)
+			assert ("not (s ∉ ss)", not (s ∉ ss))
+			assert ("not (s ∉ ss) ok", is_not_in_ok (s, ss))
+
+			ss := some_set_sg
+			assert ("is_not_in", s ∉ ss ⇒ True)
+			assert ("is_not_in_ok", is_not_in_ok (s, ss))
 		end
 
 feature -- Test routines (Construction)

@@ -22,6 +22,7 @@ inherit
 			test_has,
 			test_does_not_have,
 			test_is_in,
+			test_is_not_in,
 			test_extended,
 			test_prunned,
 			test_out,
@@ -64,6 +65,16 @@ feature -- Test routines (Membership)
 		note
 			testing: "covers/{STS_SET}.is_in"
 			testing: "covers/{STI_SET}.is_in"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_is_not_in
+			-- <Precursor>
+			-- Test {STI_SET}.is_in.
+		note
+			testing: "covers/{STS_SET}.is_not_in"
+			testing: "covers/{STI_SET}.is_not_in"
 		do
 			Precursor {SET_TESTS}
 		end

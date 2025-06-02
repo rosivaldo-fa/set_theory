@@ -40,6 +40,14 @@ feature -- Membership
 			definition: Result = s ∋ Current
 		end
 
+	is_not_in alias "∉" (s: SET [SET [G]]): BOOLEAN
+			-- Is not current set in `s'?
+		do
+			Result := not (Current ∈ s)
+		ensure
+			definition: Result = not (Current ∈ s)
+		end
+
 feature -- Construction
 
 	extended (a: G; eq: EQUALITY [G]): like superset_anchor
