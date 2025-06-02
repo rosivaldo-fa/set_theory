@@ -17,9 +17,10 @@ inherit
 
 	ELEMENT_TESTS
 		rename
+			test_is_in as test_element_is_in,
 			element_to_be_tested as set_to_be_tested
 		undefine
-			test_is_in,
+			test_element_is_in,
 			set_to_be_tested,
 			some_element
 		redefine
@@ -83,6 +84,11 @@ feature -- Test routines (Output)
 feature -- Factory (Set)
 
 	some_immediate_set_g: STI_SET [G]
+			-- <Precursor>
+		deferred
+		end
+
+	some_immediate_set_sg: STI_SET [STS_SET [G]]
 			-- <Precursor>
 		deferred
 		end

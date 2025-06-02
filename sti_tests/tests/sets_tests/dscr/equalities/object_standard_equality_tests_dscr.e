@@ -13,7 +13,8 @@ inherit
 		rename
 			some_object_g as some_separate_character_ref,
 			some_immediate_equality_g as some_object_standard_equality_dscr,
-			some_immediate_set_g as some_immediate_set_dscr
+			some_immediate_set_g as some_immediate_set_dscr,
+			some_immediate_set_sg as some_immediate_set_sdscr
 		undefine
 			default_create,
 			test_is_in

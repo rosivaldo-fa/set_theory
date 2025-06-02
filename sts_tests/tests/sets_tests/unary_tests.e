@@ -171,6 +171,71 @@ feature -- Factory (Equality)
 			end
 		end
 
+	some_equality_sg: STS_EQUALITY [STS_SET [G]]
+			-- Randomly-fetched polymorphic equality for comparing sets of objects like {G}
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_reference_equality_sg
+			when 1 then
+				Result := some_object_standard_equality_sg
+			when 2 then
+				Result := some_object_equality_sg
+			when 3 then
+				Result := some_object_deep_equality_sg
+					-- TODO: Add set equality
+			end
+		end
+
+	some_reference_equality_sg: STS_REFERENCE_EQUALITY [STS_SET [G]]
+			-- Randomly-fetched instance of {STS_REFERENCE_EQUALITY [STS_SET [G]]}
+		do
+			check
+				eq: attached {STS_REFERENCE_EQUALITY [STS_SET [G]]} some_immediate_instance
+						(agent: STS_REFERENCE_EQUALITY [STS_SET [G]] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [STS_SET [G]]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_standard_equality_sg: STS_OBJECT_STANDARD_EQUALITY [STS_SET [G]]
+			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [STS_SET [G]]}
+		do
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [STS_SET [G]]} some_immediate_instance
+						(agent: STS_OBJECT_STANDARD_EQUALITY [STS_SET [G]] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [STS_SET [G]]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_equality_sg: STS_OBJECT_EQUALITY [STS_SET [G]]
+			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [STS_SET [G]]}
+		do
+			check
+				eq: attached {STS_OBJECT_EQUALITY [STS_SET [G]]} some_immediate_instance
+						(agent: STS_OBJECT_EQUALITY [STS_SET [G]] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [STS_SET [G]]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_deep_equality_sg: STS_OBJECT_DEEP_EQUALITY [STS_SET [G]]
+			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [STS_SET [G]]}
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [STS_SET [G]]} some_immediate_instance
+						(agent: STS_OBJECT_DEEP_EQUALITY [STS_SET [G]] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [STS_SET [G]]}
+			then
+				Result := eq
+			end
+		end
+
 feature -- Factory (Set)
 
 	some_set_g: STS_SET [G]
@@ -180,10 +245,23 @@ feature -- Factory (Set)
 		end
 
 	some_immediate_set_g: STS_SET [G]
-			-- Some monomorphic set of elements like {G}
+			-- Randomly-fetched monomorphic set of elements like {G}
 		deferred
 		ensure
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_g}
+		end
+
+	some_set_sg: STS_SET [STS_SET [G]]
+			-- Randomly-fetched polymorphic set of sets of elements like {G}
+		do
+			Result := some_immediate_set_sg
+		end
+
+	some_immediate_set_sg: STS_SET [STS_SET [G]]
+			-- Randomly-fetched monomorphic set of sets of elements like {G}
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_sg}
 		end
 
 note
@@ -193,4 +271,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

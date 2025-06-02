@@ -11,7 +11,8 @@ inherit
 	STST_UNARY_TESTS [detachable separate CHARACTER_REF]
 		rename
 			some_object_g as some_separate_character_ref,
-			some_immediate_set_g as some_immediate_set_dscr
+			some_immediate_set_g as some_immediate_set_dscr,
+			some_immediate_set_sg as some_immediate_set_sdscr
 		undefine
 			default_create
 		end

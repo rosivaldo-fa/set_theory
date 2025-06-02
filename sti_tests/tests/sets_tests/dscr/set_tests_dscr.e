@@ -13,13 +13,15 @@ inherit
 		rename
 			some_object_g as some_separate_character_ref,
 --			some_set_g as some_set_dscr,
-			some_immediate_set_g as some_immediate_set_dscr
+			some_immediate_set_g as some_immediate_set_dscr,
+			some_immediate_set_sg as some_immediate_set_sdscr
 --		undefine
 --			default_create
 		redefine
 			test_all,
 			test_has,
 			test_does_not_have,
+			test_is_in,
 			test_extended,
 			test_prunned,
 			test_out,
@@ -52,6 +54,16 @@ feature -- Test routines (Membership)
 		note
 			testing: "covers/{STS_SET}.does_not_have"
 			testing: "covers/{STI_SET}.does_not_have"
+		do
+			Precursor {SET_TESTS}
+		end
+
+	test_is_in
+			-- <Precursor>
+			-- Test {STI_SET}.is_in.
+		note
+			testing: "covers/{STS_SET}.is_in"
+			testing: "covers/{STI_SET}.is_in"
 		do
 			Precursor {SET_TESTS}
 		end

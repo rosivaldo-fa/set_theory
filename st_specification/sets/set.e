@@ -13,6 +13,9 @@ deferred class
 
 inherit
 	ELEMENT
+		rename
+			is_in as element_is_in
+		end
 
 feature -- Membership
 
@@ -27,6 +30,14 @@ feature -- Membership
 			Result := not (Current ∋ a)
 		ensure
 			definition: Result = not (Current ∋ a)
+		end
+
+	is_in alias "∈" (s: SET [SET [G]]): BOOLEAN
+			-- Does `s` have current set?
+		do
+			Result := s ∋ Current
+		ensure
+			definition: Result = s ∋ Current
 		end
 
 feature -- Construction

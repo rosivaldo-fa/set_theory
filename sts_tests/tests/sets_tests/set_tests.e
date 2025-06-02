@@ -10,6 +10,7 @@ deferred class
 inherit
 	UNARY_TESTS [G]
 		rename
+			test_is_in as test_element_is_in,
 			element_to_be_tested as set_to_be_tested
 		redefine
 			test_all,
@@ -26,6 +27,7 @@ feature -- Test routines (All)
 			Precursor {UNARY_TESTS}
 			test_has
 			test_does_not_have
+			test_is_in
 			test_extended
 			test_prunned
 		end
@@ -56,6 +58,25 @@ feature -- Test routines (Membership)
 			a := some_object_g
 			s := set_to_be_tested
 			assert ("does_not_have", s ∌ a ⇒ True)
+		end
+
+	test_is_in
+			-- Test {STS_SET}.is_in.
+		note
+			testing: "covers/{STS_SET}.is_in"
+		local
+			s: like set_to_be_tested
+			ss: like some_set_sg
+		do
+			s := set_to_be_tested
+			ss := some_set_sg.extended (s, some_equality_sg)
+			assert ("s ∈ ss", s ∈ ss)
+
+			ss := some_set_sg.prunned (s)
+			assert ("not (s ∈ ss)", not (s ∈ ss))
+
+			ss := some_set_sg
+			assert ("is_in", s ∈ ss ⇒ True)
 		end
 
 feature -- Test routines (Construction)

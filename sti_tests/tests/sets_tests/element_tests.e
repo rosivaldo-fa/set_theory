@@ -239,6 +239,70 @@ feature -- Factory (Equality)
 			end
 		end
 
+	some_set_equality_dscr: STS_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]
+			-- Randomly-fetched polymorphic equality for comparing sets of {detachable separate CHARACTER_REF}
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_reference_set_equality_dscr
+			when 1 then
+				Result := some_object_standard_set_equality_dscr
+			when 2 then
+				Result := some_object_set_equality_dscr
+			when 3 then
+				Result := some_object_deep_set_equality_dscr
+			end
+		end
+
+	some_reference_set_equality_dscr: STS_REFERENCE_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]
+			-- Randomly-fetched instance of {STS_REFERENCE_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]}
+		do
+			check
+				eq: attached {STS_REFERENCE_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]} some_immediate_instance
+						(agent: STS_REFERENCE_EQUALITY [STS_SET [detachable separate CHARACTER_REF]] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_standard_set_equality_dscr: STS_OBJECT_STANDARD_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]
+			-- Randomly-fetched instance of {STS_OBJECT_STANDARD_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]}
+		do
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]} some_immediate_instance
+						(agent: STS_OBJECT_STANDARD_EQUALITY [STS_SET [detachable separate CHARACTER_REF]] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_set_equality_dscr: STS_OBJECT_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]
+			-- Randomly-fetched instance of {STS_OBJECT_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]}
+		do
+			check
+				eq: attached {STS_OBJECT_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]} some_immediate_instance
+						(agent: STS_OBJECT_EQUALITY [STS_SET [detachable separate CHARACTER_REF]] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_deep_set_equality_dscr: STS_OBJECT_DEEP_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]
+			-- Randomly-fetched instance of {STS_OBJECT_DEEP_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]}
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]} some_immediate_instance
+						(agent: STS_OBJECT_DEEP_EQUALITY [STS_SET [detachable separate CHARACTER_REF]] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [STS_SET [detachable separate CHARACTER_REF]]}
+			then
+				Result := eq
+			end
+		end
+
 feature -- Factory (Set)
 
 	some_set_dscr: STS_SET [detachable separate CHARACTER_REF]
@@ -275,6 +339,30 @@ feature -- Factory (Set)
 			monomorphic: Result.generating_type ~ {detachable STI_SET [detachable separate CHARACTER_REF]}
 		end
 
+	some_immediate_set_sdscr: STI_SET [STS_SET[detachable separate CHARACTER_REF]]
+			-- Randomly-fetched monomorphic set of sets of separate character references
+		do
+			check
+				sS: attached {STI_SET [STS_SET[detachable separate CHARACTER_REF]]} some_immediate_instance (
+							agent: STI_SET [STS_SET [detachable separate CHARACTER_REF]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result
+									loop
+										Result := Result.extended (some_set_dscr, some_set_equality_dscr)
+									end
+								end
+						) as ss -- `some_immediate_instance' definition
+				monomorphic: ss.generating_type ~ {detachable STI_SET [STS_SET[detachable separate CHARACTER_REF]]}
+			then
+				Result := cropped_set (ss)
+			end
+		ensure
+			monomorphic: Result.generating_type ~ {detachable STI_SET [STS_SET[detachable separate CHARACTER_REF]]}
+		end
+
 	cropped_set (s: STS_SET [detachable separate ANY]): like s
 			-- `s' striped from as many elements as necessary to keep its cardinality at most `Max_count'
 		local
@@ -298,52 +386,6 @@ feature -- Factory (Set)
 --			small_enough: # Result ≤ Max_count
 --			no_change: # s ≤ Max_count implies Result ≍ s
 --			cropped: Result ⊆ s
-		end
-
---	some_set_of_standard_objects_dscr: STS_SET [detachable separate CHARACTER_REF]
---			-- Randomly-fetched polymorphic set of separate character references
---		do
---			inspect
---				next_random_item \\ 1
---			when 0 then
---				Result := some_immediate_set_of_standard_objects_dscr
---			end
---		end
-
-	some_immediate_set_of_standard_objects_dscr: STI_SET [detachable separate CHARACTER_REF]
-			-- Randomly-fetched monomorphic set of separate character references
-		do
-			check
-				s: attached {STI_SET [detachable separate CHARACTER_REF]} some_immediate_instance (
-							agent: STI_SET [detachable separate CHARACTER_REF]
-								do
-									across
-										1 |..| some_count.as_integer_32 as i
-									from
-										create Result
-									loop
-										Result := Result.extended (some_separate_character_ref, some_equality_dscr)
-									end
-								end
-						) as s -- `some_immediate_instance' definition
-				monomorphic: s.generating_type ~ {detachable STI_SET [detachable separate CHARACTER_REF]}
-			then
-				Result := cropped_set (s)
-			end
-		ensure
-			monomorphic: Result.generating_type ~ {detachable STI_SET [detachable separate CHARACTER_REF]}
-		end
-
-	some_set_of_objects_dscr: STS_SET [detachable separate CHARACTER_REF]
-			-- Randomly-fetched polymorphic set of separate character references
-		do
-			inspect
-				next_random_item \\ 2
-			when 0 then
-				Result := some_immediate_set_of_standard_objects_dscr
-			when 1 then
-				Result := some_immediate_set_of_standard_objects_dscr
-			end
 		end
 
 note
