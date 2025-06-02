@@ -85,27 +85,30 @@ feature -- Output
 			Result := "{"
 			if Current /= subset then
 				from
+					check
+						given_element_not_void: element_out (given_element) /= Void -- `element_out' definition
+					end
 					Result.append (element_out (given_element))
 					s := subset
 				invariant
---					building_up: Result ~ {TRANSFORMER [A, STRING, EQ, STS_OBJECT_EQUALITY [STRING]]}.tuple_indexed_left_reduction (right_trimmed (s.n), "", 1, agent appending_term_out)
+					building_up: -- TODO
 				until
-					Current = subset
+					s = s.subset
 				loop
 					Result.append_character (',')
 					check
-						other_arguments_not_void: element_out (s.given_element) /= Void -- `element_out' definition
+						s_given_element_not_void: element_out (s.given_element) /= Void -- `element_out' definition
 					end
 					Result.append (element_out (s.given_element))
 					s := s.subset
---				variant
---					n: natural_as_integer (# s)
+--				variant -- TODO
 				end
 			end
 			Result.append_character ('}')
 		ensure then
-			base: Current = subset ⇒ Result ~ "{}"
-			induction: Current /= subset ⇒ Result ~ "{" + element_out (given_element) + "," + subset.out.substring (2, subset.out.count)
+			when_empty: Current = subset ⇒ Result ~ "{}"
+			when_singleton: Current /= subset and subset = subset.subset ⇒ Result ~ "{" + element_out (given_element) + "}"
+			induction: Current /= subset and subset /= subset.subset ⇒ Result ~ "{" + element_out (given_element) + "," + subset.out.substring (2, subset.out.count)
 		end
 
 	element_out (a: G): STRING

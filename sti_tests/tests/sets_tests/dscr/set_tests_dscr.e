@@ -22,6 +22,7 @@ inherit
 			test_does_not_have,
 			test_extended,
 			test_prunned,
+			test_out,
 			test_element_out
 		end
 
@@ -89,6 +90,14 @@ feature -- Test routines (Construction)
 		end
 
 feature -- Test routines (Output)
+
+	test_out
+			-- <Precursor>
+		note
+			testing: "covers/{STI_SET}.out"
+		do
+			Precursor {SET_TESTS}
+		end
 
 	test_element_out
 			-- <Precursor>
