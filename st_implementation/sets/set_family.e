@@ -1,0 +1,51 @@
+note
+	description: "Implementation of {STS_SET_FAMILY}"
+	author: "Rosivaldo F Alves"
+	date: "$Date$"
+	revision: "$Revision$"
+
+class
+	SET_FAMILY [G]
+
+inherit
+	STS_SET_FAMILY [G]
+		undefine
+			out
+		end
+
+	SET [STS_SET [G]]
+		rename
+			given_element as given_set,
+			given_element_storage as given_set_storage,
+			subset as subfamily,
+			set_anchor as family_anchor,
+			subset_anchor as subfamily_anchor,
+			superset_anchor as superfamily_anchor
+		redefine
+			family_anchor,
+			subfamily_anchor,
+			superfamily_anchor
+		end
+
+create
+	default_create,
+	make_extended
+
+feature -- Anchor
+
+	family_anchor,
+	subfamily_anchor,
+	superfamily_anchor: SET_FAMILY [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
+note
+	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	license: "[
+		Eiffel Forum License v2
+		(see https://www.eiffel.com/licensing/forum.txt)
+		]"
+	source: "https://github.com/rosivaldo-fa/set_theory"
+end

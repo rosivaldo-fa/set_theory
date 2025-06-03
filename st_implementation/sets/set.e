@@ -30,7 +30,7 @@ feature {NONE} -- Initialization
 			-- Create a set whose `given_element' element and `subset' are, respectively, `a' and `s'.
 		do
 			eq := a_eq
-			subset := s
+			subset := converted (s)
 			create given_element_storage.put (a)
 		ensure
 			attached_storage: attached given_element_storage
@@ -128,7 +128,43 @@ feature -- Output
 			when_detached: not attached a ⇒ Result ~ "Void"
 		end
 
+feature -- Conversion
+
+	converted (s: SET [G]): like set_anchor
+			-- `s' converted to a set like current one
+		local
+			l_s: SET [G]
+		do
+			if attached {like set_anchor} s as cs then
+				Result := cs
+			else
+				from
+					create Result
+					l_s := s
+				invariant
+	--				TODO
+				until
+					l_s = l_s.subset
+				loop
+					check
+						attached l_s.eq as l_s_eq -- l_s /= l_s.subset
+					then
+						Result := Result.extended (l_s.given_element, l_s_eq)
+					end
+					l_s := l_s.subset
+--				variant TODO
+--					cardinality: natural_as_integer (# l_s)
+				end
+			end
+		end
+
 feature -- Anchor
+
+	set_anchor: SET [G]
+			-- Anchor for sets like current set
+		do
+			Result := Current
+		end
 
 	subset_anchor,
 	superset_anchor: SET [G]
@@ -143,13 +179,13 @@ feature {SET} -- Implementation
 			-- An arbitrary element in current set
 		do
 			check
-				attached_stored_any: attached given_element_storage -- not `is_empty'
+				attached_given_element_storage: attached given_element_storage as ges -- not `is_empty'
 			then
-				Result := given_element_storage.item
+				Result := ges.item
 			end
 		ensure then
-			attached_stored_any: attached given_element_storage -- not `is_empty'
-			definition: Result ~ given_element_storage.item
+			attached_stored_any: attached given_element_storage as ges -- not `is_empty'
+			definition: Result ~ ges.item
 		end
 
 	subset: like subset_anchor

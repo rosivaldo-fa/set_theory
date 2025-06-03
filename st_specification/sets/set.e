@@ -22,6 +22,8 @@ feature -- Membership
 	has alias "∋" (a: G): BOOLEAN
 			-- Is `a' an element in current set?
 		deferred
+		ensure
+			universe_has_everything: attached is_universe as is_u and then is_u.item ⇒ Result
 		end
 
 	does_not_have alias "∌" (a: G): BOOLEAN
@@ -62,6 +64,14 @@ feature -- Construction
 		deferred
 		ensure
 			does_not_have_a: Result ∌ a
+		end
+
+feature -- Quality
+
+	is_universe: detachable BOOLEAN_REF
+			-- Is current set a universe, i.e., does it have every element of type {G}?
+			--| Detachable because it is not always knowable whether a set is a universe of not
+		do
 		end
 
 feature -- Anchor

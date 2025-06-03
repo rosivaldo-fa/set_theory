@@ -35,8 +35,19 @@ feature -- Test routines (All)
 			testing: "covers/{STI_SET}"
 		do
 			Precursor {STST_SET_TESTS}
+			test_make_extended
 			test_out
 			test_element_out
+		end
+
+feature -- Test routines (Initialization)
+
+	test_make_extended
+			-- Test {STI_SET}.make_extended.
+		note
+			testing: "covers/{STI_SET}.make_extended"
+		do
+			assert ("make_extended", attached (create {STI_SET [G]}.make_extended (some_object_g, some_equality_g, some_immediate_set_g)))
 		end
 
 feature -- Test routines (Output)

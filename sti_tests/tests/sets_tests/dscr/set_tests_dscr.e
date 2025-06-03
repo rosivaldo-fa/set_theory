@@ -19,6 +19,7 @@ inherit
 --			default_create
 		redefine
 			test_all,
+			test_make_extended,
 			test_has,
 			test_does_not_have,
 			test_is_in,
@@ -32,9 +33,19 @@ inherit
 feature -- Test routines (All)
 
 	test_all
-			-- Test every routine of {STI_SET}.
+			-- <Precursor>
 		note
 			testing: "covers/{STI_SET}"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Initialization)
+
+	test_make_extended
+			-- <Precursor>
+		note
+			testing: "covers/{STI_SET}.make_extended"
 		do
 			Precursor {SET_TESTS}
 		end
