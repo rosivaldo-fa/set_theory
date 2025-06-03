@@ -38,6 +38,7 @@ feature -- Test routines (All)
 			test_make_extended
 			test_out
 			test_element_out
+			test_converted
 		end
 
 feature -- Test routines (Initialization)
@@ -90,6 +91,16 @@ feature -- Test routines (Output)
 			a := some_object_g
 			s := set_to_be_tested
 			assert ("element_out", attached s.element_out (a))
+		end
+
+feature -- Test routines (Conversion)
+
+	test_converted
+			-- Test {STI_SET}.converted.
+		note
+			testing: "covers/{STI_SET}.converted"
+		do
+			assert ("converted", attached set_to_be_tested.converted (some_immediate_set_g))
 		end
 
 feature -- Factory (Set)

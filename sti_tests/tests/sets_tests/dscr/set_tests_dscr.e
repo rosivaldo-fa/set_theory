@@ -27,7 +27,8 @@ inherit
 			test_extended,
 			test_prunned,
 			test_out,
-			test_element_out
+			test_element_out,
+			test_converted
 		end
 
 feature -- Test routines (All)
@@ -137,6 +138,16 @@ feature -- Test routines (Output)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_SET}.element_out"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Conversion)
+
+	test_converted
+			-- <Precursor>
+		note
+			testing: "covers/{STI_SET}.converted"
 		do
 			Precursor {SET_TESTS}
 		end
