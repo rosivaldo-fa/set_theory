@@ -95,13 +95,15 @@ feature -- Factory (Element)
 			-- Randomly-fetched polymorphic element
 		do
 			inspect
-				next_random_item \\ 3
+				next_random_item \\ 4
 			when 0 then
 				Result := Precursor {ELEMENT_TESTS}
 			when 1 then
 				Result := some_equality_g
 			when 2 then
 				Result := some_set_g
+			when 3 then
+				Result := some_set_family_g
 			end
 		end
 
@@ -239,7 +241,7 @@ feature -- Factory (Equality)
 feature -- Factory (Set)
 
 	some_set_g: STS_SET [G]
-			-- Randomly-fetched polymorphic set of elements like {G}, whose equality is checked by {EQ}
+			-- Randomly-fetched polymorphic set of elements like {G}
 		do
 			Result := some_immediate_set_g
 		end
@@ -262,6 +264,44 @@ feature -- Factory (Set)
 		deferred
 		ensure
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_sg}
+		end
+
+	some_set_family_g: STS_SET_FAMILY [G]
+			-- Randomly-fetched polymorphic family of sets of elements like {G}
+		do
+			Result := some_immediate_set_family_g
+		end
+
+	some_immediate_set_family_g: STS_SET_FAMILY [G]
+			-- Randomly-fetched monomorphic family of sets of elements like {G}
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_family_g}
+		end
+
+	cropped_set (s: STS_SET [detachable separate ANY]): like s
+			-- `s' striped from as many elements as necessary to keep its cardinality at most `Max_count'
+		local
+--			cropped_s: STS_SET [detachable separate ANY, STS_EQUALITY [detachable separate ANY]]
+--			n: NATURAL
+		do
+--			n := # s
+--			if n ≤ Max_count then
+			Result := s
+--			else
+--				if n > max_asserted_elements then
+--					chk_cropp := {ISE_RUNTIME}.check_assert (False)
+--				end
+--					cropped_s := trimmed_n_tuple (s.as_tuple).terms
+--					Result := s.o ∪ cropped_s
+--				if chk_cropp then
+--					chk_cropp := {ISE_RUNTIME}.check_assert (True)
+--				end
+--			end
+		ensure
+--			small_enough: # Result ≤ Max_count
+--			no_change: # s ≤ Max_count implies Result ≍ s
+--			cropped: Result ⊆ s
 		end
 
 note

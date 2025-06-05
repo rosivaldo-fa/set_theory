@@ -48,7 +48,7 @@ feature -- Test routines (Initialization)
 		note
 			testing: "covers/{STI_SET}.make_extended"
 		do
-			assert ("make_extended", attached (create {STI_SET [G]}.make_extended (some_object_g, some_equality_g, some_immediate_set_g)))
+			assert ("make_extended", attached (create {like set_to_be_tested}.make_extended (some_object_g, some_equality_g, some_immediate_set_g)))
 		end
 
 feature -- Test routines (Output)

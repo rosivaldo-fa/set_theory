@@ -12,11 +12,28 @@ inherit
 	SET_TESTS [detachable separate CHARACTER_REF]
 		rename
 			some_object_g as some_separate_character_ref,
---			some_set_g as some_set_dscr,
+			same_object_g as same_object_dscr,
+			object_standard_twin_g as object_standard_twin_dscr,
+			object_twin_g as object_twin_dscr,
+			object_deep_twin_g as object_deep_twin_dscr,
+
+			some_equality_g as some_equality_dscr,
+			some_reference_equality_g as some_reference_equality_dscr,
+			some_object_standard_equality_g as some_object_standard_equality_dscr,
+			some_object_equality_g as some_object_equality_dscr,
+			some_object_deep_equality_g as some_object_deep_equality_dscr,
+			some_equality_sg as some_equality_sdscr,
+			some_reference_equality_sg as some_reference_equality_sdscr,
+			some_object_standard_equality_sg as some_object_standard_equality_sdscr,
+			some_object_equality_sg as some_object_equality_sdscr,
+			some_object_deep_equality_sg as some_object_deep_equality_sdscr,
+
+			some_set_g as some_set_dscr,
 			some_immediate_set_g as some_immediate_set_dscr,
-			some_immediate_set_sg as some_immediate_set_sdscr
---		undefine
---			default_create
+			some_set_sg as some_set_sdscr,
+			some_immediate_set_sg as some_immediate_set_sdscr,
+			some_set_family_g as some_set_family_dscr,
+			some_immediate_set_family_g as some_immediate_set_family_dscr
 		redefine
 			test_all,
 			test_make_extended,
@@ -30,6 +47,16 @@ inherit
 			test_element_out,
 			test_converted
 		end
+
+	UNARY_TESTS_DSCR
+		rename
+			test_is_in as test_element_is_in,
+			element_to_be_tested as set_to_be_tested
+		undefine
+			test_all,
+			set_to_be_tested
+		end
+
 
 feature -- Test routines (All)
 
@@ -100,7 +127,7 @@ feature -- Test routines (Construction)
 		local
 			a: detachable separate CHARACTER_REF
 			s: STI_SET [detachable separate CHARACTER_REF]
-			ref_eq: like some_reference_equality_g
+			ref_eq: like some_reference_equality_dscr
 		do
 			Precursor {SET_TESTS}
 			if next_random_item \\ 2 = 0 then
@@ -109,10 +136,10 @@ feature -- Test routines (Construction)
 				a := some_immediate_character_ref
 			end
 			create s
-			ref_eq := some_reference_equality_g
-			s := s.extended (object_standard_twin_g (a), ref_eq)
-			s := s.extended (object_twin_g (a), ref_eq)
-			s := s.extended (object_deep_twin_g (a), ref_eq)
+			ref_eq := some_reference_equality_dscr
+			s := s.extended (object_standard_twin_dscr (a), ref_eq)
+			s := s.extended (object_twin_dscr (a), ref_eq)
+			s := s.extended (object_deep_twin_dscr (a), ref_eq)
 			assert ("Beware equalities!", s ∌ a)
 		end
 

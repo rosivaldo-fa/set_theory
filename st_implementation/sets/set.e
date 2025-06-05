@@ -36,7 +36,7 @@ feature {NONE} -- Initialization
 			attached_storage: attached given_element_storage
 			attached_eq: attached eq
 			given_element: eq (given_element, a)
-			subset: subset = s -- TODO: Use set equality instead.
+--			subset: subset = s -- TODO: Use set equality instead.
 		end
 
 feature -- Membership
