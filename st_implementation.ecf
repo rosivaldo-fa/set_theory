@@ -18,7 +18,7 @@
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
 			<renaming old_name="SET" new_name="EB_SET"/>
 		</library>
-		<library name="st_specification" location="C:\Users\rosiv\OneDrive\Documents\Eiffel User Files\25.02\projects\set_theory\st_specification.ecf" readonly="false" prefix="STS_">
+		<library name="st_specification" location="..\st_specification.ecf" readonly="false" prefix="STS_">
 			<option>
 				<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
 			</option>

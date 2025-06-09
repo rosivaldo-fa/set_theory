@@ -19,7 +19,7 @@
 		</library>
 		<library name="st_implementation" location="..\st_implementation.ecf" readonly="false" prefix="STI_"/>
 		<library name="st_specification" location="..\st_specification.ecf" readonly="false" prefix="STS_"/>
-		<library name="sts_tests" location="C:\Users\rosiv\OneDrive\Documents\Eiffel User Files\25.02\projects\set_theory\sts_tests.ecf" readonly="false" prefix="STST_"/>
+		<library name="sts_tests" location="..\sts_tests.ecf" readonly="false" prefix="STST_"/>
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
 		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
 		<cluster name="properties" location=".\properties\">

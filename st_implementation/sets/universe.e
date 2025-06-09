@@ -7,47 +7,47 @@
 class
 	UNIVERSE [G]
 
---inherit
---	STS_UNIVERSE [G]
+inherit
+	STS_UNIVERSE [G]
 --		redefine
 --			does_not_have
 --		end
 
---feature -- Membership
+feature -- Membership
 
---	has alias "∋" (a: G): BOOLEAN
---			-- <Precursor>
---		do
---			Result := True
---		end
+	has alias "∋" (a: G): BOOLEAN
+			-- <Precursor>
+		do
+			Result := True
+		end
 
---	does_not_have alias "∌" (a: G): BOOLEAN
---			-- <Precursor>
---		do
---			Result := False
---		end
+	does_not_have alias "∌" (a: G): BOOLEAN
+			-- <Precursor>
+		do
+			Result := False
+		end
 
---feature -- Construction
+feature -- Construction
 
---	extended (a: G; eq: STS_EQUALITY [G]): like superset_anchor
---			-- <Precursor>
---		do
---			Result := Current
---		end
+	extended (a: G; eq: STS_EQUALITY [G]): like superset_anchor
+			-- <Precursor>
+		do
+			Result := Current
+		end
 
---feature -- Anchor
+feature -- Anchor
 
---	subset_anchor: SET [G]
---			-- <Precursor>
---		do
---			create Result
---		end
+	subset_anchor: SET [G]
+			-- <Precursor>
+		do
+			create Result
+		end
 
---	superset_anchor: UNIVERSE [G]
---			-- <Precursor>
---		do
---			Result := Current
---		end
+	superset_anchor: UNIVERSE [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

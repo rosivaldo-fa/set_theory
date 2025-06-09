@@ -45,6 +45,7 @@ inherit
 			test_prunned,
 			test_out,
 			test_element_out,
+			test_is_universe,
 			test_converted
 		end
 
@@ -56,7 +57,6 @@ inherit
 			test_all,
 			set_to_be_tested
 		end
-
 
 feature -- Test routines (All)
 
@@ -169,6 +169,16 @@ feature -- Test routines (Output)
 			Precursor {SET_TESTS}
 		end
 
+feature -- Test routines (Quality)
+
+	test_is_universe
+			-- Test {STI_SET}.is_universe.
+		note
+			testing: "covers/{STI_SET}.is_universe"
+		do
+			Precursor {SET_TESTS}
+		end
+
 feature -- Test routines (Conversion)
 
 	test_converted
@@ -186,4 +196,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

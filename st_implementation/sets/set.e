@@ -128,6 +128,13 @@ feature -- Output
 			when_detached: not attached a ⇒ Result ~ "Void"
 		end
 
+feature -- Quality
+
+	is_universe: detachable BOOLEAN_REF
+			-- <Precursor>
+		do
+		end
+
 feature -- Conversion
 
 	converted (s: SET [G]): like set_anchor

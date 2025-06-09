@@ -33,6 +33,7 @@ feature -- Test routines (All)
 			test_is_not_in
 			test_extended
 			test_prunned
+			test_is_universe
 		end
 
 feature -- Test routines (Membership)
@@ -134,6 +135,16 @@ feature -- Test routines (Construction)
 			a := some_object_g
 			s := s.prunned (a)
 			assert ("s ∖ {a}", s ∌ a)
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_universe
+			-- Test {STS_SET}.is_universe.
+		note
+			testing: "covers/{STS_SET}.is_universe"
+		do
+			assert ("is_universe", attached set_to_be_tested.is_universe ⇒ True)
 		end
 
 feature {NONE} -- Factory (element to be tested)

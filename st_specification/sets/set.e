@@ -71,7 +71,7 @@ feature -- Quality
 	is_universe: detachable BOOLEAN_REF
 			-- Is current set a universe, i.e., does it have every element of type {G}?
 			--| Detachable because it is not always knowable whether a set is a universe of not
-		do
+		deferred
 		end
 
 feature -- Anchor
