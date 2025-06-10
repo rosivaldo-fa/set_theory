@@ -9,9 +9,9 @@ class
 
 inherit
 	STS_UNIVERSE [G]
---		redefine
---			does_not_have
---		end
+		redefine
+			does_not_have
+		end
 
 feature -- Membership
 
@@ -34,6 +34,19 @@ feature -- Construction
 		do
 			Result := Current
 		end
+
+	prunned (a: G): like subset_anchor
+			-- <Precursor>
+		local
+			ref: SET [G]
+		do
+			create ref
+			create Result.make (ref.extended (a, create {STS_REFERENCE_EQUALITY}))
+		end
+
+feature -- Quality
+
+	is_universe: BOOLEAN = True
 
 feature -- Anchor
 

@@ -26,17 +26,18 @@ create
 
 feature {NONE} -- Initialization
 
-	make_extended (a: G; a_eq: STS_EQUALITY [G]; s: SET [G])
+	make_extended (a: G; a_eq: STS_EQUALITY [G]; s: STS_SET [G])
 			-- Create a set whose `given_element' element and `subset' are, respectively, `a' and `s'.
 		do
 			eq := a_eq
-			subset := converted (s)
+			subset := s
 			create given_element_storage.put (a)
 		ensure
 			attached_storage: attached given_element_storage
+			eq: eq = a_eq
 			attached_eq: attached eq
 			given_element: eq (given_element, a)
---			subset: subset = s -- TODO: Use set equality instead.
+			subset: subset = s -- TODO: Use set equality instead.
 		end
 
 feature -- Membership
@@ -50,7 +51,7 @@ feature -- Membership
 feature -- Construction
 
 	extended (a: G; a_eq: STS_EQUALITY [G]): like superset_anchor
-			-- <Precursor>
+			-- Current set extended with `a`, whose equality with any other element is defined by `a_eq`
 		do
 			create Result.make_extended (a, a_eq, Current)
 		ensure then
@@ -79,36 +80,18 @@ feature -- Output
 
 	out: STRING
 			-- <Precursor>
-		local
-			s: SET [G]
 		do
-			Result := "{"
-			if Current /= subset then
-				from
-					check
-						given_element_not_void: element_out (given_element) /= Void -- `element_out' definition
-					end
-					Result.append (element_out (given_element))
-					s := subset
-				invariant
-					building_up: -- TODO
-				until
-					s = s.subset
-				loop
-					Result.append_character (',')
-					check
-						s_given_element_not_void: element_out (s.given_element) /= Void -- `element_out' definition
-					end
-					Result.append (element_out (s.given_element))
-					s := s.subset
---				variant -- TODO
-				end
+			if Current = subset then
+				Result := "{}"
+			else
+				Result := subset.out
+				Result.append (" & ")
+				Result.append (element_out (given_element))
 			end
-			Result.append_character ('}')
+
 		ensure then
-			when_empty: Current = subset ⇒ Result ~ "{}"
-			when_singleton: Current /= subset and subset = subset.subset ⇒ Result ~ "{" + element_out (given_element) + "}"
-			induction: Current /= subset and subset /= subset.subset ⇒ Result ~ "{" + element_out (given_element) + "," + subset.out.substring (2, subset.out.count)
+			base: Current = subset ⇒ Result ~ "{}"
+			induction: Current /= subset ⇒ Result ~ subset.out + " & " + element_out (given_element)
 		end
 
 	element_out (a: G): STRING
@@ -135,35 +118,35 @@ feature -- Quality
 		do
 		end
 
-feature -- Conversion
+--feature -- Conversion
 
-	converted (s: SET [G]): like set_anchor
-			-- `s' converted to a set like current one
-		local
-			l_s: SET [G]
-		do
-			if attached {like set_anchor} s as cs then
-				Result := cs
-			else
-				from
-					create Result
-					l_s := s
-				invariant
-	--				TODO
-				until
-					l_s = l_s.subset
-				loop
-					check
-						attached l_s.eq as l_s_eq -- l_s /= l_s.subset
-					then
-						Result := Result.extended (l_s.given_element, l_s_eq)
-					end
-					l_s := l_s.subset
---				variant TODO
---					cardinality: natural_as_integer (# l_s)
-				end
-			end
-		end
+--	converted (s: SET [G]): like set_anchor
+--			-- `s' converted to a set like current one
+--		local
+--			l_s: SET [G]
+--		do
+--			if attached {like set_anchor} s as cs then
+--				Result := cs
+--			else
+--				from
+--					create Result
+--					l_s := s
+--				invariant
+--	--				TODO
+--				until
+--					l_s = l_s.subset
+--				loop
+--					check
+--						attached l_s.eq as l_s_eq -- l_s /= l_s.subset
+--					then
+--						Result := Result.extended (l_s.given_element, l_s_eq)
+--					end
+--					l_s := l_s.subset
+----				variant TODO
+----					cardinality: natural_as_integer (# l_s)
+--				end
+--			end
+--		end
 
 feature -- Anchor
 
@@ -173,7 +156,12 @@ feature -- Anchor
 			Result := Current
 		end
 
-	subset_anchor,
+	subset_anchor: STS_SET [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
 	superset_anchor: SET [G]
 			-- <Precursor>
 		do

@@ -1,5 +1,5 @@
 ﻿note
-	description: "Pool of features available for test classes that need one generic parameter and its respective equality type"
+	description: "Pool of features available for test classes that need one generic parameter"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"

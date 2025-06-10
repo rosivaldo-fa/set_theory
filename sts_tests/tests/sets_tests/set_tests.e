@@ -133,8 +133,7 @@ feature -- Test routines (Construction)
 		do
 			s := set_to_be_tested
 			a := some_object_g
-			s := s.prunned (a)
-			assert ("s ∖ {a}", s ∌ a)
+			assert ("s ∖ {a}", s.prunned (a) ∌ a)
 		end
 
 feature -- Test routines (Quality)

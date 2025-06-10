@@ -1,15 +1,15 @@
 ﻿note
-	description: "Test suite for {STI_SET [detachable separate CHARACTER_REF]}"
+	description: "Test suite for {STI_COMPLEMENT_SET [detachable separate CHARACTER_REF]}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
 
 class
-	SET_TESTS_DSCR
+	COMPLEMENT_SET_TESTS_DSCR
 
 inherit
-	SET_TESTS [detachable separate CHARACTER_REF]
+	STST_SET_TESTS [detachable separate CHARACTER_REF]
 		rename
 			some_object_g as some_separate_character_ref,
 			same_object_g as same_object_dscr,
@@ -34,19 +34,17 @@ inherit
 			some_immediate_set_sg as some_immediate_set_sdscr,
 			some_set_family_g as some_set_family_dscr,
 			some_immediate_set_family_g as some_immediate_set_family_dscr
+		undefine
+			default_create
 		redefine
 			test_all,
-			test_make_extended,
 			test_has,
 			test_does_not_have,
 			test_is_in,
 			test_is_not_in,
 			test_extended,
 			test_prunned,
-			test_out,
-			test_element_out,
 			test_is_universe
---			test_converted
 		end
 
 	UNARY_TESTS_DSCR
@@ -63,17 +61,7 @@ feature -- Test routines (All)
 	test_all
 			-- <Precursor>
 		note
-			testing: "covers/{STI_SET}"
-		do
-			Precursor {SET_TESTS}
-		end
-
-feature -- Test routines (Initialization)
-
-	test_make_extended
-			-- <Precursor>
-		note
-			testing: "covers/{STI_SET}.make_extended"
+			testing: "covers/{STI_COMPLEMENT_SET}"
 		do
 			Precursor {SET_TESTS}
 		end
@@ -81,29 +69,29 @@ feature -- Test routines (Initialization)
 feature -- Test routines (Membership)
 
 	test_has
-			-- Test {STI_SET}.has.
+			-- Test {STI_COMPLEMENT_SET}.has.
 		note
-			testing: "covers/{STI_SET}.has"
+			testing: "covers/{STI_COMPLEMENT_SET}.has"
 		do
 			Precursor {SET_TESTS}
 		end
 
 	test_does_not_have
 			-- <Precursor>
-			-- Test {STI_SET}.does_not_have.
+			-- Test {STI_COMPLEMENT_SET}.does_not_have.
 		note
 			testing: "covers/{STS_SET}.does_not_have"
-			testing: "covers/{STI_SET}.does_not_have"
+			testing: "covers/{STI_COMPLEMENT_SET}.does_not_have"
 		do
 			Precursor {SET_TESTS}
 		end
 
 	test_is_in
 			-- <Precursor>
-			-- Test {STI_SET}.is_in.
+			-- Test {STI_COMPLEMENT_SET}.is_in.
 		note
 			testing: "covers/{STS_SET}.is_in"
-			testing: "covers/{STI_SET}.is_in"
+			testing: "covers/{STI_COMPLEMENT_SET}.is_in"
 		do
 			Precursor {SET_TESTS}
 		end
@@ -113,7 +101,7 @@ feature -- Test routines (Membership)
 			-- Test {STI_SET}.is_in.
 		note
 			testing: "covers/{STS_SET}.is_not_in"
-			testing: "covers/{STI_SET}.is_not_in"
+			testing: "covers/{STI_COMPLEMENT_SET}.is_not_in"
 		do
 			Precursor {SET_TESTS}
 		end
@@ -121,9 +109,9 @@ feature -- Test routines (Membership)
 feature -- Test routines (Construction)
 
 	test_extended
-			-- Test {STI_SET}.extended.
+			-- Test {STI_COMPLEMENT_SET}.extended.
 		note
-			testing: "covers/{STI_SET}.extended"
+			testing: "covers/{STI_COMPLEMENT_SET}.extended"
 		local
 			a: detachable separate CHARACTER_REF
 			s: STI_SET [detachable separate CHARACTER_REF]
@@ -144,27 +132,9 @@ feature -- Test routines (Construction)
 		end
 
 	test_prunned
-			-- Test {STI_SET}.prunned.
+			-- Test {STI_COMPLEMENT_SET}.prunned.
 		note
-			testing: "covers/{STI_SET}.prunned"
-		do
-			Precursor {SET_TESTS}
-		end
-
-feature -- Test routines (Output)
-
-	test_out
-			-- <Precursor>
-		note
-			testing: "covers/{STI_SET}.out"
-		do
-			Precursor {SET_TESTS}
-		end
-
-	test_element_out
-			-- <Precursor>
-		note
-			testing: "covers/{STI_SET}.element_out"
+			testing: "covers/{STI_COMPLEMENT_SET}.prunned"
 		do
 			Precursor {SET_TESTS}
 		end
@@ -172,22 +142,12 @@ feature -- Test routines (Output)
 feature -- Test routines (Quality)
 
 	test_is_universe
-			-- Test {STI_SET}.is_universe.
+			-- Test {STI_COMPLEMENT_SET}.is_universe.
 		note
-			testing: "covers/{STI_SET}.is_universe"
+			testing: "covers/{STI_COMPLEMENT_SET}.is_universe"
 		do
 			Precursor {SET_TESTS}
 		end
-
---feature -- Test routines (Conversion)
-
---	test_converted
---			-- <Precursor>
---		note
---			testing: "covers/{STI_SET}.converted"
---		do
---			Precursor {SET_TESTS}
---		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

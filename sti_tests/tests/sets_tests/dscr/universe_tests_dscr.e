@@ -1,23 +1,15 @@
-﻿note
-	description: "Set that has every element of a given type"
-	author: "Rosivaldo Fernandes Alves"
+note
+	description: "Test suite for {STI_UNIVERSE [detachable separate CHARACTER_REF]}"
+	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	testing: "type/manual"
 
-deferred class
-	UNIVERSE [G]
+class
+	UNIVERSE_TESTS_DSCR
 
 inherit
-	SET [G]
-feature -- Anchor
-
-	superset_anchor: UNIVERSE [G]
-			-- <Precursor>
-		deferred
-		end
-
-invariant
-	is_universe: is_universe
+	SET_TESTS_DSCR
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

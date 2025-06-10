@@ -9,7 +9,7 @@ class
 	SET_FAMILY_TESTS_DSCR
 
 inherit
-	STST_SET_FAMILY_TESTS [detachable separate CHARACTER_REF]
+	SET_FAMILY_TESTS [detachable separate CHARACTER_REF]
 		rename
 			some_set_g as some_set_dscr,
 			same_set_g as same_set_dscr,
@@ -35,46 +35,11 @@ inherit
 			some_set_family_sg as some_set_family_sdscr,
 			some_immediate_set_family_sg as some_immediate_set_family_sdscr,
 
+			some_set_family_g as some_set_family_dscr,
 			some_immediate_set_family_g as some_immediate_set_family_dscr
-		undefine
-			default_create
 		redefine
-			test_all
-		end
-
-	SET_TESTS [STS_SET [detachable separate CHARACTER_REF]]
-		rename
-			set_to_be_tested as set_family_to_be_tested,
-
-			some_object_g as some_set_dscr,
-			same_object_g as same_set_dscr,
-			object_standard_twin_g as set_standard_twin_dscr,
-			object_twin_g as set_twin_dscr,
-			object_deep_twin_g as set_deep_twin_dscr,
-
-			some_equality_g as some_equality_sdscr,
-			some_reference_equality_g as some_reference_equality_sdscr,
-			some_object_standard_equality_g as some_object_standard_equality_sdscr,
-			some_object_equality_g as some_object_equality_sdscr,
-			some_object_deep_equality_g as some_object_deep_equality_sdscr,
-			some_equality_sg as some_equality_ssdscr,
-			some_reference_equality_sg as some_reference_equality_ssdscr,
-			some_object_standard_equality_sg as some_object_standard_equality_ssdscr,
-			some_object_equality_sg as some_object_equality_ssdscr,
-			some_object_deep_equality_sg as some_object_deep_equality_ssdscr,
-
-			some_set_g as some_set_sdscr,
-			some_immediate_set_g as some_immediate_set_sdscr,
-			some_set_sg as some_set_ssdscr,
-			some_immediate_set_sg as some_immediate_set_ssdscr,
-			some_set_family_g as some_set_family_sdscr,
-			some_immediate_set_family_g as some_immediate_set_family_sdscr
-		undefine
-			set_family_to_be_tested,
-			some_set_sdscr,
-			some_set_ssdscr
-		redefine
-			test_all
+			test_all,
+			test_make_extended
 		end
 
 feature -- Test routines (All)
@@ -84,7 +49,17 @@ feature -- Test routines (All)
 		note
 			testing: "covers/{STI_SET_FAMILY}"
 		do
-			Precursor {SET_TESTS}
+			Precursor {SET_FAMILY_TESTS}
+		end
+
+feature -- Test routines (Initialization)
+
+	test_make_extended
+			-- Test {STI_SET_FAMILY}.make_extended.
+		note
+			testing: "covers/{STI_SET_FAMILY}.make_extended"
+		do
+			assert ("make_extended", attached (create {like set_family_to_be_tested}.make_extended (some_set_dscr, some_equality_sdscr, some_set_family_dscr)))
 		end
 
 feature -- Factory (Set)

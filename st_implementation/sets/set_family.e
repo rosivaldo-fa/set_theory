@@ -15,6 +15,7 @@ inherit
 
 	SET [STS_SET [G]]
 		rename
+			make_extended as set_make_extended,
 			given_element as given_set,
 			given_element_storage as given_set_storage,
 			subset as subfamily,
@@ -22,6 +23,8 @@ inherit
 			subset_anchor as subfamily_anchor,
 			superset_anchor as superfamily_anchor
 		redefine
+			set_make_extended,
+			extended,
 			family_anchor,
 			subfamily_anchor,
 			superfamily_anchor
@@ -31,10 +34,48 @@ create
 	default_create,
 	make_extended
 
+feature {NONE} -- Initialization
+
+	set_make_extended (s: STS_SET [G]; a_eq: STS_EQUALITY [STS_SET [G]]; sf: STS_SET [STS_SET [G]])
+			-- Do nothing.
+		do
+		end
+
+	make_extended (s: STS_SET [G]; a_eq: STS_EQUALITY [STS_SET [G]]; sf: STS_SET_FAMILY [G])
+			-- Create a set family whose `given_set' set and `subfamily' are, respectively, `s' and `sf'.
+		do
+			eq := a_eq
+			subfamily := sf
+			create given_set_storage.put (s)
+		ensure
+			attached_storage: attached given_set_storage
+			attached_eq: attached eq
+			given_set: eq (given_set, s)
+			subfamily: subfamily = sf -- TODO: Use set equality instead.
+		end
+
+feature -- Construction
+
+	extended (s: STS_SET [G]; a_eq: STS_EQUALITY [STS_SET [G]]): like superfamily_anchor
+			-- Current set family extended with `s`, whose equality with any other set is defined by `a_eq`
+		do
+			create Result.make_extended (s, a_eq, Current)
+		end
+
 feature -- Anchor
 
-	family_anchor,
-	subfamily_anchor,
+	family_anchor: SET_FAMILY [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
+	subfamily_anchor: STS_SET_FAMILY [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
 	superfamily_anchor: SET_FAMILY [G]
 			-- <Precursor>
 		do

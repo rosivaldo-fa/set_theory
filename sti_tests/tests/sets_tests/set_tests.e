@@ -38,7 +38,6 @@ feature -- Test routines (All)
 			test_make_extended
 			test_out
 			test_element_out
-			test_converted
 		end
 
 feature -- Test routines (Initialization)
@@ -48,7 +47,7 @@ feature -- Test routines (Initialization)
 		note
 			testing: "covers/{STI_SET}.make_extended"
 		do
-			assert ("make_extended", attached (create {like set_to_be_tested}.make_extended (some_object_g, some_equality_g, some_immediate_set_g)))
+			assert ("make_extended", attached (create {like set_to_be_tested}.make_extended (some_object_g, some_equality_g, some_set_g)))
 		end
 
 feature -- Test routines (Output)
@@ -64,17 +63,17 @@ feature -- Test routines (Output)
 			create s
 			assert ("{}", s.out ~ "{}")
 
-			c := some_object_g
-			s := s.extended (c, some_equality_g)
-			assert ("{c}", s.out ~ "{" + s.element_out (c) + "}")
+			a := some_object_g
+			s := s.extended (a, some_equality_g)
+			assert ("{a}", s.out ~ "{} & " + s.element_out (a))
 
 			b := some_object_g
 			s := s.extended (b, some_equality_g)
-			assert ("{b, c}", s.out ~ "{" + s.element_out (b) + "," + s.element_out (c) + "}")
+			assert ("{a, b}", s.out ~ "{} & " + s.element_out (a) + " & " + s.element_out (b))
 
-			a := some_object_g
-			s := s.extended (a, some_equality_g)
-			assert ("{a, b, c}", s.out ~ "{" + s.element_out (a) + "," + s.element_out (b) + "," + s.element_out (c) + "}")
+			c := some_object_g
+			s := s.extended (c, some_equality_g)
+			assert ("{a, b, c}", s.out ~ "{} & " + s.element_out (a) + " & " + s.element_out (b) + " & " + s.element_out (c))
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
@@ -93,15 +92,15 @@ feature -- Test routines (Output)
 			assert ("element_out", attached s.element_out (a))
 		end
 
-feature -- Test routines (Conversion)
+--feature -- Test routines (Conversion)
 
-	test_converted
-			-- Test {STI_SET}.converted.
-		note
-			testing: "covers/{STI_SET}.converted"
-		do
-			assert ("converted", attached set_to_be_tested.converted (some_immediate_set_g))
-		end
+--	test_converted
+--			-- Test {STI_SET}.converted.
+--		note
+--			testing: "covers/{STI_SET}.converted"
+--		do
+--			assert ("converted", attached set_to_be_tested.converted (some_immediate_set_g))
+--		end
 
 feature -- Factory (Set)
 
