@@ -40,7 +40,8 @@ inherit
 			test_all,
 			test_make,
 			test_has,
-			test_extended
+			test_extended,
+			test_prunned
 		end
 
 	UNARY_TESTS_DSCR
@@ -108,6 +109,14 @@ feature -- Test routines (Construction)
 			s := s.extended (object_twin_dscr (a), ref_eq)
 			s := s.extended (object_deep_twin_dscr (a), ref_eq)
 			assert ("Beware equalities!", s ∌ a)
+		end
+
+	test_prunned
+			-- Test {STI_COMPLEMENT_SET}.prunned.
+		note
+			testing: "covers/{STI_COMPLEMENT_SET}.prunned"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
 		end
 
 note
