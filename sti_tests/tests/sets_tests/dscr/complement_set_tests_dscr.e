@@ -39,7 +39,8 @@ inherit
 		redefine
 			test_all,
 			test_make,
-			test_has
+			test_has,
+			test_extended
 		end
 
 	UNARY_TESTS_DSCR
@@ -82,6 +83,31 @@ feature -- Test routines (Membership)
 			testing: "covers/{STI_COMPLEMENT_SET}.has"
 		do
 			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {STI_COMPLEMENT_SET}.extended.
+		note
+			testing: "covers/{STI_COMPLEMENT_SET}.extended"
+		local
+			a: detachable separate CHARACTER_REF
+			s: STI_SET [detachable separate CHARACTER_REF]
+			ref_eq: like some_reference_equality_dscr
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+			if next_random_item \\ 2 = 0 then
+				a := some_immediate_separate_character_ref
+			else
+				a := some_immediate_character_ref
+			end
+			create s
+			ref_eq := some_reference_equality_dscr
+			s := s.extended (object_standard_twin_dscr (a), ref_eq)
+			s := s.extended (object_twin_dscr (a), ref_eq)
+			s := s.extended (object_deep_twin_dscr (a), ref_eq)
+			assert ("Beware equalities!", s ∌ a)
 		end
 
 note
