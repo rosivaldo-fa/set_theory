@@ -182,16 +182,6 @@ feature -- Test routines (Quality)
 			Precursor {SET_TESTS}
 		end
 
---feature -- Test routines (Conversion)
-
---	test_converted
---			-- <Precursor>
---		note
---			testing: "covers/{STI_SET}.converted"
---		do
---			Precursor {SET_TESTS}
---		end
-
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[
