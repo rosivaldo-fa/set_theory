@@ -51,7 +51,9 @@ inherit
 
 	UNARY_TESTS_DSCR
 		rename
+			is_not_in_ok as element_is_not_in_ok,
 			test_is_in as test_element_is_in,
+			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as set_to_be_tested
 		undefine
 			test_all,

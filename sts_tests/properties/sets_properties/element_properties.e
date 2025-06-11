@@ -1,25 +1,19 @@
 ﻿note
-	description: "Object that checks whether the properties verified within set theory hold for an implementation of {STS_SET}"
+	description: "Object that checks whether the properties verified within set theory hold for an implementation of {STS_ELEMENT}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
 deferred class
-	SET_PROPERTIES [G]
-
-inherit
 	ELEMENT_PROPERTIES
-		rename
-			is_not_in_ok as element_is_not_in_ok
-		end
 
 feature -- Properties (Membership)
 
-	is_not_in_ok (s: STS_SET [G]; ss: STS_SET [STS_SET [G]]): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_SET}.is_not_in?
+	is_not_in_ok (a: STS_ELEMENT; s: STS_SET [STS_ELEMENT]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_ELEMENT}.is_not_in?
 		do
 			check
-				definition: s ∉ ss = ss ∌ s
+				definition: a ∉ s = s ∌ a
 			then
 				Result := True
 			end

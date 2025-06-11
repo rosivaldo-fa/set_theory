@@ -13,7 +13,8 @@ inherit
 			default_create
 		redefine
 			test_all,
-			test_is_in
+			test_is_in,
+			test_is_not_in
 		end
 
 	EQA_TEST_SET
@@ -34,6 +35,14 @@ feature -- Test routines (Membership)
 			-- <Precursor>
 		note
 			testing: "covers/{STS_ELEMENT}.is_in"
+		do
+			Precursor {STST_ELEMENT_TESTS}
+		end
+
+	test_is_not_in
+			-- <Precursor>
+		note
+			testing: "covers/{STS_ELEMENT}.is_not_in"
 		do
 			Precursor {STST_ELEMENT_TESTS}
 		end

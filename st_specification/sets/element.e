@@ -20,6 +20,14 @@ feature -- Membership
 			definition: Result = s ∋ Current
 		end
 
+	is_not_in alias "∉" (s: SET [ELEMENT]): BOOLEAN
+			-- Is not current element in `s'?
+		do
+			Result := not (Current ∈ s)
+		ensure
+			definition: Result = not (Current ∈ s)
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

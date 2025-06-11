@@ -26,6 +26,7 @@ feature {NONE} -- Initialization
 feature -- Primitive
 
 	reference_set: STS_SET [G]
+			-- Set that current set is a complement of
 
 feature -- Membership
 

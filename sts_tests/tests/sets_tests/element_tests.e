@@ -8,7 +8,7 @@ deferred class
 	ELEMENT_TESTS
 
 inherit
-	STS_ELEMENT
+	ELEMENT_PROPERTIES
 
 feature -- Basic operations
 
@@ -27,6 +27,7 @@ feature -- Test routines (All)
 			testing: "covers/{STS_ELEMENT}"
 		do
 			test_is_in
+			test_is_not_in
 		end
 
 feature -- Test routines (Membership)
@@ -42,6 +43,20 @@ feature -- Test routines (Membership)
 			a := element_to_be_tested
 			s := some_elements
 			assert ("is_in", a ∈ s ⇒ True)
+		end
+
+	test_is_not_in
+			-- Test {STS_ELEMENT}.is_not_in.
+		note
+			testing: "covers/{STS_ELEMENT}.is_not_in"
+		local
+			a: like element_to_be_tested
+			s: like some_elements
+		do
+			a := element_to_be_tested
+			s := some_elements
+			assert ("is_not_in", a ∉ s ⇒ True)
+			assert ("is_not_in_ok", is_not_in_ok (a, s))
 		end
 
 feature {NONE} -- Factory (Element to be tested)

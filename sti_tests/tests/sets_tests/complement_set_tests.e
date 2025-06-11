@@ -1,5 +1,5 @@
 ﻿note
-	description: "Test suite for {STI_SET}"
+	description: "Test suite for {STI_COMPLEMENT_SET}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -17,10 +17,13 @@ inherit
 
 	ELEMENT_TESTS
 		rename
+			is_not_in_ok as element_is_not_in_ok,
 			test_is_in as test_element_is_in,
+			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as set_to_be_tested
 		undefine
 			test_element_is_in,
+			test_element_is_not_in,
 			set_to_be_tested,
 			some_element
 		redefine
@@ -30,15 +33,11 @@ inherit
 feature -- Test routines (All)
 
 	test_all
-			-- Test every routine of {STI_SET}.
+			-- Test every routine of {STI_COMPLEMENT_SET}.
 		note
-			testing: "covers/{STI_SET}"
+			testing: "covers/{STI_COMPLEMENT_SET}"
 		do
 			Precursor {STST_SET_TESTS}
---			test_make_extended
---			test_out
---			test_element_out
---			test_converted
 		end
 
 feature -- Factory (Set)

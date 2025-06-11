@@ -41,6 +41,7 @@ inherit
 		undefine
 			test_all,
 			test_is_in,
+			test_is_not_in,
 			some_element
 		end
 
