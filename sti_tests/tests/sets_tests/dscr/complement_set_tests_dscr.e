@@ -66,7 +66,7 @@ feature -- Test routines (All)
 feature -- Test routines (Initialization)
 
 	test_make
-			-- Test {STI_COMPLEMENT_SET}.make.
+			-- <Precursor>
 		note
 			testing: "covers/{STI_COMPLEMENT_SET}.make"
 		do

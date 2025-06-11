@@ -36,6 +36,7 @@ feature -- Test routines (All)
 			testing: "covers/{STI_COMPLEMENT_SET}"
 		do
 			Precursor {STST_SET_TESTS}
+			test_make
 		end
 
 feature -- Test routines (Initialization)
