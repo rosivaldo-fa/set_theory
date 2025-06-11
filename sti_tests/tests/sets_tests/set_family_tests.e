@@ -39,6 +39,7 @@ inherit
 
 			some_set_g as some_set_sg,
 			some_immediate_set_g as some_immediate_set_sg,
+
 			some_set_sg as some_set_ssg,
 			some_immediate_set_sg as some_immediate_set_ssg,
 			some_set_family_g as some_set_family_sg,
@@ -82,15 +83,10 @@ feature -- Test routines (Initialization)
 
 feature -- Factory (Set)
 
-	some_immediate_set_sg: STI_SET [STS_SET [G]]
-			-- Randomly-fetched monomorphic set of sets of elements like {G}
-		deferred
-		end
-
-	some_immediate_set_ssg: STI_SET [STS_SET [STS_SET [G]]]
-			-- Randomly-fetched monomorphic set of sets of sets of elements like {G}
-		deferred
-		end
+--	some_immediate_set_ssg: STI_SET [STS_SET [STS_SET [G]]]
+--			-- Randomly-fetched monomorphic set of sets of sets of elements like {G}
+--		deferred
+--		end
 
 	some_immediate_set_family_g: STI_SET_FAMILY [G]
 			-- Randomly-fetched monomorphic family of sets of elements like {G}

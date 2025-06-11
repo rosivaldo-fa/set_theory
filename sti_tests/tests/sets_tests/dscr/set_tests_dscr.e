@@ -30,6 +30,7 @@ inherit
 
 			some_set_g as some_set_dscr,
 			some_immediate_set_g as some_immediate_set_dscr,
+
 			some_set_sg as some_set_sdscr,
 			some_immediate_set_sg as some_immediate_set_sdscr,
 			some_set_family_g as some_set_family_dscr,

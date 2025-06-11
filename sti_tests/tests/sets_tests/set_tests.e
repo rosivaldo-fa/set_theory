@@ -10,22 +10,20 @@ deferred class
 inherit
 	STST_SET_TESTS [G]
 		undefine
-			default_create
+			default_create,
+			some_set_g
 		redefine
 			test_all
 		end
 
-	ELEMENT_TESTS
+	UNARY_TESTS [G]
 		rename
 			is_not_in_ok as element_is_not_in_ok,
 			test_is_in as test_element_is_in,
 			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as set_to_be_tested
 		undefine
-			test_element_is_in,
-			test_element_is_not_in,
-			set_to_be_tested,
-			some_element
+			set_to_be_tested
 		redefine
 			test_all
 		end
@@ -93,28 +91,6 @@ feature -- Test routines (Output)
 			a := some_object_g
 			s := set_to_be_tested
 			assert ("element_out", attached s.element_out (a))
-		end
-
---feature -- Test routines (Conversion)
-
---	test_converted
---			-- Test {STI_SET}.converted.
---		note
---			testing: "covers/{STI_SET}.converted"
---		do
---			assert ("converted", attached set_to_be_tested.converted (some_immediate_set_g))
---		end
-
-feature -- Factory (Set)
-
-	some_immediate_set_g: STI_SET [G]
-			-- <Precursor>
-		deferred
-		end
-
-	some_immediate_set_sg: STI_SET [STS_SET [G]]
-			-- <Precursor>
-		deferred
 		end
 
 note

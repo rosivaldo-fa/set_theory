@@ -121,8 +121,7 @@ feature -- Test routines (Construction)
 			s := set_to_be_tested
 			a := some_object_g
 			eq := some_equality_g
-			s := s.extended (same_object_g (a, eq), eq)
-			assert ("{a, ...}", s ∋ a)
+			assert ("{a, ...}", s.extended (same_object_g (a, eq), eq) ∋ a)
 		end
 
 	test_prunned

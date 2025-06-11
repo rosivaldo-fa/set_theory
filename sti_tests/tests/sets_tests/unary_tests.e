@@ -11,6 +11,8 @@ inherit
 	STST_UNARY_TESTS [G]
 		undefine
 			default_create
+		redefine
+			some_set_g
 		end
 
 	ELEMENT_TESTS
@@ -19,6 +21,108 @@ inherit
 			test_is_in,
 			test_is_not_in,
 			some_element
+		end
+
+feature -- Factory (Set)
+
+	some_set_g: STS_SET [G]
+			-- <Precursor>
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := Precursor {STST_UNARY_TESTS}
+			when 1 then
+				Result := some_complement_set_g
+			end
+		end
+
+	some_immediate_set_g: STI_SET [G]
+			-- <Precursor>
+		do
+			check
+				s: attached {STI_SET [G]} some_immediate_instance (
+							agent: STI_SET [G]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result
+									loop
+										Result := Result.extended (some_object_g, some_equality_g)
+									end
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_SET [G]}
+			then
+				Result := cropped_set (s)
+			end
+		end
+
+	some_complement_set_g: STS_SET [G]
+			-- Randomly-fetched polymorphic complement set of elements like {G}
+		do
+			Result := some_immediate_complement_set_g
+		end
+
+	some_immediate_complement_set_g: STI_COMPLEMENT_SET [G]
+			-- Randomly-fetched monomorphic complement set of elements like {G}
+		do
+			check
+				s: attached {STI_COMPLEMENT_SET [G]} some_immediate_instance (
+							agent: STI_COMPLEMENT_SET [G]
+								do
+									create Result.make (some_set_g)
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_COMPLEMENT_SET [G]}
+			then
+				Result := cropped_set (s)
+			end
+		end
+
+	some_immediate_set_sg: STI_SET [STS_SET [G]]
+			-- <Precursor>
+		do
+			check
+				s: attached {STI_SET [STS_SET [G]]} some_immediate_instance (
+							agent: STI_SET [STS_SET [G]]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result
+									loop
+										Result := Result.extended (some_set_g, some_equality_sg)
+									end
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_SET [STS_SET [G]]}
+			then
+				Result := cropped_set (s)
+			end
+		end
+
+	some_immediate_set_family_g: STI_SET_FAMILY [G]
+			-- Randomly-fetched monomorphic family of sets of sets of elements like {G}
+		do
+			check
+				sf: attached {STI_SET_FAMILY [G]} some_immediate_instance (
+							agent: STI_SET_FAMILY [G]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result
+									loop
+										Result := Result.extended (some_set_g, some_equality_sg)
+									end
+								end
+						) as sf -- `some_immediate_instance' definition
+				monomorphic: sf.generating_type ~ {detachable STI_SET_FAMILY [G]}
+			then
+				Result := cropped_set (sf)
+			end
 		end
 
 note

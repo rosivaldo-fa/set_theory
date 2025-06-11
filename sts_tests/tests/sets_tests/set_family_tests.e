@@ -36,9 +36,7 @@ inherit
 			some_set_family_g as some_set_family_sg,
 			some_immediate_set_family_g as some_immediate_set_family_sg
 		redefine
-			set_family_to_be_tested,
-			some_set_sg,
-			some_set_ssg
+			set_family_to_be_tested
 		end
 
 feature {NONE} -- Factory (element to be tested)
@@ -51,18 +49,6 @@ feature {NONE} -- Factory (element to be tested)
 
 feature -- Factory (Set)
 
-	some_set_sg: STS_SET [STS_SET [G]]
-			-- Randomly-fetched polymorphic set of sets of elements like {G}
-		do
-			inspect
-				next_random_item \\ 2
-			when 0 then
-				Result := Precursor {SET_TESTS}
-			when 1 then
-				Result := some_set_family_g
-			end
-		end
-
 	some_set_family_g: STS_SET_FAMILY [G]
 			-- Randomly-fetched polymorphic family of sets of elements like {G}
 		do
@@ -74,18 +60,6 @@ feature -- Factory (Set)
 		deferred
 		ensure
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_family_g}
-		end
-
-	some_set_ssg: STS_SET [STS_SET [STS_SET [G]]]
-			-- Randomly-fetched polymorphic set of sets of sets of elements like {G}
-		do
-			inspect
-				next_random_item \\ 2
-			when 0 then
-				Result := Precursor {SET_TESTS}
-			when 1 then
-				Result := some_set_family_sg
-			end
 		end
 
 note

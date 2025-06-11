@@ -9,7 +9,7 @@ class
 	COMPLEMENT_SET_TESTS_DSCR
 
 inherit
-	STST_SET_TESTS [detachable separate CHARACTER_REF]
+	COMPLEMENT_SET_TESTS [detachable separate CHARACTER_REF]
 		rename
 			some_object_g as some_separate_character_ref,
 			same_object_g as same_object_dscr,
@@ -34,17 +34,11 @@ inherit
 			some_immediate_set_sg as some_immediate_set_sdscr,
 			some_set_family_g as some_set_family_dscr,
 			some_immediate_set_family_g as some_immediate_set_family_dscr
-		undefine
-			default_create
+--		undefine
+--			default_create
 		redefine
 			test_all,
-			test_has,
-			test_does_not_have,
-			test_is_in,
-			test_is_not_in,
-			test_extended,
-			test_prunned,
-			test_is_universe
+			test_make
 		end
 
 	UNARY_TESTS_DSCR
@@ -54,8 +48,9 @@ inherit
 			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as set_to_be_tested
 		undefine
-			test_all,
 			set_to_be_tested
+		redefine
+			test_all
 		end
 
 feature -- Test routines (All)
@@ -65,90 +60,17 @@ feature -- Test routines (All)
 		note
 			testing: "covers/{STI_COMPLEMENT_SET}"
 		do
-			Precursor {SET_TESTS}
+			Precursor {COMPLEMENT_SET_TESTS}
 		end
 
-feature -- Test routines (Membership)
+feature -- Test routines (Initialization)
 
-	test_has
-			-- Test {STI_COMPLEMENT_SET}.has.
+	test_make
+			-- Test {STI_COMPLEMENT_SET}.make.
 		note
-			testing: "covers/{STI_COMPLEMENT_SET}.has"
+			testing: "covers/{STI_COMPLEMENT_SET}.make"
 		do
-			Precursor {SET_TESTS}
-		end
-
-	test_does_not_have
-			-- <Precursor>
-			-- Test {STI_COMPLEMENT_SET}.does_not_have.
-		note
-			testing: "covers/{STS_SET}.does_not_have"
-			testing: "covers/{STI_COMPLEMENT_SET}.does_not_have"
-		do
-			Precursor {SET_TESTS}
-		end
-
-	test_is_in
-			-- <Precursor>
-			-- Test {STI_COMPLEMENT_SET}.is_in.
-		note
-			testing: "covers/{STS_SET}.is_in"
-			testing: "covers/{STI_COMPLEMENT_SET}.is_in"
-		do
-			Precursor {SET_TESTS}
-		end
-
-	test_is_not_in
-			-- <Precursor>
-			-- Test {STI_SET}.is_in.
-		note
-			testing: "covers/{STS_SET}.is_not_in"
-			testing: "covers/{STI_COMPLEMENT_SET}.is_not_in"
-		do
-			Precursor {SET_TESTS}
-		end
-
-feature -- Test routines (Construction)
-
-	test_extended
-			-- Test {STI_COMPLEMENT_SET}.extended.
-		note
-			testing: "covers/{STI_COMPLEMENT_SET}.extended"
-		local
-			a: detachable separate CHARACTER_REF
-			s: STI_SET [detachable separate CHARACTER_REF]
-			ref_eq: like some_reference_equality_dscr
-		do
-			Precursor {SET_TESTS}
-			if next_random_item \\ 2 = 0 then
-				a := some_immediate_separate_character_ref
-			else
-				a := some_immediate_character_ref
-			end
-			create s
-			ref_eq := some_reference_equality_dscr
-			s := s.extended (object_standard_twin_dscr (a), ref_eq)
-			s := s.extended (object_twin_dscr (a), ref_eq)
-			s := s.extended (object_deep_twin_dscr (a), ref_eq)
-			assert ("Beware equalities!", s ∌ a)
-		end
-
-	test_prunned
-			-- Test {STI_COMPLEMENT_SET}.prunned.
-		note
-			testing: "covers/{STI_COMPLEMENT_SET}.prunned"
-		do
-			Precursor {SET_TESTS}
-		end
-
-feature -- Test routines (Quality)
-
-	test_is_universe
-			-- Test {STI_COMPLEMENT_SET}.is_universe.
-		note
-			testing: "covers/{STI_COMPLEMENT_SET}.is_universe"
-		do
-			Precursor {SET_TESTS}
+			Precursor {COMPLEMENT_SET_TESTS}
 		end
 
 note

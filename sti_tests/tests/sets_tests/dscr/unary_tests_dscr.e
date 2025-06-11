@@ -8,7 +8,7 @@ class
 	UNARY_TESTS_DSCR
 
 inherit
-	STST_UNARY_TESTS [detachable separate CHARACTER_REF]
+	UNARY_TESTS [detachable separate CHARACTER_REF]
 		rename
 			some_object_g as some_separate_character_ref,
 			same_object_g as same_object_dscr,
@@ -29,20 +29,11 @@ inherit
 
 			some_set_g as some_set_dscr,
 			some_immediate_set_g as some_immediate_set_dscr,
+
 			some_set_sg as some_set_sdscr,
 			some_immediate_set_sg as some_immediate_set_sdscr,
 			some_set_family_g as some_set_family_dscr,
 			some_immediate_set_family_g as some_immediate_set_family_dscr
-		undefine
-			default_create
-		end
-
-	ELEMENT_TESTS
-		undefine
-			test_all,
-			test_is_in,
-			test_is_not_in,
-			some_element
 		end
 
 feature -- Factory (Separate character reference)
@@ -164,74 +155,6 @@ feature -- Factory (Separate character reference)
 			Result := (Min_character.natural_32_code + n - 1).to_character_8
 		ensure
 			class
-		end
-
-feature -- Factory (Set)
-
-	some_immediate_set_dscr: STI_SET [detachable separate CHARACTER_REF]
-			-- Randomly-fetched monomorphic set of separate character references
-		do
-			check
-				s: attached {STI_SET [detachable separate CHARACTER_REF]} some_immediate_instance (
-							agent: STI_SET [detachable separate CHARACTER_REF]
-								do
-									across
-										1 |..| some_count.as_integer_32 as i
-									from
-										create Result
-									loop
-										Result := Result.extended (some_separate_character_ref, some_equality_dscr)
-									end
-								end
-						) as s -- `some_immediate_instance' definition
-				monomorphic: s.generating_type ~ {detachable STI_SET [detachable separate CHARACTER_REF]}
-			then
-				Result := cropped_set (s)
-			end
-		end
-
-	some_immediate_set_sdscr: STI_SET [STS_SET [detachable separate CHARACTER_REF]]
-			-- Randomly-fetched monomorphic set of sets of separate character references
-		do
-			check
-				ss: attached {STI_SET [STS_SET [detachable separate CHARACTER_REF]]} some_immediate_instance (
-							agent: STI_SET [STS_SET [detachable separate CHARACTER_REF]]
-								do
-									across
-										1 |..| some_count.as_integer_32 as i
-									from
-										create Result
-									loop
-										Result := Result.extended (some_set_dscr, some_equality_sdscr)
-									end
-								end
-						) as ss -- `some_immediate_instance' definition
-				monomorphic: ss.generating_type ~ {detachable STI_SET [STS_SET [detachable separate CHARACTER_REF]]}
-			then
-				Result := cropped_set (ss)
-			end
-		end
-
-	some_immediate_set_family_dscr: STI_SET_FAMILY [detachable separate CHARACTER_REF]
-			-- Randomly-fetched monomorphic family of sets of separate character references
-		do
-			check
-				sf: attached {STI_SET_FAMILY [detachable separate CHARACTER_REF]} some_immediate_instance (
-							agent: STI_SET_FAMILY [detachable separate CHARACTER_REF]
-								do
-									across
-										1 |..| some_count.as_integer_32 as i
-									from
-										create Result
-									loop
-										Result := Result.extended (some_set_dscr, some_equality_sdscr)
-									end
-								end
-						) as sf -- `some_immediate_instance' definition
-				monomorphic: sf.generating_type ~ {detachable STI_SET_FAMILY [detachable separate CHARACTER_REF]}
-			then
-				Result := cropped_set (sf)
-			end
 		end
 
 note

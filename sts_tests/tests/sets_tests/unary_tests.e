@@ -256,7 +256,13 @@ feature -- Factory (Set)
 	some_set_sg: STS_SET [STS_SET [G]]
 			-- Randomly-fetched polymorphic set of sets of elements like {G}
 		do
-			Result := some_immediate_set_sg
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_set_sg
+			when 1 then
+				Result := some_set_family_g
+			end
 		end
 
 	some_immediate_set_sg: STS_SET [STS_SET [G]]

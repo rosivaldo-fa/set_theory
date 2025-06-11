@@ -37,7 +37,8 @@ inherit
 			some_immediate_set_family_g as some_immediate_set_family_dscr
 		undefine
 			default_create,
-			test_is_in
+			test_is_in,
+			some_set_dscr
 		redefine
 			test_all,
 			test_holds,
