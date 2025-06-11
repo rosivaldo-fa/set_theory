@@ -38,7 +38,8 @@ inherit
 --			default_create
 		redefine
 			test_all,
-			test_make
+			test_make,
+			test_has
 		end
 
 	UNARY_TESTS_DSCR
@@ -69,6 +70,16 @@ feature -- Test routines (Initialization)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_COMPLEMENT_SET}.make"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Membership)
+
+	test_has
+			-- Test {STI_COMPLEMENT_SET}.has.
+		note
+			testing: "covers/{STI_COMPLEMENT_SET}.has"
 		do
 			Precursor {COMPLEMENT_SET_TESTS}
 		end
