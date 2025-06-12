@@ -9,6 +9,15 @@ deferred class
 
 inherit
 	SET [G]
+
+feature -- Quality
+
+	is_universe: BOOLEAN
+			-- <Precursor>
+			--| Current set knows it is a universe!
+		deferred
+		end
+
 feature -- Anchor
 
 	superset_anchor: UNIVERSE [G]
@@ -26,4 +35,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

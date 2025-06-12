@@ -35,13 +35,13 @@ feature -- Construction
 			Result := Current
 		end
 
-	prunned (a: G): like subset_anchor
+	prunned (a: G): COMPLEMENT_SET [G]
 			-- <Precursor>
 		local
-			ref: SET [G]
+			s: SET [G]
 		do
-			create ref
-			create Result.make (ref.extended (a, create {STS_REFERENCE_EQUALITY}))
+			create s
+			create Result.make (s.extended (a, create {STS_REFERENCE_EQUALITY [G]}))
 		end
 
 feature -- Quality
@@ -50,10 +50,10 @@ feature -- Quality
 
 feature -- Anchor
 
-	subset_anchor: SET [G]
+	subset_anchor: STS_SET [G]
 			-- <Precursor>
 		do
-			create Result
+			Result := Current
 		end
 
 	superset_anchor: UNIVERSE [G]

@@ -104,7 +104,7 @@ feature -- Factory (Set)
 		end
 
 	some_immediate_set_family_g: STI_SET_FAMILY [G]
-			-- Randomly-fetched monomorphic family of sets of sets of elements like {G}
+			-- <Precursor>
 		do
 			check
 				sf: attached {STI_SET_FAMILY [G]} some_immediate_instance (
@@ -122,6 +122,22 @@ feature -- Factory (Set)
 				monomorphic: sf.generating_type ~ {detachable STI_SET_FAMILY [G]}
 			then
 				Result := cropped_set (sf)
+			end
+		end
+
+	some_immediate_universe_g: STI_UNIVERSE [G]
+			-- <Precursor>
+		do
+			check
+				u: attached {STI_UNIVERSE [G]} some_immediate_instance (
+							agent: STI_UNIVERSE [G]
+								do
+									create Result
+								end
+						) as u -- `some_immediate_instance' definition
+				monomorphic: u.generating_type ~ {detachable STI_UNIVERSE [G]}
+			then
+				Result := u
 			end
 		end
 

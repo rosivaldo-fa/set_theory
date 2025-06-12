@@ -243,7 +243,13 @@ feature -- Factory (Set)
 	some_set_g: STS_SET [G]
 			-- Randomly-fetched polymorphic set of elements like {G}
 		do
-			Result := some_immediate_set_g
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_set_g
+			when 1 then
+				Result := some_universe_g
+			end
 		end
 
 	some_immediate_set_g: STS_SET [G]
@@ -283,6 +289,19 @@ feature -- Factory (Set)
 		deferred
 		ensure
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_family_g}
+		end
+
+	some_universe_g: STS_UNIVERSE [G]
+			-- Randomly-fetched polymorphic universe of elements like {G}
+		do
+			Result := some_immediate_universe_g
+		end
+
+	some_immediate_universe_g: STS_UNIVERSE [G]
+			-- Randomly-fetched monomorphic universe of elements like {G}
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_g}
 		end
 
 	cropped_set (s: STS_SET [detachable separate ANY]): like s
