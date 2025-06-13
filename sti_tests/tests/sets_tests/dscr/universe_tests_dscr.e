@@ -37,7 +37,8 @@ inherit
 			some_immediate_set_family_g as some_immediate_set_family_dscr
 		redefine
 			test_all,
-			test_has
+			test_has,
+			test_does_not_have
 		end
 
 	UNARY_TESTS_DSCR
@@ -68,6 +69,14 @@ feature -- Test routines (Membership)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_UNIVERSE}.has"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+	test_does_not_have
+			-- <Precursor>
+		note
+			testing: "covers/{STI_UNIVERSE}.does_not_have"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end

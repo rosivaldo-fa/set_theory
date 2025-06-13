@@ -13,7 +13,8 @@ inherit
 			default_create,
 			some_set_g
 		redefine
-			test_has
+			test_has,
+			test_does_not_have
 		end
 
 	UNARY_TESTS [G]
@@ -41,6 +42,20 @@ feature -- Test routines (Membership)
 			a := some_object_g
 			u := universe_to_be_tested
 			assert ("always has", u ∋ a)
+		end
+
+	test_does_not_have
+			-- Test {STI_UNIVERSE}.does_not_have.
+		note
+			testing: "covers/{STI_UNIVERSE}.does_not_have"
+		local
+			a: G
+			u: like universe_to_be_tested
+		do
+			Precursor {STST_UNIVERSE_TESTS}
+			a := some_object_g
+			u := universe_to_be_tested
+			assert ("never does_not_have", not (u ∌ a))
 		end
 
 note
