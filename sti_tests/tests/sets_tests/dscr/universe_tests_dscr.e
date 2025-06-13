@@ -38,7 +38,8 @@ inherit
 		redefine
 			test_all,
 			test_has,
-			test_does_not_have
+			test_does_not_have,
+			test_extended
 		end
 
 	UNARY_TESTS_DSCR
@@ -77,6 +78,16 @@ feature -- Test routines (Membership)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_UNIVERSE}.does_not_have"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- <Precursor>
+		note
+			testing: "covers/{STI_UNIVERSE}.extended"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end

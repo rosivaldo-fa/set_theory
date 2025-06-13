@@ -14,7 +14,8 @@ inherit
 			some_set_g
 		redefine
 			test_has,
-			test_does_not_have
+			test_does_not_have,
+			test_extended
 		end
 
 	UNARY_TESTS [G]
@@ -56,6 +57,24 @@ feature -- Test routines (Membership)
 			a := some_object_g
 			u := universe_to_be_tested
 			assert ("never does_not_have", not (u ∌ a))
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {STI_UNIVERSE}.extended.
+		note
+			testing: "covers/{STI_UNIVERSE}.extended"
+		local
+			u: like universe_to_be_tested
+			a: G
+			eq: like some_equality_g
+		do
+			Precursor {STST_UNIVERSE_TESTS}
+			u := universe_to_be_tested
+			a := some_object_g
+			eq := some_equality_g
+			assert ("no change", u.extended (same_object_g (a, eq), eq) = u) -- TODO: Use set equality instead.
 		end
 
 note
