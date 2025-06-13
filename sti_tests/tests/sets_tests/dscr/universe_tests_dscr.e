@@ -39,7 +39,8 @@ inherit
 			test_all,
 			test_has,
 			test_does_not_have,
-			test_extended
+			test_extended,
+			test_prunned
 		end
 
 	UNARY_TESTS_DSCR
@@ -88,6 +89,14 @@ feature -- Test routines (Construction)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_UNIVERSE}.extended"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+	test_prunned
+			-- Test {STI_UNIVERSE}.prunned.
+		note
+			testing: "covers/{STI_UNIVERSE}.prunned"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end
