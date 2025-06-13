@@ -71,8 +71,11 @@ feature -- Factory (Set)
 			check
 				s: attached {STI_COMPLEMENT_SET [G]} some_immediate_instance (
 							agent: STI_COMPLEMENT_SET [G]
+								local
+									s: like some_set_g
 								do
-									create Result.make (some_set_g)
+									s := some_set_g
+									create Result.make (s)
 								end
 						) as s -- `some_immediate_instance' definition
 				monomorphic: s.generating_type ~ {detachable STI_COMPLEMENT_SET [G]}

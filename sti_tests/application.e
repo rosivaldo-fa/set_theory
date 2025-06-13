@@ -22,6 +22,8 @@ feature {NONE} -- Initialization
 			(create {OBJECT_DEEP_EQUALITY_TESTS_DSCR}).test_all;
 			(create {SET_TESTS_DSCR}).test_all;
 			(create {SET_FAMILY_TESTS_DSCR}).test_all;
+			(create {COMPLEMENT_SET_TESTS_DSCR}).test_all;
+			(create {UNIVERSE_TESTS_DSCR}).test_all;
 		end
 
 note
