@@ -30,9 +30,9 @@ inherit
 feature -- Test routines (Membership)
 
 	test_has
-			-- Test {STS_SET}.has.
+			-- Test {STI_UNIVERSE}.has.
 		note
-			testing: "covers/{STS_SET}.has"
+			testing: "covers/{STI_UNIVERSE}.has"
 		local
 			a: G
 			u: like universe_to_be_tested
