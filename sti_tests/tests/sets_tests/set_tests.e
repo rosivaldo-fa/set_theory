@@ -68,17 +68,17 @@ feature -- Test routines (Output)
 			a := some_object_g
 			s := s.extended (a, some_equality_g)
 			s_out := s.out
-			assert ("{a}", s_out ~ "{} & " + s.element_out (a))
+			assert ("{a}", s_out ~ "{} & (" + s.element_out (a) + ")")
 
 			b := some_object_g
 			s := s.extended (b, some_equality_g)
 			s_out := s.out
-			assert ("{a, b}", s_out ~ "{} & " + s.element_out (a) + " & " + s.element_out (b))
+			assert ("{a, b}", s_out ~ "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ")")
 
 			c := some_object_g
 			s := s.extended (c, some_equality_g)
 			s_out := s.out
-			assert ("{a, b, c}", s_out ~ "{} & " + s.element_out (a) + " & " + s.element_out (b) + " & " + s.element_out (c))
+			assert ("{a, b, c}", s_out ~ "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ") & (" + s.element_out (c) + ")")
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)

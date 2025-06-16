@@ -85,12 +85,13 @@ feature -- Output
 				Result := "{}"
 			else
 				Result := subset.out
-				Result.append (" & ")
+				Result.append (" & (")
 				Result.append (element_out (given_element))
+				Result.append_character (')')
 			end
 		ensure then
 			base: Current = subset ⇒ Result ~ "{}"
-			induction: Current /= subset ⇒ Result ~ subset.out + " & " + element_out (given_element)
+			induction: Current /= subset ⇒ Result ~ subset.out + " & (" + element_out (given_element) + ")"
 		end
 
 	element_out (a: G): STRING
