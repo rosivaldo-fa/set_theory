@@ -37,6 +37,7 @@ feature -- Test routines (All)
 		do
 			Precursor {STST_SET_TESTS}
 			test_make
+			test_out
 		end
 
 feature -- Test routines (Initialization)
@@ -47,6 +48,16 @@ feature -- Test routines (Initialization)
 			testing: "covers/{STI_COMPLEMENT_SET}.make"
 		do
 			assert ("make", attached (create {like set_to_be_tested}.make (some_set_g)))
+		end
+
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {STI_COMPLEMENT_SET}.out.
+		note
+			testing: "covers/{STI_COMPLEMENT_SET}.out"
+		do
+			assert ("out", attached set_to_be_tested.out)
 		end
 
 feature {NONE} -- Factory (element to be tested)

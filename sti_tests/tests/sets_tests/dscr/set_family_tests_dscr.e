@@ -40,7 +40,8 @@ inherit
 			some_immediate_set_family_g as some_immediate_set_family_dscr
 		redefine
 			test_all,
-			test_make_extended
+			test_make_extended,
+			test_out
 		end
 
 feature -- Test routines (All)
@@ -61,6 +62,22 @@ feature -- Test routines (Initialization)
 			testing: "covers/{STI_SET_FAMILY}.make_extended"
 		do
 			Precursor {SET_FAMILY_TESTS}
+		end
+
+feature -- Test routines (Output)
+
+	test_out
+			-- <Precursor>
+			-- Test {STI_SET_FAMILY}.out.
+		note
+			testing: "covers/{STI_SET}.out"
+			testing: "covers/{STI_SET_FAMILY}.out"
+		do
+			from
+			until false
+			loop
+			Precursor {SET_FAMILY_TESTS}
+			end
 		end
 
 feature -- Factory (Set)
@@ -92,4 +109,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

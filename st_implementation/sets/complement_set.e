@@ -9,6 +9,16 @@ class
 
 inherit
 	STS_SET [G]
+		redefine
+			out
+		end
+
+	DEBUG_OUTPUT
+		rename
+			debug_output as out
+		redefine
+			out
+		end
 
 create
 	make
@@ -56,6 +66,18 @@ feature -- Quality
 			-- <Precursor>
 		do
 			-- TODO: Check whether `reference_set' is empty.
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		do
+			Result := "∁ ("
+			Result.append (reference_set.out)
+			Result.append_character (')')
+		ensure then
+			definition: Result ~ "∁ (" + reference_set.out + ")"
 		end
 
 feature -- Anchor

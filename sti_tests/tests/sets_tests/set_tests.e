@@ -60,21 +60,25 @@ feature -- Test routines (Output)
 		local
 			a, b, c: G
 			s: like set_to_be_tested
+			s_out: STRING
 		do
 			create s
 			assert ("{}", s.out ~ "{}")
 
 			a := some_object_g
 			s := s.extended (a, some_equality_g)
-			assert ("{a}", s.out ~ "{} & " + s.element_out (a))
+			s_out := s.out
+			assert ("{a}", s_out ~ "{} & " + s.element_out (a))
 
 			b := some_object_g
 			s := s.extended (b, some_equality_g)
-			assert ("{a, b}", s.out ~ "{} & " + s.element_out (a) + " & " + s.element_out (b))
+			s_out := s.out
+			assert ("{a, b}", s_out ~ "{} & " + s.element_out (a) + " & " + s.element_out (b))
 
 			c := some_object_g
 			s := s.extended (c, some_equality_g)
-			assert ("{a, b, c}", s.out ~ "{} & " + s.element_out (a) + " & " + s.element_out (b) + " & " + s.element_out (c))
+			s_out := s.out
+			assert ("{a, b, c}", s_out ~ "{} & " + s.element_out (a) + " & " + s.element_out (b) + " & " + s.element_out (c))
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)

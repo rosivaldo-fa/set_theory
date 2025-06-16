@@ -42,7 +42,8 @@ inherit
 			test_has,
 			test_extended,
 			test_prunned,
-			test_is_universe
+			test_is_universe,
+			test_out
 		end
 
 	UNARY_TESTS_DSCR
@@ -126,6 +127,16 @@ feature -- Test routines (Quality)
 			-- Test {STI_COMPLEMENT_SET}.is_universe.
 		note
 			testing: "covers/{STI_COMPLEMENT_SET}.is_universe"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {STI_COMPLEMENT_SET}.out.
+		note
+			testing: "covers/{STI_COMPLEMENT_SET}.out"
 		do
 			Precursor {COMPLEMENT_SET_TESTS}
 		end

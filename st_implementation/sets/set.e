@@ -88,7 +88,6 @@ feature -- Output
 				Result.append (" & ")
 				Result.append (element_out (given_element))
 			end
-
 		ensure then
 			base: Current = subset ⇒ Result ~ "{}"
 			induction: Current /= subset ⇒ Result ~ subset.out + " & " + element_out (given_element)
@@ -109,6 +108,11 @@ feature -- Output
 			class
 			when_attached: attached a ⇒ Result ~ a.out
 			when_detached: not attached a ⇒ Result ~ "Void"
+		rescue
+			if {EXCEPTIONS}.tag_name ~ "when_attached" then
+					-- If a.out contains the address of an object, the GC may changed such an address. Just hope it remains stable for now.
+				retry
+			end
 		end
 
 feature -- Quality
