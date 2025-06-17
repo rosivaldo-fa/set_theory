@@ -73,11 +73,7 @@ feature -- Test routines (Output)
 			testing: "covers/{STI_SET}.out"
 			testing: "covers/{STI_SET_FAMILY}.out"
 		do
-			from
-			until false
-			loop
 			Precursor {SET_FAMILY_TESTS}
-			end
 		end
 
 feature -- Factory (Set)
