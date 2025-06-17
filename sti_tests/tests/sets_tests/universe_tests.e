@@ -13,6 +13,7 @@ inherit
 			default_create,
 			some_set_g
 		redefine
+			test_all,
 			test_has,
 			test_does_not_have,
 			test_extended
@@ -25,8 +26,20 @@ inherit
 			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as universe_to_be_tested
 		undefine
-			test_all,
 			universe_to_be_tested
+		redefine
+			test_all
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {STS_SET}.
+		note
+			testing: "covers/{STS_SET}"
+		do
+			Precursor {UNARY_TESTS}
+			test_out
 		end
 
 feature -- Test routines (Membership)

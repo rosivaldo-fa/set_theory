@@ -110,7 +110,7 @@ feature -- Test routines (Construction)
 			s := s.extended (object_standard_twin_dscr (a), ref_eq)
 			s := s.extended (object_twin_dscr (a), ref_eq)
 			s := s.extended (object_deep_twin_dscr (a), ref_eq)
-			assert ("Beware equalities!", s ∌ a)
+			assert ("Beware equalities!", attached a ⇒ s ∌ a)
 		end
 
 	test_prunned
