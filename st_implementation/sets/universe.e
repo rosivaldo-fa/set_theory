@@ -10,7 +10,15 @@ class
 inherit
 	STS_UNIVERSE [G]
 		redefine
-			does_not_have
+			does_not_have,
+			out
+		end
+
+	DEBUG_OUTPUT
+		rename
+			debug_output as out
+		redefine
+			out
 		end
 
 feature -- Membership
@@ -47,6 +55,16 @@ feature -- Construction
 feature -- Quality
 
 	is_universe: BOOLEAN = True
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		do
+			Result := "𝕌"
+		ensure then
+			definition: Result ~ "𝕌"
+		end
 
 feature -- Anchor
 

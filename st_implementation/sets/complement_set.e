@@ -73,11 +73,11 @@ feature -- Output
 	out: STRING
 			-- <Precursor>
 		do
-			Result := "∁ ("
+			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("∁ (")
 			Result.append (reference_set.out)
 			Result.append_character (')')
 		ensure then
-			definition: Result ~ "∁ (" + reference_set.out + ")"
+			definition: Result ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("∁ (") + reference_set.out + ")"
 		end
 
 feature -- Anchor
