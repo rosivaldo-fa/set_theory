@@ -61,9 +61,9 @@ feature -- Output
 	out: STRING
 			-- <Precursor>
 		do
-			Result := "𝕌"
+			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("𝕌")
 		ensure then
-			definition: Result ~ "𝕌"
+			definition: Result ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("𝕌")
 		end
 
 feature -- Anchor
