@@ -17,6 +17,9 @@
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
 			<renaming old_name="SET" new_name="EB_SET"/>
 		</library>
+		<cluster name="numbers" location=".\numbers\" recursive="true">
+			<description>Specification of well known numeric sets and their respecitve numeric elements</description>
+		</cluster>
 		<cluster name="sets" location=".\sets\" recursive="true">
 			<description>Specification of sets and some other core concepts of set theory</description>
 		</cluster>
