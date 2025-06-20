@@ -4,6 +4,7 @@
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
+	TODO: "AutoTest may confuse {STST_NATURAL_NUMBER_TESTS} with {NATURAL_NUMBER_TESTS}."
 
 class
 	NATURAL_NUMBER_EFFECTIVE_TESTS
