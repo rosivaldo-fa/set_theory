@@ -74,7 +74,15 @@ feature -- Factory (Element)
 	some_element: STS_ELEMENT
 			-- Randomly-fetched polymorphic element
 		do
-			Result := some_immediate_element
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				Result := some_immediate_element
+			when 1 then
+				Result := some_element_equality
+			when 2 then
+				Result := some_natural_number
+			end
 		end
 
 	some_immediate_element: like some_element
@@ -169,6 +177,21 @@ feature -- Factory (Equality)
 			then
 				Result := eq
 			end
+		end
+
+feature -- Factory (natural number)
+
+	some_natural_number: STS_NATURAL_NUMBER
+			-- Randomly-fetched polymorphic natural number
+		do
+			Result := some_immediate_natural_number
+		end
+
+	some_immediate_natural_number: STS_NATURAL_NUMBER
+			-- Randomly-fetched monomorphic natural number
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_natural_number}
 		end
 
 feature {NONE} -- Implementation

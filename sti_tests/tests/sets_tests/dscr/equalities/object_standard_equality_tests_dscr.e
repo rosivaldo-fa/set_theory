@@ -34,7 +34,9 @@ inherit
 			some_set_sg as some_set_sdscr,
 			some_immediate_set_sg as some_immediate_set_sdscr,
 			some_set_family_g as some_set_family_dscr,
-			some_immediate_set_family_g as some_immediate_set_family_dscr
+			some_immediate_set_family_g as some_immediate_set_family_dscr,
+
+			some_immediate_natural_number as some_expanded_natural_number
 		undefine
 			default_create,
 			test_is_in,

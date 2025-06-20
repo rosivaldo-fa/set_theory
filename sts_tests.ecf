@@ -31,6 +31,9 @@
 			<tests name="sets_tests" location=".\tests\sets_tests\" recursive="true">
 				<description>Tests for sets and others core-concept classes of set theory, as specified by st_specification</description>
 			</tests>
+			<tests name="numbers_tests" location=".\tests\numbers_tests\" recursive="true">
+				<description>Tests for well known numeric sets and their respecitve numeric elements, as specified by st_specification</description>
+			</tests>
 		</tests>
 	</target>
 </system>

@@ -9,6 +9,8 @@ deferred class
 
 inherit
 	STST_SET_TESTS [G]
+		rename
+			some_immediate_natural_number as some_expanded_natural_number
 		undefine
 			default_create,
 			some_set_g

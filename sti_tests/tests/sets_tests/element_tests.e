@@ -10,6 +10,8 @@ class
 
 inherit
 	STST_ELEMENT_TESTS
+		rename
+			some_immediate_natural_number as some_expanded_natural_number
 		undefine
 			default_create
 		redefine
@@ -60,6 +62,13 @@ feature -- Factory (Element)
 			loop
 				Result := Result.extended (some_element, some_element_equality)
 			end
+		end
+
+feature -- Factory (natural)
+
+	some_expanded_natural_number: STI_NATURAL_NUMBER
+			-- <Precursor>
+		do
 		end
 
 note

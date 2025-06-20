@@ -24,6 +24,7 @@ feature {NONE} -- Initialization
 			(create {SET_FAMILY_TESTS_DSCR}).test_all;
 			(create {COMPLEMENT_SET_TESTS_DSCR}).test_all;
 			(create {UNIVERSE_TESTS_DSCR}).test_all;
+			(create {NATURAL_NUMBER_EFFECTIVE_TESTS}).test_all;
 		end
 
 note

@@ -17,10 +17,20 @@ feature -- Primitive
 		deferred
 		end
 
+feature -- Implementation
+
+	adjusted_value (v: like value): like value
+			-- `v' adjusted to represent the `value' of current natural number
+		deferred
+		ensure
+			stable: adjusted_value (Result) = Result
+		end
+
 feature -- Anchor
 
 	native_natural_anchor: NATURAL
 			-- Anchor for the native representation of the value of current natural number
+			--| TODO: Make it target dependant.
 		deferred
 		end
 
