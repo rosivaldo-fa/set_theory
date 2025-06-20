@@ -38,6 +38,16 @@ feature -- Test routines (Primitive)
 			assert ("value", attached natural_number_to_be_tested.value)
 		end
 
+feature -- Test routines (Implementation)
+
+	test_adjusted_value
+			-- Test {STS_NATURAL_NUMBER}.adjusted_value.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.adjusted_value"
+		do
+			assert ("adjusted_value", attached natural_number_to_be_tested.adjusted_value (next_random_item.as_natural_32))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	natural_number_to_be_tested: like some_immediate_natural_number

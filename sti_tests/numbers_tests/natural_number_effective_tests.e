@@ -19,7 +19,8 @@ inherit
 			test_is_not_in
 		redefine
 			test_all,
-			test_value
+			test_value,
+			test_adjusted_value
 		end
 
 	ELEMENT_TESTS
@@ -58,6 +59,16 @@ feature -- Test routines (Primitive)
 			testing: "covers/{STI_NATURAL_NUMBER}.value"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Implementation)
+
+	test_adjusted_value
+			-- Test {STI_NATURAL_NUMBER}.adjusted_value.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.adjusted_value"
+		do
+			assert ("adjusted_value", attached natural_number_to_be_tested.adjusted_value (next_random_item.as_natural_32))
 		end
 
 note
