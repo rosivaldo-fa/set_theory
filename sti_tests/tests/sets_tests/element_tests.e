@@ -64,11 +64,17 @@ feature -- Factory (Element)
 			end
 		end
 
-feature -- Factory (natural)
+feature -- Factory (natural number)
 
 	some_expanded_natural_number: STI_NATURAL_NUMBER
 			-- <Precursor>
 		do
+		end
+
+	some_native_natural_number: NATURAL
+			-- Randomly-created native natural number
+		do
+			Result := next_random_item.as_natural_32 & 0b1111111 -- TODO: No magic number!
 		end
 
 note

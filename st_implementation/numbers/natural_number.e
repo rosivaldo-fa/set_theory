@@ -14,6 +14,9 @@ create
 	default_create,
 	make
 
+convert
+	make ({NATURAL})
+
 feature {NONE} -- Initialization
 
 	make (v: like value)

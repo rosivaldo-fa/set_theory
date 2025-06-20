@@ -51,6 +51,15 @@ feature -- Test routines (Initialization)
 			assert ("default_create", attached (create {like natural_number_to_be_tested}))
 		end
 
+	test_make
+			-- Test {STI_NATURAL_NUMBER}.make.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.make"
+		do
+			assert ("make", attached (create {like natural_number_to_be_tested}.make (next_random_item.as_natural_32)))
+			assert ("natural_number_from_native", attached natural_number_from_native (next_random_item.as_natural_32))
+		end
+
 feature -- Test routines (Primitive)
 
 	test_value
@@ -69,6 +78,16 @@ feature -- Test routines (Implementation)
 			testing: "covers/{STI_NATURAL_NUMBER}.adjusted_value"
 		do
 			assert ("adjusted_value", attached natural_number_to_be_tested.adjusted_value (next_random_item.as_natural_32))
+		end
+
+feature {NONE} -- Conversion
+
+	natural_number_from_native (v: like some_native_natural_number): like natural_number_to_be_tested
+			-- `v' converted to a natural number like `natural_number_to_be_tested'
+		do
+			Result := v
+		ensure
+			adjusted_value: Result.value = {like natural_number_to_be_tested}.adjusted_value (v)
 		end
 
 note
