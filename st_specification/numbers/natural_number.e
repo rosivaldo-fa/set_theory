@@ -15,6 +15,8 @@ feature -- Primitive
 	value: like native_natural_anchor
 			-- Native value of current natural number
 		deferred
+		ensure
+			adjusted: Result = adjusted_value (Result)
 		end
 
 feature -- Implementation

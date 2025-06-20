@@ -55,7 +55,7 @@ feature -- Anchor
 feature {NONE} -- Implementation
 
 	stored_value: NATURAL_8;
-			-- Bit pattern of the `value' of current natural number
+		-- Bit pattern of the `value' of current natural number
 
 	stored_value_mask: like stored_value = 0b1111111
 			-- Binary mask for the (stored) value of a natural number
@@ -67,4 +67,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end
