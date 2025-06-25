@@ -22,6 +22,12 @@
 		<library name="sts_tests" location="..\sts_tests.ecf" readonly="false" prefix="STST_"/>
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
 		<library name="time" location="$ISE_LIBRARY\library\time\time.ecf"/>
+		<cluster name="adaptation" location=".\adaptation\">
+			<description>Possible adaptations of classes to be tested, mostly to allow testing of access-restricted features and/or to improve testing performance.</description>
+			<cluster name="numbers" location=".\adaptation\numbers\" recursive="true">
+				<description>Classes of well known numeric sets and their respecitve numeric elements, adapted mostly to allow testing of access-restricted features and/or to improve testing performance.</description>
+			</cluster>
+		</cluster>
 		<cluster name="properties" location=".\properties\">
 			<description>Properties of concepts of set theory, as implemented by st_implementation</description>
 			<cluster name="sets_properties" location=".\properties\sets_properties\" recursive="true">

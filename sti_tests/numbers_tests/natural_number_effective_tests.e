@@ -15,16 +15,18 @@ inherit
 			some_immediate_natural_number as some_expanded_natural_number
 		undefine
 			default_create,
-			test_is_in,
+			test_element_is_in,
 			test_is_not_in
 		redefine
 			test_all,
 			test_value,
+			test_is_in,
 			test_adjusted_value
 		end
 
 	ELEMENT_TESTS
 		rename
+			test_is_in as test_element_is_in,
 			element_to_be_tested as natural_number_to_be_tested
 		undefine
 			test_all,
@@ -66,6 +68,18 @@ feature -- Test routines (Primitive)
 			-- Test {STI_NATURAL_NUMBER}.value.
 		note
 			testing: "covers/{STI_NATURAL_NUMBER}.value"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Membership)
+
+	test_is_in
+			-- <Precursor>
+			-- Test {STI_NATURAL_NUMBER}.is_in.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.is_in"
+			testing: "covers/{STI_NATURAL_NUMBER}.is_in"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end

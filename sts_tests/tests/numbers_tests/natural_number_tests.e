@@ -11,6 +11,7 @@ deferred class
 inherit
 	ELEMENT_TESTS
 		rename
+			test_is_in as test_element_is_in,
 			element_to_be_tested as natural_number_to_be_tested
 		redefine
 			test_all,
@@ -36,6 +37,21 @@ feature -- Test routines (Primitive)
 			testing: "covers/{STS_NATURAL_NUMBER}.value"
 		do
 			assert ("value", attached natural_number_to_be_tested.value)
+		end
+
+feature -- Test routines (Membership)
+
+	test_is_in
+			-- Test {STS_NATURAL_NUMBER}.is_in.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.is_in"
+		local
+			n: like natural_number_to_be_tested
+			s: like some_set_of_natural_numbers
+		do
+			n := natural_number_to_be_tested
+			s := some_set_of_natural_numbers
+			assert ("is_in", n ∈ s ⇒ True)
 		end
 
 feature -- Test routines (Implementation)

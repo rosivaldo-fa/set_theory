@@ -304,31 +304,6 @@ feature -- Factory (Set)
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_g}
 		end
 
-	cropped_set (s: STS_SET [detachable separate ANY]): like s
-			-- `s' striped from as many elements as necessary to keep its cardinality at most `Max_count'
-		local
---			cropped_s: STS_SET [detachable separate ANY, STS_EQUALITY [detachable separate ANY]]
---			n: NATURAL
-		do
---			n := # s
---			if n ≤ Max_count then
-			Result := s
---			else
---				if n > max_asserted_elements then
---					chk_cropp := {ISE_RUNTIME}.check_assert (False)
---				end
---					cropped_s := trimmed_n_tuple (s.as_tuple).terms
---					Result := s.o ∪ cropped_s
---				if chk_cropp then
---					chk_cropp := {ISE_RUNTIME}.check_assert (True)
---				end
---			end
-		ensure
---			small_enough: # Result ≤ Max_count
---			no_change: # s ≤ Max_count implies Result ≍ s
---			cropped: Result ⊆ s
-		end
-
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

@@ -194,7 +194,64 @@ feature -- Factory (natural number)
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_natural_number}
 		end
 
+	some_set_of_natural_numbers: STS_SET [STS_NATURAL_NUMBER]
+			-- Randomly-fetched polymorphic set of natural numbers
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_set_of_natural_numbers
+			when 1 then
+				Result := some_universe_of_natural_numbers
+			end
+		end
+
+	some_immediate_set_of_natural_numbers: like some_set_of_natural_numbers
+			-- Randomly-fetched monomorphic set of natural numbers
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_of_natural_numbers}
+		end
+
+	some_universe_of_natural_numbers: STS_UNIVERSE [STS_NATURAL_NUMBER]
+			-- Randomly-fetched polymorphic universe of natural numbers
+		do
+			Result := some_immediate_universe_of_natural_numbers
+		end
+
+	some_immediate_universe_of_natural_numbers: like some_universe_of_natural_numbers
+			-- Randomly-fetched monomorphic universe of natural numbers
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_of_natural_numbers}
+		end
+
 feature {NONE} -- Implementation
+
+	cropped_set (s: STS_SET [detachable separate ANY]): like s
+			-- `s' striped from as many elements as necessary to keep its cardinality at most `Max_count'
+		local
+--			cropped_s: STS_SET [detachable separate ANY, STS_EQUALITY [detachable separate ANY]]
+--			n: NATURAL
+		do
+--			n := # s
+--			if n ≤ Max_count then
+			Result := s
+--			else
+--				if n > max_asserted_elements then
+--					chk_cropp := {ISE_RUNTIME}.check_assert (False)
+--				end
+--					cropped_s := trimmed_n_tuple (s.as_tuple).terms
+--					Result := s.o ∪ cropped_s
+--				if chk_cropp then
+--					chk_cropp := {ISE_RUNTIME}.check_assert (True)
+--				end
+--			end
+		ensure
+--			small_enough: # Result ≤ Max_count
+--			no_change: # s ≤ Max_count implies Result ≍ s
+--			cropped: Result ⊆ s
+		end
 
 	some_immediate_instance (a_new_instance: FUNCTION [detachable separate ANY]): detachable separate ANY
 			-- Randomly-fetched object whose type equals the result type of `a_new_instance'

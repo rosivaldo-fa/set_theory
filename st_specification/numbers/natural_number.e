@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Model of a natural number, i.e. a non-negative integer number."
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -9,6 +9,9 @@ deferred class
 
 inherit
 	ELEMENT
+		rename
+			is_in as element_is_in
+		end
 
 feature -- Primitive
 
@@ -17,6 +20,16 @@ feature -- Primitive
 		deferred
 		ensure
 			adjusted: Result = adjusted_value (Result)
+		end
+
+feature -- Membership
+
+	is_in alias "∈" (s: SET [NATURAL_NUMBER]): BOOLEAN
+			-- Does `s` have current natural number?
+		do
+			Result := s ∋ Current
+		ensure
+			definition: Result = s ∋ Current
 		end
 
 feature -- Implementation
