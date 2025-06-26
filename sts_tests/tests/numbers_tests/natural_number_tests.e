@@ -74,14 +74,17 @@ feature -- Test routines (Membership)
 			n := natural_number_to_be_tested
 			s := some_set_of_natural_numbers.prunned (n)
 			assert ("n ∉ s", n ∉ s)
+			assert ("n ∉ s ok", is_not_in_ok (n, s))
 
 			n := natural_number_to_be_tested
 			s := some_set_of_natural_numbers.extended (n, some_natural_number_equality)
 			assert ("not (n ∉ s)", not (n ∉ s))
+			assert ("not (n ∉ s) ok", is_not_in_ok (n, s))
 
 			n := natural_number_to_be_tested
 			s := some_set_of_natural_numbers
 			assert ("is_not_in", n ∉ s ⇒ True)
+			assert ("is_not_in_ok", is_not_in_ok (n, s))
 		end
 
 feature -- Test routines (Implementation)
