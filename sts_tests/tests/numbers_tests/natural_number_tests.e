@@ -87,6 +87,19 @@ feature -- Test routines (Membership)
 			assert ("is_not_in_ok", is_not_in_ok (n, s))
 		end
 
+feature -- Test routines (Access)
+
+	test_zero
+			-- Test {STI_NATURAL_NUMBER}.zero.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.zero"
+		local
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("zero", attached n.Zero)
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value

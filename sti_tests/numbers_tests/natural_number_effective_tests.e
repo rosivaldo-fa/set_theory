@@ -22,6 +22,7 @@ inherit
 			test_value,
 			test_is_in,
 			test_is_not_in,
+			test_zero,
 			test_adjusted_value
 		end
 
@@ -92,6 +93,16 @@ feature -- Test routines (Membership)
 		note
 			testing: "covers/{STS_NATURAL_NUMBER}.is_not_in"
 			testing: "covers/{STI_NATURAL_NUMBER}.is_not_in"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Access)
+
+	test_zero
+			-- <Precursor>
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.zero"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
