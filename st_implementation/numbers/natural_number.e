@@ -9,6 +9,9 @@ expanded class
 
 inherit
 	STS_NATURAL_NUMBER
+		redefine
+			default_create
+		end
 
 create
 	default_create,
@@ -18,6 +21,14 @@ convert
 	make ({NATURAL})
 
 feature {NONE} -- Initialization
+
+	default_create
+			-- Create a natural number with value = 0
+		do
+			stored_value := 0
+		ensure then
+			value: value = 0
+		end
 
 	make (v: like value)
 			-- Create a natural number out of value `v'.
@@ -35,6 +46,15 @@ feature -- Primitive
 			Result := stored_value
 		end
 
+feature -- Access
+
+	Zero: NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
@@ -47,6 +67,13 @@ feature -- Implementation
 		end
 
 feature -- Anchor
+
+	natural_anchor: NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
 
 	native_natural_anchor: NATURAL
 			-- <Precursor>
