@@ -57,6 +57,16 @@ feature -- Access
 			one: Result.value = 1
 		end
 
+feature -- Comparison
+
+	equals alias "≍" (n: NATURAL_NUMBER): BOOLEAN
+			-- Do current natural number and `n' have the same numeric value?
+		do
+			Result := value = n.value
+		ensure
+			definition: Result = (value = n.value)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

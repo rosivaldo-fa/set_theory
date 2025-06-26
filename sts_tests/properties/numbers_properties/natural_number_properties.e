@@ -9,11 +9,26 @@ deferred class
 
 feature -- Properties (Membership)
 
-	is_not_in_ok (i: STS_NATURAL_NUMBER; s: STS_SET [STS_NATURAL_NUMBER]): BOOLEAN
+	is_not_in_ok (l: STS_NATURAL_NUMBER; s: STS_SET [STS_NATURAL_NUMBER]): BOOLEAN
 			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.is_not_in?
 		do
 			check
-				another_definition: i ∉ s = s ∌ i
+				another_definition: l ∉ s = s ∌ l
+			then
+				Result := True
+			end
+		end
+
+feature -- Properties (Comparison)
+
+	equals_ok (l, m, n: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.equals?
+		do
+			check
+				reflexive: n ≍ n
+				symmetric: m ≍ n implies n ≍ m
+				transitive: l ≍ m and m ≍ n implies l ≍ n
+				euclidian: l ≍ n and m ≍ n implies l ≍ m
 			then
 				Result := True
 			end

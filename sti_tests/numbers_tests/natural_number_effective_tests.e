@@ -16,7 +16,8 @@ inherit
 		undefine
 			default_create,
 			test_element_is_in,
-			test_element_is_not_in
+			test_element_is_not_in,
+			same_natural_number
 		redefine
 			test_all,
 			test_value,
@@ -24,11 +25,13 @@ inherit
 			test_is_not_in,
 			test_zero,
 			test_one,
+			test_equals,
 			test_adjusted_value
 		end
 
 	ELEMENT_TESTS
 		rename
+			is_not_in_ok as element_is_not_in_ok,
 			test_is_in as test_element_is_in,
 			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as natural_number_to_be_tested
@@ -112,6 +115,18 @@ feature -- Test routines (Access)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_NATURAL_NUMBER}.one"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Comparison)
+
+	test_equals
+			-- <Precursor>
+			-- Test {STI_NATURAL_NUMBER}.equals.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.equals"
+			testing: "covers/{STI_NATURAL_NUMBER}.equals"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end

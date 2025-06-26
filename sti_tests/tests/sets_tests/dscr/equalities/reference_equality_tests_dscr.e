@@ -40,7 +40,8 @@ inherit
 		undefine
 			default_create,
 			test_is_in,
-			some_set_dscr
+			some_set_dscr,
+			same_natural_number
 		redefine
 			test_all,
 			test_holds,

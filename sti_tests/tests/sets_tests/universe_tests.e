@@ -13,7 +13,8 @@ inherit
 			some_immediate_natural_number as some_expanded_natural_number
 		undefine
 			default_create,
-			some_set_g
+			some_set_g,
+			same_natural_number
 		redefine
 			test_all,
 			test_has,

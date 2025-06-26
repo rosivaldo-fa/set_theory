@@ -11,6 +11,7 @@ deferred class
 inherit
 	ELEMENT_TESTS
 		rename
+			is_not_in_ok as element_is_not_in_ok,
 			test_is_in as test_element_is_in,
 			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as natural_number_to_be_tested
@@ -18,6 +19,8 @@ inherit
 			test_all,
 			natural_number_to_be_tested
 		end
+
+	NATURAL_NUMBER_PROPERTIES
 
 feature -- Test routines (All)
 
@@ -109,6 +112,38 @@ feature -- Test routines (Access)
 		do
 			n := natural_number_to_be_tested
 			assert ("one", attached n.One)
+		end
+
+feature -- Test routines (Comparison)
+
+	test_equals
+			-- Test {STS_NATURAL_NUMBER}.equals.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.equals"
+		local
+			m: like some_natural_number
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("same entity", n ≍ n)
+			assert ("same entity ok", equals_ok (n, n, n))
+
+			n := natural_number_to_be_tested
+			m := same_natural_number (n)
+			assert ("same_natural_number", n ≍ m)
+			assert ("same_natural_number ok", equals_ok (same_natural_number (m), m, n))
+
+			from
+				m := some_natural_number
+				n := natural_number_to_be_tested
+			until
+				m.value /= n.value
+			loop
+				m := some_natural_number
+				n := natural_number_to_be_tested
+			end
+			assert ("not (n ≍ m)", not (n ≍ m))
+			assert ("not (n ≍ m) ok", equals_ok (some_natural_number, m, n))
 		end
 
 feature -- Test routines (Implementation)

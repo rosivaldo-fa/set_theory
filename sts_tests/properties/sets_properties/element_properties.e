@@ -13,7 +13,7 @@ feature -- Properties (Membership)
 			-- Do the properties verified within set theory hold for {STS_ELEMENT}.is_not_in?
 		do
 			check
-				definition: a ∉ s = s ∌ a
+				another_definition: a ∉ s = s ∌ a
 			then
 				Result := True
 			end

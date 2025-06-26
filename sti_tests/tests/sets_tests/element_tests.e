@@ -17,7 +17,8 @@ inherit
 		redefine
 			test_all,
 			test_is_in,
-			test_is_not_in
+			test_is_not_in,
+			same_natural_number
 		end
 
 	EQA_TEST_SET
@@ -65,6 +66,18 @@ feature -- Factory (Element)
 		end
 
 feature -- Factory (natural number)
+
+	same_natural_number (n: STS_NATURAL_NUMBER): like some_natural_number
+			-- <Precursor>
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := Precursor{STST_ELEMENT_TESTS} (n)
+			when 1 then
+				create {STI_NATURAL_NUMBER} Result.make (n.value)
+			end
+		end
 
 	some_expanded_natural_number: STI_NATURAL_NUMBER
 			-- <Precursor>

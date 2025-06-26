@@ -194,6 +194,14 @@ feature -- Factory (natural number)
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_natural_number}
 		end
 
+	same_natural_number (n: STS_NATURAL_NUMBER): like some_natural_number
+			-- Natural number equal to `n'
+		do
+			Result := n
+		ensure
+			definition: Result ≍ n
+		end
+
 	some_set_of_natural_numbers: STS_SET [STS_NATURAL_NUMBER]
 			-- Randomly-fetched polymorphic set of natural numbers
 		do
