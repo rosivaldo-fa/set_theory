@@ -16,17 +16,19 @@ inherit
 		undefine
 			default_create,
 			test_element_is_in,
-			test_is_not_in
+			test_element_is_not_in
 		redefine
 			test_all,
 			test_value,
 			test_is_in,
+			test_is_not_in,
 			test_adjusted_value
 		end
 
 	ELEMENT_TESTS
 		rename
 			test_is_in as test_element_is_in,
+			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as natural_number_to_be_tested
 		undefine
 			test_all,
@@ -80,6 +82,16 @@ feature -- Test routines (Membership)
 		note
 			testing: "covers/{STS_NATURAL_NUMBER}.is_in"
 			testing: "covers/{STI_NATURAL_NUMBER}.is_in"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+	test_is_not_in
+			-- <Precursor>
+			-- Test {STI_NATURAL_NUMBER}.is_not_in.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.is_not_in"
+			testing: "covers/{STI_NATURAL_NUMBER}.is_not_in"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end

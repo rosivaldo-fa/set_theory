@@ -12,6 +12,7 @@ inherit
 	ELEMENT_TESTS
 		rename
 			test_is_in as test_element_is_in,
+			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as natural_number_to_be_tested
 		redefine
 			test_all,
@@ -60,6 +61,27 @@ feature -- Test routines (Membership)
 			n := natural_number_to_be_tested
 			s := some_set_of_natural_numbers
 			assert ("is_in", n ∈ s ⇒ True)
+		end
+
+	test_is_not_in
+			-- Test {STS_NATURAL_NUMBER}.is_not_in.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.is_not_in"
+		local
+			n: like natural_number_to_be_tested
+			s: like some_set_of_natural_numbers
+		do
+			n := natural_number_to_be_tested
+			s := some_set_of_natural_numbers.prunned (n)
+			assert ("n ∉ s", n ∉ s)
+
+			n := natural_number_to_be_tested
+			s := some_set_of_natural_numbers.extended (n, some_natural_number_equality)
+			assert ("not (n ∉ s)", not (n ∉ s))
+
+			n := natural_number_to_be_tested
+			s := some_set_of_natural_numbers
+			assert ("is_not_in", n ∉ s ⇒ True)
 		end
 
 feature -- Test routines (Implementation)

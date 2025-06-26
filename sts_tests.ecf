@@ -25,6 +25,9 @@
 			<cluster name="sets_properties" location=".\properties\sets_properties\" recursive="true">
 				<description>Properties of sets and other core concepts of set theory, as specified by st_specification</description>
 			</cluster>
+			<cluster name="numbers_properties" location=".\properties\numbers_properties\" recursive="true">
+				<description>Properties of well known numeric sets and their respecitve numeric elements, as specified by st_specification</description>
+			</cluster>
 		</cluster>
 		<tests name="tests" location=".\tests\">
 			<description>Repository of tests for classes of set theory, as specified by st_specification</description>
