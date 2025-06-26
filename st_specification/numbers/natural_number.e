@@ -50,6 +50,13 @@ feature -- Access
 			zero: Result.value = 0
 		end
 
+	one: like natural_anchor
+			-- The natural number 1
+		deferred
+		ensure
+			one: Result.value = 1
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

@@ -100,6 +100,17 @@ feature -- Test routines (Access)
 			assert ("zero", attached n.Zero)
 		end
 
+	test_one
+			-- Test {STI_NATURAL_NUMBER}.one.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.one"
+		local
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("one", attached n.One)
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value

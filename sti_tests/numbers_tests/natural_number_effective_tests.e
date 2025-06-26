@@ -23,6 +23,7 @@ inherit
 			test_is_in,
 			test_is_not_in,
 			test_zero,
+			test_one,
 			test_adjusted_value
 		end
 
@@ -103,6 +104,14 @@ feature -- Test routines (Access)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_NATURAL_NUMBER}.zero"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+	test_one
+			-- <Precursor>
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.one"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
