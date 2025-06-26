@@ -50,6 +50,14 @@ feature -- Test routines (Membership)
 			s: like some_set_of_natural_numbers
 		do
 			n := natural_number_to_be_tested
+			s := some_set_of_natural_numbers.extended (n, some_natural_number_equality)
+			assert ("n ∈ s", n ∈ s)
+
+			n := natural_number_to_be_tested
+			s := some_set_of_natural_numbers.prunned (n)
+			assert ("not (n ∈ s)", not (n ∈ s))
+
+			n := natural_number_to_be_tested
 			s := some_set_of_natural_numbers
 			assert ("is_in", n ∈ s ⇒ True)
 		end

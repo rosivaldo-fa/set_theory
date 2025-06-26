@@ -226,6 +226,70 @@ feature -- Factory (natural number)
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_of_natural_numbers}
 		end
 
+	some_natural_number_equality: STS_EQUALITY [STS_NATURAL_NUMBER]
+			-- Randomly-fetched polymorphic equality for comparing {STS_NATURAL_NUMBER} instances
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_natural_number_reference_equality
+			when 1 then
+				Result := some_natural_number_object_standard_equality
+			when 2 then
+				Result := some_natural_number_object_equality
+			when 3 then
+				Result := some_natural_number_object_deep_equality
+			end
+		end
+
+	some_natural_number_reference_equality: STS_REFERENCE_EQUALITY [STS_NATURAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_NATURAL_NUMBER} object references
+		do
+			check
+				eq: attached {STS_REFERENCE_EQUALITY [STS_NATURAL_NUMBER]} some_immediate_instance
+						(agent: STS_REFERENCE_EQUALITY [STS_NATURAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [STS_NATURAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_natural_number_object_standard_equality: STS_OBJECT_STANDARD_EQUALITY [STS_NATURAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_NATURAL_NUMBER} object standard value
+		do
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [STS_NATURAL_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_STANDARD_EQUALITY [STS_NATURAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [STS_NATURAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_natural_number_object_equality: STS_OBJECT_EQUALITY [STS_NATURAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_NATURAL_NUMBER} object value
+		do
+			check
+				eq: attached {STS_OBJECT_EQUALITY [STS_NATURAL_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_EQUALITY [STS_NATURAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [STS_NATURAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_natural_number_object_deep_equality: STS_OBJECT_DEEP_EQUALITY [STS_NATURAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_NATURAL_NUMBER} object deep value
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [STS_NATURAL_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_DEEP_EQUALITY [STS_NATURAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [STS_NATURAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
 feature {NONE} -- Implementation
 
 	cropped_set (s: STS_SET [detachable separate ANY]): like s
