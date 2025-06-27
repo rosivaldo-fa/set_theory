@@ -260,6 +260,44 @@ feature -- Test routines (Comparison)
 			assert ("is_less_equal_ok", is_less_equal_ok (n, m, some_natural_number))
 		end
 
+	test_is_greater
+			-- Test {STS_NATURAL_NUMBER}.is_greater.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.is_greater"
+		local
+			n: like natural_number_to_be_tested
+			m, l: like some_natural_number
+		do
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				n.value > m.value
+			loop
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			end
+			assert ("n > m", n > m)
+			assert ("n > m ok", is_greater_ok (n, m, some_natural_number))
+
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				n.value ≤ m.value
+			loop
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			end
+			assert ("not (n > m)", not (n > m))
+			assert ("not (n > m) ok", is_greater_ok (n, m, some_natural_number))
+
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("is_greater", n > m ⇒ True)
+			assert ("is_greater ok", is_greater_ok (n, m, some_natural_number))
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
