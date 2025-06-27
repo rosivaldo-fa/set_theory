@@ -342,7 +342,7 @@ feature -- Test routines (Comparison)
 			testing: "covers/{STS_NATURAL_NUMBER}.min"
 		local
 			n: like natural_number_to_be_tested
-			m, l: like some_natural_number
+			m: like some_natural_number
 		do
 			from
 				n := natural_number_to_be_tested
@@ -372,6 +372,44 @@ feature -- Test routines (Comparison)
 			m := some_natural_number
 			assert ("min", attached (n ∧ m))
 			assert ("min ok", min_ok (n, m, some_natural_number))
+		end
+
+	test_max
+			-- Test {STS_NATURAL_NUMBER}.max.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.max"
+		local
+			n: like natural_number_to_be_tested
+			m: like some_natural_number
+		do
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				n ≥ m
+			loop
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			end
+			assert ("n", (n ∨ m) ≍ n)
+			assert ("n ok", max_ok (n, m, some_natural_number))
+
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				n ≤ m
+			loop
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			end
+			assert ("m", (n ∨ m) ≍ m)
+			assert ("m ok", max_ok (n, m, some_natural_number))
+
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("max", attached (n ∨ m))
+			assert ("max ok", max_ok (n, m, some_natural_number))
 		end
 
 feature -- Test routines (Implementation)

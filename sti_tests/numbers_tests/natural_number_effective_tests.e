@@ -32,6 +32,7 @@ inherit
 			test_is_greater,
 			test_is_greater_equal,
 			test_min,
+			test_max,
 			test_adjusted_value
 		end
 
@@ -191,6 +192,14 @@ feature -- Test routines (Comparison)
 			-- Test {STI_NATURAL_NUMBER}.min.
 		note
 			testing: "covers/{STI_NATURAL_NUMBER}.min"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+	test_max
+			-- Test {STI_NATURAL_NUMBER}.max.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.max"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end

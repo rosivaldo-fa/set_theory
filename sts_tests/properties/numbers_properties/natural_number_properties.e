@@ -110,6 +110,18 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	max_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.max?
+		do
+			check
+				idempotent: (n ∨ n) ≍ n
+				commutative: (n ∨ m) ≍ (m ∨ n)
+				associative: ((n ∨ m) ∨ l) ≍ (n ∨ (m ∨ l))
+			then
+				Result := True
+			end
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

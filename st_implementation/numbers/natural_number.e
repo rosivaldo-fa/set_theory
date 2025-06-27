@@ -11,7 +11,8 @@ inherit
 	STS_NATURAL_NUMBER
 		redefine
 			default_create,
-			min
+			min,
+			max
 		end
 
 create
@@ -70,6 +71,12 @@ feature -- Comparison
 			-- <Precursor>
 		do
 			create Result.make (stored_value ∧ n.value)
+		end
+
+	max alias "∨" (n: STS_NATURAL_NUMBER): like natural_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value ∨ n.value)
 		end
 
 feature -- Implementation

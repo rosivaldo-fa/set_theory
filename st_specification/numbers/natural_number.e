@@ -120,6 +120,19 @@ feature -- Comparison
 			other_if_greater: Current > n ⇒  Result ≍ n
 		end
 
+	max alias "∨" (n: NATURAL_NUMBER): like natural_anchor
+			-- The greater of current natural number and `n'
+		do
+			if Current ≥ n then
+				Result := Current
+			else
+				Result := n
+			end
+		ensure
+			current_if_not_smaller: Current ≥ n implies Result ≍ Current
+			other_if_smaller: Current < n implies Result ≍ n
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
