@@ -83,7 +83,7 @@ feature -- Comparison
 			definition: Result = (value < n.value)
 		end
 
-	is_less_equal alias "<=" alias "≤" (n: NATURAL_NUMBER): BOOLEAN
+	is_less_equal alias "<=" alias "≤" alias "⩽" alias "≦" (n: NATURAL_NUMBER): BOOLEAN
 			-- Is current natural number less than or equal to `n'?
 		do
 			Result := Current < n or Current ≍ n
@@ -97,6 +97,14 @@ feature -- Comparison
 			Result := n < Current
 		ensure
 			definition: Result = (n < Current)
+		end
+
+	is_greater_equal alias ">=" alias "≥" alias "⩾" alias "≧" (n: NATURAL_NUMBER): BOOLEAN
+			-- Is current natural number greater than or equal to `n'?
+		do
+			Result := n ≤ Current
+		ensure
+			definition: Result = (n ≤ Current)
 		end
 
 feature -- Implementation
