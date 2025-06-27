@@ -107,6 +107,19 @@ feature -- Comparison
 			definition: Result = (n ≤ Current)
 		end
 
+	min alias "∧" (n: NATURAL_NUMBER): like natural_anchor
+			-- The smaller of current natural number and `n'
+		do
+			if Current ≤ n then
+				Result := Current
+			else
+				Result := n
+			end
+		ensure
+			current_if_not_greater: Current ≤ n ⇒  Result ≍ Current
+			other_if_greater: Current > n ⇒  Result ≍ n
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

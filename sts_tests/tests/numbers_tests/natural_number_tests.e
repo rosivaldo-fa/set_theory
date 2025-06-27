@@ -299,9 +299,9 @@ feature -- Test routines (Comparison)
 		end
 
 	test_is_greater_equal
-			-- Test {STS_INTEGER_NUMBER}.is_greater_equal.
+			-- Test {STS_NATURAL_NUMBER}.is_greater_equal.
 		note
-			testing: "covers/{STS_INTEGER_NUMBER}.is_greater_equal"
+			testing: "covers/{STS_NATURAL_NUMBER}.is_greater_equal"
 		local
 			n: like natural_number_to_be_tested
 			m: like some_natural_number
@@ -334,6 +334,44 @@ feature -- Test routines (Comparison)
 			m := some_natural_number
 			assert ("is_greater_equal", n ≥ m ⇒ True)
 			assert ("is_greater_equal_ok", is_less_equal_ok (n, m, some_natural_number))
+		end
+
+	test_min
+			-- Test {STS_NATURAL_NUMBER}.min.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.min"
+		local
+			n: like natural_number_to_be_tested
+			m, l: like some_natural_number
+		do
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				n ≤ m
+			loop
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			end
+			assert ("n", (n ∧ m) ≍ n)
+			assert ("n ok", min_ok (n, m, some_natural_number))
+
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				n ≥ m
+			loop
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			end
+			assert ("m", (n ∧ m) ≍ m)
+			assert ("m ok", min_ok (n, m, some_natural_number))
+
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("min", attached (n ∧ m))
+			assert ("min ok", min_ok (n, m, some_natural_number))
 		end
 
 feature -- Test routines (Implementation)

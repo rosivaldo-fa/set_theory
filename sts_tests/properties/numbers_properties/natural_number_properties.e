@@ -1,5 +1,5 @@
 ﻿note
-	description: "Object that checks whether the properties verified within set theory hold for an implementation of {STS_NATURAL_NUMBER}"
+	description: "Object that checks whether the properties verified within number theory hold for an implementation of {STS_NATURAL_NUMBER}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -10,7 +10,7 @@ deferred class
 feature -- Properties (Membership)
 
 	is_not_in_ok (l: STS_NATURAL_NUMBER; s: STS_SET [STS_NATURAL_NUMBER]): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.is_not_in?
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.is_not_in?
 		do
 			check
 				another_definition: l ∉ s = s ∌ l
@@ -22,7 +22,7 @@ feature -- Properties (Membership)
 feature -- Properties (Comparison)
 
 	equals_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.equals?
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.equals?
 		do
 			check
 				reflexive: n ≍ n
@@ -35,7 +35,7 @@ feature -- Properties (Comparison)
 		end
 
 	unequals_ok (n, m: STS_NATURAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.unequals?
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.unequals?
 		do
 			check
 				alternate_definition: n ≭ m = (n.value /= m.value)
@@ -46,7 +46,7 @@ feature -- Properties (Comparison)
 		end
 
 	is_less_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.is_less?
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.is_less?
 		do
 			check
 				irreflexive: not (n < n)
@@ -58,9 +58,10 @@ feature -- Properties (Comparison)
 		end
 
 	is_less_equal_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.is_less_equal?
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.is_less_equal?
 		do
 			check
+				alternate_definition: n ≤ m = (n.value ≤ m.value)
 				reflexive: n ≤ n
 				transitive: n ≤ m and m ≤ l implies n ≤ l
 				antisymmetric: n ≤ m and m ≤ n implies n ≍ m
@@ -70,9 +71,11 @@ feature -- Properties (Comparison)
 		end
 
 	is_greater_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.is_greater?
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.is_greater?
 		do
 			check
+				alternate_definition: n > m = (n.value > m.value)
+				yet_another_definition: n > m = not (n ≤ m)
 				irreflexive: not (n > n)
 				asymmetric: n > m implies not (m > n)
 				transitive: n > m and m > l implies n > l
@@ -82,12 +85,26 @@ feature -- Properties (Comparison)
 		end
 
 	is_greater_equal_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.is_greater_equal?
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.is_greater_equal?
 		do
 			check
+				alternate_definition: n ≥ m = (n.value ≥ m.value)
+				yet_another_definition: n ≥ m = not (n < m)
 				reflexive: n ≥ n
 				transitive: n ≥ m and m ≥ l implies n ≥ l
 				antisymmetric: n ≥ m and m ≥ n implies n ≍ m
+			then
+				Result := True
+			end
+		end
+
+	min_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.min?
+		do
+			check
+				idempotent: (n ∧ n) ≍ n
+				commutative: (n ∧ m) ≍ (m ∧ n)
+				associative: ((n ∧ m) ∧ l) ≍ (n ∧ (m ∧ l))
 			then
 				Result := True
 			end
