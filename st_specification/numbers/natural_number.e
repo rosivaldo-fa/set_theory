@@ -75,6 +75,14 @@ feature -- Comparison
 			definition: Result = not (Current ≍ n)
 		end
 
+	is_less alias "<" (n: NATURAL_NUMBER): BOOLEAN
+			-- Is current natural number less than `n'?
+		do
+			Result := value < n.value
+		ensure
+			definition: Result = (value < n.value)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

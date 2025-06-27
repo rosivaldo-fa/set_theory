@@ -27,6 +27,7 @@ inherit
 			test_one,
 			test_equals,
 			test_unequals,
+			test_is_less,
 			test_adjusted_value
 		end
 
@@ -138,6 +139,16 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_NATURAL_NUMBER}.unequals"
 			testing: "covers/{STI_NATURAL_NUMBER}.unequals"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+	test_is_less
+			-- <Precursor>
+			-- Test {STI_NATURAL_NUMBER}.is_less.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.is_less"
+			testing: "covers/{STI_NATURAL_NUMBER}.is_less"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
