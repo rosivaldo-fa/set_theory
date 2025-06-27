@@ -121,8 +121,8 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_NATURAL_NUMBER}.equals"
 		local
-			m: like some_natural_number
 			n: like natural_number_to_be_tested
+			m: like some_natural_number
 		do
 			n := natural_number_to_be_tested
 			assert ("same entity", n ≍ n)
@@ -131,19 +131,57 @@ feature -- Test routines (Comparison)
 			n := natural_number_to_be_tested
 			m := same_natural_number (n)
 			assert ("same_natural_number", n ≍ m)
-			assert ("same_natural_number ok", equals_ok (same_natural_number (m), m, n))
+			assert ("same_natural_number ok", equals_ok (n, m, same_natural_number (m)))
 
 			from
-				m := some_natural_number
 				n := natural_number_to_be_tested
+				m := some_natural_number
 			until
 				m.value /= n.value
 			loop
 				m := some_natural_number
-				n := natural_number_to_be_tested
 			end
 			assert ("not (n ≍ m)", not (n ≍ m))
-			assert ("not (n ≍ m) ok", equals_ok (some_natural_number, m, n))
+			assert ("not (n ≍ m) ok", equals_ok (n, m, some_natural_number))
+
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("equals", n ≍ m ⇒ True)
+			assert ("equals ok", equals_ok (n, m, some_natural_number))
+		end
+
+	test_unequals
+			-- Test {STS_NATURAL_NUMBER}.unequals.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.unequals"
+		local
+			n: like natural_number_to_be_tested
+			m: like some_natural_number
+		do
+			n := natural_number_to_be_tested
+			assert ("same entity", not (n ≭ n))
+			assert ("same entity ok", unequals_ok (n, n))
+
+			n := natural_number_to_be_tested
+			m := same_natural_number (n)
+			assert ("same_natural_number", not (n ≭ n))
+			assert ("same_natural_number ok", unequals_ok (n, m))
+
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				m.value /= n.value
+			loop
+				m := some_natural_number
+			end
+			assert ("n ≭ m", n ≭ m)
+			assert ("n ≭ m ok", unequals_ok (n, m))
+
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("unequals", n ≍ m ⇒ True)
+			assert ("unequals ok", unequals_ok (n, m))
 		end
 
 feature -- Test routines (Implementation)

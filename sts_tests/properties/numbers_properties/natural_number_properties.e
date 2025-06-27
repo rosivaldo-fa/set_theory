@@ -21,14 +21,25 @@ feature -- Properties (Membership)
 
 feature -- Properties (Comparison)
 
-	equals_ok (l, m, n: STS_NATURAL_NUMBER): BOOLEAN
+	equals_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
 			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.equals?
 		do
 			check
 				reflexive: n ≍ n
-				symmetric: m ≍ n implies n ≍ m
-				transitive: l ≍ m and m ≍ n implies l ≍ n
-				euclidian: l ≍ n and m ≍ n implies l ≍ m
+				symmetric: n ≍ m implies m ≍ n
+				transitive: n ≍ m and m ≍ l implies n ≍ l
+				euclidian: n ≍ m and n ≍ l implies m ≍ l
+			then
+				Result := True
+			end
+		end
+
+	unequals_ok (n, m: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.unequals?
+		do
+			check
+				alternate_definition: n ≭ m = (n.value /= m.value)
+				irreflexive: not (n ≭ n)
 			then
 				Result := True
 			end

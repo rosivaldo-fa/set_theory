@@ -67,6 +67,14 @@ feature -- Comparison
 			definition: Result = (value = n.value)
 		end
 
+	unequals alias "≭" (n: NATURAL_NUMBER): BOOLEAN
+			-- Does not current natural number equal `n'?
+		do
+			Result := not (Current ≍ n)
+		ensure
+			definition: Result = not (Current ≍ n)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
