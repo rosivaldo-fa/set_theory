@@ -57,6 +57,18 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	is_less_equal_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.is_less_equal?
+		do
+			check
+				reflexive: n ≤ n
+				transitive: n ≤ m and m ≤ l implies n ≤ l
+				antisymmetric: n ≤ m and m ≤ n implies n ≍ m
+			then
+				Result := True
+			end
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[
