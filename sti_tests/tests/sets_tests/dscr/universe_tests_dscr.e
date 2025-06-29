@@ -103,7 +103,7 @@ feature -- Test routines (Construction)
 			Precursor {UNIVERSE_TESTS}
 		end
 
-feature -- Test routines (Out)
+feature -- Test routines (Output)
 
 	test_out
 			-- <Precursor>

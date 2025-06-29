@@ -93,7 +93,7 @@ feature -- Test routines (Construction)
 			assert ("no change", u.extended (same_object_g (a, eq), eq) = u) -- TODO: Use set equality instead.
 		end
 
-feature -- Test routines (Out)
+feature -- Test routines (Output)
 
 	test_out
 			-- Test {STI_UNIVERSE}.out.
