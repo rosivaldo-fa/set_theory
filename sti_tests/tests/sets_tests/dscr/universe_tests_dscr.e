@@ -41,7 +41,7 @@ inherit
 			test_does_not_have,
 			test_extended,
 			test_prunned,
-			test_out
+			test_debug_output
 		end
 
 	UNARY_TESTS_DSCR
@@ -102,12 +102,12 @@ feature -- Test routines (Construction)
 			Precursor {UNIVERSE_TESTS}
 		end
 
-feature -- Test routines (Output)
+feature -- Test routines (Status report)
 
-	test_out
-			-- Test {STI_UNIVERSE}.out.
+	test_debug_output
+			-- Test {STI_UNIVERSE}.debug_output.
 		note
-			testing: "covers/{STI_UNIVERSE}.out"
+			testing: "covers/{STI_UNIVERSE}.debug_output"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end

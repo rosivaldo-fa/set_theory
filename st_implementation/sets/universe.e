@@ -10,16 +10,10 @@ class
 inherit
 	STS_UNIVERSE [G]
 		redefine
-			does_not_have,
-			out
+			does_not_have
 		end
 
 	DEBUG_OUTPUT
-		rename
-			debug_output as out
-		redefine
-			out
-		end
 
 feature -- Membership
 
@@ -56,14 +50,14 @@ feature -- Quality
 
 	is_universe: BOOLEAN = True
 
-feature -- Output
+feature -- Status report
 
-	out: STRING
+	debug_output: READABLE_STRING_GENERAL
 			-- <Precursor>
 		do
-			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("𝕌")
+			Result := "𝕌"
 		ensure then
-			definition: Result ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("𝕌")
+			definition: Result ~ "𝕌"
 		end
 
 feature -- Anchor
