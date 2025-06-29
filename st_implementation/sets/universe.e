@@ -69,9 +69,10 @@ feature -- Status report
 
 	debug_output: READABLE_STRING_GENERAL
 			-- <Precursor>
-		do
+		once
 			Result := {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
 		ensure then
+			class
 			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
 		end
 
