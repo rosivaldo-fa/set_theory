@@ -33,6 +33,7 @@ inherit
 			test_is_greater_equal,
 			test_min,
 			test_max,
+			test_divisible,
 			test_adjusted_value
 		end
 
@@ -204,6 +205,18 @@ feature -- Test routines (Comparison)
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Relationship)
+
+	test_divisible
+			-- <Precursor>
+			-- Test {STI_NATURAL_NUMBER}.divisible.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.divisible"
+			testing: "covers/{STI_NATURAL_NUMBER}.divisible"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
@@ -212,6 +225,15 @@ feature -- Test routines (Implementation)
 			testing: "covers/{STI_NATURAL_NUMBER}.adjusted_value"
 		do
 			assert ("adjusted_value", attached natural_number_to_be_tested.adjusted_value (next_random_item.as_natural_32))
+		end
+
+feature -- Access
+
+	zero: STI_NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
 		end
 
 feature {NONE} -- Conversion
