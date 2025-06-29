@@ -63,6 +63,16 @@ feature -- Test routines (Output)
 			assert ("out", attached set_to_be_tested.out)
 		end
 
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- Test {STI_COMPLEMENT_SET}.debug_output.
+		note
+			testing: "covers/{STI_COMPLEMENT_SET}.debug_output"
+		do
+			assert ("debug_output", attached set_to_be_tested.debug_output)
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_complement_set_g
