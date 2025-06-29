@@ -46,8 +46,8 @@ inherit
 			test_prunned,
 			test_out,
 			test_element_out,
+			test_debug_output,
 			test_is_universe
---			test_converted
 		end
 
 	UNARY_TESTS_DSCR
@@ -168,6 +168,16 @@ feature -- Test routines (Output)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_SET}.element_out"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- <Precursor>
+		note
+			testing: "covers/{STI_SET}.debug_output"
 		do
 			Precursor {SET_TESTS}
 		end

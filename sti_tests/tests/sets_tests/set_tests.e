@@ -100,6 +100,39 @@ feature -- Test routines (Output)
 			assert ("element_out", attached s.element_out (a))
 		end
 
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- Test {STI_SET}.debug_output.
+		note
+			testing: "covers/{STI_SET}.debug_output"
+		local
+			a, b, c: G
+			s: like set_to_be_tested
+			s_debug_output: STRING_32
+		do
+			create s
+			assert ("{}", s.debug_output ~ {STRING_32} "{}")
+
+			a := some_object_g
+			s := s.extended (a, some_equality_g)
+			s_debug_output := s.debug_output
+			assert ("{a}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ")")
+
+			b := some_object_g
+			s := s.extended (b, some_equality_g)
+			s_debug_output := s.debug_output
+			assert ("{a, b}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ")")
+
+			c := some_object_g
+			s := s.extended (c, some_equality_g)
+			s_debug_output := s.debug_output
+			assert ("{a, b, c}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ") & (" + s.element_out (c) + ")")
+
+			s := set_to_be_tested
+			assert ("debug_output", attached s.debug_output)
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[
