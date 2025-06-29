@@ -14,8 +14,6 @@ inherit
 		end
 
 	DEBUG_OUTPUT
-		rename
-			debug_output as out
 		redefine
 			out
 		end
@@ -114,6 +112,16 @@ feature -- Output
 					-- If a.out contains the address of an object, the GC may changed such an address. Just hope it remains stable for now.
 				retry
 			end
+		end
+
+feature -- Status report
+
+	debug_output: READABLE_STRING_GENERAL
+			-- <Precursor>
+		do
+			Result := {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
+		ensure then
+			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
 		end
 
 feature -- Quality
