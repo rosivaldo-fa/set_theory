@@ -41,6 +41,7 @@ inherit
 			test_does_not_have,
 			test_extended,
 			test_prunned,
+			test_out,
 			test_debug_output
 		end
 
@@ -102,10 +103,20 @@ feature -- Test routines (Construction)
 			Precursor {UNIVERSE_TESTS}
 		end
 
+feature -- Test routines (Out)
+
+	test_out
+			-- <Precursor>
+		note
+			testing: "covers/{STI_UNIVERSE}.out"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
 feature -- Test routines (Status report)
 
 	test_debug_output
-			-- Test {STI_UNIVERSE}.debug_output.
+			-- <Precursor>
 		note
 			testing: "covers/{STI_UNIVERSE}.debug_output"
 		do

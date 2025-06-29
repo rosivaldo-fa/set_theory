@@ -10,10 +10,14 @@ class
 inherit
 	STS_UNIVERSE [G]
 		redefine
-			does_not_have
+			does_not_have,
+			out
 		end
 
 	DEBUG_OUTPUT
+		redefine
+			out
+		end
 
 feature -- Membership
 
@@ -50,14 +54,25 @@ feature -- Quality
 
 	is_universe: BOOLEAN = True
 
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		once
+			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("𝕌")
+		ensure then
+			class
+			definition: Result ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("𝕌")
+		end
+
 feature -- Status report
 
 	debug_output: READABLE_STRING_GENERAL
 			-- <Precursor>
 		do
-			Result := "𝕌"
+			Result := {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
 		ensure then
-			definition: Result ~ "𝕌"
+			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
 		end
 
 feature -- Anchor
@@ -81,4 +96,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

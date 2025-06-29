@@ -93,6 +93,16 @@ feature -- Test routines (Construction)
 			assert ("no change", u.extended (same_object_g (a, eq), eq) = u) -- TODO: Use set equality instead.
 		end
 
+feature -- Test routines (Out)
+
+	test_out
+			-- Test {STI_UNIVERSE}.out.
+		note
+			testing: "covers/{STI_UNIVERSE}.out"
+		do
+			assert ("out", attached universe_to_be_tested.out)
+		end
+
 feature -- Test routines (Status report)
 
 	test_debug_output
