@@ -441,6 +441,22 @@ feature -- Test routines (Relationship)
 			assert ("divisible", n.divisible (m) ⇒ True)
 		end
 
+feature -- Test routines (Operation)
+
+	test_plus
+			-- Test {STS_NATURAL_NUMBER}.plus.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.plus"
+		local
+			n: like natural_number_to_be_tested
+			m, l: like some_natural_number
+		do
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("plus", attached (n + m))
+			assert ("plus_ok", plus_ok (n, m, some_natural_number))
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
@@ -449,15 +465,6 @@ feature -- Test routines (Implementation)
 			testing: "covers/{STS_NATURAL_NUMBER}.adjusted_value"
 		do
 			assert ("adjusted_value", attached natural_number_to_be_tested.adjusted_value (next_random_item.as_natural_32))
-		end
-
-feature -- Access
-
-	zero: STS_NATURAL_NUMBER
-			-- The natural number 0
-		deferred
-		ensure
-			definition: Result.value = 0
 		end
 
 feature {NONE} -- Factory (element to be tested)

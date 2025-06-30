@@ -145,6 +145,15 @@ feature -- Relationship
 			definition: Result = (n.value /= 0)
 		end
 
+feature -- Operation
+
+	plus alias "+" (n: NATURAL_NUMBER): like natural_anchor
+			-- Sum of current natural number with `n`
+		deferred
+		ensure
+			definition: Result.value = adjusted_value (value + n.value)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

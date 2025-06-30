@@ -7,6 +7,15 @@
 deferred class
 	NATURAL_NUMBER_PROPERTIES
 
+feature -- Access
+
+	zero: like natural_anchor
+			-- The natural number 0
+		deferred
+		ensure
+			definition: Result.value = 0
+		end
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (l: STS_NATURAL_NUMBER; s: STS_SET [STS_NATURAL_NUMBER]): BOOLEAN
@@ -120,6 +129,30 @@ feature -- Properties (Comparison)
 			then
 				Result := True
 			end
+		end
+
+feature -- Properties (Operation)
+
+	plus_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.plus?
+		local
+			broken_definition, broken_morphism, inherited_ok: BOOLEAN
+		do
+			check
+				neutral_left_term: (zero + n) ≍ n
+				neutral_right_term: (n + zero) ≍ n
+				commutative: (n + m) ≍ (m + n)
+				associative: ((n + m) + l) ≍ (n + (m + l))
+			then
+				Result := True
+			end
+		end
+
+feature -- Anchor
+
+	natural_anchor: STS_NATURAL_NUMBER
+			-- Anchor for natural numbers
+		deferred
 		end
 
 note

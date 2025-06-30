@@ -34,6 +34,7 @@ inherit
 			test_min,
 			test_max,
 			test_divisible,
+			test_plus,
 			test_adjusted_value
 		end
 
@@ -230,6 +231,16 @@ feature -- Test routines (Relationship)
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Operation)
+
+	test_plus
+			-- Test {STI_NATURAL_NUMBER}.plus.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.plus"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
@@ -257,6 +268,15 @@ feature {NONE} -- Conversion
 			Result := v
 		ensure
 			adjusted_value: Result.value = {like natural_number_to_be_tested}.adjusted_value (v)
+		end
+
+feature -- Anchor
+
+	natural_anchor: STI_NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
 		end
 
 note

@@ -99,6 +99,14 @@ feature -- Comparison
 			create Result.make (stored_value ∨ n.value)
 		end
 
+feature -- Operation
+
+	plus alias "+" (n: STS_NATURAL_NUMBER): like natural_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value + n.value)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
