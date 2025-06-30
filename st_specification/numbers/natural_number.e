@@ -154,6 +154,14 @@ feature -- Operation
 			definition: Result.value = adjusted_value (value + n.value)
 		end
 
+	identity alias "+": like Current
+			-- Unary plus; current natural number itself.
+		do
+			Result := Current
+		ensure
+			definition: Result ≍ Current
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

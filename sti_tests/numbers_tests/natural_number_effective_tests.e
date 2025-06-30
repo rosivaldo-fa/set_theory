@@ -35,6 +35,7 @@ inherit
 			test_max,
 			test_divisible,
 			test_plus,
+			test_identity,
 			test_adjusted_value
 		end
 
@@ -47,6 +48,23 @@ inherit
 		undefine
 			test_all,
 			natural_number_to_be_tested
+		end
+
+feature -- Access
+
+	zero: STI_NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
+	one: STI_NATURAL_NUMBER
+			-- <Precursor>
+		once
+			create Result.make (1)
+		ensure then
+			class
 		end
 
 feature -- Test routines (All)
@@ -241,6 +259,16 @@ feature -- Test routines (Operation)
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
 
+	test_identity
+			-- <Precursor>
+			-- Test {STI_NATURAL_NUMBER}.identity.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.identity"
+			testing: "covers/{STI_NATURAL_NUMBER}.identity"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
@@ -249,15 +277,6 @@ feature -- Test routines (Implementation)
 			testing: "covers/{STI_NATURAL_NUMBER}.adjusted_value"
 		do
 			assert ("adjusted_value", attached natural_number_to_be_tested.adjusted_value (next_random_item.as_natural_32))
-		end
-
-feature -- Access
-
-	zero: STI_NATURAL_NUMBER
-			-- <Precursor>
-		once
-		ensure then
-			class
 		end
 
 feature {NONE} -- Conversion

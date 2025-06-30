@@ -16,6 +16,13 @@ feature -- Access
 			definition: Result.value = 0
 		end
 
+	one: like natural_anchor
+			-- The natural number 1
+		deferred
+		ensure
+			definition: Result.value = 1
+		end
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (l: STS_NATURAL_NUMBER; s: STS_SET [STS_NATURAL_NUMBER]): BOOLEAN
@@ -143,6 +150,17 @@ feature -- Properties (Operation)
 				neutral_right_term: (n + zero) ≍ n
 				commutative: (n + m) ≍ (m + n)
 				associative: ((n + m) + l) ≍ (n + (m + l))
+			then
+				Result := True
+			end
+		end
+
+	identity_ok (n: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.identity?
+		do
+			check
+				as_left_term: + n ≍ (n + zero)
+				as_right_term: + n ≍ (zero + n)
 			then
 				Result := True
 			end

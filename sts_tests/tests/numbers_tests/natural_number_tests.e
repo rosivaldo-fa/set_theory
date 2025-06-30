@@ -457,6 +457,19 @@ feature -- Test routines (Operation)
 			assert ("plus_ok", plus_ok (n, m, some_natural_number))
 		end
 
+	test_identity
+			-- Test {STS_NATURAL_NUMBER}.identity.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.identity"
+		local
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("identity", attached (+ n))
+			assert ("identity_ok", identity_ok (n))
+		end
+
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
