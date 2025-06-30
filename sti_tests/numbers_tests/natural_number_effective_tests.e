@@ -127,6 +127,19 @@ feature -- Test routines (Access)
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {STI_NATURAL_NUMBER}.out.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.out"
+		local
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("out", attached n.out)
+		end
+
 feature -- Test routines (Comparison)
 
 	test_equals

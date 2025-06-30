@@ -11,8 +11,18 @@ inherit
 	STS_NATURAL_NUMBER
 		redefine
 			default_create,
+			out,
 			min,
 			max
+		end
+
+	DEBUG_OUTPUT
+		rename
+			debug_output as out
+		undefine
+			default_create
+		redefine
+			out
 		end
 
 create
@@ -63,6 +73,16 @@ feature -- Access
 			create Result.make (1)
 		ensure then
 			class
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		do
+			Result := stored_value.out
+		ensure then
+			definition: Result ~ value.out
 		end
 
 feature -- Comparison
