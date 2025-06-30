@@ -41,7 +41,8 @@ inherit
 		redefine
 			test_all,
 			test_make_extended,
-			test_out
+			test_out,
+			test_debug_output
 		end
 
 feature -- Test routines (All)
@@ -72,6 +73,18 @@ feature -- Test routines (Output)
 		note
 			testing: "covers/{STI_SET}.out"
 			testing: "covers/{STI_SET_FAMILY}.out"
+		do
+			Precursor {SET_FAMILY_TESTS}
+		end
+
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- <Precursor>
+			-- Test {STI_SET_FAMILY}.debug_output.
+		note
+			testing: "covers/{STI_SET}.debug_output"
+			testing: "covers/{STI_SET_FAMILY}.debug_output"
 		do
 			Precursor {SET_FAMILY_TESTS}
 		end
