@@ -271,10 +271,8 @@ feature -- Test routines (Operation)
 		end
 
 	test_minus
-			-- <Precursor>
 			-- Test {STI_NATURAL_NUMBER}.minus.
 		note
-			testing: "covers/{STS_NATURAL_NUMBER}.minus"
 			testing: "covers/{STI_NATURAL_NUMBER}.minus"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}

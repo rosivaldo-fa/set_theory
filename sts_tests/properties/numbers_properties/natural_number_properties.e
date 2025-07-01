@@ -142,8 +142,6 @@ feature -- Properties (Operation)
 
 	plus_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.plus?
-		local
-			broken_definition, broken_morphism, inherited_ok: BOOLEAN
 		do
 			check
 				neutral_left_term: (zero + n) ≍ n
@@ -161,6 +159,21 @@ feature -- Properties (Operation)
 			check
 				as_left_term: + n ≍ (n + zero)
 				as_right_term: + n ≍ (zero + n)
+			then
+				Result := True
+			end
+		end
+
+	minus_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.minus?
+		local
+			broken_definition, broken_morphism, inherited_ok: BOOLEAN
+		do
+			check
+				zero_small_enough: zero ≤ n -- By definition.
+				neutral_subtrahend: (n - zero) ≍ n
+				oppositely_homomorphic: m ≤ n and l ≤ n ⇒ (l ≤ m ⇒ (n - m) ≥ (n - l))
+				oppositely_isomorphic: m ≤ n and l ≤ n ⇒ (l < m ⇒ n - m > n - l)
 			then
 				Result := True
 			end

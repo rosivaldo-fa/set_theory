@@ -477,9 +477,17 @@ feature -- Test routines (Operation)
 			n: like natural_number_to_be_tested
 			m: like some_natural_number
 		do
-			n := natural_number_to_be_tested
-			m := some_natural_number
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				m ≤ n
+			loop
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			end
 			assert ("minus", attached (n + m))
+			assert ("minus ok", minus_ok (n, m, some_natural_number))
 		end
 
 

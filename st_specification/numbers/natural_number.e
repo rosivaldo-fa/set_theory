@@ -164,9 +164,18 @@ feature -- Operation
 
 	minus alias "-" alias "−" (n: NATURAL_NUMBER): like natural_anchor
 			-- Result of subtracting `n` from current natural number
+		require
+			small_enough: n ≤ Current
 		deferred
 		ensure
 			definition: Result.value = adjusted_value (value - n.value)
+		end
+
+	product alias "*" alias "×" alias "⋅" (n: NATURAL_NUMBER): like natural_anchor
+			-- Current natural number multiplied by `n`
+		deferred
+		ensure
+			definition: Result.value = adjusted_value (value * n.value)
 		end
 
 feature -- Implementation
