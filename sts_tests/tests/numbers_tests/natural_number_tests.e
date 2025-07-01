@@ -490,6 +490,19 @@ feature -- Test routines (Operation)
 			assert ("minus ok", minus_ok (n, m, some_natural_number))
 		end
 
+	test_product
+			-- Test {STS_NATURAL_NUMBER}.product.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.product"
+		local
+			n: like natural_number_to_be_tested
+			m: like some_natural_number
+		do
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("product", attached (n ⋅ m))
+			assert ("product ok", product_ok (n, m, some_natural_number))
+		end
 
 feature -- Test routines (Implementation)
 

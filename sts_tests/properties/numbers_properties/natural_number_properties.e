@@ -166,14 +166,27 @@ feature -- Properties (Operation)
 
 	minus_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.minus?
-		local
-			broken_definition, broken_morphism, inherited_ok: BOOLEAN
 		do
 			check
 				zero_small_enough: zero ≤ n -- By definition.
 				neutral_subtrahend: (n - zero) ≍ n
 				oppositely_homomorphic: m ≤ n and l ≤ n ⇒ (l ≤ m ⇒ (n - m) ≥ (n - l))
 				oppositely_isomorphic: m ≤ n and l ≤ n ⇒ (l < m ⇒ n - m > n - l)
+			then
+				Result := True
+			end
+		end
+
+	product_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.product?
+		do
+			check
+				neutral_left_factor: one ⋅ n ≍ n
+				neutral_right_factor: n ⋅ one ≍ n
+				absorbing_left_factor: zero ⋅ n ≍ zero
+				absorbing_right_factor: n ⋅ zero ≍ zero
+				commutative: (n ⋅ m) ≍ (m ⋅ n)
+				associative: ((n ⋅ m) ⋅ l) ≍ (n ⋅ (m ⋅ l))
 			then
 				Result := True
 			end
