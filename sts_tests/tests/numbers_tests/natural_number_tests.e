@@ -449,7 +449,7 @@ feature -- Test routines (Operation)
 			testing: "covers/{STS_NATURAL_NUMBER}.plus"
 		local
 			n: like natural_number_to_be_tested
-			m, l: like some_natural_number
+			m: like some_natural_number
 		do
 			n := natural_number_to_be_tested
 			m := some_natural_number
@@ -467,6 +467,19 @@ feature -- Test routines (Operation)
 			n := natural_number_to_be_tested
 			assert ("identity", attached (+ n))
 			assert ("identity_ok", identity_ok (n))
+		end
+
+	test_minus
+			-- Test {STS_NATURAL_NUMBER}.minus.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.minus"
+		local
+			n: like natural_number_to_be_tested
+			m: like some_natural_number
+		do
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("minus", attached (n + m))
 		end
 
 

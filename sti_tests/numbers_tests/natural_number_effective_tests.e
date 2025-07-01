@@ -36,6 +36,7 @@ inherit
 			test_divisible,
 			test_plus,
 			test_identity,
+			test_minus,
 			test_adjusted_value
 		end
 
@@ -265,6 +266,16 @@ feature -- Test routines (Operation)
 		note
 			testing: "covers/{STS_NATURAL_NUMBER}.identity"
 			testing: "covers/{STI_NATURAL_NUMBER}.identity"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+	test_minus
+			-- <Precursor>
+			-- Test {STI_NATURAL_NUMBER}.minus.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.minus"
+			testing: "covers/{STI_NATURAL_NUMBER}.minus"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
