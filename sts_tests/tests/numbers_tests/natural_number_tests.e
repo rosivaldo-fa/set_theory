@@ -504,6 +504,26 @@ feature -- Test routines (Operation)
 			assert ("product ok", product_ok (n, m, some_natural_number))
 		end
 
+	test_natural_quotient
+			-- Test {STS_NATURAL_NUMBER}.natural_quotient.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.natural_quotient"
+		local
+			n: like natural_number_to_be_tested
+			m: like some_natural_number
+		do
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				n.divisible (m)
+			loop
+				m := some_natural_number
+			end
+			assert ("natural_quotient", attached (n // m))
+			assert ("natural_quotient ok", natural_quotient_ok (n, m))
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value

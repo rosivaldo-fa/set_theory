@@ -192,6 +192,18 @@ feature -- Properties (Operation)
 			end
 		end
 
+	natural_quotient_ok (n, m: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.natural_quotient?
+		do
+			check
+				absorbing_dividend: n ≍ zero and n.divisible (m) ⇒ (n // m) ≍ zero
+				good_divisor: n.divisible (one) -- one /= 0
+				neutral_divisor: (n // one) ≍ n
+			then
+				Result := True
+			end
+		end
+
 feature -- Anchor
 
 	natural_anchor: STS_NATURAL_NUMBER
