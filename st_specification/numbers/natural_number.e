@@ -189,6 +189,17 @@ feature -- Operation
 			definition: Result.value = adjusted_value (value // n.value)
 		end
 
+	natural_remainder alias "\\" (n: NATURAL_NUMBER): like natural_anchor
+			-- Remainder of the natural division of `Current' by `n`
+		require
+			good_divisor: divisible (n)
+		deferred
+		ensure
+--			good_divisor: value.divisible (n.value) -- n.value /= 0 ⇐ divisible (n) -- TODO: Segmentation violation.
+			good_divisor: n.value /= 0
+			definition: Result.value = adjusted_value (value \\ n.value)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

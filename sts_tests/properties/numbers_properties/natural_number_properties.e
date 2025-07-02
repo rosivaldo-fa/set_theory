@@ -196,9 +196,20 @@ feature -- Properties (Operation)
 			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.natural_quotient?
 		do
 			check
-				absorbing_dividend: n ≍ zero and n.divisible (m) ⇒ (n // m) ≍ zero
+				absorbing_dividend: zero.divisible (n) ⇒ (zero // n) ≍ zero
 				good_divisor: n.divisible (one) -- one /= 0
 				neutral_divisor: (n // one) ≍ n
+			then
+				Result := True
+			end
+		end
+
+	natural_remainder_ok (n, m: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.natural_remainder?
+		do
+			check
+				absorbing_dividend: n ≍ zero and n.divisible (m) ⇒ (n \\ m) ≍ zero
+				upper_bounded: n.divisible (m) ⇒ (n \\ m) < m
 			then
 				Result := True
 			end

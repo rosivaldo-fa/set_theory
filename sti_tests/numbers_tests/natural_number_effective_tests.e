@@ -39,6 +39,7 @@ inherit
 			test_minus,
 			test_product,
 			test_natural_quotient,
+			test_natural_remainder,
 			test_adjusted_value
 		end
 
@@ -292,6 +293,14 @@ feature -- Test routines (Operation)
 			-- Test {STI_NATURAL_NUMBER}.natural_quotient.
 		note
 			testing: "covers/{STI_NATURAL_NUMBER}.natural_quotient"
+		do
+			Precursor {STST_NATURAL_NUMBER_TESTS}
+		end
+
+	test_natural_remainder
+			-- Test {STI_NATURAL_NUMBER}.natural_remainder.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.natural_remainder"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
