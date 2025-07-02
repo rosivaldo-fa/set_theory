@@ -4,9 +4,10 @@
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
+	TODO: "AutoTest may confuse {STST_ELEMENT_TESTS} with {ELEMENT_TESTS}."
 
 class
-	ELEMENT_TESTS
+	ELEMENT_EFFECTIVE_TESTS
 
 inherit
 	STST_ELEMENT_TESTS
@@ -73,7 +74,7 @@ feature -- Factory (natural number)
 			inspect
 				next_random_item \\ 2
 			when 0 then
-				Result := Precursor{STST_ELEMENT_TESTS} (n)
+				Result := Precursor {STST_ELEMENT_TESTS} (n)
 			when 1 then
 				create {STI_NATURAL_NUMBER} Result.make (n.value)
 			end
@@ -139,4 +140,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

@@ -15,7 +15,7 @@ feature {NONE} -- Initialization
 	test_all
 			-- Run every available test.
 		do
-			(create {ELEMENT_TESTS}).test_all;
+			(create {ELEMENT_EFFECTIVE_TESTS}).test_all;
 			(create {REFERENCE_EQUALITY_TESTS_DSCR}).test_all;
 			(create {OBJECT_STANDARD_EQUALITY_TESTS_DSCR}).test_all;
 			(create {OBJECT_EQUALITY_TESTS_DSCR}).test_all;
@@ -25,6 +25,7 @@ feature {NONE} -- Initialization
 			(create {COMPLEMENT_SET_TESTS_DSCR}).test_all;
 			(create {UNIVERSE_TESTS_DSCR}).test_all;
 			(create {NATURAL_NUMBER_EFFECTIVE_TESTS}).test_all;
+			(create {NATURAL_SET_TESTS}).test_all;
 		end
 
 note

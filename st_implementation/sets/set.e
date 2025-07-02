@@ -74,6 +74,16 @@ feature -- Construction
 --			when_not_found: attached eq and then not eq (a, given_element) ⇒ Result ≍ subset.prunned (a).extended (given_element, eq)
 		end
 
+feature -- Access
+
+	universe: like universe_anchor
+			-- <Precursor>
+		do
+			create Result
+		ensure then
+			class
+		end
+
 feature -- Output
 
 	out: STRING
@@ -179,6 +189,14 @@ feature -- Anchor
 			-- <Precursor>
 		do
 			Result := Current
+		end
+
+	universe_anchor: UNIVERSE [G]
+			-- <Precursor>
+		do
+			Result := universe
+		ensure then
+			class
 		end
 
 feature {SET} -- Implementation

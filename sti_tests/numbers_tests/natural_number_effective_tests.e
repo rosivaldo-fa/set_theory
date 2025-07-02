@@ -44,7 +44,7 @@ inherit
 			test_adjusted_value
 		end
 
-	ELEMENT_TESTS
+	ELEMENT_EFFECTIVE_TESTS
 		rename
 			is_not_in_ok as element_is_not_in_ok,
 			test_is_in as test_element_is_in,

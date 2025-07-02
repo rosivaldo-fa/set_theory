@@ -1,24 +1,19 @@
-﻿note
-	description: "Implementation of {STS_NATURAL_NUMBER}"
-	author: "Rosivaldo Fernandes Alves"
+note
+	description: "Implementation of {STS_NATURAL_SET}"
+	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
-expanded class
-	NATURAL_NUMBER
+class
+	NATURAL_SET
 
 inherit
-	STI_NATURAL_NUMBER
-		export {ELEMENT_EFFECTIVE_TESTS}
-			stored_value_mask
+	STS_NATURAL_SET
+		undefine
+			out
 		end
 
-create
-	default_create,
-	make
-
-convert
-	make ({NATURAL})
+	SET [STS_NATURAL_NUMBER]
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
@@ -27,5 +22,4 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
-
 end

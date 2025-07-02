@@ -50,6 +50,14 @@ feature -- Construction
 			create Result.make (s.extended (a, create {STS_REFERENCE_EQUALITY [G]}))
 		end
 
+feature -- Access
+
+	universe: like universe_anchor
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
 feature -- Quality
 
 	is_universe: BOOLEAN = True
@@ -85,6 +93,12 @@ feature -- Anchor
 		end
 
 	superset_anchor: UNIVERSE [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
+	universe_anchor: UNIVERSE [G]
 			-- <Precursor>
 		do
 			Result := Current

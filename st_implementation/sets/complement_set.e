@@ -58,6 +58,16 @@ feature -- Construction
 			create Result.make (reference_set.extended (a, create {STS_REFERENCE_EQUALITY [G]}))
 		end
 
+feature -- Access
+
+	universe: like universe_anchor
+			-- <Precursor>
+		do
+			create Result
+		ensure then
+			class
+		end
+
 feature -- Quality
 
 	is_universe: detachable BOOLEAN_REF
@@ -100,6 +110,14 @@ feature -- Anchor
 			-- <Precursor>
 		do
 			create Result
+		end
+
+	universe_anchor: UNIVERSE [G]
+			-- <Precursor>
+		do
+			Result := universe
+		ensure then
+			class
 		end
 
 note

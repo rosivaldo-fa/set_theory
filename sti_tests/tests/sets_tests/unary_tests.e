@@ -18,7 +18,7 @@ inherit
 			some_set_g
 		end
 
-	ELEMENT_TESTS
+	ELEMENT_EFFECTIVE_TESTS
 		undefine
 			test_all,
 			test_is_in,
