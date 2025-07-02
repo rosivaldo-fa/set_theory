@@ -80,6 +80,9 @@ feature -- Test routines (All)
 			testing: "covers/{STI_NATURAL_NUMBER}"
 		do
 			Precursor {STST_NATURAL_NUMBER_TESTS}
+			test_default_create
+			test_make
+			test_out
 		end
 
 feature -- Test routines (Initialization)

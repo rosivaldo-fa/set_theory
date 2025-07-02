@@ -31,6 +31,27 @@ feature -- Test routines (All)
 		do
 			Precursor {ELEMENT_TESTS}
 			test_value
+			test_is_in
+			test_is_not_in
+			test_zero
+			test_one
+			test_equals
+			test_unequals
+			test_is_less
+			test_is_less_equal
+			test_is_greater
+			test_is_greater_equal
+			test_min
+			test_max
+			test_divides
+			test_divisible
+			test_plus
+			test_identity
+			test_minus
+			test_product
+			test_natural_quotient
+			test_natural_remainder
+			test_adjusted_value
 		end
 
 feature -- Test routines (Primitive)
@@ -420,7 +441,7 @@ feature -- Test routines (Relationship)
 			testing: "covers/{STS_NATURAL_NUMBER}.divides"
 		local
 			n: like natural_number_to_be_tested
-			m, l: like some_natural_number
+			m: like some_natural_number
 		do
 			from
 				n := natural_number_to_be_tested
@@ -438,8 +459,6 @@ feature -- Test routines (Relationship)
 			assert ("divides", (n | m) ⇒ True)
 			assert ("divides_ok", divides_ok (n, m, some_natural_number))
 		end
-
-feature -- Test routines (Relationship)
 
 	test_divisible
 			-- Test {STS_NATURAL_NUMBER}.divisible.
