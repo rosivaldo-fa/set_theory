@@ -414,6 +414,33 @@ feature -- Test routines (Comparison)
 
 feature -- Test routines (Relationship)
 
+	test_divides
+			-- Test {STS_NATURAL_NUMBER}.divides.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.divides"
+		local
+			n: like natural_number_to_be_tested
+			m, l: like some_natural_number
+		do
+			from
+				n := natural_number_to_be_tested
+			until
+				n ≭ One
+			loop
+				n := natural_number_to_be_tested
+			end
+			m := (some_natural_number ⋅ n) + One
+			assert ("not (n | m)", not (n | m))
+			assert ("not (n | m) ok", divides_ok (n, m, some_natural_number))
+
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("divides", (n | m) ⇒ True)
+			assert ("divides_ok", divides_ok (n, m, some_natural_number))
+		end
+
+feature -- Test routines (Relationship)
+
 	test_divisible
 			-- Test {STS_NATURAL_NUMBER}.divisible.
 		note

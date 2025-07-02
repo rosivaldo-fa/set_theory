@@ -116,8 +116,8 @@ feature -- Comparison
 				Result := n
 			end
 		ensure
-			current_if_not_greater: Current ≤ n ⇒  Result ≍ Current
-			other_if_greater: Current > n ⇒  Result ≍ n
+			current_if_not_greater: Current ≤ n ⇒ Result ≍ Current
+			other_if_greater: Current > n ⇒ Result ≍ n
 		end
 
 	max alias "∨" (n: NATURAL_NUMBER): like natural_anchor
@@ -143,6 +143,14 @@ feature -- Relationship
 		ensure
 --			definition: Result = value.divisible (n.value) -- TODO: Segmentation violation!
 			definition: Result = (n.value /= 0)
+		end
+
+	divides alias "|" (n: NATURAL_NUMBER): BOOLEAN
+			-- Does current natural number divide `n', i.e. is there a natural number m such that `n' = m ⋅ `Current'?
+		do
+			Result := n.divisible (Current) and then (n \\ Current) ≍ zero
+		ensure
+			definition: Result = (n.divisible (Current) and then (n \\ Current) ≍ zero)
 		end
 
 feature -- Operation
@@ -229,4 +237,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

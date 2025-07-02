@@ -138,6 +138,20 @@ feature -- Properties (Comparison)
 			end
 		end
 
+feature -- Properties (Relationship)
+
+	divides_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_NATURAL_NUMBER}.divides?
+		do
+			check
+				quasi_reflexive: n ≭ zero ⇒ n | n
+				transitive: n | m and m | l ⇒ n | l
+				antisymmetric: n | m and m | n ⇒ n ≍ m
+			then
+				Result := True
+			end
+		end
+
 feature -- Properties (Operation)
 
 	plus_ok (n, m, l: STS_NATURAL_NUMBER): BOOLEAN
