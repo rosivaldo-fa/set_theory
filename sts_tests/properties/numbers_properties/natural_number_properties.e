@@ -184,8 +184,8 @@ feature -- Properties (Operation)
 			check
 				zero_small_enough: zero ≤ n -- By definition.
 				neutral_subtrahend: (n - zero) ≍ n
-				oppositely_homomorphic: m ≤ n and l ≤ n ⇒ (l ≤ m ⇒ (n - m) ≥ (n - l))
-				oppositely_isomorphic: m ≤ n and l ≤ n ⇒ (l < m ⇒ n - m > n - l)
+				oppositely_homomorphic: m ≤ n and l ≤ n ⇒ (l ≤ m ⇒ (n - l) ≥ (n - m))
+				oppositely_isomorphic: m ≤ n and l ≤ n ⇒ (l < m ⇒ n - l > n - m)
 			then
 				Result := True
 			end
