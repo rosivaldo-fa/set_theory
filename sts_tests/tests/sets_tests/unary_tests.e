@@ -22,15 +22,23 @@ feature -- Factory (Object)
 
 	object_standard_twin_g (a: G): G
 			-- Object equal (according to `standard_equal') to `a'
+		note
+			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		do
 			if attached a then
-				Result := a.standard_twin
+				from
+					Result := a.standard_twin
+				until
+					attached a ⇒ attached Result and then Result ≜ a -- Please have a look at EIS entry above.
+				loop
+					Result := a.standard_twin
+				end
 			else
 				Result := a
 			end
 		ensure
-			attached_a: attached a ⇒ attached Result and then Result ≜ a
-			detached_a: not attached a ⇒ not attached Result
+			when_attached_a: attached a ⇒ attached Result and then Result ≜ a
+			when_detached_a: not attached a ⇒ not attached Result
 		end
 
 	object_twin_g (a: G): G
@@ -39,23 +47,31 @@ feature -- Factory (Object)
 			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		do
 			if attached a then
-				Result := a.twin
+				from
+					Result := a.twin
+				until
+					a ~ Result -- Please have a look at EIS entry above.
+				loop
+					Result := a.twin
+				end
 			else
 				Result := a
 			end
 		ensure
 			definition: Result ~ a
-		rescue
-			if Result /~ a then -- Please have a look at EIS entry above.
-				retry
-			end
 		end
 
 	object_deep_twin_g (a: G): G
 			-- Object equal (according to `deep_equal') to `a'
 		do
 			if attached a then
-				Result := a.deep_twin
+				from
+					Result := a.deep_twin
+				until
+					a ≡≡≡ Result -- Please have a look at EIS entry above.
+				loop
+					Result := a.deep_twin
+				end
 			else
 				Result := a
 			end
