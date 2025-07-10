@@ -33,6 +33,7 @@ feature {NONE} -- Initialization
 		ensure
 			attached_storage: attached given_element_storage
 			eq: eq = a_eq
+			is_not_empty: subset /= Current
 			attached_eq: attached eq
 			given_element: eq (given_element, a)
 			subset: subset = s -- TODO: Use set equality instead.
@@ -249,6 +250,8 @@ feature {NONE} -- Anchor
 
 	given_element_anchor: G
 			-- Anchor for objects like `given_element'
+		require
+			is_not_empty: subset /= Current
 		do
 			Result := given_element
 		end
