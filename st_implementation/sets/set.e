@@ -69,12 +69,18 @@ feature -- Construction
 	prunned (a: G): like subset_anchor
 			-- <Precursor>
 		do
-			if not attached eq then
+			if subset = Current then
 				Result := Current
-			elseif eq (a, given_element) then
-				Result := subset.prunned (a)
-			else
-				Result := subset.prunned (a).extended (given_element, eq)
+			else -- Current set is not empty, so it is an "extended" set.
+				check
+					attached eq -- `make_extended' and `extended' definitions
+				then
+					if eq (a, given_element) then
+						Result := subset.prunned (a)
+					else
+						Result := subset.prunned (a).extended (given_element, eq)
+					end
+				end
 			end
 		ensure then
 			when_empty: not attached eq ⇒ Result = Current -- TODO: Use set equality instead.
