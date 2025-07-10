@@ -60,6 +60,7 @@ feature -- Construction
 			create Result.make_extended (a, a_eq, Current)
 		ensure then
 			equality: Result.eq = a_eq
+			is_not_empty: Result.subset /= Result
 			given_element: a_eq (Result.given_element, a)
 			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
@@ -209,6 +210,8 @@ feature {SET, NATURAL_SET} -- Implementation
 
 	given_element: like given_element_anchor
 			-- An arbitrary element in current set
+		require
+			is_not_empty: subset /= Current
 		do
 			check
 				attached_given_element_storage: attached given_element_storage as ges -- not `is_empty'

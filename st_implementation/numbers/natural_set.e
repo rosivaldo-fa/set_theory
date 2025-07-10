@@ -43,6 +43,7 @@ feature -- Construction
 			create Result.make_extended (n, a_eq, Current)
 		ensure then
 			equality: Result.eq = a_eq
+			is_not_empty: Result.subset /= Result
 			given_element: Result.given_element ≍ n
 			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
