@@ -7,6 +7,9 @@
 deferred class
 	ELEMENT_PROPERTIES
 
+inherit
+	STS_ELEMENT
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (a: STS_ELEMENT; s: STS_SET [STS_ELEMENT]): BOOLEAN

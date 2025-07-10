@@ -75,13 +75,17 @@ feature -- Factory (Element)
 			-- Randomly-fetched polymorphic element
 		do
 			inspect
-				next_random_item \\ 3
+				next_random_item \\ 5
 			when 0 then
 				Result := some_immediate_element
 			when 1 then
 				Result := some_element_equality
 			when 2 then
 				Result := some_natural_number
+			when 3 then
+				Result := some_natural_number_equality
+			when 4 then
+				Result := some_set_of_natural_numbers
 			end
 		end
 
@@ -206,11 +210,13 @@ feature -- Factory (natural number)
 			-- Randomly-fetched polymorphic set of natural numbers
 		do
 			inspect
-				next_random_item \\ 2
+				next_random_item \\ 3
 			when 0 then
 				Result := some_immediate_set_of_natural_numbers
 			when 1 then
 				Result := some_universe_of_natural_numbers
+			when 2 then
+				Result := some_natural_set
 			end
 		end
 
@@ -296,6 +302,19 @@ feature -- Factory (natural number)
 			then
 				Result := eq
 			end
+		end
+
+	some_natural_set: STS_NATURAL_SET
+			-- Randomly-fetched polymorphic natural number set
+		do
+			Result := some_immediate_natural_set
+		end
+
+	some_immediate_natural_set: STS_NATURAL_SET
+			-- Randomly-fetched monomorphic natural number set
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_natural_set}
 		end
 
 feature {NONE} -- Implementation

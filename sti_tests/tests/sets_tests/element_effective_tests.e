@@ -133,6 +133,28 @@ feature -- Factory (natural number)
 			end
 		end
 
+	some_immediate_natural_set: STI_NATURAL_SET
+			-- <Precursor>
+		do
+			check
+				s: attached {STI_NATURAL_SET} some_immediate_instance (
+							agent: STI_NATURAL_SET
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result
+									loop
+										Result := Result.extended (some_natural_number)
+									end
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_NATURAL_SET}
+			then
+				Result := cropped_set (s)
+			end
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

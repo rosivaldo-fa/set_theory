@@ -43,7 +43,13 @@ feature -- Membership
 	has alias "∋" (a: G): BOOLEAN
 			-- <Precursor>
 		do
-			Result := attached eq and then eq (a, given_element) or subset /= Current and then subset ∋ a
+			if subset /= Current then -- Current set is not empty, so it is an "extended" set.
+				check
+					attached eq -- `make_extended' and `extended' definitions
+				then
+					Result := eq (a, given_element) or subset ∋ a
+				end
+			end
 		end
 
 feature -- Construction
@@ -199,7 +205,7 @@ feature -- Anchor
 			class
 		end
 
-feature {SET} -- Implementation
+feature {SET, NATURAL_SET} -- Implementation
 
 	given_element: like given_element_anchor
 			-- An arbitrary element in current set

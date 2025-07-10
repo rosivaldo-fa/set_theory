@@ -1,17 +1,15 @@
 ﻿note
-	description: "Test suite for {STI_NATURAL_SET}"
+	description: "Test suite for {STS_NATURAL_SET}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
 
-class
+deferred class
 	NATURAL_SET_TESTS
 
 inherit
 	SET_TESTS [STS_NATURAL_NUMBER]
-		rename
-			some_object_g as some_natural_number
 		redefine
 			test_all
 		end
@@ -19,11 +17,19 @@ inherit
 feature -- Test routines (All)
 
 	test_all
-			-- <Precursor>
+			-- Test every routine of {STS_NATURAL_SET}.
 		note
-			testing: "covers/{STI_NATURAL_SET}"
+			testing: "covers/{STS_NATURAL_SET}"
 		do
 			Precursor {SET_TESTS}
+		end
+
+feature {NONE} -- Factory (element to be tested)
+
+	natural_set_to_be_tested: like some_immediate_natural_set
+			-- Natural set meant to be under tests
+		do
+			Result := some_immediate_natural_set
 		end
 
 note
@@ -33,4 +39,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end
