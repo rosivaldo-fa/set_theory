@@ -22,7 +22,7 @@ feature {NONE} -- Initialization
 			subset := s
 			create given_element_storage.put (converted_element (n))
 		ensure
-			attached_storage: attached given_element_storage
+			is_not_empty: subset /= Current
 			given_element: given_element ≍ n
 			subset: subset = s -- TODO: Use set equality instead.
 		end
