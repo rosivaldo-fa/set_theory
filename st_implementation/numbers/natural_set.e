@@ -32,7 +32,9 @@ feature -- Membership
 	has alias "∋" (n: STS_NATURAL_NUMBER): BOOLEAN
 			-- Is `n' an element in current set?
 		do
-			Result := n ≍ given_element or subset /= Current and then subset ∋ n
+			if subset /= Current then -- Current set is not empty, so it is an "extended" set.
+				Result := n ≍ given_element or subset ∋ n
+			end
 		end
 
 feature -- Construction
