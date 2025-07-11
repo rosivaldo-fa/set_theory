@@ -44,9 +44,19 @@ feature -- Test routines (All)
 			testing: "covers/{STI_NATURAL_SET}"
 		do
 			Precursor {STST_NATURAL_SET_TESTS}
+			test_default_create
+			test_make_extended
 		end
 
 feature -- Test routines (Initialization)
+
+	test_default_create
+			-- Test {STI_NATURAL_SET}.default_create.
+		note
+			testing: "covers/{STI_NATURAL_SET}.default_create"
+		do
+			assert ("default_create", attached (create {like natural_set_to_be_tested}))
+		end
 
 	test_make_extended
 			-- Test {STI_NATURAL_SET}.make_extended.

@@ -9,12 +9,22 @@ class
 
 inherit
 	STS_NATURAL_SET
+		redefine
+			default_create
+		end
 
 create
 	default_create,
 	make_extended
 
 feature {NONE} -- Initialization
+
+	default_create
+			-- Create an empty natural set
+		do
+		ensure then
+			is_empty: subset = Current
+		end
 
 	make_extended (n: STS_NATURAL_NUMBER; s: STS_NATURAL_SET)
 			-- Create a set whose `given_element' element and `subset' are, respectively, `n' and `s'.

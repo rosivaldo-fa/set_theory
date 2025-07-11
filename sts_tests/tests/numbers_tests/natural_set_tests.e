@@ -24,6 +24,7 @@ feature -- Test routines (All)
 			testing: "covers/{STS_NATURAL_SET}"
 		do
 			Precursor {SET_TESTS}
+			test_extended
 		end
 
 feature -- Test routines (Construction)
