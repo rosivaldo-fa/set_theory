@@ -39,6 +39,7 @@ feature -- Test routines (All)
 			testing: "covers/{STI_SET}"
 		do
 			Precursor {STST_SET_TESTS}
+			test_default_create
 			test_make_extended
 			test_out
 			test_element_out
