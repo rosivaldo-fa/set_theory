@@ -46,6 +46,16 @@ feature -- Test routines (All)
 			Precursor {STST_NATURAL_SET_TESTS}
 		end
 
+feature -- Test routines (Initialization)
+
+	test_make_extended
+			-- Test {STI_NATURAL_SET}.make_extended.
+		note
+			testing: "covers/{STI_NATURAL_SET}.make_extended"
+		do
+			assert ("make_extended", attached (create {like natural_set_to_be_tested}.make_extended (some_natural_number, some_natural_set)))
+		end
+
 feature -- Test routines (Construction)
 
 	test_extended
