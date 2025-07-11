@@ -47,6 +47,14 @@ feature -- Test routines (All)
 
 feature -- Test routines (Initialization)
 
+	test_default_create
+			-- Test {STI_SET}.default_create.
+		note
+			testing: "covers/{STI_SET}.default_create"
+		do
+			assert ("default_create", attached (create {like set_to_be_tested}))
+		end
+
 	test_make_extended
 			-- Test {STI_SET}.make_extended.
 		note
