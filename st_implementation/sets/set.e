@@ -10,11 +10,13 @@ class
 inherit
 	STS_SET [G]
 		redefine
+			default_create,
 			out
 		end
 
 	DEBUG_OUTPUT
 		redefine
+			default_create,
 			out
 		end
 
@@ -23,6 +25,13 @@ create
 	make_extended
 
 feature {NONE} -- Initialization
+
+	default_create
+			-- Create an empty set
+		do
+		ensure then
+			is_empty: subset = Current
+		end
 
 	make_extended (a: G; a_eq: STS_EQUALITY [G]; s: STS_SET [G])
 			-- Create a set whose `given_element' element and `subset' are, respectively, `a' and `s'.
@@ -261,6 +270,10 @@ feature {NONE} -- Anchor
 		do
 			Result := given_element
 		end
+
+invariant
+	storage: subset /= Current ⇒ attached given_element_storage
+	equality: subset /= Current ⇒ attached eq
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

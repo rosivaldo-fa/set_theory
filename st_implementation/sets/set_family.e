@@ -10,6 +10,7 @@ class
 inherit
 	STS_SET_FAMILY [G]
 		undefine
+			default_create,
 			out
 		end
 
