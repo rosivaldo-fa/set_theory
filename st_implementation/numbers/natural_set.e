@@ -138,6 +138,8 @@ feature {NATURAL_SET} -- Implementation
 
 	given_element: like given_element_anchor
 			-- An arbitrary element in current set
+		require
+			is_not_empty: subset /= Current
 		do
 			check
 				attached_given_element_storage: attached given_element_storage as ges -- not `is_empty'

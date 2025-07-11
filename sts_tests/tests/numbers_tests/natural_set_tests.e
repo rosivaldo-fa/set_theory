@@ -10,6 +10,8 @@ deferred class
 
 inherit
 	SET_TESTS [STS_NATURAL_NUMBER]
+		rename
+			test_extended as test_set_extended
 		redefine
 			test_all
 		end
@@ -22,6 +24,21 @@ feature -- Test routines (All)
 			testing: "covers/{STS_NATURAL_SET}"
 		do
 			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {STS_NATURAL_SET}.extended.
+		note
+			testing: "covers/{STS_NATURAL_SET}.extended"
+		local
+			s: like natural_set_to_be_tested
+			n: like some_natural_number
+		do
+			s := natural_set_to_be_tested
+			n := some_natural_number
+			assert ("{n, ...}", s.extended (same_natural_number (n)) ∋ n)
 		end
 
 feature {NONE} -- Factory (element to be tested)

@@ -20,6 +20,7 @@ inherit
 			same_natural_number
 		redefine
 			test_all,
+			test_extended,
 			set_to_be_tested
 		end
 
@@ -41,6 +42,16 @@ feature -- Test routines (All)
 			-- Test every routine of {STI_NATURAL_SET}.
 		note
 			testing: "covers/{STI_NATURAL_SET}"
+		do
+			Precursor {STST_NATURAL_SET_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {STI_NATURAL_SET}.extended.
+		note
+			testing: "covers/{STI_NATURAL_SET}.extended"
 		do
 			Precursor {STST_NATURAL_SET_TESTS}
 		end
