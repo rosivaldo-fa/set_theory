@@ -49,6 +49,7 @@ feature {NONE} -- Initialization
 			create given_set_storage.put (s)
 		ensure
 			attached_storage: attached given_set_storage
+			is_not_empty: subfamily /= Current
 			attached_eq: attached eq
 			given_set: eq (given_set, s)
 			subfamily: subfamily = sf -- TODO: Use set equality instead.
