@@ -10,7 +10,8 @@ class
 inherit
 	STS_NATURAL_SET
 		redefine
-			default_create
+			default_create,
+			out
 		end
 
 create
@@ -93,6 +94,24 @@ feature -- Access
 			create Result
 		ensure then
 			class
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		do
+			if Current = subset then
+				Result := "{}"
+			else
+				Result := subset.out
+				Result.append (" & (")
+				Result.append (given_element.out)
+				Result.append_character (')')
+			end
+		ensure then
+			base: Current = subset ⇒ Result ~ "{}"
+			induction: Current /= subset ⇒ Result ~ subset.out + " & (" + given_element.out + ")"
 		end
 
 feature -- Quality

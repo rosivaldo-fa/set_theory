@@ -76,6 +76,39 @@ feature -- Test routines (Construction)
 			Precursor {STST_NATURAL_SET_TESTS}
 		end
 
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {STI_NATURAL_SET}.out.
+		note
+			testing: "covers/{STI_NATURAL_SET}.out"
+		local
+			n, m, l: like some_natural_number
+			s: like set_to_be_tested
+			s_out: STRING
+		do
+			create s
+			assert ("{}", s.out ~ "{}")
+
+			n := some_natural_number
+			s := s.extended (n)
+			s_out := s.out
+			assert ("{n}", s_out ~ "{} & (" + n.out + ")")
+
+			m := some_natural_number
+			s := s.extended (m)
+			s_out := s.out
+			assert ("{n, m}", s_out ~ "{} & (" + n.out + ") & (" + m.out + ")")
+
+			l := some_natural_number
+			s := s.extended (l)
+			s_out := s.out
+			assert ("{n, m, l}", s_out ~ "{} & (" + n.out + ") & (" + m.out + ") & (" + l.out + ")")
+
+			s := set_to_be_tested
+			assert ("out", attached s.out)
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: like some_immediate_natural_set
