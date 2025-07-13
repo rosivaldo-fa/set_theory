@@ -56,7 +56,7 @@ feature -- Membership
 
 feature -- Construction
 
-	set_extended (n: STS_NATURAL_NUMBER; a_eq: STS_EQUALITY [STS_NATURAL_NUMBER]): like superset_anchor -- TODO: Use like superset_anchor?
+	set_extended (n: STS_NATURAL_NUMBER; a_eq: STS_EQUALITY [STS_NATURAL_NUMBER]): like superset_anchor
 			-- Current set extended with `n`, whose equality with any other element is defined by `a_eq`
 		do
 			create Result.make_extended (n, a_eq, Current)

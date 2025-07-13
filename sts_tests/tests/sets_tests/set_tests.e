@@ -36,6 +36,7 @@ feature -- Test routines (All)
 			test_extended
 			test_prunned
 			test_is_universe
+			test_universe
 		end
 
 feature -- Test routines (Membership)
@@ -135,6 +136,16 @@ feature -- Test routines (Construction)
 			s := set_to_be_tested
 			a := some_object_g
 			assert ("s ∖ {a}", s.prunned (a) ∌ a)
+		end
+
+feature -- Test routines (Access)
+
+	test_universe
+			-- Test {STS_SET}.universe.
+		note
+			testing: "covers/{STS_SET}.universe"
+		do
+			assert ("universe", attached set_to_be_tested.universe)
 		end
 
 feature -- Test routines (Quality)

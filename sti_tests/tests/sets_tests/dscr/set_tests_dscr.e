@@ -48,6 +48,7 @@ inherit
 			test_out,
 			test_element_out,
 			test_debug_output,
+			test_universe,
 			test_is_universe
 		end
 
@@ -187,6 +188,16 @@ feature -- Test routines (Status report)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_SET}.debug_output"
+		do
+			Precursor {SET_TESTS}
+		end
+
+feature -- Test routines (Access)
+
+	test_universe
+			-- Test {STI_SET}.universe.
+		note
+			testing: "covers/{STI_SET}.universe"
 		do
 			Precursor {SET_TESTS}
 		end

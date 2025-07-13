@@ -45,6 +45,8 @@ feature -- Test routines (All)
 			Precursor {STST_NATURAL_SET_TESTS}
 			test_default_create
 			test_make_extended
+			test_out
+			test_debug_output
 		end
 
 feature -- Test routines (Initialization)
