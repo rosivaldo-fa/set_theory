@@ -63,8 +63,11 @@ feature -- Test routines (Initialization)
 			-- Test {STI_NATURAL_SET}.make_extended.
 		note
 			testing: "covers/{STI_NATURAL_SET}.make_extended"
+		local
+			s: like some_natural_set
 		do
-			assert ("make_extended", attached (create {like natural_set_to_be_tested}.make_extended (some_natural_number, some_natural_set)))
+			s := some_natural_set
+			assert ("make_extended", attached (create {like natural_set_to_be_tested}.make_extended (some_natural_number, s)))
 		end
 
 feature -- Test routines (Construction)
