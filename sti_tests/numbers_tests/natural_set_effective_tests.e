@@ -12,7 +12,6 @@ class
 inherit
 	STST_NATURAL_SET_TESTS
 		rename
-			some_object_g as some_natural_number,
 			some_immediate_natural_number as some_expanded_natural_number
 		undefine
 			default_create,
@@ -107,6 +106,42 @@ feature -- Test routines (Output)
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
+		end
+
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- Test {STI_NATURAL_SET}.debug_output.
+		note
+			testing: "covers/{STI_NATURAL_SET}.debug_output"
+		local
+			n, m, l: like some_natural_number
+			s: like set_to_be_tested
+			s_debug_output: STRING_32
+		do
+			create s
+			assert ("{}", s.debug_output ~ {STRING_32} "{}")
+
+			n := some_natural_number
+			s := s.extended (n)
+			s_debug_output := s.debug_output
+			assert ("{n}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ")")
+
+			m := some_natural_number
+			s := s.extended (m)
+			s_debug_output := s.debug_output
+			assert ("{n, m}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ") & (" +
+				{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ")")
+
+			l := some_natural_number
+			s := s.extended (l)
+			s_debug_output := s.debug_output
+			assert ("{n, m, l}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ") & (" +
+				{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ") & (" +
+				{UTF_CONVERTER}.utf_8_string_8_to_string_32 (l.out) + ")")
+
+			s := set_to_be_tested
+			assert ("debug_output", attached s.debug_output)
 		end
 
 feature {NONE} -- Factory (element to be tested)

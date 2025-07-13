@@ -11,7 +11,8 @@ deferred class
 inherit
 	SET_TESTS [STS_NATURAL_NUMBER]
 		rename
-			test_extended as test_set_extended
+			test_extended as test_set_extended,
+			some_object_g as some_natural_number
 		redefine
 			test_all
 		end

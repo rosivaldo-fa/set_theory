@@ -142,7 +142,7 @@ feature -- Output
 			when_detached: not attached a ⇒ Result ~ "Void"
 		rescue
 			if {EXCEPTIONS}.tag_name ~ "when_attached" then
-					-- If a.out contains the address of an object, the GC may changed such an address. Just hope it remains stable for now.
+					-- If a.out contains the address of an object, the GC may have changed such an address. Just hope it remains stable for now.
 				retry
 			end
 		end
