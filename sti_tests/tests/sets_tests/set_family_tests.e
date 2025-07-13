@@ -80,8 +80,11 @@ feature -- Test routines (Initialization)
 			-- Test {STI_SET_FAMILY}.make_extended.
 		note
 			testing: "covers/{STI_SET_FAMILY}.make_extended"
+		local
+			sf: like some_set_family_g
 		do
-			assert ("make_extended", attached (create {like set_family_to_be_tested}.make_extended (some_set_g, some_equality_sg, some_set_family_g)))
+			sf := some_set_family_g
+			assert ("make_extended", attached (create {like set_family_to_be_tested}.make_extended (some_set_g, some_equality_sg, sf)))
 		end
 
 feature -- Factory (Set)

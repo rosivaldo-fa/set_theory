@@ -136,14 +136,14 @@ feature -- Test routines (Status report)
 			s := s.extended (m)
 			s_debug_output := s.debug_output
 			assert ("{n, m}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ") & (" +
-				{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ")")
+					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ")")
 
 			l := some_natural_number
 			s := s.extended (l)
 			s_debug_output := s.debug_output
 			assert ("{n, m, l}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ") & (" +
-				{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ") & (" +
-				{UTF_CONVERTER}.utf_8_string_8_to_string_32 (l.out) + ")")
+					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ") & (" +
+					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (l.out) + ")")
 
 			s := set_to_be_tested
 			assert ("debug_output", attached s.debug_output)
@@ -164,4 +164,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end
