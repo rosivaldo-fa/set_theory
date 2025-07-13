@@ -37,7 +37,7 @@ feature {NONE} -- Initialization
 			-- Create a set whose `given_element' element and `subset' are, respectively, `n' and `s'.
 		do
 			subset := s
-			create given_element_storage.put (converted_element (n))
+			create given_element_storage.put (n.value)
 		ensure
 			is_not_empty: subset /= Current
 			given_element: given_element ≍ n
@@ -135,20 +135,6 @@ feature -- Quality
 	is_universe: detachable BOOLEAN_REF
 			-- <Precursor>
 		do
-		end
-
-feature -- Factory
-
-	converted_element (n: STS_NATURAL_NUMBER): like given_element_anchor
-			-- `n` converted to an element like `given_element'
-		do
-			if attached {like given_element_anchor} n as l_n then
-				Result := l_n
-			else
-				Result := n.value
-			end
-		ensure then
-			class
 		end
 
 feature -- Anchor
