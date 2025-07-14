@@ -9,6 +9,11 @@ Copyright (c) 2012-2025, Rosivaldo F Alves
 license: Eiffel Forum License v2 (see https://www.eiffel.com/licensing/forum.txt)
 
 ## Change history
+
+### v0.1.8
+- New classes specified, implemented and tested:
+	- NATURAL_NUMBER
+ 	- NATURAL_SET
 ### v0.1.7
 - New classes specified, implemented and tested:
 	- SET
