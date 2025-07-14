@@ -140,6 +140,14 @@ feature -- Test routines (Construction)
 
 feature -- Test routines (Access)
 
+	test_u
+			-- Test {STS_SET}.u.
+		note
+			testing: "covers/{STS_SET}.u"
+		do
+			assert ("u", attached set_to_be_tested.u)
+		end
+
 	test_universe
 			-- Test {STS_SET}.universe.
 		note

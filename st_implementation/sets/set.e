@@ -99,7 +99,7 @@ feature -- Construction
 
 feature -- Access
 
-	universe: like universe_anchor
+	u, universe: like universe_anchor
 			-- <Precursor>
 		do
 			create Result
