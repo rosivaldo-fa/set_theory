@@ -92,12 +92,7 @@ feature -- Anchor
 			Result := Current
 		end
 
-	superset_anchor: UNIVERSE [G]
-			-- <Precursor>
-		do
-			Result := Current
-		end
-
+	superset_anchor,
 	universe_anchor: UNIVERSE [G]
 			-- <Precursor>
 		do

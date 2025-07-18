@@ -34,8 +34,6 @@ inherit
 			some_immediate_set_sg as some_immediate_set_sdscr,
 			some_set_family_g as some_set_family_dscr,
 			some_immediate_set_family_g as some_immediate_set_family_dscr
---		undefine
---			default_create
 		redefine
 			test_all,
 			test_make,

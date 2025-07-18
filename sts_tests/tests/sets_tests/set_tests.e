@@ -36,6 +36,7 @@ feature -- Test routines (All)
 			test_extended
 			test_prunned
 			test_is_universe
+			test_u
 			test_universe
 		end
 

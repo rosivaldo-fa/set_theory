@@ -33,58 +33,58 @@ feature {NONE} -- Initialization
 			is_empty: subset = Current
 		end
 
-	make_extended (n: STS_NATURAL_NUMBER; s: STS_NATURAL_SET)
-			-- Create a set whose `given_element' element and `subset' are, respectively, `n' and `s'.
+	make_extended (a_n: STS_NATURAL_NUMBER; s: STS_NATURAL_SET)
+			-- Create a set whose `given_element' element and `subset' are, respectively, `a_n' and `s'.
 		do
 			subset := s
-			create given_element_storage.put (n.value)
+			create given_element_storage.put (a_n.value)
 		ensure
 			is_not_empty: subset /= Current
-			given_element: given_element ≍ n
+			given_element: given_element ≍ a_n
 			subset: subset = s -- TODO: Use set equality instead.
 		end
 
 feature -- Membership
 
-	has alias "∋" (n: STS_NATURAL_NUMBER): BOOLEAN
-			-- Is `n' an element in current set?
+	has alias "∋" (a_n: STS_NATURAL_NUMBER): BOOLEAN
+			-- Is `a_n' an element in current set?
 		do
 			if subset /= Current then -- Current set is not empty, so it is an "extended" set.
-				Result := n ≍ given_element or subset ∋ n
+				Result := a_n ≍ given_element or subset ∋ a_n
 			end
 		end
 
 feature -- Construction
 
-	set_extended (n: STS_NATURAL_NUMBER; a_eq: STS_EQUALITY [STS_NATURAL_NUMBER]): like superset_anchor
-			-- Current set extended with `n`, whose equality with any other element is defined by `a_eq`
+	set_extended (a_n: STS_NATURAL_NUMBER; a_eq: STS_EQUALITY [STS_NATURAL_NUMBER]): like superset_anchor
+			-- Current set extended with `a_n`, whose equality with any other element is defined by `a_eq`
 		do
-			create Result.make_extended (n, a_eq, Current)
+			create Result.make_extended (a_n, a_eq, Current)
 		ensure then
 			equality: Result.eq = a_eq
 			is_not_empty: Result.subset /= Result
-			given_element: Result.given_element ≍ n
+			given_element: Result.given_element ≍ a_n
 			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
 
-	extended (n: STS_NATURAL_NUMBER): like natural_superset_anchor -- TODO: Use like superset_anchor?
+	extended (a_n: STS_NATURAL_NUMBER): like natural_superset_anchor -- TODO: Use like superset_anchor?
 			-- <Precursor>
 		do
-			create Result.make_extended (n, Current)
+			create Result.make_extended (a_n, Current)
 		ensure then
-			given_element: Result.given_element ≍ n
+			given_element: Result.given_element ≍ a_n
 			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
 
-	prunned (n: STS_NATURAL_NUMBER): like subset_anchor
-			-- Set with every element of current set but any element regarded equal to `n'
+	prunned (a_n: STS_NATURAL_NUMBER): like subset_anchor
+			-- Set with every element of current set but any element regarded equal to `a_n'
 		do
 			if subset = Current then
 				Result := Current
-			elseif n ≍ given_element then
-				Result := subset.prunned (n)
+			elseif a_n ≍ given_element then
+				Result := subset.prunned (a_n)
 			else
-				Result := subset.prunned (n).extended (given_element)
+				Result := subset.prunned (a_n).extended (given_element)
 			end
 		ensure then
 			when_empty: subset = Current ⇒ Result = Current -- TODO: Use set equality instead.
@@ -94,9 +94,9 @@ feature -- Construction
 
 feature -- Access
 
-	u, universe: like universe_anchor
+	n, natural_numbers: UNIVERSE [STS_NATURAL_NUMBER]
 			-- <Precursor>
-		do
+		once
 			create Result
 		ensure then
 			class
@@ -159,8 +159,8 @@ feature -- Anchor
 
 	universe_anchor: UNIVERSE [STS_NATURAL_NUMBER]
 			-- <Precursor>
-		do
-			Result := universe
+		once
+			Result := n
 		ensure then
 			class
 		end

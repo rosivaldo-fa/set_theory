@@ -155,6 +155,25 @@ feature -- Factory (natural number)
 			end
 		end
 
+	some_immediate_natural_complement_set: STI_NATURAL_COMPLEMENT_SET
+			-- <Precursor>
+		do
+			check
+				s: attached {STI_NATURAL_COMPLEMENT_SET} some_immediate_instance (
+							agent: STI_NATURAL_COMPLEMENT_SET
+								local
+									s: like some_set_of_natural_numbers
+								do
+									s := some_set_of_natural_numbers
+									create Result.make (s)
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_NATURAL_COMPLEMENT_SET}
+			then
+				Result := cropped_set (s)
+			end
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

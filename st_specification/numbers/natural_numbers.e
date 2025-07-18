@@ -1,27 +1,28 @@
 ﻿note
-	description: "Set of natural numbers, i.e. a subset of ℕ."
+	description: "Universe of all natural numbers, i.e. ℕ."
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
 deferred class
-	NATURAL_SET
+	NATURAL_NUMBERS
 
 inherit
-	SET [NATURAL_NUMBER]
+	NATURAL_SET
+
+	UNIVERSE [NATURAL_NUMBER]
 		rename
 			u as n,
 			universe as natural_numbers,
 			extended as set_extended
 		end
 
-feature -- Construction
+feature -- Quality
 
-	extended (a_n: NATURAL_NUMBER): like natural_superset_anchor
-			-- Current natural set extended with `a_n', whose equality with any other element is defined by {NATURAL_NUMBER}.equals
+	is_universe: BOOLEAN
+			-- Is current set a universe, i.e., does it have every natural number?
+			--| Current set knows it is a universe!
 		deferred
-		ensure
-			has_a_n: Result ∋ a_n
 		end
 
 feature -- Anchor
@@ -31,8 +32,9 @@ feature -- Anchor
 		deferred
 		end
 
-	natural_superset_anchor: NATURAL_SET
-			-- Anchor for supersets of current natural set
+	superset_anchor,
+	natural_superset_anchor: NATURAL_NUMBERS
+			-- <Precursor>
 		deferred
 		end
 
