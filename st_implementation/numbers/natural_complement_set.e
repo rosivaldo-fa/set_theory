@@ -23,11 +23,6 @@ inherit
 			subset_anchor
 		end
 
---	DEBUG_OUTPUT
---		redefine
---			out
---		end
-
 create
 	make
 

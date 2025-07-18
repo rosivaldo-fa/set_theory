@@ -17,7 +17,8 @@ inherit
 			default_create,
 			test_element_is_in,
 			test_element_is_not_in,
-			same_natural_number
+			same_natural_number,
+			some_natural_set
 		redefine
 			test_all,
 			test_value,

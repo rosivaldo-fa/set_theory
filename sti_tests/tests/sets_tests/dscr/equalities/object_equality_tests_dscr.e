@@ -41,7 +41,8 @@ inherit
 			default_create,
 			test_is_in,
 			some_set_dscr,
-			same_natural_number
+			same_natural_number,
+			some_natural_set
 		redefine
 			test_all,
 			test_holds,

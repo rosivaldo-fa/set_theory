@@ -15,7 +15,8 @@ inherit
 		undefine
 			default_create,
 			some_set_g,
-			same_natural_number
+			same_natural_number,
+			some_natural_set
 		redefine
 			test_all,
 --			test_extended,

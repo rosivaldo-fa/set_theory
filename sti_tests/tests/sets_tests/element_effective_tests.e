@@ -19,7 +19,8 @@ inherit
 			test_all,
 			test_is_in,
 			test_is_not_in,
-			same_natural_number
+			same_natural_number,
+			some_natural_set
 		end
 
 	EQA_TEST_SET
@@ -133,6 +134,18 @@ feature -- Factory (natural number)
 			end
 		end
 
+	some_natural_set: STS_NATURAL_SET
+			-- <Precursor>
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := Precursor {STST_ELEMENT_TESTS}
+			when 1 then
+				Result := some_natural_complement_set
+			end
+		end
+
 	some_immediate_natural_set: STI_NATURAL_SET
 			-- <Precursor>
 		do
@@ -155,8 +168,14 @@ feature -- Factory (natural number)
 			end
 		end
 
+	some_natural_complement_set: STI_NATURAL_COMPLEMENT_SET
+			-- Randomly-fetched polymorphic natural-number complement set
+		do
+			Result := some_immediate_natural_complement_set
+		end
+
 	some_immediate_natural_complement_set: STI_NATURAL_COMPLEMENT_SET
-			-- <Precursor>
+			-- Randomly-fetched monomorphic natural-number complement set
 		do
 			check
 				s: attached {STI_NATURAL_COMPLEMENT_SET} some_immediate_instance (
