@@ -19,7 +19,7 @@ inherit
 			some_natural_set
 		redefine
 			test_all,
---			test_extended,
+			test_extended,
 			set_to_be_tested
 		end
 
@@ -66,15 +66,15 @@ feature -- Test routines (All)
 --			assert ("make_extended", attached (create {like natural_set_to_be_tested}.make_extended (some_natural_number, s)))
 --		end
 
---feature -- Test routines (Construction)
+feature -- Test routines (Construction)
 
---	test_extended
---			-- Test {STI_NATURAL_SET}.extended.
---		note
---			testing: "covers/{STI_NATURAL_SET}.extended"
---		do
---			Precursor {STST_NATURAL_SET_TESTS}
---		end
+	test_extended
+			-- Test {STI_NATURAL_COMPLEMENT_SET}.extended.
+		note
+			testing: "covers/{STI_NATURAL_COMPLEMENT_SET}.extended"
+		do
+			Precursor {STST_NATURAL_SET_TESTS}
+		end
 
 --feature -- Test routines (Output)
 

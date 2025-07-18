@@ -26,29 +26,6 @@ inherit
 create
 	make
 
---feature {NONE} -- Initialization
-
---	make (s: STS_SET [G])
---			-- Create a complement set whose `reference_set' is `s'.
---		do
---			reference_set := s
---		ensure
---			reference_set: reference_set = s -- TODO: Use set equality instead.
---		end
-
---feature -- Primitive
-
---	reference_set: STS_SET [G]
---			-- Set that current set is a complement of
-
---feature -- Membership
-
---	has alias "∋" (a: G): BOOLEAN
---			-- <Precursor>
---		do
---			Result := reference_set ∌ a
---		end
-
 feature -- Construction
 
 	extended (a_n: NATURAL_NUMBER): like natural_superset_anchor
