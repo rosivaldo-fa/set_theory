@@ -7,50 +7,60 @@ note
 class
 	NATURAL_NUMBERS
 
---inherit
---	STS_NATURAL_NUMBERS
---		undefine
---			does_not_have,
---			out
---		end
+inherit
+	STS_NATURAL_NUMBERS
+		undefine
+			does_not_have,
+			out
+		end
 
---	UNIVERSE [STS_NATURAL_NUMBER]
---		rename
---			extended as set_extended,
---			u as n,
---			universe as natural_numbers
---		redefine
---			subset_anchor,
---			superset_anchor
---		end
+	UNIVERSE [STS_NATURAL_NUMBER]
+		rename
+			extended as set_extended,
+			u as n,
+			universe as natural_numbers
+		redefine
+			prunned,
+			subset_anchor,
+			superset_anchor
+		end
 
---feature -- Construction
+feature -- Construction
 
---	extended (a_n: NATURAL_NUMBER): like natural_superset_anchor
---			-- <Precursor>
---		do
---			Result := Current
---		end
+	extended (a_n: STS_NATURAL_NUMBER): like natural_superset_anchor
+			-- <Precursor>
+		do
+			Result := Current
+		end
 
---feature -- Anchor
+	prunned (a_n: STS_NATURAL_NUMBER): NATURAL_COMPLEMENT_SET
+			-- <Precursor>
+		local
+			s: NATURAL_SET
+		do
+			create s
+			create Result.make (s.extended (a_n))
+		end
 
---	subset_anchor: NATURAL_SET
---			-- <Precursor>
---		do
---			Result := Current
---		end
+feature -- Anchor
 
---	superset_anchor: NATURAL_NUMBERS
---			-- <Precursor>
---		do
---			Result := Current
---		end
+	subset_anchor: STS_NATURAL_SET
+			-- <Precursor>
+		do
+			Result := Current
+		end
 
---	natural_superset_anchor: NATURAL_NUMBERS
---			-- <Precursor>
---		do
---			Result := Current
---		end
+	superset_anchor: NATURAL_NUMBERS
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
+	natural_superset_anchor: NATURAL_NUMBERS
+			-- <Precursor>
+		do
+			Result := Current
+		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

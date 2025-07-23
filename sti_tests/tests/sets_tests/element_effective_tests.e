@@ -193,6 +193,22 @@ feature -- Factory (natural number)
 			end
 		end
 
+	some_immediate_natural_universe: STI_NATURAL_NUMBERS
+			-- <Precursor>
+		do
+			check
+				n: attached {STI_NATURAL_NUMBERS} some_immediate_instance (
+							agent: STI_NATURAL_NUMBERS
+								do
+									create Result
+								end
+						) as n -- `some_immediate_instance' definition
+				monomorphic: n.generating_type ~ {detachable STI_NATURAL_NUMBERS}
+			then
+				Result := n
+			end
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

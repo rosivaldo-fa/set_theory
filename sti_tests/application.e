@@ -14,8 +14,6 @@ feature {NONE} -- Initialization
 
 	test_all
 			-- Run every available test.
-		local
-			s: STI_NATURAL_COMPLEMENT_SET
 		do
 			(create {ELEMENT_EFFECTIVE_TESTS}).test_all;
 			(create {REFERENCE_EQUALITY_TESTS_DSCR}).test_all;
@@ -28,7 +26,7 @@ feature {NONE} -- Initialization
 			(create {UNIVERSE_TESTS_DSCR}).test_all;
 			(create {NATURAL_NUMBER_EFFECTIVE_TESTS}).test_all;
 			(create {NATURAL_SET_EFFECTIVE_TESTS}).test_all;
-			create s.make (create {STI_NATURAL_SET})
+			(create {NATURAL_COMPLEMENT_SET_TESTS}).test_all;
 		end
 
 note

@@ -210,13 +210,15 @@ feature -- Factory (natural number)
 			-- Randomly-fetched polymorphic set of natural numbers
 		do
 			inspect
-				next_random_item \\ 3
+				next_random_item \\ 4
 			when 0 then
 				Result := some_immediate_set_of_natural_numbers
 			when 1 then
 				Result := some_universe_of_natural_numbers
 			when 2 then
 				Result := some_natural_set
+			when 3 then
+				Result := some_natural_universe
 			end
 		end
 
@@ -315,6 +317,19 @@ feature -- Factory (natural number)
 		deferred
 		ensure
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_natural_set}
+		end
+
+	some_natural_universe: STS_NATURAL_NUMBERS
+			-- Randomly-fetched polymorphic natural-number universe
+		do
+			Result := some_immediate_natural_universe
+		end
+
+	some_immediate_natural_universe: STS_NATURAL_NUMBERS
+			-- Randomly-fetched monomorphic natural-number universe
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_natural_universe}
 		end
 
 feature {NONE} -- Implementation
