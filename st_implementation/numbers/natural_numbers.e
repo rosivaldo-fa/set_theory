@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Implementation of {STS_NATURAL_NUMBERS}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -10,7 +10,8 @@ class
 inherit
 	STS_NATURAL_NUMBERS
 		undefine
-			does_not_have,
+			does_not_have
+		redefine
 			out
 		end
 
@@ -21,6 +22,7 @@ inherit
 			universe as natural_numbers
 		redefine
 			prunned,
+			out,
 			subset_anchor,
 			superset_anchor
 		end
@@ -40,6 +42,16 @@ feature -- Construction
 		do
 			create s
 			create Result.make (s.extended (a_n))
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		once
+			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("ℕ")
+		ensure then
+			class
 		end
 
 feature -- Anchor

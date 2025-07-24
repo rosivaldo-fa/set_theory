@@ -55,6 +55,16 @@ feature -- Test routines (Initialization)
 			assert ("default_create", attached (create {like universe_to_be_tested}))
 		end
 
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {STI_NATURAL_NUMBERS}.out.
+		note
+			testing: "covers/{STI_NATURAL_NUMBERS}.out"
+		do
+			assert ("out", attached universe_to_be_tested.out)
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

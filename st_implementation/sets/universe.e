@@ -70,7 +70,6 @@ feature -- Output
 			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("𝕌")
 		ensure then
 			class
-			definition: Result ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("𝕌")
 		end
 
 feature -- Status report
