@@ -43,6 +43,9 @@ feature -- Test routines (All)
 			testing: "covers/{STI_NATURAL_NUMBERS}"
 		do
 			Precursor {STST_NATURAL_NUMBERS_TESTS}
+			test_default_create
+			test_out
+			test_debug_output
 		end
 
 feature -- Test routines (Initialization)
@@ -63,6 +66,16 @@ feature -- Test routines (Output)
 			testing: "covers/{STI_NATURAL_NUMBERS}.out"
 		do
 			assert ("out", attached universe_to_be_tested.out)
+		end
+
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- Test {STI_NATURAL_NUMBERS}.debug_output.
+		note
+			testing: "covers/{STI_NATURAL_NUMBERS}.debug_output"
+		do
+			assert ("debug_output", attached universe_to_be_tested.debug_output)
 		end
 
 note
