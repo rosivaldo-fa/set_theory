@@ -45,6 +45,16 @@ feature -- Test routines (All)
 			Precursor {STST_NATURAL_NUMBERS_TESTS}
 		end
 
+feature -- Test routines (Initialization)
+
+	test_default_create
+			-- Test {STI_NATURAL_NUMBERS}.default_create.
+		note
+			testing: "covers/{STI_NATURAL_NUMBERS}.default_create"
+		do
+			assert ("default_create", attached (create {like universe_to_be_tested}))
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[
