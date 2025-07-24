@@ -37,6 +37,7 @@ inherit
 			some_immediate_set_family_g as some_immediate_set_family_dscr
 		redefine
 			test_all,
+			test_default_create,
 			test_has,
 			test_does_not_have,
 			test_extended,
@@ -63,6 +64,16 @@ feature -- Test routines (All)
 			-- Test every routine of {STI_UNIVERSE}.
 		note
 			testing: "covers/{STI_UNIVERSE}"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+feature -- Test routines (Initialization)
+
+	test_default_create
+			-- Test {STI_UNIVERSE}.default_create.
+		note
+			testing: "covers/{STI_UNIVERSE}.default_create"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end

@@ -38,12 +38,22 @@ inherit
 feature -- Test routines (All)
 
 	test_all
-			-- Test every routine of {STS_SET}.
+			-- Test every routine of {STI_UNIVERSE}.
 		note
-			testing: "covers/{STS_SET}"
+			testing: "covers/{STI_UNIVERSE}"
 		do
 			Precursor {UNARY_TESTS}
 			test_debug_output
+		end
+
+feature -- Test routines (Initialization)
+
+	test_default_create
+			-- Test {STI_UNIVERSE}.default_create.
+		note
+			testing: "covers/{STI_UNIVERSE}.default_create"
+		do
+			assert ("default_create", attached (create {like universe_to_be_tested}))
 		end
 
 feature -- Test routines (Membership)
