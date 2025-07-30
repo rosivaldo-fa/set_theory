@@ -12,7 +12,8 @@ class
 inherit
 	STST_ELEMENT_TESTS
 		rename
-			some_immediate_natural_number as some_expanded_natural_number
+			some_immediate_natural_number as some_expanded_natural_number,
+			some_immediate_integer_number as some_expanded_integer_number
 		undefine
 			default_create
 		redefine
@@ -20,7 +21,8 @@ inherit
 			test_is_in,
 			test_is_not_in,
 			same_natural_number,
-			some_natural_set
+			some_natural_set,
+			same_integer_number
 		end
 
 	EQA_TEST_SET
@@ -208,6 +210,148 @@ feature -- Factory (natural number)
 				Result := n
 			end
 		end
+
+feature -- Factory (integer number)
+
+	same_integer_number (n: STS_INTEGER_NUMBER): like some_integer_number
+			-- <Precursor>
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := Precursor {STST_ELEMENT_TESTS} (n)
+			when 1 then
+				create {STI_INTEGER_NUMBER} Result.make (n.value)
+			end
+		end
+
+	some_expanded_integer_number: STI_INTEGER_NUMBER
+			-- <Precursor>
+		do
+			Result := some_native_integer_number
+		end
+
+	some_native_integer_number: INTEGER
+			-- Randomly-created native integer number
+		do
+			Result := next_random_item.as_integer_32
+		end
+
+	some_immediate_set_of_integer_numbers: STI_SET [STS_INTEGER_NUMBER]
+			-- <Precursor>
+		do
+			check
+				s: attached {STI_SET [STS_INTEGER_NUMBER]} some_immediate_instance (
+							agent: STI_SET [STS_INTEGER_NUMBER]
+								local
+									eq: STS_OBJECT_EQUALITY [STS_INTEGER_NUMBER]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create eq
+										create Result
+									loop
+										Result := Result.extended (some_integer_number, eq)
+									end
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_SET [STS_INTEGER_NUMBER]}
+			then
+				Result := cropped_set (s)
+			end
+		end
+
+	some_immediate_universe_of_integer_numbers: STI_UNIVERSE [STS_INTEGER_NUMBER]
+			-- <Precursor>
+		do
+			check
+				u: attached {STI_UNIVERSE [STS_INTEGER_NUMBER]} some_immediate_instance (
+							agent: STI_UNIVERSE [STS_INTEGER_NUMBER]
+								do
+									create Result
+								end
+						) as u -- `some_immediate_instance' definition
+				monomorphic: u.generating_type ~ {detachable STI_UNIVERSE [STS_INTEGER_NUMBER]}
+			then
+				Result := u
+			end
+		end
+
+--	some_integer_set: STS_INTEGER_SET
+--			-- <Precursor>
+--		do
+--			inspect
+--				next_random_item \\ 2
+--			when 0 then
+--				Result := Precursor {STST_ELEMENT_TESTS}
+--			when 1 then
+--				Result := some_integer_complement_set
+--			end
+--		end
+
+--	some_immediate_integer_set: STI_INTEGER_SET
+--			-- <Precursor>
+--		do
+--			check
+--				s: attached {STI_INTEGER_SET} some_immediate_instance (
+--							agent: STI_INTEGER_SET
+--								do
+--									across
+--										1 |..| some_count.as_integer_32 as i
+--									from
+--										create Result
+--									loop
+--										Result := Result.extended (some_integer_number)
+--									end
+--								end
+--						) as s -- `some_immediate_instance' definition
+--				monomorphic: s.generating_type ~ {detachable STI_INTEGER_SET}
+--			then
+--				Result := cropped_set (s)
+--			end
+--		end
+
+--	some_integer_complement_set: STI_INTEGER_COMPLEMENT_SET
+--			-- Randomly-fetched polymorphic integer-number complement set
+--		do
+--			Result := some_immediate_integer_complement_set
+--		end
+
+--	some_immediate_integer_complement_set: STI_INTEGER_COMPLEMENT_SET
+--			-- Randomly-fetched monomorphic integer-number complement set
+--		do
+--			check
+--				s: attached {STI_INTEGER_COMPLEMENT_SET} some_immediate_instance (
+--							agent: STI_INTEGER_COMPLEMENT_SET
+--								local
+--									s: like some_set_of_integer_numbers
+--								do
+--									s := some_set_of_integer_numbers
+--									create Result.make (s)
+--								end
+--						) as s -- `some_immediate_instance' definition
+--				monomorphic: s.generating_type ~ {detachable STI_INTEGER_COMPLEMENT_SET}
+--			then
+--				Result := cropped_set (s)
+--			end
+--		end
+
+--	some_immediate_integer_universe: STI_INTEGER_NUMBERS
+--			-- <Precursor>
+--		do
+--			check
+--				n: attached {STI_INTEGER_NUMBERS} some_immediate_instance (
+--							agent: STI_INTEGER_NUMBERS
+--								do
+--									create Result
+--								end
+--						) as n -- `some_immediate_instance' definition
+--				monomorphic: n.generating_type ~ {detachable STI_INTEGER_NUMBERS}
+--			then
+--				Result := n
+--			end
+--		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

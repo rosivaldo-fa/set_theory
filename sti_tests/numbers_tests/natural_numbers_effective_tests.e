@@ -12,11 +12,13 @@ class
 inherit
 	STST_NATURAL_NUMBERS_TESTS
 		rename
-			 some_immediate_natural_number as some_expanded_natural_number
+			 some_immediate_natural_number as some_expanded_natural_number,
+			 some_immediate_integer_number as some_expanded_integer_number
 		undefine
 			default_create,
 			same_natural_number,
 			some_natural_set,
+			same_integer_number,
 			some_set_g
 		redefine
 			test_all

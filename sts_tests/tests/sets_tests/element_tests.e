@@ -332,6 +332,157 @@ feature -- Factory (natural number)
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_natural_universe}
 		end
 
+feature -- Factory (integer number)
+
+	some_integer_number: STS_INTEGER_NUMBER
+			-- Randomly-fetched polymorphic integer number
+		do
+			Result := some_immediate_integer_number
+		end
+
+	some_immediate_integer_number: STS_INTEGER_NUMBER
+			-- Randomly-fetched monomorphic integer number
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_integer_number}
+		end
+
+	same_integer_number (n: STS_INTEGER_NUMBER): like some_integer_number
+			-- Integer number equal to `n'
+		do
+			Result := n
+		ensure
+			definition: Result ≍ n
+		end
+
+	some_set_of_integer_numbers: STS_SET [STS_INTEGER_NUMBER]
+			-- Randomly-fetched polymorphic set of integer numbers
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_immediate_set_of_integer_numbers
+			when 1 then
+				Result := some_universe_of_integer_numbers
+			when 2 then
+--				Result := some_integer_set
+				Result := some_set_of_integer_numbers
+			when 3 then
+--				Result := some_integer_universe
+				Result := some_set_of_integer_numbers
+			end
+		end
+
+	some_immediate_set_of_integer_numbers: like some_set_of_integer_numbers
+			-- Randomly-fetched monomorphic set of integer numbers
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_of_integer_numbers}
+		end
+
+	some_universe_of_integer_numbers: STS_UNIVERSE [STS_INTEGER_NUMBER]
+			-- Randomly-fetched polymorphic universe of integer numbers
+		do
+			Result := some_immediate_universe_of_integer_numbers
+		end
+
+	some_immediate_universe_of_integer_numbers: like some_universe_of_integer_numbers
+			-- Randomly-fetched monomorphic universe of integer numbers
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_of_integer_numbers}
+		end
+
+	some_integer_number_equality: STS_EQUALITY [STS_INTEGER_NUMBER]
+			-- Randomly-fetched polymorphic equality for comparing {STS_INTEGER_NUMBER} instances
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_integer_number_reference_equality
+			when 1 then
+				Result := some_integer_number_object_standard_equality
+			when 2 then
+				Result := some_integer_number_object_equality
+			when 3 then
+				Result := some_integer_number_object_deep_equality
+			end
+		end
+
+	some_integer_number_reference_equality: STS_REFERENCE_EQUALITY [STS_INTEGER_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_INTEGER_NUMBER} object references
+		do
+			check
+				eq: attached {STS_REFERENCE_EQUALITY [STS_INTEGER_NUMBER]} some_immediate_instance
+						(agent: STS_REFERENCE_EQUALITY [STS_INTEGER_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [STS_INTEGER_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_integer_number_object_standard_equality: STS_OBJECT_STANDARD_EQUALITY [STS_INTEGER_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_INTEGER_NUMBER} object standard value
+		do
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [STS_INTEGER_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_STANDARD_EQUALITY [STS_INTEGER_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [STS_INTEGER_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_integer_number_object_equality: STS_OBJECT_EQUALITY [STS_INTEGER_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_INTEGER_NUMBER} object value
+		do
+			check
+				eq: attached {STS_OBJECT_EQUALITY [STS_INTEGER_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_EQUALITY [STS_INTEGER_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [STS_INTEGER_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_integer_number_object_deep_equality: STS_OBJECT_DEEP_EQUALITY [STS_INTEGER_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_INTEGER_NUMBER} object deep value
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [STS_INTEGER_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_DEEP_EQUALITY [STS_INTEGER_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [STS_INTEGER_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+--	some_integer_set: STS_INTEGER_SET
+--			-- Randomly-fetched polymorphic integer number set
+--		do
+--			Result := some_immediate_integer_set
+--		end
+
+--	some_immediate_integer_set: STS_INTEGER_SET
+--			-- Randomly-fetched monomorphic integer number set
+--		deferred
+--		ensure
+--			monomorphic: Result.generating_type ~ {detachable like some_immediate_integer_set}
+--		end
+
+--	some_integer_universe: STS_INTEGER_NUMBERS
+--			-- Randomly-fetched polymorphic integer-number universe
+--		do
+--			Result := some_immediate_integer_universe
+--		end
+
+--	some_immediate_integer_universe: STS_INTEGER_NUMBERS
+--			-- Randomly-fetched monomorphic integer-number universe
+--		deferred
+--		ensure
+--			monomorphic: Result.generating_type ~ {detachable like some_immediate_integer_universe}
+--		end
+
 feature {NONE} -- Implementation
 
 	cropped_set (s: STS_SET [detachable separate ANY]): like s
