@@ -234,7 +234,7 @@ feature -- Factory (integer number)
 	some_native_integer_number: INTEGER
 			-- Randomly-created native integer number
 		do
-			Result := next_random_item.as_integer_32
+			Result := next_random_item
 		end
 
 	some_immediate_set_of_integer_numbers: STI_SET [STS_INTEGER_NUMBER]
