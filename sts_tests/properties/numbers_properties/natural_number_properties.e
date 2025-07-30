@@ -25,11 +25,11 @@ feature -- Access
 
 feature -- Properties (Membership)
 
-	is_not_in_ok (l: STS_NATURAL_NUMBER; s: STS_SET [STS_NATURAL_NUMBER]): BOOLEAN
+	is_not_in_ok (n: STS_NATURAL_NUMBER; s: STS_SET [STS_NATURAL_NUMBER]): BOOLEAN
 			-- Do the properties verified within number theory hold for {STS_NATURAL_NUMBER}.is_not_in?
 		do
 			check
-				another_definition: l ∉ s = s ∌ l
+				another_definition: n ∉ s = s ∌ n
 			then
 				Result := True
 			end
