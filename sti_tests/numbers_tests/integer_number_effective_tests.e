@@ -104,8 +104,8 @@ feature -- Test routines (Initialization)
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.make"
 		do
-			assert ("make", attached (create {like integer_number_to_be_tested}.make (next_random_item.as_integer_32)))
-			assert ("integer_number_from_native", attached integer_number_from_native (next_random_item.as_integer_32))
+			assert ("make", attached (create {like integer_number_to_be_tested}.make (next_random_item)))
+			assert ("integer_number_from_native", attached integer_number_from_native (next_random_item))
 		end
 
 feature -- Test routines (Primitive)
