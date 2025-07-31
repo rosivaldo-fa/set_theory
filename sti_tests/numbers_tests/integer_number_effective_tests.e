@@ -330,7 +330,7 @@ feature -- Test routines (Implementation)
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.adjusted_value"
 		do
-			assert ("adjusted_value", attached integer_number_to_be_tested.adjusted_value (next_random_item))
+			Precursor {STST_INTEGER_NUMBER_TESTS}
 		end
 
 feature {NONE} -- Conversion
