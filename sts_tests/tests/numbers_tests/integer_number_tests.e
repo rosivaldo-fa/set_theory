@@ -71,20 +71,20 @@ feature -- Test routines (Membership)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.is_in"
 		local
-			n: like integer_number_to_be_tested
+			i: like integer_number_to_be_tested
 			s: like some_set_of_integer_numbers
 		do
-			n := integer_number_to_be_tested
-			s := some_set_of_integer_numbers.extended (n, some_integer_number_equality)
-			assert ("n ∈ s", n ∈ s)
+			i := integer_number_to_be_tested
+			s := some_set_of_integer_numbers.extended (i, some_integer_number_equality)
+			assert ("i ∈ s", i ∈ s)
 
-			n := integer_number_to_be_tested
-			s := some_set_of_integer_numbers.prunned (n)
-			assert ("not (n ∈ s)", not (n ∈ s))
+			i := integer_number_to_be_tested
+			s := some_set_of_integer_numbers.prunned (i)
+			assert ("not (i ∈ s)", not (i ∈ s))
 
-			n := integer_number_to_be_tested
+			i := integer_number_to_be_tested
 			s := some_set_of_integer_numbers
-			assert ("is_in", n ∈ s ⇒ True)
+			assert ("is_in", i ∈ s ⇒ True)
 		end
 
 	test_is_not_in
@@ -92,23 +92,23 @@ feature -- Test routines (Membership)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.is_not_in"
 		local
-			n: like integer_number_to_be_tested
+			i: like integer_number_to_be_tested
 			s: like some_set_of_integer_numbers
 		do
-			n := integer_number_to_be_tested
-			s := some_set_of_integer_numbers.prunned (n)
-			assert ("n ∉ s", n ∉ s)
-			assert ("n ∉ s ok", is_not_in_ok (n, s))
+			i := integer_number_to_be_tested
+			s := some_set_of_integer_numbers.prunned (i)
+			assert ("i ∉ s", i ∉ s)
+			assert ("i ∉ s ok", is_not_in_ok (i, s))
 
-			n := integer_number_to_be_tested
-			s := some_set_of_integer_numbers.extended (n, some_integer_number_equality)
-			assert ("not (n ∉ s)", not (n ∉ s))
-			assert ("not (n ∉ s) ok", is_not_in_ok (n, s))
+			i := integer_number_to_be_tested
+			s := some_set_of_integer_numbers.extended (i, some_integer_number_equality)
+			assert ("not (i ∉ s)", not (i ∉ s))
+			assert ("not (i ∉ s) ok", is_not_in_ok (i, s))
 
-			n := integer_number_to_be_tested
+			i := integer_number_to_be_tested
 			s := some_set_of_integer_numbers
-			assert ("is_not_in", n ∉ s ⇒ True)
-			assert ("is_not_in_ok", is_not_in_ok (n, s))
+			assert ("is_not_in", i ∉ s ⇒ True)
+			assert ("is_not_in_ok", is_not_in_ok (i, s))
 		end
 
 feature -- Test routines (Access)
@@ -118,10 +118,10 @@ feature -- Test routines (Access)
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.zero"
 		local
-			n: like integer_number_to_be_tested
+			i: like integer_number_to_be_tested
 		do
-			n := integer_number_to_be_tested
-			assert ("zero", attached n.Zero)
+			i := integer_number_to_be_tested
+			assert ("zero", attached i.Zero)
 		end
 
 	test_one
@@ -129,10 +129,10 @@ feature -- Test routines (Access)
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.one"
 		local
-			n: like integer_number_to_be_tested
+			i: like integer_number_to_be_tested
 		do
-			n := integer_number_to_be_tested
-			assert ("one", attached n.One)
+			i := integer_number_to_be_tested
+			assert ("one", attached i.One)
 		end
 
 feature -- Test routines (Comparison)
@@ -142,33 +142,33 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.equals"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
-			n := integer_number_to_be_tested
-			assert ("same entity", n ≍ n)
-			assert ("same entity ok", equals_ok (n, n, n))
+			i := integer_number_to_be_tested
+			assert ("same entity", i ≍ i)
+			assert ("same entity ok", equals_ok (i, i, i))
 
-			n := integer_number_to_be_tested
-			m := same_integer_number (n)
-			assert ("same_integer_number", n ≍ m)
-			assert ("same_integer_number ok", equals_ok (n, m, same_integer_number (m)))
+			i := integer_number_to_be_tested
+			j := same_integer_number (i)
+			assert ("same_integer_number", i ≍ j)
+			assert ("same_integer_number ok", equals_ok (i, j, same_integer_number (j)))
 
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				m.value /= n.value
+				j.value /= i.value
 			loop
-				m := some_integer_number
+				j := some_integer_number
 			end
-			assert ("not (n ≍ m)", not (n ≍ m))
-			assert ("not (n ≍ m) ok", equals_ok (n, m, some_integer_number))
+			assert ("not (i ≍ j)", not (i ≍ j))
+			assert ("not (i ≍ j) ok", equals_ok (i, j, some_integer_number))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("equals", n ≍ m ⇒ True)
-			assert ("equals ok", equals_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("equals", i ≍ j ⇒ True)
+			assert ("equals ok", equals_ok (i, j, some_integer_number))
 		end
 
 	test_unequals
@@ -176,33 +176,33 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.unequals"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
-			n := integer_number_to_be_tested
-			assert ("same entity", not (n ≭ n))
-			assert ("same entity ok", unequals_ok (n, n))
+			i := integer_number_to_be_tested
+			assert ("same entity", not (i ≭ i))
+			assert ("same entity ok", unequals_ok (i, i))
 
-			n := integer_number_to_be_tested
-			m := same_integer_number (n)
-			assert ("same_integer_number", not (n ≭ n))
-			assert ("same_integer_number ok", unequals_ok (n, m))
+			i := integer_number_to_be_tested
+			j := same_integer_number (i)
+			assert ("same_integer_number", not (i ≭ i))
+			assert ("same_integer_number ok", unequals_ok (i, j))
 
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				m.value /= n.value
+				j.value /= i.value
 			loop
-				m := some_integer_number
+				j := some_integer_number
 			end
-			assert ("n ≭ m", n ≭ m)
-			assert ("n ≭ m ok", unequals_ok (n, m))
+			assert ("i ≭ j", i ≭ j)
+			assert ("i ≭ j ok", unequals_ok (i, j))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("unequals", n ≍ m ⇒ True)
-			assert ("unequals ok", unequals_ok (n, m))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("unequals", i ≍ j ⇒ True)
+			assert ("unequals ok", unequals_ok (i, j))
 		end
 
 	test_is_less
@@ -210,37 +210,37 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.is_less"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.value < m.value
+				i.value < j.value
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("n < m", n < m)
-			assert ("n < m ok", is_less_ok (n, m, some_integer_number))
+			assert ("i < j", i < j)
+			assert ("i < j ok", is_less_ok (i, j, some_integer_number))
 
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.value ≥ m.value
+				i.value ≥ j.value
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("not (n < m)", not (n < m))
-			assert ("not (n < m) ok", is_less_ok (n, m, some_integer_number))
+			assert ("not (i < j)", not (i < j))
+			assert ("not (i < j) ok", is_less_ok (i, j, some_integer_number))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("is_less", n < m ⇒ True)
-			assert ("is_less ok", is_less_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("is_less", i < j ⇒ True)
+			assert ("is_less ok", is_less_ok (i, j, some_integer_number))
 		end
 
 	test_is_less_equal
@@ -248,37 +248,37 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.is_less_equal"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.value ≤ m.value
+				i.value ≤ j.value
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("n ≤ m", n ≤ m)
-			assert ("n ≤ m ok", is_less_equal_ok (n, m, some_integer_number))
+			assert ("i ≤ j", i ≤ j)
+			assert ("i ≤ j ok", is_less_equal_ok (i, j, some_integer_number))
 
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.value > m.value
+				i.value > j.value
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("not (n ≤ m)", not (n ≤ m))
-			assert ("not (n ≤ m) ok", is_less_equal_ok (n, m, some_integer_number))
+			assert ("not (i ≤ j)", not (i ≤ j))
+			assert ("not (i ≤ j) ok", is_less_equal_ok (i, j, some_integer_number))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("is_less_equal", n ≤ m ⇒ True)
-			assert ("is_less_equal_ok", is_less_equal_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("is_less_equal", i ≤ j ⇒ True)
+			assert ("is_less_equal_ok", is_less_equal_ok (i, j, some_integer_number))
 		end
 
 	test_is_greater
@@ -286,37 +286,37 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.is_greater"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.value > m.value
+				i.value > j.value
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("n > m", n > m)
-			assert ("n > m ok", is_greater_ok (n, m, some_integer_number))
+			assert ("i > j", i > j)
+			assert ("i > j ok", is_greater_ok (i, j, some_integer_number))
 
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.value ≤ m.value
+				i.value ≤ j.value
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("not (n > m)", not (n > m))
-			assert ("not (n > m) ok", is_greater_ok (n, m, some_integer_number))
+			assert ("not (i > j)", not (i > j))
+			assert ("not (i > j) ok", is_greater_ok (i, j, some_integer_number))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("is_greater", n > m ⇒ True)
-			assert ("is_greater ok", is_greater_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("is_greater", i > j ⇒ True)
+			assert ("is_greater ok", is_greater_ok (i, j, some_integer_number))
 		end
 
 	test_is_greater_equal
@@ -324,37 +324,37 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.is_greater_equal"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.value ≥ m.value
+				i.value ≥ j.value
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("n ≥ m", n ≥ m)
-			assert ("n ≥ m ok", is_greater_equal_ok (n, m, some_integer_number))
+			assert ("i ≥ j", i ≥ j)
+			assert ("i ≥ j ok", is_greater_equal_ok (i, j, some_integer_number))
 
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.value < m.value
+				i.value < j.value
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("not (n ≥ m)", not (n ≥ m))
-			assert ("not (n ≥ m) ok", is_greater_equal_ok (n, m, some_integer_number))
+			assert ("not (i ≥ j)", not (i ≥ j))
+			assert ("not (i ≥ j) ok", is_greater_equal_ok (i, j, some_integer_number))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("is_greater_equal", n ≥ m ⇒ True)
-			assert ("is_greater_equal_ok", is_less_equal_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("is_greater_equal", i ≥ j ⇒ True)
+			assert ("is_greater_equal_ok", is_less_equal_ok (i, j, some_integer_number))
 		end
 
 	test_min
@@ -362,37 +362,37 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.min"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n ≤ m
+				i ≤ j
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("n", (n ∧ m) ≍ n)
-			assert ("n ok", min_ok (n, m, some_integer_number))
+			assert ("i", (i ∧ j) ≍ i)
+			assert ("i ok", min_ok (i, j, some_integer_number))
 
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n ≥ m
+				i ≥ j
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("m", (n ∧ m) ≍ m)
-			assert ("m ok", min_ok (n, m, some_integer_number))
+			assert ("j", (i ∧ j) ≍ j)
+			assert ("j ok", min_ok (i, j, some_integer_number))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("min", attached (n ∧ m))
-			assert ("min ok", min_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("min", attached (i ∧ j))
+			assert ("min ok", min_ok (i, j, some_integer_number))
 		end
 
 	test_max
@@ -400,37 +400,37 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.max"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n ≥ m
+				i ≥ j
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("n", (n ∨ m) ≍ n)
-			assert ("n ok", max_ok (n, m, some_integer_number))
+			assert ("i", (i ∨ j) ≍ i)
+			assert ("i ok", max_ok (i, j, some_integer_number))
 
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n ≤ m
+				i ≤ j
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("m", (n ∨ m) ≍ m)
-			assert ("m ok", max_ok (n, m, some_integer_number))
+			assert ("j", (i ∨ j) ≍ j)
+			assert ("j ok", max_ok (i, j, some_integer_number))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("max", attached (n ∨ m))
-			assert ("max ok", max_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("max", attached (i ∨ j))
+			assert ("max ok", max_ok (i, j, some_integer_number))
 		end
 
 feature -- Test routines (Relationship)
@@ -440,24 +440,24 @@ feature -- Test routines (Relationship)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.divides"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
+				i := integer_number_to_be_tested
 			until
-				n ≭ One
+				i ≭ One
 			loop
-				n := integer_number_to_be_tested
+				i := integer_number_to_be_tested
 			end
-			m := (some_integer_number ⋅ n) + One
-			assert ("not (n | m)", not (n | m))
-			assert ("not (n | m) ok", divides_ok (n, m, some_integer_number))
+			j := (some_integer_number ⋅ i) + One
+			assert ("not (i | j)", not (i | j))
+			assert ("not (i | j) ok", divides_ok (i, j, some_integer_number))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("divides", (n | m) ⇒ True)
-			assert ("divides_ok", divides_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("divides", (i | j) ⇒ True)
+			assert ("divides_ok", divides_ok (i, j, some_integer_number))
 		end
 
 	test_divisible
@@ -465,26 +465,26 @@ feature -- Test routines (Relationship)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.divisible"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				m ≭ zero
+				j ≭ zero
 			loop
-				m := some_integer_number
+				j := some_integer_number
 			end
-			assert ("n.divisible (m)", n.divisible (m))
+			assert ("i.divisible (j)", i.divisible (j))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number.zero
-			assert ("not n.divisible (m)", not n.divisible (m))
+			i := integer_number_to_be_tested
+			j := some_integer_number.zero
+			assert ("not i.divisible (j)", not i.divisible (j))
 
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("divisible", n.divisible (m) ⇒ True)
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("divisible", i.divisible (j) ⇒ True)
 		end
 
 feature -- Test routines (Operation)
@@ -494,13 +494,13 @@ feature -- Test routines (Operation)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.plus"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("plus", attached (n + m))
-			assert ("plus_ok", plus_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("plus", attached (i + j))
+			assert ("plus_ok", plus_ok (i, j, some_integer_number))
 		end
 
 	test_identity
@@ -508,11 +508,11 @@ feature -- Test routines (Operation)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.identity"
 		local
-			n: like integer_number_to_be_tested
+			i: like integer_number_to_be_tested
 		do
-			n := integer_number_to_be_tested
-			assert ("identity", attached (+ n))
-			assert ("identity_ok", identity_ok (n))
+			i := integer_number_to_be_tested
+			assert ("identity", attached (+ i))
+			assert ("identity_ok", identity_ok (i))
 		end
 
 	test_minus
@@ -520,20 +520,20 @@ feature -- Test routines (Operation)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.minus"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				m ≤ n
+				j ≤ i
 			loop
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			assert ("minus", attached (n + m))
-			assert ("minus ok", minus_ok (n, m, some_integer_number))
+			assert ("minus", attached (i + j))
+			assert ("minus ok", minus_ok (i, j, some_integer_number))
 		end
 
 	test_product
@@ -541,13 +541,13 @@ feature -- Test routines (Operation)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.product"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
-			n := integer_number_to_be_tested
-			m := some_integer_number
-			assert ("product", attached (n ⋅ m))
-			assert ("product ok", product_ok (n, m, some_integer_number))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("product", attached (i ⋅ j))
+			assert ("product ok", product_ok (i, j, some_integer_number))
 		end
 
 	test_integer_quotient
@@ -555,19 +555,19 @@ feature -- Test routines (Operation)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.integer_quotient"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.divisible (m)
+				i.divisible (j)
 			loop
-				m := some_integer_number
+				j := some_integer_number
 			end
-			assert ("integer_quotient", attached (n // m))
-			assert ("integer_quotient ok", integer_quotient_ok (n, m))
+			assert ("integer_quotient", attached (i // j))
+			assert ("integer_quotient ok", integer_quotient_ok (i, j))
 		end
 
 	test_integer_remainder
@@ -575,19 +575,19 @@ feature -- Test routines (Operation)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.integer_remainder"
 		local
-			n: like integer_number_to_be_tested
-			m: like some_integer_number
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
 		do
 			from
-				n := integer_number_to_be_tested
-				m := some_integer_number
+				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				n.divisible (m)
+				i.divisible (j)
 			loop
-				m := some_integer_number
+				j := some_integer_number
 			end
-			assert ("integer_remainder", attached (n \\ m))
-			assert ("integer_remainder ok", integer_remainder_ok (n, m))
+			assert ("integer_remainder", attached (i \\ j))
+			assert ("integer_remainder ok", integer_remainder_ok (i, j))
 		end
 
 feature -- Test routines (Implementation)
