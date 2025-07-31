@@ -59,107 +59,107 @@ feature -- Access
 
 feature -- Comparison
 
-	equals alias "≍" (n: INTEGER_NUMBER): BOOLEAN
-			-- Do current integer number and `n' have the same numeric value?
+	equals alias "≍" (i: INTEGER_NUMBER): BOOLEAN
+			-- Do current integer number and `i' have the same numeric value?
 		do
-			Result := value = n.value
+			Result := value = i.value
 		ensure
-			definition: Result = (value = n.value)
+			definition: Result = (value = i.value)
 		end
 
-	unequals alias "≭" (n: INTEGER_NUMBER): BOOLEAN
-			-- Does not current integer number equal `n'?
+	unequals alias "≭" (i: INTEGER_NUMBER): BOOLEAN
+			-- Does not current integer number equal `i'?
 		do
-			Result := not (Current ≍ n)
+			Result := not (Current ≍ i)
 		ensure
-			definition: Result = not (Current ≍ n)
+			definition: Result = not (Current ≍ i)
 		end
 
-	is_less alias "<" (n: INTEGER_NUMBER): BOOLEAN
-			-- Is current integer number less than `n'?
+	is_less alias "<" (i: INTEGER_NUMBER): BOOLEAN
+			-- Is current integer number less than `i'?
 		do
-			Result := value < n.value
+			Result := value < i.value
 		ensure
-			definition: Result = (value < n.value)
+			definition: Result = (value < i.value)
 		end
 
-	is_less_equal alias "<=" alias "≤" alias "⩽" alias "≦" (n: INTEGER_NUMBER): BOOLEAN
-			-- Is current integer number less than or equal to `n'?
+	is_less_equal alias "<=" alias "≤" alias "⩽" alias "≦" (i: INTEGER_NUMBER): BOOLEAN
+			-- Is current integer number less than or equal to `i'?
 		do
-			Result := Current < n or Current ≍ n
+			Result := Current < i or Current ≍ i
 		ensure
-			definition: Result = (Current < n or Current ≍ n)
+			definition: Result = (Current < i or Current ≍ i)
 		end
 
-	is_greater alias ">" (n: INTEGER_NUMBER): BOOLEAN
-			-- Is current integer number greater than `n'?
+	is_greater alias ">" (i: INTEGER_NUMBER): BOOLEAN
+			-- Is current integer number greater than `i'?
 		do
-			Result := n < Current
+			Result := i < Current
 		ensure
-			definition: Result = (n < Current)
+			definition: Result = (i < Current)
 		end
 
-	is_greater_equal alias ">=" alias "≥" alias "⩾" alias "≧" (n: INTEGER_NUMBER): BOOLEAN
-			-- Is current integer number greater than or equal to `n'?
+	is_greater_equal alias ">=" alias "≥" alias "⩾" alias "≧" (i: INTEGER_NUMBER): BOOLEAN
+			-- Is current integer number greater than or equal to `i'?
 		do
-			Result := n ≤ Current
+			Result := i ≤ Current
 		ensure
-			definition: Result = (n ≤ Current)
+			definition: Result = (i ≤ Current)
 		end
 
-	min alias "∧" (n: INTEGER_NUMBER): like integer_anchor
-			-- The smaller of current integer number and `n'
+	min alias "∧" (i: INTEGER_NUMBER): like integer_anchor
+			-- The smaller of current integer number and `i'
 		do
-			if Current ≤ n then
+			if Current ≤ i then
 				Result := Current
 			else
-				Result := n
+				Result := i
 			end
 		ensure
-			current_if_not_greater: Current ≤ n ⇒ Result ≍ Current
-			other_if_greater: Current > n ⇒ Result ≍ n
+			current_if_not_greater: Current ≤ i ⇒ Result ≍ Current
+			other_if_greater: Current > i ⇒ Result ≍ i
 		end
 
-	max alias "∨" (n: INTEGER_NUMBER): like integer_anchor
-			-- The greater of current integer number and `n'
+	max alias "∨" (i: INTEGER_NUMBER): like integer_anchor
+			-- The greater of current integer number and `i'
 		do
-			if Current ≥ n then
+			if Current ≥ i then
 				Result := Current
 			else
-				Result := n
+				Result := i
 			end
 		ensure
-			current_if_not_smaller: Current ≥ n implies Result ≍ Current
-			other_if_smaller: Current < n implies Result ≍ n
+			current_if_not_smaller: Current ≥ i implies Result ≍ Current
+			other_if_smaller: Current < i implies Result ≍ i
 		end
 
 feature -- Relationship
 
-	divisible (n: INTEGER_NUMBER): BOOLEAN
-			-- May current integer number be divided by `n`?
+	divisible (i: INTEGER_NUMBER): BOOLEAN
+			-- May current integer number be divided by `i`?
 		do
---			Result := value.divisible (n.value) -- TODO: Segmentation violation!
-			Result := n.value /= 0
+--			Result := value.divisible (i.value) -- TODO: Segmentation violation!
+			Result := i.value /= 0
 		ensure
---			definition: Result = value.divisible (n.value) -- TODO: Segmentation violation!
-			definition: Result = (n.value /= 0)
+--			definition: Result = value.divisible (i.value) -- TODO: Segmentation violation!
+			definition: Result = (i.value /= 0)
 		end
 
-	divides alias "|" (n: INTEGER_NUMBER): BOOLEAN
-			-- Does current integer number divide `n', i.e. is there a integer number m such that `n' = m ⋅ `Current'?
+	divides alias "|" (i: INTEGER_NUMBER): BOOLEAN
+			-- Does current integer number divide `i', i.e. is there a integer number m such that `i' = m ⋅ `Current'?
 		do
-			Result := n.divisible (Current) and then (n \\ Current) ≍ zero
+			Result := i.divisible (Current) and then (i \\ Current) ≍ zero
 		ensure
-			definition: Result = (n.divisible (Current) and then (n \\ Current) ≍ zero)
+			definition: Result = (i.divisible (Current) and then (i \\ Current) ≍ zero)
 		end
 
 feature -- Operation
 
-	plus alias "+" (n: INTEGER_NUMBER): like integer_anchor
-			-- Sum of current integer number with `n`
+	plus alias "+" (i: INTEGER_NUMBER): like integer_anchor
+			-- Sum of current integer number with `i`
 		deferred
 		ensure
-			definition: Result.value = adjusted_value (value + n.value)
+			definition: Result.value = adjusted_value (value + i.value)
 		end
 
 	identity alias "+": like Current
@@ -170,42 +170,42 @@ feature -- Operation
 			definition: Result ≍ Current
 		end
 
-	minus alias "-" alias "−" (n: INTEGER_NUMBER): like integer_anchor
-			-- Result of subtracting `n` from current integer number
+	minus alias "-" alias "−" (i: INTEGER_NUMBER): like integer_anchor
+			-- Result of subtracting `i` from current integer number
 		require
-			small_enough: n ≤ Current
+			small_enough: i ≤ Current
 		deferred
 		ensure
-			definition: Result.value = adjusted_value (value - n.value)
+			definition: Result.value = adjusted_value (value - i.value)
 		end
 
-	product alias "*" alias "×" alias "⋅" (n: INTEGER_NUMBER): like integer_anchor
-			-- Current integer number multiplied by `n`
+	product alias "*" alias "×" alias "⋅" (i: INTEGER_NUMBER): like integer_anchor
+			-- Current integer number multiplied by `i`
 		deferred
 		ensure
-			definition: Result.value = adjusted_value (value * n.value)
+			definition: Result.value = adjusted_value (value * i.value)
 		end
 
-	integer_quotient alias "//" (n: INTEGER_NUMBER): like integer_anchor
-			-- Division of current integer number by `n`
+	integer_quotient alias "//" (i: INTEGER_NUMBER): like integer_anchor
+			-- Division of current integer number by `i`
 		require
-			good_divisor: divisible (n)
+			good_divisor: divisible (i)
 		deferred
 		ensure
---			good_divisor: value.divisible (n.value) -- n.value /= 0 ⇐ divisible (n) -- TODO: Segmentation violation.
-			good_divisor: n.value /= 0
-			definition: Result.value = adjusted_value (value // n.value)
+--			good_divisor: value.divisible (i.value) -- i.value /= 0 ⇐ divisible (i) -- TODO: Segmentation violation.
+			good_divisor: i.value /= 0
+			definition: Result.value = adjusted_value (value // i.value)
 		end
 
-	integer_remainder alias "\\" (n: INTEGER_NUMBER): like integer_anchor
-			-- Remainder of the integer division of `Current' by `n`
+	integer_remainder alias "\\" (i: INTEGER_NUMBER): like integer_anchor
+			-- Remainder of the integer division of `Current' by `i`
 		require
-			good_divisor: divisible (n)
+			good_divisor: divisible (i)
 		deferred
 		ensure
---			good_divisor: value.divisible (n.value) -- n.value /= 0 ⇐ divisible (n) -- TODO: Segmentation violation.
-			good_divisor: n.value /= 0
-			definition: Result.value = adjusted_value (value \\ n.value)
+--			good_divisor: value.divisible (i.value) -- i.value /= 0 ⇐ divisible (i) -- TODO: Segmentation violation.
+			good_divisor: i.value /= 0
+			definition: Result.value = adjusted_value (value \\ i.value)
 		end
 
 feature -- Implementation
