@@ -329,7 +329,7 @@ feature -- Test routines (Implementation)
 		note
 			testing: "covers/{STI_NATURAL_NUMBER}.adjusted_value"
 		do
-			assert ("adjusted_value", attached natural_number_to_be_tested.adjusted_value (next_random_item.as_natural_32))
+			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
 
 feature {NONE} -- Conversion
