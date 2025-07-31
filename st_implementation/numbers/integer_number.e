@@ -87,56 +87,56 @@ feature -- Output
 
 feature -- Comparison
 
-	min alias "∧" (n: STS_INTEGER_NUMBER): like integer_anchor
+	min alias "∧" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
-			create Result.make (stored_value ∧ n.value)
+			create Result.make (stored_value ∧ i.value)
 		end
 
-	max alias "∨" (n: STS_INTEGER_NUMBER): like integer_anchor
+	max alias "∨" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
-			create Result.make (stored_value ∨ n.value)
+			create Result.make (stored_value ∨ i.value)
 		end
 
 feature -- Operation
 
-	plus alias "+" (n: STS_INTEGER_NUMBER): like integer_anchor
+	plus alias "+" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
-			create Result.make (stored_value + n.value)
+			create Result.make (stored_value + i.value)
 		end
 
-	minus alias "-" alias "−" (n: STS_INTEGER_NUMBER): like integer_anchor
+	minus alias "-" alias "−" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
-			create Result.make (stored_value - n.value)
+			create Result.make (stored_value - i.value)
 		end
 
-	product alias "*" alias "×" alias "⋅" (n: STS_INTEGER_NUMBER): like integer_anchor
+	product alias "*" alias "×" alias "⋅" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
-			create Result.make (stored_value * n.value)
+			create Result.make (stored_value * i.value)
 		end
 
-	integer_quotient alias "//" (n: STS_INTEGER_NUMBER): like integer_anchor
+	integer_quotient alias "//" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
 				check
---					good_divisor: stored_value.to_integer_32.divisible (n.value) -- n.value /= 0 ⇐ divisible (n) -- TODO: Segmentation violation.
-					good_divisor: n.value /= 0
+--					good_divisor: stored_value.to_integer_32.divisible (i.value) -- i.value /= 0 ⇐ divisible (i) -- TODO: Segmentation violation.
+					good_divisor: i.value /= 0
 				end
-			create Result.make (stored_value // n.value)
+			create Result.make (stored_value // i.value)
 		end
 
-	integer_remainder alias "\\" (n: STS_INTEGER_NUMBER): like integer_anchor
+	integer_remainder alias "\\" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
 				check
---					good_divisor: stored_value.to_integer_32.divisible (n.value) -- n.value /= 0 ⇐ divisible (n) -- TODO: Segmentation violation.
-					good_divisor: n.value /= 0
+--					good_divisor: stored_value.to_integer_32.divisible (i.value) -- i.value /= 0 ⇐ divisible (i) -- TODO: Segmentation violation.
+					good_divisor: i.value /= 0
 				end
-			create Result.make (stored_value \\ n.value)
+			create Result.make (stored_value \\ i.value)
 		end
 
 feature -- Implementation
