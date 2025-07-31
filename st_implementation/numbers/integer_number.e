@@ -122,20 +122,20 @@ feature -- Operation
 	integer_quotient alias "//" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
-				check
+			check
 --					good_divisor: stored_value.to_integer_32.divisible (i.value) -- i.value /= 0 ⇐ divisible (i) -- TODO: Segmentation violation.
-					good_divisor: i.value /= 0
-				end
+				good_divisor: i.value /= 0
+			end
 			create Result.make (stored_value // i.value)
 		end
 
 	integer_remainder alias "\\" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
-				check
+			check
 --					good_divisor: stored_value.to_integer_32.divisible (i.value) -- i.value /= 0 ⇐ divisible (i) -- TODO: Segmentation violation.
-					good_divisor: i.value /= 0
-				end
+				good_divisor: i.value /= 0
+			end
 			create Result.make (stored_value \\ i.value)
 		end
 
@@ -169,7 +169,7 @@ feature -- Anchor
 feature {NONE} -- Implementation
 
 	stored_value: INTEGER_8;
-		-- Bit pattern of the `value' of current integer number
+	-- Bit pattern of the `value' of current integer number
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

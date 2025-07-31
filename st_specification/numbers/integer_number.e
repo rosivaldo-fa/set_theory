@@ -172,8 +172,6 @@ feature -- Operation
 
 	minus alias "-" alias "−" (i: INTEGER_NUMBER): like integer_anchor
 			-- Result of subtracting `i` from current integer number
-		require
-			small_enough: i ≤ Current
 		deferred
 		ensure
 			definition: Result.value = adjusted_value (value - i.value)

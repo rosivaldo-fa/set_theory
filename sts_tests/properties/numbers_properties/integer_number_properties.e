@@ -182,10 +182,9 @@ feature -- Properties (Operation)
 			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.minus?
 		do
 			check
-				zero_small_enough: zero ≤ i -- By definition.
 				neutral_subtrahend: (i - zero) ≍ i
-				oppositely_homomorphic: j ≤ i and k ≤ i ⇒ (k ≤ j ⇒ (i - k) ≥ (i - j))
-				oppositely_isomorphic: j ≤ i and k ≤ i ⇒ (k < j ⇒ i - k > i - j)
+				oppositely_homomorphic: k ≤ j ⇒ (i - k) ≥ (i - j)
+				oppositely_isomorphic: k < j ⇒ i - k > i - j
 			then
 				Result := True
 			end

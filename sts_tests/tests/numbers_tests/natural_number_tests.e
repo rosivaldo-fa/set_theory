@@ -532,7 +532,7 @@ feature -- Test routines (Operation)
 				n := natural_number_to_be_tested
 				m := some_natural_number
 			end
-			assert ("minus", attached (n + m))
+			assert ("minus", attached (n - m))
 			assert ("minus ok", minus_ok (n, m, some_natural_number))
 		end
 
