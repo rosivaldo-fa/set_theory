@@ -523,16 +523,9 @@ feature -- Test routines (Operation)
 			i: like integer_number_to_be_tested
 			j: like some_integer_number
 		do
-			from
-				i := integer_number_to_be_tested
-				j := some_integer_number
-			until
-				j ≤ i
-			loop
-				i := integer_number_to_be_tested
-				j := some_integer_number
-			end
-			assert ("minus", attached (i + j))
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("minus", attached (i - j))
 			assert ("minus ok", minus_ok (i, j, some_integer_number))
 		end
 
