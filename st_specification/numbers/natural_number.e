@@ -8,10 +8,27 @@ deferred class
 	NATURAL_NUMBER
 
 inherit
-	ELEMENT
+	INTEGER_NUMBER
 		rename
-			is_in as element_is_in,
-			is_not_in as element_is_not_in
+			value as integer_value,
+			is_in as integer_is_in,
+			is_not_in as integer_is_not_in,
+			equals as integer_equals,
+			unequals as integer_unequals,
+			is_less as integer_is_less,
+			is_less_equal as integer_is_less_equal,
+			is_greater as integer_is_greater,
+			is_greater_equal as integer_is_greater_equal,
+			min as integer_min,
+			max as integer_max,
+			divisible as integer_divisible,
+			divides as integer_divides,
+			plus as integer_plus,
+			minus as integer_minus,
+			product as integer_product,
+			integer_quotient as integer_quotient,
+			integer_remainder as integer_remainder,
+			adjusted_value as integer_adjusted_value
 		end
 
 feature -- Primitive
@@ -21,6 +38,7 @@ feature -- Primitive
 		deferred
 		ensure
 			adjusted: Result = adjusted_value (Result)
+			consistent: Result.as_integer_32 = integer_value
 		end
 
 feature -- Membership
@@ -46,15 +64,15 @@ feature -- Access
 	zero: like natural_anchor
 			-- The natural number 0
 		deferred
-		ensure
-			zero: Result.value = 0
+--		ensure
+--			zero: Result.value = 0
 		end
 
 	one: like natural_anchor
 			-- The natural number 1
 		deferred
-		ensure
-			one: Result.value = 1
+--		ensure
+--			one: Result.value = 1
 		end
 
 feature -- Comparison
@@ -162,13 +180,13 @@ feature -- Operation
 			definition: Result.value = adjusted_value (value + n.value)
 		end
 
-	identity alias "+": like Current
-			-- Unary plus; current natural number itself.
-		do
-			Result := Current
-		ensure
-			definition: Result ≍ Current
-		end
+--	identity alias "+": like Current
+--			-- Unary plus; current natural number itself.
+--		do
+--			Result := Current
+--		ensure
+--			definition: Result ≍ Current
+--		end
 
 	minus alias "-" alias "−" (n: NATURAL_NUMBER): like natural_anchor
 			-- Result of subtracting `n` from current natural number

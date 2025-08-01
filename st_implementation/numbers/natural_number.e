@@ -12,6 +12,8 @@ inherit
 		redefine
 			default_create,
 			out,
+			integer_min,
+			integer_max,
 			min,
 			max
 		end
@@ -52,6 +54,12 @@ feature {NONE} -- Initialization
 
 feature -- Primitive
 
+	integer_value: like native_integer_anchor
+			-- <Precursor>
+		do
+			Result := stored_value
+		end
+
 	value: like native_natural_anchor
 			-- <Precursor>
 		do
@@ -87,6 +95,18 @@ feature -- Output
 
 feature -- Comparison
 
+	integer_min (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value ∧ i.value)
+		end
+
+	integer_max (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value ∨ i.value)
+		end
+
 	min alias "∧" (n: STS_NATURAL_NUMBER): like natural_anchor
 			-- <Precursor>
 		do
@@ -100,6 +120,42 @@ feature -- Comparison
 		end
 
 feature -- Operation
+
+	integer_plus (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value + i.value)
+		end
+
+	integer_minus (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value - i.value)
+		end
+
+	integer_product (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value * i.value)
+		end
+
+	integer_quotient (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+				check
+					good_divisor: i.value /= 0 -- good_divisor precondition
+				end
+			create Result.make (stored_value // i.value)
+		end
+
+	integer_remainder (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+				check
+					good_divisor: i.value /= 0 -- good_divisor precondition
+				end
+			create Result.make (stored_value \\ i.value)
+		end
 
 	plus alias "+" (n: STS_NATURAL_NUMBER): like natural_anchor
 			-- <Precursor>
@@ -141,6 +197,15 @@ feature -- Operation
 
 feature -- Implementation
 
+	integer_adjusted_value (v: like integer_value): like integer_value
+			-- <Precursor>
+		do
+			Result := {INTEGER_NUMBER}.adjusted_value (v)
+		ensure then
+			class
+			definition: Result = {INTEGER_NUMBER}.adjusted_value (v)
+		end
+
 	adjusted_value (v: like value): like value
 			-- <Precursor>
 		do
@@ -151,6 +216,20 @@ feature -- Implementation
 		end
 
 feature -- Anchor
+
+	integer_anchor: INTEGER_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
+	native_integer_anchor: INTEGER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
 
 	natural_anchor: NATURAL_NUMBER
 			-- <Precursor>

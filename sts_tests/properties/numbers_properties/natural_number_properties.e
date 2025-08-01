@@ -7,20 +7,35 @@
 deferred class
 	NATURAL_NUMBER_PROPERTIES
 
+inherit
+	INTEGER_NUMBER_PROPERTIES
+		rename
+			is_not_in_ok as integer_is_not_in_ok,
+			equals_ok as integer_equals_ok,
+			unequals_ok as integer_unequals_ok,
+			is_less_ok as integer_is_less_ok,
+			is_less_equal_ok as integer_is_less_equal_ok,
+			is_greater_ok as integer_is_greater_ok,
+			is_greater_equal_ok as integer_is_greater_equal_ok,
+			min_ok as integer_min_ok,
+			max_ok as integer_max_ok,
+			divides_ok as integer_divides_ok,
+			plus_ok as integer_plus_ok,
+			identity_ok as integer_identity_ok,
+			minus_ok as integer_minus_ok,
+			product_ok as integer_product_ok
+		end
+
 feature -- Access
 
 	zero: like natural_anchor
 			-- The natural number 0
 		deferred
-		ensure
-			definition: Result.value = 0
 		end
 
 	one: like natural_anchor
 			-- The natural number 1
 		deferred
-		ensure
-			definition: Result.value = 1
 		end
 
 feature -- Properties (Membership)

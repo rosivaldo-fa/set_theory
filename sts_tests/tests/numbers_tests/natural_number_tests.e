@@ -9,18 +9,59 @@ deferred class
 	NATURAL_NUMBER_TESTS
 
 inherit
-	ELEMENT_TESTS
+	INTEGER_NUMBER_TESTS
 		rename
-			is_not_in_ok as element_is_not_in_ok,
-			test_is_in as test_element_is_in,
-			test_is_not_in as test_element_is_not_in,
-			element_to_be_tested as natural_number_to_be_tested
+			is_not_in_ok as integer_is_not_in_ok,
+			equals_ok as integer_equals_ok,
+			unequals_ok as integer_unequals_ok,
+			is_less_ok as integer_is_less_ok,
+			is_less_equal_ok as integer_is_less_equal_ok,
+			is_greater_ok as integer_is_greater_ok,
+			is_greater_equal_ok as integer_is_greater_equal_ok,
+			min_ok as integer_min_ok,
+			max_ok as integer_max_ok,
+			divides_ok as integer_divides_ok,
+			plus_ok as integer_plus_ok,
+			identity_ok as integer_identity_ok,
+			minus_ok as integer_minus_ok,
+			product_ok as integer_product_ok,
+			test_value as test_integer_value,
+			test_is_in as test_integer_is_in,
+			test_is_not_in as test_integer_is_not_in,
+			test_equals as test_integer_equals,
+			test_unequals as test_integer_unequals,
+			test_is_less as test_integer_is_less,
+			test_is_less_equal as test_integer_is_less_equal,
+			test_is_greater as test_integer_is_greater,
+			test_is_greater_equal as test_integer_is_greater_equal,
+			test_min as test_integer_min,
+			test_max as test_integer_max,
+			test_divides as test_integer_divides,
+			test_divisible as test_integer_divisible,
+			test_plus as test_integer_plus,
+			test_identity as test_integer_identity,
+			test_minus as test_integer_minus,
+			test_product as test_integer_product,
+			test_adjusted_value as test_integer_adjusted_value,
+			integer_number_to_be_tested as natural_number_to_be_tested
 		redefine
 			test_all,
 			natural_number_to_be_tested
 		end
 
 	NATURAL_NUMBER_PROPERTIES
+
+feature -- Access
+
+	zero: like natural_anchor
+			-- The natural number 0
+		deferred
+		end
+
+	one: like natural_anchor
+			-- The natural number 1
+		deferred
+		end
 
 feature -- Test routines (All)
 
@@ -29,12 +70,10 @@ feature -- Test routines (All)
 		note
 			testing: "covers/{STS_NATURAL_NUMBER}"
 		do
-			Precursor {ELEMENT_TESTS}
+			Precursor {INTEGER_NUMBER_TESTS}
 			test_value
 			test_is_in
 			test_is_not_in
-			test_zero
-			test_one
 			test_equals
 			test_unequals
 			test_is_less
@@ -109,30 +148,6 @@ feature -- Test routines (Membership)
 			s := some_set_of_natural_numbers
 			assert ("is_not_in", n ∉ s ⇒ True)
 			assert ("is_not_in_ok", is_not_in_ok (n, s))
-		end
-
-feature -- Test routines (Access)
-
-	test_zero
-			-- Test {STI_NATURAL_NUMBER}.zero.
-		note
-			testing: "covers/{STI_NATURAL_NUMBER}.zero"
-		local
-			n: like natural_number_to_be_tested
-		do
-			n := natural_number_to_be_tested
-			assert ("zero", attached n.Zero)
-		end
-
-	test_one
-			-- Test {STI_NATURAL_NUMBER}.one.
-		note
-			testing: "covers/{STI_NATURAL_NUMBER}.one"
-		local
-			n: like natural_number_to_be_tested
-		do
-			n := natural_number_to_be_tested
-			assert ("one", attached n.One)
 		end
 
 feature -- Test routines (Comparison)

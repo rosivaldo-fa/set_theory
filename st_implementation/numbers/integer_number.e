@@ -161,7 +161,7 @@ feature -- Anchor
 
 	native_integer_anchor: INTEGER
 			-- <Precursor>
-		do
+		once
 		ensure then
 			class
 		end

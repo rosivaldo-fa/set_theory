@@ -7,6 +7,12 @@
 deferred class
 	INTEGER_NUMBER_PROPERTIES
 
+inherit
+	ELEMENT_PROPERTIES
+		rename
+			is_not_in_ok as element_is_not_in_ok
+		end
+
 feature -- Access
 
 	zero: like integer_anchor

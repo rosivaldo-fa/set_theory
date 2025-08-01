@@ -344,6 +344,13 @@ feature {NONE} -- Conversion
 
 feature -- Anchor
 
+	integer_anchor: STI_INTEGER_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
 	natural_anchor: STI_NATURAL_NUMBER
 			-- <Precursor>
 		once
