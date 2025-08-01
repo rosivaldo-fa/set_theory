@@ -53,6 +53,7 @@ feature -- Test routines (Membership)
 			a := some_object_g
 			s := set_to_be_tested
 			assert ("has", s ∋ a ⇒ True)
+			assert ("has ok", has_ok (s, a))
 		end
 
 	test_does_not_have

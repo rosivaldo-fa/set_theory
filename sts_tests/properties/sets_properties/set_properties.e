@@ -13,6 +13,13 @@ inherit
 			is_not_in_ok as element_is_not_in_ok
 		end
 
+feature -- Access
+
+	u: like universe_anchor
+			-- The universe set
+		deferred
+		end
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (s: STS_SET [G]; ss: STS_SET [STS_SET [G]]): BOOLEAN
@@ -23,6 +30,23 @@ feature -- Properties (Membership)
 			then
 				Result := True
 			end
+		end
+
+	has_ok (s: STS_SET [G]; a: G): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_SET}.has?
+		do
+			check
+				universe_has_everything: u ∋ a
+			then
+				Result := True
+			end
+		end
+
+feature -- Anchor
+
+	universe_anchor: STS_UNIVERSE [G]
+			-- Anchor for `u'
+		deferred
 		end
 
 note

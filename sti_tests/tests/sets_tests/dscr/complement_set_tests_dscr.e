@@ -57,6 +57,16 @@ inherit
 			test_all
 		end
 
+feature -- Access
+
+	u: like universe_anchor
+			-- <Precursor>
+		do
+			create Result
+		ensure then
+			class
+		end
+
 feature -- Test routines (All)
 
 	test_all
@@ -148,6 +158,16 @@ feature -- Test routines (Status report)
 			testing: "covers/{STI_COMPLEMENT_SET}.debug_output"
 		do
 			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Anchor
+
+	universe_anchor: STI_UNIVERSE [detachable separate CHARACTER_REF]
+			-- <Precursor>
+		do
+			Result := u
+		ensure then
+			class
 		end
 
 note

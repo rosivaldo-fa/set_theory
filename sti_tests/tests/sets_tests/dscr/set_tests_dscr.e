@@ -64,6 +64,16 @@ inherit
 			set_to_be_tested
 		end
 
+feature -- Access
+
+	u: like universe_anchor
+			-- <Precursor>
+		do
+			create Result
+		ensure then
+			class
+		end
+
 feature -- Test routines (All)
 
 	test_all
@@ -219,6 +229,16 @@ feature -- Test routines (Quality)
 			testing: "covers/{STI_SET}.is_universe"
 		do
 			Precursor {SET_TESTS}
+		end
+
+feature -- Anchor
+
+	universe_anchor: STI_UNIVERSE [detachable separate CHARACTER_REF]
+			-- <Precursor>
+		do
+			Result := u
+		ensure then
+			class
 		end
 
 note

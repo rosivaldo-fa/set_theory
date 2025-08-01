@@ -66,12 +66,12 @@ feature -- Test routines (Membership)
 			testing: "covers/{STI_UNIVERSE}.has"
 		local
 			a: G
-			u: like universe_to_be_tested
+			l_u: like universe_to_be_tested
 		do
 			Precursor {STST_UNIVERSE_TESTS}
 			a := some_object_g
-			u := universe_to_be_tested
-			assert ("always has", u ∋ a)
+			l_u := universe_to_be_tested
+			assert ("always has", l_u ∋ a)
 		end
 
 	test_does_not_have
@@ -80,12 +80,12 @@ feature -- Test routines (Membership)
 			testing: "covers/{STI_UNIVERSE}.does_not_have"
 		local
 			a: G
-			u: like universe_to_be_tested
+			l_u: like universe_to_be_tested
 		do
 			Precursor {STST_UNIVERSE_TESTS}
 			a := some_object_g
-			u := universe_to_be_tested
-			assert ("never does_not_have", not (u ∌ a))
+			l_u := universe_to_be_tested
+			assert ("never does_not_have", not (l_u ∌ a))
 		end
 
 feature -- Test routines (Construction)
@@ -95,15 +95,15 @@ feature -- Test routines (Construction)
 		note
 			testing: "covers/{STI_UNIVERSE}.extended"
 		local
-			u: like universe_to_be_tested
+			l_u: like universe_to_be_tested
 			a: G
 			eq: like some_equality_g
 		do
 			Precursor {STST_UNIVERSE_TESTS}
-			u := universe_to_be_tested
+			l_u := universe_to_be_tested
 			a := some_object_g
 			eq := some_equality_g
-			assert ("no change", u.extended (same_object_g (a, eq), eq) = u) -- TODO: Use set equality instead.
+			assert ("no change", l_u.extended (same_object_g (a, eq), eq) = l_u) -- TODO: Use set equality instead.
 		end
 
 feature -- Test routines (Output)

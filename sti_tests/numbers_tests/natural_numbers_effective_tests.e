@@ -12,8 +12,9 @@ class
 inherit
 	STST_NATURAL_NUMBERS_TESTS
 		rename
-			 some_immediate_natural_number as some_expanded_natural_number,
-			 some_immediate_integer_number as some_expanded_integer_number
+			u as n,
+			some_immediate_natural_number as some_expanded_natural_number,
+			some_immediate_integer_number as some_expanded_integer_number
 		undefine
 			default_create,
 			same_natural_number,
@@ -35,6 +36,16 @@ inherit
 			universe_to_be_tested
 		redefine
 			test_all
+		end
+
+feature -- Access
+
+	n: STI_NATURAL_NUMBERS
+			-- <Precursor>
+		once
+			create Result
+		ensure then
+			class
 		end
 
 feature -- Test routines (All)
@@ -78,6 +89,16 @@ feature -- Test routines (Status report)
 			testing: "covers/{STI_NATURAL_NUMBERS}.debug_output"
 		do
 			assert ("debug_output", attached universe_to_be_tested.debug_output)
+		end
+
+feature -- Anchor
+
+	universe_anchor: STI_NATURAL_NUMBERS
+			-- <Precursor>
+		once
+			Result := n
+		ensure then
+			class
 		end
 
 note

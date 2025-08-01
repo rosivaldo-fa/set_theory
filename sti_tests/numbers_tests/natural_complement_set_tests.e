@@ -11,6 +11,7 @@ class
 inherit
 	STST_NATURAL_SET_TESTS
 		rename
+			u as n,
 			some_immediate_natural_number as some_expanded_natural_number,
 			some_immediate_integer_number as some_expanded_integer_number
 		undefine
@@ -35,6 +36,16 @@ inherit
 		redefine
 			test_all,
 			set_to_be_tested
+		end
+
+feature -- Access
+
+	n: STI_NATURAL_NUMBERS
+			-- <Precursor>
+		once
+			create Result
+		ensure then
+			class
 		end
 
 feature -- Test routines (All)
@@ -130,6 +141,16 @@ feature {NONE} -- Factory (element to be tested)
 			-- Natural complement set meant to be under tests
 		do
 			Result := some_immediate_natural_complement_set
+		end
+
+feature -- Anchor
+
+	universe_anchor: STI_NATURAL_NUMBERS
+			-- <Precursor>
+		once
+			Result := n
+		ensure then
+			class
 		end
 
 note

@@ -45,6 +45,16 @@ inherit
 			test_debug_output
 		end
 
+feature -- Access
+
+	u: like universe_anchor
+			-- <Precursor>
+		do
+			create Result
+		ensure then
+			class
+		end
+
 feature -- Test routines (All)
 
 	test_all
@@ -109,6 +119,16 @@ feature {NONE} -- Implementation
 			-- Auxiliary features
 		attribute
 			create Result
+		end
+
+feature -- Anchor
+
+	universe_anchor: STI_UNIVERSE [STS_SET [detachable separate CHARACTER_REF]]
+			-- <Precursor>
+		do
+			Result := u
+		ensure then
+			class
 		end
 
 note

@@ -12,6 +12,7 @@ class
 inherit
 	STST_NATURAL_SET_TESTS
 		rename
+			u as n,
 			some_immediate_natural_number as some_expanded_natural_number,
 			some_immediate_integer_number as some_expanded_integer_number
 		undefine
@@ -36,6 +37,16 @@ inherit
 		redefine
 			test_all,
 			set_to_be_tested
+		end
+
+feature -- Access
+
+	n: STI_NATURAL_NUMBERS
+			-- <Precursor>
+		once
+			create Result
+		ensure then
+			class
 		end
 
 feature -- Test routines (All)
@@ -90,27 +101,27 @@ feature -- Test routines (Output)
 		note
 			testing: "covers/{STI_NATURAL_SET}.out"
 		local
-			n, m, l: like some_natural_number
+			n1, n2, n3: like some_natural_number
 			s: like set_to_be_tested
 			s_out: STRING
 		do
 			create s
 			assert ("{}", s.out ~ "{}")
 
-			n := some_natural_number
-			s := s.extended (n)
+			n1 := some_natural_number
+			s := s.extended (n1)
 			s_out := s.out
-			assert ("{n}", s_out ~ "{} & (" + n.out + ")")
+			assert ("{n1}", s_out ~ "{} & (" + n1.out + ")")
 
-			m := some_natural_number
-			s := s.extended (m)
+			n2 := some_natural_number
+			s := s.extended (n2)
 			s_out := s.out
-			assert ("{n, m}", s_out ~ "{} & (" + n.out + ") & (" + m.out + ")")
+			assert ("{n1, n2}", s_out ~ "{} & (" + n1.out + ") & (" + n2.out + ")")
 
-			l := some_natural_number
-			s := s.extended (l)
+			n3 := some_natural_number
+			s := s.extended (n3)
 			s_out := s.out
-			assert ("{n, m, l}", s_out ~ "{} & (" + n.out + ") & (" + m.out + ") & (" + l.out + ")")
+			assert ("{n1, n2, n3}", s_out ~ "{} & (" + n1.out + ") & (" + n2.out + ") & (" + n3.out + ")")
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
@@ -123,30 +134,30 @@ feature -- Test routines (Status report)
 		note
 			testing: "covers/{STI_NATURAL_SET}.debug_output"
 		local
-			n, m, l: like some_natural_number
+			n1, n2, n3: like some_natural_number
 			s: like set_to_be_tested
 			s_debug_output: STRING_32
 		do
 			create s
 			assert ("{}", s.debug_output ~ {STRING_32} "{}")
 
-			n := some_natural_number
-			s := s.extended (n)
+			n1 := some_natural_number
+			s := s.extended (n1)
 			s_debug_output := s.debug_output
-			assert ("{n}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ")")
+			assert ("{n1}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n1.out) + ")")
 
-			m := some_natural_number
-			s := s.extended (m)
+			n2 := some_natural_number
+			s := s.extended (n2)
 			s_debug_output := s.debug_output
-			assert ("{n, m}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ") & (" +
-					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ")")
+			assert ("{n1, n2}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n1.out) + ") & (" +
+					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (n2.out) + ")")
 
-			l := some_natural_number
-			s := s.extended (l)
+			n3 := some_natural_number
+			s := s.extended (n3)
 			s_debug_output := s.debug_output
-			assert ("{n, m, l}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ") & (" +
-					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ") & (" +
-					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (l.out) + ")")
+			assert ("{n1, n2, n3}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n1.out) + ") & (" +
+					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (n2.out) + ") & (" +
+					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (n3.out) + ")")
 
 			s := set_to_be_tested
 			assert ("debug_output", attached s.debug_output)
@@ -158,6 +169,16 @@ feature {NONE} -- Factory (element to be tested)
 			-- Natural set meant to be under tests
 		do
 			Result := some_immediate_natural_set
+		end
+
+feature -- Anchor
+
+	universe_anchor: STI_NATURAL_NUMBERS
+			-- <Precursor>
+		once
+			Result := n
+		ensure then
+			class
 		end
 
 note
