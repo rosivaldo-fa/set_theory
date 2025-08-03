@@ -196,6 +196,22 @@ feature -- Properties (Operation)
 			end
 		end
 
+	opposite_ok (i: STS_INTEGER_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.opposite?
+		do
+			check
+				opposite_left_term: ((- i) + i) ≍ zero
+				opposite_right_term: (i + (- i)) ≍ zero
+				as_subtrahend: - i ≍ (zero - i)
+				as_left_factor: - i ≍ (i ⋅ (- one))
+				as_right_factor: - i ≍ ((- one) ⋅ i)
+				divisible: i.divisible (- one) -- (- one).is_invertible
+				as_quotient: - i ≍ (i // (- one))
+			then
+				Result := True
+			end
+		end
+
 	product_ok (i, j, k: STS_INTEGER_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.product?
 		do

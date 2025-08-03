@@ -42,6 +42,7 @@ inherit
 			test_plus,
 			test_identity,
 			test_minus,
+			test_opposite,
 			test_product,
 			test_integer_quotient,
 			test_integer_remainder,
@@ -295,6 +296,14 @@ feature -- Test routines (Operation)
 			-- Test {STI_INTEGER_NUMBER}.minus.
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.minus"
+		do
+			Precursor {STST_INTEGER_NUMBER_TESTS}
+		end
+
+	test_opposite
+			-- Test {STI_INTEGER_NUMBER}.opposite.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.opposite"
 		do
 			Precursor {STST_INTEGER_NUMBER_TESTS}
 		end

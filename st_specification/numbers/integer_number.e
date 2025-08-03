@@ -107,6 +107,22 @@ feature -- Comparison
 			definition: Result = (i ≤ Current)
 		end
 
+--	three_way_comparison alias "⋚" (i: INTEGER_NUMBER): like integer_anchor
+--			-- If current integer number equal to `i', 0; if smaller, -1; if greater, 1.
+--		do
+--			if Current < i then
+--				Result := - one
+--			elseif i < Current then
+--				Result := one
+--			else
+--				Result := zero
+--			end
+--		ensure
+--			equal_zero: (Result ≍ zero) = (Current ≍ i)
+--			smaller_negative: (Result ≍ - one) = (Current < i)
+--			greater_positive: (Result ≍ one) = (Current > i)
+--		end
+
 	min alias "∧" (i: INTEGER_NUMBER): like integer_anchor
 			-- The smaller of current integer number and `i'
 		do
@@ -175,6 +191,16 @@ feature -- Operation
 		deferred
 		ensure
 			definition: Result.value = adjusted_value (value - i.value)
+		end
+
+	opposite alias "-" alias "−": like integer_anchor
+			-- Opposite value of current number relative to `+' operation, i.e. `Current' + (- `Current') = 0.
+			--| Notice that this feature is not inherited. If `Current' is represented by a two's-complement integer and and its value is the minimum possible
+			--| value in such a representation, `opposite' may yield an unexpected value, most possibly the same (still negative) value, departing from
+			--| `real_opposite' result.
+		deferred
+		ensure
+			definition: Result.value = adjusted_value (- value)
 		end
 
 	product alias "*" alias "×" alias "⋅" (i: INTEGER_NUMBER): like integer_anchor

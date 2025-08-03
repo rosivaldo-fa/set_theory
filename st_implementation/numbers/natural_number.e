@@ -169,6 +169,12 @@ feature -- Operation
 			create Result.make (stored_value - n.value)
 		end
 
+	opposite alias "-" alias "−": like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (- stored_value.as_integer_8)
+		end
+
 	product alias "*" alias "×" alias "⋅" (n: STS_NATURAL_NUMBER): like natural_anchor
 			-- <Precursor>
 		do

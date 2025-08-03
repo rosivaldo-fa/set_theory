@@ -529,6 +529,18 @@ feature -- Test routines (Operation)
 			assert ("minus ok", minus_ok (i, j, some_integer_number))
 		end
 
+	test_opposite
+			-- Test {STS_INTEGER_NUMBER}.opposite.
+		note
+			testing: "covers/{STS_INTEGER_NUMBER}.opposite"
+		local
+			i: like integer_number_to_be_tested
+		do
+			i := integer_number_to_be_tested
+			assert ("opposite", attached (- i))
+			assert ("opposite_ok", opposite_ok (i))
+		end
+
 	test_product
 			-- Test {STS_INTEGER_NUMBER}.product.
 		note

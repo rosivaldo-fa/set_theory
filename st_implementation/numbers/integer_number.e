@@ -113,6 +113,12 @@ feature -- Operation
 			create Result.make (stored_value - i.value)
 		end
 
+	opposite alias "-" alias "−": like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (- stored_value)
+		end
+
 	product alias "*" alias "×" alias "⋅" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
