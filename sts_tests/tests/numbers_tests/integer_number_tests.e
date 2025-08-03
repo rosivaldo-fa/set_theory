@@ -41,6 +41,7 @@ feature -- Test routines (All)
 			test_is_less_equal
 			test_is_greater
 			test_is_greater_equal
+			test_three_way_comparison
 			test_min
 			test_max
 			test_divides
@@ -48,6 +49,7 @@ feature -- Test routines (All)
 			test_plus
 			test_identity
 			test_minus
+			test_opposite
 			test_product
 			test_integer_quotient
 			test_integer_remainder
@@ -355,6 +357,45 @@ feature -- Test routines (Comparison)
 			j := some_integer_number
 			assert ("is_greater_equal", i ≥ j ⇒ True)
 			assert ("is_greater_equal_ok", is_less_equal_ok (i, j, some_integer_number))
+		end
+
+	test_three_way_comparison
+			-- Test {STS_INTEGER_NUMBER}.three_way_comparison.
+		note
+			testing: "covers/{STS_INTEGER_NUMBER}.three_way_comparison"
+		local
+			i: like integer_number_to_be_tested
+			j: like some_integer_number
+		do
+			from
+				i := integer_number_to_be_tested
+				j := some_integer_number
+			until
+				i < j
+			loop
+				i := integer_number_to_be_tested
+				j := some_integer_number
+			end
+			assert ("negative", i ⋚ j ≍ - One)
+
+			i := integer_number_to_be_tested
+			assert ("same_entity", i ⋚ i ≍ Zero)
+			assert ("same_integer_number", i ⋚ same_integer_number (i) ≍ Zero)
+
+			from
+				i := integer_number_to_be_tested
+				j := some_integer_number
+			until
+				i > j
+			loop
+				i := integer_number_to_be_tested
+				j := some_integer_number
+			end
+			assert ("positive", i ⋚ j ≍ One)
+
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("three_way_comparison", attached (i ⋚ j))
 		end
 
 	test_min

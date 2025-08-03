@@ -12,6 +12,7 @@ inherit
 		redefine
 			default_create,
 			out,
+			integer_three_way_comparison,
 			integer_min,
 			integer_max,
 			min,
@@ -95,6 +96,12 @@ feature -- Output
 
 feature -- Comparison
 
+	integer_three_way_comparison (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (integer_value ⋚ i.value)
+		end
+
 	integer_min (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
@@ -172,7 +179,7 @@ feature -- Operation
 	opposite alias "-" alias "−": like integer_anchor
 			-- <Precursor>
 		do
-			create Result.make (- stored_value.as_integer_8)
+			create Result.make (- integer_value)
 		end
 
 	product alias "*" alias "×" alias "⋅" (n: STS_NATURAL_NUMBER): like natural_anchor

@@ -19,6 +19,7 @@ inherit
 			is_less_equal as integer_is_less_equal,
 			is_greater as integer_is_greater,
 			is_greater_equal as integer_is_greater_equal,
+			three_way_comparison as integer_three_way_comparison,
 			min as integer_min,
 			max as integer_max,
 			divisible as integer_divisible,

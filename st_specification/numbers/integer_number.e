@@ -107,21 +107,21 @@ feature -- Comparison
 			definition: Result = (i ≤ Current)
 		end
 
---	three_way_comparison alias "⋚" (i: INTEGER_NUMBER): like integer_anchor
---			-- If current integer number equal to `i', 0; if smaller, -1; if greater, 1.
---		do
---			if Current < i then
---				Result := - one
---			elseif i < Current then
---				Result := one
---			else
---				Result := zero
---			end
---		ensure
---			equal_zero: (Result ≍ zero) = (Current ≍ i)
---			smaller_negative: (Result ≍ - one) = (Current < i)
---			greater_positive: (Result ≍ one) = (Current > i)
---		end
+	three_way_comparison alias "⋚" (i: INTEGER_NUMBER): like integer_anchor
+			-- If current integer number equal to `i', 0; if smaller, -1; if greater, 1.
+		do
+			if Current < i then
+				Result := - one
+			elseif i < Current then
+				Result := one
+			else
+				Result := zero
+			end
+		ensure
+			equal_zero: (Result ≍ zero) = (Current ≍ i)
+			smaller_negative: (Result ≍ - one) = (Current < i)
+			greater_positive: (Result ≍ one) = (Current > i)
+		end
 
 	min alias "∧" (i: INTEGER_NUMBER): like integer_anchor
 			-- The smaller of current integer number and `i'

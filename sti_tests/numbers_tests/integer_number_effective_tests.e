@@ -35,6 +35,7 @@ inherit
 			test_is_less_equal,
 			test_is_greater,
 			test_is_greater_equal,
+			test_three_way_comparison,
 			test_min,
 			test_max,
 			test_divisible,
@@ -230,6 +231,14 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.is_greater_equal"
 			testing: "covers/{STI_INTEGER_NUMBER}.is_greater_equal"
+		do
+			Precursor {STST_INTEGER_NUMBER_TESTS}
+		end
+
+	test_three_way_comparison
+			-- Test {STI_INTEGER_NUMBER}.three_way_comparison.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.three_way_comparison"
 		do
 			Precursor {STST_INTEGER_NUMBER_TESTS}
 		end
