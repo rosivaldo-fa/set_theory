@@ -171,6 +171,17 @@ feature -- Relationship
 
 feature -- Operation
 
+	modulus,
+	abs: like integer_anchor
+			-- Absolute value of current integer
+			--| Notice that this feature is not inherited. {REAL_NUMBER}.abs always yields a non-negative number (or a NaN). If `Current' is represented
+			--| by a two's-complement integer and and its value is the minimum possible value in such a representation, `abs' may yield an unexpected
+			--| value, most possibly the same (still negative) value.
+		deferred
+		ensure
+			definition: Result.value = adjusted_value (value.abs)
+		end
+
 	plus alias "+" (i: INTEGER_NUMBER): like integer_anchor
 			-- Sum of current integer number with `i`
 		deferred

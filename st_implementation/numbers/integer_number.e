@@ -108,6 +108,13 @@ feature -- Comparison
 
 feature -- Operation
 
+	modulus,
+	abs: like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value.abs)
+		end
+
 	plus alias "+" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do

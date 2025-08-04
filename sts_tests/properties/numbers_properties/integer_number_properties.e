@@ -147,7 +147,7 @@ feature -- Properties (Comparison)
 feature -- Properties (Relationship)
 
 	divides_ok (i, j, k: STS_INTEGER_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_INTEGER_NUMBER}.divides?
+			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.divides?
 		do
 			check
 				quasi_reflexive: i ≭ zero ⇒ i | i
@@ -159,6 +159,17 @@ feature -- Properties (Relationship)
 		end
 
 feature -- Properties (Operation)
+
+	modulus_ok (i: STS_INTEGER_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.modulus?
+		do
+			check
+				when_negative: i < zero implies i.modulus ≍ - i
+				when_non_negative: i ≥ zero implies i.modulus ≍ i
+			then
+				Result := True
+			end
+		end
 
 	plus_ok (i, j, k: STS_INTEGER_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.plus?

@@ -40,6 +40,7 @@ inherit
 			test_max,
 			test_divisible,
 			test_divides,
+			test_modulus,
 			test_plus,
 			test_identity,
 			test_minus,
@@ -282,6 +283,14 @@ feature -- Test routines (Relationship)
 		end
 
 feature -- Test routines (Operation)
+
+	test_modulus
+			-- Test {STI_INTEGER_NUMBER}.modulus.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.modulus"
+		do
+			Precursor {STST_INTEGER_NUMBER_TESTS}
+		end
 
 	test_plus
 			-- Test {STI_INTEGER_NUMBER}.plus.

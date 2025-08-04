@@ -46,6 +46,7 @@ feature -- Test routines (All)
 			test_max
 			test_divides
 			test_divisible
+			test_modulus
 			test_plus
 			test_identity
 			test_minus
@@ -529,6 +530,18 @@ feature -- Test routines (Relationship)
 		end
 
 feature -- Test routines (Operation)
+
+	test_modulus
+			-- Test {STS_INTEGER_NUMBER}.modulus.
+		note
+			testing: "covers/{STS_INTEGER_NUMBER}.modulus"
+		local
+			i: like integer_number_to_be_tested
+		do
+			i := integer_number_to_be_tested
+			assert ("modulus", attached i.modulus)
+			assert ("modulus_ok", modulus_ok (i))
+		end
 
 	test_plus
 			-- Test {STS_INTEGER_NUMBER}.plus.

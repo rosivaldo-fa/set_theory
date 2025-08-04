@@ -24,6 +24,8 @@ inherit
 			max as integer_max,
 			divisible as integer_divisible,
 			divides as integer_divides,
+			modulus as identity alias "+",
+			abs as identity alias "+",
 			plus as integer_plus,
 			minus as integer_minus,
 			product as integer_product,
