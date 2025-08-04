@@ -41,6 +41,7 @@ inherit
 			test_divisible,
 			test_divides,
 			test_modulus,
+			test_abs,
 			test_plus,
 			test_identity,
 			test_minus,
@@ -288,6 +289,14 @@ feature -- Test routines (Operation)
 			-- Test {STI_INTEGER_NUMBER}.modulus.
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.modulus"
+		do
+			Precursor {STST_INTEGER_NUMBER_TESTS}
+		end
+
+	test_abs
+			-- Test {STI_INTEGER_NUMBER}.abs.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.abs"
 		do
 			Precursor {STST_INTEGER_NUMBER_TESTS}
 		end

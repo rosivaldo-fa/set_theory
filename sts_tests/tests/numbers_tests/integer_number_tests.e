@@ -47,6 +47,7 @@ feature -- Test routines (All)
 			test_divides
 			test_divisible
 			test_modulus
+			test_abs
 			test_plus
 			test_identity
 			test_minus
@@ -541,6 +542,18 @@ feature -- Test routines (Operation)
 			i := integer_number_to_be_tested
 			assert ("modulus", attached i.modulus)
 			assert ("modulus_ok", modulus_ok (i))
+		end
+
+	test_abs
+			-- Test {STS_INTEGER_NUMBER}.abs.
+		note
+			testing: "covers/{STS_INTEGER_NUMBER}.abs"
+		local
+			i: like integer_number_to_be_tested
+		do
+			i := integer_number_to_be_tested
+			assert ("abs", attached i.abs)
+			assert ("abs_ok", abs_ok (i))
 		end
 
 	test_plus

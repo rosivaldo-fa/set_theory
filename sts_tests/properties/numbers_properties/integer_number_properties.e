@@ -171,6 +171,17 @@ feature -- Properties (Operation)
 			end
 		end
 
+	abs_ok (i: STS_INTEGER_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.abs?
+		do
+			check
+				when_negative: i < zero implies i.abs ≍ - i
+				when_non_negative: i ≥ zero implies i.abs ≍ i
+			then
+				Result := True
+			end
+		end
+
 	plus_ok (i, j, k: STS_INTEGER_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.plus?
 		do
