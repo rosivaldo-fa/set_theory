@@ -57,28 +57,8 @@ feature -- Test routines (All)
 			testing: "covers/{STI_NATURAL_COMPLEMENT_SET}"
 		do
 			Precursor {STST_NATURAL_SET_TESTS}
+			test_out
 		end
-
---feature -- Test routines (Initialization)
-
---	test_default_create
---			-- Test {STI_NATURAL_SET}.default_create.
---		note
---			testing: "covers/{STI_NATURAL_SET}.default_create"
---		do
---			assert ("default_create", attached (create {like natural_set_to_be_tested}))
---		end
-
---	test_make_extended
---			-- Test {STI_NATURAL_SET}.make_extended.
---		note
---			testing: "covers/{STI_NATURAL_SET}.make_extended"
---		local
---			s: like some_natural_set
---		do
---			s := some_natural_set
---			assert ("make_extended", attached (create {like natural_set_to_be_tested}.make_extended (some_natural_number, s)))
---		end
 
 feature -- Test routines (Construction)
 
@@ -99,42 +79,6 @@ feature -- Test routines (Output)
 		do
 			assert ("out", attached set_to_be_tested.out)
 		end
-
---feature -- Test routines (Status report)
-
---	test_debug_output
---			-- Test {STI_NATURAL_SET}.debug_output.
---		note
---			testing: "covers/{STI_NATURAL_SET}.debug_output"
---		local
---			n, m, l: like some_natural_number
---			s: like set_to_be_tested
---			s_debug_output: STRING_32
---		do
---			create s
---			assert ("{}", s.debug_output ~ {STRING_32} "{}")
-
---			n := some_natural_number
---			s := s.extended (n)
---			s_debug_output := s.debug_output
---			assert ("{n}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ")")
-
---			m := some_natural_number
---			s := s.extended (m)
---			s_debug_output := s.debug_output
---			assert ("{n, m}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ") & (" +
---					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ")")
-
---			l := some_natural_number
---			s := s.extended (l)
---			s_debug_output := s.debug_output
---			assert ("{n, m, l}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (n.out) + ") & (" +
---					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (m.out) + ") & (" +
---					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (l.out) + ")")
-
---			s := set_to_be_tested
---			assert ("debug_output", attached s.debug_output)
---		end
 
 feature {NONE} -- Factory (element to be tested)
 

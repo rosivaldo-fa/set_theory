@@ -57,6 +57,7 @@ feature -- Test routines (All)
 			testing: "covers/{STI_INTEGER_COMPLEMENT_SET}"
 		do
 			Precursor {STST_INTEGER_SET_TESTS}
+			test_out
 		end
 
 feature -- Test routines (Construction)
