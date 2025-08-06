@@ -20,8 +20,8 @@ inherit
 			test_element_is_not_in,
 			same_natural_number,
 			some_natural_set,
-			same_integer_number
---			some_integer_set
+			same_integer_number,
+			some_integer_set
 		redefine
 			test_all,
 			test_value,

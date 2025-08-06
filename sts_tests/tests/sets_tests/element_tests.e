@@ -75,17 +75,21 @@ feature -- Factory (Element)
 			-- Randomly-fetched polymorphic element
 		do
 			inspect
-				next_random_item \\ 5
+				next_random_item \\ 7
 			when 0 then
 				Result := some_immediate_element
 			when 1 then
 				Result := some_element_equality
 			when 2 then
-				Result := some_natural_number
-			when 3 then
 				Result := some_natural_number_equality
-			when 4 then
+			when 3 then
 				Result := some_set_of_natural_numbers
+			when 4 then
+				Result := some_integer_number
+			when 5 then
+				Result := some_integer_number_equality
+			when 6 then
+				Result := some_set_of_integer_numbers
 			end
 		end
 
@@ -337,7 +341,13 @@ feature -- Factory (integer number)
 	some_integer_number: STS_INTEGER_NUMBER
 			-- Randomly-fetched polymorphic integer number
 		do
-			Result := some_immediate_integer_number
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_integer_number
+			when 1 then
+				Result := some_natural_number
+			end
 		end
 
 	some_immediate_integer_number: STS_INTEGER_NUMBER
@@ -347,12 +357,16 @@ feature -- Factory (integer number)
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_integer_number}
 		end
 
-	same_integer_number (n: STS_INTEGER_NUMBER): like some_integer_number
-			-- Integer number equal to `n'
+	same_integer_number (i: STS_INTEGER_NUMBER): like some_integer_number
+			-- Integer number equal to `i'
 		do
-			Result := n
+			if attached {STS_NATURAL_NUMBER} i as n then
+				Result := same_natural_number (n)
+			else
+				Result := i
+			end
 		ensure
-			definition: Result ≍ n
+			definition: Result ≍ i
 		end
 
 	some_set_of_integer_numbers: STS_SET [STS_INTEGER_NUMBER]
@@ -365,11 +379,9 @@ feature -- Factory (integer number)
 			when 1 then
 				Result := some_universe_of_integer_numbers
 			when 2 then
---				Result := some_integer_set
-				Result := some_set_of_integer_numbers
+				Result := some_integer_set
 			when 3 then
---				Result := some_integer_universe
-				Result := some_set_of_integer_numbers
+				Result := some_integer_universe
 			end
 		end
 
@@ -457,31 +469,31 @@ feature -- Factory (integer number)
 			end
 		end
 
---	some_integer_set: STS_INTEGER_SET
---			-- Randomly-fetched polymorphic integer number set
---		do
---			Result := some_immediate_integer_set
---		end
+	some_integer_set: STS_INTEGER_SET
+			-- Randomly-fetched polymorphic integer number set
+		do
+			Result := some_immediate_integer_set
+		end
 
---	some_immediate_integer_set: STS_INTEGER_SET
---			-- Randomly-fetched monomorphic integer number set
---		deferred
---		ensure
---			monomorphic: Result.generating_type ~ {detachable like some_immediate_integer_set}
---		end
+	some_immediate_integer_set: STS_INTEGER_SET
+			-- Randomly-fetched monomorphic integer number set
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_integer_set}
+		end
 
---	some_integer_universe: STS_INTEGER_NUMBERS
---			-- Randomly-fetched polymorphic integer-number universe
---		do
---			Result := some_immediate_integer_universe
---		end
+	some_integer_universe: STS_INTEGER_NUMBERS
+			-- Randomly-fetched polymorphic integer-number universe
+		do
+			Result := some_immediate_integer_universe
+		end
 
---	some_immediate_integer_universe: STS_INTEGER_NUMBERS
---			-- Randomly-fetched monomorphic integer-number universe
---		deferred
---		ensure
---			monomorphic: Result.generating_type ~ {detachable like some_immediate_integer_universe}
---		end
+	some_immediate_integer_universe: STS_INTEGER_NUMBERS
+			-- Randomly-fetched monomorphic integer-number universe
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_integer_universe}
+		end
 
 feature {NONE} -- Implementation
 

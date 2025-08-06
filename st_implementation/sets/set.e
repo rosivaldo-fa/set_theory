@@ -222,7 +222,7 @@ feature -- Anchor
 			class
 		end
 
-feature {SET, NATURAL_SET} -- Implementation
+feature {SET, NATURAL_SET, INTEGER_SET} -- Implementation
 
 	given_element: like given_element_anchor
 			-- An arbitrary element in current set

@@ -17,7 +17,8 @@ inherit
 			some_set_g,
 			same_natural_number,
 			some_natural_set,
-			same_integer_number
+			same_integer_number,
+			some_integer_set
 		redefine
 			test_all
 		end

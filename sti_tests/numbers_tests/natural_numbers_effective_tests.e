@@ -20,6 +20,7 @@ inherit
 			same_natural_number,
 			some_natural_set,
 			same_integer_number,
+			some_integer_set,
 			some_set_g
 		redefine
 			test_all
