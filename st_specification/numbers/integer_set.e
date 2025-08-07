@@ -1,5 +1,5 @@
 ﻿note
-	description: "Set of integer numbers, i.e. a subset of ℕ."
+	description: "Set of integer numbers, i.e. a subset of ℤ."
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"

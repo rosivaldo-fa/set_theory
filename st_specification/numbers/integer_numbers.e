@@ -1,5 +1,5 @@
 ﻿note
-	description: "Universe of all integer numbers, i.e. ℕ."
+	description: "Universe of all integer numbers, i.e. ℤ."
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"

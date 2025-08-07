@@ -111,18 +111,18 @@ feature -- Test routines (Membership)
 			testing: "covers/{STS_NATURAL_NUMBER}.is_in"
 		local
 			n: like natural_number_to_be_tested
-			s: like some_set_of_natural_numbers
+			s: like some_set_n
 		do
 			n := natural_number_to_be_tested
-			s := some_set_of_natural_numbers.extended (n, some_natural_number_equality)
+			s := some_set_n.extended (n, some_equality_n)
 			assert ("n ∈ s", n ∈ s)
 
 			n := natural_number_to_be_tested
-			s := some_set_of_natural_numbers.prunned (n)
+			s := some_set_n.prunned (n)
 			assert ("not (n ∈ s)", not (n ∈ s))
 
 			n := natural_number_to_be_tested
-			s := some_set_of_natural_numbers
+			s := some_set_n
 			assert ("is_in", n ∈ s ⇒ True)
 		end
 
@@ -132,20 +132,20 @@ feature -- Test routines (Membership)
 			testing: "covers/{STS_NATURAL_NUMBER}.is_not_in"
 		local
 			n: like natural_number_to_be_tested
-			s: like some_set_of_natural_numbers
+			s: like some_set_n
 		do
 			n := natural_number_to_be_tested
-			s := some_set_of_natural_numbers.prunned (n)
+			s := some_set_n.prunned (n)
 			assert ("n ∉ s", n ∉ s)
 			assert ("n ∉ s ok", is_not_in_ok (n, s))
 
 			n := natural_number_to_be_tested
-			s := some_set_of_natural_numbers.extended (n, some_natural_number_equality)
+			s := some_set_n.extended (n, some_equality_n)
 			assert ("not (n ∉ s)", not (n ∉ s))
 			assert ("not (n ∉ s) ok", is_not_in_ok (n, s))
 
 			n := natural_number_to_be_tested
-			s := some_set_of_natural_numbers
+			s := some_set_n
 			assert ("is_not_in", n ∉ s ⇒ True)
 			assert ("is_not_in_ok", is_not_in_ok (n, s))
 		end

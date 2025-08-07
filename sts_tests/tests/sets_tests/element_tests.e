@@ -81,15 +81,15 @@ feature -- Factory (Element)
 			when 1 then
 				Result := some_element_equality
 			when 2 then
-				Result := some_natural_number_equality
+				Result := some_equality_n
 			when 3 then
-				Result := some_set_of_natural_numbers
+				Result := some_set_n
 			when 4 then
 				Result := some_integer_number
 			when 5 then
-				Result := some_integer_number_equality
+				Result := some_equality_i
 			when 6 then
-				Result := some_set_of_integer_numbers
+				Result := some_set_i
 			end
 		end
 
@@ -210,59 +210,63 @@ feature -- Factory (natural number)
 			definition: Result ≍ n
 		end
 
-	some_set_of_natural_numbers: STS_SET [STS_NATURAL_NUMBER]
+	some_set_n: STS_SET [STS_NATURAL_NUMBER]
 			-- Randomly-fetched polymorphic set of natural numbers
 		do
 			inspect
 				next_random_item \\ 4
 			when 0 then
-				Result := some_immediate_set_of_natural_numbers
+				Result := some_immediate_set_n
 			when 1 then
-				Result := some_universe_of_natural_numbers
+				Result := some_universe_n
 			when 2 then
 				Result := some_natural_set
-			when 3 then
+			end
+		end
+
+	some_immediate_set_n: STS_SET [STS_NATURAL_NUMBER]
+			-- Randomly-fetched monomorphic set of natural numbers
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_n}
+		end
+
+	some_universe_n: STS_UNIVERSE [STS_NATURAL_NUMBER]
+			-- Randomly-fetched polymorphic universe of natural numbers
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_universe_n
+			when 1 then
 				Result := some_natural_universe
 			end
 		end
 
-	some_immediate_set_of_natural_numbers: like some_set_of_natural_numbers
-			-- Randomly-fetched monomorphic set of natural numbers
-		deferred
-		ensure
-			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_of_natural_numbers}
-		end
-
-	some_universe_of_natural_numbers: STS_UNIVERSE [STS_NATURAL_NUMBER]
-			-- Randomly-fetched polymorphic universe of natural numbers
-		do
-			Result := some_immediate_universe_of_natural_numbers
-		end
-
-	some_immediate_universe_of_natural_numbers: like some_universe_of_natural_numbers
+	some_immediate_universe_n: STS_UNIVERSE [STS_NATURAL_NUMBER]
 			-- Randomly-fetched monomorphic universe of natural numbers
 		deferred
 		ensure
-			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_of_natural_numbers}
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_n}
 		end
 
-	some_natural_number_equality: STS_EQUALITY [STS_NATURAL_NUMBER]
+	some_equality_n: STS_EQUALITY [STS_NATURAL_NUMBER]
 			-- Randomly-fetched polymorphic equality for comparing {STS_NATURAL_NUMBER} instances
 		do
 			inspect
 				next_random_item \\ 4
 			when 0 then
-				Result := some_natural_number_reference_equality
+				Result := some_reference_equality_n
 			when 1 then
-				Result := some_natural_number_object_standard_equality
+				Result := some_object_standard_equality_n
 			when 2 then
-				Result := some_natural_number_object_equality
+				Result := some_object_equality_n
 			when 3 then
-				Result := some_natural_number_object_deep_equality
+				Result := some_object_deep_equality_n
 			end
 		end
 
-	some_natural_number_reference_equality: STS_REFERENCE_EQUALITY [STS_NATURAL_NUMBER]
+	some_reference_equality_n: STS_REFERENCE_EQUALITY [STS_NATURAL_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_NATURAL_NUMBER} object references
 		do
 			check
@@ -274,7 +278,7 @@ feature -- Factory (natural number)
 			end
 		end
 
-	some_natural_number_object_standard_equality: STS_OBJECT_STANDARD_EQUALITY [STS_NATURAL_NUMBER]
+	some_object_standard_equality_n: STS_OBJECT_STANDARD_EQUALITY [STS_NATURAL_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_NATURAL_NUMBER} object standard value
 		do
 			check
@@ -286,7 +290,7 @@ feature -- Factory (natural number)
 			end
 		end
 
-	some_natural_number_object_equality: STS_OBJECT_EQUALITY [STS_NATURAL_NUMBER]
+	some_object_equality_n: STS_OBJECT_EQUALITY [STS_NATURAL_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_NATURAL_NUMBER} object value
 		do
 			check
@@ -298,7 +302,7 @@ feature -- Factory (natural number)
 			end
 		end
 
-	some_natural_number_object_deep_equality: STS_OBJECT_DEEP_EQUALITY [STS_NATURAL_NUMBER]
+	some_object_deep_equality_n: STS_OBJECT_DEEP_EQUALITY [STS_NATURAL_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_NATURAL_NUMBER} object deep value
 		do
 			check
@@ -313,7 +317,13 @@ feature -- Factory (natural number)
 	some_natural_set: STS_NATURAL_SET
 			-- Randomly-fetched polymorphic natural number set
 		do
-			Result := some_immediate_natural_set
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_natural_set
+			when 1 then
+				Result := some_natural_universe
+			end
 		end
 
 	some_immediate_natural_set: STS_NATURAL_SET
@@ -369,15 +379,15 @@ feature -- Factory (integer number)
 			definition: Result ≍ i
 		end
 
-	some_set_of_integer_numbers: STS_SET [STS_INTEGER_NUMBER]
+	some_set_i: STS_SET [STS_INTEGER_NUMBER]
 			-- Randomly-fetched polymorphic set of integer numbers
 		do
 			inspect
 				next_random_item \\ 4
 			when 0 then
-				Result := some_immediate_set_of_integer_numbers
+				Result := some_immediate_set_i
 			when 1 then
-				Result := some_universe_of_integer_numbers
+				Result := some_universe_i
 			when 2 then
 				Result := some_integer_set
 			when 3 then
@@ -385,43 +395,43 @@ feature -- Factory (integer number)
 			end
 		end
 
-	some_immediate_set_of_integer_numbers: like some_set_of_integer_numbers
+	some_immediate_set_i: like some_set_i
 			-- Randomly-fetched monomorphic set of integer numbers
 		deferred
 		ensure
-			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_of_integer_numbers}
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_i}
 		end
 
-	some_universe_of_integer_numbers: STS_UNIVERSE [STS_INTEGER_NUMBER]
+	some_universe_i: STS_UNIVERSE [STS_INTEGER_NUMBER]
 			-- Randomly-fetched polymorphic universe of integer numbers
 		do
-			Result := some_immediate_universe_of_integer_numbers
+			Result := some_immediate_universe_i
 		end
 
-	some_immediate_universe_of_integer_numbers: like some_universe_of_integer_numbers
+	some_immediate_universe_i: like some_universe_i
 			-- Randomly-fetched monomorphic universe of integer numbers
 		deferred
 		ensure
-			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_of_integer_numbers}
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_i}
 		end
 
-	some_integer_number_equality: STS_EQUALITY [STS_INTEGER_NUMBER]
+	some_equality_i: STS_EQUALITY [STS_INTEGER_NUMBER]
 			-- Randomly-fetched polymorphic equality for comparing {STS_INTEGER_NUMBER} instances
 		do
 			inspect
 				next_random_item \\ 4
 			when 0 then
-				Result := some_integer_number_reference_equality
+				Result := some_reference_equality_i
 			when 1 then
-				Result := some_integer_number_object_standard_equality
+				Result := some_object_standard_equality_i
 			when 2 then
-				Result := some_integer_number_object_equality
+				Result := some_object_equality_i
 			when 3 then
-				Result := some_integer_number_object_deep_equality
+				Result := some_object_deep_equality_i
 			end
 		end
 
-	some_integer_number_reference_equality: STS_REFERENCE_EQUALITY [STS_INTEGER_NUMBER]
+	some_reference_equality_i: STS_REFERENCE_EQUALITY [STS_INTEGER_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_INTEGER_NUMBER} object references
 		do
 			check
@@ -433,7 +443,7 @@ feature -- Factory (integer number)
 			end
 		end
 
-	some_integer_number_object_standard_equality: STS_OBJECT_STANDARD_EQUALITY [STS_INTEGER_NUMBER]
+	some_object_standard_equality_i: STS_OBJECT_STANDARD_EQUALITY [STS_INTEGER_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_INTEGER_NUMBER} object standard value
 		do
 			check
@@ -445,7 +455,7 @@ feature -- Factory (integer number)
 			end
 		end
 
-	some_integer_number_object_equality: STS_OBJECT_EQUALITY [STS_INTEGER_NUMBER]
+	some_object_equality_i: STS_OBJECT_EQUALITY [STS_INTEGER_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_INTEGER_NUMBER} object value
 		do
 			check
@@ -457,7 +467,7 @@ feature -- Factory (integer number)
 			end
 		end
 
-	some_integer_number_object_deep_equality: STS_OBJECT_DEEP_EQUALITY [STS_INTEGER_NUMBER]
+	some_object_deep_equality_i: STS_OBJECT_DEEP_EQUALITY [STS_INTEGER_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_INTEGER_NUMBER} object deep value
 		do
 			check
@@ -719,4 +729,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

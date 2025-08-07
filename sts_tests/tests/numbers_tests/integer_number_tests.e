@@ -76,18 +76,18 @@ feature -- Test routines (Membership)
 			testing: "covers/{STS_INTEGER_NUMBER}.is_in"
 		local
 			i: like integer_number_to_be_tested
-			s: like some_set_of_integer_numbers
+			s: like some_set_i
 		do
 			i := integer_number_to_be_tested
-			s := some_set_of_integer_numbers.extended (i, some_integer_number_equality)
+			s := some_set_i.extended (i, some_equality_i)
 			assert ("i ∈ s", i ∈ s)
 
 			i := integer_number_to_be_tested
-			s := some_set_of_integer_numbers.prunned (i)
+			s := some_set_i.prunned (i)
 			assert ("not (i ∈ s)", not (i ∈ s))
 
 			i := integer_number_to_be_tested
-			s := some_set_of_integer_numbers
+			s := some_set_i
 			assert ("is_in", i ∈ s ⇒ True)
 		end
 
@@ -97,20 +97,20 @@ feature -- Test routines (Membership)
 			testing: "covers/{STS_INTEGER_NUMBER}.is_not_in"
 		local
 			i: like integer_number_to_be_tested
-			s: like some_set_of_integer_numbers
+			s: like some_set_i
 		do
 			i := integer_number_to_be_tested
-			s := some_set_of_integer_numbers.prunned (i)
+			s := some_set_i.prunned (i)
 			assert ("i ∉ s", i ∉ s)
 			assert ("i ∉ s ok", is_not_in_ok (i, s))
 
 			i := integer_number_to_be_tested
-			s := some_set_of_integer_numbers.extended (i, some_integer_number_equality)
+			s := some_set_i.extended (i, some_equality_i)
 			assert ("not (i ∉ s)", not (i ∉ s))
 			assert ("not (i ∉ s) ok", is_not_in_ok (i, s))
 
 			i := integer_number_to_be_tested
-			s := some_set_of_integer_numbers
+			s := some_set_i
 			assert ("is_not_in", i ∉ s ⇒ True)
 			assert ("is_not_in_ok", is_not_in_ok (i, s))
 		end

@@ -96,7 +96,7 @@ feature -- Factory (natural number)
 			Result := next_random_item.as_natural_32
 		end
 
-	some_immediate_set_of_natural_numbers: STI_SET [STS_NATURAL_NUMBER]
+	some_immediate_set_n: STI_SET [STS_NATURAL_NUMBER]
 			-- <Precursor>
 		do
 			check
@@ -121,7 +121,7 @@ feature -- Factory (natural number)
 			end
 		end
 
-	some_immediate_universe_of_natural_numbers: STI_UNIVERSE [STS_NATURAL_NUMBER]
+	some_immediate_universe_n: STI_UNIVERSE [STS_NATURAL_NUMBER]
 			-- <Precursor>
 		do
 			check
@@ -184,9 +184,9 @@ feature -- Factory (natural number)
 				s: attached {STI_NATURAL_COMPLEMENT_SET} some_immediate_instance (
 							agent: STI_NATURAL_COMPLEMENT_SET
 								local
-									s: like some_set_of_natural_numbers
+									s: like some_set_n
 								do
-									s := some_set_of_natural_numbers
+									s := some_set_n
 									create Result.make (s)
 								end
 						) as s -- `some_immediate_instance' definition
@@ -238,7 +238,7 @@ feature -- Factory (integer number)
 			Result := next_random_item
 		end
 
-	some_immediate_set_of_integer_numbers: STI_SET [STS_INTEGER_NUMBER]
+	some_immediate_set_i: STI_SET [STS_INTEGER_NUMBER]
 			-- <Precursor>
 		do
 			check
@@ -263,7 +263,7 @@ feature -- Factory (integer number)
 			end
 		end
 
-	some_immediate_universe_of_integer_numbers: STI_UNIVERSE [STS_INTEGER_NUMBER]
+	some_immediate_universe_i: STI_UNIVERSE [STS_INTEGER_NUMBER]
 			-- <Precursor>
 		do
 			check
@@ -326,9 +326,9 @@ feature -- Factory (integer number)
 				s: attached {STI_INTEGER_COMPLEMENT_SET} some_immediate_instance (
 							agent: STI_INTEGER_COMPLEMENT_SET
 								local
-									s: like some_set_of_integer_numbers
+									s: like some_set_i
 								do
-									s := some_set_of_integer_numbers
+									s := some_set_i
 									create Result.make (s)
 								end
 						) as s -- `some_immediate_instance' definition

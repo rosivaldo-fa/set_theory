@@ -49,7 +49,7 @@ feature -- Output
 	out: STRING
 			-- <Precursor>
 		once
-			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("ℕ")
+			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("ℤ")
 		ensure then
 			class
 		end
