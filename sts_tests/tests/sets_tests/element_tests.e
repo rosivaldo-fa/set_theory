@@ -395,7 +395,7 @@ feature -- Factory (integer number)
 			end
 		end
 
-	some_immediate_set_i: like some_set_i
+	some_immediate_set_i: STS_SET [STS_INTEGER_NUMBER]
 			-- Randomly-fetched monomorphic set of integer numbers
 		deferred
 		ensure
@@ -408,7 +408,7 @@ feature -- Factory (integer number)
 			Result := some_immediate_universe_i
 		end
 
-	some_immediate_universe_i: like some_universe_i
+	some_immediate_universe_i: STS_UNIVERSE [STS_INTEGER_NUMBER]
 			-- Randomly-fetched monomorphic universe of integer numbers
 		deferred
 		ensure

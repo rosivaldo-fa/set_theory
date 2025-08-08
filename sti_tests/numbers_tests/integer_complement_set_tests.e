@@ -16,7 +16,6 @@ inherit
 			some_immediate_integer_number as some_expanded_integer_number
 		undefine
 			default_create,
-			some_set_g,
 			same_natural_number,
 			some_natural_set,
 			same_integer_number,
@@ -33,10 +32,42 @@ inherit
 			test_is_in as test_element_is_in,
 			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as set_to_be_tested,
-			some_object_g as some_integer_number
+			some_object_g as some_integer_number,
+			object_deep_twin_g as object_deep_twin_i,
+			object_standard_twin_g as object_standard_twin_i,
+			object_twin_g as object_twin_i,
+			same_object_g as same_object_i,
+			some_equality_g as some_equality_i,
+			some_immediate_set_family_g as some_immediate_set_family_i,
+			some_immediate_set_g as some_immediate_set_i,
+			some_immediate_universe_g as some_immediate_universe_i,
+			some_object_deep_equality_g as some_object_deep_equality_i,
+			some_object_equality_g as some_object_equality_i,
+			some_object_standard_equality_g as some_object_standard_equality_i,
+			some_reference_equality_g as some_reference_equality_i,
+			some_set_family_g as some_set_family_i,
+			some_set_g as some_set_i,
+			some_universe_g as some_universe_i,
+			some_equality_sg as some_equality_si,
+			some_immediate_set_sg as some_immediate_set_si,
+			some_object_deep_equality_sg as some_object_deep_equality_si,
+			some_object_equality_sg as some_object_equality_si,
+			some_object_standard_equality_sg as some_object_standard_equality_si,
+			some_reference_equality_sg as some_reference_equality_si,
+			some_set_sg as some_set_si
+		undefine
+			some_set_i,
+			some_universe_i,
+			some_equality_i,
+			some_reference_equality_i,
+			some_object_standard_equality_i,
+			some_object_equality_i,
+			some_object_deep_equality_i
 		redefine
 			test_all,
-			set_to_be_tested
+			set_to_be_tested,
+			some_immediate_set_i,
+			some_immediate_universe_i
 		end
 
 feature -- Access
@@ -86,6 +117,49 @@ feature {NONE} -- Factory (element to be tested)
 			-- Integer complement set meant to be under tests
 		do
 			Result := some_immediate_integer_complement_set
+		end
+
+feature -- Factory (integer number)
+
+	some_immediate_set_i: STI_SET [STS_INTEGER_NUMBER]
+			-- <Precursor>
+		do
+			check
+				s: attached {STI_SET [STS_INTEGER_NUMBER]} some_immediate_instance (
+							agent: STI_SET [STS_INTEGER_NUMBER]
+								local
+									eq: STS_OBJECT_EQUALITY [STS_INTEGER_NUMBER]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create eq
+										create Result
+									loop
+										Result := Result.extended (some_integer_number, eq)
+									end
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_SET [STS_INTEGER_NUMBER]}
+			then
+				Result := cropped_set (s)
+			end
+		end
+
+	some_immediate_universe_i: STI_UNIVERSE [STS_INTEGER_NUMBER]
+			-- <Precursor>
+		do
+			check
+				u: attached {STI_UNIVERSE [STS_INTEGER_NUMBER]} some_immediate_instance (
+							agent: STI_UNIVERSE [STS_INTEGER_NUMBER]
+								do
+									create Result
+								end
+						) as u -- `some_immediate_instance' definition
+				monomorphic: u.generating_type ~ {detachable STI_UNIVERSE [STS_INTEGER_NUMBER]}
+			then
+				Result := u
+			end
 		end
 
 feature -- Anchor
