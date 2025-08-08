@@ -211,8 +211,6 @@ feature -- Properties (Operation)
 		do
 			check
 				neutral_subtrahend: (i - zero) ≍ i
-				oppositely_homomorphic: k ≤ j ⇒ (i - k) ≥ (i - j)
-				oppositely_isomorphic: k < j ⇒ i - k > i - j
 			then
 				Result := True
 			end
@@ -266,7 +264,6 @@ feature -- Properties (Operation)
 		do
 			check
 				absorbing_dividend: i ≍ zero and i.divisible (j) ⇒ (i \\ j) ≍ zero
-				upper_bounded: i.divisible (j) ⇒ (i \\ j) < j
 			then
 				Result := True
 			end

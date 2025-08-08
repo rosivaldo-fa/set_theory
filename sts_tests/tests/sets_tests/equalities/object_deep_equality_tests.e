@@ -58,6 +58,7 @@ feature -- Test routines (Relationship)
 		note
 			testing: "covers/{STS_INSTANCE_FREE_EQUALITY}.holds_successively"
 			testing: "covers/{STS_OBJECT_DEEP_EQUALITY}.holds_successively"
+			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		local
 			eq: like equality_to_be_tested
 			a1, a2, a3: G
@@ -66,8 +67,24 @@ feature -- Test routines (Relationship)
 
 			eq := equality_to_be_tested
 			a1 := some_object_g
-			a2 := object_deep_twin_g (a1)
-			a3 := object_deep_twin_g (a2)
+			separate a1 as sep_a1 do
+				from
+					a2 := object_deep_twin_g (sep_a1)
+				until
+					attached sep_a1 ⇒ attached a2 and then sep_a1 ≡≡≡ a2 -- Please have a look at EIS entry above.
+				loop
+					a2 := object_deep_twin_g (sep_a1)
+				end
+			end
+			separate a2 as sep_a2 do
+				from
+					a3 := object_deep_twin_g (sep_a2)
+				until
+					attached sep_a2 ⇒ attached a3 and then sep_a2 ≡≡≡ a3 -- Please have a look at EIS entry above.
+				loop
+					a3 := object_deep_twin_g (sep_a2)
+				end
+			end
 			assert ("a1 ≡≡≡ a2 ≡≡≡ a3", eq.holds_successively (a1, a2, a3))
 			assert ("a1 ≡≡≡ a2 ≡≡≡ a3 ok", holds_successively_ok (a1, a2, a3, eq))
 

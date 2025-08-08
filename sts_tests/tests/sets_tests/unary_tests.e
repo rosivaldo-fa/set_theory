@@ -63,6 +63,8 @@ feature -- Factory (Object)
 
 	object_deep_twin_g (a: G): G
 			-- Object equal (according to `deep_equal') to `a'
+		note
+			EIS: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		do
 			if attached a then
 				from

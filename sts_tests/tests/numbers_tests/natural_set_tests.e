@@ -86,7 +86,7 @@ feature -- Factory (natural number)
 			-- <Precursor>
 		do
 			inspect
-				next_random_item \\ 4
+				next_random_item \\ 3
 			when 0 then
 				Result := some_immediate_set_n
 			when 1 then
