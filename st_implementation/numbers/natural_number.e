@@ -15,6 +15,7 @@ inherit
 			integer_three_way_comparison,
 			integer_min,
 			integer_max,
+			three_way_comparison,
 			min,
 			max
 		end
@@ -112,6 +113,12 @@ feature -- Comparison
 			-- <Precursor>
 		do
 			create Result.make (stored_value ∨ i.value)
+		end
+
+	three_way_comparison alias "⋚" (n: STS_NATURAL_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+			create Result.make (value ⋚ n.value)
 		end
 
 	min alias "∧" (n: STS_NATURAL_NUMBER): like natural_anchor

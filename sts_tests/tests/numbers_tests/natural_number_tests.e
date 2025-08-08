@@ -18,6 +18,7 @@ inherit
 			is_less_equal_ok as integer_is_less_equal_ok,
 			is_greater_ok as integer_is_greater_ok,
 			is_greater_equal_ok as integer_is_greater_equal_ok,
+			test_three_way_comparison as test_integer_three_way_comparison,
 			min_ok as integer_min_ok,
 			max_ok as integer_max_ok,
 			divides_ok as integer_divides_ok,
@@ -80,6 +81,7 @@ feature -- Test routines (All)
 			test_is_less_equal
 			test_is_greater
 			test_is_greater_equal
+			test_three_way_comparison
 			test_min
 			test_max
 			test_divides
@@ -370,6 +372,45 @@ feature -- Test routines (Comparison)
 			m := some_natural_number
 			assert ("is_greater_equal", n ≥ m ⇒ True)
 			assert ("is_greater_equal_ok", is_less_equal_ok (n, m, some_natural_number))
+		end
+
+	test_three_way_comparison
+			-- Test {STS_NATURAL_NUMBER}.three_way_comparison.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.three_way_comparison"
+		local
+			n: like natural_number_to_be_tested
+			m: like some_natural_number
+		do
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				n < m
+			loop
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			end
+			assert ("negative", n ⋚ m ≍ - One)
+
+			n := natural_number_to_be_tested
+			assert ("same_entity", n ⋚ n ≍ Zero)
+			assert ("same_natural_number", n ⋚ same_natural_number (n) ≍ Zero)
+
+			from
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			until
+				n > m
+			loop
+				n := natural_number_to_be_tested
+				m := some_natural_number
+			end
+			assert ("positive", n ⋚ m ≍ One)
+
+			n := natural_number_to_be_tested
+			m := some_natural_number
+			assert ("three_way_comparison", attached (n ⋚ m))
 		end
 
 	test_min

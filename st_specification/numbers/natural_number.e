@@ -128,6 +128,22 @@ feature -- Comparison
 			definition: Result = (n ≤ Current)
 		end
 
+	three_way_comparison alias "⋚" (n: NATURAL_NUMBER): like integer_anchor
+			-- If current natural number equal to `n', 0; if smaller, -1; if greater, 1.
+		do
+			if Current < n then
+				Result := - one
+			elseif n < Current then
+				Result := one
+			else
+				Result := zero
+			end
+		ensure
+			equal_zero: (Result ≍ zero) = (Current ≍ n)
+			smaller_negative: (Result ≍ - one) = (Current < n)
+			greater_positive: (Result ≍ one) = (Current > n)
+		end
+
 	min alias "∧" (n: NATURAL_NUMBER): like natural_anchor
 			-- The smaller of current natural number and `n'
 		do
