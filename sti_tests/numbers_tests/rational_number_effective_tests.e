@@ -25,7 +25,8 @@ inherit
 			some_integer_set,
 			same_rational_number
 		redefine
-			test_all
+			test_all,
+			test_p
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -47,6 +48,19 @@ feature -- Test routines (All)
 			testing: "covers/{STI_RATIONAL_NUMBER}"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Primitive)
+
+	test_p
+			-- Test {STI_RATIONAL_NUMBER}.p.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.p"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("p", attached pq.p)
 		end
 
 note

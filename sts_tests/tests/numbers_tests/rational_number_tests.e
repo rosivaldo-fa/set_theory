@@ -27,6 +27,20 @@ feature -- Test routines (All)
 			testing: "covers/{STS_RATIONAL_NUMBER}"
 		do
 			Precursor {ELEMENT_TESTS}
+			test_p
+		end
+
+feature -- Test routines (Primitive)
+
+	test_p
+			-- Test {STS_RATIONAL_NUMBER}.p.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.p"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("p", attached pq.p)
 		end
 
 feature {NONE} -- Factory (element to be tested)
