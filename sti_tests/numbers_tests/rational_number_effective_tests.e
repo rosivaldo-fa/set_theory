@@ -51,6 +51,16 @@ feature -- Test routines (All)
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Initialization)
+
+	test_default_create
+			-- Test {STI_RATIONAL_NUMBER}.default_create.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.default_create"
+		do
+			assert ("default_create", attached (create {like rational_number_to_be_tested}))
+		end
+
 feature -- Test routines (Primitive)
 
 	test_p
