@@ -26,7 +26,8 @@ inherit
 			same_rational_number
 		redefine
 			test_all,
-			test_p
+			test_p,
+			test_numerator
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -61,6 +62,14 @@ feature -- Test routines (Primitive)
 		do
 			pq := rational_number_to_be_tested
 			assert ("p", attached pq.p)
+		end
+
+	test_numerator
+			-- Test every routine of {STI_RATIONAL_NUMBER}.numerator.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.numerator"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
 
 note
