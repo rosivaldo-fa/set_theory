@@ -29,6 +29,12 @@ feature -- Primitive
 		deferred
 		end
 
+	q,
+	denominator: like integer_anchor
+			-- Denominator of current rational number
+		deferred
+		end
+
 feature -- Anchor
 
 	integer_anchor: INTEGER_NUMBER

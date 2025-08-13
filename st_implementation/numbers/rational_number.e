@@ -23,7 +23,8 @@ expanded class
 inherit
 	STS_RATIONAL_NUMBER
 		rename
-			p as numerator
+			p as numerator,
+			q as denominator
 		end
 
 feature -- Primitive
@@ -37,6 +38,17 @@ feature -- Primitive
 			Result := p
 		ensure then
 			definition: Result ≍ p
+		end
+
+	q: like Integer_anchor
+			-- Denominator of current rational number
+
+	denominator: like Integer_anchor
+			-- <Precursor>
+		do
+			Result := q
+		ensure then
+			definition: Result ≍ q
 		end
 
 feature -- Anchor

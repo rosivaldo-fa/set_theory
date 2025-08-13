@@ -28,6 +28,9 @@ feature -- Test routines (All)
 		do
 			Precursor {ELEMENT_TESTS}
 			test_p
+			test_numerator
+			test_q
+			test_denominator
 		end
 
 feature -- Test routines (Primitive)
@@ -52,6 +55,28 @@ feature -- Test routines (Primitive)
 		do
 			pq := rational_number_to_be_tested
 			assert ("numerator", attached pq.numerator)
+		end
+
+	test_q
+			-- Test {STS_RATIONAL_NUMBER}.q.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.q"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("q", attached pq.q)
+		end
+
+	test_denominator
+			-- Test {STS_RATIONAL_NUMBER}.denominator.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.denominator"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("denominator", attached pq.denominator)
 		end
 
 feature {NONE} -- Factory (element to be tested)

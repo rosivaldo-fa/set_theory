@@ -27,7 +27,9 @@ inherit
 		redefine
 			test_all,
 			test_p,
-			test_numerator
+			test_numerator,
+			test_q,
+			test_denominator
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -49,6 +51,9 @@ feature -- Test routines (All)
 			testing: "covers/{STI_RATIONAL_NUMBER}"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
+			test_default_create
+			test_p
+			test_q
 		end
 
 feature -- Test routines (Initialization)
@@ -78,6 +83,25 @@ feature -- Test routines (Primitive)
 			-- Test every routine of {STI_RATIONAL_NUMBER}.numerator.
 		note
 			testing: "covers/{STI_RATIONAL_NUMBER}.numerator"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_q
+			-- Test {STI_RATIONAL_NUMBER}.q.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.q"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("q", attached pq.q)
+		end
+
+	test_denominator
+			-- Test every routine of {STI_RATIONAL_NUMBER}.denominator.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.denominator"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
