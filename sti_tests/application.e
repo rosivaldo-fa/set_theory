@@ -31,7 +31,8 @@ feature {NONE} -- Initialization
 			(create {INTEGER_NUMBER_EFFECTIVE_TESTS}).test_all;
 			(create {INTEGER_SET_EFFECTIVE_TESTS}).test_all;
 			(create {INTEGER_COMPLEMENT_SET_TESTS}).test_all;
-			(create {INTEGER_NUMBERS_EFFECTIVE_TESTS}).test_all;
+			(create {INTEGER_NUMBERS_EFFECTIVE_TESTS}).test_all;;
+			(create {RATIONAL_NUMBER_EFFECTIVE_TESTS}).test_all;
 		end
 
 note

@@ -11,13 +11,15 @@ inherit
 	STST_UNARY_TESTS [G]
 		rename
 			some_immediate_natural_number as some_expanded_natural_number,
-			some_immediate_integer_number as some_expanded_integer_number
+			some_immediate_integer_number as some_expanded_integer_number,
+			some_immediate_rational_number as some_expanded_rational_number
 		undefine
 			default_create,
 			same_natural_number,
 			some_natural_set,
 			same_integer_number,
-			some_integer_set
+			some_integer_set,
+			same_rational_number
 		redefine
 			some_set_g
 		end

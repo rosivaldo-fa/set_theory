@@ -13,7 +13,8 @@ inherit
 	STST_ELEMENT_TESTS
 		rename
 			some_immediate_natural_number as some_expanded_natural_number,
-			some_immediate_integer_number as some_expanded_integer_number
+			some_immediate_integer_number as some_expanded_integer_number,
+			some_immediate_rational_number as some_expanded_rational_number
 		undefine
 			default_create
 		redefine
@@ -23,7 +24,8 @@ inherit
 			same_natural_number,
 			some_natural_set,
 			same_integer_number,
-			some_integer_set
+			some_integer_set,
+			same_rational_number
 		end
 
 	EQA_TEST_SET
@@ -353,6 +355,150 @@ feature -- Factory (integer number)
 				Result := z
 			end
 		end
+
+feature -- Factory (rational number)
+
+	same_rational_number (r: STS_RATIONAL_NUMBER): like some_rational_number
+			-- <Precursor>
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := Precursor {STST_ELEMENT_TESTS} (r)
+			when 1 then
+				Result := same_rational_number (r)
+--				create {STI_RATIONAL_NUMBER} Result.make (i.value)
+			end
+		end
+
+	some_expanded_rational_number: STI_RATIONAL_NUMBER
+			-- <Precursor>
+		do
+--			Result := some_native_rational_number
+			create Result
+		end
+
+--	some_native_rational_number: RATIONAL
+--			-- Randomly-created native rational number
+--		do
+--			Result := next_random_item
+--		end
+
+	some_immediate_set_r: STI_SET [STS_RATIONAL_NUMBER]
+			-- <Precursor>
+		do
+			check
+				s: attached {STI_SET [STS_RATIONAL_NUMBER]} some_immediate_instance (
+							agent: STI_SET [STS_RATIONAL_NUMBER]
+								local
+									eq: STS_OBJECT_EQUALITY [STS_RATIONAL_NUMBER]
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create eq
+										create Result
+									loop
+										Result := Result.extended (some_rational_number, eq)
+									end
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_SET [STS_RATIONAL_NUMBER]}
+			then
+				Result := cropped_set (s)
+			end
+		end
+
+	some_immediate_universe_r: STI_UNIVERSE [STS_RATIONAL_NUMBER]
+			-- <Precursor>
+		do
+			check
+				u: attached {STI_UNIVERSE [STS_RATIONAL_NUMBER]} some_immediate_instance (
+							agent: STI_UNIVERSE [STS_RATIONAL_NUMBER]
+								do
+									create Result
+								end
+						) as u -- `some_immediate_instance' definition
+				monomorphic: u.generating_type ~ {detachable STI_UNIVERSE [STS_RATIONAL_NUMBER]}
+			then
+				Result := u
+			end
+		end
+
+--	some_rational_set: STS_RATIONAL_SET
+--			-- <Precursor>
+--		do
+--			inspect
+--				next_random_item \\ 2
+--			when 0 then
+--				Result := Precursor {STST_ELEMENT_TESTS}
+--			when 1 then
+--				Result := some_rational_complement_set
+--			end
+--		end
+
+--	some_immediate_rational_set: STI_RATIONAL_SET
+--			-- <Precursor>
+--		do
+--			check
+--				s: attached {STI_RATIONAL_SET} some_immediate_instance (
+--							agent: STI_RATIONAL_SET
+--								do
+--									across
+--										1 |..| some_count.as_rational_32 as i
+--									from
+--										create Result
+--									loop
+--										Result := Result.extended (some_rational_number)
+--									end
+--								end
+--						) as s -- `some_immediate_instance' definition
+--				monomorphic: s.generating_type ~ {detachable STI_RATIONAL_SET}
+--			then
+--				Result := cropped_set (s)
+--			end
+--		end
+
+--	some_rational_complement_set: STI_RATIONAL_COMPLEMENT_SET
+--			-- Randomly-fetched polymorphic rational-number complement set
+--		do
+--			Result := some_immediate_rational_complement_set
+--		end
+
+--	some_immediate_rational_complement_set: STI_RATIONAL_COMPLEMENT_SET
+--			-- Randomly-fetched monomorphic rational-number complement set
+--		do
+--			check
+--				s: attached {STI_RATIONAL_COMPLEMENT_SET} some_immediate_instance (
+--							agent: STI_RATIONAL_COMPLEMENT_SET
+--								local
+--									s: like some_set_r
+--								do
+--									s := some_set_r
+--									create Result.make (s)
+--								end
+--						) as s -- `some_immediate_instance' definition
+--				monomorphic: s.generating_type ~ {detachable STI_RATIONAL_COMPLEMENT_SET}
+--			then
+--				Result := cropped_set (s)
+--			end
+--		end
+
+--	some_immediate_rational_universe: STI_RATIONAL_NUMBERS
+--			-- <Precursor>
+--		do
+--			check
+--				z: attached {STI_RATIONAL_NUMBERS} some_immediate_instance (
+--							agent: STI_RATIONAL_NUMBERS
+--								do
+--									create Result
+--								end
+--						) as z -- `some_immediate_instance' definition
+--				monomorphic: z.generating_type ~ {detachable STI_RATIONAL_NUMBERS}
+--			then
+--				Result := z
+--			end
+--		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

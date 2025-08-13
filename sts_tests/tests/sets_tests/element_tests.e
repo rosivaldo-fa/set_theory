@@ -75,7 +75,7 @@ feature -- Factory (Element)
 			-- Randomly-fetched polymorphic element
 		do
 			inspect
-				next_random_item \\ 7
+				next_random_item \\ 10
 			when 0 then
 				Result := some_immediate_element
 			when 1 then
@@ -90,6 +90,13 @@ feature -- Factory (Element)
 				Result := some_equality_i
 			when 6 then
 				Result := some_set_i
+			when 7 then
+					-- TODO: Unify.
+				Result := some_rational_number
+			when 8 then
+				Result := some_equality_r
+			when 9 then
+				Result := some_set_r
 			end
 		end
 
@@ -504,6 +511,170 @@ feature -- Factory (integer number)
 		ensure
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_integer_universe}
 		end
+
+feature -- Factory (rational number)
+
+	some_rational_number: STS_RATIONAL_NUMBER
+			-- Randomly-fetched polymorphic rational number
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_rational_number
+			when 1 then
+--				Result := some_integer_number
+				Result := some_rational_number
+			end
+		end
+
+	some_immediate_rational_number: STS_RATIONAL_NUMBER
+			-- Randomly-fetched monomorphic rational number
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_number}
+		end
+
+	same_rational_number (r: STS_RATIONAL_NUMBER): like some_rational_number
+			-- Rational number equal to `i'
+		do
+			if attached {STS_INTEGER_NUMBER} r as u then
+--				Result := same_integer_number (r.p)
+				Result := r
+			else
+				Result := r
+			end
+		ensure
+--			definition: Result ≍ r
+			definition: Result = r
+		end
+
+	some_set_r: STS_SET [STS_RATIONAL_NUMBER]
+			-- Randomly-fetched polymorphic set of rational numbers
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_immediate_set_r
+			when 1 then
+				Result := some_universe_r
+			when 2 then
+--				Result := some_rational_set
+				Result := some_set_r
+			when 3 then
+--				Result := some_rational_universe
+				Result := some_set_r
+			end
+		end
+
+	some_immediate_set_r: STS_SET [STS_RATIONAL_NUMBER]
+			-- Randomly-fetched monomorphic set of rational numbers
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_r}
+		end
+
+	some_universe_r: STS_UNIVERSE [STS_RATIONAL_NUMBER]
+			-- Randomly-fetched polymorphic universe of rational numbers
+		do
+			Result := some_immediate_universe_r
+		end
+
+	some_immediate_universe_r: STS_UNIVERSE [STS_RATIONAL_NUMBER]
+			-- Randomly-fetched monomorphic universe of rational numbers
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_r}
+		end
+
+	some_equality_r: STS_EQUALITY [STS_RATIONAL_NUMBER]
+			-- Randomly-fetched polymorphic equality for comparing {STS_RATIONAL_NUMBER} instances
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_reference_equality_r
+			when 1 then
+				Result := some_object_standard_equality_r
+			when 2 then
+				Result := some_object_equality_r
+			when 3 then
+				Result := some_object_deep_equality_r
+			end
+		end
+
+	some_reference_equality_r: STS_REFERENCE_EQUALITY [STS_RATIONAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_RATIONAL_NUMBER} object references
+		do
+			check
+				eq: attached {STS_REFERENCE_EQUALITY [STS_RATIONAL_NUMBER]} some_immediate_instance
+						(agent: STS_REFERENCE_EQUALITY [STS_RATIONAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [STS_RATIONAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_standard_equality_r: STS_OBJECT_STANDARD_EQUALITY [STS_RATIONAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_RATIONAL_NUMBER} object standard value
+		do
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [STS_RATIONAL_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_STANDARD_EQUALITY [STS_RATIONAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [STS_RATIONAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_equality_r: STS_OBJECT_EQUALITY [STS_RATIONAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_RATIONAL_NUMBER} object value
+		do
+			check
+				eq: attached {STS_OBJECT_EQUALITY [STS_RATIONAL_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_EQUALITY [STS_RATIONAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [STS_RATIONAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_deep_equality_r: STS_OBJECT_DEEP_EQUALITY [STS_RATIONAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_RATIONAL_NUMBER} object deep value
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [STS_RATIONAL_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_DEEP_EQUALITY [STS_RATIONAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [STS_RATIONAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+--	some_rational_set: STS_RATIONAL_SET
+--			-- Randomly-fetched polymorphic rational number set
+--		do
+--			Result := some_immediate_rational_set
+--		end
+
+--	some_immediate_rational_set: STS_RATIONAL_SET
+--			-- Randomly-fetched monomorphic rational number set
+--		deferred
+--		ensure
+--			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_set}
+--		end
+
+--	some_rational_universe: STS_RATIONAL_NUMBERS
+--			-- Randomly-fetched polymorphic rational-number universe
+--		do
+--			Result := some_immediate_rational_universe
+--		end
+
+--	some_immediate_rational_universe: STS_RATIONAL_NUMBERS
+--			-- Randomly-fetched monomorphic rational-number universe
+--		deferred
+--		ensure
+--			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_universe}
+--		end
 
 feature {NONE} -- Implementation
 
