@@ -11,6 +11,7 @@ deferred class
 inherit
 	ELEMENT_TESTS
 		rename
+			is_not_in_ok as element_is_not_in_ok,
 			test_is_in as test_element_is_in,
 			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as rational_number_to_be_tested
@@ -18,6 +19,8 @@ inherit
 			test_all,
 			rational_number_to_be_tested
 		end
+
+	RATIONAL_NUMBER_PROPERTIES
 
 feature -- Test routines (All)
 
@@ -32,6 +35,7 @@ feature -- Test routines (All)
 			test_q
 			test_denominator
 			test_is_in
+			test_is_not_in
 		end
 
 feature -- Test routines (Primitive)
@@ -101,6 +105,30 @@ feature -- Test routines (Membership)
 			pq := rational_number_to_be_tested
 			s := some_set_r
 			assert ("is_in", pq ∈ s ⇒ True)
+		end
+
+	test_is_not_in
+			-- Test {STS_RATIONAL_NUMBER}.is_not_in.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_not_in"
+		local
+			pq: like rational_number_to_be_tested
+			s: like some_set_r
+		do
+			pq := rational_number_to_be_tested
+			s := some_set_r.prunned (pq)
+			assert ("pq ∉ s", pq ∉ s)
+			assert ("pq ∉ s ok", is_not_in_ok (pq, s))
+
+			pq := rational_number_to_be_tested
+			s := some_set_r.extended (pq, some_equality_r)
+			assert ("not (pq ∉ s)", not (pq ∉ s))
+			assert ("not (pq ∉ s) ok", is_not_in_ok (pq, s))
+
+			pq := rational_number_to_be_tested
+			s := some_set_r
+			assert ("is_not_in", pq ∉ s ⇒ True)
+			assert ("is_not_in_ok", is_not_in_ok (pq, s))
 		end
 
 feature {NONE} -- Factory (element to be tested)

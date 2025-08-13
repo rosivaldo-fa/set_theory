@@ -129,16 +129,13 @@ feature -- Factory (natural number)
 			check
 				s: attached {STI_SET [STS_NATURAL_NUMBER]} some_immediate_instance (
 							agent: STI_SET [STS_NATURAL_NUMBER]
-								local
-									eq: STS_OBJECT_EQUALITY [STS_NATURAL_NUMBER]
 								do
 									across
 										1 |..| some_count.as_integer_32 as i
 									from
-										create eq
 										create Result
 									loop
-										Result := Result.extended (some_natural_number, eq)
+										Result := Result.extended (some_natural_number, some_equality_n)
 									end
 								end
 						) as s -- `some_immediate_instance' definition

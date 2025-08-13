@@ -21,7 +21,8 @@ deferred class
 inherit
 	ELEMENT
 		rename
-			is_in as element_is_in
+			is_in as element_is_in,
+			is_not_in as element_is_not_in
 		end
 
 feature -- Primitive
@@ -46,6 +47,14 @@ feature -- Membership
 			Result := s ∋ Current
 		ensure
 			definition: Result = s ∋ Current
+		end
+
+	is_not_in alias "∉" (s: SET [RATIONAL_NUMBER]): BOOLEAN
+			-- Is not current rational number in `s'?
+		do
+			Result := not (Current ∈ s)
+		ensure
+			definition: Result = not (Current ∈ s)
 		end
 
 feature -- Anchor

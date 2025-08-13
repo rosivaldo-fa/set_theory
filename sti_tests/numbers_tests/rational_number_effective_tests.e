@@ -30,11 +30,13 @@ inherit
 			test_numerator,
 			test_q,
 			test_denominator,
-			test_is_in
+			test_is_in,
+			test_is_not_in
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
 		rename
+			is_not_in_ok as element_is_not_in_ok,
 			test_is_in as test_element_is_in,
 			test_is_not_in as test_element_is_not_in,
 			element_to_be_tested as rational_number_to_be_tested
@@ -115,6 +117,16 @@ feature -- Test routines (Membership)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.is_in"
 			testing: "covers/{STI_RATIONAL_NUMBER}.is_in"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_is_not_in
+			-- Test {STS_RATIONAL_NUMBER}.is_not_in.
+			-- Test {STI_RATIONAL_NUMBER}.is_not_in.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_not_in"
+			testing: "covers/{STI_RATIONAL_NUMBER}.is_not_in"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

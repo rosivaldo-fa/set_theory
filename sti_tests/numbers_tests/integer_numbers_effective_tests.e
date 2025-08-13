@@ -132,16 +132,13 @@ feature -- Factory (integer number)
 			check
 				s: attached {STI_SET [STS_INTEGER_NUMBER]} some_immediate_instance (
 							agent: STI_SET [STS_INTEGER_NUMBER]
-								local
-									eq: STS_OBJECT_EQUALITY [STS_INTEGER_NUMBER]
 								do
 									across
 										1 |..| some_count.as_integer_32 as i
 									from
-										create eq
 										create Result
 									loop
-										Result := Result.extended (some_integer_number, eq)
+										Result := Result.extended (some_integer_number, some_equality_i)
 									end
 								end
 						) as s -- `some_immediate_instance' definition
