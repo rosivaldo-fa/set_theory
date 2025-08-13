@@ -20,6 +20,9 @@ deferred class
 
 inherit
 	ELEMENT
+		rename
+			is_in as element_is_in
+		end
 
 feature -- Primitive
 
@@ -33,6 +36,16 @@ feature -- Primitive
 	denominator: like integer_anchor
 			-- Denominator of current rational number
 		deferred
+		end
+
+feature -- Membership
+
+	is_in alias "∈" (s: SET [RATIONAL_NUMBER]): BOOLEAN
+			-- Does `s` have current rational number?
+		do
+			Result := s ∋ Current
+		ensure
+			definition: Result = s ∋ Current
 		end
 
 feature -- Anchor

@@ -31,6 +31,7 @@ feature -- Test routines (All)
 			test_numerator
 			test_q
 			test_denominator
+			test_is_in
 		end
 
 feature -- Test routines (Primitive)
@@ -77,6 +78,29 @@ feature -- Test routines (Primitive)
 		do
 			pq := rational_number_to_be_tested
 			assert ("denominator", attached pq.denominator)
+		end
+
+feature -- Test routines (Membership)
+
+	test_is_in
+			-- Test {STS_RATIONAL_NUMBER}.is_in.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_in"
+		local
+			pq: like rational_number_to_be_tested
+			s: like some_set_r
+		do
+			pq := rational_number_to_be_tested
+			s := some_set_r.extended (pq, some_equality_r)
+			assert ("pq ∈ s", pq ∈ s)
+
+			pq := rational_number_to_be_tested
+			s := some_set_r.prunned (pq)
+			assert ("not (pq ∈ s)", not (pq ∈ s))
+
+			pq := rational_number_to_be_tested
+			s := some_set_r
+			assert ("is_in", pq ∈ s ⇒ True)
 		end
 
 feature {NONE} -- Factory (element to be tested)

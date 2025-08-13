@@ -29,7 +29,8 @@ inherit
 			test_p,
 			test_numerator,
 			test_q,
-			test_denominator
+			test_denominator,
+			test_is_in
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -102,6 +103,18 @@ feature -- Test routines (Primitive)
 			-- Test every routine of {STI_RATIONAL_NUMBER}.denominator.
 		note
 			testing: "covers/{STI_RATIONAL_NUMBER}.denominator"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Membership)
+
+	test_is_in
+			-- Test {STS_RATIONAL_NUMBER}.is_in.
+			-- Test {STI_RATIONAL_NUMBER}.is_in.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_in"
+			testing: "covers/{STI_RATIONAL_NUMBER}.is_in"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
