@@ -131,6 +131,19 @@ feature -- Test routines (Membership)
 			assert ("is_not_in_ok", is_not_in_ok (pq, s))
 		end
 
+feature -- Test routines (Access)
+
+	test_zero
+			-- Test {STS_RATIONAL_NUMBER}.zero.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.zero"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("zero", attached pq.Zero)
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	rational_number_to_be_tested: like some_immediate_rational_number

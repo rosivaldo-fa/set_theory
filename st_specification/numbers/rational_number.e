@@ -57,12 +57,14 @@ feature -- Membership
 			definition: Result = not (Current ∈ s)
 		end
 
---feature -- Access
+feature -- Access
 
---	zero: like rational_anchor
---			-- The rational number 0/1
---		deferred
---		end
+	zero: like rational_anchor
+			-- The rational number 0/1
+		deferred
+		ensure
+			numerator: Result.p ≍ Result.p.zero
+		end
 
 feature -- Anchor
 
@@ -71,10 +73,15 @@ feature -- Anchor
 		deferred
 		end
 
---	rational_anchor: RATIONAL_NUMBER
---			-- Anchor for rational numbers
---		deferred
---		end
+	rational_anchor: RATIONAL_NUMBER
+			-- Anchor for rational numbers
+		deferred
+		end
+
+invariant
+	numerator: numerator ≍ p
+	denominator: denominator ≍ q
+	non_zero_denominator: q ≭ q.zero
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

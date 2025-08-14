@@ -81,16 +81,14 @@ feature -- Primitive
 			definition: Result ≍ q
 		end
 
---feature -- Access
+feature -- Access
 
---	zero: RATIONAL_NUMBER
---			-- <Precursor>
---		once
---			create p
---			create q.make (1)
---		ensure then
---			class
---		end
+	zero: RATIONAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
 
 feature -- Anchor
 
@@ -101,13 +99,12 @@ feature -- Anchor
 			class
 		end
 
---	rational_anchor: RATIONAL_NUMBER
---			-- <Precursor>
---		once
---			Result := zero
---		ensure then
---			class
---		end
+	rational_anchor: RATIONAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
