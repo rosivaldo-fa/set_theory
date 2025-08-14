@@ -29,6 +29,10 @@ inherit
 			default_create
 		end
 
+create
+	default_create,
+	make
+
 feature {NONE} -- Initialization
 
 	default_create
@@ -39,6 +43,18 @@ feature {NONE} -- Initialization
 		ensure then
 			numerator: p ≍ {INTEGER_NUMBER}.Zero
 			denominator: q ≍ {INTEGER_NUMBER}.One
+		end
+
+	make (num, den: STS_INTEGER_NUMBER)
+			-- Create a rational number whose value `p'/`q' equals `num'/`den'
+		require
+			non_zero_denominator: den ≭ {INTEGER_NUMBER}.Zero
+		do
+			p := num.value
+			q := den.value
+		ensure
+			numerator: p ≍ num
+			denominator: q ≍ den
 		end
 
 feature -- Primitive

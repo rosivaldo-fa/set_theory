@@ -69,6 +69,24 @@ feature -- Test routines (Initialization)
 			assert ("default_create", attached (create {like rational_number_to_be_tested}))
 		end
 
+	test_make
+			-- Test {STI_RATIONAL_NUMBER}.make.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.make"
+		local
+			num, den: like some_integer_number
+		do
+			num := some_integer_number
+			from
+				den := some_integer_number
+			until
+				den ≭ {STI_INTEGER_NUMBER}.Zero
+			loop
+				den := some_integer_number
+			end
+			assert ("make", attached (create {like rational_number_to_be_tested}.make (num, den)))
+		end
+
 feature -- Test routines (Primitive)
 
 	test_p
