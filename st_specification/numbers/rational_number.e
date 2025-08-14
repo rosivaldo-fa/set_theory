@@ -57,12 +57,24 @@ feature -- Membership
 			definition: Result = not (Current ∈ s)
 		end
 
+--feature -- Access
+
+--	zero: like rational_anchor
+--			-- The rational number 0/1
+--		deferred
+--		end
+
 feature -- Anchor
 
 	integer_anchor: INTEGER_NUMBER
 			-- Anchor for integer numbers
 		deferred
 		end
+
+--	rational_anchor: RATIONAL_NUMBER
+--			-- Anchor for rational numbers
+--		deferred
+--		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

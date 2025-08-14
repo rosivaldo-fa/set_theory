@@ -25,6 +25,20 @@ inherit
 		rename
 			p as numerator,
 			q as denominator
+		redefine
+			default_create
+		end
+
+feature {NONE} -- Initialization
+
+	default_create
+			-- Create the rational number 0/1.
+		do
+			p := {INTEGER_NUMBER}.Zero
+			q := {INTEGER_NUMBER}.One
+		ensure then
+			numerator: p ≍ {INTEGER_NUMBER}.Zero
+			denominator: q ≍ {INTEGER_NUMBER}.One
 		end
 
 feature -- Primitive
@@ -51,6 +65,17 @@ feature -- Primitive
 			definition: Result ≍ q
 		end
 
+--feature -- Access
+
+--	zero: RATIONAL_NUMBER
+--			-- <Precursor>
+--		once
+--			create p
+--			create q.make (1)
+--		ensure then
+--			class
+--		end
+
 feature -- Anchor
 
 	integer_anchor: INTEGER_NUMBER
@@ -59,6 +84,14 @@ feature -- Anchor
 		ensure then
 			class
 		end
+
+--	rational_anchor: RATIONAL_NUMBER
+--			-- <Precursor>
+--		once
+--			Result := zero
+--		ensure then
+--			class
+--		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
