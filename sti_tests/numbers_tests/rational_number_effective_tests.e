@@ -34,7 +34,8 @@ inherit
 			test_is_not_in,
 			test_zero,
 			test_one,
-			test_is_integer
+			test_is_integer,
+			test_is_invertible
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -47,6 +48,17 @@ inherit
 			rational_number_to_be_tested
 		redefine
 			test_all
+		end
+
+feature -- Access
+
+	zero: STI_RATIONAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+			numerator: Result.p ≍ {STI_INTEGER_NUMBER}.Zero
+			denominator: Result.q ≍ {STI_INTEGER_NUMBER}.One
 		end
 
 feature -- Test routines (All)
@@ -181,6 +193,25 @@ feature -- Test routines (Quality)
 			testing: "covers/{STI_RATIONAL_NUMBER}.is_integer"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_is_invertible
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.is_invertible.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_invertible"
+			testing: "covers/{STI_RATIONAL_NUMBER}.is_invertible"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+feature -- Anchor
+
+	rational_anchor: STI_RATIONAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
 		end
 
 note

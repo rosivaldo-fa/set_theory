@@ -88,6 +88,16 @@ feature -- Quality
 			definition: Result = (p \\ q) ≍ p.zero
 		end
 
+	is_invertible: BOOLEAN
+			-- Does current rational number have a multiplicative inverse (AKA reciprocal)?
+		do
+--			Result := Current ≭ zero.p -- TODO: Fix it.
+			Result := p ≭ p.zero
+		ensure
+--			definition: Result = Current ≭ zero
+			definition: Result = p ≭ p.zero
+		end
+
 feature -- Anchor
 
 	integer_anchor: INTEGER_NUMBER

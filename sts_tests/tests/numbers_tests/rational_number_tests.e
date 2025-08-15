@@ -22,6 +22,15 @@ inherit
 
 	RATIONAL_NUMBER_PROPERTIES
 
+feature -- Access
+
+	zero: like rational_anchor
+			-- The rational number 0/1
+		deferred
+		ensure
+			numerator: Result.p ≍ Result.p.zero
+		end
+
 feature -- Test routines (All)
 
 	test_all
@@ -39,6 +48,7 @@ feature -- Test routines (All)
 			test_zero
 			test_one
 			test_is_integer
+			test_is_invertible
 		end
 
 feature -- Test routines (Primitive)
@@ -170,7 +180,7 @@ feature -- Test routines (Quality)
 			from
 				pq := rational_number_to_be_tested
 			until
-				(pq.p \\ pq.q) ≍ pq.p.zero
+				(pq.p \\ pq.q) ≍ zero.p
 			loop
 				pq := rational_number_to_be_tested
 			end
@@ -179,14 +189,14 @@ feature -- Test routines (Quality)
 			from
 				pq := rational_number_to_be_tested
 				check
-					good_divisor: pq.q ≭ pq.q.zero -- {STS_RATIONAL_NUMBER} invariant
+					good_divisor: pq.q ≭ zero.p -- {STS_RATIONAL_NUMBER} invariant
 				end
 			until
-				(pq.p \\ pq.q) ≭ pq.p.zero
+				(pq.p \\ pq.q) ≭ zero.p
 			loop
 				pq := rational_number_to_be_tested
 				check
-					good_divisor: pq.q ≭ pq.q.zero -- {STS_RATIONAL_NUMBER} invariant
+					good_divisor: pq.q ≭ zero.p -- {STS_RATIONAL_NUMBER} invariant
 				end
 			end
 			assert ("not pq.is_integer", not pq.is_integer)
@@ -195,12 +205,42 @@ feature -- Test routines (Quality)
 			assert ("is_integer", pq.is_integer implies True)
 		end
 
+	test_is_invertible
+			-- Test {STS_RATIONAL_NUMBER}.is_invertible.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_invertible"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			from
+				pq := rational_number_to_be_tested
+			until
+				pq.p ≭ zero.p
+			loop
+				pq := rational_number_to_be_tested
+			end
+			assert ("pq.is_invertible", pq.is_invertible)
+
+			pq := Zero
+			assert ("not pq.is_invertible", not pq.is_invertible)
+
+			pq := rational_number_to_be_tested
+			assert ("is_invertible", pq.is_invertible implies True)
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	rational_number_to_be_tested: like some_immediate_rational_number
 			-- Rational number meant to be under tests
 		do
 			Result := some_immediate_rational_number
+		end
+
+feature -- Anchor
+
+	rational_anchor: STS_RATIONAL_NUMBER
+			-- Anchor for rational numbers
+		deferred
 		end
 
 note
