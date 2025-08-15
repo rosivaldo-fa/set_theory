@@ -33,7 +33,8 @@ inherit
 			test_is_in,
 			test_is_not_in,
 			test_zero,
-			test_one
+			test_one,
+			test_is_integer
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -57,6 +58,7 @@ feature -- Test routines (All)
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 			test_default_create
+			test_make
 			test_p
 			test_q
 		end
@@ -165,6 +167,18 @@ feature -- Test routines (Access)
 			-- Test {STI_RATIONAL_NUMBER}.one.
 		note
 			testing: "covers/{STI_RATIONAL_NUMBER}.one"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_integer
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.is_integer.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_integer"
+			testing: "covers/{STI_RATIONAL_NUMBER}.is_integer"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

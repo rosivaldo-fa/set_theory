@@ -367,9 +367,17 @@ feature -- Factory (rational number)
 
 	some_expanded_rational_number: STI_RATIONAL_NUMBER
 			-- <Precursor>
+		local
+			den: like some_integer_number
 		do
---			Result := some_native_rational_number
-			create Result
+			from
+				den := some_integer_number
+			until
+				den ≭ den.zero
+			loop
+				den := some_integer_number
+			end
+			create Result.make (some_integer_number, den)
 		end
 
 --	some_native_rational_number: RATIONAL

@@ -36,6 +36,9 @@ feature -- Test routines (All)
 			test_denominator
 			test_is_in
 			test_is_not_in
+			test_zero
+			test_one
+			test_is_integer
 		end
 
 feature -- Test routines (Primitive)
@@ -153,6 +156,43 @@ feature -- Test routines (Access)
 		do
 			pq := rational_number_to_be_tested
 			assert ("one", attached pq.one)
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_integer
+			-- Test {STS_RATIONAL_NUMBER}.is_integer.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_integer"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			from
+				pq := rational_number_to_be_tested
+			until
+				(pq.p \\ pq.q) ≍ pq.p.zero
+			loop
+				pq := rational_number_to_be_tested
+			end
+			assert ("pq.is_integer", pq.is_integer)
+
+			from
+				pq := rational_number_to_be_tested
+				check
+					good_divisor: pq.q ≭ pq.q.zero -- {STS_RATIONAL_NUMBER} invariant
+				end
+			until
+				(pq.p \\ pq.q) ≭ pq.p.zero
+			loop
+				pq := rational_number_to_be_tested
+				check
+					good_divisor: pq.q ≭ pq.q.zero -- {STS_RATIONAL_NUMBER} invariant
+				end
+			end
+			assert ("not pq.is_integer", not pq.is_integer)
+
+			pq := rational_number_to_be_tested
+			assert ("is_integer", pq.is_integer implies True)
 		end
 
 feature {NONE} -- Factory (element to be tested)

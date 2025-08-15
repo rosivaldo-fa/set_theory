@@ -73,6 +73,21 @@ feature -- Access
 			definition: Result.p ≍ Result.q
 		end
 
+feature -- Quality
+
+	is_integer: BOOLEAN
+			-- Does current rational number represent an integer number?
+			-- Notice that, due to rounding and truncation, implementation of `real_is_integer' might give True even if `is_integer' gives False.
+		do
+				check
+					good_divisor: p.divisible (q) -- Class invariant: q /= 0
+				end
+			Result := (p \\ q) ≍ p.zero
+		ensure
+			good_divisor: p.divisible (q) -- Class invariant: q /= 0
+			definition: Result = (p \\ q) ≍ p.zero
+		end
+
 feature -- Anchor
 
 	integer_anchor: INTEGER_NUMBER
