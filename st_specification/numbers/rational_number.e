@@ -79,9 +79,9 @@ feature -- Quality
 			-- Does current rational number represent an integer number?
 			-- Notice that, due to rounding and truncation, implementation of `real_is_integer' might give True even if `is_integer' gives False.
 		do
-				check
-					good_divisor: p.divisible (q) -- Class invariant: q /= 0
-				end
+			check
+				good_divisor: p.divisible (q) -- Class invariant: q /= 0
+			end
 			Result := (p \\ q) ≍ p.zero
 		ensure
 			good_divisor: p.divisible (q) -- Class invariant: q /= 0
@@ -101,49 +101,40 @@ feature -- Quality
 feature -- Math
 
 	div (i, j: INTEGER_NUMBER): like integer_anchor
-			-- The quotient `i'/`j' rounded towards negative infinity, i.e.
-			-- ⌊`i'/`j'⌋.
+			-- The quotient `i'/`j' rounded towards negative infinity, i.e. ⌊`i'/`j'⌋.
 		require
 			good_divisor: i.divisible (j)
 		do
-			if (i \\ j) ≍ zero.p then
+			if (i \\ j) ≍ i.zero then
 				Result := converted_integer (i // j)
-			elseif i < zero.p then
-				if j < zero.p then
+			elseif i < i.zero then
+				if j < i.zero then
 					Result := converted_integer (i // j)
 				else
-						check
-							j > zero.p -- i.divisible (j)
-						end
-					Result := converted_integer (i // j - one.p)
+					check
+						j > i.zero -- i.divisible (j)
+					end
+					Result := converted_integer (i // j - i.one)
 				end
 			else
-					check
-						i > zero.p -- (i \\ j) /= 0
-					end
-				if j < zero.p then
-					Result := converted_integer (i // j - one.p)
+				check
+					i > i.zero -- (i \\ j) /= 0
+				end
+				if j < i.zero then
+					Result := converted_integer (i // j - i.one)
 				else
-						check
-							j > zero.p -- i.divisible (j)
-						end
+					check
+						j > i.zero -- i.divisible (j)
+					end
 					Result := converted_integer (i // j)
 				end
 			end
 		ensure
-			when_integer: (i \\ j) ≍ zero.p implies Result ≍ (i // j)
-			when_both_negative:
-				(i \\ j) ≭ zero.p and i < zero.p and j < zero.p implies
-				Result ≍ (i // j)
-			when_negative_by_positive:
-				(i \\ j) ≭ zero.p and i < zero.p and j > zero.p implies
-				Result ≍ (i // j - one.p)
-			when_positive_by_negative:
-				(i \\ j) ≭ zero.p and i > zero.p and j < zero.p implies
-				Result ≍ (i // j - one.p)
-			when_both_positive:
-				(i \\ j) ≭ zero.p and i > zero.p and j > zero.p implies
-				Result ≍ (i // j)
+			when_integer: (i \\ j) ≍ i.zero ⇒ Result ≍ (i // j)
+			when_both_negative: (i \\ j) ≭ i.zero and i < i.zero and j < i.zero ⇒ Result ≍ (i // j)
+			when_negative_by_positive: (i \\ j) ≭ i.zero and i < i.zero and j > i.zero ⇒ Result ≍ (i // j - i.one)
+			when_positive_by_negative: (i \\ j) ≭ i.zero and i > i.zero and j < i.zero ⇒ Result ≍ (i // j - i.one)
+			when_both_positive: (i \\ j) ≭ i.zero and i > i.zero and j > i.zero ⇒ Result ≍ (i // j)
 		end
 
 feature -- Factory

@@ -36,6 +36,7 @@ inherit
 			test_one,
 			test_is_integer,
 			test_is_invertible,
+			test_div,
 			test_converted_integer
 		end
 
@@ -202,6 +203,18 @@ feature -- Test routines (Quality)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.is_invertible"
 			testing: "covers/{STI_RATIONAL_NUMBER}.is_invertible"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Math)
+
+	test_div
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.div.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.div"
+			testing: "covers/{STI_RATIONAL_NUMBER}.div"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

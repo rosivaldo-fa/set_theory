@@ -49,6 +49,7 @@ feature -- Test routines (All)
 			test_one
 			test_is_integer
 			test_is_invertible
+			test_div
 			test_converted_integer
 		end
 
@@ -227,6 +228,26 @@ feature -- Test routines (Quality)
 
 			pq := rational_number_to_be_tested
 			assert ("is_invertible", pq.is_invertible implies True)
+		end
+
+feature -- Test routines (Math)
+
+	test_div
+			-- Test {STS_RATIONAL_NUMBER}.div.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.div"
+		local
+			i, j: like some_integer_number
+		do
+			i := some_integer_number
+			from
+				j := some_integer_number
+			until
+				i.divisible (j)
+			loop
+				j := some_integer_number
+			end
+			assert ("div", attached rational_number_to_be_tested.div (i, j))
 		end
 
 feature -- Test routines (Factory)
