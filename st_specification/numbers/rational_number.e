@@ -66,6 +66,13 @@ feature -- Access
 			numerator: Result.p ≍ Result.p.zero
 		end
 
+	one: like rational_anchor
+			-- The rational number 1/1
+		deferred
+		ensure
+			definition: Result.p ≍ Result.q
+		end
+
 feature -- Anchor
 
 	integer_anchor: INTEGER_NUMBER

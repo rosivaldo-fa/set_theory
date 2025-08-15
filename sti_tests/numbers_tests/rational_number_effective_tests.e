@@ -32,7 +32,8 @@ inherit
 			test_denominator,
 			test_is_in,
 			test_is_not_in,
-			test_zero
+			test_zero,
+			test_one
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -156,6 +157,14 @@ feature -- Test routines (Access)
 			-- Test {STI_RATIONAL_NUMBER}.zero.
 		note
 			testing: "covers/{STI_RATIONAL_NUMBER}.zero"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_one
+			-- Test {STI_RATIONAL_NUMBER}.one.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.one"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

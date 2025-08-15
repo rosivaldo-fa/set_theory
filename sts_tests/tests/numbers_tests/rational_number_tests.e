@@ -144,6 +144,17 @@ feature -- Test routines (Access)
 			assert ("zero", attached pq.Zero)
 		end
 
+	test_one
+			-- Test {STS_RATIONAL_NUMBER}.one.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.one"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("one", attached pq.one)
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	rational_number_to_be_tested: like some_immediate_rational_number

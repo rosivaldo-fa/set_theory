@@ -88,6 +88,18 @@ feature -- Access
 		once
 		ensure then
 			class
+			numerator: Result.p ≍ {INTEGER_NUMBER}.Zero
+			denominator: Result.q ≍ {INTEGER_NUMBER}.One
+		end
+
+	one: RATIONAL_NUMBER
+			-- <Precursor>
+		once
+			create Result.make ({INTEGER_NUMBER}.One, {INTEGER_NUMBER}.One)
+		ensure then
+			class
+			numerator: Result.p ≍ {INTEGER_NUMBER}.One
+			denominator: Result.q ≍ {INTEGER_NUMBER}.One
 		end
 
 feature -- Anchor
