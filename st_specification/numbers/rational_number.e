@@ -98,6 +98,64 @@ feature -- Quality
 			definition: Result = p ≭ p.zero
 		end
 
+feature -- Math
+
+	div (i, j: INTEGER_NUMBER): like integer_anchor
+			-- The quotient `i'/`j' rounded towards negative infinity, i.e.
+			-- ⌊`i'/`j'⌋.
+		require
+			good_divisor: i.divisible (j)
+		do
+			if (i \\ j) ≍ zero.p then
+				Result := converted_integer (i // j)
+			elseif i < zero.p then
+				if j < zero.p then
+					Result := converted_integer (i // j)
+				else
+						check
+							j > zero.p -- i.divisible (j)
+						end
+					Result := converted_integer (i // j - one.p)
+				end
+			else
+					check
+						i > zero.p -- (i \\ j) /= 0
+					end
+				if j < zero.p then
+					Result := converted_integer (i // j - one.p)
+				else
+						check
+							j > zero.p -- i.divisible (j)
+						end
+					Result := converted_integer (i // j)
+				end
+			end
+		ensure
+			when_integer: (i \\ j) ≍ zero.p implies Result ≍ (i // j)
+			when_both_negative:
+				(i \\ j) ≭ zero.p and i < zero.p and j < zero.p implies
+				Result ≍ (i // j)
+			when_negative_by_positive:
+				(i \\ j) ≭ zero.p and i < zero.p and j > zero.p implies
+				Result ≍ (i // j - one.p)
+			when_positive_by_negative:
+				(i \\ j) ≭ zero.p and i > zero.p and j < zero.p implies
+				Result ≍ (i // j - one.p)
+			when_both_positive:
+				(i \\ j) ≭ zero.p and i > zero.p and j > zero.p implies
+				Result ≍ (i // j)
+		end
+
+feature -- Factory
+
+	converted_integer (i: INTEGER_NUMBER): like integer_anchor
+			-- `i' converted to a integer number like `integer_anchor'
+		do
+			Result := i
+		ensure
+			definition: Result.value = integer_anchor.adjusted_value (i.value)
+		end
+
 feature -- Anchor
 
 	integer_anchor: INTEGER_NUMBER

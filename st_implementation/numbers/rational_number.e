@@ -26,7 +26,8 @@ inherit
 			p as numerator,
 			q as denominator
 		redefine
-			default_create
+			default_create,
+			converted_integer
 		end
 
 create
@@ -100,6 +101,20 @@ feature -- Access
 			class
 			numerator: Result.p ≍ {INTEGER_NUMBER}.One
 			denominator: Result.q ≍ {INTEGER_NUMBER}.One
+		end
+
+feature -- Factory
+
+	converted_integer (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+			if attached {like integer_anchor} i as exp_i then
+				Result := exp_i
+			else
+				Result := i.value
+			end
+		ensure then
+			class
 		end
 
 feature -- Anchor

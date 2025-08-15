@@ -35,7 +35,8 @@ inherit
 			test_zero,
 			test_one,
 			test_is_integer,
-			test_is_invertible
+			test_is_invertible,
+			test_converted_integer
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -201,6 +202,16 @@ feature -- Test routines (Quality)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.is_invertible"
 			testing: "covers/{STI_RATIONAL_NUMBER}.is_invertible"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Factory)
+
+	test_converted_integer
+			-- Test {STI_RATIONAL_NUMBER}.converted_integer.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.converted_integer"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
