@@ -195,6 +195,35 @@ feature -- Operation
 			create Result.make (stored_value * n.value)
 		end
 
+--	quotient alias "/" alias "÷" (i: STS_INTEGER_NUMBER): like rational_anchor
+--			-- <Precursor>
+--		do
+--			create Result.make (Current, i)
+--		ensure then
+--			el_gcd: attached gcd (Current, i) as el_gcd
+--			non_zero_gcd: el_gcd ≭ Zero -- `i' /= 0
+--			Current_good_divisor: Current.divisible (el_gcd) -- el_gcd ≭ Zero
+--			i_good_divisor: i.divisible (el_gcd) -- el_gcd ≭ Zero
+--			el_p: attached (Current // el_gcd) as el_p
+--			el_q: attached (i // el_gcd) as el_q
+--			p_as_it_is: el_q > Zero or
+--				el_p ≍ {INTEGER_NUMBER}.Min_value or
+--				el_q ≍ {INTEGER_NUMBER}.Min_value implies
+--				Result.p ≍ el_p
+--			q_as_it_is: el_q > Zero or
+--				el_p ≍ {INTEGER_NUMBER}.Min_value or
+--				el_q ≍ {INTEGER_NUMBER}.Min_value implies
+--				Result.q ≍ el_q
+--			negated_p: el_q < Zero and
+--				el_p ≭ {INTEGER_NUMBER}.Min_value and
+--				el_q ≭ {INTEGER_NUMBER}.Min_value implies
+--				Result.p ≍ - el_p
+--			negated_q: el_q < Zero and
+--				el_p ≭ {INTEGER_NUMBER}.Min_value and
+--				el_q ≭ {INTEGER_NUMBER}.Min_value implies
+--				Result.q ≍ - el_q
+--		end
+
 	natural_quotient alias "//" (n: STS_NATURAL_NUMBER): like natural_anchor
 			-- <Precursor>
 		do
@@ -261,6 +290,13 @@ feature -- Anchor
 	native_natural_anchor: NATURAL
 			-- <Precursor>
 		do
+		ensure then
+			class
+		end
+
+	rational_anchor: RATIONAL_NUMBER
+			-- <Precursor>
+		once
 		ensure then
 			class
 		end

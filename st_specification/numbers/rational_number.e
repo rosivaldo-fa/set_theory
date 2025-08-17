@@ -98,7 +98,73 @@ feature -- Quality
 			definition: Result = p ≭ p.zero
 		end
 
+--feature -- Comparison
+
+--	equals alias "≍" (pq: RATIONAL_NUMBER): BOOLEAN
+--			-- Do current rational number and `pq' have the same numerical value?
+--		do
+--				check
+--						-- Class invariant: q /= 0 and pq.q /= 0
+--					good_divisor: p.divisible (q)
+--					pq_good_divisor: pq.p.divisible (pq.q)
+--				end
+--			if is_integer then
+--				Result := pq.is_integer and
+--				div (p, q) ≍ div (pq.p, pq.q)
+--			else
+--				if not pq.is_integer then
+--						check
+--								-- not is_integer implies rem (p, q) /= 0 and
+--								-- not pq.is_integer implies
+--								--	rem (pq.p, pq.q) /= 0
+--							q_divisible_p_rem_q: q.divisible (rem (p, q))
+--							pq_q_divisible_pq_p_rem_pq_q:
+--								pq.q.divisible (rem (pq.p, pq.q))
+--						end
+--					Result := div (p, q) ≍ div (pq.p, pq.q) and
+--						(q / rem (p, q)) ≍ (pq.q / rem (pq.p, pq.q))
+--				end
+--			end
+--		ensure
+--				-- Class invariant: q /= 0 and pq.q /= 0
+--			good_divisor: p.divisible (q)
+--			pq_good_divisor: pq.p.divisible (pq.q)
+
+--				-- not is_integer implies rem (p, q) /= 0 and
+--				-- not pq.is_integer implies rem (pq.p, pq.q) /= 0
+--			q_divisible_p_rem_q: not is_integer implies
+--				q.divisible (rem (p, q))
+--			pq_q_divisible_pq_p_rem_pq_q: not pq.is_integer implies
+--				pq.q.divisible (rem (pq.p, pq.q))
+
+--			when_integer: is_integer implies Result =
+--				(pq.is_integer and div (p, q) ≍ div (pq.p, pq.q))
+--			when_not_integer: not is_integer implies Result = (
+--				not pq.is_integer and then (
+--					div (p, q) ≍ div (pq.p, pq.q) and then
+--					(q / rem (p, q)) ≍ (pq.q / rem (pq.p, pq.q))
+--					)
+--				)
+--		end
+
 feature -- Math
+
+	gcd (i, j: INTEGER_NUMBER): like integer_anchor
+			-- Greatest common divisor of `i' and `j'
+		do
+			if j ≍ zero.p then
+				Result := converted_integer (i.abs)
+			else
+					check
+						good_divisor: i.divisible (j) -- j /= 0
+					end
+				Result := gcd (j, i \\ j)
+			end
+		ensure
+			base: j ≍ zero.p implies Result ≍ i.abs
+			good_divisor: j ≭ zero.p implies i.divisible (j)
+			induction: j ≭ zero.p implies Result ≍ gcd (j, i \\ j)
+		end
 
 	div (i, j: INTEGER_NUMBER): like integer_anchor
 			-- The quotient `i'/`j' rounded towards negative infinity, i.e. ⌊`i'/`j'⌋.
@@ -135,6 +201,43 @@ feature -- Math
 			when_negative_by_positive: (i \\ j) ≭ i.zero and i < i.zero and j > i.zero ⇒ Result ≍ (i // j - i.one)
 			when_positive_by_negative: (i \\ j) ≭ i.zero and i > i.zero and j < i.zero ⇒ Result ≍ (i // j - i.one)
 			when_both_positive: (i \\ j) ≭ i.zero and i > i.zero and j > i.zero ⇒ Result ≍ (i // j)
+		end
+
+	rem (i, j: INTEGER_NUMBER): like integer_anchor
+			-- The remainder of the quotient `i'/`j' when the latter is rounded towards negative infinity, i.e. `i' - j⋅⌊`i'/`j'⌋.
+		require
+			good_divisor: i.divisible (j)
+		do
+			if (i \\ j) ≍ i.zero then
+				Result := converted_integer (i \\ j)
+			elseif i < i.zero then
+				if j < i.zero then
+					Result := converted_integer (i \\ j)
+				else
+					check
+						j > i.zero -- i.divisible (j)
+					end
+					Result := converted_integer (i \\ j + j)
+				end
+			else
+				check
+					i > i.zero -- (i \\ j) /= 0
+				end
+				if j < zero.p then
+					Result := converted_integer (i \\ j + j)
+				else
+					check
+						j > i.zero -- i.divisible (j)
+					end
+					Result := converted_integer (i \\ j)
+				end
+			end
+		ensure
+			when_integer: (i \\ j) ≍ i.zero ⇒ Result ≍ (i \\ j)
+			when_both_negative: (i \\ j) ≭ i.zero and i < i.zero and j < i.zero ⇒ Result ≍ (i \\ j)
+			when_negative_by_positive: (i \\ j) ≭ i.zero and i < i.zero and j > i.zero ⇒ Result ≍ (i \\ j + j)
+			when_positive_by_negative: (i \\ j) ≭ i.zero and i > i.zero and j < i.zero ⇒ Result ≍ (i \\ j + j)
+			when_both_positive: (i \\ j) ≭ i.zero and i > i.zero and j > i.zero ⇒ Result ≍ (i \\ j)
 		end
 
 feature -- Factory

@@ -36,7 +36,9 @@ inherit
 			test_one,
 			test_is_integer,
 			test_is_invertible,
+			test_gcd,
 			test_div,
+			test_rem,
 			test_converted_integer
 		end
 
@@ -209,12 +211,32 @@ feature -- Test routines (Quality)
 
 feature -- Test routines (Math)
 
+	test_gcd
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.gcd.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.gcd"
+			testing: "covers/{STI_RATIONAL_NUMBER}.gcd"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
 	test_div
 			-- <Precursor>
 			-- Test {STI_RATIONAL_NUMBER}.div.
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.div"
 			testing: "covers/{STI_RATIONAL_NUMBER}.div"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_rem
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.rem.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.rem"
+			testing: "covers/{STI_RATIONAL_NUMBER}.rem"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

@@ -25,6 +25,33 @@ feature -- Properties (Membership)
 			end
 		end
 
+feature -- Properties (Math)
+
+	gcd_ok (pq: STS_RATIONAL_NUMBER; i, j, k: STS_INTEGER_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.gcd?
+		do
+			check
+				common_divisor: k | i and k | j implies k | pq.gcd (i, j)
+				commutative: pq.gcd (i, j) ≍ pq.gcd (j, i)
+				associative: pq.gcd (i, pq.gcd (j, k)) ≍ pq.gcd (pq.gcd (i, j), k)
+			then
+				Result := True
+			end
+		end
+
+	rem_ok (pq: STS_RATIONAL_NUMBER; i, j: STS_INTEGER_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.rem?
+		do
+			if i.divisible (j) then
+				check
+					consistent: (pq.div (i, j) ⋅ j + pq.rem (i, j)) ≍ i
+					identity: pq.rem (pq.rem (i, j), j) ≍ pq.rem (i, j)
+				then
+				end
+			end
+			Result := True
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

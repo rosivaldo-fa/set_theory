@@ -49,7 +49,9 @@ feature -- Test routines (All)
 			test_one
 			test_is_integer
 			test_is_invertible
+			test_gcd
 			test_div
+			test_rem
 			test_converted_integer
 		end
 
@@ -232,6 +234,21 @@ feature -- Test routines (Quality)
 
 feature -- Test routines (Math)
 
+	test_gcd
+			-- Test {STS_RATIONAL_NUMBER}.gcd.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.gcd"
+		local
+			pq: like rational_number_to_be_tested
+			i, j: like some_integer_number
+		do
+			i := some_integer_number
+			j := some_integer_number
+			pq := rational_number_to_be_tested
+			assert ("gcd", attached pq.gcd (i, j))
+			assert ("gcd_ok", gcd_ok (pq, i, j, some_integer_number))
+		end
+
 	test_div
 			-- Test {STS_RATIONAL_NUMBER}.div.
 		note
@@ -248,6 +265,27 @@ feature -- Test routines (Math)
 				j := some_integer_number
 			end
 			assert ("div", attached rational_number_to_be_tested.div (i, j))
+		end
+
+	test_rem
+			-- Test {STS_RATIONAL_NUMBER}.rem.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.rem"
+		local
+			pq: like rational_number_to_be_tested
+			i, j: like some_integer_number
+		do
+			pq := rational_number_to_be_tested
+			i := some_integer_number
+			from
+				j := some_integer_number
+			until
+				i.divisible (j)
+			loop
+				j := some_integer_number
+			end
+			assert ("rem", attached pq.rem (i, j))
+			assert ("rem ok", rem_ok (pq, i, j))
 		end
 
 feature -- Test routines (Factory)

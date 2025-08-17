@@ -221,6 +221,23 @@ feature -- Operation
 			definition: Result.value = adjusted_value (value * i.value)
 		end
 
+--	quotient alias "/" alias "÷" (i: INTEGER_NUMBER): like rational_anchor
+--			-- Rational number got by dividing current integer number by `i`
+--		require
+--			good_divisor: divisible (i)
+--		deferred
+--		ensure
+--			p_divisible_q: -- {RATIONAL_NUMBER} invariant: Result.q /= 0
+--				Result.p.divisible (Result.q)
+--			quotient: (Result.p // Result.q) ≍ (Current // i)
+--			p_rem_q_divisible_q: -- {RATIONAL_NUMBER} invariant: Result.q /= 0
+--				(Result.p \\ Result.q).divisible (Result.q)
+--			current_rem_i_divisible_i: -- i /= 0 ⇐ divisible (i)
+--				(Current \\ i).divisible (i)
+--			remainder: ((Result.p \\ Result.q) / Result.q) ≍
+--				((Current \\ i) / i)
+--		end
+
 	integer_quotient alias "//" (i: INTEGER_NUMBER): like integer_anchor
 			-- Division of current integer number by `i`
 		require
@@ -262,6 +279,11 @@ feature -- Anchor
 	native_integer_anchor: INTEGER
 			-- Anchor for the native representation of the value of current integer number
 			--| TODO: Make it target dependant.
+		deferred
+		end
+
+	rational_anchor: RATIONAL_NUMBER
+			-- Anchor for rational numbers
 		deferred
 		end
 
