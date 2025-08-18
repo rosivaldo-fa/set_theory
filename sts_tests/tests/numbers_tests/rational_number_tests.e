@@ -49,6 +49,7 @@ feature -- Test routines (All)
 			test_one
 			test_is_integer
 			test_is_invertible
+			test_equals
 			test_gcd
 			test_div
 			test_rem
@@ -230,6 +231,31 @@ feature -- Test routines (Quality)
 
 			pq := rational_number_to_be_tested
 			assert ("is_invertible", pq.is_invertible implies True)
+		end
+
+feature -- Test routines (Comparison)
+
+	test_equals
+			-- Test {STS_RATIONAL_NUMBER}.equals.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.equals"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			pq_1 := rational_number_to_be_tested
+			assert ("same_entity", pq_1 ≍ pq_1)
+			assert ("same_entity_ok", equals_ok (pq_1, pq_1, pq_1))
+
+			pq_1 := rational_number_to_be_tested
+			pq_2 := same_rational_number (pq_1)
+			assert ("same_rational", pq_1 ≍ pq_2)
+			assert ("same_rational_ok", equals_ok (pq_1, pq_2, same_rational_number (pq_2)))
+
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			assert ("some_rational", pq_1 ≍ pq_2 ⇒ True)
+			assert ("equals_ok", equals_ok (pq_1, pq_2, some_rational_number))
 		end
 
 feature -- Test routines (Math)

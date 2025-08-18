@@ -534,18 +534,18 @@ feature -- Factory (rational number)
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_number}
 		end
 
-	same_rational_number (r: STS_RATIONAL_NUMBER): like some_rational_number
+	same_rational_number (pq: STS_RATIONAL_NUMBER): like some_rational_number
 			-- Rational number equal to `i'
 		do
-			if attached {STS_INTEGER_NUMBER} r as u then
---				Result := same_integer_number (r.p)
-				Result := r
+			if attached {STS_INTEGER_NUMBER} pq as i then
+--				Result := same_integer_number (i)
+				Result := pq
 			else
-				Result := r
+				Result := pq
 			end
 		ensure
 --			definition: Result ≍ r
-			definition: Result = r
+			definition: Result = pq
 		end
 
 	some_set_r: STS_SET [STS_RATIONAL_NUMBER]

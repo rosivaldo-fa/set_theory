@@ -221,22 +221,18 @@ feature -- Operation
 			definition: Result.value = adjusted_value (value * i.value)
 		end
 
---	quotient alias "/" alias "÷" (i: INTEGER_NUMBER): like rational_anchor
---			-- Rational number got by dividing current integer number by `i`
---		require
---			good_divisor: divisible (i)
---		deferred
---		ensure
---			p_divisible_q: -- {RATIONAL_NUMBER} invariant: Result.q /= 0
---				Result.p.divisible (Result.q)
---			quotient: (Result.p // Result.q) ≍ (Current // i)
---			p_rem_q_divisible_q: -- {RATIONAL_NUMBER} invariant: Result.q /= 0
---				(Result.p \\ Result.q).divisible (Result.q)
---			current_rem_i_divisible_i: -- i /= 0 ⇐ divisible (i)
---				(Current \\ i).divisible (i)
---			remainder: ((Result.p \\ Result.q) / Result.q) ≍
---				((Current \\ i) / i)
---		end
+	quotient alias "/" alias "÷" (i: INTEGER_NUMBER): like rational_anchor
+			-- Rational number got by dividing current integer number by `i`
+		require
+			good_divisor: divisible (i)
+		deferred
+		ensure
+			p_divisible_q: Result.p.divisible (Result.q) -- {RATIONAL_NUMBER} invariant: Result.q /= 0
+			quotient: (Result.p // Result.q) ≍ (Current // i)
+			p_rem_q_divisible_q: (Result.p \\ Result.q).divisible (Result.q) -- {RATIONAL_NUMBER} invariant: Result.q /= 0
+			current_rem_i_divisible_i: (Current \\ i).divisible (i) -- i /= 0 ⇐ divisible (i)
+--			remainder: ((Result.p \\ Result.q) / Result.q) ≍ ((Current \\ i) / i)
+		end
 
 	integer_quotient alias "//" (i: INTEGER_NUMBER): like integer_anchor
 			-- Division of current integer number by `i`

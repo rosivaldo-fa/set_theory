@@ -91,68 +91,55 @@ feature -- Quality
 	is_invertible: BOOLEAN
 			-- Does current rational number have a multiplicative inverse (AKA reciprocal)?
 		do
---			Result := Current ≭ zero.p -- TODO: Fix it.
+--			Result := Current ≭ i.zero -- TODO: Fix it.
 			Result := p ≭ p.zero
 		ensure
 --			definition: Result = Current ≭ zero
 			definition: Result = p ≭ p.zero
 		end
 
---feature -- Comparison
+feature -- Comparison
 
---	equals alias "≍" (pq: RATIONAL_NUMBER): BOOLEAN
---			-- Do current rational number and `pq' have the same numerical value?
---		do
---				check
---						-- Class invariant: q /= 0 and pq.q /= 0
---					good_divisor: p.divisible (q)
---					pq_good_divisor: pq.p.divisible (pq.q)
---				end
---			if is_integer then
---				Result := pq.is_integer and
---				div (p, q) ≍ div (pq.p, pq.q)
---			else
---				if not pq.is_integer then
---						check
---								-- not is_integer implies rem (p, q) /= 0 and
---								-- not pq.is_integer implies
---								--	rem (pq.p, pq.q) /= 0
---							q_divisible_p_rem_q: q.divisible (rem (p, q))
---							pq_q_divisible_pq_p_rem_pq_q:
---								pq.q.divisible (rem (pq.p, pq.q))
---						end
---					Result := div (p, q) ≍ div (pq.p, pq.q) and
---						(q / rem (p, q)) ≍ (pq.q / rem (pq.p, pq.q))
---				end
---			end
---		ensure
---				-- Class invariant: q /= 0 and pq.q /= 0
---			good_divisor: p.divisible (q)
---			pq_good_divisor: pq.p.divisible (pq.q)
+	equals alias "≍" (pq: RATIONAL_NUMBER): BOOLEAN
+			-- Do current rational number and `pq' have the same numerical value?
+		do
+				check
+						-- Class invariant: q /= 0 and pq.q /= 0
+					good_divisor: p.divisible (q)
+					pq_good_divisor: pq.p.divisible (pq.q)
+				end
+			if is_integer then
+				Result := pq.is_integer and div (p, q) ≍ div (pq.p, pq.q)
+			else
+				if not pq.is_integer then
+						check
+								-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒	rem (pq.p, pq.q) /= 0)
+							q_divisible_p_rem_q: q.divisible (rem (p, q))
+							pq_q_divisible_pq_p_rem_pq_q: pq.q.divisible (rem (pq.p, pq.q))
+						end
+					Result := div (p, q) ≍ div (pq.p, pq.q) and (q / rem (p, q)) ≍ (pq.q / rem (pq.p, pq.q))
+				end
+			end
+		ensure
+				-- Class invariant: q /= 0 and pq.q /= 0
+			good_divisor: p.divisible (q)
+			pq_good_divisor: pq.p.divisible (pq.q)
 
---				-- not is_integer implies rem (p, q) /= 0 and
---				-- not pq.is_integer implies rem (pq.p, pq.q) /= 0
---			q_divisible_p_rem_q: not is_integer implies
---				q.divisible (rem (p, q))
---			pq_q_divisible_pq_p_rem_pq_q: not pq.is_integer implies
---				pq.q.divisible (rem (pq.p, pq.q))
+				-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒ rem (pq.p, pq.q) /= 0)
+			q_divisible_p_rem_q: not is_integer ⇒ q.divisible (rem (p, q))
+			pq_q_divisible_pq_p_rem_pq_q: not pq.is_integer ⇒ pq.q.divisible (rem (pq.p, pq.q))
 
---			when_integer: is_integer implies Result =
---				(pq.is_integer and div (p, q) ≍ div (pq.p, pq.q))
---			when_not_integer: not is_integer implies Result = (
---				not pq.is_integer and then (
---					div (p, q) ≍ div (pq.p, pq.q) and then
---					(q / rem (p, q)) ≍ (pq.q / rem (pq.p, pq.q))
---					)
---				)
---		end
+			when_integer: is_integer ⇒ Result = (pq.is_integer and div (p, q) ≍ div (pq.p, pq.q))
+			when_not_integer: not is_integer ⇒
+				Result = (not pq.is_integer and then (div (p, q) ≍ div (pq.p, pq.q) and then (q / rem (p, q)) ≍ (pq.q / rem (pq.p, pq.q))))
+		end
 
 feature -- Math
 
 	gcd (i, j: INTEGER_NUMBER): like integer_anchor
 			-- Greatest common divisor of `i' and `j'
 		do
-			if j ≍ zero.p then
+			if j ≍ i.zero then
 				Result := converted_integer (i.abs)
 			else
 					check
@@ -161,9 +148,9 @@ feature -- Math
 				Result := gcd (j, i \\ j)
 			end
 		ensure
-			base: j ≍ zero.p implies Result ≍ i.abs
-			good_divisor: j ≭ zero.p implies i.divisible (j)
-			induction: j ≭ zero.p implies Result ≍ gcd (j, i \\ j)
+			base: j ≍ i.zero implies Result ≍ i.abs
+			good_divisor: j ≭ i.zero implies i.divisible (j)
+			induction: j ≭ i.zero implies Result ≍ gcd (j, i \\ j)
 		end
 
 	div (i, j: INTEGER_NUMBER): like integer_anchor
@@ -223,7 +210,7 @@ feature -- Math
 				check
 					i > i.zero -- (i \\ j) /= 0
 				end
-				if j < zero.p then
+				if j < i.zero then
 					Result := converted_integer (i \\ j + j)
 				else
 					check

@@ -139,34 +139,11 @@ feature -- Operation
 			create Result.make (stored_value * i.value)
 		end
 
---	quotient alias "/" alias "÷" (i: STS_INTEGER_NUMBER): like rational_anchor
---			-- <Precursor>
---		do
---			create Result.make (Current, i)
---		ensure then
---			el_gcd: attached gcd (Current, i) as el_gcd
---			non_zero_gcd: el_gcd ≭ Zero -- `i' /= 0
---			Current_good_divisor: Current.divisible (el_gcd) -- el_gcd ≭ Zero
---			i_good_divisor: i.divisible (el_gcd) -- el_gcd ≭ Zero
---			el_p: attached (Current // el_gcd) as el_p
---			el_q: attached (i // el_gcd) as el_q
---			p_as_it_is: el_q > Zero or
---				el_p ≍ {INTEGER_NUMBER}.Min_value or
---				el_q ≍ {INTEGER_NUMBER}.Min_value implies
---				Result.p ≍ el_p
---			q_as_it_is: el_q > Zero or
---				el_p ≍ {INTEGER_NUMBER}.Min_value or
---				el_q ≍ {INTEGER_NUMBER}.Min_value implies
---				Result.q ≍ el_q
---			negated_p: el_q < Zero and
---				el_p ≭ {INTEGER_NUMBER}.Min_value and
---				el_q ≭ {INTEGER_NUMBER}.Min_value implies
---				Result.p ≍ - el_p
---			negated_q: el_q < Zero and
---				el_p ≭ {INTEGER_NUMBER}.Min_value and
---				el_q ≭ {INTEGER_NUMBER}.Min_value implies
---				Result.q ≍ - el_q
---		end
+	quotient alias "/" alias "÷" (i: STS_INTEGER_NUMBER): like rational_anchor
+			-- <Precursor>
+		do
+			create Result.make (Current, i)
+		end
 
 	integer_quotient alias "//" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
@@ -186,6 +163,25 @@ feature -- Operation
 				good_divisor: i.value /= 0
 			end
 			create Result.make (stored_value \\ i.value)
+		end
+
+feature -- Math
+
+	gcd (i, j: STS_INTEGER_NUMBER): like integer_anchor
+			-- Greatest common divisor of `i' and `j'
+		do
+			if j ≍ zero then
+				Result := i.abs.value
+			else
+					check
+						good_divisor: i.divisible (j) -- j /= 0
+					end
+				Result := gcd (j, i \\ j)
+			end
+		ensure
+			base: j ≍ zero implies Result ≍ i.abs
+			good_divisor: j ≭ zero implies i.divisible (j)
+			induction: j ≭ zero implies Result ≍ gcd (j, i \\ j)
 		end
 
 feature -- Implementation
