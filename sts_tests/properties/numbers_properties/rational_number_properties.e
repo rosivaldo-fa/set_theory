@@ -55,7 +55,19 @@ feature -- Properties (Comparison)
 		do
 			check
 				irreflexive: not (pq_1 < pq_1)
-				transitive: pq_1 < pq_2 and pq_2 < pq_3 implies pq_1 < pq_3
+				transitive: pq_1 < pq_2 and pq_2 < pq_3 ⇒ pq_1 < pq_3
+			then
+				Result := True
+			end
+		end
+
+	is_less_equal_ok (pq_1, pq_2, pq_3: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.is_less_equal?
+		do
+			check
+				reflexive: pq_1 ≤ pq_1
+				transitive: pq_1 ≤ pq_2 and pq_2 ≤ pq_3 ⇒ pq_1 ≤ pq_3
+				antisymmetric: pq_1 ≤ pq_2 and pq_2 ≤ pq_1 ⇒ pq_1 ≍ pq_2
 			then
 				Result := True
 			end

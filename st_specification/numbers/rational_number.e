@@ -188,6 +188,14 @@ feature -- Comparison
 				Result = (div (p, q) < div (pq.p, pq.q) or div (p, q) ≍ div (pq.p, pq.q) and ((pq.q / rem (pq.p, pq.q)) < (q / rem (p, q))))
 		end
 
+	is_less_equal alias "<=" alias "≤" (pq: RATIONAL_NUMBER): BOOLEAN
+			-- Is current rational number less than or equal to `pq`?
+		do
+			Result := Current < pq or Current ≍ pq
+		ensure
+			definition: Result = (Current < pq or Current ≍ pq)
+		end
+
 	is_greater alias ">" (pq: RATIONAL_NUMBER): BOOLEAN
 			-- Is current rational number greater than `pq`?
 		do
