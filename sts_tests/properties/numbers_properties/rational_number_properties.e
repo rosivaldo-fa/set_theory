@@ -73,6 +73,17 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	is_greater_ok (pq_1, pq_2, pq_3: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.is_greater?
+		do
+			check
+				irreflexive: not (pq_1 > pq_1)
+				transitive: pq_1 > pq_2 and pq_2 > pq_3 ⇒ pq_1 > pq_3
+			then
+				Result := True
+			end
+		end
+
 feature -- Properties (Math)
 
 	gcd_ok (pq: STS_RATIONAL_NUMBER; i, j, k: STS_INTEGER_NUMBER): BOOLEAN

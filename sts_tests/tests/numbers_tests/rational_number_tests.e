@@ -53,6 +53,7 @@ feature -- Test routines (All)
 			test_unequals
 			test_is_less
 			test_is_less_equal
+			test_is_greater
 			test_gcd
 			test_div
 			test_rem
@@ -377,11 +378,56 @@ feature -- Test routines (Comparison)
 			assert ("not (pq_1 ≤ pq_2)", not (pq_1 ≤ pq_2))
 			assert ("not (pq_1 ≤ pq_2) ok", is_less_equal_ok (pq_1, pq_2, some_rational_number))
 
-
 			pq_1 := rational_number_to_be_tested
 			pq_2 := some_rational_number
 			assert ("is_less_equal", pq_1 ≤ pq_2 ⇒ True)
 			assert ("is_less_equal_ok", is_less_equal_ok (pq_1, pq_2, some_rational_number))
+		end
+
+	test_is_greater
+			-- Test {STS_RATIONAL_NUMBER}.is_greater.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_greater"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			invariant
+					-- {STS_RATIONAL_NUMBER} invariant
+				good_divisor_1: pq_1.q.value /= 0
+				good_divisor_2: pq_2.q.value /= 0
+			until
+				(pq_1.p.value / pq_1.q.value) > (pq_2.p.value / pq_2.q.value)
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
+			assert ("pq_1 > pq_2", pq_1 > pq_2)
+			assert ("pq_1 > pq_2 ok", is_greater_ok (pq_1, pq_2, some_rational_number))
+
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			invariant
+					-- {STS_RATIONAL_NUMBER} invariant
+				good_divisor_1: pq_1.q.value /= 0
+				good_divisor_2: pq_2.q.value /= 0
+			until
+				(pq_1.p.value / pq_1.q.value) ≤ (pq_2.p.value / pq_2.q.value)
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
+			assert ("not (pq_1 > pq_2)", not (pq_1 > pq_2))
+			assert ("not (pq_1 > pq_2) ok", is_greater_ok (pq_1, pq_2, some_rational_number))
+
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			assert ("is_greater", pq_1 > pq_2 ⇒ True)
+			assert ("is_greater ok", is_greater_ok (pq_1, pq_2, some_rational_number))
 		end
 
 feature -- Test routines (Math)
@@ -472,4 +518,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

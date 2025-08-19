@@ -40,6 +40,7 @@ inherit
 			test_unequals,
 			test_is_less,
 			test_is_less_equal,
+			test_is_greater,
 			test_gcd,
 			test_div,
 			test_rem,
@@ -251,6 +252,16 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.is_less_equal"
 			testing: "covers/{STI_RATIONAL_NUMBER}.is_less_equal"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_is_greater
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.is_greater.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_greater"
+			testing: "covers/{STI_RATIONAL_NUMBER}.is_greater"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
