@@ -142,6 +142,60 @@ feature -- Comparison
 			definition: Result = not (Current ≍ pq)
 		end
 
+	is_less alias "<" (pq: RATIONAL_NUMBER): BOOLEAN
+			-- Is current rational number less than `pq`?
+		do
+				check
+						-- Class invariant: q /= 0 and pq.q /= 0
+					good_divisor: p.divisible (q)
+					other_good_divisor: pq.p.divisible (pq.q)
+				end
+			if is_integer then
+				if pq.is_integer then
+					Result := div (p, q) < div (pq.p, pq.q)
+				else
+					Result := div (p, q) ≤ div (pq.p, pq.q)
+				end
+			else
+				if pq.is_integer then
+					Result := div (p, q) < div (pq.p, pq.q)
+				else
+						check
+								-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒ rem (pq.p, pq.q) /= 0)
+							q_divisible_p_rem_q: q.divisible (rem (p, q))
+							other_p_divisible_other_p_rem_other_q: pq.q.divisible (rem (pq.p, pq.q))
+						end
+					Result := div (p, q) < div (pq.p, pq.q) or div (p, q) ≍ div (pq.p, pq.q) and ((pq.q / rem (pq.p, pq.q)) < (q / rem (p, q)))
+				end
+			end
+		ensure
+				-- Class invariant: q /= 0 and pq.q /= 0
+			good_divisor: p.divisible (q)
+			other_good_divisor: pq.p.divisible (pq.q)
+
+				-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒ rem (pq.p, pq.q) /= 0)
+			q_divisible_p_rem_q: not is_integer ⇒ q.divisible (rem (p, q))
+			other_q_divisible_other_p_rem_other_q: not pq.is_integer ⇒ pq.q.divisible (rem (pq.p, pq.q))
+
+			when_both_integer: is_integer and pq.is_integer ⇒ Result = (div (p, q) < div (pq.p, pq.q))
+			when_integer_by_fractional: is_integer and not pq.is_integer ⇒
+						-- ∞ = q / rem (p, q)) > pq.q / rem (pq.p, pq.q)
+					Result = div (p, q) ≤ div (pq.p, pq.q)
+			when_fractional_by_integer: not is_integer and pq.is_integer ⇒
+						-- ratio (q, rem (p, q)) < ratio (pq.q, rem (pq.p, pq.q)) = ∞
+					Result = (div (p, q) < div (pq.p, pq.q))
+			when_both_fractional: not is_integer and not pq.is_integer ⇒
+				Result = (div (p, q) < div (pq.p, pq.q) or div (p, q) ≍ div (pq.p, pq.q) and ((pq.q / rem (pq.p, pq.q)) < (q / rem (p, q))))
+		end
+
+	is_greater alias ">" (pq: RATIONAL_NUMBER): BOOLEAN
+			-- Is current rational number greater than `pq`?
+		do
+			Result := pq < Current
+		ensure
+			definition: Result = (pq < Current)
+		end
+
 feature -- Math
 
 	gcd (i, j: INTEGER_NUMBER): like integer_anchor

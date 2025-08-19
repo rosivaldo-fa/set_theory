@@ -51,6 +51,7 @@ feature -- Test routines (All)
 			test_is_invertible
 			test_equals
 			test_unequals
+			test_is_less
 			test_gcd
 			test_div
 			test_rem
@@ -287,6 +288,52 @@ feature -- Test routines (Comparison)
 			pq_2 := some_rational_number
 			assert ("unequals", pq_1 ≭ pq_2 ⇒ True)
 			assert ("unequals ok", unequals_ok (pq_1))
+		end
+
+	test_is_less
+			-- Test {STS_RATIONAL_NUMBER}.is_less.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_less"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			invariant
+					-- {STS_RATIONAL_NUMBER} invariant
+				good_divisor_1: pq_1.q.value /= 0
+				good_divisor_2: pq_2.q.value /= 0
+			until
+				(pq_1.p.value / pq_1.q.value) < (pq_2.p.value / pq_2.q.value)
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
+			assert ("pq_1 < pq_2", pq_1 < pq_2)
+			assert ("pq_1 < pq_2 ok", is_less_ok (pq_1, pq_2, some_rational_number))
+
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			invariant
+					-- {STS_RATIONAL_NUMBER} invariant
+				good_divisor_1: pq_1.q.value /= 0
+				good_divisor_2: pq_2.q.value /= 0
+			until
+				(pq_1.p.value / pq_1.q.value) ≥ (pq_2.p.value / pq_2.q.value)
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
+			assert ("not (pq_1 < pq_2)", not (pq_1 < pq_2))
+			assert ("not (pq_1 < pq_2) ok", is_less_ok (pq_1, pq_2, some_rational_number))
+
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			assert ("is_less", pq_1 < pq_2 ⇒ True)
+			assert ("is_less ok", is_less_ok (pq_1, pq_2, some_rational_number))
 		end
 
 feature -- Test routines (Math)
