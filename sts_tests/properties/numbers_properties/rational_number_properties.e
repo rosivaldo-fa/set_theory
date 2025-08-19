@@ -28,13 +28,23 @@ feature -- Properties (Membership)
 feature -- Properties (Comparison)
 
 	equals_ok (pq_1, pq_2, pq_3: STS_RATIONAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_RATIONAL_NUMBER}.equals?
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.equals?
 		do
 			check
 				reflexive: pq_1 ≍ pq_1
 				symmetric: pq_1 ≍ pq_2 ⇒ pq_2 ≍ pq_1
 				transitive: pq_1 ≍ pq_2 and pq_2 ≍ pq_3 ⇒ pq_1 ≍ pq_3
 				euclidian: pq_1 ≍ pq_3 and pq_2 ≍ pq_3 ⇒ pq_1 ≍ pq_2
+			then
+				Result := True
+			end
+		end
+
+	unequals_ok (pq: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.unequals?
+		do
+			check
+				irreflexive: not (pq ≭ pq)
 			then
 				Result := True
 			end

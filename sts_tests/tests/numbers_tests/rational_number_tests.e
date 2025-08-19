@@ -50,6 +50,7 @@ feature -- Test routines (All)
 			test_is_integer
 			test_is_invertible
 			test_equals
+			test_unequals
 			test_gcd
 			test_div
 			test_rem
@@ -254,8 +255,38 @@ feature -- Test routines (Comparison)
 
 			pq_1 := rational_number_to_be_tested
 			pq_2 := some_rational_number
-			assert ("some_rational", pq_1 ≍ pq_2 ⇒ True)
+			assert ("some_rational_number", pq_1 ≍ pq_2 ⇒ True)
 			assert ("equals_ok", equals_ok (pq_1, pq_2, some_rational_number))
+		end
+
+	test_unequals
+			-- Test {STS_RATIONAL_NUMBER}.unequals.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.unequals"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			pq_1 := rational_number_to_be_tested
+			from
+				pq_2 := some_rational_number
+			until
+				not (pq_1 ≍ pq_2)
+			loop
+				pq_2 := some_rational_number
+			end
+			assert ("pq_1 ≭ pq_2", pq_1 ≭ pq_2)
+			assert ("pq_1 ≭ pq_2 ok", unequals_ok (pq_1))
+
+			pq_1 := rational_number_to_be_tested
+			pq_2 := same_rational_number (pq_1)
+			assert ("not (pq_1 ≭ pq_2)", not (pq_1 ≭ pq_2))
+			assert ("not (pq_1 ≭ pq_2) ok", unequals_ok (pq_1))
+
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			assert ("unequals", pq_1 ≭ pq_2 ⇒ True)
+			assert ("unequals ok", unequals_ok (pq_1))
 		end
 
 feature -- Test routines (Math)

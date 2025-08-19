@@ -37,6 +37,7 @@ inherit
 			test_is_integer,
 			test_is_invertible,
 			test_equals,
+			test_unequals,
 			test_gcd,
 			test_div,
 			test_rem,
@@ -218,6 +219,16 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.equals"
 			testing: "covers/{STI_RATIONAL_NUMBER}.equals"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_unequals
+			-- <Precursor>
+			-- Test {STS_RATIONAL_NUMBER}.unequals.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.unequals"
+			testing: "covers/{STI_RATIONAL_NUMBER}.unequals"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

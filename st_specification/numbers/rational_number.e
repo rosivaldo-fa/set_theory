@@ -134,6 +134,14 @@ feature -- Comparison
 				Result = (not pq.is_integer and then (div (p, q) ≍ div (pq.p, pq.q) and then (q / rem (p, q)) ≍ (pq.q / rem (pq.p, pq.q))))
 		end
 
+	unequals alias "≭" (pq: RATIONAL_NUMBER): BOOLEAN
+			-- Does not current rational number equal `pq'?
+		do
+			Result := not (Current ≍ pq)
+		ensure
+			definition: Result = not (Current ≍ pq)
+		end
+
 feature -- Math
 
 	gcd (i, j: INTEGER_NUMBER): like integer_anchor
