@@ -27,6 +27,7 @@ inherit
 			q as denominator
 		redefine
 			default_create,
+			min,
 			converted_integer
 		end
 
@@ -101,6 +102,21 @@ feature -- Access
 			class
 			numerator: Result.p ≍ {INTEGER_NUMBER}.One
 			denominator: Result.q ≍ {INTEGER_NUMBER}.One
+		end
+
+feature -- Comparison
+
+	min alias "∧" (pq: STS_RATIONAL_NUMBER): like Rational_anchor
+			-- <Precursor>
+		do
+			if Current ≤ pq then
+				Result := Current
+			else
+				check
+					non_zero_denominator: pq.q ≭ {INTEGER_NUMBER}.zero -- {STS_RATIONAL_NUMBER} invariant
+				end
+				create Result.make (pq.p, pq.q)
+			end
 		end
 
 feature -- Factory

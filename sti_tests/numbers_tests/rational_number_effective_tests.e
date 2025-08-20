@@ -43,6 +43,7 @@ inherit
 			test_is_greater,
 			test_is_greater_equal,
 			test_three_way_comparison,
+			test_min,
 			test_gcd,
 			test_div,
 			test_rem,
@@ -294,6 +295,14 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.three_way_comparison"
 			testing: "covers/{STI_RATIONAL_NUMBER}.three_way_comparison"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_min
+			-- Test {STI_RATIONAL_NUMBER}.min.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.min"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

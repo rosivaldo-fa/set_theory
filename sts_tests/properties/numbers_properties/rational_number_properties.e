@@ -96,6 +96,18 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	min_ok (pq_1, pq_2, pq_3: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.min?
+		do
+			check
+				idempotent: (pq_1 ∧ pq_1) ≍ pq_1
+				commutative: (pq_1 ∧ pq_2) ≍ (pq_2 ∧ pq_1)
+				associative: ((pq_1 ∧ pq_2) ∧ pq_3) ≍ (pq_1 ∧ (pq_2 ∧ pq_3))
+			then
+				Result := True
+			end
+		end
+
 feature -- Properties (Math)
 
 	gcd_ok (pq: STS_RATIONAL_NUMBER; i, j, k: STS_INTEGER_NUMBER): BOOLEAN

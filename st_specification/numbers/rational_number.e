@@ -228,6 +228,19 @@ feature -- Comparison
 			greater_positive: (Result ≍ one.p) = (Current > pq)
 		end
 
+	min alias "∧" (pq: RATIONAL_NUMBER): like rational_anchor
+			-- The smaller of current rational number and `pq`
+		do
+			if Current ≤ pq then
+				Result := Current
+			else
+				Result := pq
+			end
+		ensure
+			current_if_not_greater: Current ≤ pq ⇒ Result ≍ Current
+			other_if_greater: pq < Current ⇒ Result ≍ pq
+		end
+
 feature -- Math
 
 	gcd (i, j: INTEGER_NUMBER): like integer_anchor
