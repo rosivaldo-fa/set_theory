@@ -31,6 +31,7 @@ inherit
 			test_is_not_in,
 			test_zero,
 			test_one,
+			test_min_value,
 			test_min_value_exists,
 			test_max_value_exists,
 			test_equals,
@@ -151,7 +152,7 @@ feature -- Test routines (Membership)
 feature -- Test routines (Access)
 
 	test_zero
-			-- <Precursor>
+			-- Test {STI_INTEGER_NUMBER}.zero.
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.zero"
 		do
@@ -159,9 +160,17 @@ feature -- Test routines (Access)
 		end
 
 	test_one
-			-- <Precursor>
+			-- Test {STI_INTEGER_NUMBER}.one.
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.one"
+		do
+			Precursor {STST_INTEGER_NUMBER_TESTS}
+		end
+
+	test_min_value
+			-- Test {STI_INTEGER_NUMBER}.min_value.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.min_value"
 		do
 			Precursor {STST_INTEGER_NUMBER_TESTS}
 		end

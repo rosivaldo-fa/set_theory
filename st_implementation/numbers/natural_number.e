@@ -85,6 +85,28 @@ feature -- Access
 			class
 		end
 
+	Min_value: INTEGER_NUMBER
+			-- Minimum value representable by this implementation of integer numbers
+		require else
+			Min_value_exists: True
+		once
+			Result := Native_min_value.as_integer_32
+		ensure then
+			class
+			definition: Result ≍ (- Max_value - One)
+		end
+
+	Max_value: INTEGER_NUMBER
+			-- Maximum value representable by this implementation of integer numbers
+		require else
+			Max_value_exists: True
+		once
+			Result := Native_max_value.as_integer_32
+		ensure then
+			class
+			definition: Result.value = Native_max_value
+		end
+
 feature -- Quality
 
 	min_value_exists: BOOLEAN = True
@@ -291,8 +313,14 @@ feature {NONE} -- Implementation
 	stored_value: NATURAL_8;
 		-- Bit pattern of the `value' of current natural number
 
-	stored_value_mask: like stored_value = 0b1111111
+	stored_value_mask: like stored_value = 0b0111_1111
 			-- Binary mask for the (stored) value of a natural number
+
+	native_min_value: INTEGER_8 = - 128
+			-- Native minimum value representable by this implementation of integer numbers
+
+	native_max_value: INTEGER_8 = 127
+			-- Native maximum value representable by this implementation of integer numbers
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

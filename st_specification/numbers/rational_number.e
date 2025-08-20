@@ -216,16 +216,16 @@ feature -- Comparison
 			-- If current rational number equal to `pq`, 0; if smaller, -1; if greater, 1.
 		do
 			if Current < pq then
-				Result := - one.p
+				Result := - p.one
 			elseif Current ≍ pq then
-				Result := zero.p
+				Result := p.zero
 			else
-				Result := one.p
+				Result := p.one
 			end
 		ensure
-			equal_zero: (Result ≍ zero.p) = (Current ≍ pq)
-			smaller_negative: (Result ≍ - one.p) = (Current < pq)
-			greater_positive: (Result ≍ one.p) = (Current > pq)
+			equal_zero: (Result ≍ p.zero) = (Current ≍ pq)
+			smaller_negative: (Result ≍ - p.one) = (Current < pq)
+			greater_positive: (Result ≍ p.one) = (Current > pq)
 		end
 
 	min alias "∧" (pq: RATIONAL_NUMBER): like rational_anchor
@@ -355,6 +355,33 @@ feature -- Factory
 			Result := i
 		ensure
 			definition: Result.value = integer_anchor.adjusted_value (i.value)
+		end
+
+feature -- Predicate
+
+	integer_product_overflows (i, j: INTEGER_NUMBER): BOOLEAN
+			-- Does the product `i' ⋅ `j' overflow?
+		do
+			Result := i < i.zero and j < i.zero and i.max_value_exists and then
+				i < i.max_value // j or
+				i < i.zero and j > i.zero and i.min_value_exists and then
+				i < i.min_value // j or
+				i > i.zero and j < - i.one and i.min_value_exists and then
+				i > i.min_value // j or
+				i > i.zero and j > i.zero and i.max_value_exists and then
+				i > i.max_value // j
+		ensure
+			definition: Result = (
+				i < i.zero and j < i.zero and i.max_value_exists and then
+				i < i.max_value // j or
+				i < i.zero and j > i.zero and i.min_value_exists and then
+				i < i.min_value // j or
+				i > i.zero and j < - i.one and i.min_value_exists and then 	-- TODO: It assumes a two's-complement implementation,
+																			-- where i.min_value // j overflows.
+				i > i.min_value // j or
+				i > i.zero and j > i.zero and i.max_value_exists and then
+				i > i.max_value // j
+				)
 		end
 
 feature -- Anchor

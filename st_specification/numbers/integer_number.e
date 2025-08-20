@@ -57,6 +57,20 @@ feature -- Access
 			one: Result.value = 1
 		end
 
+	min_value: like integer_anchor
+			-- Minimum value representable by an implementation of integer numbers
+		require
+			min_value_exists: min_value_exists
+		deferred
+		end
+
+	max_value: like integer_anchor
+			-- Maximum value representable by an implementation of integer numbers
+		require
+			max_value_exists: max_value_exists
+		deferred
+		end
+
 feature -- Quality
 
 	min_value_exists: BOOLEAN

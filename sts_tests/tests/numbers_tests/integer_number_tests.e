@@ -35,6 +35,7 @@ feature -- Test routines (All)
 			test_is_not_in
 			test_zero
 			test_one
+			test_min_value
 			test_equals
 			test_unequals
 			test_is_less
@@ -136,25 +137,27 @@ feature -- Test routines (Quality)
 feature -- Test routines (Access)
 
 	test_zero
-			-- Test {STI_INTEGER_NUMBER}.zero.
+			-- Test {STS_INTEGER_NUMBER}.zero.
 		note
-			testing: "covers/{STI_INTEGER_NUMBER}.zero"
-		local
-			i: like integer_number_to_be_tested
+			testing: "covers/{STS_INTEGER_NUMBER}.zero"
 		do
-			i := integer_number_to_be_tested
-			assert ("zero", attached i.Zero)
+			assert ("zero", attached integer_number_to_be_tested.Zero)
 		end
 
 	test_one
-			-- Test {STI_INTEGER_NUMBER}.one.
+			-- Test {STS_INTEGER_NUMBER}.one.
 		note
-			testing: "covers/{STI_INTEGER_NUMBER}.one"
-		local
-			i: like integer_number_to_be_tested
+			testing: "covers/{STS_INTEGER_NUMBER}.one"
 		do
-			i := integer_number_to_be_tested
-			assert ("one", attached i.One)
+			assert ("one", attached integer_number_to_be_tested.One)
+		end
+
+	test_min_value
+			-- Test {STS_INTEGER_NUMBER}.min_value.
+		note
+			testing: "covers/{STS_INTEGER_NUMBER}.min_value"
+		do
+			assert ("min_value", attached integer_number_to_be_tested.Min_value)
 		end
 
 feature -- Test routines (Comparison)
