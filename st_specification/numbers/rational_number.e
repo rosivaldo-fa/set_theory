@@ -204,6 +204,14 @@ feature -- Comparison
 			definition: Result = (pq < Current)
 		end
 
+	is_greater_equal alias ">=" alias "≥" (pq: RATIONAL_NUMBER): BOOLEAN
+			-- Is current rational number greater than or equal to `pq'?
+		do
+			Result := pq ≤ Current
+ 		ensure
+			definition: Result = (pq ≤ Current)
+		end
+
 feature -- Math
 
 	gcd (i, j: INTEGER_NUMBER): like integer_anchor
