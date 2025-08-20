@@ -42,6 +42,7 @@ inherit
 			test_is_less_equal,
 			test_is_greater,
 			test_is_greater_equal,
+			test_three_way_comparison,
 			test_gcd,
 			test_div,
 			test_rem,
@@ -68,6 +69,16 @@ feature -- Access
 		ensure then
 			class
 			numerator: Result.p ≍ {STI_INTEGER_NUMBER}.Zero
+			denominator: Result.q ≍ {STI_INTEGER_NUMBER}.One
+		end
+
+	one: STI_RATIONAL_NUMBER
+			-- <Precursor>
+		once
+			Result := {STI_RATIONAL_NUMBER}.Zero
+		ensure then
+			class
+			numerator: Result.p ≍ {STI_INTEGER_NUMBER}.One
 			denominator: Result.q ≍ {STI_INTEGER_NUMBER}.One
 		end
 
@@ -273,6 +284,16 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.is_greater_equal"
 			testing: "covers/{STI_RATIONAL_NUMBER}.is_greater_equal"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_three_way_comparison
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.three_way_comparison.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.three_way_comparison"
+			testing: "covers/{STI_RATIONAL_NUMBER}.three_way_comparison"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

@@ -212,6 +212,22 @@ feature -- Comparison
 			definition: Result = (pq ≤ Current)
 		end
 
+	three_way_comparison alias "⋚" (pq: RATIONAL_NUMBER): like integer_anchor
+			-- If current rational number equal to `pq`, 0; if smaller, -1; if greater, 1.
+		do
+			if Current < pq then
+				Result := - one.p
+			elseif Current ≍ pq then
+				Result := zero.p
+			else
+				Result := one.p
+			end
+		ensure
+			equal_zero: (Result ≍ zero.p) = (Current ≍ pq)
+			smaller_negative: (Result ≍ - one.p) = (Current < pq)
+			greater_positive: (Result ≍ one.p) = (Current > pq)
+		end
+
 feature -- Math
 
 	gcd (i, j: INTEGER_NUMBER): like integer_anchor

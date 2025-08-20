@@ -31,6 +31,13 @@ feature -- Access
 			numerator: Result.p ≍ Result.p.zero
 		end
 
+	one: like rational_anchor
+			-- The rational number 1/1
+		deferred
+		ensure
+			definition: Result.p ≍ Result.q
+		end
+
 feature -- Test routines (All)
 
 	test_all
@@ -55,6 +62,7 @@ feature -- Test routines (All)
 			test_is_less_equal
 			test_is_greater
 			test_is_greater_equal
+			test_three_way_comparison
 			test_gcd
 			test_div
 			test_rem
@@ -475,6 +483,45 @@ feature -- Test routines (Comparison)
 			pq_2 := some_rational_number
 			assert ("is_greater_equal", pq_1 ≥ pq_2 ⇒ True)
 			assert ("is_greater_equal_ok", is_greater_equal_ok (pq_1, pq_2, some_rational_number))
+		end
+
+	test_three_way_comparison
+			-- Test {STS_RATIONAL_NUMBER}.three_way_comparison.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.three_way_comparison"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			until
+				pq_1 < pq_2
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
+			assert ("negative", pq_1 ⋚ pq_2 ≍ - pq_1.p.one)
+
+			pq_1 := rational_number_to_be_tested
+			assert ("same_entity", pq_1 ⋚ pq_1 ≍ pq_1.p.zero)
+			assert ("same_rational_number", pq_1 ⋚ same_rational_number (pq_1) ≍ pq_1.p.zero)
+
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			until
+				pq_1 > pq_2
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
+			assert ("positive", pq_1 ⋚ pq_2 ≍ pq_1.p.one)
+
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			assert ("three_way_comparison", attached (pq_1 ⋚ pq_2))
 		end
 
 feature -- Test routines (Math)
