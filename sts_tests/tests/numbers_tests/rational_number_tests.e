@@ -64,6 +64,7 @@ feature -- Test routines (All)
 			test_is_greater_equal
 			test_three_way_comparison
 			test_min
+			test_max
 			test_gcd
 			test_div
 			test_rem
@@ -561,6 +562,44 @@ feature -- Test routines (Comparison)
 			pq_2 := some_rational_number
 			assert ("min", attached (pq_1 ∧ pq_2))
 			assert ("min ok", min_ok (pq_1, pq_2, some_rational_number))
+		end
+
+	test_max
+			-- Test {STS_RATIONAL_NUMBER}.max.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.max"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			until
+				pq_1 ≥ pq_2
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
+			assert ("pq_1", (pq_1 ∨ pq_2) ≍ pq_1)
+			assert ("pq_1 ok", max_ok (pq_1, pq_2, some_rational_number))
+
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			until
+				pq_1 ≤ pq_2
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
+			assert ("pq_2", (pq_1 ∨ pq_2) ≍ pq_2)
+			assert ("pq_2 ok", max_ok (pq_1, pq_2, some_rational_number))
+
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			assert ("max", attached (pq_1 ∨ pq_2))
+			assert ("max ok", max_ok (pq_1, pq_2, some_rational_number))
 		end
 
 feature -- Test routines (Math)

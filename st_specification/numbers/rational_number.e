@@ -241,6 +241,19 @@ feature -- Comparison
 			other_if_greater: pq < Current ⇒ Result ≍ pq
 		end
 
+	max alias "∨" (pq: RATIONAL_NUMBER): like rational_anchor
+			-- The greater of current rational number and `pq'
+		do
+			if Current ≥ pq then
+				Result := Current
+			else
+				Result := pq
+			end
+		ensure
+			current_if_not_smaller: Current ≥ pq ⇒ Result ≍ Current
+			other_if_smaller: Current < pq ⇒ Result ≍ pq
+		end
+
 feature -- Math
 
 	gcd (i, j: INTEGER_NUMBER): like integer_anchor

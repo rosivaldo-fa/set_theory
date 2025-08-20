@@ -28,6 +28,7 @@ inherit
 		redefine
 			default_create,
 			min,
+			max,
 			converted_integer
 		end
 
@@ -110,6 +111,19 @@ feature -- Comparison
 			-- <Precursor>
 		do
 			if Current ≤ pq then
+				Result := Current
+			else
+				check
+					non_zero_denominator: pq.q ≭ {INTEGER_NUMBER}.zero -- {STS_RATIONAL_NUMBER} invariant
+				end
+				create Result.make (pq.p, pq.q)
+			end
+		end
+
+	max alias "∨" (pq: STS_RATIONAL_NUMBER): like Rational_anchor
+			-- <Precursor>
+		do
+			if Current ≥ pq then
 				Result := Current
 			else
 				check
