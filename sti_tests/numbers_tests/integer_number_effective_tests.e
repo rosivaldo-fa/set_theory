@@ -31,6 +31,7 @@ inherit
 			test_is_not_in,
 			test_zero,
 			test_one,
+			test_min_value_exists,
 			test_equals,
 			test_unequals,
 			test_is_less,
@@ -160,6 +161,16 @@ feature -- Test routines (Access)
 			-- <Precursor>
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.one"
+		do
+			Precursor {STST_INTEGER_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Quality)
+
+	test_min_value_exists
+			-- Test {STI_INTEGER_NUMBER}.min_value_exists.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.min_value_exists"
 		do
 			Precursor {STST_INTEGER_NUMBER_TESTS}
 		end

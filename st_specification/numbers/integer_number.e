@@ -57,6 +57,13 @@ feature -- Access
 			one: Result.value = 1
 		end
 
+feature -- Quality
+
+	min_value_exists: BOOLEAN
+			-- Is there a minimum value for current representation of integer numbers?
+		deferred
+		end
+
 feature -- Comparison
 
 	equals alias "≍" (i: INTEGER_NUMBER): BOOLEAN

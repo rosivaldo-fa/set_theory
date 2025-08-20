@@ -76,6 +76,11 @@ feature -- Access
 			class
 		end
 
+feature -- Quality
+
+	min_value_exists: BOOLEAN = True
+			-- <Precursor>
+
 feature -- Output
 
 	out: STRING

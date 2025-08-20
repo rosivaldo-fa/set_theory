@@ -115,6 +115,16 @@ feature -- Test routines (Membership)
 			assert ("is_not_in_ok", is_not_in_ok (i, s))
 		end
 
+feature -- Test routines (Quality)
+
+	test_min_value_exists
+			-- Test {STS_INTEGER_NUMBER}.min_value_exists.
+		note
+			testing: "covers/{STS_INTEGER_NUMBER}.min_value_exists"
+		do
+			assert ("min_value_exists", integer_number_to_be_tested.min_value_exists ⇒ True)
+		end
+
 feature -- Test routines (Access)
 
 	test_zero
