@@ -64,6 +64,11 @@ feature -- Quality
 		deferred
 		end
 
+	max_value_exists: BOOLEAN
+			-- Is there a maximum value for current representation of integer numbers?
+		deferred
+		end
+
 feature -- Comparison
 
 	equals alias "≍" (i: INTEGER_NUMBER): BOOLEAN

@@ -125,6 +125,14 @@ feature -- Test routines (Quality)
 			assert ("min_value_exists", integer_number_to_be_tested.min_value_exists ⇒ True)
 		end
 
+	test_max_value_exists
+			-- Test {STS_INTEGER_NUMBER}.max_value_exists.
+		note
+			testing: "covers/{STS_INTEGER_NUMBER}.max_value_exists"
+		do
+			assert ("max_value_exists", integer_number_to_be_tested.max_value_exists ⇒ True)
+		end
+
 feature -- Test routines (Access)
 
 	test_zero
