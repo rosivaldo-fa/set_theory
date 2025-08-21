@@ -362,25 +362,18 @@ feature -- Predicate
 	integer_product_overflows (i, j: INTEGER_NUMBER): BOOLEAN
 			-- Does the product `i' ⋅ `j' overflow?
 		do
-			Result := i < i.zero and j < i.zero and i.max_value_exists and then
-				i < i.max_value // j or
-				i < i.zero and j > i.zero and i.min_value_exists and then
-				i < i.min_value // j or
-				i > i.zero and j < - i.one and i.min_value_exists and then
-				i > i.min_value // j or
-				i > i.zero and j > i.zero and i.max_value_exists and then
-				i > i.max_value // j
+			Result := i < i.zero and j < i.zero and i.max_value_exists and then i < i.max_value // j or
+				i < i.zero and j > i.zero and i.min_value_exists and then i < i.min_value // j or
+				i > i.zero and j < - i.one and i.min_value_exists and then i > i.min_value // j or
+				i > i.zero and j > i.zero and i.max_value_exists and then i > i.max_value // j
 		ensure
 			definition: Result = (
-				i < i.zero and j < i.zero and i.max_value_exists and then
-				i < i.max_value // j or
-				i < i.zero and j > i.zero and i.min_value_exists and then
-				i < i.min_value // j or
+				i < i.zero and j < i.zero and i.max_value_exists and then i < i.max_value // j or
+				i < i.zero and j > i.zero and i.min_value_exists and then i < i.min_value // j or
 				i > i.zero and j < - i.one and i.min_value_exists and then 	-- TODO: It assumes a two's-complement implementation,
 																			-- where i.min_value // j overflows.
 				i > i.min_value // j or
-				i > i.zero and j > i.zero and i.max_value_exists and then
-				i > i.max_value // j
+				i > i.zero and j > i.zero and i.max_value_exists and then  i > i.max_value // j
 				)
 		end
 

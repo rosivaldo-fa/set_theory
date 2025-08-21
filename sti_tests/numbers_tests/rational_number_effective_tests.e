@@ -48,7 +48,8 @@ inherit
 			test_gcd,
 			test_div,
 			test_rem,
-			test_converted_integer
+			test_converted_integer,
+			test_integer_product_overflows
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -354,6 +355,16 @@ feature -- Test routines (Factory)
 			-- Test {STI_RATIONAL_NUMBER}.converted_integer.
 		note
 			testing: "covers/{STI_RATIONAL_NUMBER}.converted_integer"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Predicate)
+
+	test_integer_product_overflows
+			-- Test {STI_RATIONAL_NUMBER}.integer_product_overflows.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.integer_product_overflows"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

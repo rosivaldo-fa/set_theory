@@ -147,6 +147,18 @@ feature -- Properties (Math)
 			Result := True
 		end
 
+feature -- Properties (Predicate)
+
+	integer_product_overflows_ok (pq: STS_RATIONAL_NUMBER; i, j: STS_INTEGER_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.integer_product_overflows?
+		do
+			check
+				unexpected_zero_product: i ≭ i.zero and j ≭ i.zero and i ⋅ j ≍ i.zero ⇒ pq.integer_product_overflows (i, j)
+			then
+				Result := True
+			end
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

@@ -29,7 +29,8 @@ inherit
 			default_create,
 			min,
 			max,
-			converted_integer
+			converted_integer,
+			integer_product_overflows
 		end
 
 create
@@ -143,6 +144,19 @@ feature -- Factory
 			else
 				Result := i.value
 			end
+		ensure then
+			class
+		end
+
+feature -- Predicate
+
+	integer_product_overflows (i, j: STS_INTEGER_NUMBER): BOOLEAN
+			-- <Precursor>
+		do
+			Result := i < i.zero and j < i.zero and i.max_value_exists and then i < i.max_value // j or
+				i < i.zero and j > i.zero and i.min_value_exists and then i < i.min_value // j or
+				i > i.zero and j < - i.one and i.min_value_exists and then i > i.min_value // j or
+				i > i.zero and j > i.zero and i.max_value_exists and then i > i.max_value // j
 		ensure then
 			class
 		end

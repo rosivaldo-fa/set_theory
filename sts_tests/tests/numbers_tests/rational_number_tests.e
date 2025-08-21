@@ -69,6 +69,7 @@ feature -- Test routines (All)
 			test_div
 			test_rem
 			test_converted_integer
+			test_integer_product_overflows
 		end
 
 feature -- Test routines (Primitive)
@@ -666,6 +667,74 @@ feature -- Test routines (Factory)
 			testing: "covers/{STS_RATIONAL_NUMBER}.converted_integer"
 		do
 			assert ("converted_integer", attached rational_number_to_be_tested.converted_integer (some_integer_number))
+		end
+
+feature -- Test routines (Predicate)
+
+	test_integer_product_overflows
+			-- Test {STS_RATIONAL_NUMBER}.integer_product_overflows.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.integer_product_overflows"
+		local
+			pq: like rational_number_to_be_tested
+			i, j, two: like some_integer_number
+		do
+			two := some_integer_number
+			two := two.one + two.one
+			if next_random_item \\ 2 = 0 then
+				j := - some_integer_number.abs
+				j := - j ∧ - j.one
+				if next_random_item \\ 2 = 0 then
+					i := - some_integer_number.abs
+					i := i ∧ - i.one
+					i := i ∧ (i.max_value // j - i.one)
+				else
+					j := j ∧ - Two
+					i := (some_integer_number.abs ∨ j.one) ∨ (j.min_value // j + j.one)
+				end
+			else
+				j := some_integer_number.abs
+				j := j ∨ j.one
+				if next_random_item \\ 2 = 0 then
+					i := (- some_integer_number.abs ∧ - j.one) ∧ (j.min_value // j - j.one)
+				else
+					i := (some_integer_number.abs ∨ j.one) ∨ (j.max_value // j + j.one)
+				end
+			end
+			pq := rational_number_to_be_tested
+			assert ("product_overflows (i, j)", pq.integer_product_overflows (i, j))
+			assert ("product_overflows (i, j) ok", integer_product_overflows_ok (pq, i, j))
+
+			if next_random_item \\ 2 = 0 then
+				j := - some_integer_number.abs
+				i := some_integer_number
+				if j < j.zero then
+					if next_random_item \\ 2 = 0 then
+						i := - i.abs ∨ (i.max_value // j)
+					else
+						i := i.abs ∧ (i.min_value // j)
+					end
+				end
+			else
+				j := some_integer_number.abs
+				i := some_integer_number
+				if j > j.zero then
+					if next_random_item \\ 2 = 0 then
+						i := - i.abs ∨ (i.min_value // j)
+					else
+						i := i.abs ∧ (i.max_value // j)
+					end
+				end
+			end
+			pq := rational_number_to_be_tested
+			assert ("not product_overflows (i, j)", not pq.integer_product_overflows (i, j))
+			assert ("not product_overflows (i, j) ok", integer_product_overflows_ok (pq, i, j))
+
+			i := some_integer_number
+			j := some_integer_number
+			pq := rational_number_to_be_tested
+			assert ("product_overflows", pq.integer_product_overflows (i, j) ⇒ True)
+			assert ("integer_product_overflows_ok", integer_product_overflows_ok (pq, i, j))
 		end
 
 feature {NONE} -- Factory (element to be tested)
