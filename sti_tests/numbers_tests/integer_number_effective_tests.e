@@ -32,6 +32,7 @@ inherit
 			test_zero,
 			test_one,
 			test_min_value,
+			test_max_value,
 			test_min_value_exists,
 			test_max_value_exists,
 			test_equals,
@@ -171,6 +172,14 @@ feature -- Test routines (Access)
 			-- Test {STI_INTEGER_NUMBER}.min_value.
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.min_value"
+		do
+			Precursor {STST_INTEGER_NUMBER_TESTS}
+		end
+
+	test_max_value
+			-- Test {STI_INTEGER_NUMBER}.max_value.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.max_value"
 		do
 			Precursor {STST_INTEGER_NUMBER_TESTS}
 		end

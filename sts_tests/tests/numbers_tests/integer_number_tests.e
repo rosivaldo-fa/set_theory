@@ -36,6 +36,7 @@ feature -- Test routines (All)
 			test_zero
 			test_one
 			test_min_value
+			test_max_value
 			test_equals
 			test_unequals
 			test_is_less
@@ -157,7 +158,15 @@ feature -- Test routines (Access)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.min_value"
 		do
-			assert ("min_value", attached integer_number_to_be_tested.Min_value)
+			assert ("min_value", attached integer_number_to_be_tested.min_value)
+		end
+
+	test_max_value
+			-- Test {STS_INTEGER_NUMBER}.max_value.
+		note
+			testing: "covers/{STS_INTEGER_NUMBER}.max_value"
+		do
+			assert ("max_value", attached integer_number_to_be_tested.max_value)
 		end
 
 feature -- Test routines (Comparison)
