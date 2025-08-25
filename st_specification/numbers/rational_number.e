@@ -278,8 +278,7 @@ feature -- Relationship
 			gcd_2: attached {INTEGER_NUMBER} gcd (p, pq.q) as gcd_2
 			good_divisor_1: q.divisible (gcd_1) -- gcd_1 /= 0 ⇐ q /= 0
 			good_divisor_2: pq.q.divisible (gcd_2) -- gcd_2 /= 0 ⇐ pq.q /= 0
-			good_factors: -- Otherwise we might get a denominator unexpectedly equal to zero.
-				not integer_product_overflows (q // gcd_1, pq.q // gcd_2) ⇒ Result
+			good_factors: not integer_product_overflows (q // gcd_1, pq.q // gcd_2) ⇒ Result -- Otherwise we might get a denominator unexpectedly equal to zero.
 		end
 
 feature -- Math

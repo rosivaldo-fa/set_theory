@@ -33,6 +33,9 @@
 			<cluster name="sets_properties" location=".\properties\sets_properties\" recursive="true">
 				<description>Properties of sets and other core concepts of set theory, as implemented by st_implementation</description>
 			</cluster>
+			<cluster name="numbers_properties" location=".\properties\numbers_properties\" recursive="true">
+				<description>Properties of well known numeric sets and their respecitve numeric elements, as implemented by st_implementation</description>
+			</cluster>
 		</cluster>
 		<tests name="tests" location=".\tests\">
 			<description>Repository of tests for classes of set theory, as implemented by st_implementation</description>

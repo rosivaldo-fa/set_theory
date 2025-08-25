@@ -139,7 +139,7 @@ feature -- Properties (Relationship)
 				gcd_2: attached gcd (pq_1.p, pq_2.q) as gcd_2
 				good_divisor_1: pq_1.q.divisible (gcd_1) -- gcd_1 /= 0 ⇐ pq_1.q /= 0
 				good_divisor_2: pq_2.q.divisible (gcd_2) -- gcd_2 /= 0 ⇐ pq_2.q /= 0
-				unexpected_zero_product: -- Which is possible only upon an overflow.						
+				unexpected_zero_product: -- Which is possible only upon an overflow.
 					(pq_1.q // gcd_1) ⋅ (pq_2.q // gcd_2) ≍ zero.p ⇒ not pq_1.multipliable (pq_2)
 			then
 				Result := True

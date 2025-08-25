@@ -61,6 +61,7 @@ feature -- Test routines (All)
 			test_is_greater
 			test_is_greater_equal
 			test_three_way_comparison
+			test_multipliable
 			test_min
 			test_max
 			test_gcd
@@ -603,89 +604,29 @@ feature -- Test routines (Comparison)
 
 feature -- Test routines (Relationship)
 
---	test_multipliable
---			-- Test {STS_RATIONAL_NUMBER}.multipliable.
---		note
---			testing: "covers/{STS_RATIONAL_NUMBER}.multipliable"
---		local
---			pq_1: like rational_number_to_be_tested
---			pq_2: like some_rational_number
---			p1, p2, q1, q2, j: like some_integer_number
---		do
---			k := next_random_item.as_natural_32 \\ divisors.n + 1
---				check
---						-- As assigned above.		
---					positive: 0 < k
---					small_enough: k ≤ divisors.n
---				end
---			j := divisors [k]
---				check
---					good_divisor_j: -- j ∈ Z.Without_zero
---						{STS_INTEGER_NUMBER}.Min_value.divisible (j)
---				end
---			q1 := {STS_INTEGER_NUMBER}.Min_value // j
---				check
---					good_divisor_q1: -- {STS_INTEGER_NUMBER}.Min_value // j /= 0
---						{STS_INTEGER_NUMBER}.Min_value.divisible (q1)
---				end
---			from
---				q2 := Two × ({STS_INTEGER_NUMBER}.Min_value // q1) × some_integer_number
---			until
---				q2 ≭ Zero -- Which is possible upon an overflow.
---			loop
---				q2 := Two × ({STS_INTEGER_NUMBER}.Min_value // q1) × some_integer_number
---			end
---			p2 := Two × some_integer_number + One.p
---			p1 := Two × some_integer_number + One.p
---				check
---					good_divisor_1: p1.divisible (q1) -- good_divisor_q1
---				end
---			pq_1 := p1 / q1
---				check
---					good_divisor_1: p2.divisible (q2) -- q2 ≭ Zero
---				end
---			pq_2 := p2 / q2
---			assert (
---				"not pq_1.multipliable (pq_2)",
---				not pq_1.multipliable (pq_2)
---				)
---			assert (
---				"not pq_1.multipliable (pq_2) ok",
---				properties.expanded_multipliable_ok (pq_1, pq_2)
---				)
-
---				-- TODO: Take a guaranteed valid product.
-
---			from
---				pqs_1 := Q
---			until
---				pqs_1.is_empty
---			loop
---				from
---					pq_1 := pqs_1.any
---					pqs_2 := Q
---				until
---					pqs_2.is_empty
---				loop
---					pq_2 := pqs_2.any
---					assert (
---						"multipliable",
---						pq_1.multipliable (pq_2) implies True
---						)
---					assert (
---						"multipliable_ok",
---						properties.expanded_multipliable_ok (pq_1, pq_2)
---						)
---					pqs_2 := pqs_2.others
---				variant
---					pqs_2_cardinality:
---						{like new_set_a}.natural_as_integer (# pqs_2)
---				end
---				pqs_1 := pqs_1.others
---			variant
---				pqs_1_cardinality: {like new_set_a}.natural_as_integer (# pqs_1)
---			end
---		end
+	test_multipliable
+			-- Test {STS_RATIONAL_NUMBER}.multipliable.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.multipliable"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			check
+				good_divisor_1: pq_1.q.divisible (gcd (pq_2.p, pq_1.q)) -- pq_1.q /= 0
+				good_divisor_2: pq_2.q.divisible (gcd (pq_1.p, pq_2.q)) -- pq_2.q /= 0
+			end
+			assert (
+				"when does not overflow",
+				not pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q)) ⇒ pq_1.multipliable (pq_2)
+				)
+			assert (
+				"when is not multipliable",
+				not pq_1.multipliable (pq_2) ⇒ pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q))
+				)
+		end
 
 feature -- Test routines (Math)
 

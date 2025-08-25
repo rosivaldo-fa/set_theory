@@ -17,6 +17,7 @@ inherit
 			some_immediate_rational_number as some_expanded_rational_number
 		undefine
 			default_create,
+			multipliable_ok,
 			test_element_is_in,
 			test_element_is_not_in,
 			same_natural_number,
@@ -43,6 +44,7 @@ inherit
 			test_is_greater,
 			test_is_greater_equal,
 			test_three_way_comparison,
+			test_multipliable,
 			test_min,
 			test_max,
 			test_gcd,
@@ -50,6 +52,11 @@ inherit
 			test_rem,
 			test_converted_integer,
 			test_integer_product_overflows
+		end
+
+	RATIONAL_NUMBER_PROPERTIES
+		undefine
+			default_create
 		end
 
 	ELEMENT_EFFECTIVE_TESTS
@@ -65,15 +72,6 @@ inherit
 		end
 
 feature -- Access
-
-	zero: STI_RATIONAL_NUMBER
-			-- <Precursor>
-		once
-		ensure then
-			class
-			numerator: Result.p ≍ {STI_INTEGER_NUMBER}.Zero
-			denominator: Result.q ≍ {STI_INTEGER_NUMBER}.One
-		end
 
 	one: STI_RATIONAL_NUMBER
 			-- <Precursor>
@@ -317,6 +315,16 @@ feature -- Test routines (Comparison)
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Relationship)
+
+	test_multipliable
+			-- Test {STI_RATIONAL_NUMBER}.multipliable.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.multipliable"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
 feature -- Test routines (Math)
 
 	test_gcd
@@ -367,15 +375,6 @@ feature -- Test routines (Predicate)
 			testing: "covers/{STI_RATIONAL_NUMBER}.integer_product_overflows"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
-		end
-
-feature -- Anchor
-
-	rational_anchor: STI_RATIONAL_NUMBER
-			-- <Precursor>
-		once
-		ensure then
-			class
 		end
 
 note
