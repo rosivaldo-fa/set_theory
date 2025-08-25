@@ -29,6 +29,7 @@ inherit
 			default_create,
 			min,
 			max,
+			multipliable,
 			converted_integer,
 			integer_product_overflows
 		end
@@ -132,6 +133,29 @@ feature -- Comparison
 				end
 				create Result.make (pq.p, pq.q)
 			end
+		end
+
+feature -- Relationship
+
+	multipliable (pq: STS_RATIONAL_NUMBER): BOOLEAN
+			-- <Precursor>
+			--| NOTICE: This refinement assumes that a product overflow that occasionly unequals zero will *consistently* produce a non-zero result.
+		local
+			l_gcd_1, l_gcd_2: like gcd
+		do
+			l_gcd_1 := gcd (pq.p, q)
+			l_gcd_2 := gcd (p, pq.q)
+				check
+					good_divisor_1: q.divisible (l_gcd_1) -- l_gcd_1 /= 0 ⇐ q /= 0
+					good_divisor_2: pq.q.divisible (l_gcd_2) -- l_gcd_2 /= 0 ⇐ pq.q /= 0
+				end
+			Result := (q // l_gcd_1) ⋅ (pq.q // l_gcd_2) ≭ Zero.p
+		ensure then
+			gcd_1: attached gcd (pq.p, q) as gcd_1
+			gcd_2: attached gcd (p, pq.q) as gcd_2
+			good_divisor_1: q.divisible (gcd_1)
+			good_divisor_2: pq.q.divisible (gcd_2)
+			definition: Result = (q // gcd_1) ⋅ (pq.q // gcd_2) ≭ Zero.p
 		end
 
 feature -- Factory

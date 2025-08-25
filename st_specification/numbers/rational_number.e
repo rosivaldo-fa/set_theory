@@ -103,20 +103,20 @@ feature -- Comparison
 	equals alias "≍" (pq: RATIONAL_NUMBER): BOOLEAN
 			-- Do current rational number and `pq' have the same numerical value?
 		do
-				check
-						-- Class invariant: q /= 0 and pq.q /= 0
-					good_divisor: p.divisible (q)
-					pq_good_divisor: pq.p.divisible (pq.q)
-				end
+			check
+					-- Class invariant: q /= 0 and pq.q /= 0
+				good_divisor: p.divisible (q)
+				pq_good_divisor: pq.p.divisible (pq.q)
+			end
 			if is_integer then
 				Result := pq.is_integer and div (p, q) ≍ div (pq.p, pq.q)
 			else
 				if not pq.is_integer then
-						check
-								-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒	rem (pq.p, pq.q) /= 0)
-							q_divisible_p_rem_q: q.divisible (rem (p, q))
-							pq_q_divisible_pq_p_rem_pq_q: pq.q.divisible (rem (pq.p, pq.q))
-						end
+					check
+							-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒	rem (pq.p, pq.q) /= 0)
+						q_divisible_p_rem_q: q.divisible (rem (p, q))
+						pq_q_divisible_pq_p_rem_pq_q: pq.q.divisible (rem (pq.p, pq.q))
+					end
 					Result := div (p, q) ≍ div (pq.p, pq.q) and (q / rem (p, q)) ≍ (pq.q / rem (pq.p, pq.q))
 				end
 			end
@@ -145,11 +145,11 @@ feature -- Comparison
 	is_less alias "<" (pq: RATIONAL_NUMBER): BOOLEAN
 			-- Is current rational number less than `pq`?
 		do
-				check
-						-- Class invariant: q /= 0 and pq.q /= 0
-					good_divisor: p.divisible (q)
-					other_good_divisor: pq.p.divisible (pq.q)
-				end
+			check
+					-- Class invariant: q /= 0 and pq.q /= 0
+				good_divisor: p.divisible (q)
+				other_good_divisor: pq.p.divisible (pq.q)
+			end
 			if is_integer then
 				if pq.is_integer then
 					Result := div (p, q) < div (pq.p, pq.q)
@@ -160,11 +160,11 @@ feature -- Comparison
 				if pq.is_integer then
 					Result := div (p, q) < div (pq.p, pq.q)
 				else
-						check
-								-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒ rem (pq.p, pq.q) /= 0)
-							q_divisible_p_rem_q: q.divisible (rem (p, q))
-							other_p_divisible_other_p_rem_other_q: pq.q.divisible (rem (pq.p, pq.q))
-						end
+					check
+							-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒ rem (pq.p, pq.q) /= 0)
+						q_divisible_p_rem_q: q.divisible (rem (p, q))
+						other_p_divisible_other_p_rem_other_q: pq.q.divisible (rem (pq.p, pq.q))
+					end
 					Result := div (p, q) < div (pq.p, pq.q) or div (p, q) ≍ div (pq.p, pq.q) and ((pq.q / rem (pq.p, pq.q)) < (q / rem (p, q)))
 				end
 			end
@@ -179,11 +179,11 @@ feature -- Comparison
 
 			when_both_integer: is_integer and pq.is_integer ⇒ Result = (div (p, q) < div (pq.p, pq.q))
 			when_integer_by_fractional: is_integer and not pq.is_integer ⇒
-						-- ∞ = q / rem (p, q)) > pq.q / rem (pq.p, pq.q)
-					Result = div (p, q) ≤ div (pq.p, pq.q)
+					-- ∞ = q / rem (p, q)) > pq.q / rem (pq.p, pq.q)
+				Result = div (p, q) ≤ div (pq.p, pq.q)
 			when_fractional_by_integer: not is_integer and pq.is_integer ⇒
-						-- ratio (q, rem (p, q)) < ratio (pq.q, rem (pq.p, pq.q)) = ∞
-					Result = (div (p, q) < div (pq.p, pq.q))
+					-- ratio (q, rem (p, q)) < ratio (pq.q, rem (pq.p, pq.q)) = ∞
+				Result = (div (p, q) < div (pq.p, pq.q))
 			when_both_fractional: not is_integer and not pq.is_integer ⇒
 				Result = (div (p, q) < div (pq.p, pq.q) or div (p, q) ≍ div (pq.p, pq.q) and ((pq.q / rem (pq.p, pq.q)) < (q / rem (p, q))))
 		end
@@ -208,7 +208,7 @@ feature -- Comparison
 			-- Is current rational number greater than or equal to `pq'?
 		do
 			Result := pq ≤ Current
- 		ensure
+		ensure
 			definition: Result = (pq ≤ Current)
 		end
 
@@ -254,6 +254,34 @@ feature -- Comparison
 			other_if_smaller: Current < pq ⇒ Result ≍ pq
 		end
 
+feature -- Relationship
+
+	multipliable (pq: RATIONAL_NUMBER): BOOLEAN
+			-- May current rational number be multiplied by `pq`?
+			--| As explained at `product' header, an occasional overflow when multiplying denominators (both unequal to `zero' by definition) may produce an
+			--| unexpected product equal to `zero'. Hence the need for this predicate.
+		local
+			l_gcd_1, l_gcd_2: like gcd
+		do
+			l_gcd_1 := gcd (pq.p, q)
+			l_gcd_2 := gcd (p, pq.q)
+			check
+				good_divisor_1: q.divisible (l_gcd_1) -- l_gcd_1 /= 0 ⇐ q /= 0
+				good_divisor_2: pq.q.divisible (l_gcd_2) -- l_gcd_2 /= 0 ⇐ pq.q /= 0
+			end
+			Result := not integer_product_overflows (q // l_gcd_1, pq.q // l_gcd_2)
+		ensure
+				-- TODO: Debugger gets scrambled!
+--			gcd_1: attached {like integer_anchor} gcd (pq.p, q) as gcd_1
+--			gcd_2: attached {like integer_anchor} gcd (p, pq.q) as gcd_2
+			gcd_1: attached {INTEGER_NUMBER} gcd (pq.p, q) as gcd_1
+			gcd_2: attached {INTEGER_NUMBER} gcd (p, pq.q) as gcd_2
+			good_divisor_1: q.divisible (gcd_1) -- gcd_1 /= 0 ⇐ q /= 0
+			good_divisor_2: pq.q.divisible (gcd_2) -- gcd_2 /= 0 ⇐ pq.q /= 0
+			good_factors: -- Otherwise we might get a denominator unexpectedly equal to zero.
+				not integer_product_overflows (q // gcd_1, pq.q // gcd_2) ⇒ Result
+		end
+
 feature -- Math
 
 	gcd (i, j: INTEGER_NUMBER): like integer_anchor
@@ -262,9 +290,9 @@ feature -- Math
 			if j ≍ i.zero then
 				Result := converted_integer (i.abs)
 			else
-					check
-						good_divisor: i.divisible (j) -- j /= 0
-					end
+				check
+					good_divisor: i.divisible (j) -- j /= 0
+				end
 				Result := gcd (j, i \\ j)
 			end
 		ensure
@@ -368,13 +396,12 @@ feature -- Predicate
 				i > i.zero and j > i.zero and i.max_value_exists and then i > i.max_value // j
 		ensure
 			definition: Result = (
-				i < i.zero and j < i.zero and i.max_value_exists and then i < i.max_value // j or
-				i < i.zero and j > i.zero and i.min_value_exists and then i < i.min_value // j or
-				i > i.zero and j < - i.one and i.min_value_exists and then 	-- TODO: It assumes a two's-complement implementation,
-																			-- where i.min_value // j overflows.
-				i > i.min_value // j or
-				i > i.zero and j > i.zero and i.max_value_exists and then  i > i.max_value // j
-				)
+						i < i.zero and j < i.zero and i.max_value_exists and then i < i.max_value // j or
+						i < i.zero and j > i.zero and i.min_value_exists and then i < i.min_value // j or
+						i > i.zero and j < - i.one and i.min_value_exists and then -- TODO: It assumes a two's-complement implementation, where
+							i > i.min_value // j or								   -- i.min_value // - 1 overflows.
+						i > i.zero and j > i.zero and i.max_value_exists and then i > i.max_value // j
+					)
 		end
 
 feature -- Anchor

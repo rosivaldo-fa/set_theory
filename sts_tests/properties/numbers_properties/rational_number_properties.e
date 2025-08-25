@@ -13,6 +13,15 @@ inherit
 			is_not_in_ok as element_is_not_in_ok
 		end
 
+feature -- Access
+
+	zero: like rational_anchor
+			-- The rational number 0/1
+		deferred
+		ensure
+			definition: Result ≍ Result.zero
+		end
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (pq: STS_RATIONAL_NUMBER; s: STS_SET [STS_RATIONAL_NUMBER]): BOOLEAN
@@ -109,12 +118,29 @@ feature -- Properties (Comparison)
 		end
 
 	max_ok (pq_1, pq_2, pq_3: STS_RATIONAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theorpq_2 hold for {STS_RATIONAL_NUMBER}.max?
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.max?
 		do
 			check
 				idempotent: (pq_1 ∨ pq_1) ≍ pq_1
 				commutative: (pq_1 ∨ pq_2) ≍ (pq_2 ∨ pq_1)
 				associative: ((pq_1 ∨ pq_2) ∨ pq_3) ≍ (pq_1 ∨ (pq_2 ∨ pq_3))
+			then
+				Result := True
+			end
+		end
+
+feature -- Properties (Relationship)
+
+	multipliable_ok (pq_1, pq_2: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.multipliable?
+		do
+			check
+				gcd_1: attached gcd (pq_2.p, pq_1.q) as gcd_1
+				gcd_2: attached gcd (pq_1.p, pq_2.q) as gcd_2
+				good_divisor_1: pq_1.q.divisible (gcd_1) -- gcd_1 /= 0 ⇐ pq_1.q /= 0
+				good_divisor_2: pq_2.q.divisible (gcd_2) -- gcd_2 /= 0 ⇐ pq_2.q /= 0
+				unexpected_zero_product: -- Which is possible only upon an overflow.						
+					(pq_1.q // gcd_1) ⋅ (pq_2.q // gcd_2) ≍ zero.p ⇒ not pq_1.multipliable (pq_2)
 			then
 				Result := True
 			end
@@ -157,6 +183,33 @@ feature -- Properties (Predicate)
 			then
 				Result := True
 			end
+		end
+
+feature -- Math
+
+	gcd (i, j: STS_INTEGER_NUMBER): STS_INTEGER_NUMBER
+			-- Greatest common divisor of `i' and `j'
+			-- TODO: DRY!
+		do
+			if j ≍ zero.p then
+				Result := i.abs
+			else
+					check
+						good_divisor: i.divisible (j) -- j /= 0
+					end
+				Result := gcd (j, i \\ j)
+			end
+		ensure
+			base: j ≍ zero.p implies Result ≍ i.abs
+			good_divisor: j ≭ zero.p implies i.divisible (j)
+			induction: j ≭ zero.p implies Result ≍ gcd (j, i \\ j)
+		end
+
+feature -- Anchor
+
+	rational_anchor: STS_RATIONAL_NUMBER
+			-- Anchor for rational naumbers
+		deferred
 		end
 
 note

@@ -27,8 +27,6 @@ feature -- Access
 	zero: like rational_anchor
 			-- The rational number 0/1
 		deferred
-		ensure
-			numerator: Result.p ≍ Result.p.zero
 		end
 
 	one: like rational_anchor
@@ -603,6 +601,92 @@ feature -- Test routines (Comparison)
 			assert ("max ok", max_ok (pq_1, pq_2, some_rational_number))
 		end
 
+feature -- Test routines (Relationship)
+
+--	test_multipliable
+--			-- Test {STS_RATIONAL_NUMBER}.multipliable.
+--		note
+--			testing: "covers/{STS_RATIONAL_NUMBER}.multipliable"
+--		local
+--			pq_1: like rational_number_to_be_tested
+--			pq_2: like some_rational_number
+--			p1, p2, q1, q2, j: like some_integer_number
+--		do
+--			k := next_random_item.as_natural_32 \\ divisors.n + 1
+--				check
+--						-- As assigned above.		
+--					positive: 0 < k
+--					small_enough: k ≤ divisors.n
+--				end
+--			j := divisors [k]
+--				check
+--					good_divisor_j: -- j ∈ Z.Without_zero
+--						{STS_INTEGER_NUMBER}.Min_value.divisible (j)
+--				end
+--			q1 := {STS_INTEGER_NUMBER}.Min_value // j
+--				check
+--					good_divisor_q1: -- {STS_INTEGER_NUMBER}.Min_value // j /= 0
+--						{STS_INTEGER_NUMBER}.Min_value.divisible (q1)
+--				end
+--			from
+--				q2 := Two × ({STS_INTEGER_NUMBER}.Min_value // q1) × some_integer_number
+--			until
+--				q2 ≭ Zero -- Which is possible upon an overflow.
+--			loop
+--				q2 := Two × ({STS_INTEGER_NUMBER}.Min_value // q1) × some_integer_number
+--			end
+--			p2 := Two × some_integer_number + One.p
+--			p1 := Two × some_integer_number + One.p
+--				check
+--					good_divisor_1: p1.divisible (q1) -- good_divisor_q1
+--				end
+--			pq_1 := p1 / q1
+--				check
+--					good_divisor_1: p2.divisible (q2) -- q2 ≭ Zero
+--				end
+--			pq_2 := p2 / q2
+--			assert (
+--				"not pq_1.multipliable (pq_2)",
+--				not pq_1.multipliable (pq_2)
+--				)
+--			assert (
+--				"not pq_1.multipliable (pq_2) ok",
+--				properties.expanded_multipliable_ok (pq_1, pq_2)
+--				)
+
+--				-- TODO: Take a guaranteed valid product.
+
+--			from
+--				pqs_1 := Q
+--			until
+--				pqs_1.is_empty
+--			loop
+--				from
+--					pq_1 := pqs_1.any
+--					pqs_2 := Q
+--				until
+--					pqs_2.is_empty
+--				loop
+--					pq_2 := pqs_2.any
+--					assert (
+--						"multipliable",
+--						pq_1.multipliable (pq_2) implies True
+--						)
+--					assert (
+--						"multipliable_ok",
+--						properties.expanded_multipliable_ok (pq_1, pq_2)
+--						)
+--					pqs_2 := pqs_2.others
+--				variant
+--					pqs_2_cardinality:
+--						{like new_set_a}.natural_as_integer (# pqs_2)
+--				end
+--				pqs_1 := pqs_1.others
+--			variant
+--				pqs_1_cardinality: {like new_set_a}.natural_as_integer (# pqs_1)
+--			end
+--		end
+
 feature -- Test routines (Math)
 
 	test_gcd
@@ -677,58 +761,110 @@ feature -- Test routines (Predicate)
 			testing: "covers/{STS_RATIONAL_NUMBER}.integer_product_overflows"
 		local
 			pq: like rational_number_to_be_tested
-			i, j, two: like some_integer_number
+			i, j: like some_integer_number
 		do
-			two := some_integer_number
-			two := two.one + two.one
-			if next_random_item \\ 2 = 0 then
-				j := - some_integer_number.abs
-				j := - j ∧ - j.one
-				if next_random_item \\ 2 = 0 then
-					i := - some_integer_number.abs
-					i := i ∧ - i.one
-					i := i ∧ (i.max_value // j - i.one)
-				else
-					j := j ∧ - Two
-					i := (some_integer_number.abs ∨ j.one) ∨ (j.min_value // j + j.one)
-				end
-			else
-				j := some_integer_number.abs
-				j := j ∨ j.one
-				if next_random_item \\ 2 = 0 then
-					i := (- some_integer_number.abs ∧ - j.one) ∧ (j.min_value // j - j.one)
-				else
-					i := (some_integer_number.abs ∨ j.one) ∨ (j.max_value // j + j.one)
-				end
-			end
 			pq := rational_number_to_be_tested
-			assert ("product_overflows (i, j)", pq.integer_product_overflows (i, j))
-			assert ("product_overflows (i, j) ok", integer_product_overflows_ok (pq, i, j))
+			i := - some_integer_number.abs
+			i := i ∧ - i.one
+			j := - some_integer_number.abs ∧ - i.one
+			if i.max_value_exists then
+				check
+					good_divisor_1: i.max_value.divisible (j) -- j < 0
+				end
+				i := i ∧ i.max_value // j - i.one
+				assert ("i, j < 0; overflow", pq.integer_product_overflows (i, j))
+				assert ("i, j < 0; overflow ok", integer_product_overflows_ok (pq, i, j))
+			end
 
-			if next_random_item \\ 2 = 0 then
-				j := - some_integer_number.abs
-				i := some_integer_number
-				if j < j.zero then
-					if next_random_item \\ 2 = 0 then
-						i := - i.abs ∨ (i.max_value // j)
-					else
-						i := i.abs ∧ (i.min_value // j)
-					end
+			j := some_integer_number.abs ∨ j.one
+			if i.min_value_exists then
+				check
+					good_divisor_2: i.min_value.divisible (j) -- j > 0
 				end
-			else
-				j := some_integer_number.abs
-				i := some_integer_number
-				if j > j.zero then
-					if next_random_item \\ 2 = 0 then
-						i := - i.abs ∨ (i.min_value // j)
-					else
-						i := i.abs ∧ (i.max_value // j)
-					end
-				end
+				i := i ∧ i.min_value // j - i.one
+				assert ("i < 0 < j; overflow", pq.integer_product_overflows (i, j))
+				assert ("i < 0 < j; overflow ok", integer_product_overflows_ok (pq, i, j))
 			end
-			pq := rational_number_to_be_tested
-			assert ("not product_overflows (i, j)", not pq.integer_product_overflows (i, j))
-			assert ("not product_overflows (i, j) ok", integer_product_overflows_ok (pq, i, j))
+
+			i := some_integer_number.abs ∨ i.one
+			j := - some_integer_number.abs ∧ - i.one - i.one
+			if i.min_value_exists then
+				check
+					good_divisor_3: i.min_value.divisible (j) -- j < 0
+				end
+				i := i ∨ i.min_value // j + i.one
+				assert ("j < - 1 < 0 < i; overflow", pq.integer_product_overflows (i, j))
+				assert ("j < - 1 < 0 < i; overflow ok", integer_product_overflows_ok (pq, i, j))
+			end
+
+			j := some_integer_number.abs ∨ j.one
+			if i.max_value_exists then
+				check
+					good_divisor_4: i.max_value.divisible (j) -- j > 0
+				end
+				i := i ∨ i.max_value // j + i.one
+				assert ("0 < i, j; overflow", pq.integer_product_overflows (i, j))
+				assert ("0 < i, j; overflow ok", integer_product_overflows_ok (pq, i, j))
+			end
+
+			i := - some_integer_number.abs ∧ - i.one
+			j := - some_integer_number.abs ∧ - i.one
+			if i.max_value_exists then
+				check
+					good_divisor_5: i.max_value.divisible (j) -- j < 0
+				end
+				i := i ∨ i.max_value // j
+				assert ("i, j < 0; no overflow", not pq.integer_product_overflows (i, j))
+				assert ("i, j < 0; no overflow ok", integer_product_overflows_ok (pq, i, j))
+			end
+
+			j := j.zero
+			assert ("i < 0 = j; no overflow", not pq.integer_product_overflows (i, j))
+			assert ("i < 0 = j; no overflow ok", integer_product_overflows_ok (pq, i, j))
+
+			j := some_integer_number.abs ∨ j.one
+			if i.min_value_exists then
+				check
+					good_divisor_6: i.min_value.divisible (j) -- j > 0
+				end
+				i := i ∨ i.min_value // j
+				assert ("i < 0 < j; no overflow", not pq.integer_product_overflows (i, j))
+				assert ("i < 0 < j; no overflow ok", integer_product_overflows_ok (pq, i, j))
+			end
+
+			i := i.zero
+			j := some_integer_number
+			assert ("i = 0; no overflow", not pq.integer_product_overflows (i, j))
+			assert ("i = 0; no overflow ok", integer_product_overflows_ok (pq, i, j))
+
+			i := some_integer_number.abs ∨ i.one
+			j := - some_integer_number.abs ∧ - i.one - i.one
+			if i.min_value_exists then
+				check
+					good_divisor_7: i.min_value.divisible (j) -- j < 0
+				end
+				i := i ∧ i.min_value // j
+				assert ("j < - 1 < 0 < i; no overflow", not pq.integer_product_overflows (i, j))
+				assert ("j < - 1 < 0 < i; no overflow ok", integer_product_overflows_ok (pq, i, j))
+			end
+
+			j := - j.one
+			assert ("- 1 = j < 0 < i; no overflow", not pq.integer_product_overflows (i, j))
+			assert ("- 1 = j < 0 < i; no overflow ok", integer_product_overflows_ok (pq, i, j))
+
+			j := j.zero
+			assert ("j = 0 < i; no overflow", not pq.integer_product_overflows (i, j))
+			assert ("j = 0 < i; no overflow ok", integer_product_overflows_ok (pq, i, j))
+
+			j := some_integer_number.abs ∨ j.one
+			if i.max_value_exists then
+				check
+					good_divisor_8: i.max_value.divisible (j) -- j > 0
+				end
+				i := i ∧ i.max_value // j
+				assert ("0 < i, j; no overflow", not pq.integer_product_overflows (i, j))
+				assert ("0 < i, j; no overflow ok", integer_product_overflows_ok (pq, i, j))
+			end
 
 			i := some_integer_number
 			j := some_integer_number
