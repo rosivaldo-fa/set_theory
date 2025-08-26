@@ -29,7 +29,7 @@ feature -- Properties (Relationship)
 	multipliable_ok (pq_1, pq_2: STS_RATIONAL_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STI_RATIONAL_NUMBER}.multipliable?
 		do
-			if multipliable_ok (pq_1, pq_2) then
+			if Precursor {STST_RATIONAL_NUMBER_PROPERTIES} (pq_1, pq_2) then
 				check
 					gcd_1: attached gcd (pq_2.p, pq_1.q) as gcd_1
 					gcd_2: attached gcd (pq_1.p, pq_2.q) as gcd_2

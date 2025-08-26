@@ -626,6 +626,7 @@ feature -- Test routines (Relationship)
 				"when is not multipliable",
 				not pq_1.multipliable (pq_2) ⇒ pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q))
 				)
+			assert ("multipliable ok", multipliable_ok (pq_1, pq_2))
 		end
 
 feature -- Test routines (Math)
