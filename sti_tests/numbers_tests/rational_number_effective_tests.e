@@ -48,6 +48,7 @@ inherit
 			test_min,
 			test_max,
 			test_reciprocal,
+			test_inverse,
 			test_gcd,
 			test_div,
 			test_rem,
@@ -350,6 +351,16 @@ feature -- Test routines (Operation)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.reciprocal"
 			testing: "covers/{STI_RATIONAL_NUMBER}.reciprocal"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_inverse
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.inverse.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.inverse"
+			testing: "covers/{STI_RATIONAL_NUMBER}.inverse"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

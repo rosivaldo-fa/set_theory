@@ -65,6 +65,7 @@ feature -- Test routines (All)
 			test_min
 			test_max
 			test_reciprocal
+			test_inverse
 			test_gcd
 			test_div
 			test_rem
@@ -641,6 +642,17 @@ feature -- Test routines (Operation)
 		do
 			pq := rational_number_to_be_tested
 			assert ("reciprocal", pq.is_invertible ⇒ attached pq.reciprocal)
+		end
+
+	test_inverse
+			-- Test {STS_RATIONAL_NUMBER}.inverse.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.inverse"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("inverse", pq.is_invertible ⇒ attached pq.inverse)
 		end
 
 feature -- Test routines (Math)
