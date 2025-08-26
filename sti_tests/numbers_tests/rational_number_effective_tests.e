@@ -47,6 +47,7 @@ inherit
 			test_multipliable,
 			test_min,
 			test_max,
+			test_reciprocal,
 			test_gcd,
 			test_div,
 			test_rem,
@@ -339,6 +340,18 @@ feature -- Test routines (Relationship)
 				pq_1.multipliable (pq_2)
 				)
 			assert ("even when overflows ok", multipliable_ok (pq_1, pq_2))
+		end
+
+feature -- Test routines (Operation)
+
+	test_reciprocal
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.reciprocal.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.reciprocal"
+			testing: "covers/{STI_RATIONAL_NUMBER}.reciprocal"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
 
 feature -- Test routines (Math)

@@ -281,6 +281,32 @@ feature -- Relationship
 			good_factors: not integer_product_overflows (q // gcd_1, pq.q // gcd_2) ⇒ Result -- Otherwise we might get a denominator unexpectedly equal to zero.
 		end
 
+	divisible (pq: RATIONAL_NUMBER): BOOLEAN
+			-- May current rational number be divided by `pq`?
+		do
+			Result := pq.is_invertible and then multipliable (pq.inverse)
+		ensure
+			definition: Result = (pq.is_invertible and then multipliable (pq.inverse))
+		end
+
+feature -- Operation
+
+	reciprocal,
+	inverse: like rational_anchor
+			-- Reciprocal (AKA inverse) value of current rational number relative to multiplication, i.e. `Current' ⋅ `reciprocal' = `Current' ⋅ `inverse' = 1.
+		require
+			is_invertible: is_invertible
+		do
+				check
+					good_divisor: q.divisible (p) -- p /= 0 ⇐ is_invertible
+				end
+			Result := q / p
+		ensure
+			good_divisor: q.divisible (p) -- p /= 0 ⇐ is_invertible
+			numerator: Result.p ≍ (q / p).p
+			denominator: Result.q ≍ (q / p).q
+		end
+
 feature -- Math
 
 	gcd (i, j: INTEGER_NUMBER): like integer_anchor

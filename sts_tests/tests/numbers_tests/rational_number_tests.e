@@ -64,6 +64,7 @@ feature -- Test routines (All)
 			test_multipliable
 			test_min
 			test_max
+			test_reciprocal
 			test_gcd
 			test_div
 			test_rem
@@ -627,6 +628,19 @@ feature -- Test routines (Relationship)
 				not pq_1.multipliable (pq_2) ⇒ pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q))
 				)
 			assert ("multipliable ok", multipliable_ok (pq_1, pq_2))
+		end
+
+feature -- Test routines (Operation)
+
+	test_reciprocal
+			-- Test {STS_RATIONAL_NUMBER}.reciprocal.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.reciprocal"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("reciprocal", pq.is_invertible ⇒ attached pq.reciprocal)
 		end
 
 feature -- Test routines (Math)
