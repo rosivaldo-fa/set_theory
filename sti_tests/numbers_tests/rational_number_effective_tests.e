@@ -321,25 +321,24 @@ feature -- Test routines (Relationship)
 			-- Test {STI_RATIONAL_NUMBER}.multipliable.
 		note
 			testing: "covers/{STI_RATIONAL_NUMBER}.multipliable"
---		local
---			pq_1: like rational_number_to_be_tested
---			pq_2: like some_rational_number
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
---			pq_1 := rational_number_to_be_tested
---			pq_2 := some_rational_number
---			check
---				good_divisor_1: pq_1.q.divisible (gcd (pq_2.p, pq_1.q)) -- pq_1.q /= 0
---				good_divisor_2: pq_2.q.divisible (gcd (pq_1.p, pq_2.q)) -- pq_2.q /= 0
---			end
---			assert (
---				"when does not overflow",
---				not pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q)) ⇒ pq_1.multipliable (pq_2)
---				)
---			assert (
---				"when is not multipliable",
---				not pq_1.multipliable (pq_2) ⇒ pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q))
---				)
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			check
+				good_divisor_1: pq_1.q.divisible (gcd (pq_2.p, pq_1.q)) -- pq_1.q /= 0
+				good_divisor_2: pq_2.q.divisible (gcd (pq_1.p, pq_2.q)) -- pq_2.q /= 0
+			end
+			assert (
+				"even when overflows",
+				pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q)) and
+				(pq_1.q // gcd (pq_2.p, pq_1.q)) ⋅ (pq_2.q // gcd (pq_1.p, pq_2.q)) ≭ Zero.p ⇒
+				pq_1.multipliable (pq_2)
+				)
+			assert ("even when overflows ok", multipliable_ok (pq_1, pq_2))
 		end
 
 feature -- Test routines (Math)
