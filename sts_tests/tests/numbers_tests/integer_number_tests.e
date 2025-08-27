@@ -168,8 +168,11 @@ feature -- Test routines (Access)
 			-- Test {STS_INTEGER_NUMBER}.max_value.
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.max_value"
+		local
+			i: like integer_number_to_be_tested
 		do
-			assert ("max_value", attached integer_number_to_be_tested.max_value)
+			i := integer_number_to_be_tested
+			assert ("max_value", i.max_value_exists ⇒ attached i.max_value)
 		end
 
 feature -- Test routines (Comparison)
