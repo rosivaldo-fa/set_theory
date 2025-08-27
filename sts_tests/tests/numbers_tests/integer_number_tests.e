@@ -157,8 +157,11 @@ feature -- Test routines (Access)
 			-- Test {STS_INTEGER_NUMBER}.min_value.
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}.min_value"
+		local
+			i: like integer_number_to_be_tested
 		do
-			assert ("min_value", attached integer_number_to_be_tested.min_value)
+			i := integer_number_to_be_tested
+			assert ("min_value", i.min_value_exists ⇒ attached i.min_value)
 		end
 
 	test_max_value

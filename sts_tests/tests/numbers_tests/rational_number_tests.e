@@ -631,6 +631,89 @@ feature -- Test routines (Relationship)
 			assert ("multipliable ok", multipliable_ok (pq_1, pq_2))
 		end
 
+	test_divisible
+			-- Test {STS_RATIONAL_NUMBER}.divisible.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.divisible"
+--		local
+--			pq_1: like rational_number_to_be_tested
+--			pq_2: like some_rational_number
+--			p1, p2, q1, q2, j: like some_integer_number
+		do
+--			k := next_random_item.as_natural_32 \\ divisors.n + 1
+--				check
+--						-- As assigned above.		
+--					positive: 0 < k
+--					small_enough: k ≤ divisors.n
+--				end
+--			j := divisors [k]
+--				check
+--					good_divisor_j: -- j ∈ Z.Without_zero
+--						{STS_INTEGER_NUMBER}.Min_value.divisible (j)
+--				end
+--			q1 := {STS_INTEGER_NUMBER}.Min_value // j
+--				check
+--					good_divisor_q1: -- {STS_INTEGER_NUMBER}.Min_value // j /= 0
+--						{STS_INTEGER_NUMBER}.Min_value.divisible (q1)
+--				end
+--			p2 := Two × ({STS_INTEGER_NUMBER}.Min_value // q1) × some_integer_number
+--			q2 := Two × some_integer_number + One.p
+--			p1 := Two × some_integer_number + One.p
+--				check
+--					good_divisor_1: p1.divisible (q1) -- good_divisor_q1
+--				end
+--			pq_1 := p1 / q1
+--				check
+--					good_divisor_1: -- q2 = 2 × some_integer_number + 1 /= 0
+--						p2.divisible (q2)
+--				end
+--			pq_2 := p2 / q2
+--			assert ("not pq_1.divisible (pq_2)", not pq_1.divisible (pq_2))
+--			assert ("not pq_1.divisible (pq_2) ok", properties.divisible_ok (pq_1, pq_2))
+
+--			pq_1 := rational_number_to_be_tested
+--			from
+--				pq_2 := some_rational_number
+--			invariant
+--				good_divisor_1: pq_1.q.divisible -- pq_2.q, pq_1.q /= 0
+--					({STS_RATIONAL_NUMBER}.gcd (pq_2.p, pq_1.q))
+--				good_divisor_2: pq_2.p ≭ Zero implies pq_2.p.divisible
+--					({STS_RATIONAL_NUMBER}.gcd (pq_1.p, pq_2.p))
+--			until
+--				pq_2.p ≭ Zero and then (
+--				(pq_1.q // {STS_RATIONAL_NUMBER}.gcd (pq_2.q, pq_1.q)) ⋅
+--				(pq_2.p // {STS_RATIONAL_NUMBER}.gcd (pq_1.p, pq_2.p))
+--				) ≭ Zero
+--			loop
+--				pq_2 := some_rational_number
+--			end
+--			assert ("pq_1.divisible (pq_2)", pq_1.divisible (pq_2))
+--			assert ("pq_1.divisible (pq_2) ok", properties.divisible_ok (pq_1, pq_2))
+
+--			from
+--				pqs_1 := Q
+--			until
+--				pqs_1.is_empty
+--			loop
+--				pq_1 := pqs_1.any
+--				from
+--					pqs_2 := Q
+--				until
+--					pqs_2.is_empty
+--				loop
+--					pq_2 := same_rational (pqs_2.any)
+--					assert ("divisible", pq_1.divisible (pq_2) implies True)
+--					assert ("divisible_ok", properties.divisible_ok (pq_1, pq_2))
+--					pqs_2 := pqs_2.others
+--				variant
+--					pqs_2_cardinality: {like new_set_a}.natural_as_integer (# pqs_2) -- TODO: Take Q instead.
+--				end
+--				pqs_1 := pqs_1.others
+--			variant
+--				pqs_1_cardinality: {like new_set_a}.natural_as_integer (# pqs_1) -- TODO: Take Q instead.
+--			end
+		end
+
 feature -- Test routines (Operation)
 
 	test_reciprocal

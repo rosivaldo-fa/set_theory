@@ -44,6 +44,19 @@ feature -- Properties (Relationship)
 			end
 		end
 
+	divisible_ok (pq_1: STI_RATIONAL_NUMBER; pq_2: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STI_RATIONAL_NUMBER}.divisible?
+		do
+			check
+				good_divisor_1: pq_1.q.divisible (gcd (pq_2.q, pq_1.q)) -- pq_2.q, pq_1.q /= 0
+				good_divisor_2: pq_2.p ≭ Zero.p ⇒ pq_2.p.divisible (gcd (pq_1.p, pq_2.p))
+				when_divisible: pq_1.divisible (pq_2) ⇒
+					pq_2.p ≭ Zero.p and then ((pq_1.q // gcd (pq_2.q, pq_1.q)) ⋅ (pq_2.p // gcd (pq_1.p, pq_2.p))) ≭ Zero.p
+			then
+				Result := True
+			end
+		end
+
 feature -- Anchor
 
 	rational_anchor: STI_RATIONAL_NUMBER
