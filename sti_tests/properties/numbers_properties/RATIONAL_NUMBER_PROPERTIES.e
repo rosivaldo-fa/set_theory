@@ -24,6 +24,16 @@ feature -- Access
 			denominator: Result.q ≍ {STI_INTEGER_NUMBER}.One
 		end
 
+	One: STI_RATIONAL_NUMBER
+			-- <Precursor>
+			--| TODO: Feature tool cannot show the inherited post-conditions.
+			--| TODO: What about the invariants?
+		once
+			Result := {STI_RATIONAL_NUMBER}.One
+		ensure then
+			class
+		end
+
 feature -- Properties (Relationship)
 
 	multipliable_ok (pq_1, pq_2: STS_RATIONAL_NUMBER): BOOLEAN

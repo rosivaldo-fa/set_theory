@@ -49,6 +49,7 @@ inherit
 			test_divisible,
 			test_min,
 			test_max,
+			test_opposite,
 			test_reciprocal,
 			test_inverse,
 			test_gcd,
@@ -73,18 +74,6 @@ inherit
 			rational_number_to_be_tested
 		redefine
 			test_all
-		end
-
-feature -- Access
-
-	one: STI_RATIONAL_NUMBER
-			-- <Precursor>
-		once
-			Result := {STI_RATIONAL_NUMBER}.One
-		ensure then
-			class
-			numerator: Result.p ≍ {STI_INTEGER_NUMBER}.One
-			denominator: Result.q ≍ {STI_INTEGER_NUMBER}.One
 		end
 
 feature -- Test routines (All)
@@ -380,6 +369,14 @@ feature -- Test routines (Relationship)
 		end
 
 feature -- Test routines (Operation)
+
+	test_opposite
+			-- Test {STI_RATIONAL_NUMBER}.opposite.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.opposite"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
 
 	test_reciprocal
 			-- <Precursor>

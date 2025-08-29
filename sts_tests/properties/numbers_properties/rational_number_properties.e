@@ -22,6 +22,13 @@ feature -- Access
 			definition: Result ≍ Result.zero
 		end
 
+	one: like rational_anchor
+			-- The rational number 1/1
+		deferred
+		ensure
+			definition: Result ≍ Result.one
+		end
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (pq: STS_RATIONAL_NUMBER; s: STS_SET [STS_RATIONAL_NUMBER]): BOOLEAN
@@ -141,6 +148,18 @@ feature -- Properties (Relationship)
 				good_divisor_2: pq_2.q.divisible (gcd_2) -- gcd_2 /= 0 ⇐ pq_2.q /= 0
 				unexpected_zero_product: -- Which is possible only upon an overflow.
 					(pq_1.q // gcd_1) ⋅ (pq_2.q // gcd_2) ≍ zero.p ⇒ not pq_1.multipliable (pq_2)
+			then
+				Result := True
+			end
+		end
+
+feature -- Properties (Operation)
+
+	opposite_ok (pq: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.opposite?
+		do
+			check
+				inverted_sign: (- pq).sign ≍ - pq.sign
 			then
 				Result := True
 			end

@@ -203,39 +203,34 @@ feature -- Operation
 			if q > q.Zero then
 				if p ≭ {INTEGER_NUMBER}.Min_value then
 						check
-								-- p ≭ {INTEGER_NUMBER}.Min_value
 							(- p).sign ≍ - p.sign
 							minus_p_divisible_q: (- p).divisible (q) -- q > 0
 						end
 					create Result.make (- p, q)
 				else
 						check
-								-- q ≭ {INTEGER_NUMBER}.Min_value ⇐ q > 0
-							(- q).sign ≍ - q.sign
-							p_divisible_minus_q: -- -q < 0 ⇐ q > 0
-								p.divisible (- q)
+							(- q).sign ≍ - q.sign -- q ≭ {INTEGER_NUMBER}.Min_value ⇐ q > 0
+							p_divisible_minus_q: p.divisible (- q) -- - q < 0 ⇐ q > 0
 						end
 					create Result.make (p, - q)
 				end
 			else
 				if p ≭ {INTEGER_NUMBER}.Min_value then
 						check
-								-- p ≭ {INTEGER_NUMBER}.Min_value
 							(- p).sign ≍ - p.sign
-							minus_p_divisible_q: -- Class invariant: q /= 0
-								(- p).divisible (q)
+							minus_p_divisible_q: (- p).divisible (q) -- Class invariant: q /= 0
 						end
 					create Result.make (- p, q)
-				else
-						check
-								-- q ≭ {INTEGER_NUMBER}.Min_value ⇐
-								-- 	p ≍ {INTEGER_NUMBER}.Min_value
-							(- q).sign ≍ - q.sign
+				elseif q ≭ {INTEGER_NUMBER}.Min_value then
 
-								-- -q /= 0 ⇐ Class invariant: q /= 0
-							p_divisible_minus_q: p.divisible (- q)
+						check
+							(- q).sign ≍ - q.sign
+							p_divisible_minus_q: p.divisible (- q) -- - q /= 0 ⇐ Class invariant: q /= 0
 						end
 					create Result.make (p, - q)
+				else
+						-- p / q = {INTEGER_NUMBER}.Min_value / {INTEGER_NUMBER}.Min_value
+					create Result.make (- p.One , q.One)
 				end
 			end
 		end

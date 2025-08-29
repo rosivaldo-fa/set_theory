@@ -22,20 +22,6 @@ inherit
 
 	RATIONAL_NUMBER_PROPERTIES
 
-feature -- Access
-
-	zero: like rational_anchor
-			-- The rational number 0/1
-		deferred
-		end
-
-	one: like rational_anchor
-			-- The rational number 1/1
-		deferred
-		ensure
-			definition: Result.p ≍ Result.q
-		end
-
 feature -- Test routines (All)
 
 	test_all
@@ -66,6 +52,7 @@ feature -- Test routines (All)
 			test_divisible
 			test_min
 			test_max
+			test_opposite
 			test_reciprocal
 			test_inverse
 			test_gcd
@@ -692,6 +679,18 @@ feature -- Test routines (Relationship)
 		end
 
 feature -- Test routines (Operation)
+
+	test_opposite
+			-- Test {STS_RATIONAL_NUMBER}.opposite.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.opposite"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("opposite", attached (- pq))
+			assert ("opposite_ok", opposite_ok (pq))
+		end
 
 	test_reciprocal
 			-- Test {STS_RATIONAL_NUMBER}.reciprocal.
