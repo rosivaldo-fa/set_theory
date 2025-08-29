@@ -55,6 +55,7 @@ feature -- Test routines (All)
 			test_modulus
 			test_abs
 			test_plus
+			test_minus
 			test_opposite
 			test_reciprocal
 			test_inverse
@@ -705,12 +706,26 @@ feature -- Test routines (Operation)
 			testing: "covers/{STS_RATIONAL_NUMBER}.plus"
 		local
 			pq_1: like rational_number_to_be_tested
-			pq_2, pq_3: like some_rational_number
+			pq_2: like some_rational_number
 		do
 			pq_1 := rational_number_to_be_tested
 			pq_2 := some_rational_number
 			assert ("plus", attached (pq_1 + pq_2))
-			assert ("plus_ok", plus_ok (pq_1, pq_2, some_rational_number))
+			assert ("plus_ok", plus_ok (pq_1, pq_2))
+		end
+
+	test_minus
+			-- Test {STS_RATIONAL_NUMBER}.minus.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.minus"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			assert ("minus", attached (pq_1 - pq_2))
+			assert ("minus_ok", minus_ok (pq_1, pq_2))
 		end
 
 	test_opposite

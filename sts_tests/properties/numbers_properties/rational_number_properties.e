@@ -155,13 +155,25 @@ feature -- Properties (Relationship)
 
 feature -- Properties (Operation)
 
-	plus_ok (pq_1, pq_2, pq_3: STS_RATIONAL_NUMBER): BOOLEAN
+	plus_ok (pq_1, pq_2: STS_RATIONAL_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.plus?
 		do
 			check
 				neutral_left_term: (zero + pq_1) ≍ pq_1
 				neutral_right_term: (pq_1 + zero) ≍ pq_1
 				commutative: (pq_1 + pq_2) ≍ (pq_2 + pq_1)
+			then
+				Result := True
+			end
+		end
+
+	minus_ok (pq_1, pq_2: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.minus?
+		do
+			check
+				quasi_neutral_minuend: (zero - pq_1) ≍ -pq_1
+				neutral_subtrahend: (pq_1 - zero) ≍ pq_1
+				quasi_commutative: (pq_1 - pq_2).abs ≍ (pq_2 - pq_1).abs
 			then
 				Result := True
 			end

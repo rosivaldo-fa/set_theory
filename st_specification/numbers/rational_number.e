@@ -156,7 +156,7 @@ feature -- Comparison
 			check
 					-- Class invariant: q /= 0 and pq.q /= 0
 				good_divisor: p.divisible (q)
-				other_good_divisor: pq.p.divisible (pq.q)
+				pq_good_divisor: pq.p.divisible (pq.q)
 			end
 			if is_integer then
 				if pq.is_integer then
@@ -171,7 +171,7 @@ feature -- Comparison
 					check
 							-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒ rem (pq.p, pq.q) /= 0)
 						q_divisible_p_rem_q: q.divisible (rem (p, q))
-						other_p_divisible_other_p_rem_other_q: pq.q.divisible (rem (pq.p, pq.q))
+						pq_p_divisible_pq_p_rem_pq_q: pq.q.divisible (rem (pq.p, pq.q))
 					end
 					Result := div (p, q) < div (pq.p, pq.q) or div (p, q) ≍ div (pq.p, pq.q) and ((pq.q / rem (pq.p, pq.q)) < (q / rem (p, q)))
 				end
@@ -179,11 +179,11 @@ feature -- Comparison
 		ensure
 				-- Class invariant: q /= 0 and pq.q /= 0
 			good_divisor: p.divisible (q)
-			other_good_divisor: pq.p.divisible (pq.q)
+			pq_good_divisor: pq.p.divisible (pq.q)
 
 				-- (not is_integer ⇒ rem (p, q) /= 0) and (not pq.is_integer ⇒ rem (pq.p, pq.q) /= 0)
 			q_divisible_p_rem_q: not is_integer ⇒ q.divisible (rem (p, q))
-			other_q_divisible_other_p_rem_other_q: not pq.is_integer ⇒ pq.q.divisible (rem (pq.p, pq.q))
+			pq_q_divisible_pq_p_rem_pq_q: not pq.is_integer ⇒ pq.q.divisible (rem (pq.p, pq.q))
 
 			when_both_integer: is_integer and pq.is_integer ⇒ Result = (div (p, q) < div (pq.p, pq.q))
 			when_integer_by_fractional: is_integer and not pq.is_integer ⇒
@@ -246,7 +246,7 @@ feature -- Comparison
 			end
 		ensure
 			current_if_not_greater: Current ≤ pq ⇒ Result ≍ Current
-			other_if_greater: pq < Current ⇒ Result ≍ pq
+			pq_if_greater: pq < Current ⇒ Result ≍ pq
 		end
 
 	max alias "∨" (pq: RATIONAL_NUMBER): like rational_anchor
@@ -259,7 +259,7 @@ feature -- Comparison
 			end
 		ensure
 			current_if_not_smaller: Current ≥ pq ⇒ Result ≍ Current
-			other_if_smaller: Current < pq ⇒ Result ≍ pq
+			pq_if_smaller: Current < pq ⇒ Result ≍ pq
 		end
 
 feature -- Relationship
@@ -319,13 +319,13 @@ feature -- Operation
 			l_gcd, pq_q_by_gcd: INTEGER_NUMBER
 		do
 			l_gcd := gcd (q, pq.q)
-				check
-					non_zero_gcd: l_gcd ≭ zero.p -- q /= 0 and pq.q /= 0
-				end
+			check
+				non_zero_gcd: l_gcd ≭ zero.p -- q /= 0 and pq.q /= 0
+			end
 			pq_q_by_gcd := pq.q // l_gcd
-				check
-					good_divisor: (p * pq_q_by_gcd + pq.p * (q // l_gcd)).divisible (q * pq_q_by_gcd) -- (pq.q // l_gcd) /= 0
-				end
+			check
+				good_divisor: (p * pq_q_by_gcd + pq.p * (q // l_gcd)).divisible (q * pq_q_by_gcd) -- (pq.q // l_gcd) /= 0
+			end
 			Result := (p * pq_q_by_gcd + pq.p * (q // l_gcd)) / (q * pq_q_by_gcd)
 		ensure
 				-- a/b + c/d = (ad+cb)/bd = ((ad+cb)/g)/(bd/g) = (ad/g+cb/g)/(bd/g) = (a(d/g)+c(b/g))/(b(d/g)), where g = gcd (b, d)
@@ -333,6 +333,31 @@ feature -- Operation
 			non_zero_gcd: el_gcd ≭ zero.p -- q /= 0 and pq.q /= 0
 			good_divisor: (p * (pq.q // el_gcd) + pq.p * (q // el_gcd)).divisible (q * (pq.q // el_gcd)) -- (pq.q // el_gcd) /= 0
 			el_ratio: attached ((p * (pq.q // el_gcd) + pq.p * (q // el_gcd)) / (q * (pq.q // el_gcd))) as el_ratio
+
+			numerator: Result.p ≍ el_ratio.p
+			denominator: Result.q ≍ el_ratio.q
+		end
+
+	minus alias "-" alias "−" (pq: RATIONAL_NUMBER): like rational_anchor
+			-- Result of subtracting `pq` from current rational number
+		local
+			l_gcd, pq_q_by_gcd: INTEGER_NUMBER
+		do
+			l_gcd := gcd (q, pq.q)
+			check
+				non_zero_gcd: l_gcd ≭ zero.p -- q /= 0 and pq.q /= 0
+			end
+			pq_q_by_gcd := pq.q // l_gcd
+			check
+				good_divisor: (p * pq_q_by_gcd - pq.p * (q // l_gcd)).divisible (q * pq_q_by_gcd) -- (pq.q // l_gcd) /= 0
+			end
+			Result := (p * pq_q_by_gcd - pq.p * (q // l_gcd)) / (q * pq_q_by_gcd)
+		ensure
+				-- Please have a look at `plus' definition.
+			el_gcd: attached gcd (q, pq.q) as el_gcd
+			non_zero_gcd: el_gcd ≭ zero.p -- q /= 0 and pq.q /= 0
+			good_divisor: (p * (pq.q // el_gcd) - pq.p * (q // el_gcd)).divisible (q * (pq.q // el_gcd)) -- (pq.q // el_gcd) /= 0
+			el_ratio: attached ((p * (pq.q // el_gcd) - pq.p * (q // el_gcd)) / (q * (pq.q // el_gcd))) as el_ratio
 
 			numerator: Result.p ≍ el_ratio.p
 			denominator: Result.q ≍ el_ratio.q
@@ -354,9 +379,9 @@ feature -- Operation
 		require
 			is_invertible: is_invertible
 		do
-				check
-					good_divisor: q.divisible (p) -- p /= 0 ⇐ is_invertible
-				end
+			check
+				good_divisor: q.divisible (p) -- p /= 0 ⇐ is_invertible
+			end
 			Result := q / p
 		ensure
 			good_divisor: q.divisible (p) -- p /= 0 ⇐ is_invertible
@@ -481,7 +506,7 @@ feature -- Predicate
 						i < i.zero and j < i.zero and i.max_value_exists and then i < i.max_value // j or
 						i < i.zero and j > i.zero and i.min_value_exists and then i < i.min_value // j or
 						i > i.zero and j < - i.one and i.min_value_exists and then -- TODO: It assumes a two's-complement implementation, where
-							i > i.min_value // j or								   -- i.min_value // - 1 overflows.
+						i > i.min_value // j or -- i.min_value // - 1 overflows.
 						i > i.zero and j > i.zero and i.max_value_exists and then i > i.max_value // j
 					)
 		end
