@@ -45,6 +45,7 @@ inherit
 			test_is_greater_equal,
 			test_three_way_comparison,
 			test_multipliable,
+			test_divisible,
 			test_min,
 			test_max,
 			test_reciprocal,
@@ -78,7 +79,7 @@ feature -- Access
 	one: STI_RATIONAL_NUMBER
 			-- <Precursor>
 		once
-			Result := {STI_RATIONAL_NUMBER}.Zero
+			Result := {STI_RATIONAL_NUMBER}.One
 		ensure then
 			class
 			numerator: Result.p ≍ {STI_INTEGER_NUMBER}.One
@@ -341,6 +342,32 @@ feature -- Test routines (Relationship)
 				pq_1.multipliable (pq_2)
 				)
 			assert ("even when overflows ok", multipliable_ok (pq_1, pq_2))
+		end
+
+	test_divisible
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.divisible.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.divisible"
+			testing: "covers/{STI_RATIONAL_NUMBER}.divisible"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			check
+				good_divisor_1: pq_1.q.divisible (gcd (pq_2.q, pq_1.q)) -- pq_1.q, pq_2.q /= 0
+				good_divisor_2: pq_2 ≭ zero ⇒ pq_2.p.divisible (gcd (pq_1.p, pq_2.p)) -- pq_2.p /= 0 ⇐ pq_2 ≭ zero
+			end
+			assert (
+				"even when overflows",
+				pq_2 ≭ zero and then pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.q, pq_1.q), pq_2.p // gcd (pq_1.p, pq_2.p)) and
+				(pq_1.q // gcd (pq_2.q, pq_1.q)) ⋅ (pq_2.p // gcd (pq_1.p, pq_2.p)) ≭ Zero.p ⇒
+				pq_1.divisible (pq_2)
+				)
+			assert ("even when overflows ok", divisible_ok (pq_1, pq_2))
 		end
 
 feature -- Test routines (Operation)
