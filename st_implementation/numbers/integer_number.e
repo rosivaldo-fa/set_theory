@@ -11,6 +11,7 @@ inherit
 	STS_INTEGER_NUMBER
 		redefine
 			default_create,
+			sign,
 			out,
 			three_way_comparison,
 			min,
@@ -60,6 +61,16 @@ feature -- Primitive
 		end
 
 feature -- Access
+
+	sign: like integer_anchor
+			-- <Precursor>
+		do
+				check
+					not_too_small: Native_min_value ≤ stored_value.sign -- -1 ≤ stored_value.sign
+					not_too_big: stored_value.sign ≤ Native_max_value -- stored_value.sign ≤ 1
+				end
+			create Result.make (stored_value.sign)
+		end
 
 	Zero: INTEGER_NUMBER
 			-- <Precursor>

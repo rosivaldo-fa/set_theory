@@ -33,6 +33,7 @@ inherit
 			test_denominator,
 			test_is_in,
 			test_is_not_in,
+			test_sign,
 			test_zero,
 			test_one,
 			test_is_integer,
@@ -191,6 +192,14 @@ feature -- Test routines (Membership)
 		end
 
 feature -- Test routines (Access)
+
+	test_sign
+			-- Test {STI_RATIONAL_NUMBER}.sign.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.sign"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
 
 	test_zero
 			-- Test {STI_RATIONAL_NUMBER}.zero.

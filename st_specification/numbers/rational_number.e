@@ -59,6 +59,14 @@ feature -- Membership
 
 feature -- Access
 
+	sign: like integer_anchor
+			-- Sign of current number as an integer value (0, -1 or 1)
+		do
+			Result := Current ⋚ zero
+		ensure
+			three_way: Result ≍ (Current ⋚ zero)
+		end
+
 	zero: like rational_anchor
 			-- The rational number 0/1
 		deferred
@@ -290,6 +298,30 @@ feature -- Relationship
 		end
 
 feature -- Operation
+
+	modulus,
+	abs: like rational_anchor
+			-- Distance from current rational number to the origin of the real number line
+		do
+			if Current < zero then
+				Result := - Current
+			else
+				Result := Current
+			end
+		ensure then
+			when_negative: Current < zero ⇒ Result ≍ (- Current)
+			when_non_negative: Current ≥ zero ⇒ Result ≍ Current
+		end
+
+	opposite alias "-" alias "−": like rational_anchor
+			-- Opposite value of current number relative to addition, i.e. `Current' + (- `Current') = 0.
+			--| It departs from {REAL_NUMBER}.opposite in order to allow the latter to produce "negative" zeros without obliging current class to do the same.
+			-- TODO: properties, tests
+		deferred
+		ensure
+			sign: Result.sign ≍ - sign
+			abs_value: Result.abs ≍ abs
+		end
 
 	reciprocal,
 	inverse: like rational_anchor

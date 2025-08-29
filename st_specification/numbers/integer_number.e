@@ -43,6 +43,14 @@ feature -- Membership
 
 feature -- Access
 
+	sign: like integer_anchor
+			-- Sign of current number as an integer value (0, -1 or 1)
+		do
+			Result := Current ⋚ zero
+		ensure
+			three_way: Result ≍ (Current ⋚ zero)
+		end
+
 	zero: like integer_anchor
 			-- The integer number 0
 		deferred

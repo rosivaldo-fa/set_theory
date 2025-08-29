@@ -50,6 +50,7 @@ feature -- Test routines (All)
 			test_denominator
 			test_is_in
 			test_is_not_in
+			test_sign
 			test_zero
 			test_one
 			test_is_integer
@@ -168,6 +169,38 @@ feature -- Test routines (Membership)
 		end
 
 feature -- Test routines (Access)
+
+	test_sign
+			-- Test {STS_RATIONAL_NUMBER}.sign.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.sign"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			from
+				pq := rational_number_to_be_tested
+			until
+				pq < Zero
+			loop
+				pq := rational_number_to_be_tested
+			end
+			assert ("negative", pq.sign ≍ - pq.sign.one)
+
+			pq := Zero
+			assert ("unchanged zero", (- pq).sign ≍ Zero.p)
+			assert ("just zero", pq.sign ≍ Zero.p)
+
+			from
+				pq := rational_number_to_be_tested
+			until
+				pq > Zero
+			loop
+				pq := rational_number_to_be_tested
+			end
+			assert ("positive", pq.sign ≍ pq.sign.one)
+
+			assert ("sign", attached rational_number_to_be_tested.sign)
+		end
 
 	test_zero
 			-- Test {STS_RATIONAL_NUMBER}.zero.

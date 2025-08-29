@@ -27,9 +27,12 @@ inherit
 			q as denominator
 		redefine
 			default_create,
+			sign,
 			min,
 			max,
 			multipliable,
+			modulus,
+			abs,
 			converted_integer,
 			integer_product_overflows
 		end
@@ -87,6 +90,12 @@ feature -- Primitive
 		end
 
 feature -- Access
+
+	sign: like integer_anchor
+			-- <Precursor>
+		do
+			Result := p.sign ⋅ q.sign -- TODO: Take native sign bit instead?
+		end
 
 	zero: RATIONAL_NUMBER
 			-- <Precursor>
@@ -156,6 +165,79 @@ feature -- Relationship
 			good_divisor_1: q.divisible (gcd_1)
 			good_divisor_2: pq.q.divisible (gcd_2)
 			definition: Result = (q // gcd_1) ⋅ (pq.q // gcd_2) ≭ Zero.p
+		end
+
+feature -- Operation
+
+	modulus,
+	abs: like rational_anchor
+			-- <Precursor>
+		do
+			if p.sign ⋅ q.sign ≥ q.Zero then
+				Result := Current
+			elseif p ≍ {INTEGER_NUMBER}.Min_value then
+					check
+							-- Class invariant: q /= 0
+						good_divisor: p.divisible (- q)
+					end
+				Result := p / -q
+			elseif q ≍ {INTEGER_NUMBER}.Min_value then
+					check
+							-- q ≍ {INTEGER_NUMBER}.Min_value /= 0
+						good_divisor: (- p).divisible (q)
+					end
+				Result := -p / q
+			else
+					check
+							-- Class invariant: q /= 0
+						good_divisor: (- p).divisible (q)
+					end
+				Result := -p / q
+			end
+		end
+
+	opposite alias "-" alias "−": like rational_anchor
+			-- <Precursor>
+		do
+
+			if q > q.Zero then
+				if p ≭ {INTEGER_NUMBER}.Min_value then
+						check
+								-- p ≭ {INTEGER_NUMBER}.Min_value
+							(- p).sign ≍ - p.sign
+							minus_p_divisible_q: (- p).divisible (q) -- q > 0
+						end
+					create Result.make (- p, q)
+				else
+						check
+								-- q ≭ {INTEGER_NUMBER}.Min_value ⇐ q > 0
+							(- q).sign ≍ - q.sign
+							p_divisible_minus_q: -- -q < 0 ⇐ q > 0
+								p.divisible (- q)
+						end
+					create Result.make (p, - q)
+				end
+			else
+				if p ≭ {INTEGER_NUMBER}.Min_value then
+						check
+								-- p ≭ {INTEGER_NUMBER}.Min_value
+							(- p).sign ≍ - p.sign
+							minus_p_divisible_q: -- Class invariant: q /= 0
+								(- p).divisible (q)
+						end
+					create Result.make (- p, q)
+				else
+						check
+								-- q ≭ {INTEGER_NUMBER}.Min_value ⇐
+								-- 	p ≍ {INTEGER_NUMBER}.Min_value
+							(- q).sign ≍ - q.sign
+
+								-- -q /= 0 ⇐ Class invariant: q /= 0
+							p_divisible_minus_q: p.divisible (- q)
+						end
+					create Result.make (p, - q)
+				end
+			end
 		end
 
 feature -- Factory
