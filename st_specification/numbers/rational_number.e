@@ -313,6 +313,31 @@ feature -- Operation
 			when_non_negative: Current ≥ zero ⇒ Result ≍ Current
 		end
 
+	plus alias "+" (pq: RATIONAL_NUMBER): like rational_anchor
+			-- Sum of current rational number with `pq`
+		local
+			l_gcd, pq_q_by_gcd: INTEGER_NUMBER
+		do
+			l_gcd := gcd (q, pq.q)
+				check
+					non_zero_gcd: l_gcd ≭ zero.p -- q /= 0 and pq.q /= 0
+				end
+			pq_q_by_gcd := pq.q // l_gcd
+				check
+					good_divisor: (p * pq_q_by_gcd + pq.p * (q // l_gcd)).divisible (q * pq_q_by_gcd) -- (pq.q // l_gcd) /= 0
+				end
+			Result := (p * pq_q_by_gcd + pq.p * (q // l_gcd)) / (q * pq_q_by_gcd)
+		ensure
+				-- a/b + c/d = (ad+cb)/bd = ((ad+cb)/g)/(bd/g) = (ad/g+cb/g)/(bd/g) = (a(d/g)+c(b/g))/(b(d/g)), where g = gcd (b, d)
+			el_gcd: attached gcd (q, pq.q) as el_gcd
+			non_zero_gcd: el_gcd ≭ zero.p -- q /= 0 and pq.q /= 0
+			good_divisor: (p * (pq.q // el_gcd) + pq.p * (q // el_gcd)).divisible (q * (pq.q // el_gcd)) -- (pq.q // el_gcd) /= 0
+			el_ratio: attached ((p * (pq.q // el_gcd) + pq.p * (q // el_gcd)) / (q * (pq.q // el_gcd))) as el_ratio
+
+			numerator: Result.p ≍ el_ratio.p
+			denominator: Result.q ≍ el_ratio.q
+		end
+
 	opposite alias "-" alias "−": like rational_anchor
 			-- Opposite value of current number relative to addition, i.e. `Current' + (- `Current') = 0.
 			--| It departs from {REAL_NUMBER}.opposite in order to allow the latter to produce "negative" zeros without obliging current class to do the same.

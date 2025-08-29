@@ -51,6 +51,7 @@ inherit
 			test_max,
 			test_modulus,
 			test_abs,
+			test_plus,
 			test_opposite,
 			test_reciprocal,
 			test_inverse,
@@ -384,6 +385,16 @@ feature -- Test routines (Operation)
 			-- Test {STI_RATIONAL_NUMBER}.abs.
 		note
 			testing: "covers/{STI_RATIONAL_NUMBER}.abs"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_plus
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.plus.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.plus"
+			testing: "covers/{STI_RATIONAL_NUMBER}.plus"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
