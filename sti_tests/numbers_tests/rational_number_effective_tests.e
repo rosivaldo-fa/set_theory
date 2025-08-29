@@ -50,6 +50,7 @@ inherit
 			test_min,
 			test_max,
 			test_modulus,
+			test_abs,
 			test_opposite,
 			test_reciprocal,
 			test_inverse,
@@ -335,10 +336,10 @@ feature -- Test routines (Relationship)
 				good_divisor_2: pq_2.q.divisible (gcd (pq_1.p, pq_2.q)) -- pq_2.q /= 0
 			end
 			assert (
-				"even when overflows",
-				pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q)) and
-				(pq_1.q // gcd (pq_2.p, pq_1.q)) ⋅ (pq_2.q // gcd (pq_1.p, pq_2.q)) ≭ Zero.p ⇒
-				pq_1.multipliable (pq_2)
+					"even when overflows",
+					pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q)) and
+					(pq_1.q // gcd (pq_2.p, pq_1.q)) ⋅ (pq_2.q // gcd (pq_1.p, pq_2.q)) ≭ Zero.p ⇒
+					pq_1.multipliable (pq_2)
 				)
 			assert ("even when overflows ok", multipliable_ok (pq_1, pq_2))
 		end
@@ -361,10 +362,10 @@ feature -- Test routines (Relationship)
 				good_divisor_2: pq_2 ≭ zero ⇒ pq_2.p.divisible (gcd (pq_1.p, pq_2.p)) -- pq_2.p /= 0 ⇐ pq_2 ≭ zero
 			end
 			assert (
-				"even when overflows",
-				pq_2 ≭ zero and then pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.q, pq_1.q), pq_2.p // gcd (pq_1.p, pq_2.p)) and
-				(pq_1.q // gcd (pq_2.q, pq_1.q)) ⋅ (pq_2.p // gcd (pq_1.p, pq_2.p)) ≭ Zero.p ⇒
-				pq_1.divisible (pq_2)
+					"even when overflows",
+					pq_2 ≭ zero and then pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.q, pq_1.q), pq_2.p // gcd (pq_1.p, pq_2.p)) and
+					(pq_1.q // gcd (pq_2.q, pq_1.q)) ⋅ (pq_2.p // gcd (pq_1.p, pq_2.p)) ≭ Zero.p ⇒
+					pq_1.divisible (pq_2)
 				)
 			assert ("even when overflows ok", divisible_ok (pq_1, pq_2))
 		end
@@ -375,6 +376,14 @@ feature -- Test routines (Operation)
 			-- Test {STI_RATIONAL_NUMBER}.modulus.
 		note
 			testing: "covers/{STI_RATIONAL_NUMBER}.modulus"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_abs
+			-- Test {STI_RATIONAL_NUMBER}.abs.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.abs"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
@@ -466,4 +475,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

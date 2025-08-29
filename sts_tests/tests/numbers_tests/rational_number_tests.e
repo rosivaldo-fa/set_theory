@@ -53,6 +53,7 @@ feature -- Test routines (All)
 			test_min
 			test_max
 			test_modulus
+			test_abs
 			test_opposite
 			test_reciprocal
 			test_inverse
@@ -687,6 +688,14 @@ feature -- Test routines (Operation)
 			testing: "covers/{STS_RATIONAL_NUMBER}.modulus"
 		do
 			assert ("modulus", attached rational_number_to_be_tested.modulus)
+		end
+
+	test_abs
+			-- Test {STS_RATIONAL_NUMBER}.abs.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.abs"
+		do
+			assert ("abs", attached rational_number_to_be_tested.abs)
 		end
 
 	test_opposite
