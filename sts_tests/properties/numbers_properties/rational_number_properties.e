@@ -209,6 +209,18 @@ feature -- Properties (Operation)
 			end
 		end
 
+	quotient_ok (pq_1: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.quotient?
+		do
+			check
+				absorbing_dividend: zero.divisible (pq_1) ⇒ (zero / pq_1) ≍ zero
+					good_divisor: pq_1.divisible (one) -- 1 is an invertible, neutral factor.
+				neutral_divisor: (pq_1 / one) ≍ pq_1
+			then
+				Result := True
+			end
+		end
+
 feature -- Properties (Math)
 
 	gcd_ok (pq: STS_RATIONAL_NUMBER; i, j, k: STS_INTEGER_NUMBER): BOOLEAN

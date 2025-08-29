@@ -404,6 +404,21 @@ feature -- Operation
 			denominator: Result.q ≍ el_ratio.q
 		end
 
+	quotient alias "/" alias "÷" (pq: RATIONAL_NUMBER): like rational_anchor
+			-- Division of current rational number by `pq`
+		require
+			good_divisor: divisible (pq)
+		do
+				check
+					good_factor: multipliable (pq.inverse) -- divisible (pq)
+				end
+			Result := Current ⋅ pq.inverse
+		ensure
+				good_factor: multipliable (pq.inverse) -- divisible (pq)
+			numerator: Result.p ≍ (Current ⋅ pq.inverse).p
+			denominator: Result.q ≍ (Current ⋅ pq.inverse).q
+		end
+
 	reciprocal,
 	inverse: like rational_anchor
 			-- Reciprocal (AKA inverse) value of current rational number relative to multiplication, i.e. `Current' ⋅ `reciprocal' = `Current' ⋅ `inverse' = 1.

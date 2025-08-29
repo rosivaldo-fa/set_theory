@@ -749,10 +749,31 @@ feature -- Test routines (Operation)
 			pq_1: like rational_number_to_be_tested
 			pq_2: like some_rational_number
 		do
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			until
+				pq_1.multipliable (pq_2)
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
+			assert ("product", attached (pq_1 * pq_2))
+			assert ("product_ok", product_ok (pq_1, pq_2))
+		end
+
+	test_quotient
+			-- Test {STS_RATIONAL_NUMBER}.quotient.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.quotient"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
 			pq_1 := rational_number_to_be_tested
 			pq_2 := some_rational_number
-			assert ("product", attached (pq_1 - pq_2))
-			assert ("product_ok", product_ok (pq_1, pq_2))
+			assert ("quotient", attached (pq_1 / pq_2))
+			assert ("quotient_ok", quotient_ok (pq_1))
 		end
 
 	test_reciprocal
