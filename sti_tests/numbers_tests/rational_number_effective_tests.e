@@ -55,6 +55,7 @@ inherit
 			test_minus,
 			test_opposite,
 			test_product,
+			test_quotient,
 			test_reciprocal,
 			test_inverse,
 			test_gcd,
@@ -425,6 +426,16 @@ feature -- Test routines (Operation)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.product"
 			testing: "covers/{STI_RATIONAL_NUMBER}.product"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_quotient
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.quotient.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.quotient"
+			testing: "covers/{STI_RATIONAL_NUMBER}.quotient"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

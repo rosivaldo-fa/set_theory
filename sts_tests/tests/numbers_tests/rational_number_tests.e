@@ -58,6 +58,7 @@ feature -- Test routines (All)
 			test_minus
 			test_opposite
 			test_product
+			test_quotient
 			test_reciprocal
 			test_inverse
 			test_gcd
@@ -770,8 +771,15 @@ feature -- Test routines (Operation)
 			pq_1: like rational_number_to_be_tested
 			pq_2: like some_rational_number
 		do
-			pq_1 := rational_number_to_be_tested
-			pq_2 := some_rational_number
+			from
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			until
+				pq_1.divisible (pq_2)
+			loop
+				pq_1 := rational_number_to_be_tested
+				pq_2 := some_rational_number
+			end
 			assert ("quotient", attached (pq_1 / pq_2))
 			assert ("quotient_ok", quotient_ok (pq_1))
 		end
