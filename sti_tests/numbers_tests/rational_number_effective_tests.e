@@ -49,6 +49,7 @@ inherit
 			test_divisible,
 			test_min,
 			test_max,
+			test_modulus,
 			test_opposite,
 			test_reciprocal,
 			test_inverse,
@@ -369,6 +370,14 @@ feature -- Test routines (Relationship)
 		end
 
 feature -- Test routines (Operation)
+
+	test_modulus
+			-- Test {STI_RATIONAL_NUMBER}.modulus.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.modulus"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
 
 	test_opposite
 			-- Test {STI_RATIONAL_NUMBER}.opposite.

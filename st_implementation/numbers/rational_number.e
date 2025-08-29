@@ -154,10 +154,10 @@ feature -- Relationship
 		do
 			l_gcd_1 := gcd (pq.p, q)
 			l_gcd_2 := gcd (p, pq.q)
-				check
-					good_divisor_1: q.divisible (l_gcd_1) -- l_gcd_1 /= 0 ⇐ q /= 0
-					good_divisor_2: pq.q.divisible (l_gcd_2) -- l_gcd_2 /= 0 ⇐ pq.q /= 0
-				end
+			check
+				good_divisor_1: q.divisible (l_gcd_1) -- l_gcd_1 /= 0 ⇐ q /= 0
+				good_divisor_2: pq.q.divisible (l_gcd_2) -- l_gcd_2 /= 0 ⇐ pq.q /= 0
+			end
 			Result := (q // l_gcd_1) ⋅ (pq.q // l_gcd_2) ≭ Zero.p
 		ensure then
 			gcd_1: attached gcd (pq.p, q) as gcd_1
@@ -176,23 +176,25 @@ feature -- Operation
 			if p.sign ⋅ q.sign ≥ q.Zero then
 				Result := Current
 			elseif p ≍ {INTEGER_NUMBER}.Min_value then
+				if q ≍ {INTEGER_NUMBER}.Min_value then
+						-- Current = One
+					Result := Current
+				else
 					check
-							-- Class invariant: q /= 0
-						good_divisor: p.divisible (- q)
+						good_divisor: p.divisible (- q) -- Class invariant: q /= 0
 					end
-				Result := p / -q
+					Result := p / - q
+				end
 			elseif q ≍ {INTEGER_NUMBER}.Min_value then
-					check
-							-- q ≍ {INTEGER_NUMBER}.Min_value /= 0
-						good_divisor: (- p).divisible (q)
-					end
-				Result := -p / q
+				check
+					good_divisor: (- p).divisible (q) -- q ≍ {INTEGER_NUMBER}.Min_value /= 0
+				end
+				Result := - p / q
 			else
-					check
-							-- Class invariant: q /= 0
-						good_divisor: (- p).divisible (q)
-					end
-				Result := -p / q
+				check
+					good_divisor: (- p).divisible (q) -- Class invariant: q /= 0
+				end
+				Result := - p / q
 			end
 		end
 
@@ -202,35 +204,35 @@ feature -- Operation
 
 			if q > q.Zero then
 				if p ≭ {INTEGER_NUMBER}.Min_value then
-						check
-							(- p).sign ≍ - p.sign
-							minus_p_divisible_q: (- p).divisible (q) -- q > 0
-						end
+					check
+						(- p).sign ≍ - p.sign
+						minus_p_divisible_q: (- p).divisible (q) -- q > 0
+					end
 					create Result.make (- p, q)
 				else
-						check
-							(- q).sign ≍ - q.sign -- q ≭ {INTEGER_NUMBER}.Min_value ⇐ q > 0
-							p_divisible_minus_q: p.divisible (- q) -- - q < 0 ⇐ q > 0
-						end
+					check
+						(- q).sign ≍ - q.sign -- q ≭ {INTEGER_NUMBER}.Min_value ⇐ q > 0
+						p_divisible_minus_q: p.divisible (- q) -- - q < 0 ⇐ q > 0
+					end
 					create Result.make (p, - q)
 				end
 			else
 				if p ≭ {INTEGER_NUMBER}.Min_value then
-						check
-							(- p).sign ≍ - p.sign
-							minus_p_divisible_q: (- p).divisible (q) -- Class invariant: q /= 0
-						end
+					check
+						(- p).sign ≍ - p.sign
+						minus_p_divisible_q: (- p).divisible (q) -- Class invariant: q /= 0
+					end
 					create Result.make (- p, q)
 				elseif q ≭ {INTEGER_NUMBER}.Min_value then
 
-						check
-							(- q).sign ≍ - q.sign
-							p_divisible_minus_q: p.divisible (- q) -- - q /= 0 ⇐ Class invariant: q /= 0
-						end
+					check
+						(- q).sign ≍ - q.sign
+						p_divisible_minus_q: p.divisible (- q) -- - q /= 0 ⇐ Class invariant: q /= 0
+					end
 					create Result.make (p, - q)
 				else
 						-- p / q = {INTEGER_NUMBER}.Min_value / {INTEGER_NUMBER}.Min_value
-					create Result.make (- p.One , q.One)
+					create Result.make (- p.One, q.One)
 				end
 			end
 		end
