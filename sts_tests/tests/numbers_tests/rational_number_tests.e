@@ -57,6 +57,7 @@ feature -- Test routines (All)
 			test_plus
 			test_minus
 			test_opposite
+			test_product
 			test_reciprocal
 			test_inverse
 			test_gcd
@@ -738,6 +739,20 @@ feature -- Test routines (Operation)
 			pq := rational_number_to_be_tested
 			assert ("opposite", attached (- pq))
 			assert ("opposite_ok", opposite_ok (pq))
+		end
+
+	test_product
+			-- Test {STS_RATIONAL_NUMBER}.product.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.product"
+		local
+			pq_1: like rational_number_to_be_tested
+			pq_2: like some_rational_number
+		do
+			pq_1 := rational_number_to_be_tested
+			pq_2 := some_rational_number
+			assert ("product", attached (pq_1 - pq_2))
+			assert ("product_ok", product_ok (pq_1, pq_2))
 		end
 
 	test_reciprocal

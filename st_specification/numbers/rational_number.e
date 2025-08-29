@@ -373,6 +373,37 @@ feature -- Operation
 			abs_value: Result.abs ≍ abs
 		end
 
+	product alias "*" alias "×" alias "⋅" (pq: RATIONAL_NUMBER): like rational_anchor
+			-- Current rational number multiplied by `pq`
+			--| NOTICE: There is a precondition! If the implementation of {INTEGER_NUMBER}.product produces overflows, we may get a denominator unexpectedly
+			--| equal to `zero'. Since we can't assume that a particular overflow will consistently produce a value unequal to `zero', we better to avoid
+			--| overflows altogether.
+			--| Notice also that an occasional overflow on calculating the numerator, even if it yields a zero, does not produce an invalid rational number.
+		require
+			good_factor: multipliable (pq)
+		local
+			l_gcd_1, l_gcd_2: like gcd
+		do
+			l_gcd_1 := gcd (p, pq.q)
+			l_gcd_2 := gcd (pq.p, q)
+				check
+					non_zero_gcd_1: l_gcd_1 ≭ zero.p -- pq.q /= 0
+					non_zero_gcd_2: l_gcd_2 ≭ zero.p -- q /= 0
+					good_divisor: ((p // l_gcd_1) * (pq.p // l_gcd_2)).divisible ((q // l_gcd_2) * (pq.q // l_gcd_1)) -- q /= 0 and pq.q /= 0
+				end
+			Result := ((p // l_gcd_1) * (pq.p // l_gcd_2)) / ((q // l_gcd_2) * (pq.q // l_gcd_1))
+		ensure
+			gcd_1: attached gcd (p, pq.q) as gcd_1
+			gcd_2: attached gcd (pq.p, q) as gcd_2
+			non_zero_gcd_1: gcd_1 ≭ zero.p -- pq.q /= 0
+			non_zero_gcd_2: gcd_2 ≭ zero.p -- q /= 0
+			good_divisor: ((p // gcd_1) * (pq.p // gcd_2)).divisible ((q // gcd_2) * (pq.q // gcd_1)) -- q /= 0 and pq.q /= 0
+			el_ratio: attached (((p // gcd_1) * (pq.p // gcd_2)) / ((q // gcd_2) * (pq.q // gcd_1))) as el_ratio
+
+			numerator: Result.p ≍ el_ratio.p
+			denominator: Result.q ≍ el_ratio.q
+		end
+
 	reciprocal,
 	inverse: like rational_anchor
 			-- Reciprocal (AKA inverse) value of current rational number relative to multiplication, i.e. `Current' ⋅ `reciprocal' = `Current' ⋅ `inverse' = 1.

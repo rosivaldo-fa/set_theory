@@ -171,7 +171,7 @@ feature -- Properties (Operation)
 			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.minus?
 		do
 			check
-				quasi_neutral_minuend: (zero - pq_1) ≍ -pq_1
+				quasi_neutral_minuend: (zero - pq_1) ≍ - pq_1
 				neutral_subtrahend: (pq_1 - zero) ≍ pq_1
 				quasi_commutative: (pq_1 - pq_2).abs ≍ (pq_2 - pq_1).abs
 			then
@@ -184,6 +184,26 @@ feature -- Properties (Operation)
 		do
 			check
 				inverted_sign: (- pq).sign ≍ - pq.sign
+			then
+				Result := True
+			end
+		end
+
+	product_ok (pq_1, pq_2: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_RATIONAL_NUMBER}.product?
+		do
+			check
+				left_good_factor: one.multipliable (pq_1) -- 1 is a neutral factor.
+				neutral_left_factor: (one ⋅ pq_1) ≍ pq_1
+				right_good_factor: pq_1.multipliable (one) -- 1 is a neutral factor.
+				neutral_right_factor: pq_1 ⋅ one ≍ pq_1
+				absorbing_left_good_factor: zero.multipliable (pq_1) -- Denominator equal to 1 is a neutral factor.
+				absorbing_left_factor: (zero ⋅ pq_1) ≍ zero
+				absorbing_right_good_factor: pq_1.multipliable (zero) -- Denominator equal to 1 is a neutral factor.
+				absorbing_right_factor: pq_1 ⋅ zero ≍ zero
+				commutative: pq_1.multipliable (pq_2) ⇒
+					pq_2.multipliable (pq_1) -- Commutativity
+					and then (pq_1 ⋅ pq_2) ≍ (pq_2 ⋅ pq_1)
 			then
 				Result := True
 			end
@@ -237,9 +257,9 @@ feature -- Math
 			if j ≍ zero.p then
 				Result := i.abs
 			else
-					check
-						good_divisor: i.divisible (j) -- j /= 0
-					end
+				check
+					good_divisor: i.divisible (j) -- j /= 0
+				end
 				Result := gcd (j, i \\ j)
 			end
 		ensure
@@ -262,4 +282,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end
