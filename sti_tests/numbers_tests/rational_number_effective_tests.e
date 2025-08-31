@@ -234,6 +234,16 @@ feature -- Test routines (Quality)
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {STI_RATIONAL_NUMBER}.out.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.out"
+		do
+			assert ("out", attached rational_number_to_be_tested.out)
+		end
+
 feature -- Test routines (Comparison)
 
 	test_equals

@@ -28,6 +28,7 @@ inherit
 		redefine
 			default_create,
 			sign,
+			out,
 			min,
 			max,
 			multipliable,
@@ -35,6 +36,14 @@ inherit
 			abs,
 			converted_integer,
 			integer_product_overflows
+		end
+
+	DEBUG_OUTPUT
+		rename
+			debug_output as out
+		redefine
+			default_create,
+			out
 		end
 
 create
@@ -114,6 +123,21 @@ feature -- Access
 			class
 			numerator: Result.p ≍ {INTEGER_NUMBER}.One
 			denominator: Result.q ≍ {INTEGER_NUMBER}.One
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		do
+			Result := p.out
+			Result.append_character ('/')
+				check
+					argument_not_void: q.out /= Void -- {INTEGER_NUMBER}.out definition
+				end
+			Result.append (q.out)
+		ensure then
+			definition: Result ~ p.out + "/" + q.out
 		end
 
 feature -- Comparison
