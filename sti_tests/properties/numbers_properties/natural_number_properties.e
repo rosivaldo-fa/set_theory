@@ -1,0 +1,96 @@
+﻿note
+	description: "Implementation of {STST_NATURAL_NUMBER_PROPERTIES}."
+	author: "Rosivaldo F Alves"
+	date: "$Date$"
+	revision: "$Revision$"
+
+class
+	NATURAL_NUMBER_PROPERTIES
+
+inherit
+	STST_NATURAL_NUMBER_PROPERTIES
+
+feature -- Access
+
+	zero: STI_NATURAL_NUMBER
+			-- <Precursor>
+		once
+		end
+
+	One: STI_NATURAL_NUMBER
+			-- <Precursor>
+		once
+			Result := {STI_NATURAL_NUMBER}.One
+		ensure then
+			class
+		end
+
+--feature -- Properties (Relationship)
+
+--	multipliable_ok (pq_1, pq_2: STS_RATIONAL_NUMBER): BOOLEAN
+--			-- Do the properties verified within number theory hold for {STI_RATIONAL_NUMBER}.multipliable?
+--		do
+--			if Precursor {STST_RATIONAL_NUMBER_PROPERTIES} (pq_1, pq_2) then
+--				check
+--					gcd_1: attached gcd (pq_2.p, pq_1.q) as gcd_1
+--					gcd_2: attached gcd (pq_1.p, pq_2.q) as gcd_2
+--					good_divisor_1: pq_1.q.divisible (gcd_1) -- gcd_1 /= 0 ⇐ pq_1.q /= 0
+--					good_divisor_2: pq_2.q.divisible (gcd_2) -- gcd_2 /= 0 ⇐ pq_2.q /= 0
+--					accepted_overflow:
+--						{STI_RATIONAL_NUMBER}.integer_product_overflows (pq_1.q // gcd_1, pq_2.q // gcd_2) and (pq_1.q // gcd_1) ⋅ (pq_2.q // gcd_2) ≭ Zero.p ⇒
+--						pq_1.multipliable (pq_2)
+--				then
+--					Result := True
+--				end
+--			end
+--		end
+
+--	divisible_ok (pq_1: STI_RATIONAL_NUMBER; pq_2: STS_RATIONAL_NUMBER): BOOLEAN
+--			-- Do the properties verified within number theory hold for {STI_RATIONAL_NUMBER}.divisible?
+--		do
+--			check
+--				good_divisor_1: pq_1.q.divisible (gcd (pq_2.q, pq_1.q)) -- pq_2.q, pq_1.q /= 0
+--				good_divisor_2: pq_2.p ≭ Zero.p ⇒ pq_2.p.divisible (gcd (pq_1.p, pq_2.p))
+--				when_divisible: pq_1.divisible (pq_2) ⇒
+--					pq_2.p ≭ Zero.p and then ((pq_1.q // gcd (pq_2.q, pq_1.q)) ⋅ (pq_2.p // gcd (pq_1.p, pq_2.p))) ≭ Zero.p
+--			then
+--				Result := True
+--			end
+--		end
+
+feature -- Properties (Conversion)
+
+	as_integer_ok (n: STI_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STI_NATURAL_NUMBER}.as_integer?
+		do
+			check
+				natural: n.as_integer.is_natural
+			then
+				Result := True
+			end
+		end
+
+feature -- Anchor
+
+	natural_anchor: STI_NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
+	integer_anchor: STI_INTEGER_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
+note
+	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	license: "[
+		Eiffel Forum License v2
+		(see https://www.eiffel.com/licensing/forum.txt)
+		]"
+	source: "https://github.com/rosivaldo-fa/set_theory"
+end

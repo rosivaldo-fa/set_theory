@@ -43,7 +43,8 @@ create
 
 convert
 	make ({NATURAL}),
-	make_from_reference ({STS_NATURAL_NUMBER})
+	make_from_reference ({STS_NATURAL_NUMBER}),
+	as_integer: {INTEGER_NUMBER}
 
 feature {NONE} -- Initialization
 
@@ -320,6 +321,14 @@ feature -- Conversion
 		ensure
 			numerator: Result.p ≍ Current
 			denominator: Result.q ≍ One
+		end
+
+	as_integer: like Integer_anchor
+			-- Current natural number represented as an integer number
+		do
+			create Result.make (stored_value)
+		ensure
+			value: Result.value = value
 		end
 
 feature -- Factory

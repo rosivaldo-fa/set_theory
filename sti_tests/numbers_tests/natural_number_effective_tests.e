@@ -62,22 +62,27 @@ inherit
 			natural_number_to_be_tested
 		end
 
+	NATURAL_NUMBER_PROPERTIES
+		undefine
+			default_create
+		end
+
 feature -- Access
 
-	zero: STI_NATURAL_NUMBER
-			-- <Precursor>
-		once
-		ensure then
-			class
-		end
+--	zero: STI_NATURAL_NUMBER
+--			-- <Precursor>
+--		once
+--		ensure then
+--			class
+--		end
 
-	one: STI_NATURAL_NUMBER
-			-- <Precursor>
-		once
-			create Result.make (1)
-		ensure then
-			class
-		end
+--	one: STI_NATURAL_NUMBER
+--			-- <Precursor>
+--		once
+--			create Result.make (1)
+--		ensure then
+--			class
+--		end
 
 feature -- Test routines (All)
 
@@ -343,6 +348,21 @@ feature -- Test routines (Operation)
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Conversion)
+
+	test_as_integer
+			-- Test {STI_NATURAL_NUMBER}.as_integer.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.as_integer"
+		local
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("as_integer", attached n.as_integer)
+			assert ("natural_as_integer", attached natural_as_integer (n))
+			assert ("as_integer_ok", as_integer_ok (n))
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
@@ -371,21 +391,29 @@ feature {NONE} -- Conversion
 			same_natural_number: Result ≍ n
 		end
 
-feature -- Anchor
-
-	integer_anchor: STI_INTEGER_NUMBER
-			-- <Precursor>
-		once
-		ensure then
-			class
+	natural_as_integer (n: STI_NATURAL_NUMBER): STI_INTEGER_NUMBER
+			-- `n' converted to an {STI_INTEGER_NUMBER}
+		do
+			Result := n
+		ensure
+			definition: Result ≍ n
 		end
 
-	natural_anchor: STI_NATURAL_NUMBER
-			-- <Precursor>
-		once
-		ensure then
-			class
-		end
+--feature -- Anchor
+
+--	integer_anchor: STI_INTEGER_NUMBER
+--			-- <Precursor>
+--		once
+--		ensure then
+--			class
+--		end
+
+--	natural_anchor: STI_NATURAL_NUMBER
+--			-- <Precursor>
+--		once
+--		ensure then
+--			class
+--		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
