@@ -78,11 +78,15 @@ feature -- Factory (natural number)
 			-- <Precursor>
 		do
 			inspect
-				next_random_item \\ 2
+				next_random_item \\ 4
 			when 0 then
 				Result := Precursor {STST_ELEMENT_TESTS} (n)
 			when 1 then
+				Result := n.twin
+			when 2 then
 				create {STI_NATURAL_NUMBER} Result.make (n.value)
+			when 3 then
+				create {STI_NATURAL_NUMBER} Result.make_from_reference (n)
 			end
 		end
 

@@ -13,9 +13,14 @@ inherit
 			default_create,
 			sign,
 			out,
+			rational_min,
+			rational_max,
 			three_way_comparison,
 			min,
-			max
+			max,
+			rational_modulus,
+			rational_abs,
+			converted_integer
 		end
 
 	DEBUG_OUTPUT
@@ -37,7 +42,7 @@ convert
 feature {NONE} -- Initialization
 
 	default_create
-			-- Create a integer number with value = 0
+			-- Create an integer number with value = 0
 		do
 			stored_value := 0
 		ensure then
@@ -45,7 +50,7 @@ feature {NONE} -- Initialization
 		end
 
 	make (v: like value)
-			-- Create a integer number out of value `v'.
+			-- Create an integer number out of value `v'.
 		do
 			stored_value := v.as_integer_8
 		ensure
@@ -129,6 +134,18 @@ feature -- Output
 
 feature -- Comparison
 
+	rational_min (pq: STS_RATIONAL_NUMBER): like Rational_anchor
+			-- <Precursor>
+		do
+			Result := as_rational ∧ pq
+		end
+
+	rational_max (pq: STS_RATIONAL_NUMBER): like Rational_anchor
+			-- <Precursor>
+		do
+			Result := as_rational ∨ pq
+		end
+
 	three_way_comparison alias "⋚" (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
 		do
@@ -148,6 +165,19 @@ feature -- Comparison
 		end
 
 feature -- Operation
+
+	rational_modulus,
+	rational_abs: like rational_anchor
+			-- <Precursor>
+		do
+			Result := as_rational.abs
+		end
+
+	rational_opposite: like rational_anchor
+			-- <Precursor>
+		do
+			Result := - as_rational
+		end
 
 	modulus,
 	abs: like integer_anchor
@@ -206,23 +236,34 @@ feature -- Operation
 			create Result.make (stored_value \\ i.value)
 		end
 
-feature -- Math
+--feature -- Math
 
-	gcd (i, j: STS_INTEGER_NUMBER): like integer_anchor
-			-- Greatest common divisor of `i' and `j'
+--	gcd (i, j: STS_INTEGER_NUMBER): like integer_anchor
+--			-- Greatest common divisor of `i' and `j'
+--		do
+--			if j ≍ zero then
+--				Result := i.abs.value
+--			else
+--					check
+--						good_divisor: i.divisible (j) -- j /= 0
+--					end
+--				Result := gcd (j, i \\ j)
+--			end
+--		ensure
+--			base: j ≍ zero implies Result ≍ i.abs
+--			good_divisor: j ≭ zero implies i.divisible (j)
+--			induction: j ≭ zero implies Result ≍ gcd (j, i \\ j)
+--		end
+
+feature -- Conversion
+
+	as_rational: like Rational_anchor
+			-- Current integer number represented as a rational number
 		do
-			if j ≍ zero then
-				Result := i.abs.value
-			else
-					check
-						good_divisor: i.divisible (j) -- j /= 0
-					end
-				Result := gcd (j, i \\ j)
-			end
+			create Result.make (Current, One)
 		ensure
-			base: j ≍ zero implies Result ≍ i.abs
-			good_divisor: j ≭ zero implies i.divisible (j)
-			induction: j ≭ zero implies Result ≍ gcd (j, i \\ j)
+			numerator: Result.p ≍ Current
+			denominator: Result.q ≍ One
 		end
 
 feature -- Implementation
@@ -234,6 +275,16 @@ feature -- Implementation
 		ensure then
 			class
 			definition: Result = v.as_integer_8
+		end
+
+feature -- Factory
+
+	converted_integer (i: STS_INTEGER_NUMBER): like integer_anchor
+			-- <Precursor>
+		do
+			Result := {RATIONAL_NUMBER}.converted_integer (i)
+		ensure then
+			class
 		end
 
 feature -- Anchor

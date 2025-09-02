@@ -8,10 +8,31 @@ deferred class
 	INTEGER_NUMBER
 
 inherit
-	ELEMENT
+	RATIONAL_NUMBER
 		rename
-			is_in as element_is_in,
-			is_not_in as element_is_not_in
+			p as identity alias "+",
+			numerator as identity alias "+",
+			q as one,
+			denominator as one,
+			is_in as rational_number_is_in,
+			is_not_in as rational_number_is_not_in,
+			equals as rational_equals,
+			unequals as rational_unequals,
+			is_less as rational_is_less,
+			is_less_equal as rational_is_less_equal,
+			is_greater as rational_is_greater,
+			is_greater_equal as rational_is_greater_equal,
+			three_way_comparison as rational_three_way_comparison,
+			min as rational_min,
+			max as rational_max,
+			divisible as rational_divisible,
+			modulus as rational_modulus,
+			abs as rational_abs,
+			plus as rational_plus,
+			minus as rational_minus,
+			opposite as rational_opposite,
+			product as rational_print,
+			quotient as rational_quotient
 		end
 
 feature -- Primitive
@@ -43,25 +64,25 @@ feature -- Membership
 
 feature -- Access
 
-	sign: like integer_anchor
-			-- Sign of current number as an integer value (0, -1 or 1)
-		do
-			Result := Current ⋚ zero
-		ensure
-			three_way: Result ≍ (Current ⋚ zero)
-		end
+--	sign: like integer_anchor
+--			-- Sign of current number as an integer value (0, -1 or 1)
+--		do
+--			Result := Current ⋚ zero
+--		ensure
+--			three_way: Result ≍ (Current ⋚ zero)
+--		end
 
 	zero: like integer_anchor
 			-- The integer number 0
 		deferred
-		ensure
+		ensure then
 			zero: Result.value = 0
 		end
 
 	one: like integer_anchor
 			-- The integer number 1
 		deferred
-		ensure
+		ensure then
 			one: Result.value = 1
 		end
 
@@ -227,7 +248,7 @@ feature -- Operation
 			-- Unary plus; current integer number itself.
 		do
 			Result := Current
-		ensure
+		ensure then
 			definition: Result ≍ Current
 		end
 

@@ -111,6 +111,15 @@ feature -- Test routines (Initialization)
 			assert ("natural_number_from_native", attached natural_number_from_native (next_random_item.as_natural_32))
 		end
 
+	test_make_from_reference
+			-- Test {STI_NATURAL_NUMBER}.make_from_reference.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.make_from_reference"
+		do
+			assert ("make_from_reference", attached (create {like natural_number_to_be_tested}.make_from_reference (some_natural_number)))
+			assert ("natural_number_from_reference", attached natural_number_from_reference (some_natural_number))
+		end
+
 feature -- Test routines (Primitive)
 
 	test_value
@@ -352,6 +361,14 @@ feature {NONE} -- Conversion
 			Result := v
 		ensure
 			adjusted_value: Result.value = {like natural_number_to_be_tested}.adjusted_value (v)
+		end
+
+	natural_number_from_reference (n: like some_natural_number): like natural_number_to_be_tested
+			-- `n' converted to a natural number like `natural_number_to_be_tested'
+		do
+			Result := n
+		ensure
+			same_natural_number: Result ≍ n
 		end
 
 feature -- Anchor
