@@ -39,7 +39,8 @@ create
 
 convert
 	make ({INTEGER}),
-	make_from_reference ({STS_INTEGER_NUMBER})
+	make_from_reference ({STS_INTEGER_NUMBER}),
+	as_rational: {RATIONAL_NUMBER}
 
 feature {NONE} -- Initialization
 

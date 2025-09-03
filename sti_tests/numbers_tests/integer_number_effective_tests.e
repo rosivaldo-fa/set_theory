@@ -69,22 +69,27 @@ inherit
 			integer_number_to_be_tested
 		end
 
+	INTEGER_NUMBER_PROPERTIES
+		undefine
+			default_create
+		end
+
 feature -- Access
 
-	zero: STI_INTEGER_NUMBER
-			-- <Precursor>
-		once
-		ensure then
-			class
-		end
+--	zero: STI_INTEGER_NUMBER
+--			-- <Precursor>
+--		once
+--		ensure then
+--			class
+--		end
 
-	one: STI_INTEGER_NUMBER
-			-- <Precursor>
-		once
-			create Result.make (1)
-		ensure then
-			class
-		end
+--	one: STI_INTEGER_NUMBER
+--			-- <Precursor>
+--		once
+--			create Result.make (1)
+--		ensure then
+--			class
+--		end
 
 feature -- Test routines (All)
 
@@ -98,6 +103,7 @@ feature -- Test routines (All)
 			test_make
 			test_make_from_reference
 			test_out
+			test_as_rational
 		end
 
 feature -- Test routines (Initialization)
@@ -219,10 +225,10 @@ feature -- Test routines (Output)
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.out"
 		local
-			n: like integer_number_to_be_tested
+			i: like integer_number_to_be_tested
 		do
-			n := integer_number_to_be_tested
-			assert ("out", attached n.out)
+			i := integer_number_to_be_tested
+			assert ("out", attached i.out)
 		end
 
 feature -- Test routines (Comparison)
@@ -409,6 +415,21 @@ feature -- Test routines (Operation)
 			Precursor {STST_INTEGER_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Conversion)
+
+	test_as_rational
+			-- Test {STI_INTEGER_NUMBER}.as_rational.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.as_rational"
+		local
+			i: like integer_number_to_be_tested
+		do
+			i := integer_number_to_be_tested
+			assert ("as_rational", attached i.as_rational)
+			assert ("integer_as_rational", attached integer_as_rational (i))
+			assert ("as_rational_ok", as_rational_ok (i))
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
@@ -437,14 +458,22 @@ feature {NONE} -- Conversion
 			same_integer_number: Result ≍ i
 		end
 
+	integer_as_rational (i: STI_INTEGER_NUMBER): STI_RATIONAL_NUMBER
+			-- `i' converted to an {STI_RATIONAL_NUMBER}
+		do
+			Result := i
+		ensure
+			definition: Result ≍ i
+		end
+
 feature -- Anchor
 
-	integer_anchor: STI_INTEGER_NUMBER
-			-- <Precursor>
-		once
-		ensure then
-			class
-		end
+--	integer_anchor: STI_INTEGER_NUMBER
+--			-- <Precursor>
+--		once
+--		ensure then
+--			class
+--		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

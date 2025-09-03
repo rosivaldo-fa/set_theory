@@ -67,23 +67,6 @@ inherit
 			default_create
 		end
 
-feature -- Access
-
---	zero: STI_NATURAL_NUMBER
---			-- <Precursor>
---		once
---		ensure then
---			class
---		end
-
---	one: STI_NATURAL_NUMBER
---			-- <Precursor>
---		once
---			create Result.make (1)
---		ensure then
---			class
---		end
-
 feature -- Test routines (All)
 
 	test_all
@@ -422,22 +405,6 @@ feature {NONE} -- Conversion
 		ensure
 			definition: Result ≍ n
 		end
-
---feature -- Anchor
-
---	integer_anchor: STI_INTEGER_NUMBER
---			-- <Precursor>
---		once
---		ensure then
---			class
---		end
-
---	natural_anchor: STI_NATURAL_NUMBER
---			-- <Precursor>
---		once
---		ensure then
---			class
---		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
