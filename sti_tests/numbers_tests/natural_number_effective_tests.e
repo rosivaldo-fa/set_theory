@@ -95,6 +95,8 @@ feature -- Test routines (All)
 			test_default_create
 			test_make
 			test_out
+			test_as_integer
+			test_as_rational
 		end
 
 feature -- Test routines (Initialization)
@@ -363,6 +365,19 @@ feature -- Test routines (Conversion)
 			assert ("as_integer_ok", as_integer_ok (n))
 		end
 
+	test_as_rational
+			-- Test {STI_NATURAL_NUMBER}.as_rational.
+		note
+			testing: "covers/{STI_NATURAL_NUMBER}.as_rational"
+		local
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("as_rational", attached n.as_rational)
+			assert ("natural_as_rational", attached natural_as_rational (n))
+			assert ("as_rational_ok", as_rational_ok (n))
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
@@ -393,6 +408,14 @@ feature {NONE} -- Conversion
 
 	natural_as_integer (n: STI_NATURAL_NUMBER): STI_INTEGER_NUMBER
 			-- `n' converted to an {STI_INTEGER_NUMBER}
+		do
+			Result := n
+		ensure
+			definition: Result ≍ n
+		end
+
+	natural_as_rational (n: STI_NATURAL_NUMBER): STI_RATIONAL_NUMBER
+			-- `n' converted to an {STI_RATIONAL_NUMBER}
 		do
 			Result := n
 		ensure
