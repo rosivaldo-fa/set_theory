@@ -34,10 +34,12 @@ inherit
 
 create
 	default_create,
-	make
+	make,
+	make_from_reference
 
 convert
-	make ({INTEGER})
+	make ({INTEGER}),
+	make_from_reference ({STS_INTEGER_NUMBER})
 
 feature {NONE} -- Initialization
 
@@ -55,6 +57,14 @@ feature {NONE} -- Initialization
 			stored_value := v.as_integer_8
 		ensure
 			value: value = adjusted_value (v)
+		end
+
+	make_from_reference (i: STS_INTEGER_NUMBER)
+			-- Create an integer number with value `i'.`value'.
+		do
+			make (i.value)
+		ensure
+			value: value = adjusted_value (i.value)
 		end
 
 feature -- Primitive

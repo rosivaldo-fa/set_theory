@@ -94,6 +94,7 @@ feature -- Test routines (All)
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 			test_default_create
 			test_make
+			test_make_from_reference
 			test_out
 			test_as_integer
 			test_as_rational

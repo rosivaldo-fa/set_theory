@@ -96,6 +96,7 @@ feature -- Test routines (All)
 			Precursor {STST_INTEGER_NUMBER_TESTS}
 			test_default_create
 			test_make
+			test_make_from_reference
 			test_out
 		end
 
@@ -116,6 +117,15 @@ feature -- Test routines (Initialization)
 		do
 			assert ("make", attached (create {like integer_number_to_be_tested}.make (next_random_item)))
 			assert ("integer_number_from_native", attached integer_number_from_native (next_random_item))
+		end
+
+	test_make_from_reference
+			-- Test {STI_INTEGER_NUMBER}.make_from_reference.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.make_from_reference"
+		do
+			assert ("make_from_reference", attached (create {like integer_number_to_be_tested}.make_from_reference (some_integer_number)))
+			assert ("integer_number_from_reference", attached integer_number_from_reference (some_integer_number))
 		end
 
 feature -- Test routines (Primitive)
@@ -417,6 +427,14 @@ feature {NONE} -- Conversion
 			Result := v
 		ensure
 			adjusted_value: Result.value = {like integer_number_to_be_tested}.adjusted_value (v)
+		end
+
+	integer_number_from_reference (i: like some_integer_number): like integer_number_to_be_tested
+			-- `i' converted to an integer number like `integer_number_to_be_tested'
+		do
+			Result := i
+		ensure
+			same_integer_number: Result ≍ i
 		end
 
 feature -- Anchor

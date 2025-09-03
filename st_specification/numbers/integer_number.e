@@ -338,6 +338,11 @@ feature -- Anchor
 		deferred
 		end
 
+invariant
+	is_integer: is_integer
+	min_value: min_value_exists ⇒ min_value ≤ Current
+	max_value: max_value_exists ⇒ Current ≤ max_value -- TODO: It fails when `max_value' is a once routine and is called by the first time.
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

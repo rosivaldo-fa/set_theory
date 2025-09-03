@@ -221,11 +221,15 @@ feature -- Factory (integer number)
 			-- <Precursor>
 		do
 			inspect
-				next_random_item \\ 2
+				next_random_item \\ 4
 			when 0 then
 				Result := Precursor {STST_ELEMENT_TESTS} (i)
 			when 1 then
+				Result := i.twin
+			when 2 then
 				create {STI_INTEGER_NUMBER} Result.make (i.value)
+			when 3 then
+				create {STI_INTEGER_NUMBER} Result.make_from_reference (i)
 			end
 		end
 
