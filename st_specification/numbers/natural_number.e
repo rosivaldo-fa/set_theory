@@ -267,6 +267,9 @@ feature -- Anchor
 		deferred
 		end
 
+invariant
+	is_natural: is_natural
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

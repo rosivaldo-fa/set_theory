@@ -12,6 +12,7 @@ inherit
 		redefine
 			default_create,
 			sign,
+			is_natural,
 			out,
 			rational_three_way_comparison,
 			rational_min,
@@ -44,7 +45,8 @@ create
 convert
 	make ({NATURAL}),
 	make_from_reference ({STS_NATURAL_NUMBER}),
-	as_integer: {INTEGER_NUMBER}
+	as_integer: {INTEGER_NUMBER},
+	as_rational: {RATIONAL_NUMBER}
 
 feature {NONE} -- Initialization
 
@@ -132,6 +134,9 @@ feature -- Access
 		end
 
 feature -- Quality
+
+	is_natural: BOOLEAN = True
+			-- <Precursor>
 
 	min_value_exists: BOOLEAN = True
 			-- <Precursor>
@@ -328,7 +333,7 @@ feature -- Conversion
 		do
 			create Result.make (stored_value)
 		ensure
-			value: Result.value = value
+			value: Result.value = value.as_integer_32
 		end
 
 feature -- Factory
