@@ -87,13 +87,17 @@ feature -- Quality
 			-- Does current rational number represent an integer number?
 			-- Notice that, due to rounding and truncation, implementation of `real_is_integer' might give True even if `is_integer' gives False.
 		do
-			check
-				good_divisor: p.divisible (q) -- Class invariant: q /= 0
-			end
-			Result := (p \\ q) ≍ p.zero
+			Result := q | p
 		ensure
-			good_divisor: p.divisible (q) -- Class invariant: q /= 0
-			definition: Result = (p \\ q) ≍ p.zero
+			definition: Result = q | p
+		end
+
+	is_natural: BOOLEAN
+			-- Does current rational number represent a natural number?
+		do
+			Result := is_integer and zero ≤ Current
+		ensure
+			definition: Result = is_integer and zero ≤ Current
 		end
 
 	is_invertible: BOOLEAN

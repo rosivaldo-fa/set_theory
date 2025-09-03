@@ -102,14 +102,6 @@ feature -- Access
 
 feature -- Quality
 
-	is_natural: BOOLEAN
-			-- Is current integer number a natural number?
-		do
-			Result := zero ≤ Current
-		ensure
-			definition: Result = zero ≤ Current
-		end
-
 	min_value_exists: BOOLEAN
 			-- Is there a minimum value for current representation of integer numbers?
 		deferred
