@@ -97,7 +97,7 @@ feature -- Quality
 		do
 			Result := is_integer and zero ≤ Current
 		ensure
-			definition: Result = is_integer and zero ≤ Current
+			definition: Result = (is_integer and zero ≤ Current)
 		end
 
 	is_invertible: BOOLEAN

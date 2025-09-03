@@ -33,7 +33,6 @@ feature -- Test routines (All)
 			test_value
 			test_is_in
 			test_is_not_in
-			test_is_natural
 			test_min_value_exists
 			test_max_value_exists
 			test_zero
@@ -121,35 +120,6 @@ feature -- Test routines (Membership)
 		end
 
 feature -- Test routines (Quality)
-
-	test_is_natural
-			-- Test {STS_INTEGER_NUMBER}.is_natural.
-		note
-			testing: "covers/{STS_INTEGER_NUMBER}.is_natural"
-		local
-			i: like integer_number_to_be_tested
-		do
-			from
-				i := integer_number_to_be_tested
-			until
-				i < zero
-			loop
-				i := integer_number_to_be_tested
-			end
-			assert ("not i.is_natural", not i.is_natural)
-
-			from
-				i := integer_number_to_be_tested
-			until
-				zero ≤ i
-			loop
-				i := integer_number_to_be_tested
-			end
-			assert ("i.is_natural", i.is_natural)
-
-			i := integer_number_to_be_tested
-			assert ("is_natural", i.is_natural ⇒ True)
-		end
 
 	test_min_value_exists
 			-- Test {STS_INTEGER_NUMBER}.min_value_exists.

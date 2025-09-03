@@ -37,6 +37,7 @@ inherit
 			test_zero,
 			test_one,
 			test_is_integer,
+			test_is_natural,
 			test_is_invertible,
 			test_equals,
 			test_unequals,
@@ -220,6 +221,16 @@ feature -- Test routines (Quality)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.is_integer"
 			testing: "covers/{STI_RATIONAL_NUMBER}.is_integer"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_is_natural
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.is_natural.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_natural"
+			testing: "covers/{STI_RATIONAL_NUMBER}.is_natural"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

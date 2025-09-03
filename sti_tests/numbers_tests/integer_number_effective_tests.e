@@ -33,7 +33,6 @@ inherit
 			test_one,
 			test_min_value,
 			test_max_value,
-			test_is_natural,
 			test_min_value_exists,
 			test_max_value_exists,
 			test_equals,
@@ -186,16 +185,6 @@ feature -- Test routines (Access)
 		end
 
 feature -- Test routines (Quality)
-
-	test_is_natural
-			-- <Precursor>
-			-- Test {STI_INTEGER_NUMBER}.is_natural.
-		note
-			testing: "covers/{STS_INTEGER_NUMBER}.is_natural"
-			testing: "covers/{STI_INTEGER_NUMBER}.is_natural"
-		do
-			Precursor {STST_INTEGER_NUMBER_TESTS}
-		end
 
 	test_min_value_exists
 			-- Test {STI_INTEGER_NUMBER}.min_value_exists.

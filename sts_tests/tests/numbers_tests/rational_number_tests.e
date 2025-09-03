@@ -40,6 +40,7 @@ feature -- Test routines (All)
 			test_zero
 			test_one
 			test_is_integer
+			test_is_natural
 			test_is_invertible
 			test_equals
 			test_unequals
@@ -252,6 +253,35 @@ feature -- Test routines (Quality)
 
 			pq := rational_number_to_be_tested
 			assert ("is_integer", pq.is_integer implies True)
+		end
+
+	test_is_natural
+			-- Test {STS_RATIONAL_NUMBER}.is_natural.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_natural"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			from
+				pq := rational_number_to_be_tested
+			until
+				pq < zero
+			loop
+				pq := rational_number_to_be_tested
+			end
+			assert ("not pq.is_natural", not pq.is_natural)
+
+			from
+				pq := rational_number_to_be_tested
+			until
+				zero ≤ pq and pq.q | pq.p
+			loop
+				pq := rational_number_to_be_tested
+			end
+			assert ("pq.is_natural", pq.is_natural)
+
+			pq := rational_number_to_be_tested
+			assert ("is_natural", pq.is_natural ⇒ True)
 		end
 
 	test_is_invertible
