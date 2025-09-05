@@ -27,22 +27,22 @@ feature -- Access
 
 feature -- Properties (Conversion)
 
-	as_integer_ok (n: STI_NATURAL_NUMBER): BOOLEAN
-			-- Do the properties verified within number theory hold for {STI_NATURAL_NUMBER}.as_integer?
+	as_integer_number_ok (n: STI_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STI_NATURAL_NUMBER}.as_integer_number?
 		do
 			check
-				is_natural: n.as_integer.is_natural
+				is_natural: n.as_integer_number.is_natural
 			then
 				Result := True
 			end
 		end
 
-	as_rational_ok (n: STI_NATURAL_NUMBER): BOOLEAN
-			-- Do the properties verified within number theory hold for {STI_NATURAL_NUMBER}.as_rational?
+	as_rational_number_ok (n: STI_NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STI_NATURAL_NUMBER}.as_rational_number?
 		do
 			check
-				is_integer: n.as_rational.is_integer
-				is_natural: n.as_rational.is_natural
+				is_integer: n.as_rational_number.is_integer
+				is_natural: n.as_rational_number.is_natural
 			then
 				Result := True
 			end
@@ -71,4 +71,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

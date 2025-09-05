@@ -40,7 +40,7 @@ create
 convert
 	make ({INTEGER}),
 	make_from_reference ({STS_INTEGER_NUMBER}),
-	as_rational: {RATIONAL_NUMBER}
+	as_rational_number: {RATIONAL_NUMBER}
 
 feature {NONE} -- Initialization
 
@@ -81,10 +81,10 @@ feature -- Access
 	sign: like integer_anchor
 			-- <Precursor>
 		do
-				check
-					not_too_small: Native_min_value ≤ stored_value.sign -- -1 ≤ stored_value.sign
-					not_too_big: stored_value.sign ≤ Native_max_value -- stored_value.sign ≤ 1
-				end
+			check
+				not_too_small: Native_min_value ≤ stored_value.sign -- -1 ≤ stored_value.sign
+				not_too_big: stored_value.sign ≤ Native_max_value -- stored_value.sign ≤ 1
+			end
 			create Result.make (stored_value.sign)
 		end
 
@@ -148,13 +148,13 @@ feature -- Comparison
 	rational_min (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational ∧ pq
+			Result := as_rational_number ∧ pq
 		end
 
 	rational_max (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational ∨ pq
+			Result := as_rational_number ∨ pq
 		end
 
 	three_way_comparison alias "⋚" (i: STS_INTEGER_NUMBER): like integer_anchor
@@ -181,13 +181,13 @@ feature -- Operation
 	rational_abs: like rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational.abs
+			Result := as_rational_number.abs
 		end
 
 	rational_opposite: like rational_anchor
 			-- <Precursor>
 		do
-			Result := - as_rational
+			Result := - as_rational_number
 		end
 
 	modulus,
@@ -268,13 +268,19 @@ feature -- Operation
 
 feature -- Conversion
 
-	as_rational: like Rational_anchor
+	as_rational_number: like Rational_anchor
 			-- Current integer number represented as a rational number
 		do
 			create Result.make (Current, One)
 		ensure
 			numerator: Result.p ≍ Current
 			denominator: Result.q ≍ One
+		end
+
+	to_natural_number: like natural_anchor
+			-- <Precursor>
+		do
+			Result := value.as_natural_32
 		end
 
 feature -- Implementation
@@ -300,6 +306,13 @@ feature -- Factory
 
 feature -- Anchor
 
+	natural_anchor: NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
 	integer_anchor: INTEGER_NUMBER
 			-- <Precursor>
 		once
@@ -324,9 +337,9 @@ feature -- Anchor
 feature {NONE} -- Implementation
 
 	stored_value: INTEGER_8;
-			-- Bit pattern of the `value' of current integer number
+		-- Bit pattern of the `value' of current integer number
 
-	native_min_value: INTEGER_8 = - 128
+	native_min_value: INTEGER_8 = -128
 			-- Native minimum value representable by this implementation of integer numbers
 
 	native_max_value: INTEGER_8 = 127

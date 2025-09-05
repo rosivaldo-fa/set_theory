@@ -425,7 +425,7 @@ feature -- Test routines (Conversion)
 			i: like integer_number_to_be_tested
 		do
 			i := integer_number_to_be_tested
-			assert ("as_rational", attached i.as_rational)
+			assert ("as_rational", attached i.as_rational_number)
 			assert ("integer_as_rational", attached integer_as_rational (i))
 			assert ("as_rational_ok", as_rational_ok (i))
 		end

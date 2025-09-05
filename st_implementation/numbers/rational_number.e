@@ -27,6 +27,7 @@ inherit
 			q as denominator
 		redefine
 			default_create,
+			is_integer,
 			sign,
 			out,
 			min,
@@ -123,6 +124,14 @@ feature -- Access
 			class
 			numerator: Result.p ≍ {INTEGER_NUMBER}.One
 			denominator: Result.q ≍ {INTEGER_NUMBER}.One
+		end
+
+feature -- Quality
+
+	is_integer: BOOLEAN
+			-- <Precursor>
+		do
+			Result := q | p and Current ≥ p.min_value and Current ≤ p.max_value
 		end
 
 feature -- Output

@@ -226,33 +226,58 @@ feature -- Test routines (Quality)
 			testing: "covers/{STS_RATIONAL_NUMBER}.is_integer"
 		local
 			pq: like rational_number_to_be_tested
+			p, q: like some_integer_number
 		do
+			p := some_integer_number
 			from
-				pq := rational_number_to_be_tested
+				from
+					q := some_integer_number
+				until
+					p.divisible (q)
+				loop
+					q := some_integer_number
+				end
+				pq := given_rational_number (p, q)
 			until
-				(pq.p \\ pq.q) ≍ zero.p
+				q | p and (not p.min_value_exists or else pq ≥ p.min_value) and (not p.max_value_exists or else pq ≤ p.max_value)
 			loop
-				pq := rational_number_to_be_tested
+				from
+					q := some_integer_number
+				until
+					p.divisible (q)
+				loop
+					q := some_integer_number
+				end
+				pq := given_rational_number (p, q)
 			end
 			assert ("pq.is_integer", pq.is_integer)
 
+			p := some_integer_number
 			from
-				pq := rational_number_to_be_tested
-				check
-					good_divisor: pq.q ≭ zero.p -- {STS_RATIONAL_NUMBER} invariant
+				from
+					q := some_integer_number
+				until
+					p.divisible (q)
+				loop
+					q := some_integer_number
 				end
+				pq := given_rational_number (p, q)
 			until
-				(pq.p \\ pq.q) ≭ zero.p
+				not (q | p) or (p.min_value_exists and then pq < p.min_value) or (p.max_value_exists and then pq > p.max_value)
 			loop
-				pq := rational_number_to_be_tested
-				check
-					good_divisor: pq.q ≭ zero.p -- {STS_RATIONAL_NUMBER} invariant
+				from
+					q := some_integer_number
+				until
+					p.divisible (q)
+				loop
+					q := some_integer_number
 				end
+				pq := given_rational_number (p, q)
 			end
 			assert ("not pq.is_integer", not pq.is_integer)
 
 			pq := rational_number_to_be_tested
-			assert ("is_integer", pq.is_integer implies True)
+			assert ("is_integer", pq.is_integer ⇒ True)
 		end
 
 	test_is_natural
@@ -1028,6 +1053,15 @@ feature {NONE} -- Factory (element to be tested)
 			-- Rational number meant to be under tests
 		do
 			Result := some_immediate_rational_number
+		end
+
+	given_rational_number (p, q: STS_INTEGER_NUMBER): like rational_number_to_be_tested
+			-- The rational number p/q
+		require
+			good_divisor: p.divisible (q)
+		deferred
+		ensure
+			definition: Result ≍ (p / q)
 		end
 
 feature -- Anchor

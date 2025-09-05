@@ -84,12 +84,13 @@ feature -- Access
 feature -- Quality
 
 	is_integer: BOOLEAN
-			-- Does current rational number represent an integer number?
+			-- Is there an integer representation for current current rational?
 			-- Notice that, due to rounding and truncation, implementation of `real_is_integer' might give True even if `is_integer' gives False.
+			-- Besides, a mathematically integer rational number may be beyond {STS_INTEGER} ability to represent it.
 		do
-			Result := q | p
+			Result := q | p and (not p.min_value_exists or else Current ≥ p.min_value) and (not p.max_value_exists or else Current ≤ p.max_value)
 		ensure
-			definition: Result = q | p
+			definition: Result = (q | p and (not p.min_value_exists or else Current ≥ p.min_value) and (not p.max_value_exists or else Current ≤ p.max_value))
 		end
 
 	is_natural: BOOLEAN
