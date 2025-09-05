@@ -31,7 +31,7 @@ feature -- Properties (Conversion)
 			-- Do the properties verified within number theory hold for {STI_INTEGER_NUMBER}.as_rational?
 		do
 			check
-				is_integer: i.as_rational_number.is_integer
+				is_integer: i.as_rational.is_integer
 			then
 				Result := True
 			end

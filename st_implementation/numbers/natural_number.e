@@ -45,8 +45,8 @@ create
 convert
 	make ({NATURAL}),
 	make_from_reference ({STS_NATURAL_NUMBER}),
-	as_integer_number: {INTEGER_NUMBER},
-	as_rational_number: {RATIONAL_NUMBER}
+	as_integer: {INTEGER_NUMBER},
+	as_rational: {RATIONAL_NUMBER}
 
 feature {NONE} -- Initialization
 
@@ -171,13 +171,13 @@ feature -- Comparison
 	rational_min (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational_number ∧ pq
+			Result := as_rational ∧ pq
 		end
 
 	rational_max (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational_number ∨ pq
+			Result := as_rational ∨ pq
 		end
 
 	integer_three_way_comparison (i: STS_INTEGER_NUMBER): like integer_anchor
@@ -222,13 +222,13 @@ feature -- Operation
 	rational_abs: like rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational_number.abs
+			Result := as_rational.abs
 		end
 
 	rational_opposite: like rational_anchor
 			-- <Precursor>
 		do
-			Result := - as_rational_number
+			Result := - as_rational
 		end
 
 	integer_plus (i: STS_INTEGER_NUMBER): like integer_anchor
@@ -319,7 +319,7 @@ feature -- Operation
 
 feature -- Conversion
 
-	as_rational_number: like Rational_anchor
+	as_rational: like Rational_anchor
 			-- Current natural number represented as a rational number
 		do
 			create Result.make (Current, One)
@@ -328,7 +328,7 @@ feature -- Conversion
 			denominator: Result.q ≍ One
 		end
 
-	as_integer_number: like Integer_anchor
+	as_integer: like Integer_anchor
 			-- Current natural number represented as an integer number
 		do
 			create Result.make (stored_value)

@@ -533,14 +533,6 @@ feature -- Test routines (Predicate)
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
 
-feature {NONE} -- Factory (element to be tested)
-
-	given_rational_number (p, q: STS_INTEGER_NUMBER): like rational_number_to_be_tested
-			-- <Precursor>
-		do
-			create Result.make (p, q)
-		end
-
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

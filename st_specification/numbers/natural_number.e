@@ -31,7 +31,6 @@ inherit
 			product as integer_product,
 			integer_quotient as integer_quotient,
 			integer_remainder as integer_remainder,
-			to_natural_number as identity alias "+",
 			adjusted_value as integer_adjusted_value
 		end
 

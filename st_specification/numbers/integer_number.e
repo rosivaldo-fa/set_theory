@@ -286,7 +286,7 @@ feature -- Operation
 			quotient: (Result.p // Result.q) ≍ (Current // i)
 			p_rem_q_divisible_q: (Result.p \\ Result.q).divisible (Result.q) -- {RATIONAL_NUMBER} invariant: Result.q /= 0
 			current_rem_i_divisible_i: (Current \\ i).divisible (i) -- i /= 0 ⇐ divisible (i)
-			remainder: ((Result.p \\ Result.q) / Result.q) ≍ ((Current \\ i) / i)
+--			remainder: ((Result.p \\ Result.q) / Result.q) ≍ ((Current \\ i) / i)
 		end
 
 	integer_quotient alias "//" (i: INTEGER_NUMBER): like integer_anchor
@@ -311,17 +311,6 @@ feature -- Operation
 			definition: Result.value = adjusted_value (value \\ i.value)
 		end
 
-feature -- Conversion
-
-	to_natural_number: like natural_anchor
-			-- Current integer converted to a natural number
-		require
-			is_natural: is_natural
-		deferred
-		ensure
-			definition: Current ≍ Result
-		end
-
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
@@ -332,11 +321,6 @@ feature -- Implementation
 		end
 
 feature -- Anchor
-
-	natural_anchor: NATURAL_NUMBER
-			-- Anchor for natural numbers
-		deferred
-		end
 
 	integer_anchor: INTEGER_NUMBER
 			-- Anchor for integer numbers
@@ -357,7 +341,7 @@ feature -- Anchor
 invariant
 	is_integer: is_integer
 	min_value: min_value_exists ⇒ min_value ≤ Current
---	max_value: max_value_exists ⇒ Current ≤ max_value -- TODO: It fails when `max_value' is a once routine and is called by the first time.
+	max_value: max_value_exists ⇒ Current ≤ max_value -- TODO: It fails when `max_value' is a once routine and is called by the first time.
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
