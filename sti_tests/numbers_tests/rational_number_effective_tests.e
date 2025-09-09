@@ -62,6 +62,7 @@ inherit
 			test_gcd,
 			test_div,
 			test_rem,
+			test_to_integer_number,
 			test_converted_integer,
 			test_integer_product_overflows
 		end
@@ -93,8 +94,10 @@ feature -- Test routines (All)
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 			test_default_create
 			test_make
+			test_make_from_reference
 			test_p
 			test_q
+			test_out
 		end
 
 feature -- Test routines (Initialization)
@@ -490,6 +493,28 @@ feature -- Test routines (Operation)
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Conversion)
+
+	test_to_integer_number
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.to_integer_number.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.to_integer_number"
+			testing: "covers/{STI_RATIONAL_NUMBER}.to_integer_number"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Factory)
+
+	test_converted_integer
+			-- Test {STI_RATIONAL_NUMBER}.converted_integer.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.converted_integer"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
 feature -- Test routines (Math)
 
 	test_gcd
@@ -518,16 +543,6 @@ feature -- Test routines (Math)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.rem"
 			testing: "covers/{STI_RATIONAL_NUMBER}.rem"
-		do
-			Precursor {STST_RATIONAL_NUMBER_TESTS}
-		end
-
-feature -- Test routines (Factory)
-
-	test_converted_integer
-			-- Test {STI_RATIONAL_NUMBER}.converted_integer.
-		note
-			testing: "covers/{STI_RATIONAL_NUMBER}.converted_integer"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end

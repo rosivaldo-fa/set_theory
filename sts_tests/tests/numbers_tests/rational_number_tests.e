@@ -66,6 +66,7 @@ feature -- Test routines (All)
 			test_div
 			test_rem
 			test_converted_integer
+			test_to_integer_number
 			test_integer_product_overflows
 		end
 
@@ -836,6 +837,29 @@ feature -- Test routines (Operation)
 			assert ("inverse", pq.is_invertible ⇒ attached pq.inverse)
 		end
 
+feature -- Test routines (Conversion)
+
+	test_to_integer_number
+			-- Test {STS_RATIONAL_NUMBER}.to_integer_number.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.to_integer_number"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("to_integer_number", pq.is_integer ⇒ attached pq.to_integer_number)
+		end
+
+feature -- Test routines (Factory)
+
+	test_converted_integer
+			-- Test {STS_RATIONAL_NUMBER}.converted_integer.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.converted_integer"
+		do
+			assert ("converted_integer", attached rational_number_to_be_tested.converted_integer (some_integer_number))
+		end
+
 feature -- Test routines (Math)
 
 	test_gcd
@@ -890,16 +914,6 @@ feature -- Test routines (Math)
 			end
 			assert ("rem", attached pq.rem (i, j))
 			assert ("rem ok", rem_ok (pq, i, j))
-		end
-
-feature -- Test routines (Factory)
-
-	test_converted_integer
-			-- Test {STS_RATIONAL_NUMBER}.converted_integer.
-		note
-			testing: "covers/{STS_RATIONAL_NUMBER}.converted_integer"
-		do
-			assert ("converted_integer", attached rational_number_to_be_tested.converted_integer (some_integer_number))
 		end
 
 feature -- Test routines (Predicate)

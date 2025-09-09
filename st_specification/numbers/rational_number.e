@@ -390,11 +390,11 @@ feature -- Operation
 		do
 			l_gcd_1 := gcd (p, pq.q)
 			l_gcd_2 := gcd (pq.p, q)
-				check
-					non_zero_gcd_1: l_gcd_1 ≭ zero.p -- pq.q /= 0
-					non_zero_gcd_2: l_gcd_2 ≭ zero.p -- q /= 0
-					good_divisor: ((p // l_gcd_1) * (pq.p // l_gcd_2)).divisible ((q // l_gcd_2) * (pq.q // l_gcd_1)) -- q /= 0 and pq.q /= 0
-				end
+			check
+				non_zero_gcd_1: l_gcd_1 ≭ zero.p -- pq.q /= 0
+				non_zero_gcd_2: l_gcd_2 ≭ zero.p -- q /= 0
+				good_divisor: ((p // l_gcd_1) * (pq.p // l_gcd_2)).divisible ((q // l_gcd_2) * (pq.q // l_gcd_1)) -- q /= 0 and pq.q /= 0
+			end
 			Result := ((p // l_gcd_1) * (pq.p // l_gcd_2)) / ((q // l_gcd_2) * (pq.q // l_gcd_1))
 		ensure
 			gcd_1: attached gcd (p, pq.q) as gcd_1
@@ -413,12 +413,12 @@ feature -- Operation
 		require
 			good_divisor: divisible (pq)
 		do
-				check
-					good_factor: multipliable (pq.inverse) -- divisible (pq)
-				end
+			check
+				good_factor: multipliable (pq.inverse) -- divisible (pq)
+			end
 			Result := Current ⋅ pq.inverse
 		ensure
-				good_factor: multipliable (pq.inverse) -- divisible (pq)
+			good_factor: multipliable (pq.inverse) -- divisible (pq)
 			numerator: Result.p ≍ (Current ⋅ pq.inverse).p
 			denominator: Result.q ≍ (Current ⋅ pq.inverse).q
 		end
@@ -437,6 +437,31 @@ feature -- Operation
 			good_divisor: q.divisible (p) -- p /= 0 ⇐ is_invertible
 			numerator: Result.p ≍ (q / p).p
 			denominator: Result.q ≍ (q / p).q
+		end
+
+feature -- Conversion
+
+	to_integer_number: like integer_anchor
+			-- Current rational number converted to an integer number
+		require
+			is_integer: is_integer
+		do
+			check
+				good_divisor: p.divisible (q) -- Class invariant
+			end
+			Result := p // q
+		ensure
+			definition: Result ≍ (p // q)
+		end
+
+feature -- Factory
+
+	converted_integer (i: INTEGER_NUMBER): like integer_anchor
+			-- `i' converted to a integer number like `integer_anchor'
+		do
+			Result := i
+		ensure
+			definition: Result.value = integer_anchor.adjusted_value (i.value)
 		end
 
 feature -- Math
@@ -530,16 +555,6 @@ feature -- Math
 			when_negative_by_positive: (i \\ j) ≭ i.zero and i < i.zero and j > i.zero ⇒ Result ≍ (i \\ j + j)
 			when_positive_by_negative: (i \\ j) ≭ i.zero and i > i.zero and j < i.zero ⇒ Result ≍ (i \\ j + j)
 			when_both_positive: (i \\ j) ≭ i.zero and i > i.zero and j > i.zero ⇒ Result ≍ (i \\ j)
-		end
-
-feature -- Factory
-
-	converted_integer (i: INTEGER_NUMBER): like integer_anchor
-			-- `i' converted to a integer number like `integer_anchor'
-		do
-			Result := i
-		ensure
-			definition: Result.value = integer_anchor.adjusted_value (i.value)
 		end
 
 feature -- Predicate
