@@ -286,7 +286,7 @@ feature -- Operation
 			quotient: (Result.p // Result.q) ≍ (Current // i)
 			p_rem_q_divisible_q: (Result.p \\ Result.q).divisible (Result.q) -- {RATIONAL_NUMBER} invariant: Result.q /= 0
 			current_rem_i_divisible_i: (Current \\ i).divisible (i) -- i /= 0 ⇐ divisible (i)
---			remainder: ((Result.p \\ Result.q) / Result.q) ≍ ((Current \\ i) / i)
+			remainder: ((Result.p \\ Result.q) / Result.q) ≍ ((Current \\ i) / i)
 		end
 
 	integer_quotient alias "//" (i: INTEGER_NUMBER): like integer_anchor

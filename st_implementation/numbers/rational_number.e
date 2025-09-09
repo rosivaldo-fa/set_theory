@@ -48,7 +48,11 @@ inherit
 
 create
 	default_create,
-	make
+	make,
+	make_from_reference
+
+convert
+	make_from_reference ({STS_RATIONAL_NUMBER})
 
 feature {NONE} -- Initialization
 
@@ -72,6 +76,18 @@ feature {NONE} -- Initialization
 		ensure
 			numerator: p ≍ num
 			denominator: q ≍ den
+		end
+
+	make_from_reference (pq: STS_RATIONAL_NUMBER)
+			-- Create the rational number `p'/`q'
+		do
+			check
+				non_zero_denominator: pq.q ≭ {INTEGER_NUMBER}.zero -- {STS_RATIONAL_NUMBER} invariant
+			end
+			make (pq.p, pq.q)
+		ensure
+			numerator: p ≍ pq.p
+			denominator: q ≍ pq.q
 		end
 
 feature -- Primitive

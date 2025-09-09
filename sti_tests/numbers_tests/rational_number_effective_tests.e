@@ -125,6 +125,15 @@ feature -- Test routines (Initialization)
 			assert ("make", attached (create {like rational_number_to_be_tested}.make (num, den)))
 		end
 
+	test_make_from_reference
+			-- Test {STI_RATIONAL_NUMBER}.make_from_reference.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBER}.make_from_reference"
+		do
+			assert ("make_from_reference", attached (create {like rational_number_to_be_tested}.make_from_reference (some_rational_number)))
+			assert ("rational_from_reference", attached rational_from_reference (some_rational_number))
+		end
+
 feature -- Test routines (Primitive)
 
 	test_p
@@ -531,6 +540,17 @@ feature -- Test routines (Predicate)
 			testing: "covers/{STI_RATIONAL_NUMBER}.integer_product_overflows"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+feature {NONE} -- Conversion
+
+	rational_from_reference (pq: STS_RATIONAL_NUMBER): like rational_number_to_be_tested
+			-- `pq' converted to a rational number like `rational_number_to_be_tested'
+		do
+			Result := pq
+		ensure
+			numerator: Result.p ≍ pq.p
+			denominator: Result.q ≍ pq.q
 		end
 
 note
