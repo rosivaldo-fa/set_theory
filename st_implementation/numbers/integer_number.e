@@ -321,6 +321,13 @@ feature -- Anchor
 			class
 		end
 
+	natural_anchor: NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
 feature {NONE} -- Implementation
 
 	stored_value: INTEGER_8;

@@ -62,11 +62,12 @@ feature -- Test routines (All)
 			test_quotient
 			test_reciprocal
 			test_inverse
+			test_to_integer_number
+			test_to_natural_number
+			test_converted_integer
 			test_gcd
 			test_div
 			test_rem
-			test_converted_integer
-			test_to_integer_number
 			test_integer_product_overflows
 		end
 
@@ -848,6 +849,17 @@ feature -- Test routines (Conversion)
 		do
 			pq := rational_number_to_be_tested
 			assert ("to_integer_number", pq.is_integer ⇒ attached pq.to_integer_number)
+		end
+
+	test_to_natural_number
+			-- Test {STS_RATIONAL_NUMBER}.to_natural_number.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.to_natural_number"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("to_natural_number", pq.is_natural ⇒ attached pq.to_natural_number)
 		end
 
 feature -- Test routines (Factory)

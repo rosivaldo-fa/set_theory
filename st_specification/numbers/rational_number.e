@@ -454,6 +454,20 @@ feature -- Conversion
 			definition: Result ≍ (p // q)
 		end
 
+	to_natural_number: like natural_anchor
+			-- Current rational number converted to a natural number
+		require
+			is_natural: is_natural
+		do
+			check
+				good_divisor: p.divisible (q) -- Class invariant
+				p_over_q_is_natural: is_natural -- Current.is_natural
+			end
+			Result := (p // q).to_natural_number
+		ensure
+			definition: Result ≍ (p // q).to_natural_number
+		end
+
 feature -- Factory
 
 	converted_integer (i: INTEGER_NUMBER): like integer_anchor
@@ -578,13 +592,18 @@ feature -- Predicate
 
 feature -- Anchor
 
+	rational_anchor: RATIONAL_NUMBER
+			-- Anchor for rational numbers
+		deferred
+		end
+
 	integer_anchor: INTEGER_NUMBER
 			-- Anchor for integer numbers
 		deferred
 		end
 
-	rational_anchor: RATIONAL_NUMBER
-			-- Anchor for rational numbers
+	natural_anchor: NATURAL_NUMBER
+			-- Anchor for natural numbers
 		deferred
 		end
 

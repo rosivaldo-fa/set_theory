@@ -306,6 +306,13 @@ feature -- Predicate
 
 feature -- Anchor
 
+	rational_anchor: RATIONAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
 	integer_anchor: INTEGER_NUMBER
 			-- <Precursor>
 		once
@@ -313,7 +320,7 @@ feature -- Anchor
 			class
 		end
 
-	rational_anchor: RATIONAL_NUMBER
+	natural_anchor: NATURAL_NUMBER
 			-- <Precursor>
 		once
 		ensure then

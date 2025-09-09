@@ -63,6 +63,7 @@ inherit
 			test_div,
 			test_rem,
 			test_to_integer_number,
+			test_to_natural_number,
 			test_converted_integer,
 			test_integer_product_overflows
 		end
@@ -501,6 +502,16 @@ feature -- Test routines (Conversion)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}.to_integer_number"
 			testing: "covers/{STI_RATIONAL_NUMBER}.to_integer_number"
+		do
+			Precursor {STST_RATIONAL_NUMBER_TESTS}
+		end
+
+	test_to_natural_number
+			-- <Precursor>
+			-- Test {STI_RATIONAL_NUMBER}.to_natural_number.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.to_natural_number"
+			testing: "covers/{STI_RATIONAL_NUMBER}.to_natural_number"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
 		end
