@@ -32,7 +32,10 @@ inherit
 			minus as rational_minus,
 			opposite as rational_opposite,
 			product as rational_print,
-			quotient as rational_quotient
+			quotient as rational_quotient,
+			to_integer_number as identity alias "+"
+		redefine
+			identity
 		end
 
 feature -- Primitive

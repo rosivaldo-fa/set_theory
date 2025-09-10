@@ -57,6 +57,7 @@ feature -- Test routines (All)
 			test_minus
 			test_opposite
 			test_product
+			test_quotient
 			test_integer_quotient
 			test_integer_remainder
 			test_adjusted_value
@@ -658,6 +659,20 @@ feature -- Test routines (Operation)
 			j := some_integer_number
 			assert ("product", attached (i ⋅ j))
 			assert ("product ok", product_ok (i, j, some_integer_number))
+		end
+
+	test_quotient
+			-- Test {STS_INTEGER_NUMBER}.quotient.
+		note
+			testing: "covers/{STS_INTEGER_NUMBER}.quotient"
+		local
+			i: like integer_number_to_be_tested
+			j, k: like some_integer_number
+		do
+			i := integer_number_to_be_tested
+			j := some_integer_number
+			assert ("quotient", i.divisible (j) ⇒ attached (i / j))
+			assert ("quotient_ok", quotient_ok (i))
 		end
 
 	test_integer_quotient

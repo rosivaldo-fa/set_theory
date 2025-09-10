@@ -53,6 +53,7 @@ inherit
 			test_minus,
 			test_opposite,
 			test_product,
+			test_quotient,
 			test_integer_quotient,
 			test_integer_remainder,
 			test_adjusted_value
@@ -395,6 +396,14 @@ feature -- Test routines (Operation)
 			-- Test {STI_INTEGER_NUMBER}.product.
 		note
 			testing: "covers/{STI_INTEGER_NUMBER}.product"
+		do
+			Precursor {STST_INTEGER_NUMBER_TESTS}
+		end
+
+	test_quotient
+			-- Test {STI_INTEGER_NUMBER}.quotient.
+		note
+			testing: "covers/{STI_INTEGER_NUMBER}.quotient"
 		do
 			Precursor {STST_INTEGER_NUMBER_TESTS}
 		end

@@ -247,6 +247,19 @@ feature -- Properties (Operation)
 			end
 		end
 
+	quotient_ok (i: STS_INTEGER_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.quotient?
+		do
+			check
+				absorbing_dividend: zero.divisible (i) ⇒ (zero / i) ≍ zero
+					good_divisor: i.divisible (one) -- 1 is an invertible, neutral factor.
+				neutral_divisor: (i / one) ≍ i
+				multiplicative_inverse: one.divisible (i) ⇒ (one / i) ≍ i.inverse
+			then
+				Result := True
+			end
+		end
+
 	integer_quotient_ok (i, j: STS_INTEGER_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STS_INTEGER_NUMBER}.integer_quotient?
 		do

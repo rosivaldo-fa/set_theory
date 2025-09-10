@@ -465,10 +465,8 @@ feature -- Test routines (Operation)
 		end
 
 	test_quotient
-			-- <Precursor>
 			-- Test {STI_RATIONAL_NUMBER}.quotient.
 		note
-			testing: "covers/{STS_RATIONAL_NUMBER}.quotient"
 			testing: "covers/{STI_RATIONAL_NUMBER}.quotient"
 		do
 			Precursor {STST_RATIONAL_NUMBER_TESTS}
