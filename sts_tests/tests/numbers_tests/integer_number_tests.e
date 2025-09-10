@@ -589,7 +589,7 @@ feature -- Test routines (Relationship)
 				i := integer_number_to_be_tested
 				j := some_integer_number
 			until
-				i.abs ≭ One and not j.integer_product_overflows (j, i) and (j.max_value_exists ⇒ j < j.max_value)
+				i.abs ≭ One and (not j.integer_product_overflows (j, i) and then (j.max_value_exists ⇒ (j ⋅ i) < j.max_value))
 			loop
 				i := integer_number_to_be_tested
 				j := some_integer_number

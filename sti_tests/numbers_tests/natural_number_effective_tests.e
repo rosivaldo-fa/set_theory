@@ -280,11 +280,8 @@ feature -- Test routines (Relationship)
 			testing: "covers/{STI_NATURAL_NUMBER}.divides"
 		do
 			from
-
 			until false
-
 			loop
-
 			Precursor {STST_NATURAL_NUMBER_TESTS}
 			end
 		end

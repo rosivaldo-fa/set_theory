@@ -165,7 +165,7 @@ feature -- Properties (Relationship)
 			check
 				quasi_reflexive: i ≭ zero ⇒ i | i
 				transitive: i | j and j | k ⇒ i | k
-				antisymmetric: i | j and j | i ⇒ i ≍ j
+				quasi_antisymmetric: i | j and j | i ⇒ i.abs ≍ j.abs
 			then
 				Result := True
 			end
@@ -265,7 +265,7 @@ feature -- Properties (Operation)
 		do
 			check
 				absorbing_dividend: zero.divisible (i) ⇒ (zero / i) ≍ zero
-					good_divisor: i.divisible (one) -- 1 is an invertible, neutral factor.
+				good_divisor: i.divisible (one) -- 1 is an invertible, neutral factor.
 				neutral_divisor: (i / one) ≍ i
 				multiplicative_inverse: one.divisible (i) ⇒ (one / i) ≍ i.inverse
 			then
@@ -309,4 +309,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

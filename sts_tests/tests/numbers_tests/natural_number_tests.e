@@ -553,12 +553,14 @@ feature -- Test routines (Relationship)
 		do
 			from
 				n := natural_number_to_be_tested
+				m := some_natural_number
 			until
-				n ≭ One
+				n ≭ One and not m.integer_product_overflows (m, n) and (m.max_value_exists ⇒ m.max_value > m)
 			loop
 				n := natural_number_to_be_tested
+				m := some_natural_number
 			end
-			m := (some_natural_number ⋅ n) + One
+			m := (m ⋅ n) + One
 			assert ("not (n | m)", not (n | m))
 			assert ("not (n | m) ok", divides_ok (n, m, some_natural_number))
 
