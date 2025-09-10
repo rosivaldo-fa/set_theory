@@ -587,12 +587,14 @@ feature -- Test routines (Relationship)
 		do
 			from
 				i := integer_number_to_be_tested
+				j := some_integer_number
 			until
-				i ≭ One
+				i.abs ≭ One and not j.integer_product_overflows (j, i) and (j.max_value_exists ⇒ j < j.max_value)
 			loop
 				i := integer_number_to_be_tested
+				j := some_integer_number
 			end
-			j := (some_integer_number ⋅ i) + One
+			j := (j ⋅ i) + One
 			assert ("not (i | j)", not (i | j))
 			assert ("not (i | j) ok", divides_ok (i, j, some_integer_number))
 

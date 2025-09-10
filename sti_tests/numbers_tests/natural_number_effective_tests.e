@@ -79,8 +79,8 @@ feature -- Test routines (All)
 			test_make
 			test_make_from_reference
 			test_out
-			test_as_integer
-			test_as_rational
+			test_as_integer_number
+			test_as_rational_number
 		end
 
 feature -- Test routines (Initialization)
@@ -279,7 +279,14 @@ feature -- Test routines (Relationship)
 			testing: "covers/{STS_NATURAL_NUMBER}.divides"
 			testing: "covers/{STI_NATURAL_NUMBER}.divides"
 		do
+			from
+
+			until false
+
+			loop
+
 			Precursor {STST_NATURAL_NUMBER_TESTS}
+			end
 		end
 
 feature -- Test routines (Operation)
@@ -336,30 +343,30 @@ feature -- Test routines (Operation)
 
 feature -- Test routines (Conversion)
 
-	test_as_integer
-			-- Test {STI_NATURAL_NUMBER}.as_integer.
+	test_as_integer_number
+			-- Test {STI_NATURAL_NUMBER}.as_integer_number.
 		note
-			testing: "covers/{STI_NATURAL_NUMBER}.as_integer"
+			testing: "covers/{STI_NATURAL_NUMBER}.as_integer_number"
 		local
 			n: like natural_number_to_be_tested
 		do
 			n := natural_number_to_be_tested
-			assert ("as_integer", attached n.as_integer)
+			assert ("as_integer", attached n.as_integer_number)
 			assert ("natural_as_integer", attached natural_as_integer (n))
-			assert ("as_integer_ok", as_integer_ok (n))
+			assert ("as_integer_number_ok", as_integer_number_ok (n))
 		end
 
-	test_as_rational
-			-- Test {STI_NATURAL_NUMBER}.as_rational.
+	test_as_rational_number
+			-- Test {STI_NATURAL_NUMBER}.as_rational_number.
 		note
-			testing: "covers/{STI_NATURAL_NUMBER}.as_rational"
+			testing: "covers/{STI_NATURAL_NUMBER}.as_rational_number"
 		local
 			n: like natural_number_to_be_tested
 		do
 			n := natural_number_to_be_tested
-			assert ("as_rational", attached n.as_rational)
+			assert ("as_rational_number", attached n.as_rational_number)
 			assert ("natural_as_rational", attached natural_as_rational (n))
-			assert ("as_rational_ok", as_rational_ok (n))
+			assert ("as_rational_number_ok", as_rational_number_ok (n))
 		end
 
 feature -- Test routines (Implementation)
@@ -413,4 +420,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

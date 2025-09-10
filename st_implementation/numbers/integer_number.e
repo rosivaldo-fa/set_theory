@@ -41,7 +41,7 @@ create
 convert
 	make ({INTEGER}),
 	make_from_reference ({STS_INTEGER_NUMBER}),
-	as_rational: {RATIONAL_NUMBER}
+	as_rational_number: {RATIONAL_NUMBER}
 
 feature {NONE} -- Initialization
 
@@ -149,13 +149,13 @@ feature -- Comparison
 	rational_min (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational ∧ pq
+			Result := as_rational_number ∧ pq
 		end
 
 	rational_max (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational ∨ pq
+			Result := as_rational_number ∨ pq
 		end
 
 	three_way_comparison alias "⋚" (i: STS_INTEGER_NUMBER): like integer_anchor
@@ -182,13 +182,13 @@ feature -- Operation
 	rational_abs: like rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational.abs
+			Result := as_rational_number.abs
 		end
 
 	rational_opposite: like rational_anchor
 			-- <Precursor>
 		do
-			Result := - as_rational
+			Result := - as_rational_number
 		end
 
 	modulus,
@@ -269,7 +269,7 @@ feature -- Operation
 
 feature -- Conversion
 
-	as_rational: like Rational_anchor
+	as_rational_number: like Rational_anchor
 			-- Current integer number represented as a rational number
 		do
 			create Result.make (Current, One)

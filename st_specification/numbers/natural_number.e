@@ -31,7 +31,10 @@ inherit
 			product as integer_product,
 			integer_quotient as integer_quotient,
 			integer_remainder as integer_remainder,
+			to_natural_number as identity alias "+",
 			adjusted_value as integer_adjusted_value
+		redefine
+			identity
 		end
 
 feature -- Primitive
@@ -206,6 +209,14 @@ feature -- Operation
 --		ensure
 --			definition: Result ≍ Current
 --		end
+
+	identity alias "+": like Current
+			-- Unary plus; current natural number itself.
+		do
+			Result := Current
+		ensure then
+			definition: Result ≍ Current
+		end
 
 	minus alias "-" alias "−" (n: NATURAL_NUMBER): like natural_anchor
 			-- Result of subtracting `n` from current natural number

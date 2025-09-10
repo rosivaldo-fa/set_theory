@@ -9,6 +9,11 @@ expanded class
 
 inherit
 	STS_NATURAL_NUMBER
+		rename
+			min_value as Integer_min_value,
+			max_value as Integer_max_value,
+			min_value_exists as Integer_min_value_exists,
+			max_value_exists as Integer_max_value_exists
 		redefine
 			default_create,
 			sign,
@@ -45,8 +50,8 @@ create
 convert
 	make ({NATURAL}),
 	make_from_reference ({STS_NATURAL_NUMBER}),
-	as_integer: {INTEGER_NUMBER},
-	as_rational: {RATIONAL_NUMBER}
+	as_integer_number: {INTEGER_NUMBER},
+	as_rational_number: {RATIONAL_NUMBER}
 
 feature {NONE} -- Initialization
 
@@ -111,26 +116,26 @@ feature -- Access
 			class
 		end
 
-	Min_value: INTEGER_NUMBER
+	Integer_min_value: INTEGER_NUMBER
 			-- Minimum value representable by this implementation of integer numbers
 		require else
 			Min_value_exists: True
 		once
-			Result := Native_min_value.as_integer_32
+			Result := integer_native_min_value.as_integer_32
 		ensure then
 			class
-			definition: Result ≍ (- Max_value - One)
+			definition: Result ≍ (- Integer_max_value - One)
 		end
 
-	Max_value: INTEGER_NUMBER
+	Integer_max_value: INTEGER_NUMBER
 			-- Maximum value representable by this implementation of integer numbers
 		require else
 			Max_value_exists: True
 		once
-			Result := Native_max_value.as_integer_32
+			Result := integer_native_max_value.as_integer_32
 		ensure then
 			class
-			definition: Result.value = Native_max_value
+			definition: Result.value = integer_native_max_value
 		end
 
 feature -- Quality
@@ -138,10 +143,10 @@ feature -- Quality
 	is_natural: BOOLEAN = True
 			-- <Precursor>
 
-	min_value_exists: BOOLEAN = True
+	Integer_min_value_exists: BOOLEAN = True
 			-- <Precursor>
 
-	max_value_exists: BOOLEAN = True
+	Integer_max_value_exists: BOOLEAN = True
 			-- <Precursor>
 
 feature -- Output
@@ -171,13 +176,13 @@ feature -- Comparison
 	rational_min (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational ∧ pq
+			Result := as_rational_number ∧ pq
 		end
 
 	rational_max (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational ∨ pq
+			Result := as_rational_number ∨ pq
 		end
 
 	integer_three_way_comparison (i: STS_INTEGER_NUMBER): like integer_anchor
@@ -222,13 +227,13 @@ feature -- Operation
 	rational_abs: like rational_anchor
 			-- <Precursor>
 		do
-			Result := as_rational.abs
+			Result := as_rational_number.abs
 		end
 
 	rational_opposite: like rational_anchor
 			-- <Precursor>
 		do
-			Result := - as_rational
+			Result := - as_rational_number
 		end
 
 	integer_plus (i: STS_INTEGER_NUMBER): like integer_anchor
@@ -319,7 +324,7 @@ feature -- Operation
 
 feature -- Conversion
 
-	as_rational: like Rational_anchor
+	as_rational_number: like Rational_anchor
 			-- Current natural number represented as a rational number
 		do
 			create Result.make (Current, One)
@@ -328,7 +333,7 @@ feature -- Conversion
 			denominator: Result.q ≍ One
 		end
 
-	as_integer: like Integer_anchor
+	as_integer_number: like Integer_anchor
 			-- Current natural number represented as an integer number
 		do
 			create Result.make (stored_value)
@@ -411,10 +416,10 @@ feature {NONE} -- Implementation
 	stored_value_mask: like stored_value = 0b0111_1111
 			-- Binary mask for the (stored) value of a natural number
 
-	native_min_value: INTEGER_8 = -128
+	integer_native_min_value: INTEGER_8 = -128
 			-- Native minimum value representable by this implementation of integer numbers
 
-	native_max_value: INTEGER_8 = 127
+	integer_native_max_value: INTEGER_8 = 127
 			-- Native maximum value representable by this implementation of integer numbers
 
 note

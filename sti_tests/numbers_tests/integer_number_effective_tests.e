@@ -104,7 +104,7 @@ feature -- Test routines (All)
 			test_make
 			test_make_from_reference
 			test_out
-			test_as_rational
+			test_as_rational_number
 		end
 
 feature -- Test routines (Initialization)
@@ -426,17 +426,17 @@ feature -- Test routines (Operation)
 
 feature -- Test routines (Conversion)
 
-	test_as_rational
-			-- Test {STI_INTEGER_NUMBER}.as_rational.
+	test_as_rational_number
+			-- Test {STI_INTEGER_NUMBER}.as_rational_number.
 		note
-			testing: "covers/{STI_INTEGER_NUMBER}.as_rational"
+			testing: "covers/{STI_INTEGER_NUMBER}.as_rational_number"
 		local
 			i: like integer_number_to_be_tested
 		do
 			i := integer_number_to_be_tested
-			assert ("as_rational", attached i.as_rational)
+			assert ("as_rational_number", attached i.as_rational_number)
 			assert ("integer_as_rational", attached integer_as_rational (i))
-			assert ("as_rational_ok", as_rational_ok (i))
+			assert ("as_rational_number_ok", as_rational_number_ok (i))
 		end
 
 feature -- Test routines (Implementation)
@@ -491,4 +491,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

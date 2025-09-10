@@ -47,6 +47,8 @@ inherit
 			integer_number_to_be_tested as natural_number_to_be_tested
 		redefine
 			test_all,
+			test_sign,
+			test_is_natural,
 			natural_number_to_be_tested
 		end
 
@@ -150,6 +152,56 @@ feature -- Test routines (Membership)
 			s := some_set_n
 			assert ("is_not_in", n ∉ s ⇒ True)
 			assert ("is_not_in_ok", is_not_in_ok (n, s))
+		end
+
+feature -- Test routines (Access)
+
+	test_sign
+			-- Test {STS_RATIONAL_NUMBER}.sign.
+			-- Test {STS_INTEGER_NUMBER}.sign.
+			-- Test {STS_NATURAL_NUMBER}.sign.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.sign"
+			testing: "covers/{STS_INTEGER_NUMBER}.sign"
+			testing: "covers/{STS_NATURAL_NUMBER}.sign"
+		local
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("never negative", n.sign ≭ - one)
+
+			n := Zero
+			assert ("unchanged zero", (- n).sign ≍ Zero)
+			assert ("just zero", n.sign ≍ Zero)
+
+			from
+				n := natural_number_to_be_tested
+			until
+				n > Zero
+			loop
+				n := natural_number_to_be_tested
+			end
+			assert ("positive", n.sign ≍ one)
+
+			assert ("sign", attached natural_number_to_be_tested.sign)
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_natural
+			-- Test {STS_RATIONAL_NUMBER}.is_natural.
+			-- Test {STS_INTEGER_NUMBER}.is_natural.
+			-- Test {STS_NATURAL_NUMBER}.is_natural.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_natural"
+			testing: "covers/{STS_INTEGER_NUMBER}.is_natural"
+			testing: "covers/{STS_NATURAL_NUMBER}.is_natural"
+		local
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("never below zero", not (n < zero))
+			assert ("n.is_natural", n.is_natural)
 		end
 
 feature -- Test routines (Comparison)

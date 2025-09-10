@@ -27,11 +27,11 @@ feature -- Access
 
 feature -- Properties (Conversion)
 
-	as_rational_ok (i: STI_INTEGER_NUMBER): BOOLEAN
+	as_rational_number_ok (i: STI_INTEGER_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STI_INTEGER_NUMBER}.as_rational?
 		do
 			check
-				is_integer: i.as_rational.is_integer
+				is_integer: i.as_rational_number.is_integer
 			then
 				Result := True
 			end
