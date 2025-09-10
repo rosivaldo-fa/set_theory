@@ -555,7 +555,7 @@ feature -- Test routines (Relationship)
 				n := natural_number_to_be_tested
 				m := some_natural_number
 			until
-				n ≭ One and not m.integer_product_overflows (m, n) and (m.max_value_exists ⇒ m.max_value > m)
+				n ≭ One and (not m.integer_product_overflows (m, n) and then (m.max_value_exists ⇒ m.max_value > (m ⋅ n)))
 			loop
 				n := natural_number_to_be_tested
 				m := some_natural_number

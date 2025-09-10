@@ -279,11 +279,7 @@ feature -- Test routines (Relationship)
 			testing: "covers/{STS_NATURAL_NUMBER}.divides"
 			testing: "covers/{STI_NATURAL_NUMBER}.divides"
 		do
-			from
-			until false
-			loop
 			Precursor {STST_NATURAL_NUMBER_TESTS}
-			end
 		end
 
 feature -- Test routines (Operation)
