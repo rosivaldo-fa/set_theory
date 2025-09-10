@@ -20,7 +20,7 @@ feature -- Access
 	One: STI_INTEGER_NUMBER
 			-- <Precursor>
 		once
-			Result := {STI_INTEGER_NUMBER}.One
+			Result := 1
 		ensure then
 			class
 		end
@@ -38,6 +38,13 @@ feature -- Properties (Conversion)
 		end
 
 feature -- Anchor
+
+	rational_anchor: STI_RATIONAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
 
 	integer_anchor: STI_INTEGER_NUMBER
 			-- <Precursor>

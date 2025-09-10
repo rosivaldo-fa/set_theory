@@ -14,8 +14,8 @@ inherit
 			numerator as identity alias "+",
 			q as one,
 			denominator as one,
-			is_in as rational_number_is_in,
-			is_not_in as rational_number_is_not_in,
+			is_in as rational_is_in,
+			is_not_in as rational_is_not_in,
 			equals as rational_equals,
 			unequals as rational_unequals,
 			is_less as rational_is_less,
@@ -345,6 +345,7 @@ invariant
 	is_integer: is_integer
 	min_value: min_value_exists ⇒ min_value ≤ Current
 	max_value: max_value_exists ⇒ Current ≤ max_value -- TODO: It fails when `max_value' is a once routine and is called by the first time.
+	to_natural_number: is_natural ⇒ to_natural_number.value.as_integer_32 = value -- TODO: Make it more general.
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

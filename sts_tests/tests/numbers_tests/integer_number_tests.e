@@ -9,18 +9,67 @@ deferred class
 	INTEGER_NUMBER_TESTS
 
 inherit
-	ELEMENT_TESTS
+	RATIONAL_NUMBER_TESTS
 		rename
-			is_not_in_ok as element_is_not_in_ok,
-			test_is_in as test_element_is_in,
-			test_is_not_in as test_element_is_not_in,
-			element_to_be_tested as integer_number_to_be_tested
+			is_not_in_ok as rational_is_not_in_ok,
+			equals_ok as rational_equals_ok,
+			unequals_ok as rational_unequals_ok,
+			is_less_ok as rational_is_less_ok,
+			is_less_equal_ok as rational_is_less_equal_ok,
+			is_greater_ok as rational_is_greater_ok,
+			is_greater_equal_ok as rational_is_greater_equal_ok,
+			min_ok as rational_min_ok,
+			max_ok as rational_max_ok,
+			plus_ok as rational_plus_ok,
+			minus_ok as rational_minus_ok,
+			opposite_ok as rational_opposite_ok,
+			product_ok as rational_product_ok,
+			quotient_ok as rational_quotient_ok,
+			test_is_in as test_rational_is_in,
+			test_is_not_in as test_rational_is_not_in,
+			test_zero as test_rational_zero,
+			test_one as test_rational_one,
+			test_equals as test_rational_equals,
+			test_unequals as test_rational_unequals,
+			test_is_less as test_rational_is_less,
+			test_is_less_equal as test_rational_is_less_equal,
+			test_is_greater as test_rational_is_greater,
+			test_is_greater_equal as test_rational_is_greater_equal,
+			test_three_way_comparison as test_rational_three_way_comparison,
+			test_min as test_rational_min,
+			test_max as test_rational_max,
+			test_divisible as test_rational_divisible,
+			test_modulus as test_rational_modulus,
+			test_abs as test_rational_abs,
+			test_plus as test_rational_plus,
+			test_minus as test_rational_minus,
+			test_opposite as test_rational_opposite,
+			test_product as test_rational_product,
+			test_quotient as test_rational_quotient,
+			rational_number_to_be_tested as integer_number_to_be_tested
 		redefine
 			test_all,
+			test_is_integer,
 			integer_number_to_be_tested
 		end
 
 	INTEGER_NUMBER_PROPERTIES
+
+feature -- Access
+
+	zero: like integer_anchor
+			-- The integer number 0
+		deferred
+		ensure then
+			definition: Result.value = 0
+		end
+
+	one: like integer_anchor
+			-- The integer number 1
+		deferred
+		ensure then
+			definition: Result.value = 1
+		end
 
 feature -- Test routines (All)
 
@@ -29,10 +78,11 @@ feature -- Test routines (All)
 		note
 			testing: "covers/{STS_INTEGER_NUMBER}"
 		do
-			Precursor {ELEMENT_TESTS}
+			Precursor {RATIONAL_NUMBER_TESTS}
 			test_value
 			test_is_in
 			test_is_not_in
+			test_is_integer
 			test_min_value_exists
 			test_max_value_exists
 			test_zero
@@ -121,6 +171,16 @@ feature -- Test routines (Membership)
 		end
 
 feature -- Test routines (Quality)
+
+	test_is_integer
+			-- Test {STS_RATIONAL_NUMBER}.is_integer.
+			-- Test {STS_INTEGER_NUMBER}.is_integer.
+		note
+			testing: "covers/{STS_RATIONAL_NUMBER}.is_integer"
+			testing: "covers/{STS_INTEGER_NUMBER}.is_integer"
+		do
+			assert ("is_integer", integer_number_to_be_tested.is_integer)
+		end
 
 	test_min_value_exists
 			-- Test {STS_INTEGER_NUMBER}.min_value_exists.
@@ -667,7 +727,7 @@ feature -- Test routines (Operation)
 			testing: "covers/{STS_INTEGER_NUMBER}.quotient"
 		local
 			i: like integer_number_to_be_tested
-			j, k: like some_integer_number
+			j: like some_integer_number
 		do
 			i := integer_number_to_be_tested
 			j := some_integer_number

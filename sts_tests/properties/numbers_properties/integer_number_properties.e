@@ -8,9 +8,22 @@ deferred class
 	INTEGER_NUMBER_PROPERTIES
 
 inherit
-	ELEMENT_PROPERTIES
+	RATIONAL_NUMBER_PROPERTIES
 		rename
-			is_not_in_ok as element_is_not_in_ok
+			is_not_in_ok as rational_is_not_in_ok,
+			equals_ok as rational_equals_ok,
+			unequals_ok as rational_unequals_ok,
+			is_less_ok as rational_is_less_ok,
+			is_less_equal_ok as rational_is_less_equal_ok,
+			is_greater_ok as rational_is_greater_ok,
+			is_greater_equal_ok as rational_is_greater_equal_ok,
+			min_ok as rational_min_ok,
+			max_ok as rational_max_ok,
+			plus_ok as rational_plus_ok,
+			minus_ok as rational_minus_ok,
+			opposite_ok as rational_opposite_ok,
+			product_ok as rational_product_ok,
+			quotient_ok as rational_quotient_ok
 		end
 
 feature -- Access
@@ -18,14 +31,14 @@ feature -- Access
 	zero: like integer_anchor
 			-- The integer number 0
 		deferred
-		ensure
+		ensure then
 			definition: Result.value = 0
 		end
 
 	one: like integer_anchor
 			-- The integer number 1
 		deferred
-		ensure
+		ensure then
 			definition: Result.value = 1
 		end
 

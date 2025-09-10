@@ -20,6 +20,7 @@ inherit
 			max,
 			rational_modulus,
 			rational_abs,
+			to_natural_number,
 			converted_integer
 		end
 
@@ -275,6 +276,12 @@ feature -- Conversion
 		ensure
 			numerator: Result.p ≍ Current
 			denominator: Result.q ≍ One
+		end
+
+	to_natural_number: like Natural_anchor
+			-- <Precursor>
+		do
+			Result := value.as_natural_32 -- TODO: Make it more general.
 		end
 
 feature -- Implementation
