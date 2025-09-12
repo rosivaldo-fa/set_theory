@@ -138,25 +138,40 @@ feature -- Test routines (Output)
 		local
 			pq, pq_2, pq_3: like some_rational_number
 			s: like set_to_be_tested
-			s_out: STRING
+			pq_out, pq_2_out, pq_3_out, s_out: STRING
 		do
 			create s
 			assert ("{}", s.out ~ "{}")
 
 			pq := some_rational_number
+			pq_out := if attached {STS_INTEGER_NUMBER} pq then
+					pq.out + "/1"
+				else
+					pq.out
+				end
 			s := s.extended (pq)
 			s_out := s.out
-			assert ("{pq}", s_out ~ "{} & (" + pq.out + ")")
+			assert ("{pq}", s_out ~ "{} & (" + pq_out + ")")
 
 			pq_2 := some_rational_number
+			pq_2_out := if attached {STS_INTEGER_NUMBER} pq_2 then
+					pq_2.out + "/1"
+				else
+					pq_2.out
+				end
 			s := s.extended (pq_2)
 			s_out := s.out
-			assert ("{pq, pq_2}", s_out ~ "{} & (" + pq.out + ") & (" + pq_2.out + ")")
+			assert ("{pq, pq_2}", s_out ~ "{} & (" + pq_out + ") & (" + pq_2_out + ")")
 
 			pq_3 := some_rational_number
+			pq_3_out := if attached {STS_INTEGER_NUMBER} pq_3 then
+					pq_3.out + "/1"
+				else
+					pq_3.out
+				end
 			s := s.extended (pq_3)
 			s_out := s.out
-			assert ("{pq, pq_2, pq_3}", s_out ~ "{} & (" + pq.out + ") & (" + pq_2.out + ") & (" + pq_3.out + ")")
+			assert ("{pq, pq_2, pq_3}", s_out ~ "{} & (" + pq_out + ") & (" + pq_2_out + ") & (" + pq_3_out + ")")
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
