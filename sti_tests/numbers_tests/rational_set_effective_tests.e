@@ -186,28 +186,43 @@ feature -- Test routines (Status report)
 		local
 			pq, pq_2, pq_3: like some_rational_number
 			s: like set_to_be_tested
-			s_debug_output: STRING_32
+			pq_out, pq_2_out, pq_3_out, s_debug_output: STRING_32
 		do
 			create s
 			assert ("{}", s.debug_output ~ {STRING_32} "{}")
 
 			pq := some_rational_number
+			pq_out := if attached {STS_INTEGER_NUMBER} pq then
+					pq.out + "/1"
+				else
+					pq.out
+				end
 			s := s.extended (pq)
 			s_debug_output := s.debug_output
-			assert ("{pq}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq.out) + ")")
+			assert ("{pq}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq_out) + ")")
 
 			pq_2 := some_rational_number
+			pq_2_out := if attached {STS_INTEGER_NUMBER} pq_2 then
+					pq_2.out + "/1"
+				else
+					pq_2.out
+				end
 			s := s.extended (pq_2)
 			s_debug_output := s.debug_output
-			assert ("{pq, pq_2}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq.out) + ") & (" +
-					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq_2.out) + ")")
+			assert ("{pq, pq_2}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq_out) + ") & (" +
+					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq_2_out) + ")")
 
 			pq_3 := some_rational_number
+			pq_3_out := if attached {STS_INTEGER_NUMBER} pq_3 then
+					pq_3.out + "/1"
+				else
+					pq_3.out
+				end
 			s := s.extended (pq_3)
 			s_debug_output := s.debug_output
-			assert ("{pq, pq_2, pq_3}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq.out) + ") & (" +
-					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq_2.out) + ") & (" +
-					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq_3.out) + ")")
+			assert ("{pq, pq_2, pq_3}", s_debug_output ~ {STRING_32} "{} & (" + {UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq_out) + ") & (" +
+					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq_2_out) + ") & (" +
+					{UTF_CONVERTER}.utf_8_string_8_to_string_32 (pq_3_out) + ")")
 
 			s := set_to_be_tested
 			assert ("debug_output", attached s.debug_output)
