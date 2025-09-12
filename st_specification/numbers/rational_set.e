@@ -1,38 +1,38 @@
 ﻿note
-	description: "Set of integer numbers, i.e. a subset of ℤ."
+	description: "Set of rational numbers, pq.e. a subset of ℚ."
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
 deferred class
-	INTEGER_SET
+	RATIONAL_SET
 
 inherit
-	SET [INTEGER_NUMBER]
+	SET [RATIONAL_NUMBER]
 		rename
-			u as z,
-			universe as integer_numbers,
+			u as q,
+			universe as rational_numbers,
 			extended as set_extended
 		end
 
 feature -- Construction
 
-	extended (i: INTEGER_NUMBER): like integer_superset_anchor
-			-- Current integer set extended with `i', whose equality with any other element is defined by {INTEGER_NUMBER}.equals
+	extended (pq: RATIONAL_NUMBER): like rational_superset_anchor
+			-- Current rational set extended with `pq', whose equality with any other element is defined by {RATIONAL_NUMBER}.equals
 		deferred
 		ensure
-			has_i: Result ∋ i
+			has_pq: Result ∋ pq
 		end
 
 feature -- Anchor
 
-	subset_anchor: INTEGER_SET
+	subset_anchor: RATIONAL_SET
 			-- <Precursor>
 		deferred
 		end
 
-	integer_superset_anchor: INTEGER_SET
-			-- Anchor for supersets of current integer set
+	rational_superset_anchor: RATIONAL_SET
+			-- Anchor for supersets of current rational set
 		deferred
 		end
 

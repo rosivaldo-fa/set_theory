@@ -125,18 +125,18 @@ feature -- Test routines (Membership)
 			testing: "covers/{STS_RATIONAL_NUMBER}.is_in"
 		local
 			pq: like rational_number_to_be_tested
-			s: like some_set_r
+			s: like some_set_pq
 		do
 			pq := rational_number_to_be_tested
-			s := some_set_r.extended (pq, some_equality_r)
+			s := some_set_pq.extended (pq, some_equality_pq)
 			assert ("pq ∈ s", pq ∈ s)
 
 			pq := rational_number_to_be_tested
-			s := some_set_r.prunned (pq)
+			s := some_set_pq.prunned (pq)
 			assert ("not (pq ∈ s)", not (pq ∈ s))
 
 			pq := rational_number_to_be_tested
-			s := some_set_r
+			s := some_set_pq
 			assert ("is_in", pq ∈ s ⇒ True)
 		end
 
@@ -146,20 +146,20 @@ feature -- Test routines (Membership)
 			testing: "covers/{STS_RATIONAL_NUMBER}.is_not_in"
 		local
 			pq: like rational_number_to_be_tested
-			s: like some_set_r
+			s: like some_set_pq
 		do
 			pq := rational_number_to_be_tested
-			s := some_set_r.prunned (pq)
+			s := some_set_pq.prunned (pq)
 			assert ("pq ∉ s", pq ∉ s)
 			assert ("pq ∉ s ok", is_not_in_ok (pq, s))
 
 			pq := rational_number_to_be_tested
-			s := some_set_r.extended (pq, some_equality_r)
+			s := some_set_pq.extended (pq, some_equality_pq)
 			assert ("not (pq ∉ s)", not (pq ∉ s))
 			assert ("not (pq ∉ s) ok", is_not_in_ok (pq, s))
 
 			pq := rational_number_to_be_tested
-			s := some_set_r
+			s := some_set_pq
 			assert ("is_not_in", pq ∉ s ⇒ True)
 			assert ("is_not_in_ok", is_not_in_ok (pq, s))
 		end

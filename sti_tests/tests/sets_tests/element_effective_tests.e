@@ -25,7 +25,8 @@ inherit
 			some_natural_set,
 			same_integer_number,
 			some_integer_set,
-			same_rational_number
+			same_rational_number,
+			some_rational_set
 		end
 
 	EQA_TEST_SET
@@ -360,16 +361,17 @@ feature -- Factory (integer number)
 
 feature -- Factory (rational number)
 
-	same_rational_number (r: STS_RATIONAL_NUMBER): like some_rational_number
+	same_rational_number (pq: STS_RATIONAL_NUMBER): like some_rational_number
 			-- <Precursor>
 		do
 			inspect
-				next_random_item \\ 2
+				next_random_item \\ 3
 			when 0 then
-				Result := Precursor {STST_ELEMENT_TESTS} (r)
+				Result := Precursor {STST_ELEMENT_TESTS} (pq)
 			when 1 then
-				Result := same_rational_number (r)
---				create {STI_RATIONAL_NUMBER} Result.make (i.value)
+				create {STI_RATIONAL_NUMBER} Result.make (pq.p, pq.q)
+			when 2 then
+				create {STI_RATIONAL_NUMBER} Result.make_from_reference (pq)
 			end
 		end
 
@@ -388,13 +390,7 @@ feature -- Factory (rational number)
 			create Result.make (some_integer_number, den)
 		end
 
---	some_native_rational_number: RATIONAL
---			-- Randomly-created native rational number
---		do
---			Result := next_random_item
---		end
-
-	some_immediate_set_r: STI_SET [STS_RATIONAL_NUMBER]
+	some_immediate_set_pq: STI_SET [STS_RATIONAL_NUMBER]
 			-- <Precursor>
 		do
 			check
@@ -406,7 +402,7 @@ feature -- Factory (rational number)
 									from
 										create Result
 									loop
-										Result := Result.extended (some_rational_number, some_equality_r)
+										Result := Result.extended (some_rational_number, some_equality_pq)
 									end
 								end
 						) as s -- `some_immediate_instance' definition
@@ -416,7 +412,7 @@ feature -- Factory (rational number)
 			end
 		end
 
-	some_immediate_universe_r: STI_UNIVERSE [STS_RATIONAL_NUMBER]
+	some_immediate_universe_pq: STI_UNIVERSE [STS_RATIONAL_NUMBER]
 			-- <Precursor>
 		do
 			check
@@ -432,39 +428,40 @@ feature -- Factory (rational number)
 			end
 		end
 
---	some_rational_set: STS_RATIONAL_SET
---			-- <Precursor>
---		do
---			inspect
---				next_random_item \\ 2
---			when 0 then
---				Result := Precursor {STST_ELEMENT_TESTS}
---			when 1 then
+	some_rational_set: STS_RATIONAL_SET
+			-- <Precursor>
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := Precursor {STST_ELEMENT_TESTS}
+			when 1 then
 --				Result := some_rational_complement_set
---			end
---		end
+				Result := Precursor {STST_ELEMENT_TESTS}
+			end
+		end
 
---	some_immediate_rational_set: STI_RATIONAL_SET
---			-- <Precursor>
---		do
---			check
---				s: attached {STI_RATIONAL_SET} some_immediate_instance (
---							agent: STI_RATIONAL_SET
---								do
---									across
---										1 |..| some_count.as_rational_32 as i
---									from
---										create Result
---									loop
---										Result := Result.extended (some_rational_number)
---									end
---								end
---						) as s -- `some_immediate_instance' definition
---				monomorphic: s.generating_type ~ {detachable STI_RATIONAL_SET}
---			then
---				Result := cropped_set (s)
---			end
---		end
+	some_immediate_rational_set: STI_RATIONAL_SET
+			-- <Precursor>
+		do
+			check
+				s: attached {STI_RATIONAL_SET} some_immediate_instance (
+							agent: STI_RATIONAL_SET
+								do
+									across
+										1 |..| some_count.as_integer_32 as i
+									from
+										create Result
+									loop
+										Result := Result.extended (some_rational_number)
+									end
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_RATIONAL_SET}
+			then
+				Result := cropped_set (s)
+			end
+		end
 
 --	some_rational_complement_set: STI_RATIONAL_COMPLEMENT_SET
 --			-- Randomly-fetched polymorphic rational-number complement set

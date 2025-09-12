@@ -37,7 +37,7 @@ feature {NONE} -- Initialization
 			-- Create a set whose `given_element' element and `subset' are, respectively, `i' and `s'.
 		do
 			subset := s
-			create given_element_storage.put (i.value)
+			create given_element_storage.put (i)
 		ensure
 			is_not_empty: subset /= Current
 			given_element: given_element ≍ i

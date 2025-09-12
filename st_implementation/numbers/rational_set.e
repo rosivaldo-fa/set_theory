@@ -1,14 +1,14 @@
 ﻿note
-	description: "Implementation of {STS_NATURAL_SET}"
+	description: "Implementation of {STS_RATIONAL_SET}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	NATURAL_SET
+	RATIONAL_SET
 
 inherit
-	STS_NATURAL_SET
+	STS_RATIONAL_SET
 		redefine
 			default_create,
 			out
@@ -27,64 +27,64 @@ create
 feature {NONE} -- Initialization
 
 	default_create
-			-- Create an empty natural set
+			-- Create an empty rational set
 		do
 		ensure then
 			is_empty: subset = Current
 		end
 
-	make_extended (a_n: STS_NATURAL_NUMBER; s: STS_NATURAL_SET)
-			-- Create a set whose `given_element' element and `subset' are, respectively, `a_n' and `s'.
+	make_extended (pq: STS_RATIONAL_NUMBER; s: STS_RATIONAL_SET)
+			-- Create a set whose `given_element' element and `subset' are, respectively, `pq' and `s'.
 		do
 			subset := s
-			create given_element_storage.put (a_n)
+			create given_element_storage.put (pq)
 		ensure
 			is_not_empty: subset /= Current
-			given_element: given_element ≍ a_n
+			given_element: given_element ≍ pq
 			subset: subset = s -- TODO: Use set equality instead.
 		end
 
 feature -- Membership
 
-	has alias "∋" (a_n: STS_NATURAL_NUMBER): BOOLEAN
-			-- Is `a_n' an element in current set?
+	has alias "∋" (pq: STS_RATIONAL_NUMBER): BOOLEAN
+			-- Is `pq' an element in current set?
 		do
 			if subset /= Current then -- Current set is not empty, so it is an "extended" set.
-				Result := a_n ≍ given_element or subset ∋ a_n
+				Result := pq ≍ given_element or subset ∋ pq
 			end
 		end
 
 feature -- Construction
 
-	set_extended (a_n: STS_NATURAL_NUMBER; a_eq: STS_EQUALITY [STS_NATURAL_NUMBER]): like superset_anchor
-			-- Current set extended with `a_n`, whose equality with any other element is defined by `a_eq`
+	set_extended (pq: STS_RATIONAL_NUMBER; a_eq: STS_EQUALITY [STS_RATIONAL_NUMBER]): like superset_anchor
+			-- Current set extended with `pq`, whose equality with any other element is defined by `a_eq`
 		do
-			create Result.make_extended (a_n, a_eq, Current)
+			create Result.make_extended (pq, a_eq, Current)
 		ensure then
 			equality: Result.eq = a_eq
 			is_not_empty: Result.subset /= Result
-			given_element: Result.given_element ≍ a_n
+			given_element: Result.given_element ≍ pq
 			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
 
-	extended (a_n: STS_NATURAL_NUMBER): like natural_superset_anchor -- TODO: Use like superset_anchor?
+	extended (pq: STS_RATIONAL_NUMBER): like rational_superset_anchor -- TODO: Use like superset_anchor?
 			-- <Precursor>
 		do
-			create Result.make_extended (a_n, Current)
+			create Result.make_extended (pq, Current)
 		ensure then
-			given_element: Result.given_element ≍ a_n
+			given_element: Result.given_element ≍ pq
 			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
 
-	prunned (a_n: STS_NATURAL_NUMBER): like subset_anchor
-			-- Set with every element of current set but any element regarded equal to `a_n'
+	prunned (pq: STS_RATIONAL_NUMBER): like subset_anchor
+			-- Set with every element of current set but any element regarded equal to `pq'
 		do
 			if subset = Current then
 				Result := Current
-			elseif a_n ≍ given_element then
-				Result := subset.prunned (a_n)
+			elseif pq ≍ given_element then
+				Result := subset.prunned (pq)
 			else
-				Result := subset.prunned (a_n).extended (given_element)
+				Result := subset.prunned (pq).extended (given_element)
 			end
 		ensure then
 			when_empty: subset = Current ⇒ Result = Current -- TODO: Use set equality instead.
@@ -94,7 +94,7 @@ feature -- Construction
 
 feature -- Access
 
-	n, natural_numbers: UNIVERSE [STS_NATURAL_NUMBER]
+	q, rational_numbers: UNIVERSE [STS_RATIONAL_NUMBER]
 			-- <Precursor>
 		once
 			create Result
@@ -139,33 +139,33 @@ feature -- Quality
 
 feature -- Anchor
 
-	subset_anchor: STS_NATURAL_SET
+	subset_anchor: STS_RATIONAL_SET
 			-- <Precursor>
 		do
 			Result := Current
 		end
 
-	superset_anchor: SET [STS_NATURAL_NUMBER]
+	superset_anchor: SET [STS_RATIONAL_NUMBER]
 			-- <Precursor>
 		do
 			create Result
 		end
 
-	natural_superset_anchor: NATURAL_SET
+	rational_superset_anchor: RATIONAL_SET
 			-- <Precursor>
 		do
 			Result := Current
 		end
 
-	universe_anchor: UNIVERSE [STS_NATURAL_NUMBER]
+	universe_anchor: UNIVERSE [STS_RATIONAL_NUMBER]
 			-- <Precursor>
 		once
-			Result := n
+			Result := q
 		ensure then
 			class
 		end
 
-feature {NATURAL_SET} -- Implementation
+feature {RATIONAL_SET} -- Implementation
 
 	given_element: like given_element_anchor
 			-- An arbitrary element in current set
@@ -199,7 +199,7 @@ feature {NONE} -- Implementation
 
 feature {NONE} -- Anchor
 
-	given_element_anchor: NATURAL_NUMBER
+	given_element_anchor: RATIONAL_NUMBER
 			-- Anchor for objects like `given_element'
 		do
 			Result := given_element

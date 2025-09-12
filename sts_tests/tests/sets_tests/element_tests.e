@@ -75,7 +75,7 @@ feature -- Factory (Element)
 			-- Randomly-fetched polymorphic element
 		do
 			inspect
-				next_random_item \\ 10
+				next_random_item \\ 9
 			when 0 then
 				Result := some_immediate_element
 			when 1 then
@@ -85,18 +85,15 @@ feature -- Factory (Element)
 			when 3 then
 				Result := some_set_n
 			when 4 then
-				Result := some_integer_number
-			when 5 then
 				Result := some_equality_i
-			when 6 then
+			when 5 then
 				Result := some_set_i
-			when 7 then
-					-- TODO: Unify.
+			when 6 then
 				Result := some_rational_number
+			when 7 then
+				Result := some_equality_pq
 			when 8 then
-				Result := some_equality_r
-			when 9 then
-				Result := some_set_r
+				Result := some_set_pq
 			end
 		end
 
@@ -377,8 +374,8 @@ feature -- Factory (integer number)
 	same_integer_number (i: STS_INTEGER_NUMBER): like some_integer_number
 			-- Integer number equal to `i'
 		do
-			if attached {STS_NATURAL_NUMBER} i as n then
-				Result := same_natural_number (n)
+			if i.is_natural and next_random_item \\ 2 = 0 then
+				Result := same_natural_number (i.to_natural_number)
 			else
 				Result := i
 			end
@@ -522,8 +519,7 @@ feature -- Factory (rational number)
 			when 0 then
 				Result := some_immediate_rational_number
 			when 1 then
---				Result := some_integer_number
-				Result := some_rational_number
+				Result := some_integer_number
 			end
 		end
 
@@ -537,72 +533,70 @@ feature -- Factory (rational number)
 	same_rational_number (pq: STS_RATIONAL_NUMBER): like some_rational_number
 			-- Rational number equal to `i'
 		do
-			if attached {STS_INTEGER_NUMBER} pq as i then
---				Result := same_integer_number (i)
-				Result := pq
+			if pq.is_integer and next_random_item \\ 2 = 0 then
+				Result := same_integer_number (pq.to_integer_number)
 			else
 				Result := pq
 			end
 		ensure
---			definition: Result ≍ r
-			definition: Result = pq
+			definition: Result ≍ pq
 		end
 
-	some_set_r: STS_SET [STS_RATIONAL_NUMBER]
+	some_set_pq: STS_SET [STS_RATIONAL_NUMBER]
 			-- Randomly-fetched polymorphic set of rational numbers
 		do
 			inspect
 				next_random_item \\ 4
 			when 0 then
-				Result := some_immediate_set_r
+				Result := some_immediate_set_pq
 			when 1 then
-				Result := some_universe_r
+				Result := some_universe_pq
 			when 2 then
 --				Result := some_rational_set
-				Result := some_set_r
+				Result := some_set_pq
 			when 3 then
 --				Result := some_rational_universe
-				Result := some_set_r
+				Result := some_set_pq
 			end
 		end
 
-	some_immediate_set_r: STS_SET [STS_RATIONAL_NUMBER]
+	some_immediate_set_pq: STS_SET [STS_RATIONAL_NUMBER]
 			-- Randomly-fetched monomorphic set of rational numbers
 		deferred
 		ensure
-			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_r}
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_pq}
 		end
 
-	some_universe_r: STS_UNIVERSE [STS_RATIONAL_NUMBER]
+	some_universe_pq: STS_UNIVERSE [STS_RATIONAL_NUMBER]
 			-- Randomly-fetched polymorphic universe of rational numbers
 		do
-			Result := some_immediate_universe_r
+			Result := some_immediate_universe_pq
 		end
 
-	some_immediate_universe_r: STS_UNIVERSE [STS_RATIONAL_NUMBER]
+	some_immediate_universe_pq: STS_UNIVERSE [STS_RATIONAL_NUMBER]
 			-- Randomly-fetched monomorphic universe of rational numbers
 		deferred
 		ensure
-			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_r}
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_pq}
 		end
 
-	some_equality_r: STS_EQUALITY [STS_RATIONAL_NUMBER]
+	some_equality_pq: STS_EQUALITY [STS_RATIONAL_NUMBER]
 			-- Randomly-fetched polymorphic equality for comparing {STS_RATIONAL_NUMBER} instances
 		do
 			inspect
 				next_random_item \\ 4
 			when 0 then
-				Result := some_reference_equality_r
+				Result := some_reference_equality_pq
 			when 1 then
-				Result := some_object_standard_equality_r
+				Result := some_object_standard_equality_pq
 			when 2 then
-				Result := some_object_equality_r
+				Result := some_object_equality_pq
 			when 3 then
-				Result := some_object_deep_equality_r
+				Result := some_object_deep_equality_pq
 			end
 		end
 
-	some_reference_equality_r: STS_REFERENCE_EQUALITY [STS_RATIONAL_NUMBER]
+	some_reference_equality_pq: STS_REFERENCE_EQUALITY [STS_RATIONAL_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_RATIONAL_NUMBER} object references
 		do
 			check
@@ -614,7 +608,7 @@ feature -- Factory (rational number)
 			end
 		end
 
-	some_object_standard_equality_r: STS_OBJECT_STANDARD_EQUALITY [STS_RATIONAL_NUMBER]
+	some_object_standard_equality_pq: STS_OBJECT_STANDARD_EQUALITY [STS_RATIONAL_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_RATIONAL_NUMBER} object standard value
 		do
 			check
@@ -626,7 +620,7 @@ feature -- Factory (rational number)
 			end
 		end
 
-	some_object_equality_r: STS_OBJECT_EQUALITY [STS_RATIONAL_NUMBER]
+	some_object_equality_pq: STS_OBJECT_EQUALITY [STS_RATIONAL_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_RATIONAL_NUMBER} object value
 		do
 			check
@@ -638,7 +632,7 @@ feature -- Factory (rational number)
 			end
 		end
 
-	some_object_deep_equality_r: STS_OBJECT_DEEP_EQUALITY [STS_RATIONAL_NUMBER]
+	some_object_deep_equality_pq: STS_OBJECT_DEEP_EQUALITY [STS_RATIONAL_NUMBER]
 			-- Randomly-fetched polymorphic reference equality for comparing {STS_RATIONAL_NUMBER} object deep value
 		do
 			check
@@ -650,18 +644,18 @@ feature -- Factory (rational number)
 			end
 		end
 
---	some_rational_set: STS_RATIONAL_SET
---			-- Randomly-fetched polymorphic rational number set
---		do
---			Result := some_immediate_rational_set
---		end
+	some_rational_set: STS_RATIONAL_SET
+			-- Randomly-fetched polymorphic rational number set
+		do
+			Result := some_immediate_rational_set
+		end
 
---	some_immediate_rational_set: STS_RATIONAL_SET
---			-- Randomly-fetched monomorphic rational number set
---		deferred
---		ensure
---			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_set}
---		end
+	some_immediate_rational_set: STS_RATIONAL_SET
+			-- Randomly-fetched monomorphic rational number set
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_set}
+		end
 
 --	some_rational_universe: STS_RATIONAL_NUMBERS
 --			-- Randomly-fetched polymorphic rational-number universe

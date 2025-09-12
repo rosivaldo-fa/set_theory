@@ -20,7 +20,8 @@ inherit
 			some_natural_set,
 			same_integer_number,
 			some_integer_set,
-			same_rational_number
+			same_rational_number,
+			some_rational_set
 		redefine
 			test_all,
 			set_to_be_tested
