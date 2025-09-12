@@ -436,8 +436,7 @@ feature -- Factory (rational number)
 			when 0 then
 				Result := Precursor {STST_ELEMENT_TESTS}
 			when 1 then
---				Result := some_rational_complement_set
-				Result := Precursor {STST_ELEMENT_TESTS}
+				Result := some_rational_complement_set
 			end
 		end
 
@@ -463,30 +462,30 @@ feature -- Factory (rational number)
 			end
 		end
 
---	some_rational_complement_set: STI_RATIONAL_COMPLEMENT_SET
---			-- Randomly-fetched polymorphic rational-number complement set
---		do
---			Result := some_immediate_rational_complement_set
---		end
+	some_rational_complement_set: STI_RATIONAL_COMPLEMENT_SET
+			-- Randomly-fetched polymorphic rational-number complement set
+		do
+			Result := some_immediate_rational_complement_set
+		end
 
---	some_immediate_rational_complement_set: STI_RATIONAL_COMPLEMENT_SET
---			-- Randomly-fetched monomorphic rational-number complement set
---		do
---			check
---				s: attached {STI_RATIONAL_COMPLEMENT_SET} some_immediate_instance (
---							agent: STI_RATIONAL_COMPLEMENT_SET
---								local
---									s: like some_set_r
---								do
---									s := some_set_r
---									create Result.make (s)
---								end
---						) as s -- `some_immediate_instance' definition
---				monomorphic: s.generating_type ~ {detachable STI_RATIONAL_COMPLEMENT_SET}
---			then
---				Result := cropped_set (s)
---			end
---		end
+	some_immediate_rational_complement_set: STI_RATIONAL_COMPLEMENT_SET
+			-- Randomly-fetched monomorphic rational-number complement set
+		do
+			check
+				s: attached {STI_RATIONAL_COMPLEMENT_SET} some_immediate_instance (
+							agent: STI_RATIONAL_COMPLEMENT_SET
+								local
+									s: like some_set_pq
+								do
+									s := some_set_pq
+									create Result.make (s)
+								end
+						) as s -- `some_immediate_instance' definition
+				monomorphic: s.generating_type ~ {detachable STI_RATIONAL_COMPLEMENT_SET}
+			then
+				Result := cropped_set (s)
+			end
+		end
 
 --	some_immediate_rational_universe: STI_RATIONAL_NUMBERS
 --			-- <Precursor>

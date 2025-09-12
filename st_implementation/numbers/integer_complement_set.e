@@ -30,15 +30,15 @@ create
 
 feature -- Construction
 
-	extended (a_n: INTEGER_NUMBER): like integer_superset_anchor
+	extended (i: INTEGER_NUMBER): like integer_superset_anchor
 			-- <Precursor>
 		do
-			create Result.make_extended (a_n, Current)
+			create Result.make_extended (i, Current)
 		end
 
 feature -- Access
 
-	z, integer_numbers: UNIVERSE [STS_INTEGER_NUMBER]
+	z, integer_numbers: INTEGER_NUMBERS
 			-- <Precursor>
 		once
 			create Result

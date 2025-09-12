@@ -28,13 +28,13 @@ inherit
 			some_set_family_g as some_set_family_pq,
 			some_set_g as some_set_pq,
 			some_universe_g as some_universe_pq,
-			some_equality_sg as some_equality_si,
-			some_immediate_set_sg as some_immediate_set_si,
-			some_object_deep_equality_sg as some_object_deep_equality_si,
-			some_object_equality_sg as some_object_equality_si,
-			some_object_standard_equality_sg as some_object_standard_equality_si,
-			some_reference_equality_sg as some_reference_equality_si,
-			some_set_sg as some_set_si
+			some_equality_sg as some_equality_spq,
+			some_immediate_set_sg as some_immediate_set_spq,
+			some_object_deep_equality_sg as some_object_deep_equality_spq,
+			some_object_equality_sg as some_object_equality_spq,
+			some_object_standard_equality_sg as some_object_standard_equality_spq,
+			some_reference_equality_sg as some_reference_equality_spq,
+			some_set_sg as some_set_spq
 		redefine
 			test_all,
 			some_set_pq,

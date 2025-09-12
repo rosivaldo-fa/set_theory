@@ -11,7 +11,7 @@ class
 inherit
 	STST_INTEGER_SET_TESTS
 		rename
-			u as n,
+			u as z,
 			some_immediate_natural_number as some_expanded_natural_number,
 			some_immediate_integer_number as some_expanded_integer_number,
 			some_immediate_rational_number as some_expanded_rational_number
@@ -75,7 +75,7 @@ inherit
 
 feature -- Access
 
-	n: STI_INTEGER_NUMBERS
+	z: STI_INTEGER_NUMBERS
 			-- <Precursor>
 		once
 			create Result
@@ -167,7 +167,7 @@ feature -- Anchor
 	universe_anchor: STI_INTEGER_NUMBERS
 			-- <Precursor>
 		once
-			Result := n
+			Result := z
 		ensure then
 			class
 		end

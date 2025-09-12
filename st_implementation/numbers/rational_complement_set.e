@@ -1,26 +1,26 @@
 ﻿note
-	description: "Set whose natural-number elements are those not included in a given reference set"
+	description: "Set whose rational-number elements are those not included in a given reference set"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	NATURAL_COMPLEMENT_SET
+	RATIONAL_COMPLEMENT_SET
 
 inherit
-	STS_NATURAL_SET
+	STS_RATIONAL_SET
 		redefine
 			out
 		end
 
-	COMPLEMENT_SET [STS_NATURAL_NUMBER]
+	COMPLEMENT_SET [STS_RATIONAL_NUMBER]
 		rename
 			extended as set_extended,
-			u as n,
-			universe as natural_numbers
+			u as q,
+			universe as rational_numbers
 		redefine
-			n,
-			natural_numbers,
+			q,
+			rational_numbers,
 			out,
 			subset_anchor
 		end
@@ -30,15 +30,15 @@ create
 
 feature -- Construction
 
-	extended (a_n: NATURAL_NUMBER): like natural_superset_anchor
+	extended (pq: RATIONAL_NUMBER): like rational_superset_anchor
 			-- <Precursor>
 		do
-			create Result.make_extended (a_n, Current)
+			create Result.make_extended (pq, Current)
 		end
 
 feature -- Access
 
-	n, natural_numbers: NATURAL_NUMBERS
+	q, rational_numbers: UNIVERSE [STS_RATIONAL_NUMBER]
 			-- <Precursor>
 		once
 			create Result
@@ -60,13 +60,13 @@ feature -- Output
 
 feature -- Anchor
 
-	subset_anchor: NATURAL_COMPLEMENT_SET
+	subset_anchor: RATIONAL_COMPLEMENT_SET
 			-- <Precursor>
 		do
 			Result := Current
 		end
 
-	natural_superset_anchor: NATURAL_SET
+	rational_superset_anchor: RATIONAL_SET
 			-- <Precursor>
 		do
 			create Result
