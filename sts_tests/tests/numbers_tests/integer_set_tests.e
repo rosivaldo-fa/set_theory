@@ -86,13 +86,15 @@ feature -- Factory (integer number)
 			-- <Precursor>
 		do
 			inspect
-				next_random_item \\ 3
+				next_random_item \\ 4
 			when 0 then
 				Result := some_immediate_set_i
 			when 1 then
 				Result := some_universe_i
 			when 2 then
 				Result := some_integer_set
+			when 3 then
+				Result := some_integer_universe
 			end
 		end
 

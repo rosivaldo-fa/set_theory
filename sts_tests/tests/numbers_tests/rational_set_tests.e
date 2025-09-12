@@ -86,13 +86,16 @@ feature -- Factory (rational number)
 			-- <Precursor>
 		do
 			inspect
-				next_random_item \\ 3
+				next_random_item \\ 4
 			when 0 then
 				Result := some_immediate_set_pq
 			when 1 then
 				Result := some_universe_pq
 			when 2 then
 				Result := some_rational_set
+			when 3 then
+--				Result := some_rational_universe
+				Result := some_set_pq
 			end
 		end
 

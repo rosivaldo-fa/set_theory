@@ -409,7 +409,13 @@ feature -- Factory (integer number)
 	some_universe_i: STS_UNIVERSE [STS_INTEGER_NUMBER]
 			-- Randomly-fetched polymorphic universe of integer numbers
 		do
-			Result := some_immediate_universe_i
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_universe_i
+			when 1 then
+				Result := some_integer_universe
+			end
 		end
 
 	some_immediate_universe_i: STS_UNIVERSE [STS_INTEGER_NUMBER]
