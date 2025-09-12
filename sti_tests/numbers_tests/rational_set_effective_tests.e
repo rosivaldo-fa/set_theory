@@ -89,7 +89,7 @@ feature -- Test routines (All)
 	test_all
 			-- Test every routine of {STI_RATIONAL_SET}.
 		note
-			testing: "covers/{STI_RATIONAL_SET}" --
+			testing: "covers/{STI_RATIONAL_SET}"
 		do
 			Precursor {STST_RATIONAL_SET_TESTS}
 			test_default_create

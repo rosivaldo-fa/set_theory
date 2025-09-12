@@ -552,8 +552,7 @@ feature -- Factory (rational number)
 			when 1 then
 				Result := some_universe_pq
 			when 2 then
---				Result := some_rational_set
-				Result := some_set_pq
+				Result := some_rational_set
 			when 3 then
 --				Result := some_rational_universe
 				Result := some_set_pq
