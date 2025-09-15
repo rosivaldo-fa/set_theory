@@ -394,8 +394,6 @@ feature -- Factory (integer number)
 				Result := some_universe_i
 			when 2 then
 				Result := some_integer_set
-			when 3 then
-				Result := some_integer_universe
 			end
 		end
 
@@ -492,7 +490,13 @@ feature -- Factory (integer number)
 	some_integer_set: STS_INTEGER_SET
 			-- Randomly-fetched polymorphic integer number set
 		do
-			Result := some_immediate_integer_set
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_integer_set
+			when 1 then
+				Result := some_integer_universe
+			end
 		end
 
 	some_immediate_integer_set: STS_INTEGER_SET
@@ -552,16 +556,13 @@ feature -- Factory (rational number)
 			-- Randomly-fetched polymorphic set of rational numbers
 		do
 			inspect
-				next_random_item \\ 4
+				next_random_item \\ 3
 			when 0 then
 				Result := some_immediate_set_pq
 			when 1 then
 				Result := some_universe_pq
 			when 2 then
 				Result := some_rational_set
-			when 3 then
---				Result := some_rational_universe
-				Result := some_set_pq
 			end
 		end
 
@@ -652,7 +653,13 @@ feature -- Factory (rational number)
 	some_rational_set: STS_RATIONAL_SET
 			-- Randomly-fetched polymorphic rational number set
 		do
-			Result := some_immediate_rational_set
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_rational_set
+			when 1 then
+				Result := some_rational_universe
+			end
 		end
 
 	some_immediate_rational_set: STS_RATIONAL_SET
@@ -662,18 +669,18 @@ feature -- Factory (rational number)
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_set}
 		end
 
---	some_rational_universe: STS_RATIONAL_NUMBERS
---			-- Randomly-fetched polymorphic rational-number universe
---		do
---			Result := some_immediate_rational_universe
---		end
+	some_rational_universe: STS_RATIONAL_NUMBERS
+			-- Randomly-fetched polymorphic rational-number universe
+		do
+			Result := some_immediate_rational_universe
+		end
 
---	some_immediate_rational_universe: STS_RATIONAL_NUMBERS
---			-- Randomly-fetched monomorphic rational-number universe
---		deferred
---		ensure
---			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_universe}
---		end
+	some_immediate_rational_universe: STS_RATIONAL_NUMBERS
+			-- Randomly-fetched monomorphic rational-number universe
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_universe}
+		end
 
 feature {NONE} -- Implementation
 

@@ -94,7 +94,7 @@ feature -- Construction
 
 feature -- Access
 
-	z, integer_numbers: UNIVERSE [STS_INTEGER_NUMBER]
+	z, integer_numbers: INTEGER_NUMBERS
 			-- <Precursor>
 		once
 			create Result

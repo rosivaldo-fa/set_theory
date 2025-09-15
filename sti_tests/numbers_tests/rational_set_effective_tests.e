@@ -76,8 +76,7 @@ inherit
 
 feature -- Access
 
-	q: STI_UNIVERSE [STS_RATIONAL_NUMBER]
---	q: STI_RATIONAL_NUMBERS
+	q: STI_RATIONAL_NUMBERS
 			-- <Precursor>
 		once
 			create Result
@@ -187,7 +186,8 @@ feature -- Test routines (Status report)
 		local
 			pq, pq_2, pq_3: like some_rational_number
 			s: like set_to_be_tested
-			pq_out, pq_2_out, pq_3_out, s_debug_output: STRING_32
+			pq_out, pq_2_out, pq_3_out: STRING
+			s_debug_output: STRING_32
 		do
 			create s
 			assert ("{}", s.debug_output ~ {STRING_32} "{}")

@@ -94,7 +94,7 @@ feature -- Construction
 
 feature -- Access
 
-	n, natural_numbers: UNIVERSE [STS_NATURAL_NUMBER]
+	n, natural_numbers: NATURAL_NUMBERS
 			-- <Precursor>
 		once
 			create Result

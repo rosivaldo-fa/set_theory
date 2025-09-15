@@ -487,21 +487,21 @@ feature -- Factory (rational number)
 			end
 		end
 
---	some_immediate_rational_universe: STI_RATIONAL_NUMBERS
---			-- <Precursor>
---		do
---			check
---				z: attached {STI_RATIONAL_NUMBERS} some_immediate_instance (
---							agent: STI_RATIONAL_NUMBERS
---								do
---									create Result
---								end
---						) as z -- `some_immediate_instance' definition
---				monomorphic: z.generating_type ~ {detachable STI_RATIONAL_NUMBERS}
---			then
---				Result := z
---			end
---		end
+	some_immediate_rational_universe: STI_RATIONAL_NUMBERS
+			-- <Precursor>
+		do
+			check
+				q: attached {STI_RATIONAL_NUMBERS} some_immediate_instance (
+							agent: STI_RATIONAL_NUMBERS
+								do
+									create Result
+								end
+						) as q -- `some_immediate_instance' definition
+				monomorphic: q.generating_type ~ {detachable STI_RATIONAL_NUMBERS}
+			then
+				Result := q
+			end
+		end
 
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"

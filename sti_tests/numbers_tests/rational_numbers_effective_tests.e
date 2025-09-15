@@ -1,15 +1,16 @@
 ﻿note
-	description: "Test suite for {STI_RATIONAL_COMPLEMENT_SET}"
+	description: "Test suite for {STI_RATIONAL_NUMBERS}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
+	TODO: "AutoTest may confuse {STST_RATIONAL_NUMBERS_TESTS} with {RATIONAL_NUMBERS_TESTS}."
 
 class
-	RATIONAL_COMPLEMENT_SET_TESTS
+	RATIONAL_NUMBERS_EFFECTIVE_TESTS
 
 inherit
-	STST_RATIONAL_SET_TESTS
+	STST_RATIONAL_NUMBERS_TESTS
 		rename
 			u as q,
 			some_immediate_natural_number as some_expanded_natural_number,
@@ -24,9 +25,7 @@ inherit
 			same_rational_number,
 			some_rational_set
 		redefine
-			test_all,
-			test_extended,
-			set_to_be_tested
+			test_all
 		end
 
 	UNARY_TESTS [STS_RATIONAL_NUMBER]
@@ -34,7 +33,7 @@ inherit
 			is_not_in_ok as element_is_not_in_ok,
 			test_is_in as test_element_is_in,
 			test_is_not_in as test_element_is_not_in,
-			element_to_be_tested as set_to_be_tested,
+			element_to_be_tested as universe_to_be_tested,
 			some_object_g as some_rational_number,
 			object_deep_twin_g as object_deep_twin_pq,
 			object_standard_twin_g as object_standard_twin_pq,
@@ -59,6 +58,7 @@ inherit
 			some_reference_equality_sg as some_reference_equality_spq,
 			some_set_sg as some_set_spq
 		undefine
+			universe_to_be_tested,
 			some_set_pq,
 			some_universe_pq,
 			some_equality_pq,
@@ -68,7 +68,6 @@ inherit
 			some_object_deep_equality_pq
 		redefine
 			test_all,
-			set_to_be_tested,
 			some_immediate_set_pq,
 			some_immediate_universe_pq
 		end
@@ -86,40 +85,44 @@ feature -- Access
 feature -- Test routines (All)
 
 	test_all
-			-- Test every routine of {STI_RATIONAL_COMPLEMENT_SET}.
+			-- Test every routine of {STI_RATIONAL_NUMBERS}.
 		note
-			testing: "covers/{STI_RATIONAL_COMPLEMENT_SET}"
+			testing: "covers/{STI_RATIONAL_NUMBERS}"
 		do
-			Precursor {STST_RATIONAL_SET_TESTS}
+			Precursor {STST_RATIONAL_NUMBERS_TESTS}
+			test_default_create
 			test_out
+			test_debug_output
 		end
 
-feature -- Test routines (Construction)
+feature -- Test routines (Initialization)
 
-	test_extended
-			-- Test {STI_RATIONAL_COMPLEMENT_SET}.extended.
+	test_default_create
+			-- Test {STI_RATIONAL_NUMBERS}.default_create.
 		note
-			testing: "covers/{STI_RATIONAL_COMPLEMENT_SET}.extended"
+			testing: "covers/{STI_RATIONAL_NUMBERS}.default_create"
 		do
-			Precursor {STST_RATIONAL_SET_TESTS}
+			assert ("default_create", attached (create {like universe_to_be_tested}))
 		end
 
 feature -- Test routines (Output)
 
 	test_out
-			-- Test {STI_RATIONAL_COMPLEMENT_SET}.out.
+			-- Test {STI_RATIONAL_NUMBERS}.out.
 		note
-			testing: "covers/{STI_RATIONAL_COMPLEMENT_SET}.out"
+			testing: "covers/{STI_RATIONAL_NUMBERS}.out"
 		do
-			assert ("out", attached set_to_be_tested.out)
+			assert ("out", attached universe_to_be_tested.out)
 		end
 
-feature {NONE} -- Factory (element to be tested)
+feature -- Test routines (Status report)
 
-	set_to_be_tested: like some_immediate_rational_complement_set
-			-- Rational complement set meant to be under tests
+	test_debug_output
+			-- Test {STI_RATIONAL_NUMBERS}.debug_output.
+		note
+			testing: "covers/{STI_RATIONAL_NUMBERS}.debug_output"
 		do
-			Result := some_immediate_rational_complement_set
+			assert ("debug_output", attached universe_to_be_tested.debug_output)
 		end
 
 feature -- Factory (rational number)
@@ -132,7 +135,7 @@ feature -- Factory (rational number)
 							agent: STI_SET [STS_RATIONAL_NUMBER]
 								do
 									across
-										1 |..| some_count.as_integer_32 as pq
+										1 |..| some_count.as_integer_32 as i
 									from
 										create Result
 									loop
@@ -164,8 +167,7 @@ feature -- Factory (rational number)
 
 feature -- Anchor
 
-	universe_anchor: STI_UNIVERSE [STS_RATIONAL_NUMBER]
---	universe_anchor: STI_RATIONAL_NUMBERS
+	universe_anchor: STI_RATIONAL_NUMBERS
 			-- <Precursor>
 		once
 			Result := q
@@ -180,5 +182,4 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
-
 end

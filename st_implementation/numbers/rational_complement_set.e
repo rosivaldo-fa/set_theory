@@ -38,7 +38,7 @@ feature -- Construction
 
 feature -- Access
 
-	q, rational_numbers: UNIVERSE [STS_RATIONAL_NUMBER]
+	q, rational_numbers: RATIONAL_NUMBERS
 			-- <Precursor>
 		once
 			create Result

@@ -1,25 +1,25 @@
 ﻿note
-	description: "Implementation of {STS_INTEGER_NUMBERS}"
+	description: "Implementation of {STS_RATIONAL_NUMBERS}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 
 class
-	INTEGER_NUMBERS
+	RATIONAL_NUMBERS
 
 inherit
-	STS_INTEGER_NUMBERS
+	STS_RATIONAL_NUMBERS
 		undefine
 			does_not_have
 		redefine
 			out
 		end
 
-	UNIVERSE [STS_INTEGER_NUMBER]
+	UNIVERSE [STS_RATIONAL_NUMBER]
 		rename
 			extended as set_extended,
-			u as z,
-			universe as integer_numbers
+			u as q,
+			universe as rational_numbers
 		redefine
 			prunned,
 			out,
@@ -29,19 +29,19 @@ inherit
 
 feature -- Construction
 
-	extended (i: STS_INTEGER_NUMBER): like integer_superset_anchor
+	extended (pq: STS_RATIONAL_NUMBER): like rational_superset_anchor
 			-- <Precursor>
 		do
 			Result := Current
 		end
 
-	prunned (i: STS_INTEGER_NUMBER): INTEGER_COMPLEMENT_SET
+	prunned (pq: STS_RATIONAL_NUMBER): RATIONAL_COMPLEMENT_SET
 			-- <Precursor>
 		local
-			s: INTEGER_SET
+			s: RATIONAL_SET
 		do
 			create s
-			create Result.make (s.extended (i))
+			create Result.make (s.extended (pq))
 		end
 
 feature -- Output
@@ -49,26 +49,26 @@ feature -- Output
 	out: STRING
 			-- <Precursor>
 		once
-			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("ℤ")
+			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("ℚ")
 		ensure then
 			class
 		end
 
 feature -- Anchor
 
-	subset_anchor: STS_INTEGER_SET
+	subset_anchor: STS_RATIONAL_SET
 			-- <Precursor>
 		do
 			Result := Current
 		end
 
-	superset_anchor: INTEGER_NUMBERS
+	superset_anchor: RATIONAL_NUMBERS
 			-- <Precursor>
 		do
 			Result := Current
 		end
 
-	integer_superset_anchor: INTEGER_NUMBERS
+	rational_superset_anchor: RATIONAL_NUMBERS
 			-- <Precursor>
 		do
 			Result := Current
