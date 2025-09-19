@@ -97,7 +97,7 @@ feature -- Test routines (All)
 			testing: "covers/{STI_REAL_NUMBER}"
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
---			test_default_create
+			test_default_create
 --			test_make
 --			test_make_from_reference
 --			test_p
@@ -105,15 +105,15 @@ feature -- Test routines (All)
 --			test_out
 		end
 
---feature -- Test routines (Initialization)
+feature -- Test routines (Initialization)
 
---	test_default_create
---			-- Test {STI_REAL_NUMBER}.default_create.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.default_create"
---		do
---			assert ("default_create", attached (create {like real_number_to_be_tested}))
---		end
+	test_default_create
+			-- Test {STI_REAL_NUMBER}.default_create.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.default_create"
+		do
+			assert ("default_create", attached (create {like real_number_to_be_tested}))
+		end
 
 --	test_make
 --			-- Test {STI_REAL_NUMBER}.make.
