@@ -40,10 +40,12 @@ inherit
 
 create
 	default_create,
-	make
+	make,
+	make_from_reference
 
 convert
-	make ({REAL})
+	make ({REAL}),
+	make_from_reference ({STS_REAL_NUMBER})
 
 feature {NONE} -- Initialization
 
@@ -61,6 +63,15 @@ feature {NONE} -- Initialization
 			value_bit_pattern := bit_pattern_from_native_real (v)
 		ensure
 			adjusted_value: value = adjusted_value (v)
+		end
+
+	make_from_reference (x: STS_REAL_NUMBER)
+			-- Create a real number with `value' = `adjusted_value' (`x'.`value').
+			--| Notice that `x' might not conform to `Current', so `x'.`value' might not be kept intact after adjusted for current real type.
+		do
+			make (x.value)
+		ensure
+			adjusted_value: value = adjusted_value (x.value)
 		end
 
 feature -- Primitive

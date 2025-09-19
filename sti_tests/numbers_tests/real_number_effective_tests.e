@@ -125,14 +125,14 @@ feature -- Test routines (Initialization)
 		end
 
 
---	test_make_from_reference
---			-- Test {STI_REAL_NUMBER}.make_from_reference.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.make_from_reference"
---		do
---			assert ("make_from_reference", attached (create {like real_number_to_be_tested}.make_from_reference (some_real_number)))
---			assert ("real_from_reference", attached real_from_reference (some_real_number))
---		end
+	test_make_from_reference
+			-- Test {STI_REAL_NUMBER}.make_from_reference.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.make_from_reference"
+		do
+			assert ("make_from_reference", attached (create {like real_number_to_be_tested}.make_from_reference (some_real_number)))
+			assert ("real_from_reference", attached real_from_reference (some_real_number))
+		end
 
 --feature -- Test routines (Primitive)
 
@@ -567,7 +567,7 @@ feature {NONE} -- Conversion
 	real_from_reference (x: STS_REAL_NUMBER): like real_number_to_be_tested
 			-- `x' converted to a real number like `real_number_to_be_tested'
 		do
---			Result := x
+			Result := x
 		ensure
 			value: Result.value = x.value
 		end
