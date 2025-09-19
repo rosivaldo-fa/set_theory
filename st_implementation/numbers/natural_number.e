@@ -81,6 +81,12 @@ feature {NONE} -- Initialization
 
 feature -- Primitive
 
+	real_value: like native_real_anchor
+			-- <Precursor>
+		do
+			Result := stored_value
+		end
+
 	integer_value: like native_integer_anchor
 			-- <Precursor>
 		do
@@ -352,6 +358,15 @@ feature -- Factory
 		end
 
 feature -- Implementation
+
+	real_adjusted_value (v: like real_value): like real_value
+			-- <Precursor>
+		do
+			Result := {REAL_NUMBER}.adjusted_value (v)
+		ensure then
+			class
+			definition: Result = {REAL_NUMBER}.adjusted_value (v)
+		end
 
 	integer_adjusted_value (v: like integer_value): like integer_value
 			-- <Precursor>

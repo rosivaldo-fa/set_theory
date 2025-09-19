@@ -10,6 +10,7 @@ deferred class
 inherit
 	RATIONAL_NUMBER
 		rename
+			value as real_value,
 			p as identity alias "+",
 			numerator as identity alias "+",
 			q as one,
@@ -33,7 +34,8 @@ inherit
 			opposite as rational_opposite,
 			product as rational_print,
 			quotient as rational_quotient,
-			to_integer_number as identity alias "+"
+			to_integer_number as identity alias "+",
+			adjusted_value as real_adjusted_value
 		redefine
 			identity
 		end

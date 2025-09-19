@@ -14,7 +14,8 @@ inherit
 		rename
 			some_immediate_natural_number as some_expanded_natural_number,
 			some_immediate_integer_number as some_expanded_integer_number,
-			some_immediate_rational_number as some_expanded_rational_number
+			some_immediate_rational_number as some_expanded_rational_number,
+			some_immediate_real_number as some_expanded_real_number
 		undefine
 			default_create,
 			test_element_is_in,
@@ -24,7 +25,8 @@ inherit
 			same_integer_number,
 			some_integer_set,
 			same_rational_number,
-			some_rational_set
+			some_rational_set,
+			same_real_number
 		redefine
 			test_all,
 			test_value,

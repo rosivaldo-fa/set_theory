@@ -75,7 +75,7 @@ feature -- Factory (Element)
 			-- Randomly-fetched polymorphic element
 		do
 			inspect
-				next_random_item \\ 9
+				next_random_item \\ 11
 			when 0 then
 				Result := some_immediate_element
 			when 1 then
@@ -89,11 +89,15 @@ feature -- Factory (Element)
 			when 5 then
 				Result := some_set_i
 			when 6 then
-				Result := some_rational_number
-			when 7 then
 				Result := some_equality_pq
-			when 8 then
+			when 7 then
 				Result := some_set_pq
+			when 8 then
+				Result := some_real_number
+			when 9 then
+				Result := some_equality_r
+			when 10 then
+				Result := some_set_r
 			end
 		end
 
@@ -681,6 +685,170 @@ feature -- Factory (rational number)
 		ensure
 			monomorphic: Result.generating_type ~ {detachable like some_immediate_rational_universe}
 		end
+
+feature -- Factory (real number)
+
+	some_real_number: STS_REAL_NUMBER
+			-- Randomly-fetched polymorphic real number
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_immediate_real_number
+			when 1 then
+				Result := some_rational_number
+			end
+		end
+
+	some_immediate_real_number: STS_REAL_NUMBER
+			-- Randomly-fetched monomorphic real number
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_real_number}
+		end
+
+	same_real_number (x: STS_REAL_NUMBER): like some_real_number
+			-- Real number equal to `x'
+		do
+--			if x.is_integer and next_random_item \\ 2 = 0 then
+--				Result := same_integer_number (x.to_integer_number)
+--			else
+				Result := x
+--			end
+		ensure
+--			definition: Result ≍ x
+		end
+
+	some_set_r: STS_SET [STS_REAL_NUMBER]
+			-- Randomly-fetched polymorphic set of real numbers
+		do
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				Result := some_immediate_set_r
+			when 1 then
+				Result := some_universe_r
+			when 2 then
+--				Result := some_real_set
+				Result := some_set_r
+			end
+		end
+
+	some_immediate_set_r: STS_SET [STS_REAL_NUMBER]
+			-- Randomly-fetched monomorphic set of real numbers
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_set_r}
+		end
+
+	some_universe_r: STS_UNIVERSE [STS_REAL_NUMBER]
+			-- Randomly-fetched polymorphic universe of real numbers
+		do
+			Result := some_immediate_universe_r
+		end
+
+	some_immediate_universe_r: STS_UNIVERSE [STS_REAL_NUMBER]
+			-- Randomly-fetched monomorphic universe of real numbers
+		deferred
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_immediate_universe_r}
+		end
+
+	some_equality_r: STS_EQUALITY [STS_REAL_NUMBER]
+			-- Randomly-fetched polymorphic equality for comparing {STS_REAL_NUMBER} instances
+		do
+			inspect
+				next_random_item \\ 4
+			when 0 then
+				Result := some_reference_equality_r
+			when 1 then
+				Result := some_object_standard_equality_r
+			when 2 then
+				Result := some_object_equality_r
+			when 3 then
+				Result := some_object_deep_equality_r
+			end
+		end
+
+	some_reference_equality_r: STS_REFERENCE_EQUALITY [STS_REAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_REAL_NUMBER} object references
+		do
+			check
+				eq: attached {STS_REFERENCE_EQUALITY [STS_REAL_NUMBER]} some_immediate_instance
+						(agent: STS_REFERENCE_EQUALITY [STS_REAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_REFERENCE_EQUALITY [STS_REAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_standard_equality_r: STS_OBJECT_STANDARD_EQUALITY [STS_REAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_REAL_NUMBER} object standard value
+		do
+			check
+				eq: attached {STS_OBJECT_STANDARD_EQUALITY [STS_REAL_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_STANDARD_EQUALITY [STS_REAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_STANDARD_EQUALITY [STS_REAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_equality_r: STS_OBJECT_EQUALITY [STS_REAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_REAL_NUMBER} object value
+		do
+			check
+				eq: attached {STS_OBJECT_EQUALITY [STS_REAL_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_EQUALITY [STS_REAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_EQUALITY [STS_REAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+	some_object_deep_equality_r: STS_OBJECT_DEEP_EQUALITY [STS_REAL_NUMBER]
+			-- Randomly-fetched polymorphic reference equality for comparing {STS_REAL_NUMBER} object deep value
+		do
+			check
+				eq: attached {STS_OBJECT_DEEP_EQUALITY [STS_REAL_NUMBER]} some_immediate_instance
+						(agent: STS_OBJECT_DEEP_EQUALITY [STS_REAL_NUMBER] do create Result end) as eq -- `some_immediate_instance' definition
+				monomorphic: eq.generating_type ~ {detachable STS_OBJECT_DEEP_EQUALITY [STS_REAL_NUMBER]}
+			then
+				Result := eq
+			end
+		end
+
+--	some_real_set: STS_REAL_SET
+--			-- Randomly-fetched polymorphic real number set
+--		do
+--			inspect
+--				next_random_item \\ 2
+--			when 0 then
+--				Result := some_immediate_real_set
+--			when 1 then
+--				Result := some_real_universe
+--			end
+--		end
+
+--	some_immediate_real_set: STS_REAL_SET
+--			-- Randomly-fetched monomorphic real number set
+--		deferred
+--		ensure
+--			monomorphic: Result.generating_type ~ {detachable like some_immediate_real_set}
+--		end
+
+--	some_real_universe: STS_REAL_NUMBERS
+--			-- Randomly-fetched polymorphic real-number universe
+--		do
+--			Result := some_immediate_real_universe
+--		end
+
+--	some_immediate_real_universe: STS_REAL_NUMBERS
+--			-- Randomly-fetched monomorphic real-number universe
+--		deferred
+--		ensure
+--			monomorphic: Result.generating_type ~ {detachable like some_immediate_real_universe}
+--		end
 
 feature {NONE} -- Implementation
 

@@ -114,6 +114,17 @@ feature -- Primitive
 			definition: Result ≍ q
 		end
 
+	value: like native_real_anchor
+			-- <Precursor>
+			-- NOTICE: This implementation allows two different rational numbers to have the same `value', due to lack of precision of (floating-point) real
+			-- numbers implementation. TODO: Really?
+		do
+				check
+					good_divisor: q.value /= 0 -- Class invariant: q /= 0
+				end
+			Result := (p.value / q.value).truncated_to_real
+		end
+
 feature -- Access
 
 	sign: like integer_anchor
@@ -302,6 +313,17 @@ feature -- Predicate
 				i > i.zero and j > i.zero and i.max_value_exists and then i > i.max_value // j
 		ensure then
 			class
+		end
+
+feature -- Implementation
+
+	adjusted_value (v: like value): like value
+			-- <Precursor>
+		do
+			Result := {REAL_NUMBER}.adjusted_value (v)
+		ensure then
+			class
+			definition: Result = {REAL_NUMBER}.adjusted_value (v)
 		end
 
 feature -- Anchor
