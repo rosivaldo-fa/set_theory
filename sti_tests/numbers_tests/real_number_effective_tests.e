@@ -254,15 +254,15 @@ feature -- Test routines (Initialization)
 --			Precursor {STST_REAL_NUMBER_TESTS}
 --		end
 
---feature -- Test routines (Output)
+feature -- Test routines (Output)
 
---	test_out
---			-- Test {STI_REAL_NUMBER}.out.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.out"
---		do
---			assert ("out", attached real_number_to_be_tested.out)
---		end
+	test_out
+			-- Test {STI_REAL_NUMBER}.out.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.out"
+		do
+			assert ("out", attached real_number_to_be_tested.out)
+		end
 
 --feature -- Test routines (Comparison)
 

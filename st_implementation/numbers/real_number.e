@@ -26,7 +26,16 @@ expanded class
 inherit
 	STS_REAL_NUMBER
 		redefine
-			default_create
+			default_create,
+			out
+		end
+
+	DEBUG_OUTPUT
+		rename
+			debug_output as out
+		redefine
+			default_create,
+			out
 		end
 
 create
@@ -93,6 +102,16 @@ feature -- Primitive
 			when_subnormal: el_exp < min_normal_exponent and 0 < el_m ⇒
 				Result = (el_sgn × (2 ^ min_normal_exponent) × el_m / Mantissa_scale).truncated_to_real
 			when_tiny: el_exp < min_normal_exponent and el_m = 0 ⇒ Result = el_sgn × 0
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		do
+			Result := value.out
+		ensure then
+			definition: Result ~ value.out
 		end
 
 feature -- Math
