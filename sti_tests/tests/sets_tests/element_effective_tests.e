@@ -528,6 +528,17 @@ feature -- Factory (real number)
 			create Result.make (next_random_item * Random_sequence.real_item)
 		end
 
+	some_native_real_number: REAL
+			-- Randomly-created native real number
+		do
+			Result := Random_sequence.real_item
+			Random_sequence.forth
+			Result := Result / Random_sequence.real_item
+			if next_random_item \\ 2 = 0 then
+				Result := - Result
+			end
+		end
+
 	some_immediate_set_r: STI_SET [STS_REAL_NUMBER]
 			-- <Precursor>
 		do

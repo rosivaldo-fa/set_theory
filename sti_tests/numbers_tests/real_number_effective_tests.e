@@ -115,23 +115,15 @@ feature -- Test routines (Initialization)
 			assert ("default_create", attached (create {like real_number_to_be_tested}))
 		end
 
---	test_make
---			-- Test {STI_REAL_NUMBER}.make.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.make"
---		local
---			num, den: like some_integer_number
---		do
---			num := some_integer_number
---			from
---				den := some_integer_number
---			until
---				den ≭ {STI_INTEGER_NUMBER}.Zero
---			loop
---				den := some_integer_number
---			end
---			assert ("make", attached (create {like real_number_to_be_tested}.make (num, den)))
---		end
+	test_make
+			-- Test {STI_REAL_NUMBER}.make.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.make"
+		do
+			assert ("make", attached (create {like real_number_to_be_tested}.make (some_native_real_number)))
+			assert ("real_from_native", attached real_from_native (some_native_real_number))
+		end
+
 
 --	test_make_from_reference
 --			-- Test {STI_REAL_NUMBER}.make_from_reference.
@@ -578,6 +570,14 @@ feature {NONE} -- Conversion
 --			Result := x
 		ensure
 			value: Result.value = x.value
+		end
+
+	real_from_native (v: like some_native_real_number): like real_number_to_be_tested
+			-- `v' converted to a real number like `real_number_to_be_tested'
+		do
+			Result := v
+		ensure
+			adjusted_value: Result.value = {like real_number_to_be_tested}.adjusted_value (v)
 		end
 
 feature -- Anchor
