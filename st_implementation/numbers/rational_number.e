@@ -122,7 +122,7 @@ feature -- Primitive
 				check
 					good_divisor: q.value /= 0 -- Class invariant: q /= 0
 				end
-			Result := (p.value / q.value).truncated_to_real
+			Result := {REAL_NUMBER}.adjusted_value ((p.value / q.value).truncated_to_real)
 		end
 
 feature -- Access

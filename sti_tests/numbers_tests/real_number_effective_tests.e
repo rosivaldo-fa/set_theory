@@ -132,6 +132,9 @@ feature -- Test routines (Initialization)
 		do
 			assert ("make_from_reference", attached (create {like real_number_to_be_tested}.make_from_reference (some_real_number)))
 			assert ("real_from_reference", attached real_from_reference (some_real_number))
+			assert ("real_from_rational", attached real_from_rational_reference (some_rational_number))
+			assert ("real_from_integer", attached real_from_integer_reference (some_integer_number))
+			assert ("real_from_natural", attached real_from_natural_reference (some_natural_number))
 		end
 
 --feature -- Test routines (Primitive)
@@ -570,6 +573,30 @@ feature {NONE} -- Conversion
 			Result := x
 		ensure
 			value: Result.value = x.value
+		end
+
+	real_from_rational_reference (pq: STS_RATIONAL_NUMBER): like real_number_to_be_tested
+			-- `pq' converted to a real number like `real_number_to_be_tested'
+		do
+			Result := pq
+		ensure
+			value: Result.value = pq.value
+		end
+
+	real_from_integer_reference (i: STS_INTEGER_NUMBER): like real_number_to_be_tested
+			-- `i' converted to a real number like `real_number_to_be_tested'
+		do
+			Result := i
+		ensure
+			value: Result.value = i.real_value
+		end
+
+	real_from_natural_reference (n: STS_NATURAL_NUMBER): like real_number_to_be_tested
+			-- `n' converted to a real number like `real_number_to_be_tested'
+		do
+			Result := n
+		ensure
+			value: Result.value = n.real_value
 		end
 
 	real_from_native (v: like some_native_real_number): like real_number_to_be_tested

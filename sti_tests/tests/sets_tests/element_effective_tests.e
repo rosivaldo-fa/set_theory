@@ -517,26 +517,84 @@ feature -- Factory (real number)
 			when 1 then
 				create {STI_REAL_NUMBER} Result.make (x.value)
 			when 2 then
---				create {STI_REAL_NUMBER} Result.make_from_reference (x)
-				Result := same_real_number (x)
+				create {STI_REAL_NUMBER} Result.make_from_reference (x)
 			end
 		end
 
 	some_expanded_real_number: STI_REAL_NUMBER
 			-- <Precursor>
 		do
-			create Result.make (next_random_item * Random_sequence.real_item)
+			create Result.make (some_native_real_number)
 		end
 
 	some_native_real_number: REAL
 			-- Randomly-created native real number
+			-- TODO: DRY
+		local
+			value_bit_pattern: NATURAL_16
+			m: NATURAL_16
+			sgn: INTEGER
+			exp: INTEGER_8
 		do
-			Result := Random_sequence.real_item
-			Random_sequence.forth
-			Result := Result / Random_sequence.real_item
+			value_bit_pattern := next_random_item.as_natural_16
+			sgn := value_bit_pattern |>> (5 + 10)
+			sgn := sgn & 1
+			sgn := if sgn = 0 then 1 else - 1 end
+
+			exp := (value_bit_pattern |>> 10).as_integer_8
+			exp := exp & 0b1_1111
+			exp := exp - 0b0_1111
+
+			m := value_bit_pattern & 0b11_1111_1111
+
+			if 0b0_1111 < exp then
+				if m = 0 then
+					Result := sgn × {REAL}.Positive_infinity
+				else
+					Result := c_copysign ({REAL}.Nan, sgn)
+				end
+			elseif -14 ≤ exp then
+					-- Normal range
+				Result := (sgn × (2 ^ exp) × (1 + m / 0b100_0000_0000)).truncated_to_real -- TODO: Get rid of truncated_to_real.
+			elseif 0 < m then
+					-- Subnormal range
+				Result := (sgn × (2 ^ -14) × m / 0b100_0000_0000).truncated_to_real -- TODO: Get rid of truncated_to_real.
+			else
+				Result := sgn × {REAL} 0.0
+			end
 			if next_random_item \\ 2 = 0 then
 				Result := - Result
 			end
+		end
+
+	c_copysign (x, y: REAL): REAL
+			-- Value with the magnitude of `x' and the sign of `y'. It produces a NaN (with the sign of `y') if `x' is a NaN.
+			-- TODO: DRY
+		external
+			"C signature (float, float): float use <math.h>"
+		alias
+			"copysignf"
+		ensure
+			class
+			keep_magnitude: Result.abs = x.abs
+			take_y_sign: value_sign_bit (Result) = value_sign_bit (y)
+		end
+
+	value_sign_bit (v: REAL): INTEGER
+			-- Status of the sign bit of `v', which is 1 for negative numbers but also, e.g. for a "negative" zero as specified by IEEE 754.
+			-- TODO: DRY
+		external
+			"C inline use <math.h>"
+		alias
+			"{
+				return signbit ($v)? 1: 0;
+			}"
+		ensure
+			class
+			when_nan: v.is_nan ⇒ Result = 0 or Result = 1
+			when_negative: not v.is_nan and v < 0 ⇒ Result = 1
+			when_zero: v = 0 ⇒ Result = 0 or Result = 1
+			when_positive: 0 < v ⇒ Result = 0
 		end
 
 	some_immediate_set_r: STI_SET [STS_REAL_NUMBER]
