@@ -31,7 +31,7 @@ inherit
 --			some_real_set
 		redefine
 			test_all,
-			test_value
+			test_value,
 --			test_is_in,
 --			test_is_not_in,
 --			test_sign,
@@ -67,6 +67,7 @@ inherit
 --			test_to_natural_number,
 --			test_converted_integer,
 --			test_integer_product_overflows
+			test_adjusted_value
 		end
 
 --	REAL_NUMBER_PROPERTIES
@@ -538,6 +539,16 @@ feature -- Test routines (Output)
 --		do
 --			Precursor {STST_REAL_NUMBER_TESTS}
 --		end
+
+feature -- Test routines (Implementation)
+
+	test_adjusted_value
+			-- Test {STI_REAL_NUMBER}.adjusted_value.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.adjusted_value"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+		end
 
 feature {NONE} -- Conversion
 

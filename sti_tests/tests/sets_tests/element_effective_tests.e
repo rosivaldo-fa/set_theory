@@ -528,7 +528,7 @@ feature -- Factory (real number)
 		end
 
 	some_native_real: REAL
-			-- Randomly-created native real number
+			-- <Precursor>
 			-- TODO: DRY
 		local
 			value_bit_pattern: NATURAL_16

@@ -1015,6 +1015,16 @@ feature -- Test routines (Primitive)
 --			assert ("integer_product_overflows_ok", integer_product_overflows_ok (x, i, j))
 --		end
 
+feature -- Test routines (Implementation)
+
+	test_adjusted_value
+			-- Test {STS_REAL_NUMBER}.adjusted_value.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.adjusted_value"
+		do
+			assert ("adjusted_value", attached real_number_to_be_tested.adjusted_value (some_native_real))
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	real_number_to_be_tested: like some_immediate_real_number

@@ -719,6 +719,11 @@ feature -- Factory (real number)
 --			definition: Result ≍ x
 		end
 
+	some_native_real: REAL
+			-- Randomly-created native real number
+		deferred
+		end
+
 	some_set_r: STS_SET [STS_REAL_NUMBER]
 			-- Randomly-fetched polymorphic set of real numbers
 		do
