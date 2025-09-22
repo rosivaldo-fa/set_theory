@@ -30,11 +30,8 @@ inherit
 			same_real_number
 --			some_real_set
 		redefine
-			test_all
---			test_p,
---			test_numerator,
---			test_q,
---			test_denominator,
+			test_all,
+			test_value
 --			test_is_in,
 --			test_is_not_in,
 --			test_sign,
@@ -120,10 +117,9 @@ feature -- Test routines (Initialization)
 		note
 			testing: "covers/{STI_REAL_NUMBER}.make"
 		do
-			assert ("make", attached (create {like real_number_to_be_tested}.make (some_native_real_number)))
-			assert ("real_from_native", attached real_from_native (some_native_real_number))
+			assert ("make", attached (create {like real_number_to_be_tested}.make (some_native_real)))
+			assert ("real_from_native", attached real_from_native (some_native_real))
 		end
-
 
 	test_make_from_reference
 			-- Test {STI_REAL_NUMBER}.make_from_reference.
@@ -137,45 +133,23 @@ feature -- Test routines (Initialization)
 			assert ("real_from_natural", attached real_from_natural_reference (some_natural_number))
 		end
 
---feature -- Test routines (Primitive)
+feature -- Test routines (Primitive)
 
---	test_p
---			-- Test {STI_REAL_NUMBER}.p.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.p"
---		local
---			x: like real_number_to_be_tested
---		do
---			x := real_number_to_be_tested
---			assert ("p", attached x.p)
---		end
-
---	test_numerator
---			-- Test every routine of {STI_REAL_NUMBER}.numerator.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.numerator"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
-
---	test_q
---			-- Test {STI_REAL_NUMBER}.q.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.q"
---		local
---			x: like real_number_to_be_tested
---		do
---			x := real_number_to_be_tested
---			assert ("q", attached x.q)
---		end
-
---	test_denominator
---			-- Test every routine of {STI_REAL_NUMBER}.denominator.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.denominator"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_value
+			-- Test {STI_REAL_NUMBER}.value.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.value"
+		local
+			x: like real_number_to_be_tested
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			assert ("value", attached x.value)
+			assert ("native_from_real", attached native_from_real (x))
+			assert ("native_ref_from_real", attached native_ref_from_real (x))
+			assert ("numeric_from_real", attached numeric_from_real (x))
+			assert ("comparable_from_real", attached comparable_from_real (x))
+			assert ("hashable_from_real", attached hashable_from_real (x))
+		end
 
 --feature -- Test routines (Membership)
 
@@ -599,12 +573,52 @@ feature {NONE} -- Conversion
 			value: Result.value = n.real_value
 		end
 
-	real_from_native (v: like some_native_real_number): like real_number_to_be_tested
+	real_from_native (v: like some_native_real): like real_number_to_be_tested
 			-- `v' converted to a real number like `real_number_to_be_tested'
 		do
 			Result := v
 		ensure
 			adjusted_value: Result.value = {like real_number_to_be_tested}.adjusted_value (v)
+		end
+
+	native_from_real (x: STI_REAL_NUMBER): like some_native_real
+			-- `x' converted to a native real number
+		do
+			Result := x
+		ensure
+			value: Result = x.value
+		end
+
+	native_ref_from_real (x: STI_REAL_NUMBER): like some_native_real_ref
+			-- `x' converted to a native real number reference
+		do
+			Result := x
+		ensure
+			value: Result = x.value
+		end
+
+	numeric_from_real (x: STI_REAL_NUMBER): NUMERIC
+			-- `x' converted to a {NUMERIC} object
+		do
+			Result := x
+		ensure
+			value: Result = x.value
+		end
+
+	comparable_from_real (x: STI_REAL_NUMBER): COMPARABLE
+			-- `x' converted to a {COMPARABLE} object
+		do
+			Result := x
+		ensure
+			value: Result = x.value
+		end
+
+	hashable_from_real (x: STI_REAL_NUMBER): HASHABLE
+			-- `x' converted to a {HASHABLE} object
+		do
+			Result := x
+		ensure
+			value: Result = x.value
 		end
 
 feature -- Anchor

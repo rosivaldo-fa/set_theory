@@ -454,7 +454,7 @@ feature -- Test routines (Implementation)
 
 feature {NONE} -- Conversion
 
-	integer_number_from_native (v: like some_native_integer_number): like integer_number_to_be_tested
+	integer_number_from_native (v: like some_native_integer): like integer_number_to_be_tested
 			-- `v' converted to a integer number like `integer_number_to_be_tested'
 		do
 			Result := v

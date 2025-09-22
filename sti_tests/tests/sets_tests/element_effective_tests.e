@@ -96,10 +96,10 @@ feature -- Factory (natural number)
 	some_expanded_natural_number: STI_NATURAL_NUMBER
 			-- <Precursor>
 		do
-			Result := some_native_natural_number
+			Result := some_native_natural
 		end
 
-	some_native_natural_number: NATURAL
+	some_native_natural: NATURAL
 			-- Randomly-created native natural number
 		do
 			Result := next_random_item.as_natural_32
@@ -239,10 +239,10 @@ feature -- Factory (integer number)
 	some_expanded_integer_number: STI_INTEGER_NUMBER
 			-- <Precursor>
 		do
-			Result := some_native_integer_number
+			Result := some_native_integer
 		end
 
-	some_native_integer_number: INTEGER
+	some_native_integer: INTEGER
 			-- Randomly-created native integer number
 		do
 			Result := next_random_item
@@ -524,10 +524,10 @@ feature -- Factory (real number)
 	some_expanded_real_number: STI_REAL_NUMBER
 			-- <Precursor>
 		do
-			create Result.make (some_native_real_number)
+			create Result.make (some_native_real)
 		end
 
-	some_native_real_number: REAL
+	some_native_real: REAL
 			-- Randomly-created native real number
 			-- TODO: DRY
 		local
@@ -539,7 +539,7 @@ feature -- Factory (real number)
 			value_bit_pattern := next_random_item.as_natural_16
 			sgn := value_bit_pattern |>> (5 + 10)
 			sgn := sgn & 1
-			sgn := if sgn = 0 then 1 else - 1 end
+			sgn := if sgn = 0 then 1 else -1 end
 
 			exp := (value_bit_pattern |>> 10).as_integer_8
 			exp := exp & 0b1_1111
@@ -565,6 +565,43 @@ feature -- Factory (real number)
 			if next_random_item \\ 2 = 0 then
 				Result := - Result
 			end
+		end
+
+	some_native_real_ref: REAL_REF
+			-- Randomly-fetched polymorphic native real reference
+		do
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				Result := some_direct_native_real_ref
+			when 1 then
+				Result := some_native_real
+			end
+		end
+
+	some_direct_native_real_ref: like some_native_real_ref
+			-- Randomly-fetched monomorphic native real reference
+		do
+			check
+					-- `some_direct_instance' and `new_native_real_ref' definitions
+				x: attached {like new_native_real_ref} some_immediate_instance (agent new_native_real_ref) as x
+			then
+				Result := x
+				check
+						-- `some_direct_instance' and `new_native_real_ref' definitions
+					monomorphic: Result.generating_type ~ {detachable like new_native_real_ref}
+				end
+			end
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_native_real_ref}
+		end
+
+	new_native_real_ref: like some_direct_native_real_ref
+			-- Randomly-created monomorphic native real reference
+		do
+			Result := some_native_real.to_reference
+		ensure
+			monomorphic: Result.generating_type ~ {detachable like some_direct_native_real_ref}
 		end
 
 	c_copysign (x, y: REAL): REAL

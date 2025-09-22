@@ -71,51 +71,18 @@ feature -- Test routines (All)
 --			test_integer_product_overflows
 		end
 
---feature -- Test routines (Primitive)
+feature -- Test routines (Primitive)
 
---	test_p
---			-- Test {STS_REAL_NUMBER}.p.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.p"
---		local
---			x: like real_number_to_be_tested
---		do
---			x := real_number_to_be_tested
---			assert ("p", attached x.p)
---		end
-
---	test_numerator
---			-- Test {STS_REAL_NUMBER}.numerator.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.numerator"
---		local
---			x: like real_number_to_be_tested
---		do
---			x := real_number_to_be_tested
---			assert ("numerator", attached x.numerator)
---		end
-
---	test_q
---			-- Test {STS_REAL_NUMBER}.q.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.q"
---		local
---			x: like real_number_to_be_tested
---		do
---			x := real_number_to_be_tested
---			assert ("q", attached x.q)
---		end
-
---	test_denominator
---			-- Test {STS_REAL_NUMBER}.denominator.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.denominator"
---		local
---			x: like real_number_to_be_tested
---		do
---			x := real_number_to_be_tested
---			assert ("denominator", attached x.denominator)
---		end
+	test_value
+			-- Test {STS_REAL_NUMBER}.value.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.value"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("value", attached x.value)
+		end
 
 --feature -- Test routines (Membership)
 

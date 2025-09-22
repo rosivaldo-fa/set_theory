@@ -377,7 +377,7 @@ feature -- Test routines (Implementation)
 
 feature {NONE} -- Conversion
 
-	natural_number_from_native (v: like some_native_natural_number): like natural_number_to_be_tested
+	natural_number_from_native (v: like some_native_natural): like natural_number_to_be_tested
 			-- `v' converted to a natural number like `natural_number_to_be_tested'
 		do
 			Result := v

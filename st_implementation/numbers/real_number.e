@@ -45,7 +45,8 @@ create
 
 convert
 	make ({REAL}),
-	make_from_reference ({STS_REAL_NUMBER, STS_RATIONAL_NUMBER, STS_INTEGER_NUMBER, STS_NATURAL_NUMBER})
+	make_from_reference ({STS_REAL_NUMBER, STS_RATIONAL_NUMBER, STS_INTEGER_NUMBER, STS_NATURAL_NUMBER}),
+	value: {REAL, REAL_REF, NUMERIC, COMPARABLE, HASHABLE}
 
 feature {NONE} -- Initialization
 
