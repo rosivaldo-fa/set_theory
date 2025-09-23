@@ -629,6 +629,20 @@ feature -- Test routines (Math)
 			assert ("x", attached real_number_to_be_tested.value_sign_bit (some_native_real))
 		end
 
+	test_value_logb
+			-- Test {STI_REAL_NUMBER}.value_logb.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.value_logb"
+		do
+			assert ("-NaN", attached real_number_to_be_tested.value_logb (- Nan.value))
+			assert ("NaN", attached real_number_to_be_tested.value_logb (Nan))
+			assert ("-Infinity", attached real_number_to_be_tested.value_logb (Negative_infinity))
+			assert ("Infinity", attached real_number_to_be_tested.value_logb (Positive_infinity))
+			assert ("-0", attached real_number_to_be_tested.value_logb (-0.0))
+			assert ("0", attached real_number_to_be_tested.value_logb (0))
+			assert ("x", attached real_number_to_be_tested.value_logb (some_native_real))
+		end
+
 feature -- Test routines (Implementation)
 
 	test_adjusted_value
