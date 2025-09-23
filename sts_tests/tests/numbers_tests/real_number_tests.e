@@ -30,10 +30,7 @@ feature -- Test routines (All)
 			testing: "covers/{STS_REAL_NUMBER}"
 		do
 			Precursor {ELEMENT_TESTS}
---			test_p
---			test_numerator
---			test_q
---			test_denominator
+			test_value
 --			test_is_in
 --			test_is_not_in
 --			test_sign
@@ -69,6 +66,7 @@ feature -- Test routines (All)
 --			test_div
 --			test_rem
 --			test_integer_product_overflows
+			test_adjusted_value
 		end
 
 feature -- Test routines (Primitive)

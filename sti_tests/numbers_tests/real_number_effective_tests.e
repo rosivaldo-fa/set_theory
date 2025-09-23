@@ -87,6 +87,44 @@ inherit
 			test_all
 		end
 
+feature -- Access
+
+	negative_infinity: STI_REAL_NUMBER
+			-- Representation of negative infinity
+		once
+			Result := {REAL}.negative_infinity
+		ensure
+			class
+			definition: Result.value.is_negative_infinity
+		end
+
+	positive_infinity: STI_REAL_NUMBER
+			-- Representation of positive infinity
+		once
+			Result := {REAL}.positive_infinity
+		ensure
+			class
+			definition: Result.value.is_positive_infinity
+		end
+
+	nan: STI_REAL_NUMBER
+			-- Representation of not a number (NaN)
+		once
+			Result := {REAL}.nan
+		ensure
+			class
+			definition: Result.value.is_nan
+		end
+
+	zero: STI_REAL_NUMBER
+			-- Representation of the real number 0
+		once
+			Result := {REAL} 0.0
+		ensure
+			class
+			definition: Result.value = {REAL} 0.0
+		end
+
 feature -- Test routines (All)
 
 	test_all
@@ -96,11 +134,9 @@ feature -- Test routines (All)
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
 			test_default_create
---			test_make
---			test_make_from_reference
---			test_p
---			test_q
---			test_out
+			test_make
+			test_make_from_reference
+			test_out
 		end
 
 feature -- Test routines (Initialization)
@@ -144,12 +180,23 @@ feature -- Test routines (Primitive)
 			x: like real_number_to_be_tested
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
-			assert ("value", attached x.value)
+			x := real_number_to_be_tested
 			assert ("native_from_real", attached native_from_real (x))
 			assert ("native_ref_from_real", attached native_ref_from_real (x))
 			assert ("numeric_from_real", attached numeric_from_real (x))
 			assert ("comparable_from_real", attached comparable_from_real (x))
 			assert ("hashable_from_real", attached hashable_from_real (x))
+
+			x := Nan
+			assert ("NaN", x.value.is_nan)
+
+			x := - x.value
+			assert ("negative NaN", x.value.is_nan and - x.value = Nan.value)
+			assert ("negative NaN sign bit ", {like real_number_to_be_tested}.value_sign_bit (x.value) = 1)
+
+			x := Zero
+			assert ("negative zero", - x.value = 0)
+			assert ("negative zero sign bit ", {like real_number_to_be_tested}.value_sign_bit (- x.value) = 1)
 		end
 
 --feature -- Test routines (Membership)
@@ -539,6 +586,48 @@ feature -- Test routines (Output)
 --		do
 --			Precursor {STST_REAL_NUMBER_TESTS}
 --		end
+
+feature -- Test routines (Math)
+
+	test_value_sign_bit
+			-- Test {STI_REAL_NUMBER}.value_sign_bit.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.value_sign_bit"
+		local
+			v: like some_native_real
+		do
+			v := Nan
+			assert ("unsigned nan", real_number_to_be_tested.value_sign_bit (v) = 0)
+
+			from
+				v := some_native_real
+			until
+				not v.is_nan and v < 0
+			loop
+				v := some_native_real
+			end
+			assert ("negative", real_number_to_be_tested.value_sign_bit (v) = 1)
+
+			v := 0.0
+			assert ("negative zero", real_number_to_be_tested.value_sign_bit (- v) = 1)
+			assert ("positive zero", real_number_to_be_tested.value_sign_bit (v) = 0)
+
+			from
+				v := some_native_real
+			until
+				0 < v
+			loop
+				v := some_native_real
+			end
+			assert ("positive", real_number_to_be_tested.value_sign_bit (v) = 0)
+
+			assert ("NaN", attached real_number_to_be_tested.value_sign_bit (Nan))
+			assert ("-Infinity", attached real_number_to_be_tested.value_sign_bit (Negative_infinity))
+			assert ("Infinity", attached real_number_to_be_tested.value_sign_bit (Positive_infinity))
+			assert ("-0", attached real_number_to_be_tested.value_sign_bit (-0.0))
+			assert ("0", attached real_number_to_be_tested.value_sign_bit (0))
+			assert ("x", attached real_number_to_be_tested.value_sign_bit (some_native_real))
+		end
 
 feature -- Test routines (Implementation)
 
