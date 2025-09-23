@@ -637,6 +637,12 @@ feature -- Test routines (Implementation)
 			testing: "covers/{STI_REAL_NUMBER}.adjusted_value"
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
+			assert ("-NaN", attached real_number_to_be_tested.adjusted_value (- Nan.value))
+			assert ("NaN", attached real_number_to_be_tested.adjusted_value (Nan))
+			assert ("-Infinity", attached real_number_to_be_tested.adjusted_value (Negative_infinity))
+			assert ("Infinity", attached real_number_to_be_tested.adjusted_value (Positive_infinity))
+			assert ("-0", attached real_number_to_be_tested.adjusted_value (-0.0))
+			assert ("0", attached real_number_to_be_tested.adjusted_value (0))
 		end
 
 feature {NONE} -- Conversion
