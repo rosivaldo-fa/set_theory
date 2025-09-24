@@ -71,6 +71,13 @@ feature -- Anchor
 			class
 		end
 
+	real_anchor: STI_REAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
 note
 	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
 	license: "[

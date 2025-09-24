@@ -13,7 +13,9 @@ expanded class
 inherit
 	STI_REAL_NUMBER
 		export {REAL_NUMBER_PROPERTIES, REAL_NUMBER_EFFECTIVE_TESTS}
-			sign_bit_status
+			sign_bit_status,
+			exponent_bit_pattern,
+			Exponent_width
 		end
 
 create

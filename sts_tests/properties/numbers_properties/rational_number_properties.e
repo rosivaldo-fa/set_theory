@@ -8,25 +8,18 @@ deferred class
 	RATIONAL_NUMBER_PROPERTIES
 
 inherit
-	ELEMENT_PROPERTIES
-		rename
-			is_not_in_ok as element_is_not_in_ok
-		end
+	REAL_NUMBER_PROPERTIES
 
 feature -- Access
 
 	zero: like rational_anchor
 			-- The rational number 0/1
 		deferred
-		ensure
-			definition: Result ≍ Result.zero
 		end
 
 	one: like rational_anchor
 			-- The rational number 1/1
 		deferred
-		ensure
-			definition: Result ≍ Result.one
 		end
 
 feature -- Properties (Membership)

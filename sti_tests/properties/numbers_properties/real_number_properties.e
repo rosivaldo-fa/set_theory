@@ -69,7 +69,7 @@ feature -- Properties (Relationship)
 feature -- Properties (Implementation)
 
 	sign_bit_status_ok (x: REAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STI_REAL_NUMBER}.sign_bit_status?
+			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.sign_bit_status?
 		do
 			check
 				two_states: x.sign_bit_status = 0 or x.sign_bit_status = 1
@@ -78,8 +78,29 @@ feature -- Properties (Implementation)
 --				when_negative_zero: x.value.is_negative_zero ⇒ x.sign_bit_status = 1
 --				when_positive_zero: x.value.is_positive_zero ⇒ x.sign_bit_status = 0
 				when_positive: 0 < x.value ⇒ x.sign_bit_status = 0
+			then
+				Result := True
 			end
-			Result := True
+		end
+
+	exponent_bit_pattern_ok (x: REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.exponent_bit_pattern?
+		local
+			x_abs: REAL_NUMBER
+		do
+			x_abs := x.value.abs
+			check
+				when_nan: x.value.is_nan ⇒ x.exponent_bit_pattern = (2 ^ {REAL_NUMBER}.Exponent_width - 1)
+				when_negative: not x.value.is_nan and x.value < 0 ⇒ x.exponent_bit_pattern = x_abs.exponent_bit_pattern
+				when_zero: x.value = 0 ⇒ x.exponent_bit_pattern = 0
+--				when_subnormal: Zero < x.value.abs and x.value.abs < {STI_REAL_NUMBER}.epsilon ⇒ x.exponent_bit_pattern = 0
+--				when_normal: {STI_REAL_NUMBER}.epsilon ≤ x.abs and x.is_finite ⇒
+--					x.exponent_bit_pattern = {STI_REAL_NUMBER}.value_logb (x.value) + {REAL_NUMBER}.Exponent_bias
+				when_infinite: x.value = {REAL}.negative_infinity or x.value = {REAL}.positive_infinity ⇒
+					x.exponent_bit_pattern = (2 ^ {REAL_NUMBER}.Exponent_width - 1)
+			then
+				Result := True
+			end
 		end
 
 feature -- Anchor

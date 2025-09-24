@@ -708,6 +708,42 @@ feature -- Test routines (Implementation)
 			assert ("sign_bit_status_ok", sign_bit_status_ok (x))
 		end
 
+	test_exponent_bit_pattern
+			-- Test {STI_REAL_NUMBER}.exponent_bit_pattern.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.exponent_bit_pattern"
+		local
+			x: like exposed_real_number_to_be_tested
+		do
+			x := - Nan.value
+			assert ("-NaN", attached x.exponent_bit_pattern)
+			assert ("-NaN ok", exponent_bit_pattern_ok (x))
+
+			x := Nan
+			assert ("NaN", attached x.exponent_bit_pattern)
+			assert ("NaN ok", exponent_bit_pattern_ok (x))
+
+			x := Negative_infinity
+			assert ("-Infinity", attached x.exponent_bit_pattern)
+			assert ("-Infinity ok", exponent_bit_pattern_ok (x))
+
+			x := Positive_infinity
+			assert ("Infinity", attached x.exponent_bit_pattern)
+			assert ("Infinity ok", exponent_bit_pattern_ok (x))
+
+			x := - Zero.value
+			assert ("-0", attached x.exponent_bit_pattern)
+			assert ("-0 ok", exponent_bit_pattern_ok (x))
+
+			x := Zero
+			assert ("0", attached x.exponent_bit_pattern)
+			assert ("0 ok", exponent_bit_pattern_ok (Zero))
+
+			x := exposed_real_number_to_be_tested
+			assert ("exponent_bit_pattern", attached x.exponent_bit_pattern)
+			assert ("exponent_bit_pattern ok", exponent_bit_pattern_ok (x))
+		end
+
 feature {NONE} -- Conversion
 
 	real_from_reference (x: STS_REAL_NUMBER): like real_number_to_be_tested
