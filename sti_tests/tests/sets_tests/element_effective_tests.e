@@ -604,6 +604,12 @@ feature -- Factory (real number)
 			monomorphic: Result.generating_type ~ {detachable like some_direct_native_real_ref}
 		end
 
+	some_exposed_real_number: REAL_NUMBER
+			-- Randomly-fetched exposed real number
+		do
+			Result := some_real_number
+		end
+
 	c_copysign (x, y: REAL): REAL
 			-- Value with the magnitude of `x' and the sign of `y'. It produces a NaN (with the sign of `y') if `x' is a NaN.
 			-- TODO: DRY

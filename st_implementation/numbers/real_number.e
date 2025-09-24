@@ -217,6 +217,36 @@ feature -- Anchor
 
 feature {NONE} -- Implementation
 
+	value_bit_pattern: NATURAL_16
+			-- Bit pattern of the `value' of current real number
+
+	sign_bit_status: like value_bit_pattern
+			-- Status of the sign bit of `value_bit_pattern'
+			-- Notice that, unlike `sign', it has only two possible values (0 or 1), and it may be non zero for, e.g. negative zero.
+		do
+			Result := value_bit_pattern |>> (Exponent_width + Mantissa_width)
+			Result := Result & 1
+		ensure
+			definition: Result = (value_bit_pattern |>> (Exponent_width + Mantissa_width)) & 1
+		end
+
+	exponent_bit_pattern: like value_bit_pattern
+			-- Bit pattern that represents the exponent, on base 2, of current real number.
+		do
+			Result := value_bit_pattern |>> Mantissa_width
+			Result := Result & Exponent_mask
+		ensure
+			definition: Result = (value_bit_pattern |>> Mantissa_width) & Exponent_mask
+		end
+
+	mantissa_bit_pattern: like value_bit_pattern
+			-- Bit pattern that represents the mantissa, on base 2, of current real number.
+		do
+			Result := value_bit_pattern & Mantissa_mask
+		ensure
+			definition: Result = value_bit_pattern & Mantissa_mask
+		end
+
 	bit_pattern_from_native_real (v: like value): like value_bit_pattern
 			-- `v' converted to a bit pattern that represents the value of a real number like current
 		local
@@ -273,19 +303,6 @@ feature {NONE} -- Implementation
 					Max_mantissa
 		end
 
-	value_bit_pattern: NATURAL_16
-			-- Bit pattern of the `value' of current real number
-
-	sign_bit_status: like value_bit_pattern
-			-- Status of the sign bit of `value_bit_pattern'
-			-- Notice that, unlike `sign', it has only two possible values (0 or 1), and it may be non zero for, e.g. negative zero.
-		do
-			Result := value_bit_pattern |>> (Exponent_width + Mantissa_width)
-			Result := Result & 1
-		ensure
-			definition: Result = (value_bit_pattern |>> (Exponent_width + Mantissa_width)) & 1
-		end
-
 	exponent_width: NATURAL_8 = 5
 			-- How many bits a real number uses to represent its exponent
 
@@ -299,15 +316,6 @@ feature {NONE} -- Implementation
 			-- Maximum unbiased value for the exponent of a real number
 			--| TODO: Get rid of as_integer_8
 
-	exponent_bit_pattern: like value_bit_pattern
-			-- Bit pattern that represents the exponent, on base 2, of current real number.
-		do
-			Result := value_bit_pattern |>> Mantissa_width
-			Result := Result & Exponent_mask
-		ensure
-			definition: Result = (value_bit_pattern |>> Mantissa_width) & Exponent_mask
-		end
-
 	min_normal_exponent: like max_exponent = -14 -- 1 - `exponent_bias'
 			-- Minimum unbiased value for the exponent of a normal real number
 
@@ -316,14 +324,6 @@ feature {NONE} -- Implementation
 
 	mantissa_width: NATURAL_8 = 10
 			-- Number of (explicit) bits used to store the mantissa of a real number
-
-	mantissa_bit_pattern: like value_bit_pattern
-			-- Bit pattern that represents the mantissa, on base 2, of current real number.
-		do
-			Result := value_bit_pattern & Mantissa_mask
-		ensure
-			definition: Result = value_bit_pattern & Mantissa_mask
-		end
 
 	mantissa_mask,
 		-- Binary mask for the mantissa of a real number

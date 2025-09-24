@@ -70,10 +70,10 @@ inherit
 			test_adjusted_value
 		end
 
---	REAL_NUMBER_PROPERTIES
---		undefine
---			default_create
---		end
+	REAL_NUMBER_PROPERTIES
+		undefine
+			default_create
+		end
 
 	ELEMENT_EFFECTIVE_TESTS
 		rename
@@ -114,15 +114,6 @@ feature -- Access
 		ensure
 			class
 			definition: Result.value.is_nan
-		end
-
-	zero: STI_REAL_NUMBER
-			-- Representation of the real number 0
-		once
-			Result := {REAL} 0.0
-		ensure
-			class
-			definition: Result.value = {REAL} 0.0
 		end
 
 feature -- Test routines (All)
@@ -659,6 +650,64 @@ feature -- Test routines (Implementation)
 			assert ("0", attached real_number_to_be_tested.adjusted_value (0))
 		end
 
+feature -- Test routines (Implementation)
+
+	test_sign_bit_status
+			-- Test {STI_REAL_NUMBER}.sign_bit_status.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.sign_bit_status"
+		local
+			x: like exposed_real_number_to_be_tested
+		do
+			x := - Nan.value
+			assert ("signed NaN", x.sign_bit_status = 1)
+			assert ("signed NaN ok", sign_bit_status_ok (x))
+
+			x := Nan
+			assert ("unsigned NaN", x.sign_bit_status = 0)
+			assert ("unsigned NaN ok", sign_bit_status_ok (x))
+
+			x := - Zero.value
+			assert ("negative zero", x.sign_bit_status = 1)
+			assert ("negative zero ok", sign_bit_status_ok (x))
+
+			x := Zero
+			assert ("positive zero", x.sign_bit_status = 0)
+			assert ("positive zero ok", sign_bit_status_ok (x))
+
+			x := Negative_infinity
+			assert ("- Infinity", x.sign_bit_status = 1)
+			assert ("- Infinity ok", sign_bit_status_ok (x))
+
+			x := Positive_infinity
+			assert ("Infinity", x.sign_bit_status = 0)
+			assert ("Infinity ok", sign_bit_status_ok (x))
+
+			from
+				x := exposed_real_number_to_be_tested
+			until
+				not x.value.is_nan and x.value < 0
+			loop
+				x := exposed_real_number_to_be_tested
+			end
+			assert ("negative", x.sign_bit_status = 1)
+			assert ("negative ok", sign_bit_status_ok (x))
+
+			from
+				x := exposed_real_number_to_be_tested
+			until
+				0 < x.value
+			loop
+				x := exposed_real_number_to_be_tested
+			end
+			assert ("positive", x.sign_bit_status = 0)
+			assert ("positive ok", sign_bit_status_ok (x))
+
+			x := exposed_real_number_to_be_tested
+			assert ("sign_bit_status", attached x.sign_bit_status)
+			assert ("sign_bit_status_ok", sign_bit_status_ok (x))
+		end
+
 feature {NONE} -- Conversion
 
 	real_from_reference (x: STS_REAL_NUMBER): like real_number_to_be_tested
@@ -741,16 +790,17 @@ feature {NONE} -- Conversion
 			value: Result = x.value
 		end
 
+feature {NONE} -- Factory (element to be tested)
+
+	exposed_real_number_to_be_tested: like some_exposed_real_number
+			-- Real number meant to have under tests its features with restricted access
+		do
+			Result := some_exposed_real_number
+		end
+
 feature -- Anchor
 
 	rational_anchor: STI_RATIONAL_NUMBER
-			-- <Precursor>
-		once
-		ensure then
-			class
-		end
-
-	real_anchor: STI_REAL_NUMBER
 			-- <Precursor>
 		once
 		ensure then
