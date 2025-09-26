@@ -20,7 +20,7 @@ inherit
 			real_number_to_be_tested
 		end
 
---	REAL_NUMBER_PROPERTIES
+	REAL_NUMBER_PROPERTIES
 
 feature -- Test routines (All)
 
@@ -31,7 +31,7 @@ feature -- Test routines (All)
 		do
 			Precursor {ELEMENT_TESTS}
 			test_value
---			test_is_in
+			test_is_in
 --			test_is_not_in
 --			test_sign
 --			test_zero
@@ -82,28 +82,28 @@ feature -- Test routines (Primitive)
 			assert ("value", attached x.value)
 		end
 
---feature -- Test routines (Membership)
+feature -- Test routines (Membership)
 
---	test_is_in
---			-- Test {STS_REAL_NUMBER}.is_in.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_in"
---		local
---			x: like real_number_to_be_tested
---			s: like some_set_pq
---		do
---			x := real_number_to_be_tested
---			s := some_set_pq.extended (x, some_equality_pq)
---			assert ("x ∈ s", x ∈ s)
+	test_is_in
+			-- Test {STS_REAL_NUMBER}.is_in.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_in"
+		local
+			x: like real_number_to_be_tested
+			s: like some_set_r
+		do
+			x := real_number_to_be_tested
+			s := some_set_r.extended (x, some_equality_r)
+			assert ("x ∈ s", x ∈ s)
 
---			x := real_number_to_be_tested
---			s := some_set_pq.prunned (x)
---			assert ("not (x ∈ s)", not (x ∈ s))
+			x := real_number_to_be_tested
+			s := some_set_r.prunned (x)
+			assert ("not (x ∈ s)", not (x ∈ s))
 
---			x := real_number_to_be_tested
---			s := some_set_pq
---			assert ("is_in", x ∈ s ⇒ True)
---		end
+			x := real_number_to_be_tested
+			s := some_set_r
+			assert ("is_in", x ∈ s ⇒ True)
+		end
 
 --	test_is_not_in
 --			-- Test {STS_REAL_NUMBER}.is_not_in.
@@ -111,20 +111,20 @@ feature -- Test routines (Primitive)
 --			testing: "covers/{STS_REAL_NUMBER}.is_not_in"
 --		local
 --			x: like real_number_to_be_tested
---			s: like some_set_pq
+--			s: like some_set_r
 --		do
 --			x := real_number_to_be_tested
---			s := some_set_pq.prunned (x)
+--			s := some_set_r.prunned (x)
 --			assert ("x ∉ s", x ∉ s)
 --			assert ("x ∉ s ok", is_not_in_ok (x, s))
 
 --			x := real_number_to_be_tested
---			s := some_set_pq.extended (x, some_equality_pq)
+--			s := some_set_r.extended (x, some_equality_r)
 --			assert ("not (x ∉ s)", not (x ∉ s))
 --			assert ("not (x ∉ s) ok", is_not_in_ok (x, s))
 
 --			x := real_number_to_be_tested
---			s := some_set_pq
+--			s := some_set_r
 --			assert ("is_not_in", x ∉ s ⇒ True)
 --			assert ("is_not_in_ok", is_not_in_ok (x, s))
 --		end

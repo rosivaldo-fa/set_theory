@@ -32,7 +32,7 @@ inherit
 		redefine
 			test_all,
 			test_value,
---			test_is_in,
+			test_is_in,
 --			test_is_not_in,
 --			test_sign,
 --			test_zero,
@@ -133,6 +133,8 @@ feature -- Test routines (All)
 			test_sign_bit_status
 			test_exponent_bit_pattern
 			test_mantissa_bit_pattern
+			test_bit_pattern_from_native_real
+			test_c_copysign
 		end
 
 feature -- Test routines (Initialization)
@@ -195,17 +197,17 @@ feature -- Test routines (Primitive)
 			assert ("negative zero sign bit ", {like real_number_to_be_tested}.value_sign_bit (- x.value) = 1)
 		end
 
---feature -- Test routines (Membership)
+feature -- Test routines (Membership)
 
---	test_is_in
---			-- Test {STS_REAL_NUMBER}.is_in.
---			-- Test {STI_REAL_NUMBER}.is_in.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_in"
---			testing: "covers/{STI_REAL_NUMBER}.is_in"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_is_in
+			-- Test {STS_REAL_NUMBER}.is_in.
+			-- Test {STI_REAL_NUMBER}.is_in.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_in"
+			testing: "covers/{STI_REAL_NUMBER}.is_in"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+		end
 
 --	test_is_not_in
 --			-- Test {STS_REAL_NUMBER}.is_not_in.
@@ -811,16 +813,16 @@ feature -- Test routines (Implementation)
 		note
 			testing: "covers/{STI_REAL_NUMBER}.c_copysign"
 		do
-			assert ("-NaN, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (-Nan.value, -Nan.value))
-			assert ("NaN, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (Nan, -Nan.value))
-			assert ("-Infinity, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (Negative_infinity, -Nan.value))
-			assert ("Infinity, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (Positive_infinity, -Nan.value))
-			assert ("0, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (0, -Nan.value))
-			assert ("-0, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (-0.0, -Nan.value))
-			assert ("0, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (0, -Nan.value))
-			assert ("a, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (some_real_number.value, -Nan.value))
+			assert ("-NaN, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (- Nan.value, - Nan.value))
+			assert ("NaN, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (Nan, - Nan.value))
+			assert ("-Infinity, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (Negative_infinity, - Nan.value))
+			assert ("Infinity, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (Positive_infinity, - Nan.value))
+			assert ("0, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (0, - Nan.value))
+			assert ("-0, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (-0.0, - Nan.value))
+			assert ("0, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (0, - Nan.value))
+			assert ("a, -NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (some_real_number.value, - Nan.value))
 
-			assert ("-NaN, NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (-Nan.value, Nan))
+			assert ("-NaN, NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (- Nan.value, Nan))
 			assert ("NaN, NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (Nan, Nan))
 			assert ("-Infinity, NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (Negative_infinity, Nan))
 			assert ("Infinity, NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (Positive_infinity, Nan))
@@ -829,7 +831,7 @@ feature -- Test routines (Implementation)
 			assert ("0, NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (0, Nan))
 			assert ("a, NaN", attached {like exposed_real_number_to_be_tested}.c_copysign (some_real_number.value, Nan))
 
-			assert ("-NaN, -Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (-Nan.value, Negative_infinity))
+			assert ("-NaN, -Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (- Nan.value, Negative_infinity))
 			assert ("NaN, -Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (Nan, Negative_infinity))
 			assert ("-Infinity, -Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (Negative_infinity, Negative_infinity))
 			assert ("Infinity, -Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (Positive_infinity, Negative_infinity))
@@ -838,7 +840,7 @@ feature -- Test routines (Implementation)
 			assert ("0, -Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (0, Negative_infinity))
 			assert ("a, -Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (some_real_number.value, Negative_infinity))
 
-			assert ("-NaN, Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (-Nan.value, Positive_infinity))
+			assert ("-NaN, Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (- Nan.value, Positive_infinity))
 			assert ("NaN, Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (Nan, Positive_infinity))
 			assert ("-Infinity, Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (Negative_infinity, Positive_infinity))
 			assert ("Infinity, Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (Positive_infinity, Positive_infinity))
@@ -847,7 +849,7 @@ feature -- Test routines (Implementation)
 			assert ("0, Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (0, Positive_infinity))
 			assert ("a, Infinity", attached {like exposed_real_number_to_be_tested}.c_copysign (some_real_number.value, Positive_infinity))
 
-			assert ("-NaN, -0", attached {like exposed_real_number_to_be_tested}.c_copysign (-Nan.value, -0.0))
+			assert ("-NaN, -0", attached {like exposed_real_number_to_be_tested}.c_copysign (- Nan.value, -0.0))
 			assert ("NaN, -0", attached {like exposed_real_number_to_be_tested}.c_copysign (Nan, -0.0))
 			assert ("-Infinity, -0", attached {like exposed_real_number_to_be_tested}.c_copysign (Negative_infinity, -0.0))
 			assert ("Infinity, -0", attached {like exposed_real_number_to_be_tested}.c_copysign (Positive_infinity, -0.0))
@@ -856,8 +858,8 @@ feature -- Test routines (Implementation)
 			assert ("0, -0", attached {like exposed_real_number_to_be_tested}.c_copysign (0, -0.0))
 			assert ("a, -0", attached {like exposed_real_number_to_be_tested}.c_copysign (some_real_number.value, -0.0))
 
-			assert ("-NaN, 0", attached {like exposed_real_number_to_be_tested}.c_copysign (-Nan.value, 0))
-			assert ("-NaN, 0", attached {like exposed_real_number_to_be_tested}.c_copysign (-Nan.value, 0))
+			assert ("-NaN, 0", attached {like exposed_real_number_to_be_tested}.c_copysign (- Nan.value, 0))
+			assert ("-NaN, 0", attached {like exposed_real_number_to_be_tested}.c_copysign (- Nan.value, 0))
 			assert ("NaN, 0", attached {like exposed_real_number_to_be_tested}.c_copysign (Nan, 0))
 			assert ("NaN, 0", attached {like exposed_real_number_to_be_tested}.c_copysign (Nan, 0))
 			assert ("-Infinity, 0", attached {like exposed_real_number_to_be_tested}.c_copysign (Negative_infinity, 0))
@@ -871,7 +873,7 @@ feature -- Test routines (Implementation)
 			assert ("a, 0", attached {like exposed_real_number_to_be_tested}.c_copysign (some_real_number.value, 0))
 			assert ("a, 0", attached {like exposed_real_number_to_be_tested}.c_copysign (some_real_number.value, 0))
 
-			assert ("-NaN, b", attached {like exposed_real_number_to_be_tested}.c_copysign (-Nan.value, some_real_number.value))
+			assert ("-NaN, b", attached {like exposed_real_number_to_be_tested}.c_copysign (- Nan.value, some_real_number.value))
 			assert ("NaN, b", attached {like exposed_real_number_to_be_tested}.c_copysign (Nan, some_real_number.value))
 			assert ("-Infinity, b", attached {like exposed_real_number_to_be_tested}.c_copysign (Negative_infinity, some_real_number.value))
 			assert ("Infinity, b", attached {like exposed_real_number_to_be_tested}.c_copysign (Positive_infinity, some_real_number.value))

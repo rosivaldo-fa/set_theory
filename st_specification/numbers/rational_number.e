@@ -20,6 +20,9 @@ deferred class
 
 inherit
 	REAL_NUMBER
+		rename
+			is_in as real_is_in
+		end
 
 feature -- Primitive
 

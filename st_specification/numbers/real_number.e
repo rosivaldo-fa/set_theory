@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "[
 					Model of a real number, i.e. a complex number whose imaginary part is zero.
 			
@@ -30,6 +30,16 @@ feature -- Primitive
 		deferred
 		ensure
 			adjusted: Result = adjusted_value (Result)
+		end
+
+feature -- Membership
+
+	is_in alias "∈" (s: SET [REAL_NUMBER]): BOOLEAN
+			-- Does `s` have current real number?
+		do
+			Result := s ∋ Current
+		ensure
+			definition: Result = s ∋ Current
 		end
 
 feature -- Implementation
