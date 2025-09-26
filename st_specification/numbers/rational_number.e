@@ -21,7 +21,8 @@ deferred class
 inherit
 	REAL_NUMBER
 		rename
-			is_in as real_is_in
+			is_in as real_number_is_in,
+			is_not_in as real_is_not_in
 		end
 
 feature -- Primitive

@@ -33,7 +33,7 @@ inherit
 			test_all,
 			test_value,
 			test_is_in,
---			test_is_not_in,
+			test_is_not_in,
 --			test_sign,
 --			test_zero,
 --			test_one,
@@ -209,15 +209,15 @@ feature -- Test routines (Membership)
 			Precursor {STST_REAL_NUMBER_TESTS}
 		end
 
---	test_is_not_in
---			-- Test {STS_REAL_NUMBER}.is_not_in.
---			-- Test {STI_REAL_NUMBER}.is_not_in.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_not_in"
---			testing: "covers/{STI_REAL_NUMBER}.is_not_in"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_is_not_in
+			-- Test {STS_REAL_NUMBER}.is_not_in.
+			-- Test {STI_REAL_NUMBER}.is_not_in.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_not_in"
+			testing: "covers/{STI_REAL_NUMBER}.is_not_in"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+		end
 
 --feature -- Test routines (Access)
 

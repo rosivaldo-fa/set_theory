@@ -23,7 +23,7 @@ feature -- Access
 		end
 
 	one: like real_anchor
-			-- The real number 1/1
+			-- The real number 1
 		deferred
 		ensure
 			definition: Result.value = 1
@@ -31,15 +31,15 @@ feature -- Access
 
 feature -- Properties (Membership)
 
---	is_not_in_ok (x: STS_REAL_NUMBER; s: STS_SET [STS_REAL_NUMBER]): BOOLEAN
---			-- Do the properties verified within set theory hold for {STS_REAL_NUMBER}.is_not_in?
---		do
---			check
---				definition: x ∉ s = s ∌ x
---			then
---				Result := True
---			end
---		end
+	is_not_in_ok (x: STS_REAL_NUMBER; s: STS_SET [STS_REAL_NUMBER]): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_REAL_NUMBER}.is_not_in?
+		do
+			check
+				definition: x ∉ s = s ∌ x
+			then
+				Result := True
+			end
+		end
 
 feature -- Properties (Comparison)
 

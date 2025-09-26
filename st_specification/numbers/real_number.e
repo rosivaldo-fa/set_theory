@@ -42,6 +42,14 @@ feature -- Membership
 			definition: Result = s ∋ Current
 		end
 
+	is_not_in alias "∉" (s: SET [REAL_NUMBER]): BOOLEAN
+			-- Is not current real number in `s'?
+		do
+			Result := not (Current ∈ s)
+		ensure
+			definition: Result = not (Current ∈ s)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

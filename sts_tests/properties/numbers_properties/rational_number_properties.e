@@ -9,6 +9,9 @@ deferred class
 
 inherit
 	REAL_NUMBER_PROPERTIES
+		rename
+			is_not_in_ok as real_is_not_in_ok
+		end
 
 feature -- Access
 

@@ -32,7 +32,7 @@ feature -- Test routines (All)
 			Precursor {ELEMENT_TESTS}
 			test_value
 			test_is_in
---			test_is_not_in
+			test_is_not_in
 --			test_sign
 --			test_zero
 --			test_one
@@ -105,29 +105,29 @@ feature -- Test routines (Membership)
 			assert ("is_in", x ∈ s ⇒ True)
 		end
 
---	test_is_not_in
---			-- Test {STS_REAL_NUMBER}.is_not_in.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_not_in"
---		local
---			x: like real_number_to_be_tested
---			s: like some_set_r
---		do
---			x := real_number_to_be_tested
---			s := some_set_r.prunned (x)
---			assert ("x ∉ s", x ∉ s)
---			assert ("x ∉ s ok", is_not_in_ok (x, s))
+	test_is_not_in
+			-- Test {STS_REAL_NUMBER}.is_not_in.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_not_in"
+		local
+			x: like real_number_to_be_tested
+			s: like some_set_r
+		do
+			x := real_number_to_be_tested
+			s := some_set_r.prunned (x)
+			assert ("x ∉ s", x ∉ s)
+			assert ("x ∉ s ok", is_not_in_ok (x, s))
 
---			x := real_number_to_be_tested
---			s := some_set_r.extended (x, some_equality_r)
---			assert ("not (x ∉ s)", not (x ∉ s))
---			assert ("not (x ∉ s) ok", is_not_in_ok (x, s))
+			x := real_number_to_be_tested
+			s := some_set_r.extended (x, some_equality_r)
+			assert ("not (x ∉ s)", not (x ∉ s))
+			assert ("not (x ∉ s) ok", is_not_in_ok (x, s))
 
---			x := real_number_to_be_tested
---			s := some_set_r
---			assert ("is_not_in", x ∉ s ⇒ True)
---			assert ("is_not_in_ok", is_not_in_ok (x, s))
---		end
+			x := real_number_to_be_tested
+			s := some_set_r
+			assert ("is_not_in", x ∉ s ⇒ True)
+			assert ("is_not_in_ok", is_not_in_ok (x, s))
+		end
 
 --feature -- Test routines (Access)
 

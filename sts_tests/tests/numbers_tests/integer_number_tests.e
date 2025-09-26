@@ -25,6 +25,8 @@ inherit
 			opposite_ok as rational_opposite_ok,
 			product_ok as rational_product_ok,
 			quotient_ok as rational_quotient_ok,
+			test_value as test_real_value,
+			test_adjusted_value as test_real_adjusted_value,
 			test_is_in as test_rational_is_in,
 			test_is_not_in as test_rational_is_not_in,
 			test_zero as test_rational_zero,

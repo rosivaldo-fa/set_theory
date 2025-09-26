@@ -9,12 +9,12 @@ deferred class
 	RATIONAL_NUMBER_TESTS
 
 inherit
-	ELEMENT_TESTS
+	REAL_NUMBER_TESTS
 		rename
-			is_not_in_ok as element_is_not_in_ok,
-			test_is_in as test_element_is_in,
-			test_is_not_in as test_element_is_not_in,
-			element_to_be_tested as rational_number_to_be_tested
+			is_not_in_ok as real_is_not_in_ok,
+			test_is_in as test_real_is_in,
+			test_is_not_in as test_real_is_not_in,
+			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,
 			rational_number_to_be_tested
@@ -29,7 +29,7 @@ feature -- Test routines (All)
 		note
 			testing: "covers/{STS_RATIONAL_NUMBER}"
 		do
-			Precursor {ELEMENT_TESTS}
+			Precursor {REAL_NUMBER_TESTS}
 			test_p
 			test_numerator
 			test_q
@@ -69,6 +69,18 @@ feature -- Test routines (All)
 			test_div
 			test_rem
 			test_integer_product_overflows
+		end
+
+feature -- Access
+
+	zero: like rational_anchor
+			-- The rational number 0/1
+		deferred
+		end
+
+	one: like rational_anchor
+			-- The rational number 1/1
+		deferred
 		end
 
 feature -- Test routines (Primitive)
