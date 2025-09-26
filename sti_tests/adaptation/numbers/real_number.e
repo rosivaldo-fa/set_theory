@@ -18,7 +18,8 @@ inherit
 			Exponent_width,
 			mantissa_bit_pattern,
 			bit_pattern_from_native_real,
-			Mantissa_width
+			Mantissa_width,
+			c_copysign
 		end
 
 create
