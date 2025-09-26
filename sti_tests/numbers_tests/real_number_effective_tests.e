@@ -785,6 +785,27 @@ feature -- Test routines (Implementation)
 			assert ("mantissa_bit_pattern ok", mantissa_bit_pattern_ok (x))
 		end
 
+	test_bit_pattern_from_native_real
+			-- Test {STI_REAL_NUMBER}.bit_pattern_from_native_real.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.bit_pattern_from_native_real"
+		local
+			x: like exposed_real_number_to_be_tested
+		do
+			x := exposed_real_number_to_be_tested
+			assert (
+					"signed NaN",
+					x.bit_pattern_from_native_real (- NaN.value) &
+					({NATURAL_16} 1 |<< ({like exposed_real_number_to_be_tested}.Exponent_width + {like exposed_real_number_to_be_tested}.Mantissa_width)) /= 0
+				) -- TODO: Get rid of {NATURAL_16}? Make a function to take the sign bit.
+			assert (
+					"negative zero",
+					x.bit_pattern_from_native_real (- Zero.value) &
+					({NATURAL_16} 1 |<< ({like exposed_real_number_to_be_tested}.Exponent_width + {like exposed_real_number_to_be_tested}.Mantissa_width)) /= 0
+				) -- TODO: Get rid of {NATURAL_8}? Make a function to take the sign bit.
+			assert ("bit_pattern_from_native_real", attached x.bit_pattern_from_native_real (some_native_real))
+		end
+
 feature {NONE} -- Conversion
 
 	real_from_reference (x: STS_REAL_NUMBER): like real_number_to_be_tested

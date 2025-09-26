@@ -16,7 +16,9 @@ inherit
 			sign_bit_status,
 			exponent_bit_pattern,
 			Exponent_width,
-			mantissa_bit_pattern
+			mantissa_bit_pattern,
+			bit_pattern_from_native_real,
+			Mantissa_width
 		end
 
 create
