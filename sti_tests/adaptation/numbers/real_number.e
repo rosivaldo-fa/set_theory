@@ -15,7 +15,8 @@ inherit
 		export {REAL_NUMBER_PROPERTIES, REAL_NUMBER_EFFECTIVE_TESTS}
 			sign_bit_status,
 			exponent_bit_pattern,
-			Exponent_width
+			Exponent_width,
+			mantissa_bit_pattern
 		end
 
 create

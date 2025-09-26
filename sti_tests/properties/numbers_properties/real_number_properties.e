@@ -103,6 +103,26 @@ feature -- Properties (Implementation)
 			end
 		end
 
+	mantissa_bit_pattern_ok (x: REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.mantissa_bit_pattern?
+		local
+			x_abs: REAL_NUMBER
+		do
+			x_abs := x.value.abs
+			check
+				when_nan: x.value.is_nan ⇒ x.mantissa_bit_pattern /= 0
+				when_negative: not x.value.is_nan and x.value < 0 ⇒ x.mantissa_bit_pattern = x_abs.mantissa_bit_pattern
+				when_zero: x.value = 0 ⇒ x.mantissa_bit_pattern = 0
+--				when_subnormal: Zero < x.value.abs and x.value.abs < {STI_REAL_NUMBER}.epsilon ⇒
+--					0 < x.mantissa_bit_pattern and x.mantissa_bit_pattern <= {REAL_NUMBER}.Max_mantissa
+--				when_normal: {STI_REAL_NUMBER}.epsilon ≤ x.abs and x.is_finite ⇒
+--					0 <= x.mantissa_bit_pattern and x.mantissa_bit_pattern <= {REAL_NUMBER}.Max_mantissa
+				when_infinite: x.value = {REAL}.negative_infinity or x.value = {REAL}.positive_infinity ⇒ x.mantissa_bit_pattern = 0
+			then
+				Result := True
+			end
+		end
+
 feature -- Anchor
 
 	real_anchor: STI_REAL_NUMBER
