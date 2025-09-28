@@ -34,7 +34,7 @@ inherit
 			test_value,
 			test_is_in,
 			test_is_not_in,
---			test_sign,
+			test_sign,
 --			test_zero,
 --			test_one,
 --			test_is_integer,
@@ -219,15 +219,26 @@ feature -- Test routines (Membership)
 			Precursor {STST_REAL_NUMBER_TESTS}
 		end
 
---feature -- Test routines (Access)
+feature -- Test routines (Access)
 
---	test_sign
---			-- Test {STI_REAL_NUMBER}.sign.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.sign"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_sign
+			-- <Precursor>
+			-- Test {STI_REAL_NUMBER}.sign.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.sign"
+			testing: "covers/{STI_REAL_NUMBER}.sign"
+		local
+			x: like real_number_to_be_tested
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			x := Nan
+			assert ("signed NaN", - One ≍ (- x).sign)
+			assert ("NaN", - One ≍ x.sign)
+
+			x := Zero
+			assert ("negative zero", Zero ≍ (- x).sign)
+			assert ("positive zero", Zero ≍ x.sign)
+		end
 
 --	test_zero
 --			-- Test {STI_REAL_NUMBER}.zero.

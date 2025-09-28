@@ -14,6 +14,7 @@ inherit
 			is_not_in_ok as real_is_not_in_ok,
 			test_is_in as test_real_is_in,
 			test_is_not_in as test_real_is_not_in,
+			test_sign as test_real_sign,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,

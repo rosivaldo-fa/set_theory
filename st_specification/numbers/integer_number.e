@@ -11,6 +11,7 @@ inherit
 	RATIONAL_NUMBER
 		rename
 			value as real_value,
+			truncated_to_integer as identity alias "+",
 			p as identity alias "+",
 			numerator as identity alias "+",
 			q as one,

@@ -33,7 +33,7 @@ feature -- Test routines (All)
 			test_value
 			test_is_in
 			test_is_not_in
---			test_sign
+			test_sign
 --			test_zero
 --			test_one
 --			test_is_integer
@@ -1012,6 +1012,37 @@ feature -- Test routines (Membership)
 --			assert ("product_overflows", x.integer_product_overflows (i, j) ⇒ True)
 --			assert ("integer_product_overflows_ok", integer_product_overflows_ok (x, i, j))
 --		end
+
+feature -- Test routines (Access)
+
+	test_sign
+			-- Test {STS_REAL_NUMBER}.sign.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.sign"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("x.sign", attached x.sign)
+
+			from
+				x := real_number_to_be_tested
+			until
+				x < Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("negative", x.sign.real_value = - One.value)
+
+			from
+				x := real_number_to_be_tested
+			until
+				x > Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("positive", x.sign.real_value = One.value)
+		end
 
 feature -- Test routines (Implementation)
 

@@ -152,6 +152,18 @@ feature -- Access
 			denominator: Result.q ≍ {INTEGER_NUMBER}.One
 		end
 
+	previous_float: like real_anchor
+			-- <Precursor>
+		do
+			Result := as_real.previous_float
+		end
+
+	next_float: like real_anchor
+			-- <Precursor>
+		do
+			Result := as_real.next_float
+		end
+
 feature -- Output
 
 	out: STRING
@@ -288,7 +300,35 @@ feature -- Operation
 			end
 		end
 
+feature -- Conversion
+
+	as_real: like real_anchor
+			-- Current rational number represented as a real number
+		do
+				check
+					good_divisor: q.real_divisible (q) -- `q' /= 0
+				end
+			Result := p.real_quotient (q)
+		end
+
+	truncated_to_integer: like integer_anchor
+			-- <Precursor>
+		do
+				check
+					good_divisor: p.divisible (q) -- Class invariant: q /= 0
+				end
+			Result := p // q
+		end
+
 feature -- Factory
+
+	real_from_value (v: like real_anchor.value): like real_anchor
+			-- <Precursor>
+		do
+			create Result.make (v)
+		ensure then
+			class
+		end
 
 	converted_integer (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
@@ -327,6 +367,13 @@ feature -- Implementation
 		end
 
 feature -- Anchor
+
+	real_anchor: REAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
 
 	rational_anchor: RATIONAL_NUMBER
 			-- <Precursor>

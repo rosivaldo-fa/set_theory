@@ -19,6 +19,7 @@ inherit
 			sign,
 			is_natural,
 			out,
+			real_three_way_comparison,
 			rational_three_way_comparison,
 			rational_min,
 			rational_max,
@@ -122,6 +123,18 @@ feature -- Access
 			class
 		end
 
+	previous_float: like real_anchor
+			-- <Precursor>
+		do
+			Result := as_real_number.previous_float
+		end
+
+	next_float: like real_anchor
+			-- <Precursor>
+		do
+			Result := as_real_number.next_float
+		end
+
 	Integer_min_value: INTEGER_NUMBER
 			-- Minimum value representable by this implementation of integer numbers
 		require else
@@ -166,6 +179,19 @@ feature -- Output
 		end
 
 feature -- Comparison
+
+	real_three_way_comparison (x: STS_REAL_NUMBER): like Integer_anchor
+			-- <Precursor>
+		local
+			v: like Real_anchor.value
+		do
+			v := x.value
+			if stored_value < v then
+				Result := - One
+			elseif v < stored_value then
+				Result := One
+			end
+		end
 
 	rational_three_way_comparison (pq: STS_RATIONAL_NUMBER): like integer_anchor
 			-- <Precursor>
@@ -330,6 +356,14 @@ feature -- Operation
 
 feature -- Conversion
 
+	as_real_number: like real_anchor
+			-- Current integer number represented as a real number
+		do
+			create Result.make (stored_value)
+		ensure
+			value: Result.value = real_value
+		end
+
 	as_rational_number: like Rational_anchor
 			-- Current natural number represented as a rational number
 		do
@@ -348,6 +382,14 @@ feature -- Conversion
 		end
 
 feature -- Factory
+
+	real_from_value (v: like real_anchor.value): like real_anchor
+			-- <Precursor>
+		do
+			create Result.make (v)
+		ensure then
+			class
+		end
 
 	converted_integer (i: STS_INTEGER_NUMBER): like integer_anchor
 			-- <Precursor>
@@ -417,6 +459,13 @@ feature -- Anchor
 		end
 
 	rational_anchor: RATIONAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
+	real_anchor: REAL_NUMBER
 			-- <Precursor>
 		once
 		ensure then

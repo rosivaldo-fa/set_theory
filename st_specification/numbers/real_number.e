@@ -50,6 +50,209 @@ feature -- Membership
 			definition: Result = not (Current ∈ s)
 		end
 
+feature -- Access
+
+	sign: like integer_anchor
+			-- Sign of current number as an integer value (0, -1 or 1)
+		do
+			Result := Current ⋚ zero
+		ensure
+			three_way: Result ≍ (Current ⋚ zero)
+		end
+
+	zero: like real_anchor
+			-- The real number 0
+		deferred
+		ensure
+			definition: Result.value = 0
+		end
+
+	one: like real_anchor
+			-- The real number 1
+		deferred
+		ensure
+			definition: Result.value = 1
+		end
+
+	previous_float: like real_anchor
+			-- Greatest representable value that is less than current real number
+		deferred
+		ensure
+			when_nan: is_nan implies Result.is_nan
+			when_negative_infinity: is_negative_infinity implies Result.is_negative_infinity
+			ordinary_case: not is_nan and not is_negative_infinity implies Result < Current
+			greatest_below: -- Please see `previous_float' post-condition of `is_greater'
+		end
+
+	next_float: like real_anchor
+			-- Least representable value that is greater than current real number
+		deferred
+		ensure
+			when_nan: is_nan implies Result.is_nan
+			when_positive_infinity: is_positive_infinity implies Result.is_positive_infinity
+			ordinary_case: not is_nan and not is_positive_infinity implies Current < Result
+			least_above: -- Please see `next_float' post-condition of `is_less'
+		end
+
+feature -- Quality
+
+	is_nan: BOOLEAN
+			-- Is current the representation of NaN, i.e. does it represent no valid real number?
+		do
+			Result := value.is_nan
+		ensure
+			definition: Result = value.is_nan
+			total_order: Result implies Current ≍ Current
+		end
+
+	is_negative_infinity: BOOLEAN
+			-- Is current the representation of negative_infinity, i.e. is it not greater than any valid real number?
+		do
+			Result := value.is_negative_infinity
+		ensure
+			definition: Result = value.is_negative_infinity
+		end
+
+	is_positive_infinity: BOOLEAN
+			-- Is current the representation of positive_infinity, i.e. is it not less than any valid real number?
+		do
+			Result := value.is_positive_infinity
+		ensure
+			definition: Result = value.is_positive_infinity
+		end
+
+	is_infinite: BOOLEAN
+			-- Is current the representation of an infinity, i.e. either it `is_negative_infinity' or `is_positive_infinity'?
+		do
+			Result := is_negative_infinity or is_positive_infinity
+		ensure then
+			real_definition: Result = (is_negative_infinity or is_positive_infinity)
+		end
+
+	is_finite: BOOLEAN
+			-- Is current the representation of a finite real number, i.e. neither it `is_nan' or `is_infinite'?
+		do
+			Result := not (is_nan or is_infinite)
+		ensure then
+			real_definition: Result = not (is_nan or is_infinite)
+		end
+
+	is_invertible: BOOLEAN
+			-- Does current real number have a multiplicative inverse
+			-- (AKA reciprocal)?
+			-- Notice that the real_quasi_definition post-condition allows an
+			-- implementation to regard zero as invertible.
+		do
+			Result := Current ≭ zero
+		ensure then
+			real_quasi_definition: Current ≭ zero implies Result
+		end
+
+feature -- Comparison
+
+	equals alias "≍" (x: REAL_NUMBER): BOOLEAN
+			-- Do current real number and `x' have the same numeric value?
+			--| Please have a look at the note in the header of {SET}.equals.
+		do
+			Result := value = x.value
+		ensure
+			definition: Result = (value = x.value)
+		end
+
+	is_less alias "<" (x: REAL_NUMBER): BOOLEAN
+			-- Is current real number less than `x'?
+		do
+			Result := value < x.value
+		ensure
+			definition: Result = (value < x.value)
+			previous_float: Result implies next_float ≤ x
+		end
+
+	unequals alias "≭" (x: REAL_NUMBER): BOOLEAN
+			-- Does not current real number equal `x'?
+		do
+			Result := not (Current ≍ x)
+		ensure
+			definition: Result = not (Current ≍ x)
+		end
+
+	is_less_equal alias "<=" alias "≤" (x: REAL_NUMBER): BOOLEAN
+			-- Is current real number less than or equal to `x'?
+		do
+			Result := Current < x or Current ≍ x
+		ensure
+			definition: Result = (Current < x or Current ≍ x)
+		end
+
+	is_greater alias ">" (x: REAL_NUMBER): BOOLEAN
+			-- Is current real number greater than `x'?
+		do
+			Result := x < Current
+		ensure
+			definition: Result = (x < Current)
+			previous_float: Result implies x ≤ previous_float
+		end
+
+	three_way_comparison alias "⋚" (x: REAL_NUMBER): like integer_anchor
+			-- If current real number equal to `x', 0; if smaller, -1; if greater, 1.
+		do
+			if Current < x then
+				Result := - one.truncated_to_integer
+			elseif Current ≍ x then
+				Result := zero.truncated_to_integer
+			else
+				Result := one.truncated_to_integer
+			end
+		ensure
+			equal_zero: (Result ≍ zero.truncated_to_integer) = (Current ≍ x)
+			smaller_negative: (Result ≍ - one.truncated_to_integer) = (Current < x)
+			greater_positive: (Result ≍ one.truncated_to_integer) = (Current > x)
+		end
+
+feature -- Relationship
+
+	divisible (x: REAL_NUMBER): BOOLEAN
+			-- May current real number be divided by `x`?
+		do
+			Result := x.is_invertible
+		ensure
+			definition: Result = x.is_invertible
+		end
+
+feature -- Operation
+
+	quotient alias "/" alias "÷" (x: REAL_NUMBER): like real_anchor
+			-- Division of current real number by `x`
+			-- Notice that quasi_definition post-condition allows an implementation to regard `zero' a good divisor.
+		require
+			good_divisor: divisible (x)
+		do
+				check
+					good_divisor: value.divisible (x.value) -- x.is_invertible <== divisible (x)
+				end
+			Result := real_from_value (value / x.value)
+		ensure
+			quasi_definition: value.divisible (x.value) implies Result ≍ real_from_value (value / x.value)
+		end
+
+feature -- Conversion
+
+	truncated_to_integer: like integer_anchor
+			-- Integer part (same sign, largest absolute value no greater than current real number's)
+		deferred
+		ensure
+			definition: Result.value = Result.adjusted_value (value.truncated_to_integer)
+		end
+
+feature -- Factory
+
+	real_from_value (v: like native_real_anchor): like real_anchor
+			-- Real number whose value is {REAL_NUMBER}.adjusted_value (`v')
+		deferred
+		ensure
+			definition: Result.value = Result.adjusted_value (v)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
@@ -66,6 +269,16 @@ feature -- Anchor
 		once
 		ensure
 			class
+		end
+
+	real_anchor: REAL_NUMBER
+			-- Anchor for real numbers
+		deferred
+		end
+
+	integer_anchor: INTEGER_NUMBER
+			-- Anchor for integer numbers
+		deferred
 		end
 
 note

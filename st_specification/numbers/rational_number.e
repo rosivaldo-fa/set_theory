@@ -22,7 +22,16 @@ inherit
 	REAL_NUMBER
 		rename
 			is_in as real_number_is_in,
-			is_not_in as real_is_not_in
+			is_not_in as real_is_not_in,
+			is_invertible as real_is_invertible,
+			equals as real_equals,
+			unequals as real_unequals,
+			is_less as real_is_less,
+			is_less_equal as real_is_less_equal,
+			is_greater as real_is_greater,
+			three_way_comparison as real_three_way_comparison,
+			divisible as real_divisible,
+			quotient as real_quotient
 		end
 
 feature -- Primitive
@@ -59,26 +68,22 @@ feature -- Membership
 
 feature -- Access
 
-	sign: like integer_anchor
-			-- Sign of current number as an integer value (0, -1 or 1)
-		do
-			Result := Current ⋚ zero
-		ensure
-			three_way: Result ≍ (Current ⋚ zero)
-		end
+--	sign: like integer_anchor
+--			-- Sign of current number as an integer value (0, -1 or 1)
+--		do
+--			Result := Current ⋚ zero
+--		ensure
+--			three_way: Result ≍ (Current ⋚ zero)
+--		end
 
 	zero: like rational_anchor
 			-- The rational number 0/1
 		deferred
-		ensure
-			numerator: Result.p ≍ Result.p.zero
 		end
 
 	one: like rational_anchor
 			-- The rational number 1/1
 		deferred
-		ensure
-			definition: Result.p ≍ Result.q
 		end
 
 feature -- Quality
