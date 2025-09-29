@@ -34,6 +34,7 @@ feature -- Test routines (All)
 			test_is_in
 			test_is_not_in
 			test_sign
+			test_sign_bit
 --			test_zero
 --			test_one
 --			test_is_integer
@@ -1042,6 +1043,35 @@ feature -- Test routines (Access)
 				x := real_number_to_be_tested
 			end
 			assert ("positive", x.sign.real_value = One.value)
+		end
+
+	test_sign_bit
+			-- Test {STS_REAL_NUMBER}.sign_bit.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.sign_bit"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("x.sign_bit", attached x.sign_bit)
+
+			from
+				x := real_number_to_be_tested
+			until
+				x < Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("negative", One ≍ x.sign_bit)
+
+			from
+				x := real_number_to_be_tested
+			until
+				x > Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("positive", zero ≍ x.sign_bit)
 		end
 
 feature -- Test routines (Implementation)

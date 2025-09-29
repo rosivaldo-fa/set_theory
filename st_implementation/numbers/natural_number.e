@@ -108,6 +108,11 @@ feature -- Access
 			Result := Current ⋚ Zero
 		end
 
+	sign_bit: NATURAL_NUMBER
+			-- <Precursor>
+		once
+		end
+
 	Zero: NATURAL_NUMBER
 			-- <Precursor>
 		once

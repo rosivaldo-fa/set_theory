@@ -85,6 +85,14 @@ feature -- Primitive
 
 feature -- Access
 
+	sign_bit: like one
+			-- <Precursor>
+		do
+			if stored_value < 0 then
+				Result := One
+			end
+		end
+
 	sign: like integer_anchor
 			-- <Precursor>
 		do
@@ -390,7 +398,7 @@ feature {NONE} -- Implementation
 	stored_value: INTEGER_8;
 			-- Bit pattern of the `value' of current integer number
 
-feature {REAL_NUMBER} -- Implementation
+feature {REAL_NUMBER, RATIONAL_NUMBER} -- Implementation
 
 	native_min_value: INTEGER_8 = - 128
 			-- Native minimum value representable by this implementation of integer numbers

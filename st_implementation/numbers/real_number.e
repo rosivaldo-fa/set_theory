@@ -148,6 +148,17 @@ feature -- Primitive
 
 feature -- Access
 
+	sign_bit: like Integer_anchor -- TODO: Natural instead.
+			-- <Precursor>
+		do
+				check
+						-- sign_bit_status.as_integer_8 ∈ {0, 1}
+					big_enough: {INTEGER_NUMBER}.Native_min_value ≤ sign_bit_status.as_integer_8
+					small_enough: sign_bit_status.as_integer_8 ≤ {INTEGER_NUMBER}.Native_max_value
+				end
+			create Result.make ((sign_bit_status.as_integer_8))
+		end
+
 	zero: REAL_NUMBER
 			-- <Precursor>
 		once
@@ -419,22 +430,6 @@ feature -- Conversion
 		end
 
 feature -- Math
-
-	value_sign_bit (v: like native_real_anchor): like integer_anchor.value
-			-- Status of the sign bit of `v', which is 1 for negative numbers but also, e.g. for a "negative" zero as specified by IEEE 754.
-		external
-			"C inline use <math.h>"
-		alias
-			"{
-				return signbit ($v)? 1: 0;
-			}"
-		ensure
-			class
-			when_nan: v.is_nan ⇒ Result = 0 or Result = 1
-			when_negative: not v.is_nan and v < 0 ⇒ Result = 1
-			when_zero: v = 0 ⇒ Result = 0 or Result = 1
-			when_positive: 0 < v ⇒ Result = 0
-		end
 
 	value_logb (v: like native_real_anchor): like native_real_anchor
 			-- Exponent of `v', as a signed integer value in ﬂoating-point format. If `v' is subnormal it is treated as though it were normalized; thus, for

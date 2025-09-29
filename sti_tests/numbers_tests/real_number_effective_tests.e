@@ -35,6 +35,7 @@ inherit
 			test_is_in,
 			test_is_not_in,
 			test_sign,
+			test_sign_bit,
 --			test_zero,
 --			test_one,
 --			test_is_integer,
@@ -238,6 +239,40 @@ feature -- Test routines (Access)
 			x := Zero
 			assert ("negative zero", Zero ≍ (- x).sign)
 			assert ("positive zero", Zero ≍ x.sign)
+		end
+
+	test_sign_bit
+			-- Test {STI_REAL_NUMBER}.sign_bit.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.sign_bit"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := Nan
+			assert ("signed NaN", One ≍ (- x).sign_bit)
+			assert ("unsigned NaN", Zero ≍ x.sign_bit)
+
+			from
+				x := real_number_to_be_tested
+			until
+				x < Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("negative", One ≍ x.sign_bit)
+
+			x := Zero
+			assert ("negative zero", One ≍ (- x).sign_bit)
+			assert ("positive zero", Zero ≍ x.sign_bit)
+
+			from
+				x := real_number_to_be_tested
+			until
+				x > Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("positive", Zero ≍ x.sign_bit)
 		end
 
 --	test_zero

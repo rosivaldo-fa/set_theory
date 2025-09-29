@@ -60,6 +60,14 @@ feature -- Access
 			three_way: Result ≍ (Current ⋚ zero)
 		end
 
+	sign_bit: like integer_anchor
+			-- Status of the sign bit of `value', which is 1 for negative numbers but also, e.g. for a "negative" zero as specified by IEEE 754.
+			--| TODO: Natural instead?
+		deferred
+		ensure
+			definition: Result.value = value_sign_bit (value)
+		end
+
 	zero: like real_anchor
 			-- The real number 0
 		deferred
@@ -251,6 +259,24 @@ feature -- Factory
 		deferred
 		ensure
 			definition: Result.value = Result.adjusted_value (v)
+		end
+
+feature -- Math
+
+	value_sign_bit (v: like native_real_anchor): like integer_anchor.value
+			-- Status of the sign bit of `v', which is 1 for negative numbers but also, e.g. for a "negative" zero as specified by IEEE 754.
+		external
+			"C inline use <math.h>"
+		alias
+			"{
+				return signbit ($v)? 1: 0;
+				}"
+		ensure
+			class
+			when_nan: v.is_nan ⇒ Result = 0 or Result = 1
+			when_negative: not v.is_nan and v < 0 ⇒ Result = 1
+			when_zero: v = 0 ⇒ Result = 0 or Result = 1
+			when_positive: 0 < v ⇒ Result = 0
 		end
 
 feature -- Implementation

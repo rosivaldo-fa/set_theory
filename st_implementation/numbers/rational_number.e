@@ -133,6 +133,17 @@ feature -- Access
 			Result := p.sign ⋅ q.sign -- TODO: Take native sign bit instead?
 		end
 
+	sign_bit: like integer_anchor -- TODO: Natural instead.
+			-- <Precursor>
+		do
+				check
+						-- value_sign_bit (value).as_integer_8 ∈ {0, 1}
+					big_enough: {INTEGER_NUMBER}.Native_min_value ≤ value_sign_bit (value).as_integer_8
+					small_enough: value_sign_bit (value).as_integer_8 ≤ {INTEGER_NUMBER}.Native_max_value
+				end
+			create Result.make (value_sign_bit (value).as_integer_8) -- TODO: as_integer_8?
+		end
+
 	zero: RATIONAL_NUMBER
 			-- <Precursor>
 		once
