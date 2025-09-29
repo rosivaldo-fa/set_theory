@@ -36,7 +36,7 @@ inherit
 			test_is_not_in,
 			test_sign,
 			test_sign_bit,
---			test_zero,
+			test_zero,
 --			test_one,
 --			test_is_integer,
 --			test_is_natural,
@@ -275,13 +275,13 @@ feature -- Test routines (Access)
 			assert ("positive", Zero ≍ x.sign_bit)
 		end
 
---	test_zero
---			-- Test {STI_REAL_NUMBER}.zero.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.zero"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_zero
+			-- Test {STI_REAL_NUMBER}.zero.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.zero"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+		end
 
 --	test_one
 --			-- Test {STI_REAL_NUMBER}.one.

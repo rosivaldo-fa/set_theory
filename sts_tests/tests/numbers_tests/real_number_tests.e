@@ -35,7 +35,7 @@ feature -- Test routines (All)
 			test_is_not_in
 			test_sign
 			test_sign_bit
---			test_zero
+			test_zero
 --			test_one
 --			test_is_integer
 --			test_is_natural
@@ -130,50 +130,76 @@ feature -- Test routines (Membership)
 			assert ("is_not_in_ok", is_not_in_ok (x, s))
 		end
 
---feature -- Test routines (Access)
+feature -- Test routines (Access)
 
---	test_sign
---			-- Test {STS_REAL_NUMBER}.sign.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.sign"
---		local
---			x: like real_number_to_be_tested
---		do
---			from
---				x := real_number_to_be_tested
---			until
---				x < Zero
---			loop
---				x := real_number_to_be_tested
---			end
---			assert ("negative", x.sign ≍ - x.sign.one)
+	test_sign
+			-- Test {STS_REAL_NUMBER}.sign.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.sign"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("x.sign", attached x.sign)
 
---			x := Zero
---			assert ("unchanged zero", (- x).sign ≍ Zero.p)
---			assert ("just zero", x.sign ≍ Zero.p)
+			from
+				x := real_number_to_be_tested
+			until
+				x < Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("negative", x.sign.real_value = - One.value)
 
---			from
---				x := real_number_to_be_tested
---			until
---				x > Zero
---			loop
---				x := real_number_to_be_tested
---			end
---			assert ("positive", x.sign ≍ x.sign.one)
+			from
+				x := real_number_to_be_tested
+			until
+				x > Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("positive", x.sign.real_value = One.value)
+		end
 
---			assert ("sign", attached real_number_to_be_tested.sign)
---		end
+	test_sign_bit
+			-- Test {STS_REAL_NUMBER}.sign_bit.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.sign_bit"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("x.sign_bit", attached x.sign_bit)
 
---	test_zero
---			-- Test {STS_REAL_NUMBER}.zero.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.zero"
---		local
---			x: like real_number_to_be_tested
---		do
---			x := real_number_to_be_tested
---			assert ("zero", attached x.Zero)
---		end
+			from
+				x := real_number_to_be_tested
+			until
+				x < Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("negative", One ≍ x.sign_bit)
+
+			from
+				x := real_number_to_be_tested
+			until
+				x > Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("positive", zero ≍ x.sign_bit)
+		end
+
+	test_zero
+			-- Test {STS_REAL_NUMBER}.zero.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.zero"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("zero", attached x.Zero)
+		end
 
 --	test_one
 --			-- Test {STS_REAL_NUMBER}.one.
@@ -1013,66 +1039,6 @@ feature -- Test routines (Membership)
 --			assert ("product_overflows", x.integer_product_overflows (i, j) ⇒ True)
 --			assert ("integer_product_overflows_ok", integer_product_overflows_ok (x, i, j))
 --		end
-
-feature -- Test routines (Access)
-
-	test_sign
-			-- Test {STS_REAL_NUMBER}.sign.
-		note
-			testing: "covers/{STS_REAL_NUMBER}.sign"
-		local
-			x: like real_number_to_be_tested
-		do
-			x := real_number_to_be_tested
-			assert ("x.sign", attached x.sign)
-
-			from
-				x := real_number_to_be_tested
-			until
-				x < Zero
-			loop
-				x := real_number_to_be_tested
-			end
-			assert ("negative", x.sign.real_value = - One.value)
-
-			from
-				x := real_number_to_be_tested
-			until
-				x > Zero
-			loop
-				x := real_number_to_be_tested
-			end
-			assert ("positive", x.sign.real_value = One.value)
-		end
-
-	test_sign_bit
-			-- Test {STS_REAL_NUMBER}.sign_bit.
-		note
-			testing: "covers/{STS_REAL_NUMBER}.sign_bit"
-		local
-			x: like real_number_to_be_tested
-		do
-			x := real_number_to_be_tested
-			assert ("x.sign_bit", attached x.sign_bit)
-
-			from
-				x := real_number_to_be_tested
-			until
-				x < Zero
-			loop
-				x := real_number_to_be_tested
-			end
-			assert ("negative", One ≍ x.sign_bit)
-
-			from
-				x := real_number_to_be_tested
-			until
-				x > Zero
-			loop
-				x := real_number_to_be_tested
-			end
-			assert ("positive", zero ≍ x.sign_bit)
-		end
 
 feature -- Test routines (Implementation)
 

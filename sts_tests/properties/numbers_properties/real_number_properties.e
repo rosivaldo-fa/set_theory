@@ -32,7 +32,7 @@ feature -- Access
 feature -- Properties (Membership)
 
 	is_not_in_ok (x: STS_REAL_NUMBER; s: STS_SET [STS_REAL_NUMBER]): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_REAL_NUMBER}.is_not_in?
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_not_in?
 		do
 			check
 				definition: x ∉ s = s ∌ x
