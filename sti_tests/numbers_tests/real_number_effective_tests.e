@@ -37,7 +37,7 @@ inherit
 			test_sign,
 			test_sign_bit,
 			test_zero,
---			test_one,
+			test_one,
 --			test_is_integer,
 --			test_is_natural,
 --			test_is_invertible,
@@ -283,13 +283,20 @@ feature -- Test routines (Access)
 			Precursor {STST_REAL_NUMBER_TESTS}
 		end
 
---	test_one
---			-- Test {STI_REAL_NUMBER}.one.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.one"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_one
+			-- Test {STI_REAL_NUMBER}.one.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.one"
+		local
+			x: like real_number_to_be_tested
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			assert ("-NaN", one_ok (-Nan, some_real_number))
+			assert ("NaN", one_ok (Nan, some_real_number))
+			assert ("-Infinity", one_ok (Negative_infinity, some_real_number))
+			assert ("Infinity", one_ok (Positive_infinity, some_real_number))
+			assert ("-0", one_ok (- Zero, some_real_number))
+		end
 
 --feature -- Test routines (Quality)
 

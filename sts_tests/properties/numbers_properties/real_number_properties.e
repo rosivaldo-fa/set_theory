@@ -41,6 +41,19 @@ feature -- Properties (Membership)
 			end
 		end
 
+feature -- Properties (Access)
+
+	one_ok (x, y: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_REAL_NUMBER}.one?
+		do
+			check
+					good_divisor: x.divisible (y.one) -- one.is_invertible
+				neutral_divisor: (x / y.one) ≍ x
+			then
+				Result := True
+			end
+		end
+
 feature -- Properties (Comparison)
 
 --	equals_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
