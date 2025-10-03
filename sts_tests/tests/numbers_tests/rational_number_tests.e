@@ -20,6 +20,7 @@ inherit
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,
+			test_is_nan,
 			rational_number_to_be_tested
 		end
 
@@ -237,6 +238,18 @@ feature -- Test routines (Access)
 
 feature -- Test routines (Quality)
 
+	test_is_nan
+			-- Test {STI_REAL_NUMBER}.is_nan.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_nan"
+		local
+			pq: like rational_number_to_be_tested
+		do
+			pq := rational_number_to_be_tested
+			assert ("not pq.is_nan", not pq.is_nan)
+			assert ("not pq.is_nan ok", is_nan_ok (pq, some_real_number))
+		end
+
 	test_is_integer
 			-- Test {STS_RATIONAL_NUMBER}.is_integer.
 		note
@@ -269,7 +282,7 @@ feature -- Test routines (Quality)
 			assert ("not pq.is_integer", not pq.is_integer)
 
 			pq := rational_number_to_be_tested
-			assert ("is_integer", pq.is_integer implies True)
+			assert ("is_integer", pq.is_integer ⇒ True)
 		end
 
 	test_is_natural
@@ -321,7 +334,7 @@ feature -- Test routines (Quality)
 			assert ("not pq.is_invertible", not pq.is_invertible)
 
 			pq := rational_number_to_be_tested
-			assert ("is_invertible", pq.is_invertible implies True)
+			assert ("is_invertible", pq.is_invertible ⇒ True)
 		end
 
 feature -- Test routines (Comparison)

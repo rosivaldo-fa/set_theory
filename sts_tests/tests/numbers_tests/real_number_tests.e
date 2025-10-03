@@ -34,9 +34,9 @@ feature -- Test routines (All)
 			test_is_in
 			test_is_not_in
 			test_sign
-			test_sign_bit
 			test_zero
 			test_one
+			test_is_nan
 --			test_is_integer
 --			test_is_natural
 --			test_is_invertible
@@ -161,35 +161,6 @@ feature -- Test routines (Access)
 			assert ("positive", x.sign.real_value = One.value)
 		end
 
-	test_sign_bit
-			-- Test {STS_REAL_NUMBER}.sign_bit.
-		note
-			testing: "covers/{STS_REAL_NUMBER}.sign_bit"
-		local
-			x: like real_number_to_be_tested
-		do
-			x := real_number_to_be_tested
-			assert ("x.sign_bit", attached x.sign_bit)
-
-			from
-				x := real_number_to_be_tested
-			until
-				x < Zero
-			loop
-				x := real_number_to_be_tested
-			end
-			assert ("negative", One ≍ x.sign_bit)
-
-			from
-				x := real_number_to_be_tested
-			until
-				x > Zero
-			loop
-				x := real_number_to_be_tested
-			end
-			assert ("positive", zero ≍ x.sign_bit)
-		end
-
 	test_zero
 			-- Test {STS_REAL_NUMBER}.zero.
 		note
@@ -211,11 +182,60 @@ feature -- Test routines (Access)
 			x := real_number_to_be_tested
 			assert ("one", attached x.One)
 			assert ("One ok", one_ok (x, some_real_number))
-			
+
 			assert ("0", one_ok (Zero, some_real_number))
 		end
 
---feature -- Test routines (Quality)
+feature -- Test routines (Quality)
+
+	test_is_nan
+			-- Test {STS_REAL_NUMBER}.is_nan.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_nan"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("is_nan", x.is_nan ⇒ True)
+			assert ("is_nan ok", is_nan_ok (x, some_real_number))
+
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				from
+					x := real_number_to_be_tested
+				until
+					x < Zero
+				loop
+					x := real_number_to_be_tested
+				end
+				x := x.real_from_value ({like real_math_anchor}.log (x.value))
+			when 1 then
+				from
+					x := real_number_to_be_tested
+				until
+					x < Zero
+				loop
+					x := real_number_to_be_tested
+				end
+				x := x.real_from_value ({like real_math_anchor}.log10 (x.value))
+			when 2 then
+				from
+					x := real_number_to_be_tested
+				until
+					x < Zero
+				loop
+					x := real_number_to_be_tested
+				end
+				x := x.real_from_value ({like real_math_anchor}.log_2 (x.value))
+			end
+			assert ("x.is_nan", x.is_nan)
+			assert ("x.is_nan ok", is_nan_ok (x, some_real_number))
+
+			assert ("0 ok", is_nan_ok (Zero, some_real_number))
+
+			assert ("is_nan_ok", is_nan_ok (real_number_to_be_tested, some_real_number))
+		end
 
 --	test_is_integer
 --			-- Test {STS_REAL_NUMBER}.is_integer.
@@ -249,7 +269,7 @@ feature -- Test routines (Access)
 --			assert ("not x.is_integer", not x.is_integer)
 
 --			x := real_number_to_be_tested
---			assert ("is_integer", x.is_integer implies True)
+--			assert ("is_integer", x.is_integer ⇒ True)
 --		end
 
 --	test_is_natural
@@ -301,7 +321,7 @@ feature -- Test routines (Access)
 --			assert ("not x.is_invertible", not x.is_invertible)
 
 --			x := real_number_to_be_tested
---			assert ("is_invertible", x.is_invertible implies True)
+--			assert ("is_invertible", x.is_invertible ⇒ True)
 --		end
 
 --feature -- Test routines (Comparison)
@@ -1066,6 +1086,12 @@ feature -- Anchor
 	real_anchor: STS_REAL_NUMBER
 			-- Anchor for real numbers
 		deferred
+		end
+
+	real_math_anchor: like real_number_to_be_tested.real_math_anchor
+			-- Anchor for accessing basic mathematical operations on native real numbers
+		do
+			Result := real_number_to_be_tested.real_math_anchor
 		end
 
 note

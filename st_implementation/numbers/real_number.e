@@ -27,7 +27,10 @@ inherit
 	STS_REAL_NUMBER
 		redefine
 			default_create,
+			is_nan,
 			out,
+			is_less,
+			is_greater,
 			three_way_comparison
 		end
 
@@ -148,15 +151,18 @@ feature -- Primitive
 
 feature -- Access
 
-	sign_bit: like Integer_anchor -- TODO: Natural instead.
-			-- <Precursor>
+	sign_bit: like Integer_anchor
+			-- Status of the sign bit of `value', which is 1 for negative numbers but also, e.g. for a "negative" zero as specified by IEEE 754.
+			--| TODO: Natural instead?
 		do
-				check
-						-- sign_bit_status.as_integer_8 ∈ {0, 1}
-					big_enough: {INTEGER_NUMBER}.Native_min_value ≤ sign_bit_status.as_integer_8
-					small_enough: sign_bit_status.as_integer_8 ≤ {INTEGER_NUMBER}.Native_max_value
-				end
+			check
+					-- sign_bit_status.as_integer_8 ∈ {0, 1}
+				big_enough: {INTEGER_NUMBER}.Native_min_value ≤ sign_bit_status.as_integer_8
+				small_enough: sign_bit_status.as_integer_8 ≤ {INTEGER_NUMBER}.Native_max_value
+			end
 			create Result.make ((sign_bit_status.as_integer_8))
+		ensure
+			definition: Result.value = value_sign_bit (value)
 		end
 
 	zero: REAL_NUMBER
@@ -174,22 +180,38 @@ feature -- Access
 			class
 		end
 
-	max_value: REAL_NUMBER
-			-- Maximum value representable by current kind of real number.
+	machine_epsilon: REAL_NUMBER
+			-- The difference between 1 and the least value greater than 1 that is representable by current kind of real number.
 		local
 			e: like Exponent_mask
-			m: like value_bit_pattern
 		once
-			e := (max_exponent_bit_pattern - 1) |<< Mantissa_width
-			m := Max_mantissa
-				check
-					no_extra_bit: ({NATURAL_8} 0 | e | m) & (⊝ Value_bit_pattern_mask) = 0
-						-- 0 | ((max_exponent_bit_pattern - 1) |<< Mantissa_width) | Max_mantissa < Value_bit_pattern_mask
-				end
-			create Result.make_from_bit_pattern ({NATURAL_8} 0 | e | m) -- TODO: Get rid of {NATURAL_8}?
+			e := (Exponent_bias.as_natural_8 - Mantissa_width) |<< Mantissa_width
+			check
+				no_extra_bit: ({NATURAL_8} 0 | e | 0) & (⊝ Value_bit_pattern_mask) = 0
+				-- 0 | ((Exponent_bias - Mantissa_width) |<< Mantissa_width) | 0 < Value_bit_pattern_mask
+			end
+			create Result.make_from_bit_pattern ({NATURAL_8} 0 | e | 0) -- TODO: Get rid of {NATURAL_8}?
 		ensure
 			class
-			definition: Result.value = (2 ^ max_exponent) × (1 + Max_mantissa / Mantissa_scale)
+			definition: Result ≍ one.relative_epsilon
+		end
+
+	ulp,
+	relative_epsilon: like real_anchor
+			-- Unit in last place (ulp) of the floating representation of current real number
+			--| This specifications follows the definition given at https://docs.julialang.org/en/v1/base/base/#Base.eps-Tuple{AbstractFloat}.
+			--| TODO: Optimize it?
+		do
+			Result := abs
+			if Max_value ≤ Result then
+				Result := Result - Result.previous_float
+			else
+				Result := Result.next_float - Result
+			end
+		ensure
+			when_huge_negative: previous_float.is_negative_infinity implies Result ≍ (next_float - Current)
+			when_huge_positive: next_float.is_positive_infinity implies Result ≍ (Current - previous_float)
+			ordinary_definition: not previous_float.is_negative_infinity and not next_float.is_positive_infinity implies Result ≍ (abs.next_float - abs)
 		end
 
 	epsilon: REAL_NUMBER
@@ -198,9 +220,9 @@ feature -- Access
 			e: like Exponent_mask
 		once
 			e := {NATURAL_8} 1 |<< Mantissa_width
-				check
-					no_extra_bit: ({NATURAL_8} 0 | e | 0) & (⊝ Value_bit_pattern_mask) = 0 -- 0 | (1 |<< Mantissa_width) | 0 < Value_bit_pattern_mask
-				end
+			check
+				no_extra_bit: ({NATURAL_8} 0 | e | 0) & (⊝ Value_bit_pattern_mask) = 0 -- 0 | (1 |<< Mantissa_width) | 0 < Value_bit_pattern_mask
+			end
 			create Result.make_from_bit_pattern ({NATURAL_8} 0 | e | 0)
 		ensure
 			class
@@ -208,7 +230,7 @@ feature -- Access
 		end
 
 	previous_float: like real_anchor
-			-- <Precursor>
+			-- Greatest representable value that is less than current real number
 		local
 			e: like value_bit_pattern
 			m: like value_bit_pattern
@@ -218,63 +240,68 @@ feature -- Access
 			if sign_bit_status = 0 then
 				if e = max_exponent_bit_pattern then
 					if m = 0 then
-							check
-								is_positive_infinity
-							end
+						check
+							is_positive_infinity
+						end
 							-- Come down to `Max_value'
-							check
-								no_extra_bit: (value_bit_pattern - 1) & (⊝ Value_bit_pattern_mask) = 0
-									-- value_bit_pattern - 1 < Value_bit_pattern_mask <== value_bit_pattern ≤ Value_bit_pattern_mask
-							end
+						check
+							no_extra_bit: (value_bit_pattern - 1) & (⊝ Value_bit_pattern_mask) = 0
+							-- value_bit_pattern - 1 < Value_bit_pattern_mask <== value_bit_pattern ≤ Value_bit_pattern_mask
+						end
 						create Result.make_from_bit_pattern (value_bit_pattern - 1)
 					else
-							check
-								is_nan
-							end
+						check
+							is_nan
+						end
 							-- Stay upon NaN.
-							check
-								no_extra_bit: value_bit_pattern & (⊝ Value_bit_pattern_mask) = 0 -- value_bit_pattern ≤ Value_bit_pattern_mask
-							end
+						check
+							no_extra_bit: value_bit_pattern & (⊝ Value_bit_pattern_mask) = 0 -- value_bit_pattern ≤ Value_bit_pattern_mask
+						end
 						create Result.make_from_bit_pattern (value_bit_pattern)
 					end
 				elseif e | m = 0 then
-						check
-							Current ≍ Zero
-						end
+					check
+						Current ≍ Zero
+					end
 						-- Flip sign and go to the tiniest negative value.
-						check
-							no_extra_bit: (({NATURAL_8} 1 |<< (Exponent_width + Mantissa_width)) | 0 | 1) & (⊝ Value_bit_pattern_mask) = 0
-								-- ((1 |<< (Exponent_width + Mantissa_width)) | 0 | 1) < Value_bit_pattern_mask
-						end
+					check
+						no_extra_bit: (({NATURAL_8} 1 |<< (Exponent_width + Mantissa_width)) | 0 | 1) & (⊝ Value_bit_pattern_mask) = 0
+						-- ((1 |<< (Exponent_width + Mantissa_width)) | 0 | 1) < Value_bit_pattern_mask
+					end
 					create Result.make_from_bit_pattern (({NATURAL_8} 1 |<< (Exponent_width + Mantissa_width)) | 0 | 1)
 				else
-						check
-							Zero < Current
-						end
+					check
+						Zero < Current
+					end
 						-- Come one `ulp' down.
-						check
-							no_extra_bit: (value_bit_pattern - 1) & (⊝ Value_bit_pattern_mask) = 0
-									-- value_bit_pattern - 1 < Value_bit_pattern_mask <== value_bit_pattern ≤ Value_bit_pattern_mask
-						end
+					check
+						no_extra_bit: (value_bit_pattern - 1) & (⊝ Value_bit_pattern_mask) = 0
+						-- value_bit_pattern - 1 < Value_bit_pattern_mask <== value_bit_pattern ≤ Value_bit_pattern_mask
+					end
 					create Result.make_from_bit_pattern (value_bit_pattern - 1)
 				end
 			else
 				if e = max_exponent_bit_pattern then
-						check
-							is_nan or is_negative_infinity
-						end
+					check
+						is_nan or is_negative_infinity
+					end
 						-- Nothing changes.
 					create Result.make_from_bit_pattern (value_bit_pattern)
 				else
-						check
-							is_finite
-							Current ≤ Zero
-						end
+					check
+						is_finite
+						Current ≤ Zero
+					end
 						-- Come one `ulp' down.
 					create Result.make_from_bit_pattern (value_bit_pattern + 1) -- The segative sign inverts the order.
 				end
 			end
-		ensure then
+		ensure
+			when_nan: is_nan implies Result.is_nan
+			when_negative_infinity: is_negative_infinity implies Result.is_negative_infinity
+			ordinary_case: not is_nan and not is_negative_infinity implies Result < Current
+				-- greatest_below: -- Please see `previous_float' post-condition of `is_greater'
+
 			when_positive_infinity: is_positive_infinity implies Result ≍ Max_value
 
 			el_exp: attached {like value} value_logb (value) as el_exp
@@ -293,7 +320,7 @@ feature -- Access
 		end
 
 	next_float: like real_anchor
-			-- <Precursor>
+			-- Least representable value that is greater than current real number
 		local
 			e: like value_bit_pattern
 			m: like value_bit_pattern
@@ -302,71 +329,76 @@ feature -- Access
 			m := mantissa_bit_pattern
 			if sign_bit_status = 0 then
 				if e = max_exponent_bit_pattern then
-						check
-							is_nan or is_positive_infinity
-						end
+					check
+						is_nan or is_positive_infinity
+					end
 						-- Nothing changes.
-						check
-							no_extra_bit: value_bit_pattern & (⊝ Value_bit_pattern_mask) = 0 -- value_bit_pattern ≤ Value_bit_pattern_mask
-						end
+					check
+						no_extra_bit: value_bit_pattern & (⊝ Value_bit_pattern_mask) = 0 -- value_bit_pattern ≤ Value_bit_pattern_mask
+					end
 					create Result.make_from_bit_pattern (value_bit_pattern)
 				else
-						check
-							is_finite
-							Zero ≤ Current
-						end
+					check
+						is_finite
+						Zero ≤ Current
+					end
 						-- Go one `ulp' up.
-						check
-							no_extra_bit: (value_bit_pattern + 1) & (⊝ Value_bit_pattern_mask) = 0
-								-- value_bit_pattern + 1 < Value_bit_pattern_mask <== is_finite
-						end
+					check
+						no_extra_bit: (value_bit_pattern + 1) & (⊝ Value_bit_pattern_mask) = 0
+						-- value_bit_pattern + 1 < Value_bit_pattern_mask <== is_finite
+					end
 					create Result.make_from_bit_pattern (value_bit_pattern + 1)
 				end
 			else
 				if e = max_exponent_bit_pattern then
 					if m = 0 then
-							check
-								is_negative_infinity
-							end
+						check
+							is_negative_infinity
+						end
 							-- Go up to `Min_value'.
-							check
-								no_extra_bit: (value_bit_pattern - 1) & (⊝ Value_bit_pattern_mask) = 0
-									-- value_bit_pattern - 1 < Value_bit_pattern_mask <== value_bit_pattern ≤ Value_bit_pattern_mask
-							end
+						check
+							no_extra_bit: (value_bit_pattern - 1) & (⊝ Value_bit_pattern_mask) = 0
+							-- value_bit_pattern - 1 < Value_bit_pattern_mask <== value_bit_pattern ≤ Value_bit_pattern_mask
+						end
 						create Result.make_from_bit_pattern (value_bit_pattern - 1) -- The segative sign inverts the order.
 					else
-							check
-								is_nan
-							end
+						check
+							is_nan
+						end
 							-- Stay upon NaN.
-							check
-								no_extra_bit: value_bit_pattern & (⊝ Value_bit_pattern_mask) = 0 -- value_bit_pattern ≤ Value_bit_pattern_mask
-							end
+						check
+							no_extra_bit: value_bit_pattern & (⊝ Value_bit_pattern_mask) = 0 -- value_bit_pattern ≤ Value_bit_pattern_mask
+						end
 						create Result.make_from_bit_pattern (value_bit_pattern)
 					end
 				elseif e | m = 0 then
-						check
-							negative_zero: Current ≍ Zero
-						end
+					check
+						negative_zero: Current ≍ Zero
+					end
 						-- Flip sign and go to the tiniest positive value.
-						check
-							no_extra_bit: ({NATURAL_8} 0 | 0 | 1) & (⊝ Value_bit_pattern_mask) = 0 -- By definition
-						end
+					check
+						no_extra_bit: ({NATURAL_8} 0 | 0 | 1) & (⊝ Value_bit_pattern_mask) = 0 -- By definition
+					end
 					create Result.make_from_bit_pattern ({NATURAL_8} 0 | 0 | 1) -- TODO: Get rid of {NATURAL_8}?
 				else
-						check
-							is_finite
-							Current < Zero
-						end
+					check
+						is_finite
+						Current < Zero
+					end
 						-- Go one `ulp' up.
-						check
-							no_extra_bit: (value_bit_pattern - 1) & (⊝ Value_bit_pattern_mask) = 0
-								-- value_bit_pattern - 1 < Value_bit_pattern_mask <== is_finite
-						end
+					check
+						no_extra_bit: (value_bit_pattern - 1) & (⊝ Value_bit_pattern_mask) = 0
+						-- value_bit_pattern - 1 < Value_bit_pattern_mask <== is_finite
+					end
 					create Result.make_from_bit_pattern (value_bit_pattern - 1) -- The segative sign inverts the order.
 				end
 			end
-		ensure then
+		ensure
+			when_nan: is_nan implies Result.is_nan
+			when_positive_infinity: is_positive_infinity implies Result.is_positive_infinity
+			ordinary_case: not is_nan and not is_positive_infinity implies Current < Result
+				-- least_above: -- Please see `next_float' post-condition of `is_less'
+
 			when_nan: is_nan implies Result.is_nan
 			when_negative: Current < Zero implies Result ≍ - abs.previous_float
 			when_sero: Current ≍ Zero implies Result.value = Epsilon.value / Mantissa_scale
@@ -378,6 +410,32 @@ feature -- Access
 			when_normal: Zero < Current and min_normal_exponent ≤ el_exp and Current < Max_value implies
 				Result.value = (2 ^ el_exp).truncated_to_real × (1 + ((value / (2 ^ el_exp).truncated_to_real - 1) × Mantissa_scale + 1) / Mantissa_scale)
 			when_huge: Max_value ≤ Current implies Result.is_positive_infinity
+		end
+
+	max_value: REAL_NUMBER
+			-- Maximum value representable by current kind of real number.
+		local
+			e: like Exponent_mask
+			m: like value_bit_pattern
+		once
+			e := (max_exponent_bit_pattern - 1) |<< Mantissa_width
+			m := Max_mantissa
+			check
+				no_extra_bit: ({NATURAL_8} 0 | e | m) & (⊝ Value_bit_pattern_mask) = 0
+				-- 0 | ((max_exponent_bit_pattern - 1) |<< Mantissa_width) | Max_mantissa < Value_bit_pattern_mask
+			end
+			create Result.make_from_bit_pattern ({NATURAL_8} 0 | e | m) -- TODO: Get rid of {NATURAL_8}?
+		ensure
+			class
+			definition: Result.value = (2 ^ max_exponent) × (1 + Max_mantissa / Mantissa_scale)
+		end
+
+feature -- Quality
+
+	is_nan: BOOLEAN
+			-- <Precursor>
+		do
+			Result := exponent_bit_pattern = max_exponent_bit_pattern and mantissa_bit_pattern /= 0
 		end
 
 feature -- Output
@@ -392,16 +450,32 @@ feature -- Output
 
 feature -- Comparison
 
+	is_less alias "<" (x: STS_REAL_NUMBER): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {STS_REAL_NUMBER} (x)
+		ensure then
+			next_float: Result implies next_float ≤ x
+		end
+
+	is_greater alias ">" (x: STS_REAL_NUMBER): BOOLEAN
+			-- <Precursor>
+		do
+			Result := Precursor {STS_REAL_NUMBER} (x)
+		ensure then
+			previous_float: Result implies x ≤ previous_float
+		end
+
 	three_way_comparison alias "⋚" (x: STS_REAL_NUMBER): like integer_anchor
 			-- <Precursor>
 		local
 			v: like Integer_anchor.value
 		do
 			v := value ⋚ x.value
-				check
-					not_too_small: {INTEGER_NUMBER}.Native_min_value ≤ v.as_integer_8 -- {INTEGER_NUMBER}.Native_min_value ≤ -1
-					not_too_big: v.as_integer_8 ≤ {INTEGER_NUMBER}.Native_max_value -- 1 ≤ {INTEGER_NUMBER}.Native_max_value
-				end
+			check
+				not_too_small: {INTEGER_NUMBER}.Native_min_value ≤ v.as_integer_8 -- {INTEGER_NUMBER}.Native_min_value ≤ -1
+				not_too_big: v.as_integer_8 ≤ {INTEGER_NUMBER}.Native_max_value -- 1 ≤ {INTEGER_NUMBER}.Native_max_value
+			end
 			create Result.make (v.as_integer_8)
 		end
 
@@ -413,6 +487,14 @@ feature -- Operation
 			-- line
 		do
 			create Result.make_abs (Current)
+		end
+
+	minus alias "-" alias "−" (x: STS_REAL_NUMBER): like real_anchor
+			-- Result of subtracting `x` from current real number
+		do
+			Result := real_from_value (value - x.value)
+		ensure
+			definition: Result ≍ real_from_value (value - x.value)
 		end
 
 	opposite alias "-" alias "−": like real_anchor
@@ -606,7 +688,7 @@ feature {NONE} -- Implementation
 			-- How many bits a real number uses to represent its exponent
 
 	exponent_mask,
-			-- Binary mask for the exponent of a real number
+		-- Binary mask for the exponent of a real number
 	max_exponent_bit_pattern: like exponent_bit_pattern = 0b1_1111 -- 2 ^ `exponent_width' - 1
 			-- Maximum biased value for the exponent of a real number
 

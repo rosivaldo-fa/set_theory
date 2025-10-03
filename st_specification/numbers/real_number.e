@@ -60,14 +60,6 @@ feature -- Access
 			three_way: Result ≍ (Current ⋚ zero)
 		end
 
-	sign_bit: like integer_anchor
-			-- Status of the sign bit of `value', which is 1 for negative numbers but also, e.g. for a "negative" zero as specified by IEEE 754.
-			--| TODO: Natural instead?
-		deferred
-		ensure
-			definition: Result.value = value_sign_bit (value)
-		end
-
 	zero: like real_anchor
 			-- The real number 0
 		deferred
@@ -80,26 +72,6 @@ feature -- Access
 		deferred
 		ensure
 			definition: Result.value = 1
-		end
-
-	previous_float: like real_anchor
-			-- Greatest representable value that is less than current real number
-		deferred
-		ensure
-			when_nan: is_nan implies Result.is_nan
-			when_negative_infinity: is_negative_infinity implies Result.is_negative_infinity
-			ordinary_case: not is_nan and not is_negative_infinity implies Result < Current
-			greatest_below: -- Please see `previous_float' post-condition of `is_greater'
-		end
-
-	next_float: like real_anchor
-			-- Least representable value that is greater than current real number
-		deferred
-		ensure
-			when_nan: is_nan implies Result.is_nan
-			when_positive_infinity: is_positive_infinity implies Result.is_positive_infinity
-			ordinary_case: not is_nan and not is_positive_infinity implies Current < Result
-			least_above: -- Please see `next_float' post-condition of `is_less'
 		end
 
 feature -- Quality
@@ -173,7 +145,6 @@ feature -- Comparison
 			Result := value < x.value
 		ensure
 			definition: Result = (value < x.value)
-			previous_float: Result implies next_float ≤ x
 		end
 
 	unequals alias "≭" (x: REAL_NUMBER): BOOLEAN
@@ -198,7 +169,6 @@ feature -- Comparison
 			Result := x < Current
 		ensure
 			definition: Result = (x < Current)
-			previous_float: Result implies x ≤ previous_float
 		end
 
 	three_way_comparison alias "⋚" (x: REAL_NUMBER): like integer_anchor
@@ -305,6 +275,14 @@ feature -- Anchor
 	integer_anchor: INTEGER_NUMBER
 			-- Anchor for integer numbers
 		deferred
+		end
+
+	real_math_anchor: SINGLE_MATH
+			-- Anchor for accessing basic mathematical operations on native real numbers
+		once
+			create Result
+		ensure
+			class
 		end
 
 note

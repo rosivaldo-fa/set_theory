@@ -44,11 +44,25 @@ feature -- Properties (Membership)
 feature -- Properties (Access)
 
 	one_ok (x, y: STS_REAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_REAL_NUMBER}.one?
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.one?
 		do
 			check
 					good_divisor: x.divisible (y.one) -- one.is_invertible
 				neutral_divisor: (x / y.one) ≍ x
+			then
+				Result := True
+			end
+		end
+
+feature -- Properties (Quality)
+
+	is_nan_ok (x, y: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_nan?
+		do
+			check
+				absorbing_dividend: x.is_nan and x.divisible (y) ⇒ (x / y).is_nan
+					good_divisor: y.is_nan ⇒ x.divisible (y) -- y /= 0
+				propagating_nan_divisor: y.is_nan ⇒ (x / y).is_nan
 			then
 				Result := True
 			end

@@ -35,9 +35,9 @@ inherit
 			test_is_in,
 			test_is_not_in,
 			test_sign,
-			test_sign_bit,
 			test_zero,
 			test_one,
+			test_is_nan,
 --			test_is_integer,
 --			test_is_natural,
 --			test_is_invertible,
@@ -252,6 +252,9 @@ feature -- Test routines (Access)
 			assert ("signed NaN", One ≍ (- x).sign_bit)
 			assert ("unsigned NaN", Zero ≍ x.sign_bit)
 
+			x := real_number_to_be_tested
+			assert ("x.sign_bit", attached x.sign_bit)
+
 			from
 				x := real_number_to_be_tested
 			until
@@ -287,18 +290,84 @@ feature -- Test routines (Access)
 			-- Test {STI_REAL_NUMBER}.one.
 		note
 			testing: "covers/{STI_REAL_NUMBER}.one"
-		local
-			x: like real_number_to_be_tested
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
-			assert ("-NaN", one_ok (-Nan, some_real_number))
+			assert ("-NaN", one_ok (- Nan, some_real_number))
 			assert ("NaN", one_ok (Nan, some_real_number))
 			assert ("-Infinity", one_ok (Negative_infinity, some_real_number))
 			assert ("Infinity", one_ok (Positive_infinity, some_real_number))
 			assert ("-0", one_ok (- Zero, some_real_number))
 		end
 
---feature -- Test routines (Quality)
+feature -- Test routines (Quality)
+
+	test_is_nan
+			-- Test {STI_REAL_NUMBER}.is_nan.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_nan"
+		local
+			x: like real_number_to_be_tested
+			l_check: BOOLEAN
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			from
+				x := real_number_to_be_tested
+			until
+				Negative_infinity ≤ x and x ≤ Positive_infinity
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("not x.is_nan", not x.is_nan)
+			assert ("not x.is_nan ok", is_nan_ok (x, some_real_number))
+
+			inspect
+				next_random_item \\ 10
+			when 0 then
+					l_check := {ISE_RUNTIME}.check_assert (False)
+				x := Zero / Zero
+					l_check := {ISE_RUNTIME}.check_assert (l_check)
+			when 1 then
+				x := Negative_infinity / Negative_infinity
+			when 2 then
+				x := Negative_infinity / Positive_infinity
+			when 3 then
+				x := Positive_infinity / Negative_infinity
+			when 4 then
+				x := Positive_infinity / Positive_infinity
+			when 5 then
+				x := Positive_infinity - Positive_infinity
+			when 6 then
+				x := Negative_infinity - Negative_infinity
+			when 7 then
+				from
+					x := real_number_to_be_tested
+				until
+					x < - One or x > One
+				loop
+					x := real_number_to_be_tested
+				end
+				x := {like real_math_anchor}.arc_cosine (x)
+			when 8 then
+				from
+					x := real_number_to_be_tested
+				until
+					x < - One or x > One
+				loop
+					x := real_number_to_be_tested
+				end
+				x := {like real_math_anchor}.arc_sine (x)
+			when 9 then
+				x := Nan
+			end
+			assert ("x.is_nan", x.is_nan)
+			assert ("x.is_nan ok", is_nan_ok (x, some_real_number))
+
+			assert ("-NaN ok", is_nan_ok (- Nan, some_real_number))
+			assert ("NaN ok", is_nan_ok (Nan, some_real_number))
+			assert ("-Infinity ok", is_nan_ok (Negative_infinity, some_real_number))
+			assert ("Infinity ok", is_nan_ok (Positive_infinity, some_real_number))
+			assert ("-0 ok", is_nan_ok (- Zero, some_real_number))
+		end
 
 --	test_is_integer
 --			-- <Precursor>
