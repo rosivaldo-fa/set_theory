@@ -235,6 +235,9 @@ feature -- Test routines (Quality)
 
 			assert ("not zero.is_nan", not zero.is_nan)
 			assert ("not zero.is_nan ok", is_nan_ok (Zero, some_real_number))
+
+			assert ("not one.is_nan", not one.is_nan)
+			assert ("not one.is_nan ok", is_nan_ok (one, some_real_number))
 		end
 
 	test_is_negative_infinity
