@@ -9,8 +9,8 @@ class
 
 inherit
 	STST_REAL_NUMBER_PROPERTIES
-		redefine
---			multipliable_ok
+		rename
+			is_nan_ok as stst_is_nan_ok
 		end
 
 feature -- Access
@@ -31,6 +31,21 @@ feature -- Access
 			Result := {REAL} 1.0
 		ensure then
 			class
+		end
+
+feature -- Properties (Access)
+
+	is_nan_ok (x: STI_REAL_NUMBER; y: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_nan?
+		do
+			if stst_is_nan_ok (x, y) then
+				check
+					absorbing_minuend: x.is_nan ⇒ (x - y).is_nan
+					absorbing_subtrahend: y.is_nan ⇒ (x - y).is_nan
+				then
+					Result := True
+				end
+			end
 		end
 
 feature -- Properties (Relationship)

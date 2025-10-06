@@ -28,6 +28,7 @@ inherit
 		redefine
 			default_create,
 			is_nan,
+			is_negative_infinity,
 			out,
 			is_less,
 			is_greater,
@@ -436,6 +437,12 @@ feature -- Quality
 			-- <Precursor>
 		do
 			Result := exponent_bit_pattern = max_exponent_bit_pattern and mantissa_bit_pattern /= 0
+		end
+
+	is_negative_infinity: BOOLEAN
+			-- <Precursor>
+		do
+			Result := mantissa_bit_pattern = 0 and exponent_bit_pattern = max_exponent_bit_pattern and sign_bit_status = 1
 		end
 
 feature -- Output

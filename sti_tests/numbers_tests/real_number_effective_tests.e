@@ -12,6 +12,7 @@ class
 inherit
 	STST_REAL_NUMBER_TESTS
 		rename
+			is_nan_ok as stst_is_nan_ok,
 			some_immediate_natural_number as some_expanded_natural_number,
 			some_immediate_integer_number as some_expanded_integer_number,
 			some_immediate_rational_number as some_expanded_rational_number,
