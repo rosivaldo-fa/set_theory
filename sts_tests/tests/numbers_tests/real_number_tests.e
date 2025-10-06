@@ -37,6 +37,7 @@ feature -- Test routines (All)
 			test_zero
 			test_one
 			test_is_nan
+			test_is_negative_infinity
 --			test_is_integer
 --			test_is_natural
 --			test_is_invertible
@@ -199,42 +200,58 @@ feature -- Test routines (Quality)
 			assert ("is_nan", x.is_nan ⇒ True)
 			assert ("is_nan ok", is_nan_ok (x, some_real_number))
 
-			inspect
-				next_random_item \\ 3
-			when 0 then
-				from
-					x := real_number_to_be_tested
-				until
-					x < Zero
-				loop
-					x := real_number_to_be_tested
-				end
-				x := x.real_from_value ({like real_math_anchor}.log (x.value))
-			when 1 then
-				from
-					x := real_number_to_be_tested
-				until
-					x < Zero
-				loop
-					x := real_number_to_be_tested
-				end
-				x := x.real_from_value ({like real_math_anchor}.log10 (x.value))
-			when 2 then
-				from
-					x := real_number_to_be_tested
-				until
-					x < Zero
-				loop
-					x := real_number_to_be_tested
-				end
-				x := x.real_from_value ({like real_math_anchor}.log_2 (x.value))
+			from
+				x := real_number_to_be_tested
+			until
+				x < Zero
+			loop
+				x := real_number_to_be_tested
 			end
-			assert ("x.is_nan", x.is_nan)
-			assert ("x.is_nan ok", is_nan_ok (x, some_real_number))
+			x := x.real_from_value ({like real_math_anchor}.log (x.value))
+			assert ("log (x).is_nan", x.is_nan)
+			assert ("log (x).is_nan ok", is_nan_ok (x, some_real_number))
 
-			assert ("0 ok", is_nan_ok (Zero, some_real_number))
+			from
+				x := real_number_to_be_tested
+			until
+				x < Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			x := x.real_from_value ({like real_math_anchor}.log10 (x.value))
+			assert ("log10 (x).is_nan", x.is_nan)
+			assert ("log10 (x).is_nan ok", is_nan_ok (x, some_real_number))
 
-			assert ("is_nan_ok", is_nan_ok (real_number_to_be_tested, some_real_number))
+			from
+				x := real_number_to_be_tested
+			until
+				x < Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			x := x.real_from_value ({like real_math_anchor}.log_2 (x.value))
+			assert ("log_2 (x).is_nan", x.is_nan)
+			assert ("log_2 (x).is_nan ok", is_nan_ok (x, some_real_number))
+
+			assert ("not zero.is_nan", not zero.is_nan)
+			assert ("not zero.is_nan ok", is_nan_ok (Zero, some_real_number))
+		end
+
+	test_is_negative_infinity
+			-- Test {STS_REAL_NUMBER}.is_negative_infinity.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_negative_infinity"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("is_negative_infinity", x.is_negative_infinity ⇒ True)
+			assert ("is_negative_infinity ok", is_negative_infinity_ok (x, some_real_number))
+
+			assert ("0", is_negative_infinity_ok (Zero, some_real_number))
+			assert ("0 ok", is_negative_infinity_ok (Zero, some_real_number))
+
+			assert ("is_negative_infinity_ok", is_negative_infinity_ok (real_number_to_be_tested, some_real_number))
 		end
 
 --	test_is_integer

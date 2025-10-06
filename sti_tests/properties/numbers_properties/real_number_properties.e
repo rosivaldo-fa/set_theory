@@ -10,7 +10,8 @@ class
 inherit
 	STST_REAL_NUMBER_PROPERTIES
 		rename
-			is_nan_ok as stst_is_nan_ok
+			is_nan_ok as stst_is_nan_ok,
+			is_negative_infinity_ok as stst_is_negative_infinity_ok
 		end
 
 feature -- Access
@@ -42,6 +43,19 @@ feature -- Properties (Access)
 				check
 					absorbing_minuend: x.is_nan ⇒ (x - y).is_nan
 					absorbing_subtrahend: y.is_nan ⇒ (x - y).is_nan
+				then
+					Result := True
+				end
+			end
+		end
+
+	is_negative_infinity_ok (x: STI_REAL_NUMBER; y: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_negative_infinity?
+		do
+			if stst_is_negative_infinity_ok (x, y) then
+				check
+					absorbing_minuend: x.is_negative_infinity and not y.is_nan and not y.is_negative_infinity ⇒ (x - y).is_negative_infinity
+					quasi_absorbing_subtrahend: not x.is_nan and not x.is_negative_infinity and y.is_negative_infinity ⇒ (x - y).is_positive_infinity
 				then
 					Result := True
 				end
