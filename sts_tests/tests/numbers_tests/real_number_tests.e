@@ -251,10 +251,11 @@ feature -- Test routines (Quality)
 			assert ("is_negative_infinity", x.is_negative_infinity ⇒ True)
 			assert ("is_negative_infinity ok", is_negative_infinity_ok (x, some_real_number))
 
-			assert ("0", is_negative_infinity_ok (Zero, some_real_number))
-			assert ("0 ok", is_negative_infinity_ok (Zero, some_real_number))
+			assert ("not zero.is_negative_infinity", not zero.is_negative_infinity)
+			assert ("not zero.is_negative_infinity ok", is_negative_infinity_ok (Zero, some_real_number))
 
-			assert ("is_negative_infinity_ok", is_negative_infinity_ok (real_number_to_be_tested, some_real_number))
+			assert ("not one.is_negative_infinity", not one.is_negative_infinity)
+			assert ("not one.is_negative_infinity ok", is_negative_infinity_ok (one, some_real_number))
 		end
 
 --	test_is_integer

@@ -419,48 +419,50 @@ feature -- Test routines (Quality)
 			testing: "covers/{STI_REAL_NUMBER}.is_negative_infinity"
 		local
 			x: like real_number_to_be_tested
+			l_check: BOOLEAN
 		do
-			x := real_number_to_be_tested
-			assert ("is_negative_infinity", x.is_negative_infinity ⇒ True)
-			assert ("is_negative_infinity ok", is_negative_infinity_ok (x, some_real_number))
+			Precursor {STST_REAL_NUMBER_TESTS}
 
---			from
---				x := real_number_to_be_tested
---			until
---				x.is_nan or Negative_infinity < x
---			loop
---				x := real_number_to_be_tested
---			end
---			assert ("not x.is_negative_infinity", not x.is_negative_infinity)
---			assert ("not x.is_negative_infinity ok", is_negative_infinity_ok (x, some_real_number))
+			from
+				x := real_number_to_be_tested
+			until
+				x.is_nan or Negative_infinity < x
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("not x.is_negative_infinity", not x.is_negative_infinity)
+			assert ("not x.is_negative_infinity ok", is_negative_infinity_ok (x, some_real_number))
 
---			inspect
---				next_random_item \\ 3
---			when 0 then
---				from
---					x := real_number_to_be_tested
---				until
---					Negative_infinity ≤ x and x < Zero
---				loop
---					x := real_number_to_be_tested
---				end
---				x := x / Zero
---			when 1 then
---				x := - Positive_infinity
---			when 2 then
---				x := Negative_infinity
---			end
---			assert ("x.is_negative_infinity", x.is_negative_infinity)
---			assert ("x.is_negative_infinity ok", is_negative_infinity_ok (x, some_real_number))
+			from
+				x := real_number_to_be_tested
+			until
+				Negative_infinity ≤ x and x < Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			l_check := {ISE_RUNTIME}.check_assert (False)
+			x := x / Zero
+			l_check := {ISE_RUNTIME}.check_assert (l_check)
+			assert ("x.is_negative_infinity", x.is_negative_infinity)
+			assert ("x.is_negative_infinity ok", is_negative_infinity_ok (x, some_real_number))
 
---			assert ("-NaN", is_negative_infinity_ok (-Nan, some_real_number))
---			assert ("NaN", is_negative_infinity_ok (Nan, some_real_number))
---			assert ("-Infinity", is_negative_infinity_ok (Negative_infinity, some_real_number))
---			assert ("Infinity", is_negative_infinity_ok (Positive_infinity, some_real_number))
---			assert ("-0", is_negative_infinity_ok (- Zero, some_real_number))
-			assert ("0", is_negative_infinity_ok (Zero, some_real_number))
+			assert ("not (- NaN).is_negative_infinity", not (- Nan).is_negative_infinity)
+			assert ("not (- NaN).is_negative_infinity ok", is_negative_infinity_ok (- Nan, some_real_number))
 
-			assert ("is_negative_infinity_ok", is_negative_infinity_ok (real_number_to_be_tested, some_real_number))
+			assert ("not NaN.is_negative_infinity", not Nan.is_negative_infinity)
+			assert ("not NaN.is_negative_infinity ok", is_negative_infinity_ok (Nan, some_real_number))
+
+			assert ("Negative_infinity.is_negative_infinity", Negative_infinity.is_negative_infinity)
+			assert ("Negative_infinity.is_negative_infinity ok", is_negative_infinity_ok (Negative_infinity, some_real_number))
+
+			assert ("(- Positive_infinity).is_negative_infinity", (- Positive_infinity).is_negative_infinity)
+			assert ("(- Positive_infinity).is_negative_infinity ok", is_negative_infinity_ok ((- Positive_infinity), some_real_number))
+
+			assert ("not Positive_infinity.is_negative_infinity", not Positive_infinity.is_negative_infinity)
+			assert ("not Positive_infinity.is_negative_infinity ok", is_negative_infinity_ok (Positive_infinity, some_real_number))
+
+			assert ("not (- Zero).is_negative_infinity", not (- Zero).is_negative_infinity)
+			assert ("not (- Zero).is_negative_infinity ok", is_negative_infinity_ok (- Zero, some_real_number))
 		end
 
 --	test_is_integer
