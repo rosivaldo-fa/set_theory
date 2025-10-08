@@ -38,6 +38,7 @@ feature -- Test routines (All)
 			test_one
 			test_is_nan
 			test_is_negative_infinity
+			test_is_positive_infinity
 --			test_is_integer
 --			test_is_natural
 --			test_is_invertible
@@ -256,6 +257,24 @@ feature -- Test routines (Quality)
 
 			assert ("not one.is_negative_infinity", not one.is_negative_infinity)
 			assert ("not one.is_negative_infinity ok", is_negative_infinity_ok (one, some_real_number))
+		end
+
+	test_is_positive_infinity
+			-- Test {STS_REAL_NUMBER}.is_positive_infinity.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_positive_infinity"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("is_positive_infinity", x.is_positive_infinity ⇒ True)
+			assert ("is_positive_infinity ok", is_positive_infinity_ok (x, some_real_number))
+
+			assert ("not zero.is_positive_infinity", not zero.is_positive_infinity)
+			assert ("not zero.is_positive_infinity ok", is_positive_infinity_ok (Zero, some_real_number))
+
+			assert ("not one.is_positive_infinity", not one.is_positive_infinity)
+			assert ("not one.is_positive_infinity ok", is_positive_infinity_ok (one, some_real_number))
 		end
 
 --	test_is_integer

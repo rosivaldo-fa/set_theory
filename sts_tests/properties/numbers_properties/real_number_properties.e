@@ -72,22 +72,6 @@ feature -- Properties (Quality)
 			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_negative_infinity?
 		do
 			check
---				absorbing_left_term: x.is_negative_infinity and not y.is_nan and not y.is_positive_infinity ⇒ (x + y).is_negative_infinity
---				absorbing_right_term: not x.is_nan and not x.is_positive_infinity and y.is_negative_infinity ⇒ (x + y).is_negative_infinity
---				absorbing_minuend: x.is_negative_infinity and not y.is_nan and not y.is_negative_infinity ⇒ (x - y).is_negative_infinity
---				quasi_absorbing_subtrahend: not x.is_nan and not x.is_negative_infinity and y.is_negative_infinity ⇒ (x - y).is_positive_infinity
---				quasi_absorbing_left_factor: x.is_negative_infinity and not y.is_nan and y ≭ zero ⇒
---					if y < zero then
---						(x ⋅ y).is_positive_infinity
---					else
---						(x ⋅ y).is_negative_infinity
---					end
---				quasi_absorbing_right_factor: not x.is_nan and x ≭ zero and y.is_negative_infinity ⇒
---					if x < zero then
---						(x ⋅ y).is_positive_infinity
---					else
---						(x ⋅ y).is_negative_infinity
---					end
 				quasi_absorbing_dividend: x.is_negative_infinity and x.divisible (y) and y.is_finite ⇒
 					if y < zero then
 						(x / y).is_positive_infinity
@@ -96,6 +80,39 @@ feature -- Properties (Quality)
 					end
 					good_divisor: y.is_negative_infinity ⇒ x.divisible (y) -- y /= 0
 				nullifying_divisor: x.is_finite and y.is_negative_infinity ⇒ (x / y) ≍ zero
+			then
+				Result := True
+			end
+		end
+
+	is_positive_infinity_ok (x, y: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_positive_infinity?
+		do
+			check
+--				absorbing_left_term: x.is_positive_infinity and not y.is_nan and not y.is_negative_infinity ⇒ (x + y).is_positive_infinity
+--				absorbing_right_term: not x.is_nan and not x.is_negative_infinity and y.is_positive_infinity ⇒ (x + y).is_positive_infinity
+--				absorbing_minuend: x.is_positive_infinity and not y.is_nan and not y.is_positive_infinity ⇒ (x - y).is_positive_infinity
+--				quasi_absorbing_subtrahend: not x.is_nan and not x.is_positive_infinity and y.is_positive_infinity ⇒ (x - y).is_negative_infinity
+--				quasi_absorbing_left_factor: x.is_positive_infinity and not y.is_nan and y ≭ zero ⇒
+--					if y < zero then
+--						(x ⋅ y).is_negative_infinity
+--					else
+--						(x ⋅ y).is_positive_infinity
+--					end
+--				quasi_absorbing_right_factor: not x.is_nan and x ≭ zero and y.is_positive_infinity ⇒
+--					if x < zero then
+--						(x ⋅ y).is_negative_infinity
+--					else
+--						(x ⋅ y).is_positive_infinity
+--					end
+				quasi_absorbing_dividend: x.is_positive_infinity and x.divisible (y) and y.is_finite ⇒
+					if y < zero then
+						(x / y).is_negative_infinity
+					else
+						(x / y).is_positive_infinity
+					end
+					good_divisor: y.is_positive_infinity ⇒ x.divisible (y) -- y /= 0
+				nullifying_divisor: x.is_finite and y.is_positive_infinity ⇒ (x / y) ≍ zero
 			then
 				Result := True
 			end
