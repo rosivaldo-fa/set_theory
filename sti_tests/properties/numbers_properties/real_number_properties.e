@@ -34,7 +34,7 @@ feature -- Access
 			class
 		end
 
-feature -- Properties (Access)
+feature -- Properties (Quality)
 
 	is_nan_ok (x: STI_REAL_NUMBER; y: STS_REAL_NUMBER): BOOLEAN
 			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_nan?
@@ -59,6 +59,16 @@ feature -- Properties (Access)
 				then
 					Result := True
 				end
+			end
+		end
+
+	is_negative_zero_ok (x: STI_REAL_NUMBER; y: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_negative_zero?
+		do
+			check
+				negative_zero_by_positive_number: x.is_negative_zero and y > zero ⇒ (x / y).is_negative_zero
+			then
+				Result := True
 			end
 		end
 

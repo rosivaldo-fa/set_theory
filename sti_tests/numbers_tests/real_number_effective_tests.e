@@ -465,6 +465,47 @@ feature -- Test routines (Quality)
 			assert ("not (- Zero).is_negative_infinity ok", is_negative_infinity_ok (- Zero, some_real_number))
 		end
 
+	test_is_negative_zero
+			-- Test {STI_REAL_NUMBER}.is_negative_zero.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_negative_zero"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("not x.is_negative_zero", not x.is_negative_zero)
+			assert ("not x.is_negative_zero ok", is_negative_zero_ok (x, some_real_number))
+
+			from
+				x := real_number_to_be_tested
+			until
+				x.is_finite and x < Zero
+			loop
+				x := real_number_to_be_tested
+			end
+			x := Zero / x
+			assert ("x.is_negative_zero", x.is_negative_zero)
+			assert ("x.is_negative_zero ok", is_negative_zero_ok (x, some_real_number))
+
+			assert ("not (- Nan).is_negative_zero", not (- Nan).is_negative_zero)
+			assert ("not (- Nan).is_negative_zero ok", is_negative_zero_ok (- Nan, some_real_number))
+
+			assert ("not Nan.is_negative_zero", not Nan.is_negative_zero)
+			assert ("not Nan.is_negative_zero ok", is_negative_zero_ok (Nan, some_real_number))
+
+			assert ("not Negative_infinity.is_negative_zero", not Negative_infinity.is_negative_zero)
+			assert ("not Negative_infinity.is_negative_zero ok", is_negative_zero_ok (Negative_infinity, some_real_number))
+
+			assert ("not Positive_infinity.is_negative_zero", not Positive_infinity.is_negative_zero)
+			assert ("not Positive_infinity.is_negative_zero ok", is_negative_zero_ok (Positive_infinity, some_real_number))
+
+			assert ("(- Zero).is_negative_zero", (- Zero).is_negative_zero)
+			assert ("(- Zero).is_negative_zero ok", is_negative_zero_ok (- Zero, some_real_number))
+
+			assert ("not Zero.is_negative_zero", not Zero.is_negative_zero)
+			assert ("not Zero.is_negative_zero ok", is_negative_zero_ok (Zero, some_real_number))
+		end
+
 --	test_is_integer
 --			-- <Precursor>
 --			-- Test {STI_REAL_NUMBER}.is_integer.

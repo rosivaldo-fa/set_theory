@@ -445,6 +445,14 @@ feature -- Quality
 			Result := mantissa_bit_pattern = 0 and exponent_bit_pattern = max_exponent_bit_pattern and sign_bit_status = 1
 		end
 
+	is_negative_zero: BOOLEAN
+			-- Is current the representation of a "negative" zero, as specified by IEEE 754?
+		do
+			Result := value_bit_pattern = {NATURAL_16} 1 |<< (Exponent_width + Mantissa_width)
+		ensure
+			definition: Result = (Current ≍ zero and sign_bit ≍ one.truncated_to_integer)
+		end
+
 feature -- Output
 
 	out: STRING
