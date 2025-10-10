@@ -31,6 +31,7 @@ inherit
 			is_negative_infinity,
 			is_positive_infinity,
 			is_infinite,
+			is_finite,
 			out,
 			is_less,
 			is_greater,
@@ -473,6 +474,12 @@ feature -- Quality
 			-- <Precursor>
 		do
 			Result := exponent_bit_pattern = max_exponent_bit_pattern and mantissa_bit_pattern = 0
+		end
+
+	is_finite: BOOLEAN
+			-- <Precursor>
+		do
+			Result := exponent_bit_pattern < max_exponent_bit_pattern
 		end
 
 feature -- Output

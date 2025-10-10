@@ -44,6 +44,7 @@ inherit
 			test_is_negative_infinity,
 			test_is_positive_infinity,
 			test_is_infinite,
+			test_is_finite,
 --			test_is_integer,
 --			test_is_natural,
 --			test_is_invertible,
@@ -603,6 +604,40 @@ feature -- Test routines (Quality)
 			assert ("(- Positive_infinity).is_infinite", (- Positive_infinity).is_infinite)
 			assert ("Positive_infinity.is_infinite", Positive_infinity.is_infinite)
 			assert ("not (- Zero).is_infinite", not (- Zero).is_infinite)
+		end
+
+	test_is_finite
+			-- Test {STI_REAL_NUMBER}.is_finite.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_finite"
+		local
+			x: like real_number_to_be_tested
+			l_check: BOOLEAN
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+
+			from
+				x := real_number_to_be_tested
+			until
+				Negative_infinity < x and x < Positive_infinity
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("x.is_finite", x.is_finite)
+
+			x := real_number_to_be_tested
+			l_check := {ISE_RUNTIME}.check_assert (False)
+			x := x / Zero
+			l_check := {ISE_RUNTIME}.check_assert (l_check)
+			assert ("not x.is_finite", not x.is_finite)
+
+			assert ("not (- NaN).is_finite", not (- Nan).is_finite)
+			assert ("not NaN.is_finite", not Nan.is_finite)
+			assert ("not (- Negative_infinity).is_finite", not (- Negative_infinity).is_finite)
+			assert ("not Negative_infinity.is_finite", not Negative_infinity.is_finite)
+			assert ("not (- Positive_infinity).is_finite", not (- Positive_infinity).is_finite)
+			assert ("not Positive_infinity.is_finite", not Positive_infinity.is_finite)
+			assert ("(- Zero).is_finite", (- Zero).is_finite)
 		end
 
 --	test_is_integer

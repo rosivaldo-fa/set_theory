@@ -40,6 +40,7 @@ feature -- Test routines (All)
 			test_is_negative_infinity
 			test_is_positive_infinity
 			test_is_infinite
+			test_is_finite
 --			test_is_integer
 --			test_is_natural
 --			test_is_invertible
@@ -289,6 +290,19 @@ feature -- Test routines (Quality)
 			assert ("is_infinite", x.is_infinite ⇒ True)
 			assert ("not zero.is_infinite", not zero.is_infinite)
 			assert ("not one.is_infinite", not one.is_infinite)
+		end
+
+	test_is_finite
+			-- Test {STS_REAL_NUMBER}.is_finite.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_finite"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("is_finite", x.is_finite ⇒ True)
+			assert ("zero.is_finite", zero.is_finite)
+			assert ("one.is_finite", one.is_finite)
 		end
 
 --	test_is_integer
