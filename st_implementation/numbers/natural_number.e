@@ -128,6 +128,14 @@ feature -- Access
 			class
 		end
 
+	two: NATURAL_NUMBER
+			-- <Precursor>
+		once
+			Result := {NATURAL} 2
+		ensure then
+			class
+		end
+
 	previous_float: like real_anchor
 			-- <Precursor>
 		do
@@ -163,6 +171,9 @@ feature -- Access
 		end
 
 feature -- Quality
+
+	is_rational: BOOLEAN = True
+			-- <Precursor>
 
 	is_natural: BOOLEAN = True
 			-- <Precursor>
@@ -384,6 +395,14 @@ feature -- Conversion
 			create Result.make (stored_value)
 		ensure
 			value: Result.value = value.as_integer_32
+		end
+
+feature -- Math
+
+	splitted (a_q: STS_REAL_NUMBER): TUPLE [a, b: REAL_NUMBER]
+			-- <Precursor>
+		do
+			Result := as_real_number.splitted (a_q)
 		end
 
 feature -- Factory

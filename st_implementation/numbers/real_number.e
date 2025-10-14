@@ -184,6 +184,14 @@ feature -- Access
 			class
 		end
 
+	two: REAL_NUMBER
+			-- <Precursor>
+		once
+			Result := {REAL} 2.0
+		ensure then
+			class
+		end
+
 	machine_epsilon: REAL_NUMBER
 			-- The difference between 1 and the least value greater than 1 that is representable by current kind of real number.
 		local
@@ -482,6 +490,40 @@ feature -- Quality
 			Result := exponent_bit_pattern < max_exponent_bit_pattern
 		end
 
+	is_rational: BOOLEAN
+			-- <Precursor>
+		local
+			m: like value_bit_pattern
+			sgn: like value.sign
+			exp: like Exponent_bias
+			num, den: like value
+		do
+			sgn := if sign_bit_status = 0 then 1 else - 1 end
+			exp := exponent_bit_pattern.as_integer_8 - Exponent_bias
+			m := mantissa_bit_pattern
+			if exp ≤ max_exponent then
+				if min_normal_exponent ≤ exp then
+						-- Normal range
+					num := (sgn × (2 ^ exp) × (1 + m / Mantissa_scale)).truncated_to_real -- TODO: Get rid of truncated_to_real.
+				elseif 0 < m then
+						-- Subnormal range
+					num := (sgn × (2 ^ min_normal_exponent) × m / Mantissa_scale).truncated_to_real -- TODO: Get rid of truncated_to_real.
+				end
+				from
+					den := 1
+				until
+					num = num.floor_real_32
+				loop
+					num := num * 2
+					den := den * 2
+				end
+					check
+						0 < den -- den = 2 ^ k, k ≥ 0.
+					end
+				Result := num.abs ≤ {INTEGER_NUMBER}.Native_min_value.abs and den ≤ {INTEGER_NUMBER}.Native_min_value.abs
+			end
+		end
+
 feature -- Output
 
 	out: STRING
@@ -533,14 +575,6 @@ feature -- Operation
 			create Result.make_abs (Current)
 		end
 
-	minus alias "-" alias "−" (x: STS_REAL_NUMBER): like real_anchor
-			-- Result of subtracting `x` from current real number
-		do
-			Result := real_from_value (value - x.value)
-		ensure
-			definition: Result ≍ real_from_value (value - x.value)
-		end
-
 	opposite alias "-" alias "−": like real_anchor
 			-- <Precursor>
 		do
@@ -556,6 +590,23 @@ feature -- Conversion
 		end
 
 feature -- Math
+
+	splitted (q: STS_REAL_NUMBER): TUPLE [a, b: REAL_NUMBER]
+			-- <Precursor>
+		local
+			num, den: like value
+		do
+			from
+				num := value
+				den := q.value
+			until
+				num = num.floor_real_32
+			loop
+				num := num * 2
+				den := den * 2
+			end
+			Result := [create {REAL_NUMBER}.make (num), create {REAL_NUMBER}.make (den)]
+		end
 
 	value_logb (v: like native_real_anchor): like native_real_anchor
 			-- Exponent of `v', as a signed integer value in ﬂoating-point format. If `v' is subnormal it is treated as though it were normalized; thus, for

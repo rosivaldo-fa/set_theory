@@ -23,6 +23,7 @@ inherit
 		rename
 			is_in as real_number_is_in,
 			is_not_in as real_is_not_in,
+			is_integer as real_is_integer,
 			is_invertible as real_is_invertible,
 			equals as real_equals,
 			unequals as real_unequals,
@@ -31,6 +32,8 @@ inherit
 			is_greater as real_is_greater,
 			three_way_comparison as real_three_way_comparison,
 			divisible as real_divisible,
+			minus as real_minus,
+			product as real_product,
 			quotient as real_quotient
 		end
 
@@ -90,7 +93,7 @@ feature -- Quality
 
 	is_integer: BOOLEAN
 			-- Does current rational number represent an integer number?
-			-- Notice that, due to rounding and truncation, implementation of `real_is_integer' might give True even if `is_integer' gives False.
+			-- TODO: Notice that, due to rounding and truncation, implementation of `real_is_integer' might give True even if `is_integer' gives False.
 		do
 			Result := q | p
 		ensure

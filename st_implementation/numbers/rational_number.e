@@ -163,6 +163,14 @@ feature -- Access
 			denominator: Result.q ≍ {INTEGER_NUMBER}.One
 		end
 
+	two: RATIONAL_NUMBER
+			-- <Precursor>
+		once
+			create Result.make ({INTEGER_NUMBER}.Two, {INTEGER_NUMBER}.One)
+		ensure then
+			class
+		end
+
 	previous_float: like real_anchor
 			-- <Precursor>
 		do
@@ -174,6 +182,11 @@ feature -- Access
 		do
 			Result := as_real.next_float
 		end
+
+feature -- Quality
+
+	is_rational: BOOLEAN = True
+			-- <Precursor>
 
 feature -- Output
 
@@ -329,6 +342,14 @@ feature -- Conversion
 					good_divisor: p.divisible (q) -- Class invariant: q /= 0
 				end
 			Result := p // q
+		end
+
+feature -- Math
+
+	splitted (a_q: STS_REAL_NUMBER): TUPLE [a, b: REAL_NUMBER]
+			-- <Precursor>
+		do
+			Result := as_real.splitted (a_q)
 		end
 
 feature -- Factory

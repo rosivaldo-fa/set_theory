@@ -74,6 +74,14 @@ feature -- Access
 			definition: Result.value = 1
 		end
 
+	two: like real_anchor
+			-- The real number 2
+			--| Necessary for some specifications and properties
+		deferred
+		ensure
+			definition: Result.value = 2
+		end
+
 feature -- Quality
 
 	is_nan: BOOLEAN
@@ -115,6 +123,27 @@ feature -- Quality
 			Result := not (is_nan or is_infinite)
 		ensure then
 			real_definition: Result = not (is_nan or is_infinite)
+		end
+
+	is_rational: BOOLEAN
+			-- Does current real number represent a rational number?
+		deferred
+		ensure then
+			splitted_one: attached splitted (one) as splitted_one
+			a: attached splitted_one.a as a
+			b: attached splitted_one.b as b
+			real_definition:; Result = (
+				(a.is_integer or zero.truncated_to_integer.max_value_exists and then (a - one) ≍ zero.truncated_to_integer.max_value) and
+				(b.is_integer or zero.truncated_to_integer.max_value_exists and then (b - one) ≍ zero.truncated_to_integer.max_value)
+				)
+		end
+
+	is_integer: BOOLEAN
+			-- Does current real number represent an integer number?
+		do
+			Result := Current ≍ truncated_to_integer
+		ensure then
+			real_definition: Result = Current ≍ truncated_to_integer
 		end
 
 	is_invertible: BOOLEAN
@@ -199,6 +228,22 @@ feature -- Relationship
 
 feature -- Operation
 
+	minus alias "-" alias "−" (x: REAL_NUMBER): like real_anchor
+			-- Result of subtracting `x` from current real number
+		do
+			Result := real_from_value (value - x.value)
+		ensure
+			definition: Result ≍ real_from_value (value - x.value)
+		end
+
+	product alias "*" alias "×" alias "⋅" (x: REAL_NUMBER): like real_anchor
+			-- Current real number multiplied by `x`
+		do
+			Result := real_from_value (value × x.value)
+		ensure
+			definition: Result ≍ real_from_value (value × x.value)
+		end
+
 	quotient alias "/" alias "÷" (x: REAL_NUMBER): like real_anchor
 			-- Division of current real number by `x`
 			-- Notice that quasi_definition post-condition allows an implementation to regard `zero' a good divisor.
@@ -232,6 +277,15 @@ feature -- Factory
 		end
 
 feature -- Math
+
+	splitted (q: REAL_NUMBER): TUPLE [a, b: REAL_NUMBER]
+			-- Current real number represented as a tuple [a, b] = [`Current' ⋅ (2 ^ k), `q' ⋅ (2 ^ k)], k ∈ ℕ.
+		deferred
+		ensure
+				-- TODO: Get rid of `floor_real_32'.
+			when_integral: value = value.floor_real_32 ⇒ Result.a ≍ Current and Result.b ≍ q
+			when_fractional: value /= value.floor_real_32 ⇒ Result.a ≍ (Current ⋅ two).splitted (q ⋅ two).a and Result.b ≍ (Current ⋅ two).splitted (q ⋅ two).b
+		end
 
 	value_sign_bit (v: like native_real_anchor): like integer_anchor.value
 			-- Status of the sign bit of `v', which is 1 for negative numbers but also, e.g. for a "negative" zero as specified by IEEE 754.

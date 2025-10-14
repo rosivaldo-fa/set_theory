@@ -40,6 +40,7 @@ inherit
 			test_sign,
 			test_zero,
 			test_one,
+			test_two,
 			test_is_nan,
 			test_is_negative_infinity,
 			test_is_positive_infinity,
@@ -305,6 +306,14 @@ feature -- Test routines (Access)
 			assert ("-Infinity", one_ok (Negative_infinity, some_real_number))
 			assert ("Infinity", one_ok (Positive_infinity, some_real_number))
 			assert ("-0", one_ok (- Zero, some_real_number))
+		end
+
+	test_two
+			-- Test {STI_REAL_NUMBER}.two.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.two"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
 		end
 
 feature -- Test routines (Quality)

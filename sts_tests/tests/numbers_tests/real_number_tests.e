@@ -190,6 +190,14 @@ feature -- Test routines (Access)
 			assert ("0", one_ok (Zero, some_real_number))
 		end
 
+	test_two
+			-- Test {STS_REAL_NUMBER}.two.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.two"
+		do
+			assert ("two", attached real_number_to_be_tested.two)
+		end
+
 feature -- Test routines (Quality)
 
 	test_is_nan

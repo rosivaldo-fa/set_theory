@@ -118,6 +118,14 @@ feature -- Access
 			class
 		end
 
+	two: INTEGER_NUMBER
+			-- <Precursor>
+		once
+			Result := 2
+		ensure then
+			class
+		end
+
 	previous_float: like real_anchor
 			-- <Precursor>
 		do
@@ -153,6 +161,9 @@ feature -- Access
 		end
 
 feature -- Quality
+
+	is_rational: BOOLEAN = True
+			-- <Precursor>
 
 	min_value_exists: BOOLEAN = True
 			-- <Precursor>
@@ -316,6 +327,14 @@ feature -- Conversion
 			-- <Precursor>
 		do
 			Result := value.as_natural_32 -- TODO: Make it more general.
+		end
+
+feature -- Math
+
+	splitted (a_q: STS_REAL_NUMBER): TUPLE [a, b: REAL_NUMBER]
+			-- <Precursor>
+		do
+			Result := as_real_number.splitted (a_q)
 		end
 
 feature -- Implementation
