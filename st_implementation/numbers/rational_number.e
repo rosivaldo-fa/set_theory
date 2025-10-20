@@ -285,6 +285,12 @@ feature -- Operation
 			end
 		end
 
+	identity alias "+": RATIONAL_NUMBER
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
 	opposite alias "-" alias "−": like rational_anchor
 			-- <Precursor>
 		do

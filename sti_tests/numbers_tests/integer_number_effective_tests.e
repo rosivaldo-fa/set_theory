@@ -80,20 +80,15 @@ inherit
 
 feature -- Access
 
---	zero: STI_INTEGER_NUMBER
---			-- <Precursor>
---		once
---		ensure then
---			class
---		end
-
---	one: STI_INTEGER_NUMBER
---			-- <Precursor>
---		once
---			create Result.make (1)
---		ensure then
---			class
---		end
+	two: STI_INTEGER_NUMBER
+			-- <Precursor>
+			--| TODO: Feature tool cannot show the inherited post-conditions.
+			--| TODO: What about the invariants?
+		once
+			Result := 2
+		ensure then
+			class
+		end
 
 feature -- Test routines (All)
 

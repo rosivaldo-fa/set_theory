@@ -132,7 +132,7 @@ feature -- Quality
 			splitted_one: attached splitted (one) as splitted_one
 			a: attached splitted_one.a as a
 			b: attached splitted_one.b as b
-			real_definition:; Result = (
+			real_definition: Result = (
 				(a.is_integer or zero.truncated_to_integer.max_value_exists and then (a - one) ≍ zero.truncated_to_integer.max_value) and
 				(b.is_integer or zero.truncated_to_integer.max_value_exists and then (b - one) ≍ zero.truncated_to_integer.max_value)
 				)
@@ -228,6 +228,15 @@ feature -- Relationship
 
 feature -- Operation
 
+	modulus,
+	abs: like real_anchor
+			-- Distance from current real number to the origin of the real line
+		do
+			Result := real_from_value (value.abs)
+		ensure
+			definition: Result ≍ real_from_value (value.abs)
+		end
+
 	minus alias "-" alias "−" (x: REAL_NUMBER): like real_anchor
 			-- Result of subtracting `x` from current real number
 		do
@@ -259,6 +268,21 @@ feature -- Operation
 		end
 
 feature -- Conversion
+
+	to_rational: like rational_anchor
+			-- Rational representation of current real number
+			-- TODO: Properties, tests
+		require
+			is_rational: is_rational
+		deferred
+		ensure
+			splitted_one: attached splitted (one) as splitted_one
+			a: attached splitted_one.a as a
+			b: attached splitted_one.b as b
+			numerator: a.abs ≍ Result.p.rational_abs
+			denominator: b.abs ≍ Result.q.rational_abs
+			same_sign: Result.sign ≍ sign
+		end
 
 	truncated_to_integer: like integer_anchor
 			-- Integer part (same sign, largest absolute value no greater than current real number's)
@@ -323,6 +347,11 @@ feature -- Anchor
 
 	real_anchor: REAL_NUMBER
 			-- Anchor for real numbers
+		deferred
+		end
+
+	rational_anchor: RATIONAL_NUMBER
+			-- Anchor for rational numbers
 		deferred
 		end
 

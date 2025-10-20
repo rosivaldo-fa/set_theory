@@ -118,6 +118,21 @@ feature -- Properties (Quality)
 			end
 		end
 
+	is_rational_ok (x: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_rational?
+		do
+			check
+				is_not_nan: x.is_rational ⇒ not x.is_nan
+				is_not_negative_infinity: x.is_rational ⇒ not x.is_negative_infinity
+--				is_not_negative_nero: x.is_rational ⇒ not x.is_negative_zero
+				is_not_positive_infinity: x.is_rational ⇒ not x.is_positive_infinity
+				is_not_infinite: x.is_rational ⇒ not x.is_infinite
+				is_finite: x.is_rational ⇒ x.is_finite
+			then
+				Result := True
+			end
+		end
+
 feature -- Properties (Comparison)
 
 --	equals_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
@@ -297,6 +312,22 @@ feature -- Properties (Operation)
 --				Result := True
 --			end
 --		end
+
+feature -- Properties (Math)
+
+	splitted_ok (x: STS_REAL_NUMBER; q: STS_INTEGER_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.splitted?
+		do
+			check
+				when_intinite: x.is_infinite ⇒ x.splitted (q).a ≍ x and x.splitted (q).b ≍ q
+				when_nan: x.is_nan ⇒ x.splitted (q).a.is_nan and x.splitted (q).b ≍ q
+				trivial_rational_splitting: x.is_rational ⇒
+					x.splitted (one).a.abs ≍ x.to_rational.p.rational_abs and x.splitted (one).b.abs ≍ x.to_rational.q.rational_abs
+				trivial_integer_splitting: x.is_integer ⇒ x.splitted (one).a ≍ x and x.splitted (one).b ≍ one
+			then
+				Result := True
+			end
+		end
 
 feature -- Anchor
 

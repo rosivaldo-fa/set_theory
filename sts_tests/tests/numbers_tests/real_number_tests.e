@@ -22,6 +22,15 @@ inherit
 
 	REAL_NUMBER_PROPERTIES
 
+feature -- Access
+
+	two: like real_anchor
+			-- The real number 2
+		deferred
+		ensure
+			definition: Result.value = 2
+		end
+
 feature -- Test routines (All)
 
 	test_all
@@ -36,11 +45,13 @@ feature -- Test routines (All)
 			test_sign
 			test_zero
 			test_one
+			test_two
 			test_is_nan
 			test_is_negative_infinity
 			test_is_positive_infinity
 			test_is_infinite
 			test_is_finite
+			test_is_rational
 --			test_is_integer
 --			test_is_natural
 --			test_is_invertible
@@ -311,6 +322,27 @@ feature -- Test routines (Quality)
 			assert ("is_finite", x.is_finite ⇒ True)
 			assert ("zero.is_finite", zero.is_finite)
 			assert ("one.is_finite", one.is_finite)
+		end
+
+	test_is_rational
+			-- Test {STI_REAL_NUMBER}.is_rational.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_rational"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("is_rational", x.is_rational ⇒ True)
+			assert ("is_rational ok", is_rational_ok (x))
+
+			assert ("zero.is_rational", zero.is_rational)
+			assert ("zero.is_rational ok", is_rational_ok (zero))
+
+			assert ("one.is_rational", one.is_rational)
+			assert ("one.is_rational ok", is_rational_ok (one))
+
+			assert ("two.is_rational", two.is_rational)
+			assert ("two.is_rational ok", is_rational_ok (two))
 		end
 
 --	test_is_integer
@@ -960,10 +992,33 @@ feature -- Test routines (Quality)
 --		note
 --			testing: "covers/{STS_REAL_NUMBER}.converted_integer"
 --		do
---			assert ("converted_integer", attached real_number_to_be_tested.converted_integer (some_integer_number))
+--			assert ("converted_integer", attached real_number_to_be_tested.converted_integer (some_integer_number_number))
 --		end
 
---feature -- Test routines (Math)
+feature -- Test routines (Math)
+
+	test_splitted
+			-- Test {STS_REAL_NUMBER}.splitted.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.splitted"
+		local
+			x: like real_number_to_be_tested
+			i: like some_integer_number
+		do
+			x := real_number_to_be_tested
+			i := some_integer_number
+			assert ("splitted", attached x.splitted (i))
+			assert ("splitted ok", splitted_ok (x, i))
+
+			assert ("zero.splitted (i)", attached zero.splitted (i))
+			assert ("zero.splitted (i) ok", splitted_ok (zero, i))
+
+			assert ("one.splitted (i)", attached one.splitted (i))
+			assert ("one.is_rational ok", splitted_ok (one, i))
+
+			assert ("two.splitted (i)", attached two.is_rational)
+			assert ("two.splitted (i) ok", splitted_ok (two, i))
+		end
 
 --	test_gcd
 --			-- Test gcd.
@@ -971,13 +1026,13 @@ feature -- Test routines (Quality)
 --			testing: "covers/gcd"
 --		local
 --			x: like real_number_to_be_tested
---			i, j: like some_integer_number
+--			i, j: like some_integer_number_number
 --		do
---			i := some_integer_number
---			j := some_integer_number
+--			i := some_integer_number_number
+--			j := some_integer_number_number
 --			x := real_number_to_be_tested
 --			assert ("gcd", attached x.gcd (i, j))
---			assert ("gcd_ok", gcd_ok (x, i, j, some_integer_number))
+--			assert ("gcd_ok", gcd_ok (x, i, j, some_integer_number_number))
 --		end
 
 --	test_div
@@ -985,15 +1040,15 @@ feature -- Test routines (Quality)
 --		note
 --			testing: "covers/{STS_REAL_NUMBER}.div"
 --		local
---			i, j: like some_integer_number
+--			i, j: like some_integer_number_number
 --		do
---			i := some_integer_number
+--			i := some_integer_number_number
 --			from
---				j := some_integer_number
+--				j := some_integer_number_number
 --			until
 --				i.divisible (j)
 --			loop
---				j := some_integer_number
+--				j := some_integer_number_number
 --			end
 --			assert ("div", attached real_number_to_be_tested.div (i, j))
 --		end
@@ -1004,16 +1059,16 @@ feature -- Test routines (Quality)
 --			testing: "covers/{STS_REAL_NUMBER}.rem"
 --		local
 --			x: like real_number_to_be_tested
---			i, j: like some_integer_number
+--			i, j: like some_integer_number_number
 --		do
 --			x := real_number_to_be_tested
---			i := some_integer_number
+--			i := some_integer_number_number
 --			from
---				j := some_integer_number
+--				j := some_integer_number_number
 --			until
 --				i.divisible (j)
 --			loop
---				j := some_integer_number
+--				j := some_integer_number_number
 --			end
 --			assert ("rem", attached x.rem (i, j))
 --			assert ("rem ok", rem_ok (x, i, j))
@@ -1027,12 +1082,12 @@ feature -- Test routines (Quality)
 --			testing: "covers/{STS_REAL_NUMBER}.integer_product_overflows"
 --		local
 --			x: like real_number_to_be_tested
---			i, j: like some_integer_number
+--			i, j: like some_integer_number_number
 --		do
 --			x := real_number_to_be_tested
---			i := - some_integer_number.abs
+--			i := - some_integer_number_number.abs
 --			i := i ∧ - i.one
---			j := - some_integer_number.abs ∧ - i.one
+--			j := - some_integer_number_number.abs ∧ - i.one
 --			if i.max_value_exists then
 --				check
 --					good_divisor_1: i.max_value.divisible (j) -- j < 0
@@ -1042,7 +1097,7 @@ feature -- Test routines (Quality)
 --				assert ("i, j < 0; overflow ok", integer_product_overflows_ok (x, i, j))
 --			end
 
---			j := some_integer_number.abs ∨ j.one
+--			j := some_integer_number_number.abs ∨ j.one
 --			if i.min_value_exists then
 --				check
 --					good_divisor_2: i.min_value.divisible (j) -- j > 0
@@ -1052,8 +1107,8 @@ feature -- Test routines (Quality)
 --				assert ("i < 0 < j; overflow ok", integer_product_overflows_ok (x, i, j))
 --			end
 
---			i := some_integer_number.abs ∨ i.one
---			j := - some_integer_number.abs ∧ - i.one - i.one
+--			i := some_integer_number_number.abs ∨ i.one
+--			j := - some_integer_number_number.abs ∧ - i.one - i.one
 --			if i.min_value_exists then
 --				check
 --					good_divisor_3: i.min_value.divisible (j) -- j < 0
@@ -1063,7 +1118,7 @@ feature -- Test routines (Quality)
 --				assert ("j < - 1 < 0 < i; overflow ok", integer_product_overflows_ok (x, i, j))
 --			end
 
---			j := some_integer_number.abs ∨ j.one
+--			j := some_integer_number_number.abs ∨ j.one
 --			if i.max_value_exists then
 --				check
 --					good_divisor_4: i.max_value.divisible (j) -- j > 0
@@ -1073,8 +1128,8 @@ feature -- Test routines (Quality)
 --				assert ("0 < i, j; overflow ok", integer_product_overflows_ok (x, i, j))
 --			end
 
---			i := - some_integer_number.abs ∧ - i.one
---			j := - some_integer_number.abs ∧ - i.one
+--			i := - some_integer_number_number.abs ∧ - i.one
+--			j := - some_integer_number_number.abs ∧ - i.one
 --			if i.max_value_exists then
 --				check
 --					good_divisor_5: i.max_value.divisible (j) -- j < 0
@@ -1088,7 +1143,7 @@ feature -- Test routines (Quality)
 --			assert ("i < 0 = j; no overflow", not x.integer_product_overflows (i, j))
 --			assert ("i < 0 = j; no overflow ok", integer_product_overflows_ok (x, i, j))
 
---			j := some_integer_number.abs ∨ j.one
+--			j := some_integer_number_number.abs ∨ j.one
 --			if i.min_value_exists then
 --				check
 --					good_divisor_6: i.min_value.divisible (j) -- j > 0
@@ -1099,12 +1154,12 @@ feature -- Test routines (Quality)
 --			end
 
 --			i := i.zero
---			j := some_integer_number
+--			j := some_integer_number_number
 --			assert ("i = 0; no overflow", not x.integer_product_overflows (i, j))
 --			assert ("i = 0; no overflow ok", integer_product_overflows_ok (x, i, j))
 
---			i := some_integer_number.abs ∨ i.one
---			j := - some_integer_number.abs ∧ - i.one - i.one
+--			i := some_integer_number_number.abs ∨ i.one
+--			j := - some_integer_number_number.abs ∧ - i.one - i.one
 --			if i.min_value_exists then
 --				check
 --					good_divisor_7: i.min_value.divisible (j) -- j < 0
@@ -1122,7 +1177,7 @@ feature -- Test routines (Quality)
 --			assert ("j = 0 < i; no overflow", not x.integer_product_overflows (i, j))
 --			assert ("j = 0 < i; no overflow ok", integer_product_overflows_ok (x, i, j))
 
---			j := some_integer_number.abs ∨ j.one
+--			j := some_integer_number_number.abs ∨ j.one
 --			if i.max_value_exists then
 --				check
 --					good_divisor_8: i.max_value.divisible (j) -- j > 0
@@ -1132,8 +1187,8 @@ feature -- Test routines (Quality)
 --				assert ("0 < i, j; no overflow ok", integer_product_overflows_ok (x, i, j))
 --			end
 
---			i := some_integer_number
---			j := some_integer_number
+--			i := some_integer_number_number
+--			j := some_integer_number_number
 --			x := real_number_to_be_tested
 --			assert ("product_overflows", x.integer_product_overflows (i, j) ⇒ True)
 --			assert ("integer_product_overflows_ok", integer_product_overflows_ok (x, i, j))

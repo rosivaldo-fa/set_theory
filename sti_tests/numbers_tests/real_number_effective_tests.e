@@ -46,6 +46,7 @@ inherit
 			test_is_positive_infinity,
 			test_is_infinite,
 			test_is_finite,
+			test_is_rational,
 --			test_is_integer,
 --			test_is_natural,
 --			test_is_invertible,
@@ -69,6 +70,7 @@ inherit
 --			test_quotient,
 --			test_reciprocal,
 --			test_inverse,
+			test_splitted,
 --			test_gcd,
 --			test_div,
 --			test_rem,
@@ -123,6 +125,16 @@ feature -- Access
 		ensure
 			class
 			definition: Result.value.is_nan
+		end
+
+	two: STI_REAL_NUMBER
+			-- <Precursor>
+			--| TODO: Feature tool cannot show the inherited post-conditions.
+			--| TODO: What about the invariants?
+		once
+			Result := {REAL} 2.0
+		ensure then
+			class
 		end
 
 feature -- Test routines (All)
@@ -649,6 +661,35 @@ feature -- Test routines (Quality)
 			assert ("(- Zero).is_finite", (- Zero).is_finite)
 		end
 
+	test_is_rational
+			-- Test {STI_REAL_NUMBER}.is_rational.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_rational"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+
+			assert ("not (- NaN).is_rational", not (- Nan).is_rational)
+			assert ("not (- NaN).is_rational ok", is_rational_ok (- Nan))
+
+			assert ("not NaN.is_rational", not Nan.is_rational)
+			assert ("not NaN.is_rational ok", is_rational_ok (Nan))
+
+			assert ("not (- Negative_infinity).is_rational", not (- Negative_infinity).is_rational)
+			assert ("not (- Negative_infinity).is_rational ok", is_rational_ok (- Negative_infinity))
+
+			assert ("not Negative_infinity.is_rational", not Negative_infinity.is_rational)
+			assert ("not Negative_infinity.is_rational ok", is_rational_ok (Negative_infinity))
+
+			assert ("not (- Positive_infinity).is_rational", not (- Positive_infinity).is_rational)
+			assert ("not (- Positive_infinity).is_rational ok", is_rational_ok (- Positive_infinity))
+
+			assert ("not Positive_infinity.is_rational", not Positive_infinity.is_rational)
+			assert ("not Positive_infinity.is_rational ok", is_rational_ok (Positive_infinity))
+
+			assert ("(- Zero).is_rational", (- Zero).is_rational)
+			assert ("(- Zero).is_rational ok", is_rational_ok (- Zero))
+		end
+
 --	test_is_integer
 --			-- <Precursor>
 --			-- Test {STI_REAL_NUMBER}.is_integer.
@@ -1041,6 +1082,38 @@ feature -- Test routines (Math)
 			assert ("-0", attached real_number_to_be_tested.value_logb (-0.0))
 			assert ("0", attached real_number_to_be_tested.value_logb (0))
 			assert ("x", attached real_number_to_be_tested.value_logb (some_native_real))
+		end
+
+	test_splitted
+			-- Test {STI_REAL_NUMBER}.splitted.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.splitted"
+		local
+			i: like some_integer_number
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+
+			i := some_integer_number
+			assert ("(- NaN).splitted (i)", attached (- Nan).splitted (i))
+			assert ("(- NaN).splitted (i) ok", splitted_ok (zero, i))
+
+			assert ("NaN.splitted (i)", attached Nan.splitted (i))
+			assert ("NaN.splitted (i) ok", splitted_ok (zero, i))
+
+			assert ("(- Negative_infinity).splitted (i)", attached (- Negative_infinity).splitted (i))
+			assert ("(- Negative_infinity).splitted (i) ok", splitted_ok (zero, i))
+
+			assert ("Negative_infinity.splitted (i)", attached Negative_infinity.splitted (i))
+			assert ("Negative_infinity.splitted (i) ok", splitted_ok (zero, i))
+
+			assert ("(- Positive_infinity).splitted (i)", attached (- Positive_infinity).splitted (i))
+			assert ("(- Positive_infinity).splitted (i) ok", splitted_ok (zero, i))
+
+			assert ("Positive_infinity.splitted (i)", attached Positive_infinity.splitted (i))
+			assert ("Positive_infinity.splitted (i) ok", splitted_ok (zero, i))
+
+			assert ("(- Zero).splitted (i)", attached (- Zero).splitted (i))
+			assert ("(- Zero).splitted (i) ok", splitted_ok (zero, i))
 		end
 
 feature -- Test routines (Implementation)

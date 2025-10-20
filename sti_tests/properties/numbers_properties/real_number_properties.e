@@ -38,7 +38,7 @@ feature -- Access
 feature -- Properties (Quality)
 
 	is_nan_ok (x: STI_REAL_NUMBER; y: STS_REAL_NUMBER): BOOLEAN
-			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_nan?
+			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.is_nan?
 		do
 			if stst_is_nan_ok (x, y) then
 				check
@@ -51,7 +51,7 @@ feature -- Properties (Quality)
 		end
 
 	is_negative_infinity_ok (x: STI_REAL_NUMBER; y: STS_REAL_NUMBER): BOOLEAN
-			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_negative_infinity?
+			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.is_negative_infinity?
 		do
 			if stst_is_negative_infinity_ok (x, y) then
 				check
@@ -64,7 +64,7 @@ feature -- Properties (Quality)
 		end
 
 	is_negative_zero_ok (x: STI_REAL_NUMBER; y: STS_REAL_NUMBER): BOOLEAN
-			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_negative_zero?
+			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.is_negative_zero?
 		do
 			check
 				negative_zero_by_positive_number: x.is_negative_zero and y > zero ⇒ (x / y).is_negative_zero
@@ -74,7 +74,7 @@ feature -- Properties (Quality)
 		end
 
 	is_positive_infinity_ok (x: STI_REAL_NUMBER; y: STS_REAL_NUMBER): BOOLEAN
-			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_positive_infinity?
+			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.is_positive_infinity?
 		do
 			if stst_is_positive_infinity_ok (x, y) then
 				check

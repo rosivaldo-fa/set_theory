@@ -34,7 +34,11 @@ inherit
 			divisible as real_divisible,
 			minus as real_minus,
 			product as real_product,
-			quotient as real_quotient
+			quotient as real_quotient,
+			to_rational as identity alias "+"
+		redefine
+			modulus,
+			abs
 		end
 
 feature -- Primitive

@@ -70,6 +70,18 @@ inherit
 			default_create
 		end
 
+feature -- Access
+
+	two: STI_NATURAL_NUMBER
+			-- <Precursor>
+			--| TODO: Feature tool cannot show the inherited post-conditions.
+			--| TODO: What about the invariants?
+		once
+			Result := {NATURAL} 2
+		ensure then
+			class
+		end
+
 feature -- Test routines (All)
 
 	test_all

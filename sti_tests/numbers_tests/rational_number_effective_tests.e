@@ -88,6 +88,18 @@ inherit
 			test_all
 		end
 
+feature -- Access
+
+	two: STI_RATIONAL_NUMBER
+			-- <Precursor>
+			--| TODO: Feature tool cannot show the inherited post-conditions.
+			--| TODO: What about the invariants?
+		once
+			create Result.make (create {STI_INTEGER_NUMBER}.make (2), create {STI_INTEGER_NUMBER}.make (1))
+		ensure then
+			class
+		end
+
 feature -- Test routines (All)
 
 	test_all

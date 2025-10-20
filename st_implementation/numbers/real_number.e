@@ -35,7 +35,9 @@ inherit
 			out,
 			is_less,
 			is_greater,
-			three_way_comparison
+			three_way_comparison,
+			modulus,
+			abs
 		end
 
 	DEBUG_OUTPUT
@@ -498,7 +500,7 @@ feature -- Quality
 			exp: like Exponent_bias
 			num, den: like value
 		do
-			sgn := if sign_bit_status = 0 then 1 else - 1 end
+			sgn := if sign_bit_status = 0 then 1 else -1 end
 			exp := exponent_bit_pattern.as_integer_8 - Exponent_bias
 			m := mantissa_bit_pattern
 			if exp ≤ max_exponent then
@@ -517,10 +519,11 @@ feature -- Quality
 					num := num * 2
 					den := den * 2
 				end
-					check
-						0 < den -- den = 2 ^ k, k ≥ 0.
-					end
-				Result := num.abs ≤ {INTEGER_NUMBER}.Native_min_value.abs and den ≤ {INTEGER_NUMBER}.Native_min_value.abs
+				check
+					0 < den -- den = 2 ^ k, k ≥ 0.
+				end
+				Result := {INTEGER_NUMBER}.Native_min_value ≤ num and num ≤ {INTEGER_NUMBER}.Native_max_value and
+					{INTEGER_NUMBER}.Native_min_value ≤ den and den ≤ {INTEGER_NUMBER}.Native_max_value
 			end
 		end
 
@@ -582,6 +585,48 @@ feature -- Operation
 		end
 
 feature -- Conversion
+
+	to_rational: like rational_anchor
+			-- <Precursor>
+		local
+			m: like value_bit_pattern
+			sgn: like value.sign
+			exp: like Exponent_bias
+			num, den: like value
+		do
+			sgn := if sign_bit_status = 0 then 1 else -1 end
+			exp := exponent_bit_pattern.as_integer_8 - Exponent_bias
+			m := mantissa_bit_pattern
+			if min_normal_exponent ≤ exp then
+					-- Normal range
+				num := (sgn × (2 ^ exp) × (1 + m / Mantissa_scale)).truncated_to_real -- TODO: Get rid of truncated_to_real.
+			elseif 0 < m then
+					-- Subnormal range
+				num := (sgn × (2 ^ min_normal_exponent) × m / Mantissa_scale).truncated_to_real -- TODO: Get rid of truncated_to_real.
+			end
+			from
+				den := 1
+			until
+				num = num.floor_real_32
+			loop
+				num := num * 2
+				den := den * 2
+			end
+			check
+					-- Precondition: is_rational
+				{INTEGER_NUMBER}.Native_min_value ≤ num and num ≤ {INTEGER_NUMBER}.Native_max_value
+				{INTEGER_NUMBER}.Native_min_value ≤ den and den ≤ {INTEGER_NUMBER}.Native_max_value
+			end
+			if num = {INTEGER_NUMBER}.Native_min_value.abs or den = {INTEGER_NUMBER}.Native_min_value.abs then
+					-- Otherwise, e.g. pq = 128/q gets changed upon creation to -128/q = -pq.
+				num := - num
+				den := - den
+			end
+			check
+				non_zero_denominator: den.truncated_to_integer /= 0 -- den = 2 ^ k, k ≥ 0.
+			end
+			create Result.make (create {INTEGER_NUMBER}.make (num.truncated_to_integer), create {INTEGER_NUMBER}.make (den.truncated_to_integer))
+		end
 
 	truncated_to_integer: like integer_anchor
 			-- <Precursor>
@@ -676,6 +721,13 @@ feature -- Implementation
 feature -- Anchor
 
 	real_anchor: REAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
+	rational_anchor: RATIONAL_NUMBER
 			-- <Precursor>
 		once
 		ensure then
