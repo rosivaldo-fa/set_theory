@@ -47,7 +47,7 @@ inherit
 			test_is_infinite,
 			test_is_finite,
 			test_is_rational,
---			test_is_integer,
+			test_is_integer,
 --			test_is_natural,
 --			test_is_invertible,
 --			test_equals,
@@ -690,15 +690,36 @@ feature -- Test routines (Quality)
 			assert ("(- Zero).is_rational ok", is_rational_ok (- Zero))
 		end
 
---	test_is_integer
---			-- <Precursor>
---			-- Test {STI_REAL_NUMBER}.is_integer.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_integer"
---			testing: "covers/{STI_REAL_NUMBER}.is_integer"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_is_integer
+			-- <Precursor>
+			-- Test {STI_REAL_NUMBER}.is_integer.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_integer"
+			testing: "covers/{STI_REAL_NUMBER}.is_integer"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+
+			assert ("not (- NaN).is_integer", not (- Nan).is_integer)
+			assert ("not (- NaN).is_integer ok", is_integer_ok (- Nan))
+
+			assert ("not NaN.is_integer", not Nan.is_integer)
+			assert ("not NaN.is_integer ok", is_integer_ok (Nan))
+
+			assert ("not (- Negative_infinity).is_integer", not (- Negative_infinity).is_integer)
+			assert ("not (- Negative_infinity).is_integer ok", is_integer_ok (- Negative_infinity))
+
+			assert ("not Negative_infinity.is_integer", not Negative_infinity.is_integer)
+			assert ("not Negative_infinity.is_integer ok", is_integer_ok (Negative_infinity))
+
+			assert ("not (- Positive_infinity).is_integer", not (- Positive_infinity).is_integer)
+			assert ("not (- Positive_infinity).is_integer ok", is_integer_ok (- Positive_infinity))
+
+			assert ("not Positive_infinity.is_integer", not Positive_infinity.is_integer)
+			assert ("not Positive_infinity.is_integer ok", is_integer_ok (Positive_infinity))
+
+			assert ("(- Zero).is_integer", (- Zero).is_integer)
+			assert ("(- Zero).is_integer ok", is_integer_ok (- Zero))
+		end
 
 --	test_is_natural
 --			-- <Precursor>

@@ -52,7 +52,7 @@ feature -- Test routines (All)
 			test_is_infinite
 			test_is_finite
 			test_is_rational
---			test_is_integer
+			test_is_integer
 --			test_is_natural
 --			test_is_invertible
 --			test_equals
@@ -325,9 +325,9 @@ feature -- Test routines (Quality)
 		end
 
 	test_is_rational
-			-- Test {STI_REAL_NUMBER}.is_rational.
+			-- Test {STS_REAL_NUMBER}.is_rational.
 		note
-			testing: "covers/{STI_REAL_NUMBER}.is_rational"
+			testing: "covers/{STS_REAL_NUMBER}.is_rational"
 		local
 			x: like real_number_to_be_tested
 		do
@@ -345,40 +345,26 @@ feature -- Test routines (Quality)
 			assert ("two.is_rational ok", is_rational_ok (two))
 		end
 
---	test_is_integer
---			-- Test {STS_REAL_NUMBER}.is_integer.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_integer"
---		local
---			x: like real_number_to_be_tested
---		do
---			from
---				x := real_number_to_be_tested
---			until
---				(x.p \\ x.q) ≍ zero.p
---			loop
---				x := real_number_to_be_tested
---			end
---			assert ("x.is_integer", x.is_integer)
+	test_is_integer
+			-- Test {STS_REAL_NUMBER}.is_integer.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_integer"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("is_integer", x.is_integer ⇒ True)
+			assert ("is_integer ok", is_integer_ok (x))
 
---			from
---				x := real_number_to_be_tested
---				check
---					good_divisor: x.q ≭ zero.p -- {STS_REAL_NUMBER} invariant
---				end
---			until
---				(x.p \\ x.q) ≭ zero.p
---			loop
---				x := real_number_to_be_tested
---				check
---					good_divisor: x.q ≭ zero.p -- {STS_REAL_NUMBER} invariant
---				end
---			end
---			assert ("not x.is_integer", not x.is_integer)
+			assert ("zero.is_integer", zero.is_integer)
+			assert ("zero.is_integer ok", is_integer_ok (zero))
 
---			x := real_number_to_be_tested
---			assert ("is_integer", x.is_integer ⇒ True)
---		end
+			assert ("one.is_integer", one.is_integer)
+			assert ("one.is_integer ok", is_integer_ok (one))
+
+			assert ("two.is_integer", two.is_integer)
+			assert ("two.is_integer ok", is_integer_ok (two))
+		end
 
 --	test_is_natural
 --			-- Test {STS_REAL_NUMBER}.is_natural.

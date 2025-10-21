@@ -124,10 +124,23 @@ feature -- Properties (Quality)
 			check
 				is_not_nan: x.is_rational ⇒ not x.is_nan
 				is_not_negative_infinity: x.is_rational ⇒ not x.is_negative_infinity
---				is_not_negative_nero: x.is_rational ⇒ not x.is_negative_zero
 				is_not_positive_infinity: x.is_rational ⇒ not x.is_positive_infinity
 				is_not_infinite: x.is_rational ⇒ not x.is_infinite
 				is_finite: x.is_rational ⇒ x.is_finite
+			then
+				Result := True
+			end
+		end
+
+	is_integer_ok (x: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_integer?
+		do
+			check
+				is_not_nan: x.is_integer ⇒ not x.is_nan
+				is_not_negative_infinity: x.is_integer ⇒ not x.is_negative_infinity
+				is_not_positive_infinity: x.is_integer ⇒ not x.is_positive_infinity
+				is_not_infinite: x.is_integer ⇒ not x.is_infinite
+				is_finite: x.is_integer ⇒ x.is_finite
 			then
 				Result := True
 			end
