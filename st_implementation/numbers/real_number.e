@@ -32,6 +32,7 @@ inherit
 			is_positive_infinity,
 			is_infinite,
 			is_finite,
+			is_invertible,
 			out,
 			is_less,
 			is_greater,
@@ -526,6 +527,10 @@ feature -- Quality
 					{INTEGER_NUMBER}.Native_min_value ≤ den and den ≤ {INTEGER_NUMBER}.Native_max_value
 			end
 		end
+
+	is_invertible: BOOLEAN = True
+			-- <Precursor>
+			-- An implementation akin to IEEE 754 inverts zero with no major consequence.
 
 feature -- Output
 

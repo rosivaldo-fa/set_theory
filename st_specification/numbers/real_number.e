@@ -147,14 +147,12 @@ feature -- Quality
 		end
 
 	is_invertible: BOOLEAN
-			-- Does current real number have a multiplicative inverse
-			-- (AKA reciprocal)?
-			-- Notice that the real_quasi_definition post-condition allows an
-			-- implementation to regard zero as invertible.
+			-- Does current real number have a multiplicative inverse (AKA reciprocal)?
+			-- Notice that the real_quasi_definition post-condition allows an implementation to regard zero as invertible.
 		do
 			Result := Current ≭ zero
 		ensure then
-			real_quasi_definition: Current ≭ zero implies Result
+			real_quasi_definition: Current ≭ zero ⇒ Result
 		end
 
 feature -- Comparison

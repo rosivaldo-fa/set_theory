@@ -54,7 +54,7 @@ feature -- Test routines (All)
 			test_is_rational
 			test_is_integer
 --			test_is_natural
---			test_is_invertible
+			test_is_invertible
 --			test_equals
 --			test_unequals
 --			test_is_less
@@ -395,28 +395,28 @@ feature -- Test routines (Quality)
 --			assert ("is_natural", x.is_natural ⇒ True)
 --		end
 
---	test_is_invertible
---			-- Test {STS_REAL_NUMBER}.is_invertible.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_invertible"
---		local
---			x: like real_number_to_be_tested
---		do
---			from
---				x := real_number_to_be_tested
---			until
---				x.p ≭ zero.p
---			loop
---				x := real_number_to_be_tested
---			end
---			assert ("x.is_invertible", x.is_invertible)
+	test_is_invertible
+			-- Test {STS_REAL_NUMBER}.is_invertible.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_invertible"
+		local
+			x: like real_number_to_be_tested
+		do
+			from
+				x := real_number_to_be_tested
+			until
+				x ≭ zero
+			loop
+				x := real_number_to_be_tested
+			end
+			assert ("x.is_invertible", x.is_invertible)
 
---			x := Zero
---			assert ("not x.is_invertible", not x.is_invertible)
-
---			x := real_number_to_be_tested
---			assert ("is_invertible", x.is_invertible ⇒ True)
---		end
+			x := real_number_to_be_tested
+			assert ("is_invertible", x.is_invertible ⇒ True)
+			assert ("zero.is_invertible ⇒ True", zero.is_invertible ⇒ True)
+			assert ("one.is_invertible", one.is_invertible)
+			assert ("two.is_invertible", two.is_invertible)
+		end
 
 --feature -- Test routines (Comparison)
 

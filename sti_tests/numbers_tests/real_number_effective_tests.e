@@ -49,7 +49,7 @@ inherit
 			test_is_rational,
 			test_is_integer,
 --			test_is_natural,
---			test_is_invertible,
+			test_is_invertible,
 --			test_equals,
 --			test_unequals,
 --			test_is_less,
@@ -731,15 +731,26 @@ feature -- Test routines (Quality)
 --			Precursor {STST_REAL_NUMBER_TESTS}
 --		end
 
---	test_is_invertible
---			-- <Precursor>
---			-- Test {STI_REAL_NUMBER}.is_invertible.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_invertible"
---			testing: "covers/{STI_REAL_NUMBER}.is_invertible"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_is_invertible
+			-- Test {STI_REAL_NUMBER}.is_invertible.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_invertible"
+		local
+			x: like real_number_to_be_tested
+			l_check: BOOLEAN
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			x := real_number_to_be_tested
+			assert ("x.is_invertible", x.is_invertible)
+
+			assert ("(- NaN).is_invertible", (- Nan).is_invertible)
+			assert ("NaN.is_invertible", Nan.is_invertible)
+			assert ("(- Negative_infinity).is_invertible", (- Negative_infinity).is_invertible)
+			assert ("Negative_infinity.is_invertible", Negative_infinity.is_invertible)
+			assert ("(- Positive_infinity).is_invertible", (- Positive_infinity).is_invertible)
+			assert ("Positive_infinity.is_invertible", Positive_infinity.is_invertible)
+			assert ("(- Zero).is_invertible", (- Zero).is_invertible)
+		end
 
 feature -- Test routines (Output)
 
