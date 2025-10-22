@@ -53,7 +53,7 @@ feature -- Test routines (All)
 			test_is_finite
 			test_is_rational
 			test_is_integer
---			test_is_natural
+			test_is_natural
 			test_is_invertible
 --			test_equals
 --			test_unequals
@@ -366,34 +366,26 @@ feature -- Test routines (Quality)
 			assert ("two.is_integer ok", is_integer_ok (two))
 		end
 
---	test_is_natural
---			-- Test {STS_REAL_NUMBER}.is_natural.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_natural"
---		local
---			x: like real_number_to_be_tested
---		do
---			from
---				x := real_number_to_be_tested
---			until
---				x < zero
---			loop
---				x := real_number_to_be_tested
---			end
---			assert ("not x.is_natural", not x.is_natural)
+	test_is_natural
+			-- Test {STS_REAL_NUMBER}.is_natural.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_natural"
+		local
+			x: like real_number_to_be_tested
+		do
+			x := real_number_to_be_tested
+			assert ("is_natural", x.is_natural ⇒ True)
+			assert ("is_natural ok", is_natural_ok (x))
 
---			from
---				x := real_number_to_be_tested
---			until
---				zero ≤ x and x.q | x.p
---			loop
---				x := real_number_to_be_tested
---			end
---			assert ("x.is_natural", x.is_natural)
+			assert ("zero.is_natural", zero.is_natural)
+			assert ("zero.is_natural ok", is_natural_ok (zero))
 
---			x := real_number_to_be_tested
---			assert ("is_natural", x.is_natural ⇒ True)
---		end
+			assert ("one.is_natural", one.is_natural)
+			assert ("one.is_natural ok", is_natural_ok (one))
+
+			assert ("two.is_natural", two.is_natural)
+			assert ("two.is_natural ok", is_natural_ok (two))
+		end
 
 	test_is_invertible
 			-- Test {STS_REAL_NUMBER}.is_invertible.

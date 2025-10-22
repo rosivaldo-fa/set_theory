@@ -48,7 +48,7 @@ inherit
 			test_is_finite,
 			test_is_rational,
 			test_is_integer,
---			test_is_natural,
+			test_is_natural,
 			test_is_invertible,
 --			test_equals,
 --			test_unequals,
@@ -721,15 +721,36 @@ feature -- Test routines (Quality)
 			assert ("(- Zero).is_integer ok", is_integer_ok (- Zero))
 		end
 
---	test_is_natural
---			-- <Precursor>
---			-- Test {STI_REAL_NUMBER}.is_natural.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_natural"
---			testing: "covers/{STI_REAL_NUMBER}.is_natural"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_is_natural
+			-- <Precursor>
+			-- Test {STI_REAL_NUMBER}.is_natural.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.is_natural"
+			testing: "covers/{STI_REAL_NUMBER}.is_natural"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+
+			assert ("not (- NaN).is_natural", not (- Nan).is_natural)
+			assert ("not (- NaN).is_natural ok", is_natural_ok (- Nan))
+
+			assert ("not NaN.is_natural", not Nan.is_natural)
+			assert ("not NaN.is_natural ok", is_natural_ok (Nan))
+
+			assert ("not (- Negative_infinity).is_natural", not (- Negative_infinity).is_natural)
+			assert ("not (- Negative_infinity).is_natural ok", is_natural_ok (- Negative_infinity))
+
+			assert ("not Negative_infinity.is_natural", not Negative_infinity.is_natural)
+			assert ("not Negative_infinity.is_natural ok", is_natural_ok (Negative_infinity))
+
+			assert ("not (- Positive_infinity).is_natural", not (- Positive_infinity).is_natural)
+			assert ("not (- Positive_infinity).is_natural ok", is_natural_ok (- Positive_infinity))
+
+			assert ("not Positive_infinity.is_natural", not Positive_infinity.is_natural)
+			assert ("not Positive_infinity.is_natural ok", is_natural_ok (Positive_infinity))
+
+			assert ("(- Zero).is_natural", (- Zero).is_natural)
+			assert ("(- Zero).is_natural ok", is_natural_ok (- Zero))
+		end
 
 	test_is_invertible
 			-- Test {STI_REAL_NUMBER}.is_invertible.

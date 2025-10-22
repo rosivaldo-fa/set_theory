@@ -146,6 +146,14 @@ feature -- Quality
 			real_definition: Result = Current ≍ truncated_to_integer
 		end
 
+	is_natural: BOOLEAN
+			-- Does current real number represent a natural number?
+		do
+			Result := is_integer and zero ≤ Current
+		ensure
+			definition: Result = (is_integer and zero ≤ Current)
+		end
+
 	is_invertible: BOOLEAN
 			-- Does current real number have a multiplicative inverse (AKA reciprocal)?
 			-- Notice that the real_quasi_definition post-condition allows an implementation to regard zero as invertible.

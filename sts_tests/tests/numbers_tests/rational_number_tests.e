@@ -18,6 +18,7 @@ inherit
 			test_zero as test_real_zero,
 			test_one as test_real_one,
 			test_is_integer as test_real_is_integer,
+			test_is_natural as test_real_is_natural,
 			test_is_invertible as test_real_is_invertible,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine

@@ -104,14 +104,6 @@ feature -- Quality
 			definition: Result = q | p
 		end
 
-	is_natural: BOOLEAN
-			-- Does current rational number represent a natural number?
-		do
-			Result := is_integer and zero ≤ Current
-		ensure
-			definition: Result = (is_integer and zero ≤ Current)
-		end
-
 	is_invertible: BOOLEAN
 			-- Does current rational number have a multiplicative inverse (AKA reciprocal)?
 		do
