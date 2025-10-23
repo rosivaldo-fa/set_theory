@@ -165,18 +165,18 @@ feature -- Properties (Quality)
 
 feature -- Properties (Comparison)
 
---	equals_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.equals?
---		do
---			check
---				reflexive: x ≍ x
---				symmetric: x ≍ y ⇒ y ≍ x
---				transitive: x ≍ y and y ≍ z ⇒ x ≍ z
---				euclidian: x ≍ z and y ≍ z ⇒ x ≍ y
---			then
---				Result := True
---			end
---		end
+	equals_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within set theory hold for {STS_REAL_NUMBER}.equals?
+		do
+			check
+				reflexive: x ≍ x
+				symmetric: x ≍ y implies y ≍ x
+				transitive: x ≍ y and y ≍ z implies x ≍ z
+				euclidian: x ≍ z and y ≍ z implies x ≍ y
+			then
+				Result := True
+			end
+		end
 
 --	unequals_ok (x: STS_REAL_NUMBER): BOOLEAN
 --			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.unequals?

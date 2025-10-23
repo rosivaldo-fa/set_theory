@@ -34,6 +34,7 @@ inherit
 			is_finite,
 			is_invertible,
 			out,
+			equals,
 			is_less,
 			is_greater,
 			three_way_comparison,
@@ -543,6 +544,26 @@ feature -- Output
 		end
 
 feature -- Comparison
+
+	equals alias "≍" (x: STS_REAL_NUMBER): BOOLEAN
+			-- <Precursor>
+		do
+			if Current ~ x then
+				Result := True
+			elseif attached {REAL_NUMBER} x as exp_x then
+				if
+						-- +0 = -0
+					value_bit_pattern & ((Exponent_mask |<< Mantissa_width) | Mantissa_mask) = 0 and
+					exp_x.value_bit_pattern & ((Exponent_mask |<< Mantissa_width) | Mantissa_mask) = 0
+				then
+					Result := True
+				elseif is_nan then
+					Result := exp_x.is_nan
+				end
+			else
+				Result := Precursor {STS_REAL_NUMBER}(x)
+			end
+		end
 
 	is_less alias "<" (x: STS_REAL_NUMBER): BOOLEAN
 			-- <Precursor>

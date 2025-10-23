@@ -50,7 +50,7 @@ inherit
 			test_is_integer,
 			test_is_natural,
 			test_is_invertible,
---			test_equals,
+			test_equals,
 --			test_unequals,
 --			test_is_less,
 --			test_is_less_equal,
@@ -758,7 +758,6 @@ feature -- Test routines (Quality)
 			testing: "covers/{STI_REAL_NUMBER}.is_invertible"
 		local
 			x: like real_number_to_be_tested
-			l_check: BOOLEAN
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
 			x := real_number_to_be_tested
@@ -783,17 +782,20 @@ feature -- Test routines (Output)
 			assert ("out", attached real_number_to_be_tested.out)
 		end
 
---feature -- Test routines (Comparison)
+feature -- Test routines (Comparison)
 
---	test_equals
---			-- <Precursor>
---			-- Test {STI_REAL_NUMBER}.equals.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.equals"
---			testing: "covers/{STI_REAL_NUMBER}.equals"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_equals
+			-- Test {STI_REAL_NUMBER}.equals.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.equals"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			assert ("-NaN", equals_ok (- Nan, some_real_number, some_real_number))
+			assert ("NaN", equals_ok (Nan, some_real_number, some_real_number))
+			assert ("-Infinity", equals_ok (Negative_infinity, some_real_number, some_real_number))
+			assert ("Infinity", equals_ok (Positive_infinity, some_real_number, some_real_number))
+			assert ("-0", equals_ok (- Zero, some_real_number, some_real_number))
+		end
 
 --	test_unequals
 --			-- <Precursor>

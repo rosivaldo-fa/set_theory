@@ -55,7 +55,7 @@ feature -- Test routines (All)
 			test_is_integer
 			test_is_natural
 			test_is_invertible
---			test_equals
+			test_equals
 --			test_unequals
 --			test_is_less
 --			test_is_less_equal
@@ -410,30 +410,37 @@ feature -- Test routines (Quality)
 			assert ("two.is_invertible", two.is_invertible)
 		end
 
---feature -- Test routines (Comparison)
+feature -- Test routines (Comparison)
 
---	test_equals
---			-- Test {STS_REAL_NUMBER}.equals.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.equals"
---		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
---		do
---			pq_1 := real_number_to_be_tested
---			assert ("same_entity", pq_1 ≍ pq_1)
---			assert ("same_entity_ok", equals_ok (pq_1, pq_1, pq_1))
+	test_equals
+			-- Test {STS_REAL_NUMBER}.equals.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.equals"
+		local
+			x: like real_number_to_be_tested
+			y: like some_real_number
+		do
+			x := real_number_to_be_tested
+			assert ("same_entity", x ≍ x)
+			assert ("same_entity ok", equals_ok (x, x, x))
 
---			pq_1 := real_number_to_be_tested
---			pq_2 := same_real_number (pq_1)
---			assert ("same_real", pq_1 ≍ pq_2)
---			assert ("same_real_ok", equals_ok (pq_1, pq_2, same_real_number (pq_2)))
+			x := real_number_to_be_tested
+			y := same_real_number (x)
+			assert ("same_real_number", x ≍ y)
+			assert ("same_real ok", equals_ok (x, y, same_real_number (y)))
 
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
---			assert ("some_real_number", pq_1 ≍ pq_2 ⇒ True)
---			assert ("equals_ok", equals_ok (pq_1, pq_2, some_real_number))
---		end
+			x := real_number_to_be_tested
+			y := some_real_number
+			assert ("some_real_number", x ≍ y ⇒ True)
+			assert ("some_real_number ok", equals_ok (x, y, some_real_number))
+
+--			assert ("-NaN", equals_ok (-Nan, some_real_number, some_real_number))
+--			assert ("NaN", equals_ok (Nan, some_real_number, some_real_number))
+--			assert ("-Infinity", equals_ok (Negative_infinity, some_real_number, some_real_number))
+--			assert ("Infinity", equals_ok (Positive_infinity, some_real_number, some_real_number))
+--			assert ("-0", equals_ok (- Zero, some_real_number, some_real_number))
+			assert ("0", equals_ok (Zero, some_real_number, some_real_number))
+		end
 
 --	test_unequals
 --			-- Test {STS_REAL_NUMBER}.unequals.
