@@ -12,9 +12,10 @@ inherit
 	REAL_NUMBER_TESTS
 		rename
 			is_not_in_ok as real_is_not_in_ok,
+			equals_ok as real_equals_ok,
+			unequals_ok as real_unequals_ok,
 			test_is_in as test_real_is_in,
 			test_is_not_in as test_real_is_not_in,
-			equals_ok as real_equals_ok,
 			test_sign as test_real_sign,
 			test_zero as test_real_zero,
 			test_one as test_real_one,
@@ -22,6 +23,7 @@ inherit
 			test_is_natural as test_real_is_natural,
 			test_is_invertible as test_real_is_invertible,
 			test_equals as test_real_equals,
+			test_unequals as test_real_unequals,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,

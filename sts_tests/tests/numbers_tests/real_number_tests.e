@@ -56,7 +56,7 @@ feature -- Test routines (All)
 			test_is_natural
 			test_is_invertible
 			test_equals
---			test_unequals
+			test_unequals
 --			test_is_less
 --			test_is_less_equal
 --			test_is_greater
@@ -434,43 +434,37 @@ feature -- Test routines (Comparison)
 			assert ("some_real_number", x ≍ y ⇒ True)
 			assert ("some_real_number ok", equals_ok (x, y, some_real_number))
 
---			assert ("-NaN", equals_ok (-Nan, some_real_number, some_real_number))
---			assert ("NaN", equals_ok (Nan, some_real_number, some_real_number))
---			assert ("-Infinity", equals_ok (Negative_infinity, some_real_number, some_real_number))
---			assert ("Infinity", equals_ok (Positive_infinity, some_real_number, some_real_number))
---			assert ("-0", equals_ok (- Zero, some_real_number, some_real_number))
-			assert ("0", equals_ok (Zero, some_real_number, some_real_number))
+			assert ("0 ok", equals_ok (Zero, some_real_number, some_real_number))
+			assert ("1 ok", equals_ok (one, some_real_number, some_real_number))
+			assert ("2 ok", equals_ok (two, some_real_number, some_real_number))
 		end
 
---	test_unequals
---			-- Test {STS_REAL_NUMBER}.unequals.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.unequals"
---		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
---		do
---			pq_1 := real_number_to_be_tested
---			from
---				pq_2 := some_real_number
---			until
---				not (pq_1 ≍ pq_2)
---			loop
---				pq_2 := some_real_number
---			end
---			assert ("pq_1 ≭ pq_2", pq_1 ≭ pq_2)
---			assert ("pq_1 ≭ pq_2 ok", unequals_ok (pq_1))
+	test_unequals
+			-- Test {STS_REAL_NUMBER}.unequals.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.unequals"
+		local
+			x: like real_number_to_be_tested
+			y: like some_real_number
+		do
+			x := real_number_to_be_tested
+			assert ("same_entity", not (x ≭ x))
+			assert ("same_entity ok", unequals_ok (x, x))
 
---			pq_1 := real_number_to_be_tested
---			pq_2 := same_real_number (pq_1)
---			assert ("not (pq_1 ≭ pq_2)", not (pq_1 ≭ pq_2))
---			assert ("not (pq_1 ≭ pq_2) ok", unequals_ok (pq_1))
+			x := real_number_to_be_tested
+			y := same_real_number (x)
+			assert ("same_real_number", not (x ≭ y))
+			assert ("same_real ok", unequals_ok (x, y))
 
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
---			assert ("unequals", pq_1 ≭ pq_2 ⇒ True)
---			assert ("unequals ok", unequals_ok (pq_1))
---		end
+			x := real_number_to_be_tested
+			y := some_real_number
+			assert ("some_real_number", x ≭ y ⇒ True)
+			assert ("some_real_number ok", unequals_ok (x, y))
+
+			assert ("0 ok", unequals_ok (Zero, some_real_number))
+			assert ("1 ok", unequals_ok (one, some_real_number))
+			assert ("2 ok", unequals_ok (two, some_real_number))
+		end
 
 --	test_is_less
 --			-- Test {STS_REAL_NUMBER}.is_less.

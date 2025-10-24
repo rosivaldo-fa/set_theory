@@ -174,20 +174,20 @@ feature -- Comparison
 			definition: Result = (value = x.value)
 		end
 
-	is_less alias "<" (x: REAL_NUMBER): BOOLEAN
-			-- Is current real number less than `x'?
-		do
-			Result := value < x.value
-		ensure
-			definition: Result = (value < x.value)
-		end
-
 	unequals alias "≭" (x: REAL_NUMBER): BOOLEAN
 			-- Does not current real number equal `x'?
 		do
 			Result := not (Current ≍ x)
 		ensure
 			definition: Result = not (Current ≍ x)
+		end
+
+	is_less alias "<" (x: REAL_NUMBER): BOOLEAN
+			-- Is current real number less than `x'?
+		do
+			Result := value < x.value
+		ensure
+			definition: Result = (value < x.value)
 		end
 
 	is_less_equal alias "<=" alias "≤" (x: REAL_NUMBER): BOOLEAN

@@ -51,7 +51,7 @@ inherit
 			test_is_natural,
 			test_is_invertible,
 			test_equals,
---			test_unequals,
+			test_unequals,
 --			test_is_less,
 --			test_is_less_equal,
 --			test_is_greater,
@@ -797,15 +797,20 @@ feature -- Test routines (Comparison)
 			assert ("-0", equals_ok (- Zero, some_real_number, some_real_number))
 		end
 
---	test_unequals
---			-- <Precursor>
---			-- Test {STS_REAL_NUMBER}.unequals.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.unequals"
---			testing: "covers/{STI_REAL_NUMBER}.unequals"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_unequals
+			-- <Precursor>
+			-- Test {STI_REAL_NUMBER}.unequals.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.unequals"
+			testing: "covers/{STI_REAL_NUMBER}.unequals"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			assert ("-NaN", unequals_ok (- Nan, some_real_number))
+			assert ("NaN", unequals_ok (Nan, some_real_number))
+			assert ("-Infinity", unequals_ok (Negative_infinity, some_real_number))
+			assert ("Infinity", unequals_ok (Positive_infinity, some_real_number))
+			assert ("-0", unequals_ok (- Zero, some_real_number))
+		end
 
 --	test_is_less
 --			-- <Precursor>

@@ -166,7 +166,7 @@ feature -- Properties (Quality)
 feature -- Properties (Comparison)
 
 	equals_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {STS_REAL_NUMBER}.equals?
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.equals?
 		do
 			check
 				reflexive: x ≍ x
@@ -178,15 +178,16 @@ feature -- Properties (Comparison)
 			end
 		end
 
---	unequals_ok (x: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.unequals?
---		do
---			check
---				irreflexive: not (x ≭ x)
---			then
---				Result := True
---			end
---		end
+	unequals_ok (x, y: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.unequals?
+		do
+			check
+				definition: x ≭ y = (x.value /= y.value)
+				irreflexive: not (x ≭ x)
+			then
+				Result := True
+			end
+		end
 
 --	is_less_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
 --			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_less?

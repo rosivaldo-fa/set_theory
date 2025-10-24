@@ -11,7 +11,8 @@ inherit
 	REAL_NUMBER_PROPERTIES
 		rename
 			is_not_in_ok as real_is_not_in_ok,
-			equals_ok as real_equals_ok
+			equals_ok as real_equals_ok,
+			unequals_ok as real_unequals_ok
 		end
 
 feature -- Access
