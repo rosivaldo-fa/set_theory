@@ -567,8 +567,70 @@ feature -- Comparison
 
 	is_less alias "<" (x: STS_REAL_NUMBER): BOOLEAN
 			-- <Precursor>
+			--| Notice that the code is big, but after discarding assertions and removing dead code, hopefully it is faster than comparing the calculated values.
+			--| TODO: Test it.
+		local
+			sb, x_sb: like sign_bit_status
 		do
-			Result := Precursor {STS_REAL_NUMBER} (x)
+			if attached {REAL_NUMBER} x as exp_x then
+				if exp_x.is_nan then
+						check
+							cant_be_less_than_nan: exp_x.value ≤ value
+							nothing_to_do: not Result
+						end
+				elseif is_nan then
+						check
+							nan_is_minimum: value < exp_x.value
+						end
+					Result := True
+				else
+					sb := sign_bit_status
+					x_sb := exp_x.sign_bit_status
+					if sb | x_sb = 0 then
+							check
+								current_is_non_negative: 0 ≤ value
+								x_is_non_negative: 0 ≤ exp_x.value
+							end
+						Result := value_bit_pattern < exp_x.value_bit_pattern
+					elseif sb < x_sb then
+							check
+								x_is_non_positive: exp_x.value ≤ 0
+								current_is_non_negative: 0 ≤ value
+								nothing_to_do: not Result
+							end
+					elseif sb > x_sb then
+							check
+								current_is_non_positive: value ≤ 0
+								x_is_non_negative: 0 ≤ exp_x.value
+							end
+						if
+								-- +0 = -0
+							value_bit_pattern & ((Exponent_mask |<< Mantissa_width) | Mantissa_mask) /= 0 or
+							exp_x.value_bit_pattern & ((Exponent_mask |<< Mantissa_width) | Mantissa_mask) /= 0
+						then
+								check
+									negative_below_non_negative: value < 0 implies 0 ≤ exp_x.value
+									zero_below_positive: value = 0 implies 0 < exp_x.value
+								end
+							Result := True
+						else
+								check
+									current_is_zero: value = 0
+									x_is_zero: exp_x.value = 0
+									nothing_to_do: not Result
+								end
+						end
+					else
+							check
+								current_is_non_positive: sb = 1
+								x_is_non_positive: x_sb = 1
+							end
+						Result := exp_x.value_bit_pattern < value_bit_pattern
+					end
+				end
+			else
+				Result := Precursor {STS_REAL_NUMBER}(x)
+			end
 		ensure then
 			next_float: Result implies next_float ≤ x
 		end
@@ -772,8 +834,6 @@ feature {REAL_NUMBER} -- Implementation
 	value_bit_pattern: NATURAL_16
 			-- Bit pattern of the `value' of current real number
 
-feature {NONE} -- Implementation
-
 	sign_bit_status: like value_bit_pattern
 			-- Status of the sign bit of `value_bit_pattern'
 			-- Notice that, unlike `sign', it has only two possible values (0 or 1), and it may be non zero for, e.g. negative zero.
@@ -783,6 +843,8 @@ feature {NONE} -- Implementation
 		ensure
 			definition: Result = (value_bit_pattern |>> (Exponent_width + Mantissa_width)) & 1
 		end
+
+feature {NONE} -- Implementation
 
 	exponent_bit_pattern: like value_bit_pattern
 			-- Bit pattern that represents the exponent, on base 2, of current real number.

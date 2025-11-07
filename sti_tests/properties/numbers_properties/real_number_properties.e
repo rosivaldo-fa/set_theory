@@ -12,7 +12,8 @@ inherit
 		rename
 			is_nan_ok as stst_is_nan_ok,
 			is_negative_infinity_ok as stst_is_negative_infinity_ok,
-			is_positive_infinity_ok as stst_is_positive_infinity_ok
+			is_positive_infinity_ok as stst_is_positive_infinity_ok,
+			is_less_ok as stst_is_less_ok
 		end
 
 feature -- Access
@@ -80,6 +81,20 @@ feature -- Properties (Quality)
 				check
 					absorbing_minuend: x.is_positive_infinity and not y.is_nan and not y.is_positive_infinity ⇒ (x - y).is_positive_infinity
 					quasi_absorbing_subtrahend: not x.is_nan and not x.is_positive_infinity and y.is_positive_infinity ⇒ (x - y).is_negative_infinity
+				then
+					Result := True
+				end
+			end
+		end
+
+feature -- Properties (Comparison)
+
+	is_less_ok (x: STI_REAL_NUMBER; y, z: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.is_less?
+		do
+			if stst_is_less_ok (x, y, z) then
+				check
+	--				relative_epsilon: x < y ⇒ (y - x) ≥ x.relative_epsilon
 				then
 					Result := True
 				end

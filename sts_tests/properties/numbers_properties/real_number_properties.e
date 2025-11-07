@@ -170,9 +170,9 @@ feature -- Properties (Comparison)
 		do
 			check
 				reflexive: x ≍ x
-				symmetric: x ≍ y implies y ≍ x
-				transitive: x ≍ y and y ≍ z implies x ≍ z
-				euclidian: x ≍ z and y ≍ z implies x ≍ y
+				symmetric: x ≍ y ⇒ y ≍ x
+				transitive: x ≍ y and y ≍ z ⇒ x ≍ z
+				euclidian: x ≍ z and y ≍ z ⇒ x ≍ y
 			then
 				Result := True
 			end
@@ -189,16 +189,19 @@ feature -- Properties (Comparison)
 			end
 		end
 
---	is_less_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_less?
---		do
---			check
---				irreflexive: not (x < x)
---				transitive: x < y and y < z ⇒ x < z
---			then
---				Result := True
---			end
---		end
+	is_less_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_less?
+		do
+			check
+				irreflexive: not (x < x)
+				transitive: x < y and y < z ⇒ x < z
+				nan: x.is_nan and not y.is_nan ⇒ x < y
+				negative_infinity: x.is_negative_infinity and not (y.is_nan or y.is_negative_infinity) ⇒ x < y
+				positive_infinity: x.is_positive_infinity ⇒ not (x < y)
+			then
+				Result := True
+			end
+		end
 
 --	is_less_equal_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
 --			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_less_equal?

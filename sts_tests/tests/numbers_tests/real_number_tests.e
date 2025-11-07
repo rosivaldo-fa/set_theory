@@ -57,7 +57,7 @@ feature -- Test routines (All)
 			test_is_invertible
 			test_equals
 			test_unequals
---			test_is_less
+			test_is_less
 --			test_is_less_equal
 --			test_is_greater
 --			test_is_greater_equal
@@ -466,51 +466,21 @@ feature -- Test routines (Comparison)
 			assert ("2 ok", unequals_ok (two, some_real_number))
 		end
 
---	test_is_less
---			-- Test {STS_REAL_NUMBER}.is_less.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_less"
---		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
---		do
---			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			invariant
---					-- {STS_REAL_NUMBER} invariant
---				good_divisor_1: pq_1.q.value /= 0
---				good_divisor_2: pq_2.q.value /= 0
---			until
---				(pq_1.p.value / pq_1.q.value) < (pq_2.p.value / pq_2.q.value)
---			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			end
---			assert ("pq_1 < pq_2", pq_1 < pq_2)
---			assert ("pq_1 < pq_2 ok", is_less_ok (pq_1, pq_2, some_real_number))
+	test_is_less
+			-- Test {STI_REAL_NUMBER}.is_less.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_less"
+		local
+			x: like real_number_to_be_tested
+			y: like some_real_number
+		do
+			x := real_number_to_be_tested
+			y := some_real_number
+			assert ("is_less", x < y ⇒ True)
+			assert ("is_less_ok", is_less_ok (x, y, some_real_number))
 
---			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			invariant
---					-- {STS_REAL_NUMBER} invariant
---				good_divisor_1: pq_1.q.value /= 0
---				good_divisor_2: pq_2.q.value /= 0
---			until
---				(pq_1.p.value / pq_1.q.value) ≥ (pq_2.p.value / pq_2.q.value)
---			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			end
---			assert ("not (pq_1 < pq_2)", not (pq_1 < pq_2))
---			assert ("not (pq_1 < pq_2) ok", is_less_ok (pq_1, pq_2, some_real_number))
-
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
---			assert ("is_less", pq_1 < pq_2 ⇒ True)
---			assert ("is_less ok", is_less_ok (pq_1, pq_2, some_real_number))
---		end
+			assert ("0 ok", is_less_ok (Zero, some_real_number, some_real_number))
+		end
 
 --	test_is_less_equal
 --			-- Test {STS_REAL_NUMBER}.is_less_equal.

@@ -15,6 +15,7 @@ inherit
 			is_nan_ok as stst_is_nan_ok,
 			is_negative_infinity_ok as stst_is_negative_infinity_ok,
 			is_positive_infinity_ok as stst_is_positive_infinity_ok,
+			is_less_ok as stst_is_less_ok,
 			some_immediate_natural_number as some_expanded_natural_number,
 			some_immediate_integer_number as some_expanded_integer_number,
 			some_immediate_rational_number as some_expanded_rational_number,
@@ -52,7 +53,7 @@ inherit
 			test_is_invertible,
 			test_equals,
 			test_unequals,
---			test_is_less,
+			test_is_less,
 --			test_is_less_equal,
 --			test_is_greater,
 --			test_is_greater_equal,
@@ -812,15 +813,17 @@ feature -- Test routines (Comparison)
 			assert ("-0", unequals_ok (- Zero, some_real_number))
 		end
 
---	test_is_less
---			-- <Precursor>
---			-- Test {STI_REAL_NUMBER}.is_less.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_less"
---			testing: "covers/{STI_REAL_NUMBER}.is_less"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_is_less
+			-- Test {STI_REAL_NUMBER}.is_less.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_less"
+		do
+			assert ("-NaN", is_less_ok (-Nan, some_real_number, some_real_number))
+			assert ("NaN", is_less_ok (Nan, some_real_number, some_real_number))
+			assert ("-Infinity", is_less_ok (Negative_infinity, some_real_number, some_real_number))
+			assert ("Infinity", is_less_ok (Positive_infinity, some_real_number, some_real_number))
+			assert ("-0", is_less_ok (- Zero, some_real_number, some_real_number))
+		end
 
 --	test_is_less_equal
 --			-- <Precursor>

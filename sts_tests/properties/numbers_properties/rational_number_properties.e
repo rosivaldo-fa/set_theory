@@ -12,7 +12,8 @@ inherit
 		rename
 			is_not_in_ok as real_is_not_in_ok,
 			equals_ok as real_equals_ok,
-			unequals_ok as real_unequals_ok
+			unequals_ok as real_unequals_ok,
+			is_less_ok as real_is_less_ok
 		end
 
 feature -- Access
