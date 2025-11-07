@@ -818,6 +818,7 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STI_REAL_NUMBER}.is_less"
 		do
+			Precursor {STST_REAL_NUMBER_TESTS}
 			assert ("-NaN", is_less_ok (-Nan, some_real_number, some_real_number))
 			assert ("NaN", is_less_ok (Nan, some_real_number, some_real_number))
 			assert ("-Infinity", is_less_ok (Negative_infinity, some_real_number, some_real_number))

@@ -195,25 +195,28 @@ feature -- Properties (Comparison)
 			check
 				irreflexive: not (x < x)
 				transitive: x < y and y < z ⇒ x < z
-				nan: x.is_nan and not y.is_nan ⇒ x < y
-				negative_infinity: x.is_negative_infinity and not (y.is_nan or y.is_negative_infinity) ⇒ x < y
+				nan: x.is_nan ⇒ ((x < y) = not y.is_nan)
+				negative_infinity: x.is_negative_infinity ⇒ ((x < y) = not (y.is_nan or y.is_negative_infinity))
 				positive_infinity: x.is_positive_infinity ⇒ not (x < y)
 			then
 				Result := True
 			end
 		end
 
---	is_less_equal_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_less_equal?
---		do
---			check
---				reflexive: x ≤ x
---				transitive: x ≤ y and y ≤ z ⇒ x ≤ z
---				antisymmetric: x ≤ y and y ≤ x ⇒ x ≍ y
---			then
---				Result := True
---			end
---		end
+	is_less_equal_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_less_equal?
+		do
+			check
+				reflexive: x ≤ x
+				transitive: x ≤ y and y ≤ z ⇒ x ≤ z
+				antisymmetric: x ≤ y and y ≤ x ⇒ x ≍ y
+				nan: x.is_nan ⇒ x ≤ y
+				negative_infinity: x.is_negative_infinity ⇒ ((x ≤ y) = not y.is_nan)
+				positive_infinity: x.is_positive_infinity ⇒ ((x ≤ y) = y.is_positive_infinity)
+			then
+				Result := True
+			end
+		end
 
 --	is_greater_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
 --			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_greater?

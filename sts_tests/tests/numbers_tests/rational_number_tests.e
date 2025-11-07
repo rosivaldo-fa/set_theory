@@ -15,6 +15,7 @@ inherit
 			equals_ok as real_equals_ok,
 			unequals_ok as real_unequals_ok,
 			is_less_ok as real_is_less_ok,
+			is_less_equal_ok as real_is_less_equal_ok,
 			test_is_in as test_real_is_in,
 			test_is_not_in as test_real_is_not_in,
 			test_sign as test_real_sign,
