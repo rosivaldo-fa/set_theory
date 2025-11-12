@@ -54,7 +54,7 @@ inherit
 			test_equals,
 			test_unequals,
 			test_is_less,
---			test_is_less_equal,
+			test_is_less_equal,
 --			test_is_greater,
 --			test_is_greater_equal,
 --			test_three_way_comparison,
@@ -817,24 +817,51 @@ feature -- Test routines (Comparison)
 			-- Test {STI_REAL_NUMBER}.is_less.
 		note
 			testing: "covers/{STI_REAL_NUMBER}.is_less"
+		local
+			x: like real_number_to_be_tested
+			y: like some_real_number
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
-			assert ("-NaN", is_less_ok (-Nan, some_real_number, some_real_number))
-			assert ("NaN", is_less_ok (Nan, some_real_number, some_real_number))
-			assert ("-Infinity", is_less_ok (Negative_infinity, some_real_number, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not y.is_nan
+			loop
+				y := some_real_number
+			end
+			assert ("-NaN < y", - Nan < y)
+			assert ("-NaN < y ok", is_less_ok (- Nan, y, some_real_number))
+
+			assert ("NaN < y", Nan < y)
+			assert ("NaN < y ok", is_less_ok (Nan, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y.is_finite or y.is_positive_infinity
+			loop
+				y := some_real_number
+			end
+			assert ("-Infinity < y", Negative_infinity < y)
+			assert ("-Infinity < y ok", is_less_ok (Negative_infinity, y, some_real_number))
+			aqui
 			assert ("Infinity", is_less_ok (Positive_infinity, some_real_number, some_real_number))
 			assert ("-0", is_less_ok (- Zero, some_real_number, some_real_number))
 		end
 
---	test_is_less_equal
---			-- <Precursor>
---			-- Test {STI_REAL_NUMBER}.is_less_equal.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_less_equal"
---			testing: "covers/{STI_REAL_NUMBER}.is_less_equal"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_is_less_equal
+			-- Test {STI_REAL_NUMBER}.is_less_equal.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_less_equal"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			assert ("-NaN", is_less_equal_ok (-Nan, some_real_number, some_real_number))
+			assert ("NaN", is_less_equal_ok (Nan, some_real_number, some_real_number))
+			assert ("-Infinity", is_less_equal_ok (Negative_infinity, some_real_number, some_real_number))
+			assert ("Infinity", is_less_equal_ok (Positive_infinity, some_real_number, some_real_number))
+			assert ("-0", is_less_equal_ok (- Zero, some_real_number, some_real_number))
+		end
 
 --	test_is_greater
 --			-- <Precursor>

@@ -27,6 +27,7 @@ inherit
 			test_equals as test_real_equals,
 			test_unequals as test_real_unequals,
 			test_is_less as test_real_is_less,
+			test_is_less_equal as test_real_is_less_equal,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,
