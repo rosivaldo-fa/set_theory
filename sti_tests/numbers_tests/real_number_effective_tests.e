@@ -818,7 +818,6 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{STI_REAL_NUMBER}.is_less"
 		local
-			x: like real_number_to_be_tested
 			y: like some_real_number
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
@@ -836,6 +835,13 @@ feature -- Test routines (Comparison)
 			assert ("NaN < y", Nan < y)
 			assert ("NaN < y ok", is_less_ok (Nan, y, some_real_number))
 
+			y := if next_random_item \\ 2 = 0 then Nan else - Nan end
+			assert ("not (-NaN < y)", not (- NaN < y))
+			assert ("not (-NaN < y) ok", is_less_ok (- Nan, y, some_real_number))
+
+			assert ("not (NaN < y)", not (NaN < y))
+			assert ("not (NaN < y) ok", is_less_ok (Nan, y, some_real_number))
+
 			from
 				y := some_real_number
 			until
@@ -845,22 +851,72 @@ feature -- Test routines (Comparison)
 			end
 			assert ("-Infinity < y", Negative_infinity < y)
 			assert ("-Infinity < y ok", is_less_ok (Negative_infinity, y, some_real_number))
-			aqui
-			assert ("Infinity", is_less_ok (Positive_infinity, some_real_number, some_real_number))
-			assert ("-0", is_less_ok (- Zero, some_real_number, some_real_number))
+
+			inspect
+				next_random_item \\ 3
+			when 0 then
+				y := Nan
+			when 1 then
+				y := - Nan
+			when 2 then
+				y := Negative_infinity
+			end
+			assert ("not (-Infinity < y)", not (Negative_infinity < y))
+			assert ("not (-Infinity < y) ok", is_less_ok (Negative_infinity, y, some_real_number))
+
+			y := some_real_number
+			assert ("not (Infinity < y)", not (Positive_infinity < y))
+			assert ("not (Infinity < y) ok", is_less_ok (Positive_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y > y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("-0 < y", - zero < y)
+			assert ("-0 < y ok", is_less_ok (- zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y.zero ≍ y or y.zero > y
+			loop
+				y := some_real_number
+			end
+			assert ("not (-0 < y)", not (- zero < y))
+			assert ("not (-0 < y) ok", is_less_ok (-Zero, y, some_real_number))
 		end
 
 	test_is_less_equal
 			-- Test {STI_REAL_NUMBER}.is_less_equal.
 		note
 			testing: "covers/{STI_REAL_NUMBER}.is_less_equal"
+		local
+			y: like some_real_number
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
-			assert ("-NaN", is_less_equal_ok (-Nan, some_real_number, some_real_number))
-			assert ("NaN", is_less_equal_ok (Nan, some_real_number, some_real_number))
-			assert ("-Infinity", is_less_equal_ok (Negative_infinity, some_real_number, some_real_number))
-			assert ("Infinity", is_less_equal_ok (Positive_infinity, some_real_number, some_real_number))
-			assert ("-0", is_less_equal_ok (- Zero, some_real_number, some_real_number))
+
+			y := some_real_number
+			assert ("-NaN ≤ y", - Nan ≤ y)
+			assert ("-NaN ≤ y ok", is_less_ok (- Nan, y, some_real_number))
+
+			assert ("NaN ≤ y", Nan < y)
+			assert ("NaN ≤ y ok", is_less_ok (Nan, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not y.is_nan
+			loop
+				y := some_real_number
+			end
+			assert ("-Infinity ≤ y", Negative_infinity ≤ y)
+			assert ("-Infinity ≤ y ok", is_less_ok (Negative_infinity, y, some_real_number))
+
+			assert ("Infinity", is_less_ok (Positive_infinity, some_real_number, some_real_number))
+			assert ("-0", is_less_ok (- Zero, some_real_number, some_real_number))
 		end
 
 --	test_is_greater
