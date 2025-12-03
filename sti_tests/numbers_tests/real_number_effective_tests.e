@@ -886,7 +886,7 @@ feature -- Test routines (Comparison)
 				y := some_real_number
 			end
 			assert ("not (-0 < y)", not (- zero < y))
-			assert ("not (-0 < y) ok", is_less_ok (-Zero, y, some_real_number))
+			assert ("not (-0 < y) ok", is_less_ok (- Zero, y, some_real_number))
 		end
 
 	test_is_less_equal
@@ -900,10 +900,10 @@ feature -- Test routines (Comparison)
 
 			y := some_real_number
 			assert ("-NaN ≤ y", - Nan ≤ y)
-			assert ("-NaN ≤ y ok", is_less_ok (- Nan, y, some_real_number))
+			assert ("-NaN ≤ y ok", is_less_equal_ok (- Nan, y, some_real_number))
 
-			assert ("NaN ≤ y", Nan < y)
-			assert ("NaN ≤ y ok", is_less_ok (Nan, y, some_real_number))
+			assert ("NaN ≤ y", Nan ≤ y)
+			assert ("NaN ≤ y ok", is_less_equal_ok (Nan, y, some_real_number))
 
 			from
 				y := some_real_number
@@ -913,10 +913,51 @@ feature -- Test routines (Comparison)
 				y := some_real_number
 			end
 			assert ("-Infinity ≤ y", Negative_infinity ≤ y)
-			assert ("-Infinity ≤ y ok", is_less_ok (Negative_infinity, y, some_real_number))
+			assert ("-Infinity ≤ y ok", is_less_equal_ok (Negative_infinity, y, some_real_number))
 
-			assert ("Infinity", is_less_ok (Positive_infinity, some_real_number, some_real_number))
-			assert ("-0", is_less_ok (- Zero, some_real_number, some_real_number))
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				y := same_real_number (Nan)
+			when 1 then
+				y := same_real_number (- Nan)
+			end
+			assert ("not (-Infinity ≤ y)", not (Negative_infinity ≤ y))
+			assert ("not (-Infinity ≤ y) ok", is_less_equal_ok (Negative_infinity, y, some_real_number))
+
+			y := same_real_number (Positive_infinity)
+			assert ("Infinity ≤ y", Positive_infinity ≤ y)
+			assert ("Infinity ≤ y ok", is_less_equal_ok (Positive_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not y.is_positive_infinity
+			loop
+				y := some_real_number
+			end
+			assert ("not (Infinity ≤ y)", not (Positive_infinity ≤ y))
+			assert ("not (Infinity ≤ y) ok", is_less_equal_ok (Positive_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y ≍ y.zero or y > y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("-0 ≤ y", - zero ≤ y)
+			assert ("-0 ≤ y ok", is_less_equal_ok (- zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y.zero > y
+			loop
+				y := some_real_number
+			end
+			assert ("not (-0 ≤ y)", not (- zero ≤ y))
+			assert ("not (-0 ≤ y) ok", is_less_equal_ok (- Zero, y, some_real_number))
 		end
 
 --	test_is_greater

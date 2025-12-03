@@ -513,7 +513,25 @@ feature -- Test routines (Comparison)
 			assert ("is_less_equal", x ≤ y ⇒ True)
 			assert ("is_less_equal_ok", is_less_equal_ok (x, y, some_real_number))
 
-			assert ("0 ok", is_less_equal_ok (Zero, some_real_number, some_real_number))
+			from
+				y := some_real_number
+			until
+				y > y.zero or y ≍ zero
+			loop
+				y := some_real_number
+			end
+			assert ("0 ≤ y", zero ≤ y)
+			assert ("0 ≤ y ok", is_less_equal_ok (zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y < y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("not (0 ≤ y)", not (zero ≤ y))
+			assert ("not (0 ≤ y) ok", is_less_equal_ok (Zero, y, some_real_number))
 		end
 
 --	test_is_greater
