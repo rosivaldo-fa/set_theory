@@ -1029,6 +1029,7 @@ feature -- Test routines (Comparison)
 			-- <Precursor>
 			-- Test {STI_REAL_NUMBER}.is_greater_equal.
 		note
+			testing: "covers/{STS_REAL_NUMBER}.is_greater_equal"
 			testing: "covers/{STI_REAL_NUMBER}.is_greater_equal"
 		local
 			y: like some_real_number
