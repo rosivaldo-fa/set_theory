@@ -218,16 +218,19 @@ feature -- Properties (Comparison)
 			end
 		end
 
---	is_greater_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_greater?
---		do
---			check
---				irreflexive: not (x > x)
---				transitive: x > y and y > z ⇒ x > z
---			then
---				Result := True
---			end
---		end
+	is_greater_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_greater?
+		do
+			check
+				irreflexive: not (x > x)
+				transitive: x > y and y > z ⇒ x > z
+				nan: x.is_nan ⇒ not (x > y)
+				negative_infinity: x.is_negative_infinity ⇒ ((x > y) = y.is_nan)
+				positive_infinity: x.is_positive_infinity ⇒ (x > y or y.is_positive_infinity)
+			then
+				Result := True
+			end
+		end
 
 --	is_greater_equal_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
 --			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_greater_equal?

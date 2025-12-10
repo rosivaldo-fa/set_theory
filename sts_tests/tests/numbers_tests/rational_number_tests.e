@@ -16,6 +16,7 @@ inherit
 			unequals_ok as real_unequals_ok,
 			is_less_ok as real_is_less_ok,
 			is_less_equal_ok as real_is_less_equal_ok,
+			is_greater_ok as real_is_greater_ok,
 			test_is_in as test_real_is_in,
 			test_is_not_in as test_real_is_not_in,
 			test_sign as test_real_sign,
@@ -28,6 +29,7 @@ inherit
 			test_unequals as test_real_unequals,
 			test_is_less as test_real_is_less,
 			test_is_less_equal as test_real_is_less_equal,
+			test_is_greater as test_real_is_greater,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,

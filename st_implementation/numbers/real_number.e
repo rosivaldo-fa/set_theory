@@ -694,7 +694,7 @@ feature -- Comparison
 		do
 			Result := Precursor {STS_REAL_NUMBER} (x)
 		ensure then
-			previous_float: Result implies x ≤ previous_float
+			previous_float: Result ⇒ x ≤ previous_float
 		end
 
 	three_way_comparison alias "⋚" (x: STS_REAL_NUMBER): like integer_anchor

@@ -15,7 +15,6 @@ inherit
 			is_nan_ok as stst_is_nan_ok,
 			is_negative_infinity_ok as stst_is_negative_infinity_ok,
 			is_positive_infinity_ok as stst_is_positive_infinity_ok,
-			is_less_ok as stst_is_less_ok,
 			some_immediate_natural_number as some_expanded_natural_number,
 			some_immediate_integer_number as some_expanded_integer_number,
 			some_immediate_rational_number as some_expanded_rational_number,
@@ -55,7 +54,7 @@ inherit
 			test_unequals,
 			test_is_less,
 			test_is_less_equal,
---			test_is_greater,
+			test_is_greater,
 --			test_is_greater_equal,
 --			test_three_way_comparison,
 --			test_multipliable,
@@ -960,15 +959,70 @@ feature -- Test routines (Comparison)
 			assert ("not (-0 ≤ y) ok", is_less_equal_ok (- Zero, y, some_real_number))
 		end
 
---	test_is_greater
---			-- <Precursor>
---			-- Test {STI_REAL_NUMBER}.is_greater.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.is_greater"
---			testing: "covers/{STI_REAL_NUMBER}.is_greater"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_is_greater
+			-- Test {STI_REAL_NUMBER}.is_greater.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.is_greater"
+		local
+			y: like some_real_number
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+
+			y := some_real_number
+			assert ("not (-NaN > y)", not (- Nan > y))
+			assert ("not (-NaN > y) ok", is_greater_ok (- Nan, y, some_real_number))
+
+			assert ("not (NaN > y)", not (Nan > y))
+			assert ("not (NaN > y) ok", is_greater_ok (Nan, y, some_real_number))
+
+			y := same_real_number (if next_random_item \\ 2 = 0 then -Nan else Nan end)
+			assert ("-Infinity > y", Negative_infinity > y)
+			assert ("-Infinity > y ok", is_greater_ok (Negative_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				Nan < y
+			loop
+				y := some_real_number
+			end
+			assert ("not (-Infinity > y)", not (Negative_infinity > y))
+			assert ("not (-Infinity > y) ok", is_greater_ok (Negative_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y ≤ {REAL_NUMBER}.Max_value
+			loop
+				y := some_real_number
+			end
+			assert ("Infinity > y", Positive_infinity > y)
+			assert ("Infinity > y ok", is_greater_ok (Positive_infinity, y, some_real_number))
+
+			y := Positive_infinity
+			assert ("not (Infinity > y)", not (Positive_infinity > y))
+			assert ("not (Infinity > y) ok", is_greater_ok (Positive_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y < y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("-0 > y", - zero > y)
+			assert ("-0 > y ok", is_greater_ok (- zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y.zero ≤ y
+			loop
+				y := some_real_number
+			end
+			assert ("not (-0 > y)", not (- zero > y))
+			assert ("not (-0 > y) ok", is_greater_ok (- Zero, y, some_real_number))
+		end
 
 --	test_is_greater_equal
 --			-- <Precursor>
