@@ -232,17 +232,20 @@ feature -- Properties (Comparison)
 			end
 		end
 
---	is_greater_equal_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_greater_equal?
---		do
---			check
---				reflexive: x ≥ x
---				transitive: x ≥ y and y ≥ z ⇒ x ≥ z
---				antisymmetric: x ≥ y and y ≥ x ⇒ x ≍ y
---			then
---				Result := True
---			end
---		end
+	is_greater_equal_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_greater_equal?
+		do
+			check
+				reflexive: x ≥ x
+				transitive: x ≥ y and y ≥ z ⇒ x ≥ z
+				antisymmetric: x ≥ y and y ≥ x ⇒ x ≍ y
+				nan: x.is_nan ⇒ ((x ≥ y) = y.is_nan)
+				negative_infinity: x.is_negative_infinity ⇒ ((x ≥ y) = (y.is_nan or y.is_negative_infinity))
+				positive_infinity: x.is_positive_infinity ⇒ x ≥ y
+			then
+				Result := True
+			end
+		end
 
 --	min_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
 --			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.min?

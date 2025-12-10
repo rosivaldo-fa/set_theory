@@ -30,6 +30,7 @@ inherit
 			is_less as real_is_less,
 			is_less_equal as real_is_less_equal,
 			is_greater as real_is_greater,
+			is_greater_equal as real_is_greater_equal,
 			three_way_comparison as real_three_way_comparison,
 			divisible as real_divisible,
 			minus as real_minus,

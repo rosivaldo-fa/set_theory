@@ -206,6 +206,14 @@ feature -- Comparison
 			definition: Result = (x < Current)
 		end
 
+	is_greater_equal alias ">=" alias "≥" (x: REAL_NUMBER): BOOLEAN
+			-- Is current real number greater than or equal to `x'?
+		do
+			Result := x ≤ Current
+ 		ensure
+			definition: Result = (x ≤ Current)
+		end
+
 	three_way_comparison alias "⋚" (x: REAL_NUMBER): like integer_anchor
 			-- If current real number equal to `x', 0; if smaller, -1; if greater, 1.
 		do
