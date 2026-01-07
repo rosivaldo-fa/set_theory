@@ -61,7 +61,7 @@ feature -- Test routines (All)
 			test_is_less_equal
 			test_is_greater
 			test_is_greater_equal
---			test_three_way_comparison
+			test_three_way_comparison
 --			test_multipliable
 --			test_divisible
 --			test_min
@@ -602,44 +602,72 @@ feature -- Test routines (Comparison)
 			assert ("not (0 ≥ y) ok", is_greater_equal_ok (Zero, y, some_real_number))
 		end
 
---	test_three_way_comparison
---			-- Test {STS_REAL_NUMBER}.three_way_comparison.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.three_way_comparison"
---		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
---		do
---			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			until
---				pq_1 < pq_2
---			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			end
---			assert ("negative", pq_1 ⋚ pq_2 ≍ - pq_1.p.one)
+	test_three_way_comparison
+			-- Test {STS_REAL_NUMBER}.three_way_comparison.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.three_way_comparison"
+		local
+			x: like real_number_to_be_tested
+			y: like some_real_number
+		do
+			x := real_number_to_be_tested
+			y := some_real_number
+			assert ("three_way_comparison", attached (x ⋚ y))
+			assert ("three_way_comparison ok", three_way_comparison_ok (x, y, some_real_number))
 
---			pq_1 := real_number_to_be_tested
---			assert ("same_entity", pq_1 ⋚ pq_1 ≍ pq_1.p.zero)
---			assert ("same_real_number", pq_1 ⋚ same_real_number (pq_1) ≍ pq_1.p.zero)
+			from
+				x := real_number_to_be_tested
+				y := some_real_number
+			until
+				x < y
+			loop
+				x := real_number_to_be_tested
+				y := some_real_number
+			end
+			assert ("negative", x ⋚ y ≍ - (x ⋚ y).one)
+			assert ("negative ok", three_way_comparison_ok (x, y, some_real_number))
 
---			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			until
---				pq_1 > pq_2
---			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			end
---			assert ("positive", pq_1 ⋚ pq_2 ≍ pq_1.p.one)
+			x := real_number_to_be_tested
+			y := same_real_number (x)
+			assert ("zero", x.zero ≍ (x ⋚ y))
+			assert ("zero ok", three_way_comparison_ok (x, y, some_real_number))
 
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
---			assert ("three_way_comparison", attached (pq_1 ⋚ pq_2))
---		end
+			from
+				x := real_number_to_be_tested
+				y := some_real_number
+			until
+				x > y
+			loop
+				x := real_number_to_be_tested
+				y := some_real_number
+			end
+			assert ("positive", x.one ≍ (x ⋚ y))
+			assert ("positive ok", three_way_comparison_ok (x, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y > y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("0 < y", zero ⋚ y ≍ - (zero ⋚ y).one)
+			assert ("0 < y ok", three_way_comparison_ok (zero, y, some_real_number))
+
+			y := y.zero
+			assert ("0 = y", zero ≍ (zero ⋚ y))
+			assert ("0 = y ok", three_way_comparison_ok (zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y < y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("0 > y", one ≍ (zero ⋚ y))
+			assert ("0 > y ok", three_way_comparison_ok (zero, y, some_real_number))
+		end
 
 --	test_min
 --			-- Test {STS_REAL_NUMBER}.min.

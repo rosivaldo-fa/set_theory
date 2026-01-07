@@ -104,7 +104,7 @@ feature {NONE} -- Initialization
 	make_abs (x: REAL_NUMBER)
 			-- Create a real number with value `x'.`value'.`abs'.
 		do
-			value_bit_pattern := x.value_bit_pattern & ⊝ ({NATURAL_8} 1 |<< (Exponent_width + Mantissa_width))
+			value_bit_pattern := x.value_bit_pattern & ⊝ ({NATURAL_16} 1 |<< (Exponent_width + Mantissa_width))
 		ensure
 			value: value = x.value.abs
 		end
@@ -703,11 +703,7 @@ feature -- Comparison
 			v: like Integer_anchor.value
 		do
 			v := value ⋚ x.value
-			check
-				not_too_small: {INTEGER_NUMBER}.Native_min_value ≤ v.as_integer_8 -- {INTEGER_NUMBER}.Native_min_value ≤ -1
-				not_too_big: v.as_integer_8 ≤ {INTEGER_NUMBER}.Native_max_value -- 1 ≤ {INTEGER_NUMBER}.Native_max_value
-			end
-			create Result.make (v.as_integer_8)
+			create Result.make (v)
 		end
 
 feature -- Operation
@@ -1020,7 +1016,7 @@ feature {NONE} -- Implementation
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

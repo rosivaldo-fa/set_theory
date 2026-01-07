@@ -32,6 +32,7 @@ inherit
 			test_is_less_equal as test_real_is_less_equal,
 			test_is_greater as test_real_is_greater,
 			test_is_greater_equal as test_real_is_greater_equal,
+			test_three_way_comparison as test_real_three_way_comparison,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,

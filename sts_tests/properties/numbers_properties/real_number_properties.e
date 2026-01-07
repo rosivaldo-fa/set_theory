@@ -247,6 +247,40 @@ feature -- Properties (Comparison)
 			end
 		end
 
+	three_way_comparison_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.is_greater_equal?
+		do
+			check
+				reflexive_equality: zero ≍ (x ⋚ x)
+				symmetric_equality: zero ≍ (x ⋚ y) ⇒ zero ≍ (y ⋚ x)
+				transitive_equality: zero ≍ (x ⋚ y) and zero ≍ (y ⋚ z) ⇒ zero ≍ (x ⋚ z)
+
+				reflexive_comparison: zero ≥ (x ⋚ x)
+				transitive_comparison: zero ≥ (x ⋚ y) and zero ≥ (y ⋚ z) ⇒ zero ≥ (x ⋚ z)
+				antisymmetric_comparison: zero ≥ (x ⋚ y) and zero ≥ (y ⋚ x) ⇒ x ≍ y
+
+				irreflexive_strict_comparison: zero ≍ (x ⋚ x)
+				transitive_strict_comparison: zero > (x ⋚ y) and zero > (y ⋚ z) ⇒ zero > (x ⋚ z)
+
+				dual_reflexive_comparison: zero ≤ (x ⋚ x)
+				dual_transitive_comparison: zero ≤ (x ⋚ y) and zero ≤ (y ⋚ z) ⇒ zero ≤ (x ⋚ z)
+				dual_antisymmetric_comparison: zero ≤ (x ⋚ y) and zero ≤ (y ⋚ x) ⇒ x ≍ y
+
+				dual_irreflexive_strict_comparison: zero ≍ (x ⋚ x)
+				dual_transitive_strict_comparison: zero < (x ⋚ y) and zero < (y ⋚ z) ⇒ zero < (x ⋚ z)
+
+				nan_y: x.is_nan ⇒ zero ≥ (x ⋚ y)
+				nan_nan: x.is_nan ⇒ (zero ≍ (x ⋚ y) = y.is_nan)
+
+				negative_infinity_nan: x.is_negative_infinity and y.is_nan ⇒ (zero < (x ⋚ y))
+				negative_infinity_y: x.is_negative_infinity and not y.is_nan ⇒ (zero ≥ (x ⋚ y))
+
+				positive_infinity: x.is_positive_infinity ⇒ (zero ≤ (x ⋚ y))
+			then
+				Result := True
+			end
+		end
+
 --	min_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
 --			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.min?
 --		do
@@ -380,7 +414,7 @@ feature -- Anchor
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

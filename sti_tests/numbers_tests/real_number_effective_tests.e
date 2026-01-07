@@ -56,7 +56,7 @@ inherit
 			test_is_less_equal,
 			test_is_greater,
 			test_is_greater_equal,
---			test_three_way_comparison,
+			test_three_way_comparison,
 --			test_multipliable,
 --			test_divisible,
 --			test_min,
@@ -976,7 +976,7 @@ feature -- Test routines (Comparison)
 			assert ("not (NaN > y)", not (Nan > y))
 			assert ("not (NaN > y) ok", is_greater_ok (Nan, y, some_real_number))
 
-			y := same_real_number (if next_random_item \\ 2 = 0 then -Nan else Nan end)
+			y := same_real_number (if next_random_item \\ 2 = 0 then - Nan else Nan end)
 			assert ("-Infinity > y", Negative_infinity > y)
 			assert ("-Infinity > y ok", is_greater_ok (Negative_infinity, y, some_real_number))
 
@@ -1036,7 +1036,7 @@ feature -- Test routines (Comparison)
 		do
 			Precursor {STST_REAL_NUMBER_TESTS}
 
-			y := if next_random_item \\ 2 = 0 then -Nan else Nan end
+			y := if next_random_item \\ 2 = 0 then - Nan else Nan end
 			y := same_real_number (y)
 			assert ("-NaN ≥ y", - Nan ≥ y)
 			assert ("-NaN ≥ y ok", is_greater_equal_ok (- Nan, y, some_real_number))
@@ -1085,15 +1085,115 @@ feature -- Test routines (Comparison)
 			assert ("not (-0 ≥ y) ok", is_greater_equal_ok (- Zero, y, some_real_number))
 		end
 
---	test_three_way_comparison
---			-- <Precursor>
---			-- Test {STI_REAL_NUMBER}.three_way_comparison.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.three_way_comparison"
---			testing: "covers/{STI_REAL_NUMBER}.three_way_comparison"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_three_way_comparison
+			-- Test {STI_REAL_NUMBER}.three_way_comparison.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.three_way_comparison"
+		local
+			y: like some_real_number
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+
+			if next_random_item \\ 2 = 0 then
+				y := same_real_number (Nan)
+			else
+				y := same_real_number (- Nan)
+			end
+			assert ("-Nan ≍ y", Zero ≍ (- Nan ⋚ y))
+			assert ("-Nan ≍ y ok", three_way_comparison_ok (- Nan, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not y.is_nan
+			loop
+				y := some_real_number
+			end
+			assert ("-Nan < y", - one ≍ (- Nan ⋚ y))
+			assert ("-Nan < y ok", three_way_comparison_ok (- Nan, y, some_real_number))
+
+			if next_random_item \\ 2 = 0 then
+				y := same_real_number (Nan)
+			else
+				y := same_real_number (- Nan)
+			end
+			assert ("Nan ≍ y", Zero ≍ (Nan ⋚ y))
+			assert ("Nan ≍ y ok", three_way_comparison_ok (Nan, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not y.is_nan
+			loop
+				y := some_real_number
+			end
+			assert ("Nan < y", - one ≍ (Nan ⋚ y))
+			assert ("Nan < y ok", three_way_comparison_ok (Nan, y, some_real_number))
+
+			if next_random_item \\ 2 = 0 then
+				y := same_real_number (Nan)
+			else
+				y := same_real_number (- Nan)
+			end
+			assert ("-Infinity > y", One ≍ (Negative_infinity ⋚ y))
+			assert ("-Infinity > y ok", three_way_comparison_ok (Negative_infinity, y, some_real_number))
+
+			y := same_real_number (Negative_infinity)
+			assert ("-Infinity = y", Zero ≍ (Negative_infinity ⋚ y))
+			assert ("-Infinity = y ok", three_way_comparison_ok (Negative_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not (y.is_nan or y.is_negative_infinity)
+			loop
+				y := some_real_number
+			end
+			assert ("-Infinity < y", - one ≍ (Negative_infinity ⋚ y))
+			assert ("-Infinity < y ok", three_way_comparison_ok (Negative_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y > y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("-0 > y", - One ≍ (- Zero ⋚ y))
+			assert ("-0 > y ok", three_way_comparison_ok (- Zero, y, some_real_number))
+
+			if next_random_item \\ 2 = 0 then
+				y := same_real_number (Zero)
+			else
+				y := same_real_number (- Zero)
+			end
+			assert ("-0 = y", Zero ≍ (- Zero ⋚ y))
+			assert ("-0 = y ok", three_way_comparison_ok (- Zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y < y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("-0 < y", One ≍ (- Zero ⋚ y))
+			assert ("-0 < y ok", three_way_comparison_ok (- Zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not y.is_positive_infinity
+			loop
+				y := some_real_number
+			end
+			assert ("Infinity > y", One ≍ (Positive_infinity ⋚ y))
+			assert ("Infinity > y ok", three_way_comparison_ok (Positive_infinity, y, some_real_number))
+
+			y := same_real_number (Positive_infinity)
+			assert ("Infinity = y", Zero ≍ (Positive_infinity ⋚ y))
+			assert ("Infinity = y ok", three_way_comparison_ok (Positive_infinity, y, some_real_number))
+		end
 
 --	test_min
 --			-- Test {STI_REAL_NUMBER}.min.
