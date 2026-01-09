@@ -29,6 +29,7 @@ inherit
 			default_create,
 			sign,
 			out,
+			real_min,
 			min,
 			max,
 			multipliable,
@@ -204,6 +205,17 @@ feature -- Output
 		end
 
 feature -- Comparison
+
+	real_min (x: STS_REAL_NUMBER): like real_anchor
+			-- <Precursor>
+		do
+			if real_is_less_equal (x) then
+				create Result.make_from_reference (Current) -- TODO: make_from_rational?
+			else
+--				Result := x -- TODO: Result := create {REAL_NUMBER}.make_from_real (x) instead of create Result.make_from_real (x)
+				create Result.make_from_reference (x)
+			end
+		end
 
 	min alias "∧" (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
@@ -435,7 +447,7 @@ feature -- Anchor
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

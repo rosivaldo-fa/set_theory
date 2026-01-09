@@ -32,6 +32,7 @@ inherit
 			is_greater as real_is_greater,
 			is_greater_equal as real_is_greater_equal,
 			three_way_comparison as real_three_way_comparison,
+			min as real_min,
 			divisible as real_divisible,
 			minus as real_minus,
 			product as real_product,
@@ -618,7 +619,7 @@ invariant
 	non_zero_denominator: q ≭ q.zero
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

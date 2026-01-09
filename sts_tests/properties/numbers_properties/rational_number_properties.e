@@ -16,7 +16,8 @@ inherit
 			is_less_ok as real_is_less_ok,
 			is_less_equal_ok as real_is_less_equal_ok,
 			is_greater_ok as real_is_greater_ok,
-			is_greater_equal_ok as real_is_greater_equal_ok
+			is_greater_equal_ok as real_is_greater_equal_ok,
+			min_ok as real_min_ok
 		end
 
 feature -- Access
@@ -290,7 +291,7 @@ feature -- Anchor
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

@@ -39,6 +39,7 @@ inherit
 			is_less_equal,
 			is_greater,
 			three_way_comparison,
+			min,
 			modulus,
 			abs
 		end
@@ -704,6 +705,17 @@ feature -- Comparison
 		do
 			v := value ⋚ x.value
 			create Result.make (v)
+		end
+
+	min alias "∧" (x: STS_REAL_NUMBER): like real_anchor
+			-- <Precursor>
+		do
+			if Current ≤ x then
+				Result := Current -- TODO: No-op when called from {STT_REAL_NUMBER}!!!
+			else
+--				Result := x -- TODO: Result := create {REAL_NUMBER}.make_from_real (x) instead of create Result.make_from_real (x)
+				create Result.make_from_reference (x)
+			end
 		end
 
 feature -- Operation

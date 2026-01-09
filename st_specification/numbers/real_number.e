@@ -230,6 +230,19 @@ feature -- Comparison
 			greater_positive: (Result ≍ one.truncated_to_integer) = (Current > x)
 		end
 
+	min alias "∧" (x: REAL_NUMBER): like real_anchor
+			-- The smaller of current real number and `x'
+		do
+			if Current ≤ x then
+				Result := Current
+			else
+				Result := x
+			end
+		ensure
+			current_if_not_greater: Current ≤ x ⇒ Result ≍ Current
+			other_if_greater: x < Current ⇒ Result ≍ x
+		end
+
 feature -- Relationship
 
 	divisible (x: REAL_NUMBER): BOOLEAN
@@ -383,7 +396,7 @@ feature -- Anchor
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

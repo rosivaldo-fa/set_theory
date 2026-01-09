@@ -18,6 +18,7 @@ inherit
 			is_less_equal_ok as real_is_less_equal_ok,
 			is_greater_ok as real_is_greater_ok,
 			is_greater_equal_ok as real_is_greater_equal_ok,
+			min_ok as real_min_ok,
 			test_is_in as test_real_is_in,
 			test_is_not_in as test_real_is_not_in,
 			test_sign as test_real_sign,
@@ -33,6 +34,7 @@ inherit
 			test_is_greater as test_real_is_greater,
 			test_is_greater_equal as test_real_is_greater_equal,
 			test_three_way_comparison as test_real_three_way_comparison,
+			test_min as test_real_min,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,
@@ -1108,7 +1110,7 @@ feature -- Anchor
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

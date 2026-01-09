@@ -13,6 +13,7 @@ inherit
 			default_create,
 			sign,
 			out,
+			real_min,
 			rational_min,
 			rational_max,
 			three_way_comparison,
@@ -182,6 +183,12 @@ feature -- Output
 		end
 
 feature -- Comparison
+
+	real_min (x: STS_REAL_NUMBER): like real_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value ∧ x.value)
+		end
 
 	rational_min (pq: STS_RATIONAL_NUMBER): like Rational_anchor
 			-- <Precursor>
@@ -426,7 +433,7 @@ feature {REAL_NUMBER, RATIONAL_NUMBER} -- Implementation
 			-- Native maximum value representable by this implementation of integer numbers
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

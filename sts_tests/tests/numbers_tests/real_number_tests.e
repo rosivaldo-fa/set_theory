@@ -669,80 +669,100 @@ feature -- Test routines (Comparison)
 			assert ("0 > y ok", three_way_comparison_ok (zero, y, some_real_number))
 		end
 
---	test_min
---			-- Test {STS_REAL_NUMBER}.min.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.min"
---		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
---		do
---			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			until
---				pq_1 ≤ pq_2
---			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			end
---			assert ("pq_1", (pq_1 ∧ pq_2) ≍ pq_1)
---			assert ("pq_1 ok", min_ok (pq_1, pq_2, some_real_number))
+	test_min
+			-- Test {STS_REAL_NUMBER}.min.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.min"
+		local
+			x: like real_number_to_be_tested
+			y: like some_real_number
+		do
+			x := real_number_to_be_tested
+			y := some_real_number
+			assert ("min", attached (x ∧ y))
+			assert ("min ok", min_ok (x, y, some_real_number))
 
---			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			until
---				pq_1 ≥ pq_2
---			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
---			end
---			assert ("pq_2", (pq_1 ∧ pq_2) ≍ pq_2)
---			assert ("pq_2 ok", min_ok (pq_1, pq_2, some_real_number))
+			from
+				x := real_number_to_be_tested
+				y := some_real_number
+			until
+				x ≤ y
+			loop
+				x := real_number_to_be_tested
+				y := some_real_number
+			end
+			assert ("x", (x ∧ y) ≍ x)
+			assert ("x ok", min_ok (x, y, some_real_number))
 
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
---			assert ("min", attached (pq_1 ∧ pq_2))
---			assert ("min ok", min_ok (pq_1, pq_2, some_real_number))
---		end
+			from
+				x := real_number_to_be_tested
+				y := some_real_number
+			until
+				x ≥ y
+			loop
+				x := real_number_to_be_tested
+				y := some_real_number
+			end
+			assert ("y", (x ∧ y) ≍ y)
+			assert ("y ok", min_ok (x, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y ≥ y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("0 ≤ y", (zero ∧ y) ≍ zero)
+			assert ("0 ≤ y ok", min_ok (zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y ≤ y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("0 ≥ y", (zero ∧ y) ≍ y)
+			assert ("0 ≥ y ok", min_ok (zero, y, some_real_number))
+		end
 
 --	test_max
 --			-- Test {STS_REAL_NUMBER}.max.
 --		note
 --			testing: "covers/{STS_REAL_NUMBER}.max"
 --		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
+--			x: like real_number_to_be_tested
+--			y: like some_real_number
 --		do
 --			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
+--				x := real_number_to_be_tested
+--				y := some_real_number
 --			until
---				pq_1 ≥ pq_2
+--				x ≥ y
 --			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
+--				x := real_number_to_be_tested
+--				y := some_real_number
 --			end
---			assert ("pq_1", (pq_1 ∨ pq_2) ≍ pq_1)
---			assert ("pq_1 ok", max_ok (pq_1, pq_2, some_real_number))
+--			assert ("x", (x ∨ y) ≍ x)
+--			assert ("x ok", max_ok (x, y, some_real_number))
 
 --			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
+--				x := real_number_to_be_tested
+--				y := some_real_number
 --			until
---				pq_1 ≤ pq_2
+--				x ≤ y
 --			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
+--				x := real_number_to_be_tested
+--				y := some_real_number
 --			end
---			assert ("pq_2", (pq_1 ∨ pq_2) ≍ pq_2)
---			assert ("pq_2 ok", max_ok (pq_1, pq_2, some_real_number))
+--			assert ("y", (x ∨ y) ≍ y)
+--			assert ("y ok", max_ok (x, y, some_real_number))
 
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
---			assert ("max", attached (pq_1 ∨ pq_2))
---			assert ("max ok", max_ok (pq_1, pq_2, some_real_number))
+--			x := real_number_to_be_tested
+--			y := some_real_number
+--			assert ("max", attached (x ∨ y))
+--			assert ("max ok", max_ok (x, y, some_real_number))
 --		end
 
 --feature -- Test routines (Relationship)
@@ -752,24 +772,24 @@ feature -- Test routines (Comparison)
 --		note
 --			testing: "covers/{STS_REAL_NUMBER}.multipliable"
 --		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
+--			x: like real_number_to_be_tested
+--			y: like some_real_number
 --		do
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
+--			x := real_number_to_be_tested
+--			y := some_real_number
 --			check
---				good_divisor_1: pq_1.q.divisible (gcd (pq_2.p, pq_1.q)) -- pq_1.q /= 0
---				good_divisor_2: pq_2.q.divisible (gcd (pq_1.p, pq_2.q)) -- pq_2.q /= 0
+--				good_divisor_1: x.q.divisible (gcd (y.p, x.q)) -- x.q /= 0
+--				good_divisor_2: y.q.divisible (gcd (x.p, y.q)) -- y.q /= 0
 --			end
 --			assert (
 --					"when does not overflow",
---					not pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q)) ⇒ pq_1.multipliable (pq_2)
+--					not x.integer_product_overflows (x.q // gcd (y.p, x.q), y.q // gcd (x.p, y.q)) ⇒ x.multipliable (y)
 --				)
 --			assert (
 --					"when is not multipliable",
---					not pq_1.multipliable (pq_2) ⇒ pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.p, pq_1.q), pq_2.q // gcd (pq_1.p, pq_2.q))
+--					not x.multipliable (y) ⇒ x.integer_product_overflows (x.q // gcd (y.p, x.q), y.q // gcd (x.p, y.q))
 --				)
---			assert ("multipliable ok", multipliable_ok (pq_1, pq_2))
+--			assert ("multipliable ok", multipliable_ok (x, y))
 --		end
 
 --	test_divisible
@@ -777,24 +797,24 @@ feature -- Test routines (Comparison)
 --		note
 --			testing: "covers/{STS_REAL_NUMBER}.divisible"
 --		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
+--			x: like real_number_to_be_tested
+--			y: like some_real_number
 --		do
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
+--			x := real_number_to_be_tested
+--			y := some_real_number
 --			check
---				good_divisor_1: pq_1.q.divisible (gcd (pq_2.q, pq_1.q)) -- pq_1.q, pq_2.q /= 0
---				good_divisor_2: pq_2 ≭ zero ⇒ pq_2.p.divisible (gcd (pq_1.p, pq_2.p)) -- pq_2.p /= 0 ⇐ pq_2 ≭ zero
+--				good_divisor_1: x.q.divisible (gcd (y.q, x.q)) -- x.q, y.q /= 0
+--				good_divisor_2: y ≭ zero ⇒ y.p.divisible (gcd (x.p, y.p)) -- y.p /= 0 ⇐ y ≭ zero
 --			end
 --			assert (
 --					"when does not overflow",
---					pq_2 ≭ zero and then not pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.q, pq_1.q), pq_2.p // gcd (pq_1.p, pq_2.p)) ⇒
---					pq_1.divisible (pq_2)
+--					y ≭ zero and then not x.integer_product_overflows (x.q // gcd (y.q, x.q), y.p // gcd (x.p, y.p)) ⇒
+--					x.divisible (y)
 --				)
 --			assert (
 --					"when is not divisible",
---					not pq_1.divisible (pq_2) ⇒
---					pq_2 ≍ zero or else pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.q, pq_1.q), pq_2.p // gcd (pq_1.p, pq_2.p))
+--					not x.divisible (y) ⇒
+--					y ≍ zero or else x.integer_product_overflows (x.q // gcd (y.q, x.q), y.p // gcd (x.p, y.p))
 --				)
 --		end
 
@@ -821,13 +841,13 @@ feature -- Test routines (Comparison)
 --		note
 --			testing: "covers/{STS_REAL_NUMBER}.plus"
 --		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
+--			x: like real_number_to_be_tested
+--			y: like some_real_number
 --		do
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
---			assert ("plus", attached (pq_1 + pq_2))
---			assert ("plus_ok", plus_ok (pq_1, pq_2))
+--			x := real_number_to_be_tested
+--			y := some_real_number
+--			assert ("plus", attached (x + y))
+--			assert ("plus_ok", plus_ok (x, y))
 --		end
 
 --	test_minus
@@ -835,13 +855,13 @@ feature -- Test routines (Comparison)
 --		note
 --			testing: "covers/{STS_REAL_NUMBER}.minus"
 --		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
+--			x: like real_number_to_be_tested
+--			y: like some_real_number
 --		do
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
---			assert ("minus", attached (pq_1 - pq_2))
---			assert ("minus_ok", minus_ok (pq_1, pq_2))
+--			x := real_number_to_be_tested
+--			y := some_real_number
+--			assert ("minus", attached (x - y))
+--			assert ("minus_ok", minus_ok (x, y))
 --		end
 
 --	test_opposite
@@ -861,20 +881,20 @@ feature -- Test routines (Comparison)
 --		note
 --			testing: "covers/{STS_REAL_NUMBER}.product"
 --		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
+--			x: like real_number_to_be_tested
+--			y: like some_real_number
 --		do
 --			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
+--				x := real_number_to_be_tested
+--				y := some_real_number
 --			until
---				pq_1.multipliable (pq_2)
+--				x.multipliable (y)
 --			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
+--				x := real_number_to_be_tested
+--				y := some_real_number
 --			end
---			assert ("product", attached (pq_1 * pq_2))
---			assert ("product_ok", product_ok (pq_1, pq_2))
+--			assert ("product", attached (x * y))
+--			assert ("product_ok", product_ok (x, y))
 --		end
 
 --	test_quotient
@@ -882,20 +902,20 @@ feature -- Test routines (Comparison)
 --		note
 --			testing: "covers/{STS_REAL_NUMBER}.quotient"
 --		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
+--			x: like real_number_to_be_tested
+--			y: like some_real_number
 --		do
 --			from
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
+--				x := real_number_to_be_tested
+--				y := some_real_number
 --			until
---				pq_1.divisible (pq_2)
+--				x.divisible (y)
 --			loop
---				pq_1 := real_number_to_be_tested
---				pq_2 := some_real_number
+--				x := real_number_to_be_tested
+--				y := some_real_number
 --			end
---			assert ("quotient", attached (pq_1 / pq_2))
---			assert ("quotient_ok", quotient_ok (pq_1))
+--			assert ("quotient", attached (x / y))
+--			assert ("quotient_ok", quotient_ok (x))
 --		end
 
 --	test_reciprocal
@@ -1185,7 +1205,7 @@ feature -- Anchor
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

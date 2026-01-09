@@ -59,7 +59,7 @@ inherit
 			test_three_way_comparison,
 --			test_multipliable,
 --			test_divisible,
---			test_min,
+			test_min,
 --			test_max,
 --			test_modulus,
 --			test_abs,
@@ -1195,13 +1195,76 @@ feature -- Test routines (Comparison)
 			assert ("Infinity = y ok", three_way_comparison_ok (Positive_infinity, y, some_real_number))
 		end
 
---	test_min
---			-- Test {STI_REAL_NUMBER}.min.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.min"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_min
+			-- Test {STI_REAL_NUMBER}.min.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.min"
+		local
+			y: like some_real_number
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+
+			y := some_real_number
+			assert ("-NaN ≤ y", (- Nan ∧ y) ≍ - NaN)
+			assert ("-NaN ≤ y ok", min_ok (- Nan, y, some_real_number))
+
+			assert ("NaN ≤ y", (Nan ∧ y) ≍ NaN)
+			assert ("NaN ≤ y ok", min_ok (Nan, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not y.is_nan
+			loop
+				y := some_real_number
+			end
+			assert ("-Infinity ≤ y", (Negative_infinity ∧ y) ≍ Negative_infinity)
+			assert ("-Infinity ≤ y ok", min_ok (Negative_infinity, y, some_real_number))
+
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				y := same_real_number (Nan)
+			when 1 then
+				y := same_real_number (- Nan)
+			end
+			assert ("not (-Infinity ≤ y)", (Negative_infinity ∧ y) ≍ y)
+			assert ("not (-Infinity ≤ y) ok", min_ok (Negative_infinity, y, some_real_number))
+
+			y := same_real_number (Positive_infinity)
+			assert ("Infinity ≤ y", (Positive_infinity ∧ y) ≍ Positive_infinity)
+			assert ("Infinity ≤ y ok", min_ok (Positive_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not y.is_positive_infinity
+			loop
+				y := some_real_number
+			end
+			assert ("not (Infinity ≤ y)", (Positive_infinity ∧ y) ≍ y)
+			assert ("not (Infinity ≤ y) ok", min_ok (Positive_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y ≍ y.zero or y > y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("-0 ≤ y", (- zero ∧ y) ≍ Zero)
+			assert ("-0 ≤ y ok", min_ok (- zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y.zero > y
+			loop
+				y := some_real_number
+			end
+			assert ("not (-0 ≤ y)", (- zero ∧ y) ≍ y)
+			assert ("not (-0 ≤ y) ok", min_ok (- Zero, y, some_real_number))
+		end
 
 --	test_max
 --			-- Test {STI_REAL_NUMBER}.max.
@@ -1851,7 +1914,7 @@ feature -- Anchor
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

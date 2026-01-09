@@ -21,6 +21,7 @@ inherit
 			Mantissa_width,
 			c_copysign
 		redefine
+			min,
 			modulus,
 			abs,
 			opposite
@@ -35,6 +36,15 @@ convert
 	make ({REAL}),
 	make_from_reference ({STS_REAL_NUMBER, STI_REAL_NUMBER, STS_RATIONAL_NUMBER, STS_INTEGER_NUMBER, STS_NATURAL_NUMBER}),
 	value: {REAL, REAL_REF, NUMERIC, COMPARABLE, HASHABLE}
+
+feature -- Comparison
+
+	min alias "∧" (x: STS_REAL_NUMBER): like real_anchor
+			-- <Precursor>
+		do
+--			Result := Precursor {STI_REAL_NUMBER}(x)
+			Result := as_parent ∧ x -- TODO: Don't call Precursor; it stumbles on a bug in the compiler?
+		end
 
 feature -- Operation
 
@@ -63,7 +73,7 @@ feature -- Conversion
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

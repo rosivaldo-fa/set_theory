@@ -20,6 +20,7 @@ inherit
 			is_natural,
 			out,
 			real_three_way_comparison,
+			real_min,
 			rational_three_way_comparison,
 			rational_min,
 			rational_max,
@@ -207,6 +208,12 @@ feature -- Comparison
 			elseif v < stored_value then
 				Result := One
 			end
+		end
+
+	real_min (x: STS_REAL_NUMBER): like real_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value ∧ x.value)
 		end
 
 	rational_three_way_comparison (pq: STS_RATIONAL_NUMBER): like integer_anchor
@@ -511,7 +518,7 @@ feature {NONE} -- Implementation
 			-- Native maximum value representable by this implementation of integer numbers
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)
