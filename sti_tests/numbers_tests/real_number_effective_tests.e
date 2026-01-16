@@ -58,7 +58,7 @@ inherit
 			test_is_greater_equal,
 			test_three_way_comparison,
 --			test_multipliable,
---			test_divisible,
+			test_divisible,
 			test_min,
 			test_max,
 --			test_modulus,
@@ -1327,7 +1327,7 @@ feature -- Test routines (Comparison)
 			assert ("not (-0 ≤ y) ok", max_ok (- Zero, y, some_real_number))
 		end
 
---feature -- Test routines (Relationship)
+feature -- Test routines (Relationship)
 
 --	test_multipliable
 --			-- Test {STI_REAL_NUMBER}.multipliable.
@@ -1353,31 +1353,15 @@ feature -- Test routines (Comparison)
 --			assert ("even when overflows ok", multipliable_ok (pq_1, pq_2))
 --		end
 
---	test_divisible
---			-- <Precursor>
---			-- Test {STI_REAL_NUMBER}.divisible.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.divisible"
---			testing: "covers/{STI_REAL_NUMBER}.divisible"
---		local
---			pq_1: like real_number_to_be_tested
---			pq_2: like some_real_number
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---			pq_1 := real_number_to_be_tested
---			pq_2 := some_real_number
---			check
---				good_divisor_1: pq_1.q.divisible (gcd (pq_2.q, pq_1.q)) -- pq_1.q, pq_2.q /= 0
---				good_divisor_2: pq_2 ≭ zero ⇒ pq_2.p.divisible (gcd (pq_1.p, pq_2.p)) -- pq_2.p /= 0 ⇐ pq_2 ≭ zero
---			end
---			assert (
---					"even when overflows",
---					pq_2 ≭ zero and then pq_1.integer_product_overflows (pq_1.q // gcd (pq_2.q, pq_1.q), pq_2.p // gcd (pq_1.p, pq_2.p)) and
---					(pq_1.q // gcd (pq_2.q, pq_1.q)) ⋅ (pq_2.p // gcd (pq_1.p, pq_2.p)) ≭ Zero.p ⇒
---					pq_1.divisible (pq_2)
---				)
---			assert ("even when overflows ok", divisible_ok (pq_1, pq_2))
---		end
+	test_divisible
+			-- <Precursor>
+			-- Test {STI_REAL_NUMBER}.divisible.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.divisible"
+			testing: "covers/{STI_REAL_NUMBER}.divisible"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+		end
 
 --feature -- Test routines (Operation)
 

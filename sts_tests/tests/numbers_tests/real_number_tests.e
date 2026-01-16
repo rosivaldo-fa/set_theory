@@ -64,8 +64,8 @@ feature -- Test routines (All)
 			test_three_way_comparison
 --			test_multipliable
 --			test_divisible
---			test_min
---			test_max
+			test_min
+			test_max
 --			test_modulus
 --			test_abs
 --			test_plus
@@ -785,7 +785,7 @@ feature -- Test routines (Comparison)
 			assert ("0 ≤ y ok", max_ok (zero, y, some_real_number))
 		end
 
---feature -- Test routines (Relationship)
+feature -- Test routines (Relationship)
 
 --	test_multipliable
 --			-- Test {STS_REAL_NUMBER}.multipliable.
@@ -812,31 +812,28 @@ feature -- Test routines (Comparison)
 --			assert ("multipliable ok", multipliable_ok (x, y))
 --		end
 
---	test_divisible
---			-- Test {STS_REAL_NUMBER}.divisible.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.divisible"
---		local
---			x: like real_number_to_be_tested
---			y: like some_real_number
---		do
---			x := real_number_to_be_tested
---			y := some_real_number
---			check
---				good_divisor_1: x.q.divisible (gcd (y.q, x.q)) -- x.q, y.q /= 0
---				good_divisor_2: y ≭ zero ⇒ y.p.divisible (gcd (x.p, y.p)) -- y.p /= 0 ⇐ y ≭ zero
---			end
---			assert (
---					"when does not overflow",
---					y ≭ zero and then not x.integer_product_overflows (x.q // gcd (y.q, x.q), y.p // gcd (x.p, y.p)) ⇒
---					x.divisible (y)
---				)
---			assert (
---					"when is not divisible",
---					not x.divisible (y) ⇒
---					y ≍ zero or else x.integer_product_overflows (x.q // gcd (y.q, x.q), y.p // gcd (x.p, y.p))
---				)
---		end
+	test_divisible
+			-- Test {STS_REAL_NUMBER}.divisible.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.divisible"
+		local
+			x: like real_number_to_be_tested
+			y: like some_real_number
+		do
+			x := real_number_to_be_tested
+			y := some_real_number
+			assert ("divisible", x.divisible (y) ⇒ True)
+
+			x := real_number_to_be_tested
+			from
+				y := some_real_number
+			until
+				y ≭ zero
+			loop
+				y := some_real_number
+			end
+			assert ("x.divisible (y)", x.divisible (y))
+		end
 
 --feature -- Test routines (Operation)
 

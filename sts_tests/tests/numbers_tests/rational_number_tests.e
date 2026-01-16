@@ -37,6 +37,7 @@ inherit
 			test_three_way_comparison as test_real_three_way_comparison,
 			test_min as test_real_min,
 			test_max as test_real_max,
+			test_divisible as test_real_divisible,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,
