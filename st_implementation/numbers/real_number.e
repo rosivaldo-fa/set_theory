@@ -734,8 +734,7 @@ feature -- Operation
 
 	modulus,
 	abs: like real_anchor
-			-- Distance from current real number to the origin of the real number
-			-- line
+			-- <Precursor>
 		do
 			create Result.make_abs (Current)
 		end

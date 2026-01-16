@@ -66,7 +66,7 @@ feature -- Test routines (All)
 --			test_divisible
 			test_min
 			test_max
---			test_modulus
+			test_modulus
 --			test_abs
 --			test_plus
 --			test_minus
@@ -835,15 +835,15 @@ feature -- Test routines (Relationship)
 			assert ("x.divisible (y)", x.divisible (y))
 		end
 
---feature -- Test routines (Operation)
+feature -- Test routines (Operation)
 
---	test_modulus
---			-- Test {STS_REAL_NUMBER}.modulus.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.modulus"
---		do
---			assert ("modulus", attached real_number_to_be_tested.modulus)
---		end
+	test_modulus
+			-- Test {STS_REAL_NUMBER}.modulus.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.modulus"
+		do
+			assert ("modulus", attached real_number_to_be_tested.modulus)
+		end
 
 --	test_abs
 --			-- Test {STS_REAL_NUMBER}.abs.

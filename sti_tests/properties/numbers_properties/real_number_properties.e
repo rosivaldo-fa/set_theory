@@ -86,38 +86,18 @@ feature -- Properties (Quality)
 			end
 		end
 
-feature -- Properties (Relationship)
+feature -- Properties (Operation)
 
---	multipliable_ok (x, y: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.multipliable?
---		do
---			if Precursor {STST_REAL_NUMBER_PROPERTIES} (x, y) then
---				check
---					gcd_1: attached gcd (y.p, x.q) as gcd_1
---					gcd_2: attached gcd (x.p, y.q) as gcd_2
---					good_divisor_1: x.q.divisible (gcd_1) -- gcd_1 /= 0 ⇐ x.q /= 0
---					good_divisor_2: y.q.divisible (gcd_2) -- gcd_2 /= 0 ⇐ y.q /= 0
---					accepted_overflow:
---						{STI_REAL_NUMBER}.integer_product_overflows (x.q // gcd_1, y.q // gcd_2) and (x.q // gcd_1) ⋅ (y.q // gcd_2) ≭ Zero.p ⇒
---						x.multipliable (y)
---				then
---					Result := True
---				end
---			end
---		end
-
---	divisible_ok (x: STI_REAL_NUMBER; y: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STI_REAL_NUMBER}.divisible?
---		do
---			check
---				good_divisor_1: x.q.divisible (gcd (y.q, x.q)) -- y.q, x.q /= 0
---				good_divisor_2: y.p ≭ Zero.p ⇒ y.p.divisible (gcd (x.p, y.p))
---				when_divisible: x.divisible (y) ⇒
---					y.p ≭ Zero.p and then ((x.q // gcd (y.q, x.q)) ⋅ (y.p // gcd (x.p, y.p))) ≭ Zero.p
---			then
---				Result := True
---			end
---		end
+	modulus_ok (x: REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {REAL_NUMBER}.modulus?
+		do
+			check
+				when_negative: x < zero ⇒ x.modulus ≍ - x
+				when_non_negative: x ≥ zero ⇒ x.modulus ≍ x
+			then
+				Result := True
+			end
+		end
 
 feature -- Properties (Implementation)
 
@@ -186,7 +166,7 @@ feature -- Anchor
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

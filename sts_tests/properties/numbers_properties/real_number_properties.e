@@ -307,23 +307,6 @@ feature -- Properties (Comparison)
 			end
 		end
 
-feature -- Properties (Relationship)
-
---	multipliable_ok (x, y: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.multipliable?
---		do
---			check
---				gcd_1: attached gcd (y.p, x.q) as gcd_1
---				gcd_2: attached gcd (x.p, y.q) as gcd_2
---				good_divisor_1: x.q.divisible (gcd_1) -- gcd_1 /= 0 ⇐ x.q /= 0
---				good_divisor_2: y.q.divisible (gcd_2) -- gcd_2 /= 0 ⇐ y.q /= 0
---				unexpected_zero_product: -- Which is possible only upon an overflow.
---					(x.q // gcd_1) ⋅ (y.q // gcd_2) ≍ zero.p ⇒ not x.multipliable (y)
---			then
---				Result := True
---			end
---		end
-
 feature -- Properties (Operation)
 
 --	plus_ok (x, y: STS_REAL_NUMBER): BOOLEAN

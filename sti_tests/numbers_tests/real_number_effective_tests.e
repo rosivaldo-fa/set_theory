@@ -61,7 +61,7 @@ inherit
 			test_divisible,
 			test_min,
 			test_max,
---			test_modulus,
+			test_modulus,
 --			test_abs,
 --			test_plus,
 --			test_minus,
@@ -1363,15 +1363,16 @@ feature -- Test routines (Relationship)
 			Precursor {STST_REAL_NUMBER_TESTS}
 		end
 
---feature -- Test routines (Operation)
+feature -- Test routines (Operation)
 
---	test_modulus
---			-- Test {STI_REAL_NUMBER}.modulus.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.modulus"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_modulus
+			-- Test {STI_REAL_NUMBER}.modulus.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.modulus"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			assert ("modulus ok", modulus_ok (real_number_to_be_tested))
+		end
 
 --	test_abs
 --			-- Test {STI_REAL_NUMBER}.abs.
