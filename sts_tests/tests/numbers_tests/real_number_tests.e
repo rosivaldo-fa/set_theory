@@ -727,43 +727,63 @@ feature -- Test routines (Comparison)
 			assert ("0 ≥ y ok", min_ok (zero, y, some_real_number))
 		end
 
---	test_max
---			-- Test {STS_REAL_NUMBER}.max.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.max"
---		local
---			x: like real_number_to_be_tested
---			y: like some_real_number
---		do
---			from
---				x := real_number_to_be_tested
---				y := some_real_number
---			until
---				x ≥ y
---			loop
---				x := real_number_to_be_tested
---				y := some_real_number
---			end
---			assert ("x", (x ∨ y) ≍ x)
---			assert ("x ok", max_ok (x, y, some_real_number))
+	test_max
+			-- Test {STS_REAL_NUMBER}.max.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.max"
+		local
+			x: like real_number_to_be_tested
+			y: like some_real_number
+		do
+			x := real_number_to_be_tested
+			y := some_real_number
+			assert ("max", attached (x ∨ y))
+			assert ("max ok", max_ok (x, y, some_real_number))
 
---			from
---				x := real_number_to_be_tested
---				y := some_real_number
---			until
---				x ≤ y
---			loop
---				x := real_number_to_be_tested
---				y := some_real_number
---			end
---			assert ("y", (x ∨ y) ≍ y)
---			assert ("y ok", max_ok (x, y, some_real_number))
+			from
+				x := real_number_to_be_tested
+				y := some_real_number
+			until
+				x ≥ y
+			loop
+				x := real_number_to_be_tested
+				y := some_real_number
+			end
+			assert ("x", (x ∨ y) ≍ x)
+			assert ("x ok", max_ok (x, y, some_real_number))
 
---			x := real_number_to_be_tested
---			y := some_real_number
---			assert ("max", attached (x ∨ y))
---			assert ("max ok", max_ok (x, y, some_real_number))
---		end
+			from
+				x := real_number_to_be_tested
+				y := some_real_number
+			until
+				x ≤ y
+			loop
+				x := real_number_to_be_tested
+				y := some_real_number
+			end
+			assert ("y", (x ∨ y) ≍ y)
+			assert ("y ok", max_ok (x, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y ≤ y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("0 ≥ y", (zero ∨ y) ≍ zero)
+			assert ("0 ≥ y ok", max_ok (zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y ≥ y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("0 ≤ y", (zero ∨ y) ≍ y)
+			assert ("0 ≤ y ok", max_ok (zero, y, some_real_number))
+		end
 
 --feature -- Test routines (Relationship)
 

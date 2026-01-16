@@ -294,17 +294,18 @@ feature -- Properties (Comparison)
 			end
 		end
 
---	max_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.max?
---		do
---			check
---				idempotent: (x ∨ x) ≍ x
---				commutative: (x ∨ y) ≍ (y ∨ x)
---				associative: ((x ∨ y) ∨ z) ≍ (x ∨ (y ∨ z))
---			then
---				Result := True
---			end
---		end
+	max_ok (x, y, z: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.max?
+		do
+			check
+				idempotent: (x ∨ x) ≍ x
+				commutative: (x ∨ y) ≍ (y ∨ x)
+				associative: ((x ∨ y) ∨ z) ≍ (x ∨ (y ∨ z))
+				absolute_maximum: x.is_positive_infinity ⇒ (x ∨ y).is_positive_infinity
+			then
+				Result := True
+			end
+		end
 
 feature -- Properties (Relationship)
 

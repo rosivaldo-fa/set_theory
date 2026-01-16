@@ -14,6 +14,7 @@ inherit
 			sign,
 			out,
 			real_min,
+			real_max,
 			rational_min,
 			rational_max,
 			three_way_comparison,
@@ -188,6 +189,12 @@ feature -- Comparison
 			-- <Precursor>
 		do
 			create Result.make (stored_value ∧ x.value)
+		end
+
+	real_max (x: STS_REAL_NUMBER): like real_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value ∨ x.value)
 		end
 
 	rational_min (pq: STS_RATIONAL_NUMBER): like Rational_anchor

@@ -30,6 +30,7 @@ inherit
 			sign,
 			out,
 			real_min,
+			real_max,
 			min,
 			max,
 			multipliable,
@@ -210,6 +211,17 @@ feature -- Comparison
 			-- <Precursor>
 		do
 			if real_is_less_equal (x) then
+				create Result.make_from_reference (Current) -- TODO: make_from_rational?
+			else
+--				Result := x -- TODO: Result := create {REAL_NUMBER}.make_from_real (x) instead of create Result.make_from_real (x)
+				create Result.make_from_reference (x)
+			end
+		end
+
+	real_max (x: STS_REAL_NUMBER): like real_anchor
+			-- <Precursor>
+		do
+			if real_is_greater_equal (x) then
 				create Result.make_from_reference (Current) -- TODO: make_from_rational?
 			else
 --				Result := x -- TODO: Result := create {REAL_NUMBER}.make_from_real (x) instead of create Result.make_from_real (x)

@@ -60,7 +60,7 @@ inherit
 --			test_multipliable,
 --			test_divisible,
 			test_min,
---			test_max,
+			test_max,
 --			test_modulus,
 --			test_abs,
 --			test_plus,
@@ -1266,13 +1266,66 @@ feature -- Test routines (Comparison)
 			assert ("not (-0 ≤ y) ok", min_ok (- Zero, y, some_real_number))
 		end
 
---	test_max
---			-- Test {STI_REAL_NUMBER}.max.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.max"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_max
+			-- Test {STI_REAL_NUMBER}.max.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.max"
+		local
+			y: like some_real_number
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+
+			y := some_real_number
+			assert ("-NaN ≤ y", (- Nan ∨ y) ≍ y)
+			assert ("-NaN ≤ y ok", max_ok (- Nan, y, some_real_number))
+
+			assert ("NaN ≤ y", (Nan ∨ y) ≍ y)
+			assert ("NaN ≤ y ok", max_ok (Nan, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				not y.is_nan
+			loop
+				y := some_real_number
+			end
+			assert ("-Infinity ≤ y", (Negative_infinity ∨ y) ≍ y)
+			assert ("-Infinity ≤ y ok", max_ok (Negative_infinity, y, some_real_number))
+
+			inspect
+				next_random_item \\ 2
+			when 0 then
+				y := same_real_number (Nan)
+			when 1 then
+				y := same_real_number (- Nan)
+			end
+			assert ("not (-Infinity ≤ y)", (Negative_infinity ∨ y) ≍ Negative_infinity)
+			assert ("not (-Infinity ≤ y) ok", max_ok (Negative_infinity, y, some_real_number))
+
+			y := same_real_number (Positive_infinity)
+			assert ("Infinity ≥ y", (Positive_infinity ∨ y) ≍ Positive_infinity)
+			assert ("Infinity ≥ y ok", max_ok (Positive_infinity, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y ≍ y.zero or y > y.zero
+			loop
+				y := some_real_number
+			end
+			assert ("-0 ≤ y", (- zero ∨ y) ≍ y)
+			assert ("-0 ≤ y ok", max_ok (- zero, y, some_real_number))
+
+			from
+				y := some_real_number
+			until
+				y.zero > y
+			loop
+				y := some_real_number
+			end
+			assert ("not (-0 ≤ y)", (- zero ∨ y) ≍ - Zero)
+			assert ("not (-0 ≤ y) ok", max_ok (- Zero, y, some_real_number))
+		end
 
 --feature -- Test routines (Relationship)
 

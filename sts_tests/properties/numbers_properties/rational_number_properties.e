@@ -17,7 +17,8 @@ inherit
 			is_less_equal_ok as real_is_less_equal_ok,
 			is_greater_ok as real_is_greater_ok,
 			is_greater_equal_ok as real_is_greater_equal_ok,
-			min_ok as real_min_ok
+			min_ok as real_min_ok,
+			max_ok as real_max_ok
 		end
 
 feature -- Access

@@ -33,6 +33,7 @@ inherit
 			is_greater_equal as real_is_greater_equal,
 			three_way_comparison as real_three_way_comparison,
 			min as real_min,
+			max as real_max,
 			divisible as real_divisible,
 			minus as real_minus,
 			product as real_product,

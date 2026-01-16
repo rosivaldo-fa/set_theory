@@ -243,6 +243,19 @@ feature -- Comparison
 			other_if_greater: x < Current ⇒ Result ≍ x
 		end
 
+	max alias "∨" (x: REAL_NUMBER): like real_anchor
+			-- The greater of current real number and `x'
+		do
+			if Current ≥ x then
+				Result := Current
+			else
+				Result := x
+			end
+		ensure
+			current_if_not_smaller: Current ≥ x ⇒ Result ≍ Current
+			other_if_smaller: Current < x ⇒ Result ≍ x
+		end
+
 feature -- Relationship
 
 	divisible (x: REAL_NUMBER): BOOLEAN

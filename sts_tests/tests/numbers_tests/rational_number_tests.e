@@ -19,6 +19,7 @@ inherit
 			is_greater_ok as real_is_greater_ok,
 			is_greater_equal_ok as real_is_greater_equal_ok,
 			min_ok as real_min_ok,
+			max_ok as real_max_ok,
 			test_is_in as test_real_is_in,
 			test_is_not_in as test_real_is_not_in,
 			test_sign as test_real_sign,
@@ -35,6 +36,7 @@ inherit
 			test_is_greater_equal as test_real_is_greater_equal,
 			test_three_way_comparison as test_real_three_way_comparison,
 			test_min as test_real_min,
+			test_max as test_real_max,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,

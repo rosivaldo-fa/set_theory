@@ -22,6 +22,7 @@ inherit
 			c_copysign
 		redefine
 			min,
+			max,
 			modulus,
 			abs,
 			opposite
@@ -44,6 +45,13 @@ feature -- Comparison
 		do
 --			Result := Precursor {STI_REAL_NUMBER}(x)
 			Result := as_parent ∧ x -- TODO: Don't call Precursor; it stumbles on a bug in the compiler?
+		end
+
+	max alias "∨" (x: STS_REAL_NUMBER): like real_anchor
+			-- <Precursor>
+		do
+--			Result := Precursor {STI_REAL_NUMBER}(x)
+			Result := as_parent ∨ x -- TODO: Don't call Precursor; it stumbles on a bug in the compiler?
 		end
 
 feature -- Operation
