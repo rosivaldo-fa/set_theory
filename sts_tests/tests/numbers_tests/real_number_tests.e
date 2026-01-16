@@ -67,7 +67,7 @@ feature -- Test routines (All)
 			test_min
 			test_max
 			test_modulus
---			test_abs
+			test_abs
 --			test_plus
 --			test_minus
 --			test_opposite
@@ -845,13 +845,13 @@ feature -- Test routines (Operation)
 			assert ("modulus", attached real_number_to_be_tested.modulus)
 		end
 
---	test_abs
---			-- Test {STS_REAL_NUMBER}.abs.
---		note
---			testing: "covers/{STS_REAL_NUMBER}.abs"
---		do
---			assert ("abs", attached real_number_to_be_tested.abs)
---		end
+	test_abs
+			-- Test {STS_REAL_NUMBER}.abs.
+		note
+			testing: "covers/{STS_REAL_NUMBER}.abs"
+		do
+			assert ("abs", attached real_number_to_be_tested.abs)
+		end
 
 --	test_plus
 --			-- Test {STS_REAL_NUMBER}.plus.

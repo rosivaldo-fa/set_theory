@@ -62,7 +62,7 @@ inherit
 			test_min,
 			test_max,
 			test_modulus,
---			test_abs,
+			test_abs,
 --			test_plus,
 --			test_minus,
 --			test_opposite,
@@ -1374,13 +1374,14 @@ feature -- Test routines (Operation)
 			assert ("modulus ok", modulus_ok (real_number_to_be_tested))
 		end
 
---	test_abs
---			-- Test {STI_REAL_NUMBER}.abs.
---		note
---			testing: "covers/{STI_REAL_NUMBER}.abs"
---		do
---			Precursor {STST_REAL_NUMBER_TESTS}
---		end
+	test_abs
+			-- Test {STI_REAL_NUMBER}.abs.
+		note
+			testing: "covers/{STI_REAL_NUMBER}.abs"
+		do
+			Precursor {STST_REAL_NUMBER_TESTS}
+			assert ("abs ok", abs_ok (real_number_to_be_tested))
+		end
 
 --	test_plus
 --			-- <Precursor>

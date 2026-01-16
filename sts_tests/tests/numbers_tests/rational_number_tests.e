@@ -39,6 +39,7 @@ inherit
 			test_max as test_real_max,
 			test_divisible as test_real_divisible,
 			test_modulus as test_real_modulus,
+			test_abs as test_real_abs,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,

@@ -99,6 +99,17 @@ feature -- Properties (Operation)
 			end
 		end
 
+	abs_ok (x: REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {REAL_NUMBER}.abs?
+		do
+			check
+				when_negative: x < zero ⇒ x.abs ≍ - x
+				when_non_negative: x ≥ zero ⇒ x.abs ≍ x
+			then
+				Result := True
+			end
+		end
+
 feature -- Properties (Implementation)
 
 	sign_bit_status_ok (x: REAL_NUMBER): BOOLEAN
