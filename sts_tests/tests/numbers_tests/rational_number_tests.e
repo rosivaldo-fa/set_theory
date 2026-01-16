@@ -20,6 +20,7 @@ inherit
 			is_greater_equal_ok as real_is_greater_equal_ok,
 			min_ok as real_min_ok,
 			max_ok as real_max_ok,
+			plus_ok as real_plus_ok,
 			test_is_in as test_real_is_in,
 			test_is_not_in as test_real_is_not_in,
 			test_sign as test_real_sign,
@@ -40,6 +41,7 @@ inherit
 			test_divisible as test_real_divisible,
 			test_modulus as test_real_modulus,
 			test_abs as test_real_abs,
+			test_plus as test_real_plus,
 			real_number_to_be_tested as rational_number_to_be_tested
 		redefine
 			test_all,

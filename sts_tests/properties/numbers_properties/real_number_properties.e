@@ -309,17 +309,21 @@ feature -- Properties (Comparison)
 
 feature -- Properties (Operation)
 
---	plus_ok (x, y: STS_REAL_NUMBER): BOOLEAN
---			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.plus?
---		do
---			check
---				neutral_left_term: (zero + x) ≍ x
---				neutral_right_term: (x + zero) ≍ x
---				commutative: (x + y) ≍ (y + x)
---			then
---				Result := True
---			end
---		end
+	plus_ok (x, y: STS_REAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.plus?
+		do
+			check
+				neutral_left_term: (zero + x) ≍ x
+				neutral_right_term: (x + zero) ≍ x
+				commutative: (x + y) ≍ (y + x)
+				absorbing_left_nan_term: x.is_nan ⇒ (x + y).is_nan
+				absorbing_right_nan_term: y.is_nan ⇒ (x + y).is_nan
+				impossible_sum: x.is_negative_infinity and y.is_positive_infinity ⇒ (x + y).is_nan
+				commuted_impossible_sum: x.is_positive_infinity and y.is_negative_infinity ⇒ (x + y).is_nan
+			then
+				Result := True
+			end
+		end
 
 --	minus_ok (x, y: STS_REAL_NUMBER): BOOLEAN
 --			-- Do the properties verified within number theory hold for {STS_REAL_NUMBER}.minus?

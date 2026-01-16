@@ -277,6 +277,14 @@ feature -- Operation
 			definition: Result ≍ real_from_value (value.abs)
 		end
 
+	plus alias "+" (x: REAL_NUMBER): like real_anchor
+			-- Sum of current real number with `x`
+		do
+			Result := real_from_value (value + x.value)
+		ensure
+			definition: Result ≍ real_from_value (value + x.value)
+		end
+
 	minus alias "-" alias "−" (x: REAL_NUMBER): like real_anchor
 			-- Result of subtracting `x` from current real number
 		do

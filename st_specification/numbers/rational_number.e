@@ -35,6 +35,7 @@ inherit
 			min as real_min,
 			max as real_max,
 			divisible as real_divisible,
+			plus as real_plus,
 			minus as real_minus,
 			product as real_product,
 			quotient as real_quotient,
