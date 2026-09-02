@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-23-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-23-0 http://www.eiffel.com/developers/xml/configuration-1-23-0.xsd" name="set_theory" uuid="42C0C86D-A478-4774-B24C-E82FED9934CF" library_target="set_theory">
+	<target name="set_theory">
+		<root all_classes="true"/>
+		<file_rule>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/\..*$</exclude>
+		</file_rule>
+		<option warning="warning">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<setting name="dead_code_removal" value="feature"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf">
+			<renaming old_name="SET" new_name="EB_SET"/>
+		</library>
+		<cluster name="src" location=".\src\">
+			<cluster name="sets" location="C:\Users\rosiv\OneDrive\Documents\Eiffel User Files\25.12\projects\demo\set_theory\src\sets\" recursive="true"/>
+		</cluster>
+	</target>
+	<target name="set_theory_tests" extends="set_theory">
+		<root class="APPLICATION" feature="make"/>
+		<option warning="warning">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
+		<cluster name="test" location=".\testing\">
+			<tests name="sets_tests" location="C:\Users\rosiv\OneDrive\Documents\Eiffel User Files\25.12\projects\demo\set_theory\testing\sets_tests\"/>
+		</cluster>
+	</target>
+</system>
