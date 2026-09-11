@@ -10,7 +10,8 @@ class
 inherit
 	EQUALITY_TESTS
 		redefine
-			test_holds
+			test_holds,
+			test_holds_successively
 		end
 
 feature -- Test routines (Relationship)
@@ -29,6 +30,26 @@ feature -- Test routines (Relationship)
 			create c1
 			create c2
 			assert ("c1 /= c2", not eq (c1, c2))
+		end
+
+	test_holds_successively
+			-- Test {INSTANCE_FREE_EQUALITY}.holds_successively.
+			-- Test {REFERENCE_EQUALITY}.holds_successively.
+		note
+			testing: "covers/{INSTANCE_FREE_EQUALITY}.holds_successively"
+			testing: "covers/{REFERENCE_EQUALITY}.holds_successively"
+		local
+			eq: like equality_to_be_tested
+			c1, c2, c3: detachable separate CHARACTER_REF
+		do
+			Precursor {EQUALITY_TESTS}
+
+			eq := equality_to_be_tested
+			create c1
+			c2 := c1
+			create c3
+			assert ("unequal references", not eq.holds_successively (c1, c2, c3))
+			assert ("unequal references ok", holds_successively_ok (c1, c2, c3, eq))
 		end
 
 feature {NONE} -- Factory (Element to be tested)
