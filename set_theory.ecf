@@ -15,7 +15,7 @@
 			<renaming old_name="SET" new_name="EB_SET"/>
 		</library>
 		<cluster name="src" location=".\src\">
-			<cluster name="sets" location="C:\Users\rosiv\OneDrive\Documents\Eiffel User Files\25.12\projects\demo\set_theory\src\sets\" recursive="true"/>
+			<cluster name="sets" location=".\src\sets\" recursive="true"/>
 		</cluster>
 	</target>
 	<target name="set_theory_tests" extends="set_theory">
@@ -26,7 +26,7 @@
 		<setting name="console_application" value="true"/>
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
 		<cluster name="test" location=".\testing\">
-			<tests name="sets_tests" location="C:\Users\rosiv\OneDrive\Documents\Eiffel User Files\25.12\projects\demo\set_theory\testing\sets_tests\"/>
+			<tests name="sets_tests" location=".\testing\sets_tests\" recursive="true"/>
 		</cluster>
 	</target>
 </system>
