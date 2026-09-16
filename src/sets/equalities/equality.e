@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Element that checks for equality between two objects; defined as an equivalence relation."
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -17,8 +17,8 @@ feature -- Relationship
 			--| Please have a look at {INSTANCE_FREE_EQUALITY}.
 		deferred
 		ensure
-			reflexive: a = b implies Result
-			symmetric: Result implies holds (b, a)
+			reflexive: a = b ⇒ Result
+			symmetric: Result ⇒ holds (b, a)
 		end
 
 	holds_successively (a, b, c: G): BOOLEAN
@@ -28,7 +28,7 @@ feature -- Relationship
 			Result := holds (a, b) and holds (b, c)
 		ensure
 			definition: Result = (holds (a, b) and holds (b, c))
-			transitive: Result implies holds (a, c)
+			transitive: Result ⇒ holds (a, c)
 		end
 
 note
@@ -36,6 +36,6 @@ note
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	source: "https://github.com/rosivaldo-fa/set_theory"
 end

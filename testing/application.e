@@ -9,22 +9,22 @@ class
 create
 	make
 
-feature  -- Initialization
+feature -- Initialization
 
 	make
 			-- Run application.
 		do
 			(create {ELEMENT_TESTS}).test_all;
+			(create {REFERENCE_EQUALITY_TESTS}).test_all;
+			(create {OBJECT_STANDARD_EQUALITY_TESTS}).test_all;
 		end
 
 note
-	copyright: "Copyright (c) 1984-2019, Eiffel Software and others"
-	license: "Eiffel Forum License v2 (see http://www.eiffel.com/licensing/forum.txt)"
-	source: "[
-			Eiffel Software
-			5949 Hollister Ave., Goleta, CA 93117 USA
-			Telephone 805-685-1006, Fax 805-685-6869
-			Website http://www.eiffel.com
-			Customer support http://support.eiffel.com
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
+	license: "[
+		Eiffel Forum License v2
+		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
+	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end
