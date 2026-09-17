@@ -10,8 +10,8 @@ class
 inherit
 	EQUALITY_TESTS
 		redefine
-			test_holds --,
---			test_holds_successively
+			test_holds,
+			test_holds_successively
 		end
 
 feature -- Test routines (Relationship)
@@ -28,26 +28,31 @@ feature -- Test routines (Relationship)
 		do
 			if not (eq_failed or neq_failed) then
     			Precursor {EQUALITY_TESTS}
-
     			eq := equality_to_be_tested
     			create c1
     			separate c1 as sep_c1 do
     				c2 := sep_c1.standard_twin
     			end
-    			assert ("c1 ≜ c2", eq (c1, c2))
+    		else
+    		    check
+    		    		-- eq and c1 was set on a previous iteration.
+    		        attached eq
+    		        attached c1
+    		    then
+    		    end
+    		end
+   			if not neq_failed then
+       			assert ("c1 ≜ c2", eq (c1, c2))
 
     			c2 := Void
     			assert ("not (c1 ≜ Void)", not eq (c1, c2))
-			end
 
-			if not neq_failed then
-    			eq := equality_to_be_tested
     			create c2
     			separate c2 as sep_c2 do
     				sep_c2.set_item ('a')
     			end
-    			assert ("not (c1 ≜ 'a')", not eq (c1, c2))
-			end
+   			end
+    		assert ("not (c1 ≜ 'a')", not eq (c1, c2))
 		rescue
 			if {EXCEPTIONS}.tag_name ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("c1 ≜ c2") then
 				eq_failed := True -- Please have a look at EIS entry above.
@@ -58,45 +63,36 @@ feature -- Test routines (Relationship)
 			end
 		end
 
---	test_holds_successively
---			-- Test {INSTANCE_FREE_EQUALITY}.holds_successively.
---			-- Test {OBJECT_STANDARD_EQUALITY}.holds_successively.
---		note
---			testing: "covers/{INSTANCE_FREE_EQUALITY}.holds_successively"
---			testing: "covers/{OBJECT_STANDARD_EQUALITY}.holds_successively"
---		local
---			eq: like equality_to_be_tested
---			c1, c2, c3: detachable separate CHARACTER_REF
---		do
---			Precursor {EQUALITY_TESTS}
+	test_holds_successively
+			-- Test {INSTANCE_FREE_EQUALITY}.holds_successively.
+			-- Test {OBJECT_STANDARD_EQUALITY}.holds_successively.
+		note
+			testing: "covers/{INSTANCE_FREE_EQUALITY}.holds_successively"
+			testing: "covers/{OBJECT_STANDARD_EQUALITY}.holds_successively"
+		local
+			eq: like equality_to_be_tested
+			c1, c2, c3: detachable separate CHARACTER_REF
+		do
+			Precursor {EQUALITY_TESTS}
 
---			eq := equality_to_be_tested
---			c1 := some_object_g
---			c2 := object_standard_twin_g (c1)
---			c3 := object_standard_twin_g (c2)
---			assert ("c1 ≜ c2 ≜ c3", eq.holds_successively (c1, c2, c3))
---			assert ("c1 ≜ c2 ≜ c3 ok", holds_successively_ok (c1, c2, c3, eq))
+			eq := equality_to_be_tested
+			create c1
+			separate c1 as sep_c1 do
+				c2 := sep_c1.standard_twin
+			end
+			separate c2 as sep_c2 do
+				c3 := sep_c2.standard_twin
+			end
+			assert ("c1 ≜ c2 ≜ c3", eq.holds_successively (c1, c2, c3))
+			assert ("c1 ≜ c2 ≜ c3 ok", holds_successively_ok (c1, c2, c3, eq))
 
---			from
---				c2 := some_object_g
---				c3 := some_object_g
---			until (
---					agent (ia_a1, ia_a2, ia_a3: detachable separate CHARACTER_REF): BOOLEAN
---						do
---							Result := if attached ia_a1 then
---									not (attached ia_a2 and attached ia_a3) or else not (ia_a1 ≜ ia_a2 and ia_a2 ≜ ia_a3)
---								else
---									attached ia_a2 or attached ia_a3
---								end
---						end
---				).item (c1, c2, c3)
---			loop
---				c2 := some_object_g
---				c3 := some_object_g
---			end
---			assert ("not (c1 ≜ c2 ≜ c3)", not eq.holds_successively (c1, c2, c3))
---			assert ("not (c1 ≜ c2 ≜ c3) ok", holds_successively_ok (c1, c2, c3, eq))
---		end
+			separate c2 as sep_c2 do
+				sep_c2.set_item ('a')
+			end
+			c3 := Void
+			assert ("not (c1 ≜ c2 ≜ c3)", not eq.holds_successively (c1, c2, c3))
+			assert ("not (c1 ≜ c2 ≜ c3) ok", holds_successively_ok (c1, c2, c3, eq))
+		end
 
 feature {NONE} -- Factory (Element to be tested)
 
