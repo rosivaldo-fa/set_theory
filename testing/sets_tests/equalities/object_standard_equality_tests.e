@@ -35,7 +35,7 @@ feature -- Test routines (Relationship)
     			end
     		else
     		    check
-    		    		-- eq and c1 was set on a previous iteration.
+    		    		-- eq and c1 were set on a previous iteration.
     		        attached eq
     		        attached c1
     		    then
@@ -64,10 +64,8 @@ feature -- Test routines (Relationship)
 		end
 
 	test_holds_successively
-			-- Test {INSTANCE_FREE_EQUALITY}.holds_successively.
 			-- Test {OBJECT_STANDARD_EQUALITY}.holds_successively.
 		note
-			testing: "covers/{INSTANCE_FREE_EQUALITY}.holds_successively"
 			testing: "covers/{OBJECT_STANDARD_EQUALITY}.holds_successively"
 		local
 			eq: like equality_to_be_tested

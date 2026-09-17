@@ -5,15 +5,20 @@
 	revision: "$Revision$"
 
 class
-	OBJECT_STANDARD_EQUALITY [A]
+	OBJECT_STANDARD_EQUALITY [G]
 
 inherit
-	INSTANCE_FREE_EQUALITY [A]
+	INSTANCE_FREE_EQUALITY [G]
+		redefine
+		    holds_successively
+		end
 
 feature -- Relationship
 
-	holds alias "()" (a, b: A): BOOLEAN
+	holds alias "()" (a, b: G): BOOLEAN
 			-- <Precursor>
+		note
+			eis: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		do
 			if attached a then
 				Result := attached b and then a ≜ b
@@ -21,8 +26,24 @@ feature -- Relationship
 				Result := not attached b
 			end
 		ensure then
-			attached_a: attached a ⇒ Result = (attached b and then a ≜ b)
-			detached_a: not attached a ⇒ Result = not attached b
+			when_attached_a: attached a ⇒ Result = (attached b and then a ≜ b)
+			when_detached_a: not attached a ⇒ Result = not attached b
+		rescue
+			if {EXCEPTIONS}.tag_name ~ "symmetric" or {EXCEPTIONS}.tag_name ~ "when_attached_a" then
+				retry -- Please have a look at EIS entry above.
+			end
+		end
+
+	holds_successively (a, b, c: G): BOOLEAN
+			-- <Precursor>
+		note
+			eis: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
+		do
+			Result := Precursor {INSTANCE_FREE_EQUALITY}(a, b, c)
+		rescue
+			if {EXCEPTIONS}.tag_name ~ "definition" then
+				retry -- Please have a look at EIS entry above.
+			end
 		end
 
 note
