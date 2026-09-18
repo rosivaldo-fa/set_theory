@@ -33,6 +33,7 @@ feature -- Test routines (All)
 			test_is_in
 			test_is_not_in
 			test_extended
+			test_prunned
 		end
 
 feature -- Test routines (Initialization)
@@ -142,6 +143,17 @@ feature -- Test routines (Construction)
 		do
 			s := set_to_be_tested
 			assert ("{Void, ...}", s.extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}) ∋ Void)
+		end
+
+	test_prunned
+			-- Test {SET}.prunned.
+		note
+			testing: "covers/{SET}.prunned"
+		local
+			s: like set_to_be_tested
+		do
+			s := set_to_be_tested
+			assert ("s ∖ {a}", s.prunned (Void) ∌ Void)
 		end
 
 feature {NONE} -- Factory (element to be tested)
