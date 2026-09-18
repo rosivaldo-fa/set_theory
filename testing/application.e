@@ -17,6 +17,7 @@ feature -- Initialization
 			(create {ELEMENT_TESTS}).test_all;
 			(create {REFERENCE_EQUALITY_TESTS}).test_all;
 			(create {OBJECT_STANDARD_EQUALITY_TESTS}).test_all;
+			(create {OBJECT_EQUALITY_TESTS}).test_all;
 		end
 
 note
