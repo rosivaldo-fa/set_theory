@@ -17,7 +17,16 @@ inherit
 			is_in as element_is_in,
 			is_not_in as element_is_not_in
 		redefine
-			default_create
+			default_create,
+			out
+		end
+
+	DEBUG_OUTPUT
+		rename
+		    debug_output as out
+		redefine
+			default_create,
+			out
 		end
 
 create
@@ -133,6 +142,46 @@ feature -- Quality
 		do
 		end
 
+feature -- Output
+
+	element_out (a: G): STRING
+			-- Terse printable representation of `a'
+		do
+			if attached a then
+				check
+					other_not_void: a.out /= Void -- {ANY}.out definition
+				end
+				create Result.make_from_separate (a.out)
+			else
+				Result := "Void"
+			end
+		ensure
+			class
+			when_attached: attached a ⇒ Result ~ a.out
+			when_detached: not attached a ⇒ Result ~ "Void"
+		rescue
+			if {EXCEPTIONS}.tag_name ~ "when_attached" then
+					-- If a.out contains the address of an object, the GC may have changed such an address. Just hope it remains stable for now.
+				retry
+			end
+		end
+
+	out: STRING
+			-- <Precursor>
+		do
+			if Current = subset then
+				Result := "{}"
+			else
+				Result := subset.out
+				Result.append (" & (")
+				Result.append (element_out (given_element))
+				Result.append_character (')')
+			end
+		ensure then
+			base: Current = subset ⇒ Result ~ "{}"
+			induction: Current /= subset ⇒ Result ~ subset.out + " & (" + element_out (given_element) + ")"
+		end
+
 feature -- Anchor
 
 	subset_anchor: SET [G]
@@ -197,7 +246,7 @@ feature {NONE} -- Anchor
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)

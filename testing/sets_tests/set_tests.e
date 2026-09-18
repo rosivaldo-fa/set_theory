@@ -34,6 +34,7 @@ feature -- Test routines (All)
 			test_is_not_in
 			test_extended
 			test_prunned
+			test_element_out
 		end
 
 feature -- Test routines (Initialization)
@@ -153,7 +154,79 @@ feature -- Test routines (Construction)
 			s: like set_to_be_tested
 		do
 			s := set_to_be_tested
-			assert ("s ∖ {a}", s.prunned (Void) ∌ Void)
+			assert ("s ∖ {Void}", s.prunned (Void) ∌ Void)
+		end
+
+feature -- Test routines (Output)
+
+	test_element_out
+			-- Test {SET}.element_out.
+		note
+			testing: "covers/{SET}.element_out"
+			eis: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
+		local
+			c: detachable separate CHARACTER_REF
+			s: like set_to_be_tested
+			a_failed: BOOLEAN
+		do
+			if not a_failed then
+    			s := set_to_be_tested
+    			assert ("Void", s.element_out (c) ~ "Void")
+
+    			create c
+    			assert ("%U", s.element_out (c) ~ "%U")
+
+    			separate c as sep_c do
+    			    sep_c.set_item ('a')
+    			end
+    		else
+    		    check
+    		    		-- s was set on a previous iteration.
+    		        attached s
+    		    then
+    		    end
+			end
+			assert ("a", s.element_out (c) ~ "a")
+		rescue
+			if {EXCEPTIONS}.tag_name ~ "a" then
+				a_failed := True -- Please have a look at EIS entry above.
+				retry
+			end
+		end
+
+	test_out
+			-- Test {SET}.out.
+		note
+			testing: "covers/{SET}.out"
+		local
+			c1, c2, c3: detachable separate CHARACTER_REF
+			s: like set_to_be_tested
+			eq: REFERENCE_EQUALITY [detachable separate CHARACTER_REF]
+			s_out: STRING
+		do
+			create eq
+			create s
+			assert ("{}", s.out ~ "{}")
+
+			s := s.extended (c1, eq)
+			s_out := s.out
+			assert ("{Void}", s_out ~ "{} & (Void)")
+
+			create c2
+			s := s.extended (c2, eq)
+			s_out := s.out
+			assert ("{Void, '%%U'}", s_out ~ "{} & (Void) & '%%U'")
+
+			create c3
+			separate c3 as sep_c3 do
+			    sep_c3.set_item ('a')
+			end
+			s := s.extended (c3, eq)
+			s_out := s.out
+			assert ("{Void, '%%U', 'a'}", s_out ~ "{} & (Void) & '%%U' & 'a'")
+
+			s := set_to_be_tested
+			assert ("out", attached s.out)
 		end
 
 feature {NONE} -- Factory (element to be tested)
