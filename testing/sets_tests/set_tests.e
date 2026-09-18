@@ -24,6 +24,8 @@ feature -- Test routines (All)
 			testing: "covers/{SET}"
 		do
 			Precursor {ELEMENT_TESTS}
+			test_default_create
+			test_make_extended
 		end
 
 feature -- Test routines (Initialization)
@@ -34,6 +36,20 @@ feature -- Test routines (Initialization)
 			testing: "covers/{SET}.default_create"
 		do
 			assert ("default_create", attached (create {like set_to_be_tested}))
+		end
+
+	test_make_extended
+			-- Test {SET}.make_extended.
+		note
+			testing: "covers/{SET}.make_extended"
+		local
+			s: SET [detachable separate CHARACTER_REF]
+		do
+			create s
+			assert (
+				"make_extended",
+				attached (create {like set_to_be_tested}.make_extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}, s))
+				)
 		end
 
 feature {NONE} -- Factory (element to be tested)
