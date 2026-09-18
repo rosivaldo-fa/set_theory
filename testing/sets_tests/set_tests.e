@@ -9,8 +9,11 @@ class
 
 inherit
     ELEMENT_TESTS
+    	rename
+    	    element_to_be_tested as set_to_be_tested
     	redefine
-    	    test_all
+    	    test_all,
+    	    set_to_be_tested
 		end
 
 feature -- Test routines (All)
@@ -21,6 +24,24 @@ feature -- Test routines (All)
 			testing: "covers/{SET}"
 		do
 			Precursor {ELEMENT_TESTS}
+		end
+
+feature -- Test routines (Initialization)
+
+	test_default_create
+			-- Test {SET}.default_create.
+		note
+			testing: "covers/{SET}.default_create"
+		do
+			assert ("default_create", attached (create {like set_to_be_tested}))
+		end
+
+feature {NONE} -- Factory (element to be tested)
+
+	set_to_be_tested: SET [detachable separate CHARACTER_REF]
+			-- Set meant to be under tests
+		do
+			create Result
 		end
 
 note
