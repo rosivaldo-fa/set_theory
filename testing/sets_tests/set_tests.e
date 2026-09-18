@@ -1,4 +1,4 @@
-note
+﻿note
 	description: "Test suite for {SET}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
@@ -26,6 +26,7 @@ feature -- Test routines (All)
 			Precursor {ELEMENT_TESTS}
 			test_default_create
 			test_make_extended
+			test_has
 		end
 
 feature -- Test routines (Initialization)
@@ -50,6 +51,25 @@ feature -- Test routines (Initialization)
 				"make_extended",
 				attached (create {like set_to_be_tested}.make_extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}, s))
 				)
+		end
+
+feature -- Test routines (Membership)
+
+	test_has
+			-- Test {SET}.has.
+		note
+			testing: "covers/{SET}.has"
+		local
+			s: like set_to_be_tested
+		do
+			create s.make_extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}, set_to_be_tested)
+			assert ("s ∋ Void", s ∋ Void)
+
+			create s
+			assert ("not (s ∋ Void)", not (s ∋ Void))
+
+			s := set_to_be_tested
+			assert ("has", s ∋ Void ⇒ True)
 		end
 
 feature {NONE} -- Factory (element to be tested)
