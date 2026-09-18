@@ -32,7 +32,7 @@ feature -- Test routines (All)
 			test_does_not_have
 			test_is_in
 			test_is_not_in
-			test_is_not_in
+			test_extended
 		end
 
 feature -- Test routines (Initialization)
@@ -129,6 +129,19 @@ feature -- Test routines (Membership)
 				s, create {REFERENCE_EQUALITY [SET [detachable separate CHARACTER_REF]]}, create {SET [SET [detachable separate CHARACTER_REF]]}
 				)
 			assert ("not (s ∉ ss)", not (s ∉ ss))
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {SET}.extended.
+		note
+			testing: "covers/{SET}.extended"
+		local
+			s: like set_to_be_tested
+		do
+			s := set_to_be_tested
+			assert ("{Void, ...}", s.extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}) ∋ Void)
 		end
 
 feature {NONE} -- Factory (element to be tested)
