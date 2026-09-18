@@ -52,8 +52,12 @@ feature -- Test routines (Membership)
 		do
 			a := element_to_be_tested
 			create s
-			assert ("is_not_in", a ∉ s ⇒ True)
-			assert ("is_not_in_ok", is_not_in_ok (a, s))
+			assert ("a ∉ s", a ∉ s)
+			assert ("a ∉ s ok", is_not_in_ok (a, s))
+
+			s := s.extended (a, create {REFERENCE_EQUALITY [ELEMENT]})
+			assert ("not (a ∉ s)", not (a ∉ s))
+			assert ("not (a ∉ s) ok", is_not_in_ok (a, s))
 		end
 
 feature -- Properties (Membership)
@@ -77,7 +81,7 @@ feature {NONE} -- Factory (Element to be tested)
 		end
 
 note
-	copyright: "Copyright (c) 2012-2025, Rosivaldo F Alves"
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[
 		Eiffel Forum License v2
 		(see https://www.eiffel.com/licensing/forum.txt)
