@@ -10,6 +10,7 @@ class
 inherit
     ELEMENT_TESTS
     	rename
+    		test_is_in as test_element_is_in,
     	    element_to_be_tested as set_to_be_tested
     	redefine
     	    test_all,
@@ -28,6 +29,7 @@ feature -- Test routines (All)
 			test_make_extended
 			test_has
 			test_does_not_have
+			test_is_in
 		end
 
 feature -- Test routines (Initialization)
@@ -88,6 +90,24 @@ feature -- Test routines (Membership)
 
 			s := set_to_be_tested
 			assert ("does_not_have", s ∌ Void ⇒ True)
+		end
+
+	test_is_in
+			-- Test {SET}.is_in.
+		note
+			testing: "covers/{SET}.is_in"
+		local
+			s: like set_to_be_tested
+			ss: SET [SET [detachable separate CHARACTER_REF]]
+		do
+			s := set_to_be_tested
+			create ss.make_extended (
+				s, create {REFERENCE_EQUALITY [SET [detachable separate CHARACTER_REF]]}, create {SET [SET [detachable separate CHARACTER_REF]]}
+				)
+			assert ("s ∈ ss", s ∈ ss)
+
+			create ss
+			assert ("not (s ∈ ss)", not (s ∈ ss))
 		end
 
 feature {NONE} -- Factory (element to be tested)
