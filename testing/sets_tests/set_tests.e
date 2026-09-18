@@ -27,6 +27,7 @@ feature -- Test routines (All)
 			test_default_create
 			test_make_extended
 			test_has
+			test_does_not_have
 		end
 
 feature -- Test routines (Initialization)
@@ -70,6 +71,23 @@ feature -- Test routines (Membership)
 
 			s := set_to_be_tested
 			assert ("has", s ∋ Void ⇒ True)
+		end
+
+	test_does_not_have
+			-- Test {SET}.does_not_have.
+		note
+			testing: "covers/{SET}.does_not_have"
+		local
+			s: like set_to_be_tested
+		do
+			create s
+			assert ("s ∌ Void", s ∌ Void)
+
+			create s.make_extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}, set_to_be_tested)
+			assert ("not (s ∌ Void)", not (s ∌ Void))
+
+			s := set_to_be_tested
+			assert ("does_not_have", s ∌ Void ⇒ True)
 		end
 
 feature {NONE} -- Factory (element to be tested)
