@@ -8,14 +8,14 @@ class
 	SET_TESTS
 
 inherit
-    ELEMENT_TESTS
-    	rename
-    		test_is_in as test_element_is_in,
-    		test_is_not_in as test_element_is_not_in,
-    	    element_to_be_tested as set_to_be_tested
-    	redefine
-    	    test_all,
-    	    set_to_be_tested
+	ELEMENT_TESTS
+		rename
+			test_is_in as test_element_is_in,
+			test_is_not_in as test_element_is_not_in,
+			element_to_be_tested as set_to_be_tested
+		redefine
+			test_all,
+			set_to_be_tested
 		end
 
 feature -- Test routines (All)
@@ -56,8 +56,8 @@ feature -- Test routines (Initialization)
 		do
 			create s
 			assert (
-				"make_extended",
-				attached (create {like set_to_be_tested}.make_extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}, s))
+					"make_extended",
+					attached (create {like set_to_be_tested}.make_extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}, s))
 				)
 		end
 
@@ -107,7 +107,7 @@ feature -- Test routines (Membership)
 		do
 			s := set_to_be_tested
 			create ss.make_extended (
-				s, create {REFERENCE_EQUALITY [SET [detachable separate CHARACTER_REF]]}, create {SET [SET [detachable separate CHARACTER_REF]]}
+					s, create {REFERENCE_EQUALITY [SET [detachable separate CHARACTER_REF]]}, create {SET [SET [detachable separate CHARACTER_REF]]}
 				)
 			assert ("s ∈ ss", s ∈ ss)
 
@@ -128,7 +128,7 @@ feature -- Test routines (Membership)
 			assert ("s ∉ ss", s ∉ ss)
 
 			create ss.make_extended (
-				s, create {REFERENCE_EQUALITY [SET [detachable separate CHARACTER_REF]]}, create {SET [SET [detachable separate CHARACTER_REF]]}
+					s, create {REFERENCE_EQUALITY [SET [detachable separate CHARACTER_REF]]}, create {SET [SET [detachable separate CHARACTER_REF]]}
 				)
 			assert ("not (s ∉ ss)", not (s ∉ ss))
 		end
@@ -170,21 +170,21 @@ feature -- Test routines (Output)
 			a_failed: BOOLEAN
 		do
 			if not a_failed then
-    			s := set_to_be_tested
-    			assert ("Void", s.element_out (c) ~ "Void")
+				s := set_to_be_tested
+				assert ("Void", s.element_out (c) ~ "Void")
 
-    			create c
-    			assert ("%U", s.element_out (c) ~ "%U")
+				create c
+				assert ("%U", s.element_out (c) ~ "%U")
 
-    			separate c as sep_c do
-    			    sep_c.set_item ('a')
-    			end
-    		else
-    		    check
-    		    		-- s was set on a previous iteration.
-    		        attached s
-    		    then
-    		    end
+				separate c as sep_c do
+					sep_c.set_item ('a')
+				end
+			else
+				check
+						-- s was set on a previous iteration.
+					attached s
+				then
+				end
 			end
 			assert ("a", s.element_out (c) ~ "a")
 		rescue
@@ -215,15 +215,15 @@ feature -- Test routines (Output)
 			create c2
 			s := s.extended (c2, eq)
 			s_out := s.out
-			assert ("{Void, '%%U'}", s_out ~ "{} & (Void) & '%%U'")
+			assert ("{Void, %U}", s_out ~ "{} & (Void) & (%U)")
 
 			create c3
 			separate c3 as sep_c3 do
-			    sep_c3.set_item ('a')
+				sep_c3.set_item ('a')
 			end
 			s := s.extended (c3, eq)
 			s_out := s.out
-			assert ("{Void, '%%U', 'a'}", s_out ~ "{} & (Void) & '%%U' & 'a'")
+			assert ("{Void, %U, a}", s_out ~ "{} & (Void) & (%U) & (a)")
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
@@ -244,4 +244,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end
