@@ -37,6 +37,7 @@ feature -- Test routines (All)
 			test_element_out
 			test_out
 			test_debug_output
+			test_is_universe
 		end
 
 feature -- Test routines (Initialization)
@@ -157,6 +158,16 @@ feature -- Test routines (Construction)
 		do
 			s := set_to_be_tested
 			assert ("s ∖ {Void}", s.prunned (Void) ∌ Void)
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_universe
+			-- Test {SET}.is_universe.
+		note
+			testing: "covers/{SET}.is_universe"
+		do
+			assert ("is_universe", attached set_to_be_tested.is_universe ⇒ True)
 		end
 
 feature -- Test routines (Output)
