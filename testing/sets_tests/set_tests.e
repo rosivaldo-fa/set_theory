@@ -35,6 +35,8 @@ feature -- Test routines (All)
 			test_extended
 			test_prunned
 			test_element_out
+			test_out
+			test_debug_output
 		end
 
 feature -- Test routines (Initialization)
@@ -227,6 +229,43 @@ feature -- Test routines (Output)
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
+		end
+
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- Test {SET}.debug_output.
+		note
+			testing: "covers/{SET}.debug_output"
+		local
+			c1, c2, c3: detachable separate CHARACTER_REF
+			eq: REFERENCE_EQUALITY [detachable separate CHARACTER_REF]
+			s: like set_to_be_tested
+			s_debug_output: STRING_32
+		do
+			create eq
+			create s
+			assert ("{}", s.debug_output ~ {STRING_32} "{}")
+
+			s := s.extended (c1, eq)
+			s_debug_output := s.debug_output
+			assert ("{Void}", s_debug_output ~ {STRING_32} "{} & (Void)")
+
+			create c2
+			s := s.extended (c2, eq)
+			s_debug_output := s.debug_output
+			assert ("{Void, %U}", s_debug_output ~ {STRING_32} "{} & (Void) & (%U)")
+
+			create c3
+			separate c3 as sep_c3 do
+			    sep_c3.set_item ('a')
+			end
+			s := s.extended (c3, eq)
+			s_debug_output := s.debug_output
+			assert ("{Void, %U, a}", s_debug_output ~ {STRING_32} "{} & (Void) & (%U) & (a)")
+
+			s := set_to_be_tested
+			assert ("debug_output", attached s.debug_output)
 		end
 
 feature {NONE} -- Factory (element to be tested)

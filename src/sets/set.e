@@ -22,8 +22,6 @@ inherit
 		end
 
 	DEBUG_OUTPUT
-		rename
-		    debug_output as out
 		redefine
 			default_create,
 			out
@@ -180,6 +178,16 @@ feature -- Output
 		ensure then
 			base: Current = subset ⇒ Result ~ "{}"
 			induction: Current /= subset ⇒ Result ~ subset.out + " & (" + element_out (given_element) + ")"
+		end
+
+feature -- Status report
+
+	debug_output: READABLE_STRING_GENERAL
+			-- <Precursor>
+		do
+			Result := {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
+		ensure then
+			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
 		end
 
 feature -- Anchor
