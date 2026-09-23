@@ -253,6 +253,10 @@ feature {NONE} -- Anchor
 			Result := given_element
 		end
 
+invariant
+	given_element_storage: subset /= Current ⇒ attached given_element_storage
+	equality: subset /= Current ⇒ attached eq
+
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[

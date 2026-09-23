@@ -54,13 +54,12 @@ feature -- Test routines (Initialization)
 			-- Test {SET}.make_extended.
 		note
 			testing: "covers/{SET}.make_extended"
-		local
-			s: SET [detachable separate CHARACTER_REF]
 		do
-			create s
 			assert (
 					"make_extended",
-					attached (create {like set_to_be_tested}.make_extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}, s))
+					attached (
+						create {like set_to_be_tested}.make_extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]}, set_to_be_tested)
+						)
 				)
 		end
 
@@ -279,10 +278,18 @@ feature -- Test routines (Status report)
 			assert ("debug_output", attached s.debug_output)
 		end
 
+feature -- Test routines (Implementation)
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: SET [detachable separate CHARACTER_REF]
 			-- Set meant to be under tests
+		do
+			create Result
+		end
+
+	exposed_set_to_be_tested: EXPOSED_SET [detachable separate CHARACTER_REF]
+			-- Exposed set meant to be under tests
 		do
 			create Result
 		end

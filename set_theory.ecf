@@ -27,6 +27,7 @@
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing.ecf"/>
 		<cluster name="test" location=".\testing\">
 			<tests name="sets_tests" location=".\testing\sets_tests\" recursive="true"/>
+			<cluster name="exposed_sets" location=".\testing\exposed_sets\" recursive="true"/>
 		</cluster>
 	</target>
 </system>
