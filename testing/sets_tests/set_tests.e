@@ -280,6 +280,50 @@ feature -- Test routines (Status report)
 
 feature -- Test routines (Implementation)
 
+	test_given_element
+			-- Test {SET}.given_element.
+		note
+			testing: "covers/{SET}.given_element"
+		local
+			c1, c2, c3, c4: detachable separate CHARACTER_REF
+			s: like exposed_set_to_be_tested
+			s_debug_output: STRING_32
+		do
+			create s
+			s := s.extended (c1, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]})
+			assert ("{Void} /= ∅", s.subset /= s)
+			assert ("{Void}", s.given_element = c1)
+
+			create c2
+			separate c2 as sep_c2 do
+				s := s.extended (sep_c2.standard_twin, create {OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]})
+    			assert ("{Void, %U} /= ∅", s.subset /= s)
+    			check attached s.eq as s_eq then -- s.subset /= s and {SET} invariant
+					assert ("{Void, %U}", s_eq (s.given_element, c2))
+    			end
+			end
+
+			create c3
+			separate c3 as sep_c3 do
+				sep_c3.set_item ('a')
+				s := s.extended (sep_c3.twin, create {OBJECT_EQUALITY [detachable separate CHARACTER_REF]})
+    			assert ("{Void, %U, a} /= ∅", s.subset /= s)
+    			check attached s.eq as s_eq then -- s.subset /= s and {SET} invariant
+					assert ("{Void, %U, a}", s_eq (s.given_element, c3))
+    			end
+			end
+
+			create c4
+			separate c4 as sep_c4 do
+				sep_c4.set_item ('b')
+				s := s.extended (sep_c4.deep_twin, create {OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]})
+    			assert ("{Void, %U, a, b} /= ∅", s.subset /= s)
+    			check attached s.eq as s_eq then -- s.subset /= s and {SET} invariant
+					assert ("{Void, %U, a, b}", s_eq (s.given_element, c4))
+    			end
+			end
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: SET [detachable separate CHARACTER_REF]

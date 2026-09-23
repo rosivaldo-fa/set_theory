@@ -10,8 +10,23 @@ inherit
     SET [G]
     	export {SET_TESTS}
     		given_element,
-    		subset
+    		subset,
+    		eq
+    	redefine
+    	    superset_anchor
     	end
+
+create
+	default_create,
+    make_extended
+
+feature -- Anchor
+
+	superset_anchor: EXPOSED_SET [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
 
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
