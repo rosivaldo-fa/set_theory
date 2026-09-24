@@ -41,6 +41,7 @@ feature -- Test routines (All)
 			test_given_element
 			test_eq
 			test_subset
+			test_given_element_storage
 		end
 
 feature -- Test routines (Initialization)
