@@ -7,18 +7,19 @@ note
 class EXPOSED_SET [G]
 
 inherit
-    SET [G]
-    	export {SET_TESTS}
-    		given_element,
-    		subset,
-    		eq
-    	redefine
-    	    superset_anchor
-    	end
+	SET [G]
+		export {SET_TESTS}
+			given_element,
+			subset,
+			eq,
+			given_element_storage
+		redefine
+			superset_anchor
+		end
 
 create
 	default_create,
-    make_extended
+	make_extended
 
 feature -- Anchor
 
@@ -35,4 +36,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

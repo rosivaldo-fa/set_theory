@@ -354,6 +354,58 @@ feature -- Test routines (Implementation)
 			assert ("{Void}", s /= s.subset)
 		end
 
+	test_given_element_storage
+			-- Test {SET}.given_element_storage.
+		note
+			testing: "covers/{SET}.given_element_storage"
+		local
+			c1, c2, c3, c4: detachable separate CHARACTER_REF
+			s: like exposed_set_to_be_tested
+		do
+			create s
+			assert ("{}", not attached s.given_element_storage)
+
+			s := s.extended (c1, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]})
+			check attached s.given_element_storage as s_given_element_storage then
+				assert ("{Void}", s_given_element_storage.item = c1)
+			end
+
+			create c2
+			separate c2 as sep_c2 do
+				s := s.extended (sep_c2.standard_twin, create {OBJECT_STANDARD_EQUALITY [detachable separate CHARACTER_REF]})
+				assert ("{Void, %U} /= {}", s.subset /= s)
+				check attached s.given_element_storage as s_given_element_storage then
+    				check attached s.eq as s_eq then -- s.subset /= s and {SET} invariant
+    					assert ("{Void, %U}", s_eq (s_given_element_storage.item, c2))
+    				end
+    			end
+			end
+
+			create c3
+			separate c3 as sep_c3 do
+				sep_c3.set_item ('a')
+				s := s.extended (sep_c3.twin, create {OBJECT_EQUALITY [detachable separate CHARACTER_REF]})
+				assert ("{Void, %U, a} /= {}", s.subset /= s)
+				check attached s.given_element_storage as s_given_element_storage then
+    				check attached s.eq as s_eq then -- s.subset /= s and {SET} invariant
+    					assert ("{Void, %U, a}", s_eq (s_given_element_storage.item, c3))
+    				end
+    			end
+			end
+
+			create c4
+			separate c4 as sep_c4 do
+				sep_c4.set_item ('b')
+				s := s.extended (sep_c4.deep_twin, create {OBJECT_DEEP_EQUALITY [detachable separate CHARACTER_REF]})
+				assert ("{Void, %U, a, b} /= {}", s.subset /= s)
+				check attached s.given_element_storage as s_given_element_storage then
+    				check attached s.eq as s_eq then -- s.subset /= s and {SET} invariant
+    					assert ("{Void, %U, a, b}", s_eq (s_given_element_storage.item, c4))
+    				end
+    			end
+			end
+		end
+
 feature {NONE} -- Factory (element to be tested)
 
 	set_to_be_tested: SET [detachable separate CHARACTER_REF]
