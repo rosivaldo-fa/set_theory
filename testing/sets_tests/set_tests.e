@@ -38,6 +38,9 @@ feature -- Test routines (All)
 			test_out
 			test_debug_output
 			test_is_universe
+			test_given_element
+			test_eq
+			test_subset
 		end
 
 feature -- Test routines (Initialization)
@@ -335,6 +338,20 @@ feature -- Test routines (Implementation)
 
 			s := s.extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]})
 			assert ("{Void}", attached {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]} s.eq)
+		end
+
+	test_subset
+			-- Test {SET}.subset.
+		note
+			testing: "covers/{SET}.subset"
+		local
+			s: like exposed_set_to_be_tested
+		do
+			create s
+			assert ("{}", s = s.subset)
+
+			s := s.extended (Void, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]})
+			assert ("{Void}", s /= s.subset)
 		end
 
 feature {NONE} -- Factory (element to be tested)
