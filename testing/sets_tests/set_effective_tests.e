@@ -5,7 +5,7 @@
 	revision: "$Revision$"
 
 class
-	EFFECTIVE_SET_TESTS
+	SET_EFFECTIVE_TESTS
 
 inherit
 	SET_TESTS [detachable separate CHARACTER_REF]
@@ -193,13 +193,13 @@ feature {NONE} -- Factory
 
 	c2: detachable separate CHARACTER_REF
 			-- <Precursor>
-		do
+		once
 			create Result
 		end
 
 	c3: detachable separate CHARACTER_REF
 			-- <Precursor>
-		do
+		once
 			create Result
 			separate Result as sep_result do
 				sep_result.set_item ('a')
@@ -208,7 +208,7 @@ feature {NONE} -- Factory
 
 	c4: detachable separate CHARACTER_REF
 			-- <Precursor>
-		do
+		once
 			create Result
 			separate Result as sep_result do
 				sep_result.set_item ('b')

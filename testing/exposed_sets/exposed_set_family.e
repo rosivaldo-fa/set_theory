@@ -21,7 +21,7 @@ inherit
 
 	EXPOSED_SET [SET [G]]
 		rename
-			make_extended as set_make_extended,
+			make_extended as exposed_set_make_extended,
 			given_element as given_set,
 			given_element_storage as given_set_storage,
 			subset as subfamily,
@@ -31,6 +31,7 @@ inherit
 			set_make_extended,
 			extended
 		redefine
+			exposed_set_make_extended,
 			subfamily_anchor,
 			superfamily_anchor
 		end
@@ -42,6 +43,11 @@ create
 feature {NONE} -- Initialization
 
 	set_family_make_extended (s: SET [G]; a_eq: EQUALITY [SET [G]]; sf: SET_FAMILY [G])
+			-- Do nothing.
+		do
+		end
+
+	exposed_set_make_extended (a: SET [G]; a_eq: EQUALITY [SET [G]]; s: EXPOSED_SET [SET [G]])
 			-- Do nothing.
 		do
 		end
