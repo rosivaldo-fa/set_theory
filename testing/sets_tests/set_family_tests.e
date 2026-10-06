@@ -18,11 +18,23 @@ inherit
 			c as s3,
 			d as s4
 		redefine
+			test_all,
 			test_set_make_extended,
 			test_has,
 			test_does_not_have,
 			set_family_to_be_tested,
 			exposed_set_family_to_be_tested
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {SET_FAMILY}.
+		note
+			testing: "covers/{SET_FAMILY}"
+		do
+			Precursor {SET_TESTS}
+			test_make_extended
 		end
 
 feature -- Test routines (Initialization)
@@ -32,6 +44,19 @@ feature -- Test routines (Initialization)
 		note
 			testing: "covers/{SET_FAMILY}.set_make_extended"
 		do
+		end
+
+	test_make_extended
+			-- Test {SET_FAMILY}.make_extended.
+		note
+			testing: "covers/{SET_FAMILY}.make_extended"
+		do
+			assert (
+					"make_extended",
+					attached (
+						create {like set_family_to_be_tested}.make_extended (s1, create {REFERENCE_EQUALITY [SET [G]]}, set_family_to_be_tested)
+					)
+				)
 		end
 
 feature -- Test routines (Membership)

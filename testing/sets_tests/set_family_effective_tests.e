@@ -10,7 +10,8 @@ class
 inherit
 	SET_FAMILY_TESTS [detachable separate CHARACTER_REF]
 		redefine
-			test_all
+			test_all,
+			test_make_extended
 		end
 
 feature -- Test routines (All)
@@ -19,6 +20,16 @@ feature -- Test routines (All)
 			-- <Precursor>
 		note
 			testing: "covers/{SET_FAMILY}"
+		do
+			Precursor {SET_FAMILY_TESTS}
+		end
+
+feature -- Test routines (Initialization)
+
+	test_make_extended
+			-- <Precursor>
+		note
+			testing: "covers/{SET_FAMILY}.make_extended"
 		do
 			Precursor {SET_FAMILY_TESTS}
 		end
