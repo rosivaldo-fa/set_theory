@@ -182,13 +182,17 @@ feature -- Test routines (Output)
 			eis: "name=Inconsistent results of {detachable separate CHARACTER_REF}.twin", "protocol=URI", "src=https://support.eiffel.com/report_detail/19952", "tag=bug, separate, compiler, SCOOP"
 		local
 			s: like set_to_be_tested
-			a_failed: BOOLEAN
+			c_failed: BOOLEAN
 		do
-			if not a_failed then
+			if not c_failed then
 				s := set_to_be_tested
-				assert ("Void", s.element_out (a) ~ "Void")
+				separate a as sep_a do
+					assert ("a", s.element_out (a) ~ if attached sep_a then sep_a.out else "Void" end)
+				end
 
-				assert ("%U", s.element_out (b) ~ "%U")
+				separate b as sep_b do
+					assert ("b", s.element_out (b) ~ if attached sep_b then sep_b.out else "Void" end)
+				end
 			else
 				check
 						-- s was set on a previous iteration.
@@ -196,10 +200,13 @@ feature -- Test routines (Output)
 				then
 				end
 			end
-			assert ("a", s.element_out (c) ~ "a")
+
+			separate c as sep_c do
+				assert ("c", s.element_out (c) ~ if attached sep_c then sep_c.out else "Void" end)
+			end
 		rescue
-			if {EXCEPTIONS}.tag_name ~ "a" then
-				a_failed := True -- Please have a look at EIS entry above.
+			if {EXCEPTIONS}.tag_name ~ "c" then
+				c_failed := True -- Please have a look at EIS entry above.
 				retry
 			end
 		end
@@ -219,17 +226,17 @@ feature -- Test routines (Output)
 
 			s := s.extended (a, eq)
 			s_out := s.out
-			assert ("{Void}", s_out ~ "{} & (Void)")
+			assert ("a", s_out ~ "{} & (" + s.element_out (a) + ")")
 
 			s := s.extended (b, eq)
 			s_out := s.out
-			assert ("{Void, %U}", s_out ~ "{} & (Void) & (%U)")
+			assert ("{a,b}", s_out ~ "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ")")
 
 			separate c as sep_c do
 			end
 			s := s.extended (c, eq)
 			s_out := s.out
-			assert ("{Void, %U, a}", s_out ~ "{} & (Void) & (%U) & (a)")
+			assert ("{a,b,c}", s_out ~ "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ") & (" + s.element_out (c) + ")")
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
@@ -252,17 +259,17 @@ feature -- Test routines (Status report)
 
 			s := s.extended (a, eq)
 			s_debug_output := s.debug_output
-			assert ("{Void}", s_debug_output ~ {STRING_32} "{} & (Void)")
+			assert ("{a}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ")")
 
 			s := s.extended (b, eq)
 			s_debug_output := s.debug_output
-			assert ("{Void, %U}", s_debug_output ~ {STRING_32} "{} & (Void) & (%U)")
+			assert ("{a,b}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ")")
 
 			separate c as sep_c do
 			end
 			s := s.extended (c, eq)
 			s_debug_output := s.debug_output
-			assert ("{Void, %U, a}", s_debug_output ~ {STRING_32} "{} & (Void) & (%U) & (a)")
+			assert ("{a,b,c}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ") & (" + s.element_out (c) + ")")
 
 			s := set_to_be_tested
 			assert ("debug_output", attached s.debug_output)

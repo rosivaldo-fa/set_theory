@@ -19,6 +19,8 @@ feature -- Initialization
 			(create {OBJECT_STANDARD_EQUALITY_TESTS}).test_all;
 			(create {OBJECT_EQUALITY_TESTS}).test_all;
 			(create {OBJECT_DEEP_EQUALITY_TESTS}).test_all;
+			(create {SET_EFFECTIVE_TESTS}).test_all;
+			(create {SET_FAMILY_EFFECTIVE_TESTS}).test_all;
 		end
 
 note

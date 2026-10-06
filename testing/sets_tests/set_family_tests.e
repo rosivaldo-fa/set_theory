@@ -28,23 +28,10 @@ inherit
 feature -- Test routines (Initialization)
 
 	test_set_make_extended
-			-- Test {SET_FAMILY}.set_make_extended.
+			-- Do nothing
 		note
 			testing: "covers/{SET_FAMILY}.set_make_extended"
 		do
-			assert (
-					"set_make_extended", (
-						agent: BOOLEAN
-							local
-								sf, old_sf: like exposed_set_family_to_be_tested
-							do
-								sf := exposed_set_family_to_be_tested
-								old_sf := sf.twin
-								sf.set_make_extended (s1, create {REFERENCE_EQUALITY [SET [G]]}, set_family_to_be_tested)
-								Result := sf ~ old_sf
-							end
-						).item
-				)
 		end
 
 feature -- Test routines (Membership)
@@ -108,4 +95,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

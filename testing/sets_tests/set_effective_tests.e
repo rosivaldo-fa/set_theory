@@ -184,17 +184,21 @@ feature -- Test routines (Implementation)
 			Precursor {SET_TESTS}
 		end
 
-feature {NONE} -- Factory
+feature -- Factory
 
 	c1: detachable separate CHARACTER_REF
 			-- <Precursor>
 		once
+		ensure then
+			class
 		end
 
 	c2: detachable separate CHARACTER_REF
 			-- <Precursor>
 		once
 			create Result
+		ensure then
+			class
 		end
 
 	c3: detachable separate CHARACTER_REF
@@ -204,6 +208,8 @@ feature {NONE} -- Factory
 			separate Result as sep_result do
 				sep_result.set_item ('a')
 			end
+		ensure then
+			class
 		end
 
 	c4: detachable separate CHARACTER_REF
@@ -213,6 +219,8 @@ feature {NONE} -- Factory
 			separate Result as sep_result do
 				sep_result.set_item ('b')
 			end
+		ensure then
+			class
 		end
 
 note
