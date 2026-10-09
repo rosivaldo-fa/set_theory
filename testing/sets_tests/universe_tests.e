@@ -77,6 +77,16 @@ feature -- Test routines (Output)
 			assert ("out", attached universe_to_be_tested.out)
 		end
 
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- Test {UNIVERSE}.debug_output.
+		note
+			testing: "covers/{UNIVERSE}.debug_output"
+		do
+			assert ("debug_output", attached universe_to_be_tested.debug_output)
+		end
+
 feature -- Factory (element to be tested)
 
 	universe_to_be_tested: UNIVERSE [G]

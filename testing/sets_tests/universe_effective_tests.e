@@ -17,7 +17,8 @@ inherit
 		redefine
 			test_all,
 			test_default_create,
-			test_out
+			test_out,
+			test_debug_output
 		end
 
 feature -- Test routines (All)
@@ -46,6 +47,16 @@ feature -- Test routines (Output)
 			-- <Precursor>
 		note
 			testing: "covers/{UNIVERSE}.out"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- <Precursor>
+		note
+			testing: "covers/{UNIVERSE}.debug_output"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end
