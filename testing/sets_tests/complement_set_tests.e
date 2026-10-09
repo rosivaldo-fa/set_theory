@@ -24,6 +24,7 @@ feature -- Test routines (All)
 		do
 			Precursor {SET_TESTS}
 			test_make
+			test_reference_set
 		end
 
 feature -- Test routines (Initialization)
@@ -39,6 +40,16 @@ feature -- Test routines (Initialization)
 						create {like set_to_be_tested}.make (create {EFFECTIVE_SET [G]})
 					)
 				)
+		end
+
+feature -- Test routines (Primitive)
+
+	test_reference_set
+			-- Test {COMPLEMENT_SET}.reference_set.
+		note
+			testing: "covers/{COMPLEMENT_SET}.reference_set"
+		do
+			assert ("reference_set", attached set_to_be_tested.reference_set)
 		end
 
 feature -- Test routines (Membership)

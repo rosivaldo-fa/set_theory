@@ -16,7 +16,8 @@ inherit
 			d as c4
 		redefine
 			test_all,
-			test_make
+			test_make,
+			test_reference_set
 		end
 
 feature -- Test routines (All)
@@ -35,6 +36,16 @@ feature -- Test routines (Initialization)
 			-- <Precursor>
 		note
 			testing: "covers/{COMPLEMENT_SET}.make"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Primitive)
+
+	test_reference_set
+			-- <Precursor>
+		note
+			testing: "covers/{COMPLEMENT_SET}.reference_set"
 		do
 			Precursor {COMPLEMENT_SET_TESTS}
 		end
