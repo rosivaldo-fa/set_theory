@@ -26,6 +26,7 @@ feature -- Test routines (All)
 			test_make
 			test_reference_set
 			test_out
+			test_debug_output
 		end
 
 feature -- Test routines (Initialization)
@@ -93,6 +94,16 @@ feature -- Test routines (Output)
 			testing: "covers/{COMPLEMENT_SET}.out"
 		do
 			assert ("out", attached set_to_be_tested.out)
+		end
+
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- Test {COMPLEMENT_SET}.debug_output.
+		note
+			testing: "covers/{COMPLEMENT_SET}.debug_output"
+		do
+			assert ("debug_output", attached set_to_be_tested.debug_output)
 		end
 
 feature -- Factory (element to be tested)

@@ -18,7 +18,8 @@ inherit
 			test_all,
 			test_make,
 			test_reference_set,
-			test_out
+			test_out,
+			test_debug_output
 		end
 
 feature -- Test routines (All)
@@ -57,6 +58,16 @@ feature -- Test routines (Output)
 			-- <Precursor>
 		note
 			testing: "covers/{COMPLEMENT_SET}.out"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- <Precursor>
+		note
+			testing: "covers/{COMPLEMENT_SET}.debug_output"
 		do
 			Precursor {COMPLEMENT_SET_TESTS}
 		end
