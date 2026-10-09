@@ -23,7 +23,7 @@ feature -- Test routines (All)
 			testing: "covers/{COMPLEMENT_SET}"
 		do
 			Precursor {SET_TESTS}
---			test_make
+			test_make
 		end
 
 feature -- Test routines (Initialization)
