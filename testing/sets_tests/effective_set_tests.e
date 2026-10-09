@@ -137,7 +137,7 @@ feature -- Test routines (Primitive)
 		note
 			testing: "covers/{EFFECTIVE_SET}.subset"
 		local
-			s: like exposed_set_to_be_tested
+			s: like set_to_be_tested
 		do
 			create s
 			assert ("{}", s = s.subset)
