@@ -123,7 +123,7 @@ feature -- Test routines (Primitive)
 		note
 			testing: "covers/{EFFECTIVE_SET}.eq"
 		local
-			s: like exposed_set_to_be_tested
+			s: like set_to_be_tested
 		do
 			create s
 			assert ("{}", s.eq = Void)
