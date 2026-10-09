@@ -32,7 +32,7 @@ feature -- Test routines (Membership)
 			s: SET [ELEMENT]
 		do
 			a := element_to_be_tested
-			create s
+			create {EFFECTIVE_SET [ELEMENT]} s
 			assert ("not (a ∈ s)", not (a ∈ s))
 
 			s := s.extended (a, create {REFERENCE_EQUALITY [ELEMENT]})
@@ -48,7 +48,7 @@ feature -- Test routines (Membership)
 			testing: "covers/{ELEMENT}.is_not_in"
 		local
 			a: like element_to_be_tested
-			s: SET [ELEMENT]
+			s: EFFECTIVE_SET [ELEMENT]
 		do
 			a := element_to_be_tested
 			create s

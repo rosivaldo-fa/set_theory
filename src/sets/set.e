@@ -8,7 +8,7 @@
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
+deferred class
 	SET [G]
 
 inherit
@@ -16,57 +16,13 @@ inherit
 		rename
 			is_in as element_is_in,
 			is_not_in as element_is_not_in
-		redefine
-			default_create,
-			out
-		end
-
-	DEBUG_OUTPUT
-		redefine
-			default_create,
-			out
-		end
-
-create
-	default_create,
-	make_extended
-
-feature {NONE} -- Initialization
-
-	default_create
-			-- Create an empty set
-		do
-		ensure then
-			is_empty: subset = Current
-		end
-
-	make_extended (a: G; a_eq: EQUALITY [G]; s: SET [G])
-			-- Create a set whose `given_element' element and `subset' are, respectively, `a' and `s'.
-		do
-			eq := a_eq
-			subset := s
-			create given_element_storage.put (a)
-		ensure
-			attached_storage: attached given_element_storage
-			eq: eq = a_eq
-			is_not_empty: subset /= Current
-			attached_eq: attached eq
-			given_element: eq (given_element, a)
-			subset: subset = s -- TODO: Use set equality instead.
 		end
 
 feature -- Membership
 
 	has alias "∋" (a: G): BOOLEAN
 			-- Is `a' an element in current set?
-		do
-			if subset /= Current then -- Current set is not empty, so it is an "extended" set.
-				check
-					attached eq -- `make_extended' and `extended' definitions
-				then
-					Result := eq (a, given_element) or subset ∋ a
-				end
-			end
+		deferred
 		ensure
 			universe_has_everything: attached is_universe as is_u and then is_u.item ⇒ Result
 		end
@@ -97,39 +53,18 @@ feature -- Membership
 
 feature -- Construction
 
-	extended (a: G; a_eq: EQUALITY [G]): like superset_anchor
+	extended (a: G; eq: EQUALITY [G]): like superset_anchor
 			-- Current set extended with `a', whose equality with any other element is defined by `eq'
-		do
-			create Result.make_extended (a, a_eq, Current)
+		deferred
 		ensure
 			has_a: Result ∋ a
-			equality: Result.eq = a_eq
-			is_not_empty: Result.subset /= Result
-			given_element: a_eq (Result.given_element, a)
-			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
 
 	prunned (a: G): like subset_anchor
 			-- Set with every element of current set but any element regarded equal to `a'
-		do
-			if subset = Current then
-				Result := Current
-			else -- Current set is not empty, so it is an "extended" set.
-				check
-					attached eq -- `make_extended' and `extended' definitions
-				then
-					if eq (a, given_element) then
-						Result := subset.prunned (a)
-					else
-						Result := subset.prunned (a).extended (given_element, eq)
-					end
-				end
-			end
+		deferred
 		ensure
 			does_not_have_a: Result ∌ a
-			when_empty: not attached eq ⇒ Result = Current -- TODO: Use set equality instead.
---			when_found: attached eq and then eq (a, given_element) ⇒ Result ≍ subset.prunned (a)
---			when_not_found: attached eq and then not eq (a, given_element) ⇒ Result ≍ subset.prunned (a).extended (given_element, eq)
 		end
 
 feature -- Quality
@@ -137,57 +72,7 @@ feature -- Quality
 	is_universe: detachable BOOLEAN_REF
 			-- Is current set a universe, i.e., does it have every element of type {G}?
 			--| Detachable because it is not always knowable whether a set is a universe of not
-		do
-		end
-
-feature -- Output
-
-	element_out (a: G): STRING
-			-- Terse printable representation of `a'
-		do
-			if attached a then
-				check
-					other_not_void: a.out /= Void -- {ANY}.out definition
-				end
-				create Result.make_from_separate (a.out)
-			else
-				Result := "Void"
-			end
-		ensure
-			class
-			when_attached: attached a ⇒ Result ~ a.out
-			when_detached: not attached a ⇒ Result ~ "Void"
-		rescue
-			if {EXCEPTIONS}.tag_name ~ "when_attached" then
-					-- If a.out contains the address of an object, the GC may have changed such an address. Just hope it remains stable for now.
-				retry
-			end
-		end
-
-	out: STRING
-			-- <Precursor>
-		do
-			if Current = subset then
-				Result := "{}"
-			else
-				Result := subset.out
-				Result.append (" & (")
-				Result.append (element_out (given_element))
-				Result.append_character (')')
-			end
-		ensure then
-			base: Current = subset ⇒ Result ~ "{}"
-			induction: Current /= subset ⇒ Result ~ subset.out + " & (" + element_out (given_element) + ")"
-		end
-
-feature -- Status report
-
-	debug_output: READABLE_STRING_GENERAL
-			-- <Precursor>
-		do
-			Result := {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
-		ensure then
-			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
+		deferred
 		end
 
 feature -- Anchor
@@ -203,59 +88,6 @@ feature -- Anchor
 		do
 			Result := Current
 		end
-
-feature {SET} -- Implementation
-
-	given_element: like given_element_anchor
-			-- An arbitrary element in current set
-		require
-			is_not_empty: subset /= Current
-		do
-			check
-				attached_given_element_storage: attached given_element_storage as ges -- not `is_empty'
-			then
-				Result := ges.item
-			end
-		ensure then
-			attached_stored_any: attached given_element_storage as ges -- not `is_empty'
-			definition: Result ~ ges.item
-		end
-
-	eq: detachable EQUALITY [G]
-			-- Rule for testing equality between `given_element' and any other element
-		note
-			option: stable
-		attribute
-		end
-
-	subset: like subset_anchor
-			-- Set of all elements in current set but, possibly, `given_element'
-		attribute
-			Result := Current
-		end
-
-feature {NONE} -- Implementation
-
-	given_element_storage: detachable CELL [like given_element_anchor]
-			-- Storage for `given_element'
-		note
-			option: stable
-		attribute
-		end
-
-feature {NONE} -- Anchor
-
-	given_element_anchor: G
-			-- Anchor for objects like `given_element'
-		require
-			is_not_empty: subset /= Current
-		do
-			Result := given_element
-		end
-
-invariant
-	given_element_storage: subset /= Current ⇒ attached given_element_storage
-	equality: subset /= Current ⇒ attached eq
 
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"

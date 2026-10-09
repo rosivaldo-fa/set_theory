@@ -7,7 +7,7 @@ note
 class EXPOSED_SET_FAMILY [G]
 
 inherit
-	SET_FAMILY[G]
+	EFFECTIVE_SET_FAMILY[G]
 		rename
 			make_extended as set_family_make_extended
 		export {SET_FAMILY_TESTS}
@@ -42,7 +42,7 @@ create
 
 feature {NONE} -- Initialization
 
-	set_family_make_extended (s: SET [G]; a_eq: EQUALITY [SET [G]]; sf: SET_FAMILY [G])
+	set_family_make_extended (s: SET [G]; a_eq: EQUALITY [SET [G]]; sf: EFFECTIVE_SET_FAMILY [G])
 			-- Do nothing.
 		do
 		end

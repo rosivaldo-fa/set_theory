@@ -1,5 +1,5 @@
 note
-	description: "Descendant of {SET} that exposes the hidden features or its ancestor in order to test them"
+	description: "Descendant of {EFFECTIVE_SET} that exposes the hidden features or its ancestor in order to test them"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -7,10 +7,10 @@ note
 class EXPOSED_SET [G]
 
 inherit
-	SET [G]
+	EFFECTIVE_SET [G]
 		rename
 			make_extended as set_make_extended
-		export {SET_TESTS}
+		export {EFFECTIVE_SET_TESTS}
 			given_element,
 			subset,
 			eq,
@@ -28,7 +28,7 @@ create
 
 feature {NONE} -- Initialization
 
-	set_make_extended (a: G; a_eq: EQUALITY [G]; s: SET [G])
+	set_make_extended (a: G; a_eq: EQUALITY [G]; s: EFFECTIVE_SET [G])
 			-- Do nothing.
 		do
 		end

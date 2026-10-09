@@ -1,5 +1,5 @@
 ﻿note
-	description: "Effective test suite for {SET_FAMILY}"
+	description: "Effective test suite for {EFFECTIVE_SET_FAMILY}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -8,7 +8,7 @@ class
 	SET_FAMILY_EFFECTIVE_TESTS
 
 inherit
-	SET_FAMILY_TESTS [detachable separate CHARACTER_REF]
+	EFFECTIVE_SET_FAMILY_TESTS [detachable separate CHARACTER_REF]
 		redefine
 			test_all,
 			test_make_extended
@@ -19,9 +19,9 @@ feature -- Test routines (All)
 	test_all
 			-- <Precursor>
 		note
-			testing: "covers/{SET_FAMILY}"
+			testing: "covers/{EFFECTIVE_SET_FAMILY}"
 		do
-			Precursor {SET_FAMILY_TESTS}
+			Precursor {EFFECTIVE_SET_FAMILY_TESTS}
 		end
 
 feature -- Test routines (Initialization)
@@ -29,14 +29,14 @@ feature -- Test routines (Initialization)
 	test_make_extended
 			-- <Precursor>
 		note
-			testing: "covers/{SET_FAMILY}.make_extended"
+			testing: "covers/{EFFECTIVE_SET_FAMILY}.make_extended"
 		do
-			Precursor {SET_FAMILY_TESTS}
+			Precursor {EFFECTIVE_SET_FAMILY_TESTS}
 		end
 
 feature {NONE} -- Factory
 
-	s1: SET [detachable separate CHARACTER_REF]
+	s1: EFFECTIVE_SET [detachable separate CHARACTER_REF]
 			-- <Precursor>
 		once
 			create Result
@@ -44,7 +44,7 @@ feature {NONE} -- Factory
 			class
 		end
 
-	s2: SET [detachable separate CHARACTER_REF]
+	s2: EFFECTIVE_SET [detachable separate CHARACTER_REF]
 			-- <Precursor>
 		once
 			Result := s1.extended ({SET_EFFECTIVE_TESTS}.C1, create {REFERENCE_EQUALITY [detachable separate CHARACTER_REF]})
@@ -52,7 +52,7 @@ feature {NONE} -- Factory
 			class
 		end
 
-	s3: SET [detachable separate CHARACTER_REF]
+	s3: EFFECTIVE_SET [detachable separate CHARACTER_REF]
 			-- <Precursor>
 		once
 			separate {SET_EFFECTIVE_TESTS}.C2 as sep_c2 do
@@ -62,7 +62,7 @@ feature {NONE} -- Factory
 			class
 		end
 
-	s4: SET [detachable separate CHARACTER_REF]
+	s4: EFFECTIVE_SET [detachable separate CHARACTER_REF]
 			-- <Precursor>
 		once
 			separate {SET_EFFECTIVE_TESTS}.C3 as sep_c3 do

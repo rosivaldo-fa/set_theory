@@ -1,5 +1,5 @@
 ﻿note
-	description: "Effective test suite for {SET}"
+	description: "Effective test suite for {EFFECTIVE_SET}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -8,7 +8,7 @@ class
 	SET_EFFECTIVE_TESTS
 
 inherit
-	SET_TESTS [detachable separate CHARACTER_REF]
+	EFFECTIVE_SET_TESTS [detachable separate CHARACTER_REF]
 		rename
 			a as c1,
 			b as c2,
@@ -39,9 +39,9 @@ feature -- Test routines (All)
 	test_all
 			-- <Precursor>
 		note
-			testing: "covers/{SET}"
+			testing: "covers/{EFFECTIVE_SET}"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 feature -- Test routines (Initialization)
@@ -49,79 +49,93 @@ feature -- Test routines (Initialization)
 	test_default_create
 			-- <Precursor>
 		note
-			testing: "covers/{SET}.default_create"
+			testing: "covers/{EFFECTIVE_SET}.default_create"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 	test_make_extended
 			-- <Precursor>
 		note
-			testing: "covers/{SET}.make_extended"
+			testing: "covers/{EFFECTIVE_SET}.make_extended"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 feature -- Test routines (Membership)
 
 	test_has
 			-- <Precursor>
+			-- Test {EFFECTIVE_SET}.has.
 		note
 			testing: "covers/{SET}.has"
+			testing: "covers/{EFFECTIVE_SET}.has"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 	test_does_not_have
 			-- <Precursor>
+			-- Test {EFFECTIVE_SET}.does_not_have.
 		note
 			testing: "covers/{SET}.does_not_have"
+			testing: "covers/{EFFECTIVE_SET}.does_not_have"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 	test_is_in
 			-- <Precursor>
+			-- Test {EFFECTIVE_SET}.is_in.
 		note
 			testing: "covers/{SET}.is_in"
+			testing: "covers/{EFFECTIVE_SET}.is_in"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 	test_is_not_in
 			-- <Precursor>
+			-- Test {EFFECTIVE_SET}.is_not_in.
 		note
 			testing: "covers/{SET}.is_not_in"
+			testing: "covers/{EFFECTIVE_SET}.is_not_in"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 feature -- Test routines (Construction)
 
 	test_extended
 			-- <Precursor>
+			-- Test {EFFECTIVE_SET}.extended.
 		note
 			testing: "covers/{SET}.extended"
+			testing: "covers/{EFFECTIVE_SET}.extended"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 	test_prunned
 			-- <Precursor>
+			-- Test {EFFECTIVE_SET}.prunned.
 		note
 			testing: "covers/{SET}.prunned"
+			testing: "covers/{EFFECTIVE_SET}.prunned"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 feature -- Test routines (Quality)
 
 	test_is_universe
 			-- <Precursor>
+			-- Test {EFFECTIVE_SET}.is_universe.
 		note
 			testing: "covers/{SET}.is_universe"
+			testing: "covers/{EFFECTIVE_SET}.is_universe"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 feature -- Test routines (Output)
@@ -129,25 +143,27 @@ feature -- Test routines (Output)
 	test_element_out
 			-- <Precursor>
 		note
-			testing: "covers/{SET}.element_out"
+			testing: "covers/{EFFECTIVE_SET}.element_out"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 	test_out
 			-- <Precursor>
 		note
-			testing: "covers/{SET}.out"
+			testing: "covers/{EFFECTIVE_SET}.out"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 feature -- Test routines (Status report)
 
 	test_debug_output
 			-- <Precursor>
+		note
+			testing: "covers/{EFFECTIVE_SET}.out"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 feature -- Test routines (Implementation)
@@ -155,33 +171,33 @@ feature -- Test routines (Implementation)
 	test_given_element
 			-- <Precursor>
 		note
-			testing: "covers/{SET}.given_element"
+			testing: "covers/{EFFECTIVE_SET}.given_element"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 	test_eq
 			-- <Precursor>
 		note
-			testing: "covers/{SET}.eq"
+			testing: "covers/{EFFECTIVE_SET}.eq"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 	test_subset
 			-- <Precursor>
 		note
-			testing: "covers/{SET}.subset"
+			testing: "covers/{EFFECTIVE_SET}.subset"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 	test_given_element_storage
 			-- <Precursor>
 		note
-			testing: "covers/{SET}.given_element_storage"
+			testing: "covers/{EFFECTIVE_SET}.given_element_storage"
 		do
-			Precursor {SET_TESTS}
+			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
 feature -- Factory
