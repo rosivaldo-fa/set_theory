@@ -67,6 +67,16 @@ feature -- Test routines (Membership)
 			assert ("not (u ∌ d)", not (u ∌ d))
 		end
 
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {UNIVERSE}.out.
+		note
+			testing: "covers/{UNIVERSE}.out"
+		do
+			assert ("out", attached universe_to_be_tested.out)
+		end
+
 feature -- Factory (element to be tested)
 
 	universe_to_be_tested: UNIVERSE [G]
