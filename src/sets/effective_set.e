@@ -49,6 +49,36 @@ feature {NONE} -- Initialization
 			subset: subset = s -- TODO: Use set equality instead.
 		end
 
+feature -- Primitive
+
+	given_element: like given_element_anchor
+			-- An arbitrary element in current set
+		require
+			is_not_empty: subset /= Current
+		do
+			check
+				attached_given_element_storage: attached given_element_storage as ges -- not `is_empty'
+			then
+				Result := ges.item
+			end
+		ensure then
+			attached_stored_any: attached given_element_storage as ges -- not `is_empty'
+			definition: Result ~ ges.item
+		end
+
+	eq: detachable EQUALITY [G]
+			-- Rule for testing equality between `given_element' and any other element
+		note
+			option: stable
+		attribute
+		end
+
+	subset: like subset_anchor
+			-- Set of all elements in current set but, possibly, `given_element'
+		attribute
+			Result := Current
+		end
+
 feature -- Membership
 
 	has alias "∋" (a: G): BOOLEAN
@@ -161,36 +191,6 @@ feature -- Anchor
 	superset_anchor: EFFECTIVE_SET [G]
 			-- Anchor for supersets of current set
 		do
-			Result := Current
-		end
-
-feature {EFFECTIVE_SET} -- Implementation
-
-	given_element: like given_element_anchor
-			-- An arbitrary element in current set
-		require
-			is_not_empty: subset /= Current
-		do
-			check
-				attached_given_element_storage: attached given_element_storage as ges -- not `is_empty'
-			then
-				Result := ges.item
-			end
-		ensure then
-			attached_stored_any: attached given_element_storage as ges -- not `is_empty'
-			definition: Result ~ ges.item
-		end
-
-	eq: detachable EQUALITY [G]
-			-- Rule for testing equality between `given_element' and any other element
-		note
-			option: stable
-		attribute
-		end
-
-	subset: like subset_anchor
-			-- Set of all elements in current set but, possibly, `given_element'
-		attribute
 			Result := Current
 		end
 

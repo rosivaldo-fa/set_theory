@@ -42,7 +42,7 @@ create
 
 feature {NONE} -- Initialization
 
-	set_family_make_extended (s: SET [G]; a_eq: EQUALITY [SET [G]]; sf: EFFECTIVE_SET_FAMILY [G])
+	set_family_make_extended (s: SET [G]; a_eq: EQUALITY [SET [G]]; sf: SET_FAMILY [G])
 			-- Do nothing.
 		do
 		end

@@ -28,7 +28,7 @@ create
 
 feature {NONE} -- Initialization
 
-	set_make_extended (a: G; a_eq: EQUALITY [G]; s: EFFECTIVE_SET [G])
+	set_make_extended (a: G; a_eq: EQUALITY [G]; s: SET [G])
 			-- Do nothing.
 		do
 		end

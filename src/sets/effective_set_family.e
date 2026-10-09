@@ -38,12 +38,12 @@ create
 
 feature {NONE} -- Initialization
 
-	set_make_extended (s: SET [G]; a_eq: EQUALITY [SET [G]]; ss: EFFECTIVE_SET [SET [G]])
+	set_make_extended (s: SET [G]; a_eq: EQUALITY [SET [G]]; ss: SET [SET [G]])
 			-- Do nothing.
 		do
 		end
 
-	make_extended (s: SET [G]; a_eq: EQUALITY [SET [G]]; sf: EFFECTIVE_SET_FAMILY [G])
+	make_extended (s: SET [G]; a_eq: EQUALITY [SET [G]]; sf: SET_FAMILY [G])
 			-- Create a set family whose `given_set' set and `subfamily' are, respectively, `s' and `sf'.
 		do
 			eq := a_eq

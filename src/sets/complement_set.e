@@ -52,6 +52,11 @@ feature -- Construction
 			-- <Precursor>
 		do
 			create Result.make_extended (a, eq, Current)
+		ensure then
+			equality: Result.eq = eq
+			is_not_empty: Result.subset /= Result
+			given_element: eq (Result.given_element, a)
+			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
 
 	prunned (a: G): like subset_anchor
