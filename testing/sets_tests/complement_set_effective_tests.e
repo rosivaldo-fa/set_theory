@@ -17,7 +17,8 @@ inherit
 		redefine
 			test_all,
 			test_make,
-			test_reference_set
+			test_reference_set,
+			test_out
 		end
 
 feature -- Test routines (All)
@@ -46,6 +47,16 @@ feature -- Test routines (Primitive)
 			-- <Precursor>
 		note
 			testing: "covers/{COMPLEMENT_SET}.reference_set"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Output)
+
+	test_out
+			-- <Precursor>
+		note
+			testing: "covers/{COMPLEMENT_SET}.out"
 		do
 			Precursor {COMPLEMENT_SET_TESTS}
 		end

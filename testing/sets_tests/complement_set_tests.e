@@ -25,6 +25,7 @@ feature -- Test routines (All)
 			Precursor {SET_TESTS}
 			test_make
 			test_reference_set
+			test_out
 		end
 
 feature -- Test routines (Initialization)
@@ -82,6 +83,16 @@ feature -- Test routines (Membership)
 			assert ("not (s ∌ a)", not (s ∌ a))
 			s := set_to_be_tested
 			assert ("does_not_have", s ∌ a ⇒ True)
+		end
+
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {COMPLEMENT_SET}.out.
+		note
+			testing: "covers/{COMPLEMENT_SET}.out"
+		do
+			assert ("out", attached set_to_be_tested.out)
 		end
 
 feature -- Factory (element to be tested)

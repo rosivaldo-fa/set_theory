@@ -60,15 +60,15 @@ feature -- Construction
 			create Result.make (reference_set.extended (a, create {REFERENCE_EQUALITY [G]}))
 		end
 
-feature -- Access
+--feature -- Access
 
-	u, universe: like universe_anchor
-			-- <Precursor>
-		do
-			create Result
-		ensure then
-			class
-		end
+--	u, universe: like universe_anchor
+--			-- <Precursor>
+--		do
+--			create Result
+--		ensure then
+--			class
+--		end
 
 feature -- Quality
 
@@ -114,13 +114,13 @@ feature -- Anchor
 			create Result
 		end
 
-	universe_anchor: UNIVERSE [G]
-			-- <Precursor>
-		do
-			Result := universe
-		ensure then
-			class
-		end
+--	universe_anchor: UNIVERSE [G]
+--			-- <Precursor>
+--		do
+--			Result := universe
+--		ensure then
+--			class
+--		end
 
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
