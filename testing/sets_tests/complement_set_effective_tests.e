@@ -85,6 +85,7 @@ feature -- Factory
 	c1: detachable separate CHARACTER_REF
 			-- <Precursor>
 		once
+			Result := {SET_EFFECTIVE_TESTS}.C1
 		ensure then
 			class
 		end
@@ -92,7 +93,7 @@ feature -- Factory
 	c2: detachable separate CHARACTER_REF
 			-- <Precursor>
 		once
-			create Result
+			Result := {SET_EFFECTIVE_TESTS}.C2
 		ensure then
 			class
 		end
@@ -100,10 +101,7 @@ feature -- Factory
 	c3: detachable separate CHARACTER_REF
 			-- <Precursor>
 		once
-			create Result
-			separate Result as sep_result do
-				sep_result.set_item ('a')
-			end
+			Result := {SET_EFFECTIVE_TESTS}.C3
 		ensure then
 			class
 		end
@@ -111,10 +109,7 @@ feature -- Factory
 	c4: detachable separate CHARACTER_REF
 			-- <Precursor>
 		once
-			create Result
-			separate Result as sep_result do
-				sep_result.set_item ('b')
-			end
+			Result := {SET_EFFECTIVE_TESTS}.C4
 		ensure then
 			class
 		end

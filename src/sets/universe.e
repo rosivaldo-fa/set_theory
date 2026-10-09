@@ -7,29 +7,87 @@
 class
 	UNIVERSE [G]
 
---inherit
---	SET [G]
---		redefine
---			is_universe,
---			superset_anchor
---		end
+inherit
+	SET [G]
+		redefine
+			does_not_have,
+			out,
+			superset_anchor
+		end
 
---feature -- Quality
+	DEBUG_OUTPUT
+		redefine
+			out
+		end
 
---	is_universe: BOOLEAN = True
---			-- <Precursor>
---			--| Current set knows it is a universe!
+feature -- Membership
 
---feature -- Anchor
+	has alias "∋" (a: G): BOOLEAN
+			-- <Precursor>
+		do
+			Result := True
+		end
 
---	superset_anchor: UNIVERSE [G]
---			-- <Precursor>
---		do
---			Result := Current
---		end
+	does_not_have alias "∌" (a: G): BOOLEAN
+			-- <Precursor>
+		do
+			Result := False
+		end
 
---invariant
---	is_universe: is_universe
+feature -- Construction
+
+	extended (a: G; eq: EQUALITY [G]): like superset_anchor
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
+	prunned (a: G): COMPLEMENT_SET [G]
+			-- <Precursor>
+		local
+			s: EFFECTIVE_SET [G]
+		do
+			create s
+			create Result.make (s.extended (a, create {REFERENCE_EQUALITY [G]}))
+		end
+
+feature -- Quality
+
+	is_universe: BOOLEAN = True
+			-- <Precursor>
+			--| Current set knows it is a universe!
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		once
+			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("𝕌")
+		ensure then
+			class
+		end
+
+feature -- Status report
+
+	debug_output: READABLE_STRING_GENERAL
+			-- <Precursor>
+		once
+			Result := {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
+		ensure then
+			class
+			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
+		end
+
+feature -- Anchor
+
+	superset_anchor: UNIVERSE [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
+invariant
+	is_universe: is_universe
 
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
