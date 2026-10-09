@@ -27,6 +27,16 @@ feature -- Test routines (All)
 			Precursor {SET_TESTS}
 		end
 
+feature -- Test routines (Initialization)
+
+	test_default_create
+			-- Test {UNIVERSE}.default_create.
+		note
+			testing: "covers/{UNIVERSE}.default_create"
+		do
+			assert ("default_create", attached (create {like universe_to_be_tested}))
+		end
+
 feature -- Test routines (Membership)
 
 	test_has

@@ -15,7 +15,8 @@ inherit
 			c as c3,
 			d as c4
 		redefine
-			test_all
+			test_all,
+			test_default_create
 		end
 
 feature -- Test routines (All)
@@ -24,6 +25,14 @@ feature -- Test routines (All)
 			-- <Precursor>
 		note
 			testing: "covers/{UNIVERSE}"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+	test_default_create
+			-- <Precursor>
+		note
+			testing: "covers/{UNIVERSE}.default_create"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end
