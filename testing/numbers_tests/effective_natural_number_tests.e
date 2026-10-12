@@ -23,6 +23,7 @@ feature -- Test routines (All)
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 			test_default_create
+			test_make
 		end
 
 feature -- Test routines (Initialization)
@@ -35,12 +36,41 @@ feature -- Test routines (Initialization)
 			assert ("default_create", attached (create {like natural_number_to_be_tested}))
 		end
 
+	test_make
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.make.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.make"
+		do
+			assert ("make", attached (create {like natural_number_to_be_tested}.make (1)))
+			assert ("natural_number_from_native", attached natural_number_from_native (1))
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: EFFECTIVE_NATURAL_NUMBER
 			-- Natural number meant to be under tests
 		once
 			create Result
+		ensure then
+			class
+		end
+
+feature -- Conversion
+
+	natural_number_from_native (v: like native_natural_anchor): like natural_number_to_be_tested
+			-- `v' converted to a natural number like `natural_number_to_be_tested'
+		do
+			Result := v
+		ensure
+			class
+			adjusted_value: Result.value = {like natural_number_to_be_tested}.adjusted_value (v)
+		end
+
+feature -- Anchor
+
+	native_natural_anchor: NATURAL
+			-- <Precursor>
+		do
 		ensure then
 			class
 		end

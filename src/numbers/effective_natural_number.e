@@ -13,6 +13,13 @@ inherit
 			default_create
 		end
 
+create
+	default_create,
+	make
+
+convert
+	make ({NATURAL})
+
 feature {NONE} -- Initialization
 
 	default_create
@@ -21,6 +28,14 @@ feature {NONE} -- Initialization
 			stored_value := 0
 		ensure then
 			value: value = 0
+		end
+
+	make (v: like value)
+			-- Create a natural number out of value `v'.
+		do
+			stored_value := v.as_natural_8 & Stored_value_mask
+		ensure
+			value: value = adjusted_value (v)
 		end
 
 feature -- Primitive
