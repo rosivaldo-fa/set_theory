@@ -69,7 +69,8 @@ feature -- Construction
 
 feature -- Access
 
-	u, universe: like universe_anchor
+	u,
+	universe: like universe_anchor
 			-- Set that has every element of type {G}
 		deferred
 		end

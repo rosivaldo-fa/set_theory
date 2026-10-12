@@ -9,10 +9,12 @@ class
 
 inherit
 	SET [G]
+		rename
+			superset_anchor as universe_anchor
 		redefine
 			does_not_have,
 			out,
-			superset_anchor
+			universe_anchor
 		end
 
 	DEBUG_OUTPUT
@@ -36,7 +38,7 @@ feature -- Membership
 
 feature -- Construction
 
-	extended (a: G; eq: EQUALITY [G]): like superset_anchor
+	extended (a: G; eq: EQUALITY [G]): like universe_anchor
 			-- <Precursor>
 		do
 			Result := Current
@@ -53,7 +55,8 @@ feature -- Construction
 
 feature -- Access
 
-	u, universe: like universe_anchor
+	u,
+	universe: like universe_anchor
 			-- <Precursor>
 		do
 			Result := Current
@@ -88,7 +91,7 @@ feature -- Status report
 
 feature -- Anchor
 
-	superset_anchor: UNIVERSE [G]
+	universe_anchor: UNIVERSE [G]
 			-- <Precursor>
 		do
 			Result := Current

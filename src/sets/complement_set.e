@@ -65,19 +65,10 @@ feature -- Construction
 			create Result.make (reference_set.extended (a, create {REFERENCE_EQUALITY [G]}))
 		end
 
---feature -- Access
-
---	u, universe: like universe_anchor
---			-- <Precursor>
---		do
---			create Result
---		ensure then
---			class
---		end
-
 feature -- Access
 
-	u, universe: like universe_anchor
+	u,
+	universe: like universe_anchor
 			-- <Precursor>
 		do
 			Result := {EFFECTIVE_SET [G]}.u

@@ -16,6 +16,7 @@
 		</library>
 		<cluster name="src" location=".\src\">
 			<cluster name="sets" location=".\src\sets\" recursive="true"/>
+			<cluster name="numbers" location=".\src\numbers\" recursive="true"/>
 		</cluster>
 	</target>
 	<target name="set_theory_tests" extends="set_theory">
@@ -28,6 +29,7 @@
 		<cluster name="test" location=".\testing\">
 			<tests name="sets_tests" location=".\testing\sets_tests\" recursive="true"/>
 			<cluster name="exposed_sets" location=".\testing\exposed_sets\" recursive="true"/>
+			<cluster name="numbers_tests" location=".\testing\numbers_tests\" recursive="true"/>
 		</cluster>
 	</target>
 </system>
