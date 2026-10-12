@@ -75,6 +75,16 @@ feature -- Construction
 --			class
 --		end
 
+feature -- Access
+
+	u, universe: like universe_anchor
+			-- <Precursor>
+		do
+			Result := {EFFECTIVE_SET [G]}.u
+		ensure then
+			class
+		end
+
 feature -- Quality
 
 	is_universe: detachable BOOLEAN_REF

@@ -67,6 +67,13 @@ feature -- Construction
 			does_not_have_a: Result ∌ a
 		end
 
+feature -- Access
+
+	u, universe: like universe_anchor
+			-- Set that has every element of type {G}
+		deferred
+		end
+
 feature -- Quality
 
 	is_universe: detachable BOOLEAN_REF
@@ -87,6 +94,12 @@ feature -- Anchor
 			-- Anchor for supersets of current set
 		do
 			Result := Current
+		end
+
+	universe_anchor: UNIVERSE [G]
+			-- Anchor for universe of elements of current set
+		do
+			Result := u
 		end
 
 note

@@ -33,6 +33,8 @@ feature -- Test routines (All)
 			test_is_not_in
 			test_extended
 			test_prunned
+			test_u
+			test_universe
 			test_is_universe
 		end
 
@@ -130,6 +132,24 @@ feature -- Test routines (Construction)
 		do
 			s := set_to_be_tested
 			assert ("s ∖ {a}", s.prunned (a) ∌ a)
+		end
+
+feature -- Test routines (Access)
+
+	test_u
+			-- Test {SET}.u.
+		note
+			testing: "covers/{SET}.u"
+		do
+			assert ("u", attached set_to_be_tested.u)
+		end
+
+	test_universe
+			-- Test {SET}.universe.
+		note
+			testing: "covers/{SET}.universe"
+		do
+			assert ("universe", attached set_to_be_tested.universe)
 		end
 
 feature -- Test routines (Quality)

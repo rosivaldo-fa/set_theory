@@ -128,6 +128,16 @@ feature -- Construction
 --			when_not_found: attached eq and then not eq (a, given_element) ⇒ Result ≍ subset.prunned (a).extended (given_element, eq)
 		end
 
+feature -- Access
+
+	u, universe: like universe_anchor
+			-- <Precursor>
+		do
+			create Result
+		ensure then
+			class
+		end
+
 feature -- Quality
 
 	is_universe: detachable BOOLEAN_REF

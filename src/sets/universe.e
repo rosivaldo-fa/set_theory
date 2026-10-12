@@ -51,6 +51,14 @@ feature -- Construction
 			create Result.make (s.extended (a, create {REFERENCE_EQUALITY [G]}))
 		end
 
+feature -- Access
+
+	u, universe: like universe_anchor
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
 feature -- Quality
 
 	is_universe: BOOLEAN = True

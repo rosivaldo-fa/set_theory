@@ -24,6 +24,8 @@ inherit
 			test_is_not_in,
 			test_extended,
 			test_prunned,
+			test_u,
+			test_universe,
 			test_element_out,
 			test_out,
 			test_debug_output,
@@ -122,6 +124,24 @@ feature -- Test routines (Construction)
 		note
 			testing: "covers/{SET}.prunned"
 			testing: "covers/{EFFECTIVE_SET}.prunned"
+		do
+			Precursor {EFFECTIVE_SET_TESTS}
+		end
+
+feature -- Test routines (Access)
+
+	test_u
+			-- Test {EFFECTIVE_SET}.u.
+		note
+			testing: "covers/{EFFECTIVE_SET}.u"
+		do
+			Precursor {EFFECTIVE_SET_TESTS}
+		end
+
+	test_universe
+			-- Test {EFFECTIVE_SET}.universe.
+		note
+			testing: "covers/{EFFECTIVE_SET}.universe"
 		do
 			Precursor {EFFECTIVE_SET_TESTS}
 		end
