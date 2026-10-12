@@ -15,10 +15,12 @@ inherit
 
 create
 	default_create,
-	make
+	make,
+	make_from_reference
 
 convert
-	make ({NATURAL})
+	make ({NATURAL}),
+	make_from_reference ({NATURAL_NUMBER})
 
 feature {NONE} -- Initialization
 
@@ -36,6 +38,14 @@ feature {NONE} -- Initialization
 			stored_value := v.as_natural_8 & Stored_value_mask
 		ensure
 			value: value = adjusted_value (v)
+		end
+
+	make_from_reference (n: NATURAL_NUMBER)
+			-- Create a natural number with value `n'.`value'.
+		do
+			make (n.value)
+		ensure
+			value: value = adjusted_value (n.value)
 		end
 
 feature -- Primitive
