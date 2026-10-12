@@ -22,6 +22,17 @@ feature -- Test routines (All)
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
+			test_default_create
+		end
+
+feature -- Test routines (Initialization)
+
+	test_default_create
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.default_create.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.default_create"
+		do
+			assert ("default_create", attached (create {like natural_number_to_be_tested}))
 		end
 
 feature -- Factory (element to be tested)

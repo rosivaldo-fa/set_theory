@@ -9,6 +9,19 @@ class
 
 inherit
 	NATURAL_NUMBER
+		redefine
+			default_create
+		end
+
+feature {NONE} -- Initialization
+
+	default_create
+			-- Create a natural number with value = 0
+		do
+			stored_value := 0
+		ensure then
+			value: value = 0
+		end
 
 feature -- Primitive
 
