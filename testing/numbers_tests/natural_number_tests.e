@@ -31,6 +31,7 @@ feature -- Test routines (All)
 			Precursor {ELEMENT_TESTS}
 			test_is_in
 			test_is_not_in
+			test_zero
 		end
 
 feature -- Test routines (Membership)
@@ -68,6 +69,16 @@ feature -- Test routines (Membership)
 			s := s.extended (n, create {REFERENCE_EQUALITY [NATURAL_NUMBER]})
 			assert ("not (n ∉ s)", not (n ∉ s))
 			assert ("not (n ∉ s) ok", is_not_in_ok (n, s))
+		end
+
+feature -- Test routines (Access)
+
+	test_zero
+			-- Test {NATURAL_NUMBER}.zero.
+		note
+			testing: "covers/{NATURAL_NUMBER}.zero"
+		do
+			assert ("zero", attached natural_number_to_be_tested.Zero)
 		end
 
 feature -- Factory (element to be tested)

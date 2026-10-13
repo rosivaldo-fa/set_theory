@@ -42,6 +42,15 @@ feature -- Membership
 			definition: Result = not (Current ∈ s)
 		end
 
+feature -- Access
+
+	zero: like natural_anchor
+			-- The natural number 0
+		deferred
+		ensure
+			zero: Result.value = 0
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
@@ -52,6 +61,11 @@ feature -- Implementation
 		end
 
 feature -- Anchor
+
+	natural_anchor: NATURAL_NUMBER
+			-- Anchor for natural numbers
+		deferred
+		end
 
 	native_natural_anchor: NATURAL
 			-- Anchor for the native representation of the value of current natural number

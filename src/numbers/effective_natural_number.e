@@ -4,7 +4,7 @@
 	date: "$Date$"
 	revision: "$Revision$"
 
-class
+expanded class
 	EFFECTIVE_NATURAL_NUMBER
 
 inherit
@@ -56,6 +56,15 @@ feature -- Primitive
 			Result := stored_value
 		end
 
+feature -- Access
+
+	Zero: EFFECTIVE_NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
@@ -68,6 +77,13 @@ feature -- Implementation
 		end
 
 feature -- Anchor
+
+	natural_anchor: EFFECTIVE_NATURAL_NUMBER
+			-- <Precursor>
+		do
+		ensure then
+			class
+		end
 
 	native_natural_anchor: NATURAL
 			-- <Precursor>
