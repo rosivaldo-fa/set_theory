@@ -9,6 +9,9 @@ deferred class
 
 inherit
 	ELEMENT
+		rename
+			is_in as element_is_in
+		end
 
 feature -- Primitive
 
@@ -18,6 +21,16 @@ feature -- Primitive
 		ensure
 			adjusted: Result = adjusted_value (Result)
 --			consistent: Result.as_integer_32 = integer_value
+		end
+
+feature -- Membership
+
+	is_in alias "∈" (s: SET [NATURAL_NUMBER]): BOOLEAN
+			-- Does `s` have current natural number?
+		do
+			Result := s ∋ Current
+		ensure
+			definition: Result = s ∋ Current
 		end
 
 feature -- Implementation

@@ -11,6 +11,7 @@ deferred class
 inherit
 	ELEMENT_TESTS
 		rename
+			test_is_in as test_element_is_in,
 			element_to_be_tested as natural_number_to_be_tested
 		undefine
 			natural_number_to_be_tested
@@ -26,6 +27,26 @@ feature -- Test routines (All)
 			testing: "covers/{NATURAL_NUMBER}"
 		do
 			Precursor {ELEMENT_TESTS}
+			test_is_in
+		end
+
+feature -- Test routines (Membership)
+
+	test_is_in
+			-- Test {NATURAL_NUMBER}.is_in.
+		note
+			testing: "covers/{NATURAL_NUMBER}.is_in"
+		local
+			n: like natural_number_to_be_tested
+			s: SET [NATURAL_NUMBER]
+		do
+			n := natural_number_to_be_tested
+			create {EFFECTIVE_SET [NATURAL_NUMBER]} s
+			s := s.extended (n, create {REFERENCE_EQUALITY [NATURAL_NUMBER]})
+			assert ("n ∈ s", n ∈ s)
+
+			s := s.prunned (n)
+			assert ("not (n ∈ s)", not (n ∈ s))
 		end
 
 feature -- Factory (element to be tested)
