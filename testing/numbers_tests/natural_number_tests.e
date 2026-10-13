@@ -12,7 +12,9 @@ inherit
 	ELEMENT_TESTS
 		rename
 			test_is_in as test_element_is_in,
-			element_to_be_tested as natural_number_to_be_tested
+			test_is_not_in as test_element_is_not_in,
+			element_to_be_tested as natural_number_to_be_tested,
+			is_not_in_ok as element_is_not_in_ok
 		undefine
 			natural_number_to_be_tested
 		redefine
@@ -28,6 +30,7 @@ feature -- Test routines (All)
 		do
 			Precursor {ELEMENT_TESTS}
 			test_is_in
+			test_is_not_in
 		end
 
 feature -- Test routines (Membership)
@@ -49,11 +52,41 @@ feature -- Test routines (Membership)
 			assert ("not (n ∈ s)", not (n ∈ s))
 		end
 
+	test_is_not_in
+			-- Test {NATURAL_NUMBER}.is_not_in.
+		note
+			testing: "covers/{NATURAL_NUMBER}.is_not_in"
+		local
+			n: like natural_number_to_be_tested
+			s: SET [NATURAL_NUMBER]
+		do
+			n := natural_number_to_be_tested
+			create {EFFECTIVE_SET [NATURAL_NUMBER]} s
+			assert ("n ∉ s", n ∉ s)
+			assert ("n ∉ s ok", is_not_in_ok (n, s))
+
+			s := s.extended (n, create {REFERENCE_EQUALITY [NATURAL_NUMBER]})
+			assert ("not (n ∉ s)", not (n ∉ s))
+			assert ("not (n ∉ s) ok", is_not_in_ok (n, s))
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: NATURAL_NUMBER
 			-- Natural number meant to be under tests
 		deferred
+		end
+
+feature -- Properties (Membership)
+
+	is_not_in_ok (n: NATURAL_NUMBER; s: SET [NATURAL_NUMBER]): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.is_not_in?
+		do
+			check
+				another_definition: n ∉ s = s ∌ n
+			then
+				Result := True
+			end
 		end
 
 note

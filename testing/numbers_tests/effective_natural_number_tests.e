@@ -12,7 +12,8 @@ inherit
 	NATURAL_NUMBER_TESTS
 		redefine
 			test_all,
-			test_is_in
+			test_is_in,
+			test_is_not_in
 		end
 
 feature -- Test routines (All)
@@ -64,6 +65,16 @@ feature -- Test routines (Membership)
 		note
 			testing: "covers/{NATURAL_NUMBER}.is_in"
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.is_in"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+	test_is_not_in
+			-- <Precursor>
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.is_not_in.
+		note
+			testing: "covers/{NATURAL_NUMBER}.is_not_in"
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.is_not_in"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 		end
