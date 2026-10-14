@@ -34,6 +34,7 @@ feature -- Test routines (All)
 			test_zero
 			test_one
 			test_equals
+			test_unequals
 		end
 
 feature -- Test routines (Membership)
@@ -114,6 +115,27 @@ feature -- Test routines (Comparison)
 			assert ("not (n ≍ m) ok", equals_ok (n, m, natural_from_native (3)))
 		end
 
+	test_unequals
+			-- Test {STS_NATURAL_NUMBER}.unequals.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.unequals"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			assert ("same entity", not (n ≭ n))
+			assert ("same entity ok", unequals_ok (n, n))
+
+			m := natural_from_native (n.value)
+			assert ("same_natural_number", not (n ≭ n))
+			assert ("same_natural_number ok", unequals_ok (n, m))
+
+			m := natural_from_native (n.value + 1)
+			assert ("n ≭ m", n ≭ m)
+			assert ("n ≭ m ok", unequals_ok (n, m))
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: NATURAL_NUMBER
@@ -149,9 +171,20 @@ feature -- Properties (Comparison)
 		do
 			check
 				reflexive: n ≍ n
-				symmetric: n ≍ m implies m ≍ n
-				transitive: n ≍ m and m ≍ l implies n ≍ l
-				euclidian: n ≍ m and n ≍ l implies m ≍ l
+				symmetric: n ≍ m ⇒ m ≍ n
+				transitive: n ≍ m and m ≍ l ⇒ n ≍ l
+				euclidian: n ≍ m and n ≍ l ⇒ m ≍ l
+			then
+				Result := True
+			end
+		end
+
+	unequals_ok (n, m: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.unequals?
+		do
+			check
+				alternate_definition: n ≭ m = (n.value /= m.value)
+				irreflexive: not (n ≭ n)
 			then
 				Result := True
 			end
