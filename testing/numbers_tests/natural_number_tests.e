@@ -35,6 +35,7 @@ feature -- Test routines (All)
 			test_one
 			test_equals
 			test_unequals
+			test_is_less
 		end
 
 feature -- Test routines (Membership)
@@ -136,6 +137,36 @@ feature -- Test routines (Comparison)
 			assert ("n ≭ m ok", unequals_ok (n, m))
 		end
 
+	test_is_less
+			-- Test {NATURAL_NUMBER}.is_less.
+		note
+			testing: "covers/{NATURAL_NUMBER}.is_less"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_from_native (n.value + 1)
+			if n.value ≥ m.value then -- An overflow may cause this comparison to succeed
+				n := natural_from_native (n.value - 1)
+				m := natural_from_native (n.value + 1)
+			end
+			assert ("n < m", n < m)
+			assert ("n < m ok", is_less_ok (n, m, natural_from_native (3)))
+
+			m := natural_from_native (n.value)
+			assert ("not (n < m)", not (n < m))
+			assert ("not (n < m) ok", is_less_ok (n, m, natural_from_native (3)))
+
+			m := natural_from_native (n.value - 1)
+			if n.value < m.value then -- An overflow may cause this comparison to succeed
+				n := natural_from_native (n.value + 1)
+				m := natural_from_native (n.value - 1)
+			end
+			assert ("again: not (n < m)", not (n < m))
+			assert ("again: not (n < m) ok", is_less_ok (n, m, natural_from_native (3)))
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: NATURAL_NUMBER
@@ -185,6 +216,18 @@ feature -- Properties (Comparison)
 			check
 				alternate_definition: n ≭ m = (n.value /= m.value)
 				irreflexive: not (n ≭ n)
+			then
+				Result := True
+			end
+		end
+
+	is_less_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.is_less?
+		do
+			check
+				irreflexive: not (n < n)
+				asymmetric: n < m ⇒ not (m < n)
+				transitive: n < m and m < l ⇒ n < l
 			then
 				Result := True
 			end

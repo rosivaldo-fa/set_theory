@@ -17,7 +17,8 @@ inherit
 			test_zero,
 			test_one,
 			test_equals,
-			test_unequals
+			test_unequals,
+			test_is_less
 		end
 
 feature -- Test routines (All)
@@ -119,6 +120,16 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{NATURAL_NUMBER}.unequals"
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.unequals"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+	test_is_less
+			-- <Precursor>
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.is_less.
+		note
+			testing: "covers/{NATURAL_NUMBER}.is_less"
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.is_less"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 		end
