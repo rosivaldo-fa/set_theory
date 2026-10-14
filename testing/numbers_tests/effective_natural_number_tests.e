@@ -15,7 +15,8 @@ inherit
 			test_is_in,
 			test_is_not_in,
 			test_zero,
-			test_one
+			test_one,
+			test_equals
 		end
 
 feature -- Test routines (All)
@@ -99,12 +100,34 @@ feature -- Test routines (Access)
 			Precursor {NATURAL_NUMBER_TESTS}
 		end
 
+feature -- Test routines (Comparison)
+
+	test_equals
+			-- <Precursor>
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.equals.
+		note
+			testing: "covers/{NATURAL_NUMBER}.equals"
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.equals"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: EFFECTIVE_NATURAL_NUMBER
 			-- Natural number meant to be under tests
 		once
 			create Result
+		ensure then
+			class
+		end
+
+feature -- Factory
+
+	natural_from_native (v: like native_natural_anchor): EFFECTIVE_NATURAL_NUMBER
+			-- <Precursor>
+		do
+			Result := v
 		ensure then
 			class
 		end

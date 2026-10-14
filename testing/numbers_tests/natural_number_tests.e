@@ -33,6 +33,7 @@ feature -- Test routines (All)
 			test_is_not_in
 			test_zero
 			test_one
+			test_equals
 		end
 
 feature -- Test routines (Membership)
@@ -90,11 +91,43 @@ feature -- Test routines (Access)
 			assert ("one", attached natural_number_to_be_tested.One)
 		end
 
+feature -- Test routines (Comparison)
+
+	test_equals
+			-- Test {NATURAL_NUMBER}.equals.
+		note
+			testing: "covers/{NATURAL_NUMBER}.equals"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			assert ("same entity", n ≍ n)
+			assert ("same entity ok", equals_ok (n, n, n))
+
+			m := natural_from_native (n.value)
+			assert ("same_natural_number", n ≍ m)
+			assert ("same_natural_number ok", equals_ok (n, m, natural_from_native (m.value)))
+
+			m := natural_from_native (n.value + 1)
+			assert ("not (n ≍ m)", not (n ≍ m))
+			assert ("not (n ≍ m) ok", equals_ok (n, m, natural_from_native (3)))
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: NATURAL_NUMBER
 			-- Natural number meant to be under tests
 		deferred
+		end
+
+feature -- Factory
+
+	natural_from_native (v: like native_natural_anchor): NATURAL_NUMBER
+			-- Natural number whose value is adjusted from `v'
+		deferred
+		ensure
+			adjusted_value: Result.value = natural_number_to_be_tested.adjusted_value (v)
 		end
 
 feature -- Properties (Membership)
@@ -107,6 +140,29 @@ feature -- Properties (Membership)
 			then
 				Result := True
 			end
+		end
+
+feature -- Properties (Comparison)
+
+	equals_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.equals?
+		do
+			check
+				reflexive: n ≍ n
+				symmetric: n ≍ m implies m ≍ n
+				transitive: n ≍ m and m ≍ l implies n ≍ l
+				euclidian: n ≍ m and n ≍ l implies m ≍ l
+			then
+				Result := True
+			end
+		end
+
+feature -- Anchor
+
+	native_natural_anchor: NATURAL
+			-- Anchor for the native representation of the value of current natural number
+			--| TODO: Make it target dependant.
+		deferred
 		end
 
 note
