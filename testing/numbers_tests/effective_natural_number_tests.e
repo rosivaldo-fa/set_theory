@@ -24,7 +24,17 @@ inherit
 			test_is_greater_equal,
 			test_min,
 			test_max,
-			test_divisible
+			test_divisible,
+			test_plus
+		end
+
+feature -- Access
+
+	zero: EFFECTIVE_NATURAL_NUMBER
+			-- <Precursor>
+		once
+		ensure then
+			class
 		end
 
 feature -- Test routines (All)
@@ -194,6 +204,16 @@ feature -- Test routines (Relationship)
 		note
 			testing: "covers/{NATURAL_NUMBER}.divisible"
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.divisible"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Operation)
+
+	test_plus
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.plus.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.plus"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 		end

@@ -21,6 +21,13 @@ inherit
 			test_all
 		end
 
+feature -- Access
+
+	zero: like natural_number_to_be_tested
+			-- The natural number 0
+		deferred
+		end
+
 feature -- Test routines (All)
 
 	test_all
@@ -42,6 +49,7 @@ feature -- Test routines (All)
 			test_min
 			test_max
 			test_divisible
+			test_plus
 		end
 
 feature -- Test routines (Membership)
@@ -342,20 +350,20 @@ feature -- Test routines (Relationship)
 			assert ("not n.divisible (m)", not n.divisible (m))
 		end
 
-feature -- Factory (element to be tested)
+feature -- Test routines (Operation)
 
-	natural_number_to_be_tested: NATURAL_NUMBER
-			-- Natural number meant to be under tests
-		deferred
-		end
-
-feature -- Factory
-
-	natural_from_native (v: like native_natural_anchor): NATURAL_NUMBER
-			-- Natural number whose value is adjusted from `v'
-		deferred
-		ensure
-			adjusted_value: Result.value = natural_number_to_be_tested.adjusted_value (v)
+	test_plus
+			-- Test {NATURAL_NUMBER}.plus.
+		note
+			testing: "covers/{NATURAL_NUMBER}.plus"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_from_native (1)
+			assert ("plus", attached (n + m))
+			assert ("plus_ok", plus_ok (n, m, natural_from_native (3)))
 		end
 
 feature -- Properties (Membership)
@@ -471,6 +479,37 @@ feature -- Properties (Comparison)
 			then
 				Result := True
 			end
+		end
+
+feature -- Properties (Operation)
+
+	plus_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.plus?
+		do
+			check
+				neutral_left_term: (zero + n) ≍ n
+				neutral_right_term: (n + zero) ≍ n
+				commutative: (n + m) ≍ (m + n)
+				associative: ((n + m) + l) ≍ (n + (m + l))
+			then
+				Result := True
+			end
+		end
+
+feature -- Factory (element to be tested)
+
+	natural_number_to_be_tested: NATURAL_NUMBER
+			-- Natural number meant to be under tests
+		deferred
+		end
+
+feature -- Factory
+
+	natural_from_native (v: like native_natural_anchor): NATURAL_NUMBER
+			-- Natural number whose value is adjusted from `v'
+		deferred
+		ensure
+			adjusted_value: Result.value = natural_number_to_be_tested.adjusted_value (v)
 		end
 
 feature -- Anchor
