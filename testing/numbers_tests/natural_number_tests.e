@@ -41,6 +41,7 @@ feature -- Test routines (All)
 			test_is_greater_equal
 			test_min
 			test_max
+			test_divisible
 		end
 
 feature -- Test routines (Membership)
@@ -321,6 +322,24 @@ feature -- Test routines (Comparison)
 			end
 			assert ("n < m", (n ∨ m) ≍ m)
 			assert ("n < m) ok", max_ok (n, m, natural_from_native (3)))
+		end
+
+feature -- Test routines (Relationship)
+
+	test_divisible
+			-- Test {NATURAL_NUMBER}.divisible.
+		note
+			testing: "covers/{NATURAL_NUMBER}.divisible"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_from_native (5)
+			assert ("n.divisible (m)", n.divisible (m))
+
+			m := m.zero
+			assert ("not n.divisible (m)", not n.divisible (m))
 		end
 
 feature -- Factory (element to be tested)

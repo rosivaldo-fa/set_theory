@@ -134,6 +134,18 @@ feature -- Comparison
 			other_if_smaller: Current < n ⇒ Result ≍ n
 		end
 
+feature -- Relationship
+
+	divisible (n: NATURAL_NUMBER): BOOLEAN
+			-- May current natural number be divided by `n`?
+		do
+--			Result := value.divisible (n.value) -- TODO: Segmentation violation!
+			Result := n.value /= 0
+		ensure
+--			definition: Result = value.divisible (n.value) -- TODO: Segmentation violation!
+			definition: Result = (n.value /= 0)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

@@ -23,7 +23,8 @@ inherit
 			test_is_greater,
 			test_is_greater_equal,
 			test_min,
-			test_max
+			test_max,
+			test_divisible
 		end
 
 feature -- Test routines (All)
@@ -181,6 +182,18 @@ feature -- Test routines (Comparison)
 			-- Test {EFFECTIVE_NATURAL_NUMBER}.max.
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.max"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Relationship)
+
+	test_divisible
+			-- <Precursor>
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.divisible.
+		note
+			testing: "covers/{NATURAL_NUMBER}.divisible"
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.divisible"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 		end
