@@ -21,7 +21,8 @@ inherit
 			test_is_less,
 			test_is_less_equal,
 			test_is_greater,
-			test_is_greater_equal
+			test_is_greater_equal,
+			test_min
 		end
 
 feature -- Test routines (All)
@@ -163,6 +164,14 @@ feature -- Test routines (Comparison)
 		note
 			testing: "covers/{NATURAL_NUMBER}.is_greater_equal"
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.is_greater_equal"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+	test_min
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.min.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.min"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 		end

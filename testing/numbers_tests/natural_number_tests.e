@@ -39,6 +39,7 @@ feature -- Test routines (All)
 			test_is_less_equal
 			test_is_greater
 			test_is_greater_equal
+			test_min
 		end
 
 feature -- Test routines (Membership)
@@ -261,6 +262,36 @@ feature -- Test routines (Comparison)
 		end
 
 
+	test_min
+			-- Test {NATURAL_NUMBER}.min.
+		note
+			testing: "covers/{NATURAL_NUMBER}.min"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_from_native (n.value)
+			assert ("n ≍ m", (n ∧ m) ≍ n)
+			assert ("n ≍ m ok", min_ok (n, m, natural_from_native (3)))
+
+			m := natural_from_native (n.value + 1)
+			if m.value ≤ n.value then -- An overflow may cause this comparison to succeed
+				n := natural_from_native (n.value - 1)
+				m := natural_from_native (n.value + 1)
+			end
+			assert ("n < m", (n ∧ m) ≍ n)
+			assert ("n < m ok", min_ok (n, m, natural_from_native (3)))
+
+			m := natural_from_native (n.value - 1)
+			if m.value ≥ n.value then -- An overflow may cause this comparison to succeed
+				n := natural_from_native (n.value + 1)
+				m := natural_from_native (n.value - 1)
+			end
+			assert ("n > m", (n ∧ m) ≍ m)
+			assert ("n > m) ok", min_ok (n, m, natural_from_native (3)))
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: NATURAL_NUMBER
@@ -347,8 +378,8 @@ feature -- Properties (Comparison)
 				alternate_definition: n > m = (n.value > m.value)
 				yet_another_definition: n > m = not (n ≤ m)
 				irreflexive: not (n > n)
-				asymmetric: n > m implies not (m > n)
-				transitive: n > m and m > l implies n > l
+				asymmetric: n > m ⇒ not (m > n)
+				transitive: n > m and m > l ⇒ n > l
 			then
 				Result := True
 			end
@@ -361,8 +392,20 @@ feature -- Properties (Comparison)
 				alternate_definition: n ≥ m = (n.value ≥ m.value)
 				yet_another_definition: n ≥ m = not (n < m)
 				reflexive: n ≥ n
-				transitive: n ≥ m and m ≥ l implies n ≥ l
-				antisymmetric: n ≥ m and m ≥ n implies n ≍ m
+				transitive: n ≥ m and m ≥ l ⇒ n ≥ l
+				antisymmetric: n ≥ m and m ≥ n ⇒ n ≍ m
+			then
+				Result := True
+			end
+		end
+
+	min_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.min?
+		do
+			check
+				idempotent: (n ∧ n) ≍ n
+				commutative: (n ∧ m) ≍ (m ∧ n)
+				associative: ((n ∧ m) ∧ l) ≍ (n ∧ (m ∧ l))
 			then
 				Result := True
 			end

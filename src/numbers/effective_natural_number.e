@@ -10,7 +10,8 @@ expanded class
 inherit
 	NATURAL_NUMBER
 		redefine
-			default_create
+			default_create,
+			min
 		end
 
 create
@@ -71,6 +72,14 @@ feature -- Access
 			create Result.make (1)
 		ensure then
 			class
+		end
+
+feature -- Comparison
+
+	min alias "∧" (n: NATURAL_NUMBER): like natural_anchor
+			-- <Precursor>
+		do
+			create Result.make (stored_value ∧ n.value)
 		end
 
 feature -- Implementation
