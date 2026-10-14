@@ -40,6 +40,7 @@ feature -- Test routines (All)
 			test_is_greater
 			test_is_greater_equal
 			test_min
+			test_max
 		end
 
 feature -- Test routines (Membership)
@@ -292,6 +293,36 @@ feature -- Test routines (Comparison)
 			assert ("n > m) ok", min_ok (n, m, natural_from_native (3)))
 		end
 
+	test_max
+			-- Test {NATURAL_NUMBER}.max.
+		note
+			testing: "covers/{NATURAL_NUMBER}.max"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_from_native (n.value)
+			assert ("n ≍ m", (n ∨ m) ≍ n)
+			assert ("n ≍ m ok", max_ok (n, m, natural_from_native (3)))
+
+			m := natural_from_native (n.value - 1)
+			if m.value ≥ n.value then -- An overflow may cause this comparison to succeed
+				n := natural_from_native (n.value + 1)
+				m := natural_from_native (n.value - 1)
+			end
+			assert ("n > m", (n ∨ m) ≍ n)
+			assert ("n > m ok", max_ok (n, m, natural_from_native (3)))
+
+			m := natural_from_native (n.value + 1)
+			if m.value ≤ n.value then -- An overflow may cause this comparison to succeed
+				n := natural_from_native (n.value - 1)
+				m := natural_from_native (n.value + 1)
+			end
+			assert ("n < m", (n ∨ m) ≍ m)
+			assert ("n < m) ok", max_ok (n, m, natural_from_native (3)))
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: NATURAL_NUMBER
@@ -406,6 +437,18 @@ feature -- Properties (Comparison)
 				idempotent: (n ∧ n) ≍ n
 				commutative: (n ∧ m) ≍ (m ∧ n)
 				associative: ((n ∧ m) ∧ l) ≍ (n ∧ (m ∧ l))
+			then
+				Result := True
+			end
+		end
+
+	max_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.max?
+		do
+			check
+				idempotent: (n ∨ n) ≍ n
+				commutative: (n ∨ m) ≍ (m ∨ n)
+				associative: ((n ∨ m) ∨ l) ≍ (n ∨ (m ∨ l))
 			then
 				Result := True
 			end
