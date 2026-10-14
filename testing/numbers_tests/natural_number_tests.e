@@ -36,6 +36,7 @@ feature -- Test routines (All)
 			test_equals
 			test_unequals
 			test_is_less
+			test_is_less_equal
 		end
 
 feature -- Test routines (Membership)
@@ -167,6 +168,36 @@ feature -- Test routines (Comparison)
 			assert ("again: not (n < m) ok", is_less_ok (n, m, natural_from_native (3)))
 		end
 
+	test_is_less_equal
+			-- Test {STS_NATURAL_NUMBER}.is_less_equal.
+		note
+			testing: "covers/{STS_NATURAL_NUMBER}.is_less_equal"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_from_native (n.value)
+			assert ("equal: n ≤ m", n ≤ m)
+			assert ("equal: n ≤ m ok", is_less_equal_ok (n, m, natural_from_native (3)))
+
+			m := natural_from_native (n.value + 1)
+			if m.value ≤ n.value then -- An overflow may cause this comparison to succeed
+				n := natural_from_native (n.value - 1)
+				m := natural_from_native (n.value + 1)
+			end
+			assert ("less: n ≤ m", n ≤ m)
+			assert ("less: n ≤ m ok", is_less_equal_ok (n, m, natural_from_native (3)))
+
+			m := natural_from_native (n.value - 1)
+			if m.value ≥ n.value then -- An overflow may cause this comparison to succeed
+				n := natural_from_native (n.value + 1)
+				m := natural_from_native (n.value - 1)
+			end
+			assert ("not (n ≤ m)", not (n ≤ m))
+			assert ("not (n ≤ m) ok", is_less_equal_ok (n, m, natural_from_native (3)))
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: NATURAL_NUMBER
@@ -228,6 +259,19 @@ feature -- Properties (Comparison)
 				irreflexive: not (n < n)
 				asymmetric: n < m ⇒ not (m < n)
 				transitive: n < m and m < l ⇒ n < l
+			then
+				Result := True
+			end
+		end
+
+	is_less_equal_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.is_less_equal?
+		do
+			check
+				alternate_definition: n ≤ m = (n.value ≤ m.value)
+				reflexive: n ≤ n
+				transitive: n ≤ m and m ≤ l ⇒ n ≤ l
+				antisymmetric: n ≤ m and m ≤ n ⇒ n ≍ m
 			then
 				Result := True
 			end
