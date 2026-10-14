@@ -100,6 +100,14 @@ feature -- Comparison
 			definition: Result = (n < Current)
 		end
 
+	is_greater_equal alias ">=" alias "≥" alias "⩾" alias "≧" (n: NATURAL_NUMBER): BOOLEAN
+			-- Is current natural number greater than or equal to `n'?
+		do
+			Result := n ≤ Current
+		ensure
+			definition: Result = (n ≤ Current)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
