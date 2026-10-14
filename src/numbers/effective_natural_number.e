@@ -65,6 +65,14 @@ feature -- Access
 			class
 		end
 
+	One: EFFECTIVE_NATURAL_NUMBER
+			-- <Precursor>
+		once
+			create Result.make (1)
+		ensure then
+			class
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

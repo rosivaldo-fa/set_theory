@@ -14,7 +14,8 @@ inherit
 			test_all,
 			test_is_in,
 			test_is_not_in,
-			test_zero
+			test_zero,
+			test_one
 		end
 
 feature -- Test routines (All)
@@ -86,6 +87,14 @@ feature -- Test routines (Access)
 			-- Test {EFFECTIVE_NATURAL_NUMBER}.zero.
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.zero"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+	test_one
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.one.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.one"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 		end

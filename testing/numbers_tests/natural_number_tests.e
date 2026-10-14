@@ -32,6 +32,7 @@ feature -- Test routines (All)
 			test_is_in
 			test_is_not_in
 			test_zero
+			test_one
 		end
 
 feature -- Test routines (Membership)
@@ -79,6 +80,14 @@ feature -- Test routines (Access)
 			testing: "covers/{NATURAL_NUMBER}.zero"
 		do
 			assert ("zero", attached natural_number_to_be_tested.Zero)
+		end
+
+	test_one
+			-- Test {NATURAL_NUMBER}.one.
+		note
+			testing: "covers/{NATURAL_NUMBER}.one"
+		do
+			assert ("one", attached natural_number_to_be_tested.One)
 		end
 
 feature -- Factory (element to be tested)
