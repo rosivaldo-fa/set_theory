@@ -62,6 +62,7 @@ feature -- Test routines (All)
 			test_identity
 			test_minus
 			test_product
+			test_natural_quotient
 		end
 
 feature -- Test routines (Membership)
@@ -425,6 +426,23 @@ feature -- Test routines (Operation)
 			assert ("product ok", product_ok (n, m, natural_number_from_native (2)))
 		end
 
+	test_natural_quotient
+			-- Test {NATURAL_NUMBER}.natural_quotient.
+		note
+			testing: "covers/{NATURAL_NUMBER}.natural_quotient"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_number_from_native (2)
+			check
+				n.divisible (m) -- m /= 0
+			end
+			assert ("natural_quotient", attached (n // m))
+			assert ("natural_quotient ok", natural_quotient_ok (n, m))
+		end
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (n: NATURAL_NUMBER; s: SET [NATURAL_NUMBER]): BOOLEAN
@@ -590,6 +608,18 @@ feature -- Properties (Operation)
 				absorbing_right_factor: n ⋅ zero ≍ zero
 				commutative: (n ⋅ m) ≍ (m ⋅ n)
 				associative: ((n ⋅ m) ⋅ l) ≍ (n ⋅ (m ⋅ l))
+			then
+				Result := True
+			end
+		end
+
+	natural_quotient_ok (n, m: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.natural_quotient?
+		do
+			check
+				absorbing_dividend: zero.divisible (n) ⇒ (zero // n) ≍ zero
+				good_divisor: n.divisible (one) -- one /= 0
+				neutral_divisor: (n // one) ≍ n
 			then
 				Result := True
 			end
