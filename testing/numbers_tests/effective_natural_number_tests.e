@@ -25,7 +25,8 @@ inherit
 			test_min,
 			test_max,
 			test_divisible,
-			test_plus
+			test_plus,
+			test_identity
 		end
 
 feature -- Access
@@ -214,6 +215,16 @@ feature -- Test routines (Operation)
 			-- Test {EFFECTIVE_NATURAL_NUMBER}.plus.
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.plus"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+	test_identity
+			-- <Precursor>
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.identity.
+		note
+			testing: "covers/{NATURAL_NUMBER}.identity"
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.identity"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 		end

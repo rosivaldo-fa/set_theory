@@ -50,6 +50,7 @@ feature -- Test routines (All)
 			test_max
 			test_divisible
 			test_plus
+			test_identity
 		end
 
 feature -- Test routines (Membership)
@@ -366,6 +367,18 @@ feature -- Test routines (Operation)
 			assert ("plus_ok", plus_ok (n, m, natural_from_native (3)))
 		end
 
+	test_identity
+			-- Test {NATURAL_NUMBER}.identity.
+		note
+			testing: "covers/{NATURAL_NUMBER}.identity"
+		local
+			n: like natural_number_to_be_tested
+		do
+			n := natural_number_to_be_tested
+			assert ("identity", attached (+ n))
+			assert ("identity_ok", identity_ok (n))
+		end
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (n: NATURAL_NUMBER; s: SET [NATURAL_NUMBER]): BOOLEAN
@@ -491,6 +504,18 @@ feature -- Properties (Operation)
 				neutral_right_term: (n + zero) ≍ n
 				commutative: (n + m) ≍ (m + n)
 				associative: ((n + m) + l) ≍ (n + (m + l))
+			then
+				Result := True
+			end
+		end
+
+	identity_ok (n: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.identity?
+		do
+			check
+				stable: + + n ≍ n
+				as_left_term: + n ≍ (n + zero)
+				as_right_term: + n ≍ (zero + n)
 			then
 				Result := True
 			end
