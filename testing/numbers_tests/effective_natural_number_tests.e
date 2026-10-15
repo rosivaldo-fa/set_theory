@@ -29,7 +29,8 @@ inherit
 			test_identity,
 			test_minus,
 			test_product,
-			test_natural_quotient
+			test_natural_quotient,
+			test_natural_remainder
 		end
 
 feature -- Access
@@ -260,6 +261,14 @@ feature -- Test routines (Operation)
 			-- Test {EFFECTIVE_NATURAL_NUMBER}.natural_quotient.
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.natural_quotient"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+	test_natural_remainder
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.natural_remainder.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.natural_remainder"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 		end

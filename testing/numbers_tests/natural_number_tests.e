@@ -63,6 +63,7 @@ feature -- Test routines (All)
 			test_minus
 			test_product
 			test_natural_quotient
+			test_natural_remainder
 		end
 
 feature -- Test routines (Membership)
@@ -443,6 +444,23 @@ feature -- Test routines (Operation)
 			assert ("natural_quotient ok", natural_quotient_ok (n, m))
 		end
 
+	test_natural_remainder
+			-- Test {NATURAL_NUMBER}.natural_remainder.
+		note
+			testing: "covers/{NATURAL_NUMBER}.natural_remainder"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_number_from_native (2)
+			check
+				n.divisible (m) -- m /= 0
+			end
+			assert ("natural_remainder", attached (n \\ m))
+			assert ("natural_remainder ok", natural_remainder_ok (n, m))
+		end
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (n: NATURAL_NUMBER; s: SET [NATURAL_NUMBER]): BOOLEAN
@@ -620,6 +638,19 @@ feature -- Properties (Operation)
 				absorbing_dividend: zero.divisible (n) ⇒ (zero // n) ≍ zero
 				good_divisor: n.divisible (one) -- one /= 0
 				neutral_divisor: (n // one) ≍ n
+				related_to_remainder: n.divisible (m) ⇒ n ≍ ((m ⋅ (n // m)) + (n \\ m))
+			then
+				Result := True
+			end
+		end
+
+	natural_remainder_ok (n, m: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.natural_remainder?
+		do
+			check
+				absorbing_dividend: n ≍ zero and n.divisible (m) ⇒ (n \\ m) ≍ zero
+				upper_bounded: n.divisible (m) ⇒ (n \\ m) < m
+				related_to_quotient: n.divisible (m) ⇒ n ≍ ((m ⋅ (n // m)) + (n \\ m))
 			then
 				Result := True
 			end

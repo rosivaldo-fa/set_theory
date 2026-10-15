@@ -119,6 +119,16 @@ feature -- Operation
 			create Result.make (stored_value // n.value)
 		end
 
+	natural_remainder alias "\\" (n: NATURAL_NUMBER): like natural_anchor
+			-- <Precursor>
+		do
+			check
+--					good_divisor: stored_value.to_natural_32.divisible (n.value) -- n.value /= 0 ⇐ divisible (n) -- TODO: Segmentation violation.
+				good_divisor: n.value /= 0
+			end
+			create Result.make (stored_value \\ n.value)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
