@@ -26,6 +26,15 @@ feature -- Access
 	zero: like natural_number_to_be_tested
 			-- The natural number 0
 		deferred
+		ensure
+			zero: Result.value = 0
+		end
+
+	one: like natural_number_to_be_tested
+			-- The natural number
+		deferred
+		ensure
+			one: Result.value = 1
 		end
 
 feature -- Test routines (All)
@@ -52,6 +61,7 @@ feature -- Test routines (All)
 			test_plus
 			test_identity
 			test_minus
+			test_product
 		end
 
 feature -- Test routines (Membership)
@@ -123,13 +133,13 @@ feature -- Test routines (Comparison)
 			assert ("same entity", n ≍ n)
 			assert ("same entity ok", equals_ok (n, n, n))
 
-			m := natural_from_native (n.value)
+			m := natural_number_from_native (n.value)
 			assert ("same_natural_number", n ≍ m)
-			assert ("same_natural_number ok", equals_ok (n, m, natural_from_native (m.value)))
+			assert ("same_natural_number ok", equals_ok (n, m, natural_number_from_native (m.value)))
 
-			m := natural_from_native (n.value + 1)
+			m := natural_number_from_native (n.value + 1)
 			assert ("not (n ≍ m)", not (n ≍ m))
-			assert ("not (n ≍ m) ok", equals_ok (n, m, natural_from_native (3)))
+			assert ("not (n ≍ m) ok", equals_ok (n, m, natural_number_from_native (3)))
 		end
 
 	test_unequals
@@ -144,11 +154,11 @@ feature -- Test routines (Comparison)
 			assert ("same entity", not (n ≭ n))
 			assert ("same entity ok", unequals_ok (n, n))
 
-			m := natural_from_native (n.value)
+			m := natural_number_from_native (n.value)
 			assert ("same_natural_number", not (n ≭ n))
 			assert ("same_natural_number ok", unequals_ok (n, m))
 
-			m := natural_from_native (n.value + 1)
+			m := natural_number_from_native (n.value + 1)
 			assert ("n ≭ m", n ≭ m)
 			assert ("n ≭ m ok", unequals_ok (n, m))
 		end
@@ -162,25 +172,25 @@ feature -- Test routines (Comparison)
 			m: NATURAL_NUMBER
 		do
 			n := natural_number_to_be_tested
-			m := natural_from_native (n.value + 1)
+			m := natural_number_from_native (n.value + 1)
 			if n.value ≥ m.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value - 1)
-				m := natural_from_native (n.value + 1)
+				n := natural_number_from_native (n.value - 1)
+				m := natural_number_from_native (n.value + 1)
 			end
 			assert ("n < m", n < m)
-			assert ("n < m ok", is_less_ok (n, m, natural_from_native (3)))
+			assert ("n < m ok", is_less_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value)
+			m := natural_number_from_native (n.value)
 			assert ("not (n < m)", not (n < m))
-			assert ("not (n < m) ok", is_less_ok (n, m, natural_from_native (3)))
+			assert ("not (n < m) ok", is_less_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value - 1)
+			m := natural_number_from_native (n.value - 1)
 			if n.value < m.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value + 1)
-				m := natural_from_native (n.value - 1)
+				n := natural_number_from_native (n.value + 1)
+				m := natural_number_from_native (n.value - 1)
 			end
 			assert ("again: not (n < m)", not (n < m))
-			assert ("again: not (n < m) ok", is_less_ok (n, m, natural_from_native (3)))
+			assert ("again: not (n < m) ok", is_less_ok (n, m, natural_number_from_native (3)))
 		end
 
 	test_is_less_equal
@@ -192,25 +202,25 @@ feature -- Test routines (Comparison)
 			m: NATURAL_NUMBER
 		do
 			n := natural_number_to_be_tested
-			m := natural_from_native (n.value)
+			m := natural_number_from_native (n.value)
 			assert ("equal: n ≤ m", n ≤ m)
-			assert ("equal: n ≤ m ok", is_less_equal_ok (n, m, natural_from_native (3)))
+			assert ("equal: n ≤ m ok", is_less_equal_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value + 1)
+			m := natural_number_from_native (n.value + 1)
 			if m.value ≤ n.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value - 1)
-				m := natural_from_native (n.value + 1)
+				n := natural_number_from_native (n.value - 1)
+				m := natural_number_from_native (n.value + 1)
 			end
 			assert ("less: n ≤ m", n ≤ m)
-			assert ("less: n ≤ m ok", is_less_equal_ok (n, m, natural_from_native (3)))
+			assert ("less: n ≤ m ok", is_less_equal_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value - 1)
+			m := natural_number_from_native (n.value - 1)
 			if m.value ≥ n.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value + 1)
-				m := natural_from_native (n.value - 1)
+				n := natural_number_from_native (n.value + 1)
+				m := natural_number_from_native (n.value - 1)
 			end
 			assert ("not (n ≤ m)", not (n ≤ m))
-			assert ("not (n ≤ m) ok", is_less_equal_ok (n, m, natural_from_native (3)))
+			assert ("not (n ≤ m) ok", is_less_equal_ok (n, m, natural_number_from_native (3)))
 		end
 
 	test_is_greater
@@ -222,25 +232,25 @@ feature -- Test routines (Comparison)
 			m: NATURAL_NUMBER
 		do
 			n := natural_number_to_be_tested
-			m := natural_from_native (n.value - 1)
+			m := natural_number_from_native (n.value - 1)
 			if n.value ≤ m.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value + 1)
-				m := natural_from_native (n.value - 1)
+				n := natural_number_from_native (n.value + 1)
+				m := natural_number_from_native (n.value - 1)
 			end
 			assert ("n > m", n > m)
-			assert ("n > m ok", is_greater_ok (n, m, natural_from_native (3)))
+			assert ("n > m ok", is_greater_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value)
+			m := natural_number_from_native (n.value)
 			assert ("equal: not (n > m)", not (n > m))
-			assert ("equal: not (n > m) ok", is_greater_ok (n, m, natural_from_native (3)))
+			assert ("equal: not (n > m) ok", is_greater_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value + 1)
+			m := natural_number_from_native (n.value + 1)
 			if n.value ≥ m.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value - 1)
-				m := natural_from_native (n.value + 1)
+				n := natural_number_from_native (n.value - 1)
+				m := natural_number_from_native (n.value + 1)
 			end
 			assert ("less: not (n > m)", not (n > m))
-			assert ("again: not (n > m) ok", is_greater_ok (n, m, natural_from_native (3)))
+			assert ("again: not (n > m) ok", is_greater_ok (n, m, natural_number_from_native (3)))
 		end
 
 	test_is_greater_equal
@@ -252,25 +262,25 @@ feature -- Test routines (Comparison)
 			m: NATURAL_NUMBER
 		do
 			n := natural_number_to_be_tested
-			m := natural_from_native (n.value)
+			m := natural_number_from_native (n.value)
 			assert ("equal: n ≥ m", n ≥ m)
-			assert ("equal: n ≥ m ok", is_greater_equal_ok (n, m, natural_from_native (3)))
+			assert ("equal: n ≥ m ok", is_greater_equal_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value - 1)
+			m := natural_number_from_native (n.value - 1)
 			if m.value ≥ n.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value + 1)
-				m := natural_from_native (n.value - 1)
+				n := natural_number_from_native (n.value + 1)
+				m := natural_number_from_native (n.value - 1)
 			end
 			assert ("greater: n ≥ m", n ≥ m)
-			assert ("greater: n ≥ m ok", is_greater_equal_ok (n, m, natural_from_native (3)))
+			assert ("greater: n ≥ m ok", is_greater_equal_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value + 1)
+			m := natural_number_from_native (n.value + 1)
 			if m.value ≤ n.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value - 1)
-				m := natural_from_native (n.value + 1)
+				n := natural_number_from_native (n.value - 1)
+				m := natural_number_from_native (n.value + 1)
 			end
 			assert ("not (n ≥ m)", not (n ≥ m))
-			assert ("not (n ≥ m) ok", is_greater_equal_ok (n, m, natural_from_native (3)))
+			assert ("not (n ≥ m) ok", is_greater_equal_ok (n, m, natural_number_from_native (3)))
 		end
 
 
@@ -283,25 +293,25 @@ feature -- Test routines (Comparison)
 			m: NATURAL_NUMBER
 		do
 			n := natural_number_to_be_tested
-			m := natural_from_native (n.value)
+			m := natural_number_from_native (n.value)
 			assert ("n ≍ m", (n ∧ m) ≍ n)
-			assert ("n ≍ m ok", min_ok (n, m, natural_from_native (3)))
+			assert ("n ≍ m ok", min_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value + 1)
+			m := natural_number_from_native (n.value + 1)
 			if m.value ≤ n.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value - 1)
-				m := natural_from_native (n.value + 1)
+				n := natural_number_from_native (n.value - 1)
+				m := natural_number_from_native (n.value + 1)
 			end
 			assert ("n < m", (n ∧ m) ≍ n)
-			assert ("n < m ok", min_ok (n, m, natural_from_native (3)))
+			assert ("n < m ok", min_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value - 1)
+			m := natural_number_from_native (n.value - 1)
 			if m.value ≥ n.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value + 1)
-				m := natural_from_native (n.value - 1)
+				n := natural_number_from_native (n.value + 1)
+				m := natural_number_from_native (n.value - 1)
 			end
 			assert ("n > m", (n ∧ m) ≍ m)
-			assert ("n > m) ok", min_ok (n, m, natural_from_native (3)))
+			assert ("n > m) ok", min_ok (n, m, natural_number_from_native (3)))
 		end
 
 	test_max
@@ -313,25 +323,25 @@ feature -- Test routines (Comparison)
 			m: NATURAL_NUMBER
 		do
 			n := natural_number_to_be_tested
-			m := natural_from_native (n.value)
+			m := natural_number_from_native (n.value)
 			assert ("n ≍ m", (n ∨ m) ≍ n)
-			assert ("n ≍ m ok", max_ok (n, m, natural_from_native (3)))
+			assert ("n ≍ m ok", max_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value - 1)
+			m := natural_number_from_native (n.value - 1)
 			if m.value ≥ n.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value + 1)
-				m := natural_from_native (n.value - 1)
+				n := natural_number_from_native (n.value + 1)
+				m := natural_number_from_native (n.value - 1)
 			end
 			assert ("n > m", (n ∨ m) ≍ n)
-			assert ("n > m ok", max_ok (n, m, natural_from_native (3)))
+			assert ("n > m ok", max_ok (n, m, natural_number_from_native (3)))
 
-			m := natural_from_native (n.value + 1)
+			m := natural_number_from_native (n.value + 1)
 			if m.value ≤ n.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value - 1)
-				m := natural_from_native (n.value + 1)
+				n := natural_number_from_native (n.value - 1)
+				m := natural_number_from_native (n.value + 1)
 			end
 			assert ("n < m", (n ∨ m) ≍ m)
-			assert ("n < m) ok", max_ok (n, m, natural_from_native (3)))
+			assert ("n < m) ok", max_ok (n, m, natural_number_from_native (3)))
 		end
 
 feature -- Test routines (Relationship)
@@ -345,7 +355,7 @@ feature -- Test routines (Relationship)
 			m: NATURAL_NUMBER
 		do
 			n := natural_number_to_be_tested
-			m := natural_from_native (5)
+			m := natural_number_from_native (5)
 			assert ("n.divisible (m)", n.divisible (m))
 
 			m := m.zero
@@ -363,9 +373,9 @@ feature -- Test routines (Operation)
 			m: NATURAL_NUMBER
 		do
 			n := natural_number_to_be_tested
-			m := natural_from_native (1)
+			m := natural_number_from_native (1)
 			assert ("plus", attached (n + m))
-			assert ("plus_ok", plus_ok (n, m, natural_from_native (3)))
+			assert ("plus_ok", plus_ok (n, m, natural_number_from_native (3)))
 		end
 
 	test_identity
@@ -389,16 +399,30 @@ feature -- Test routines (Operation)
 			m: NATURAL_NUMBER
 		do
 			n := natural_number_to_be_tested
-			m := natural_from_native (n.value - 1)
+			m := natural_number_from_native (n.value - 1)
 			if m.value > n.value then -- An overflow may cause this comparison to succeed
-				n := natural_from_native (n.value + 1)
-				m := natural_from_native (n.value - 1)
+				n := natural_number_from_native (n.value + 1)
+				m := natural_number_from_native (n.value - 1)
 			end
 				check
 					small_enough: m ≤ n -- m = n - 1
 				end
 			assert ("minus", attached (n - m))
-			assert ("minus ok", minus_ok (n, m, natural_from_native (3)))
+			assert ("minus ok", minus_ok (n, m, natural_number_from_native (3)))
+		end
+
+	test_product
+			-- Test {NATURAL_NUMBER}.product.
+		note
+			testing: "covers/{NATURAL_NUMBER}.product"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_number_from_native (2)
+			assert ("product", attached (n ⋅ m))
+			assert ("product ok", product_ok (n, m, natural_number_from_native (2)))
 		end
 
 feature -- Properties (Membership)
@@ -556,6 +580,21 @@ feature -- Properties (Operation)
 			end
 		end
 
+	product_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.product?
+		do
+			check
+				neutral_left_factor: one ⋅ n ≍ n
+				neutral_right_factor: n ⋅ one ≍ n
+				absorbing_left_factor: zero ⋅ n ≍ zero
+				absorbing_right_factor: n ⋅ zero ≍ zero
+				commutative: (n ⋅ m) ≍ (m ⋅ n)
+				associative: ((n ⋅ m) ⋅ l) ≍ (n ⋅ (m ⋅ l))
+			then
+				Result := True
+			end
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: NATURAL_NUMBER
@@ -563,9 +602,9 @@ feature -- Factory (element to be tested)
 		deferred
 		end
 
-feature -- Factory
+feature -- Conversion
 
-	natural_from_native (v: like native_natural_anchor): NATURAL_NUMBER
+	natural_number_from_native (v: like native_natural_anchor): NATURAL_NUMBER
 			-- Natural number whose value is adjusted from `v'
 		deferred
 		ensure

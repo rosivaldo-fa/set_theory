@@ -172,6 +172,13 @@ feature -- Operation
 			definition: Result.value = adjusted_value (value - n.value)
 		end
 
+	product alias "*" alias "×" alias "⋅" (n: NATURAL_NUMBER): like natural_anchor
+			-- Current natural number multiplied by `n`
+		deferred
+		ensure
+			definition: Result.value = adjusted_value (value * n.value)
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value

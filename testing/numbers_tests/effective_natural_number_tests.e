@@ -27,7 +27,8 @@ inherit
 			test_divisible,
 			test_plus,
 			test_identity,
-			test_minus
+			test_minus,
+			test_product
 		end
 
 feature -- Access
@@ -35,6 +36,14 @@ feature -- Access
 	zero: EFFECTIVE_NATURAL_NUMBER
 			-- <Precursor>
 		once
+		ensure then
+			class
+		end
+
+	one: EFFECTIVE_NATURAL_NUMBER
+			-- <Precursor>
+		once
+			Result := {NATURAL} 1
 		ensure then
 			class
 		end
@@ -238,6 +247,14 @@ feature -- Test routines (Operation)
 			Precursor {NATURAL_NUMBER_TESTS}
 		end
 
+	test_product
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.product.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.product"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
 feature -- Factory (element to be tested)
 
 	natural_number_to_be_tested: EFFECTIVE_NATURAL_NUMBER
@@ -248,23 +265,13 @@ feature -- Factory (element to be tested)
 			class
 		end
 
-feature -- Factory
-
-	natural_from_native (v: like native_natural_anchor): EFFECTIVE_NATURAL_NUMBER
-			-- <Precursor>
-		do
-			Result := v
-		ensure then
-			class
-		end
-
 feature -- Conversion
 
 	natural_number_from_native (v: like native_natural_anchor): like natural_number_to_be_tested
 			-- `v' converted to a natural number like `natural_number_to_be_tested'
 		do
 			Result := v
-		ensure
+		ensure then
 			class
 			adjusted_value: Result.value = {like natural_number_to_be_tested}.adjusted_value (v)
 		end
