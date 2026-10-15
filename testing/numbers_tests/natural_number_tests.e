@@ -58,6 +58,7 @@ feature -- Test routines (All)
 			test_min
 			test_max
 			test_divisible
+			test_divides
 			test_plus
 			test_identity
 			test_minus
@@ -364,6 +365,24 @@ feature -- Test routines (Relationship)
 			assert ("not n.divisible (m)", not n.divisible (m))
 		end
 
+	test_divides
+			-- Test {NATURAL_NUMBER}.divides.
+		note
+			testing: "covers/{NATURAL_NUMBER}.divides"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			m := natural_number_from_native (6)
+			n := natural_number_from_native (3)
+			assert ("n | m", n | m)
+			assert ("n | m ok", divides_ok (n, m, natural_number_from_native (2)))
+
+			m := m + one
+			assert ("not (n | m)", not (n | m))
+			assert ("not (n | m) ok", divides_ok (n, m, natural_number_from_native (2)))
+		end
+
 feature -- Test routines (Operation)
 
 	test_plus
@@ -571,6 +590,20 @@ feature -- Properties (Comparison)
 				idempotent: (n ∨ n) ≍ n
 				commutative: (n ∨ m) ≍ (m ∨ n)
 				associative: ((n ∨ m) ∨ l) ≍ (n ∨ (m ∨ l))
+			then
+				Result := True
+			end
+		end
+
+feature -- Properties (Relationship)
+
+	divides_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within set theory hold for {NATURAL_NUMBER}.divides?
+		do
+			check
+				quasi_reflexive: n ≭ zero ⇒ n | n
+				transitive: n | m and m | l ⇒ n | l
+				antisymmetric: n | m and m | n ⇒ n ≍ m
 			then
 				Result := True
 			end

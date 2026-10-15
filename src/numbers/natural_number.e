@@ -146,6 +146,14 @@ feature -- Relationship
 			definition: Result = (n.value /= 0)
 		end
 
+	divides alias "|" (n: NATURAL_NUMBER): BOOLEAN
+			-- Does current natural number divide `n', i.e. is there a natural number m such that `n' = m ⋅ `Current'?
+		do
+			Result := n.divisible (Current) and then (n \\ Current) ≍ zero
+		ensure
+			definition: Result = (n.divisible (Current) and then (n \\ Current) ≍ zero)
+		end
+
 feature -- Operation
 
 	plus alias "+" (n: NATURAL_NUMBER): like natural_anchor

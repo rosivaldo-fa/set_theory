@@ -25,6 +25,7 @@ inherit
 			test_min,
 			test_max,
 			test_divisible,
+			test_divides,
 			test_plus,
 			test_identity,
 			test_minus,
@@ -217,6 +218,16 @@ feature -- Test routines (Relationship)
 		note
 			testing: "covers/{NATURAL_NUMBER}.divisible"
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.divisible"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+	test_divides
+			-- <Precursor>
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.divides.
+		note
+			testing: "covers/{NATURAL_NUMBER}.divides"
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.divides"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
 		end
