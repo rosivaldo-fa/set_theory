@@ -51,6 +51,7 @@ feature -- Test routines (All)
 			test_divisible
 			test_plus
 			test_identity
+			test_minus
 		end
 
 feature -- Test routines (Membership)
@@ -379,6 +380,27 @@ feature -- Test routines (Operation)
 			assert ("identity_ok", identity_ok (n))
 		end
 
+	test_minus
+			-- Test {NATURAL_NUMBER}.minus.
+		note
+			testing: "covers/{NATURAL_NUMBER}.minus"
+		local
+			n: like natural_number_to_be_tested
+			m: NATURAL_NUMBER
+		do
+			n := natural_number_to_be_tested
+			m := natural_from_native (n.value - 1)
+			if m.value > n.value then -- An overflow may cause this comparison to succeed
+				n := natural_from_native (n.value + 1)
+				m := natural_from_native (n.value - 1)
+			end
+				check
+					small_enough: m ≤ n -- m = n - 1
+				end
+			assert ("minus", attached (n - m))
+			assert ("minus ok", minus_ok (n, m, natural_from_native (3)))
+		end
+
 feature -- Properties (Membership)
 
 	is_not_in_ok (n: NATURAL_NUMBER; s: SET [NATURAL_NUMBER]): BOOLEAN
@@ -516,6 +538,19 @@ feature -- Properties (Operation)
 				stable: + + n ≍ n
 				as_left_term: + n ≍ (n + zero)
 				as_right_term: + n ≍ (zero + n)
+			then
+				Result := True
+			end
+		end
+
+	minus_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.minus?
+		do
+			check
+				zero_small_enough: zero ≤ n -- By definition.
+				neutral_subtrahend: (n - zero) ≍ n
+				oppositely_homomorphic: m ≤ n and l ≤ n ⇒ (l ≤ m ⇒ (n - l) ≥ (n - m))
+				oppositely_isomorphic: m ≤ n and l ≤ n ⇒ (l < m ⇒ n - l > n - m)
 			then
 				Result := True
 			end
