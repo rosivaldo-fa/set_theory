@@ -38,7 +38,7 @@ feature -- Test routines (Membership)
 			s := s.extended (a, create {REFERENCE_EQUALITY [ELEMENT]})
 			assert ("a ∈ s", a ∈ s)
 
-			s := s.prunned (a)
+			s := s / a
 			assert ("not (a ∈ (s \ {a}))", not (a ∈ s))
 		end
 

@@ -58,9 +58,11 @@ feature -- Construction
 		deferred
 		ensure
 			has_a: Result ∋ a
+			quantifiable: attached (Result |∃ agent eq.holds (?, a)) as exists
+			exists_holds: exists.item
 		end
 
-	prunned (a: G): like subset_anchor
+	prunned alias "/" (a: G): like subset_anchor
 			-- Set with every element of current set but any element regarded equal to `a'
 		deferred
 		ensure
@@ -83,24 +85,29 @@ feature -- Quality
 		deferred
 		end
 
+feature -- Quantifier
+
+	there_exists alias "|∃" (p: FUNCTION [G, BOOLEAN]): detachable BOOLEAN_REF
+			-- Existential quantifier: does `p' hold for some element in current set?
+			--| Detachable because perhaps current set is not existentially quantifiable
+		deferred
+		end
+
 feature -- Anchor
 
 	subset_anchor: SET [G]
 			-- Anchor for subsets of current set
-		do
-			Result := Current
+		deferred
 		end
 
 	superset_anchor: SET [G]
 			-- Anchor for supersets of current set
-		do
-			Result := Current
+		deferred
 		end
 
 	universe_anchor: UNIVERSE [G]
 			-- Anchor for universe of elements of current set
-		do
-			Result := u
+		deferred
 		end
 
 note

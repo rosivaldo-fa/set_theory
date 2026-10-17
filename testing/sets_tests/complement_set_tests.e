@@ -12,7 +12,8 @@ inherit
 		redefine
 			test_all,
 			test_has,
-			test_does_not_have
+			test_does_not_have,
+			test_there_exists
 		end
 
 feature -- Test routines (All)
@@ -65,7 +66,8 @@ feature -- Test routines (Membership)
 		do
 			s := set_to_be_tested
 			assert ("s ∋ a", s ∋ a)
-			s := s.prunned (a)
+
+			s := s / a
 			assert ("not (s ∋ a)", not (s ∋ a))
 			s := set_to_be_tested
 			assert ("has", s ∋ a ⇒ True)
@@ -78,7 +80,7 @@ feature -- Test routines (Membership)
 		local
 			s: like set_to_be_tested
 		do
-			s := set_to_be_tested.prunned (a)
+			s := set_to_be_tested / a
 			assert ("s ∌ a", s ∌ a)
 			create s.make (create {EFFECTIVE_SET [G]})
 			assert ("not (s ∌ a)", not (s ∌ a))
@@ -104,6 +106,16 @@ feature -- Test routines (Status report)
 			testing: "covers/{COMPLEMENT_SET}.debug_output"
 		do
 			assert ("debug_output", attached set_to_be_tested.debug_output)
+		end
+
+feature -- Test routines (Quantifier)
+
+	test_there_exists
+			-- Test {COMPLEMENT_SET}.there_exists.
+		note
+			testing: "covers/{COMPLEMENT_SET}.there_exists"
+		do
+			-- TODO
 		end
 
 feature -- Factory (element to be tested)

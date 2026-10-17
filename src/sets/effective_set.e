@@ -11,8 +11,7 @@ inherit
 	SET [G]
 		redefine
 			default_create,
-			out,
-			superset_anchor
+			out
 		end
 
 	DEBUG_OUTPUT
@@ -106,7 +105,7 @@ feature -- Construction
 			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
 
-	prunned (a: G): like subset_anchor
+	prunned alias "/" (a: G): like subset_anchor
 			-- Set with every element of current set but any element regarded equal to `a'
 		do
 			if subset = Current then
@@ -116,16 +115,16 @@ feature -- Construction
 					attached eq -- `make_extended' and `extended' definitions
 				then
 					if eq (a, given_element) then
-						Result := subset.prunned (a)
+						Result := subset / a
 					else
-						Result := subset.prunned (a).extended (given_element, eq)
+						Result := (subset / a).extended (given_element, eq)
 					end
 				end
 			end
 		ensure then
 			when_empty: not attached eq ⇒ Result = Current -- TODO: Use set equality instead.
---			when_found: attached eq and then eq (a, given_element) ⇒ Result ≍ subset.prunned (a)
---			when_not_found: attached eq and then not eq (a, given_element) ⇒ Result ≍ subset.prunned (a).extended (given_element, eq)
+--			when_found: attached eq and then eq (a, given_element) ⇒ Result ≍ (subset / a)
+--			when_not_found: attached eq and then not eq (a, given_element) ⇒ Result ≍ (subset / a).extended (given_element, eq)
 		end
 
 feature -- Access
@@ -197,12 +196,44 @@ feature -- Status report
 			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
 		end
 
+feature -- Quantifier
+
+	there_exists alias "|∃" (p: FUNCTION [G, BOOLEAN]): detachable BOOLEAN_REF
+			-- <Precursor>
+		do
+			if subset = Current then
+				Result := False
+			elseif p (given_element) then
+				Result := True
+			else
+				Result := subset |∃ p
+			end
+		ensure then
+			when_empty: subset = Current ⇒ attached Result and then not Result.item
+			when_found: subset /= Current and then p (given_element) ⇒ attached Result and then Result.item
+			when_not_found: subset /= Current and then not p (given_element) ⇒ Result = subset |∃ p
+		end
+
 feature -- Anchor
+
+	subset_anchor: SET [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
 
 	superset_anchor: EFFECTIVE_SET [G]
 			-- Anchor for supersets of current set
 		do
 			Result := Current
+		end
+
+	universe_anchor: UNIVERSE [G]
+			-- <Precursor>
+		do
+			Result := u
+		ensure then
+			class
 		end
 
 feature {NONE} -- Implementation

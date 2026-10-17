@@ -13,8 +13,7 @@ inherit
 			superset_anchor as universe_anchor
 		redefine
 			does_not_have,
-			out,
-			universe_anchor
+			out
 		end
 
 	DEBUG_OUTPUT
@@ -44,7 +43,7 @@ feature -- Construction
 			Result := Current
 		end
 
-	prunned (a: G): COMPLEMENT_SET [G]
+	prunned alias "/" (a: G): COMPLEMENT_SET [G]
 			-- <Precursor>
 		local
 			s: EFFECTIVE_SET [G]
@@ -89,7 +88,20 @@ feature -- Status report
 			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
 		end
 
+feature -- Quantifier
+
+	there_exists alias "|∃" (p: FUNCTION [G, BOOLEAN]): detachable BOOLEAN_REF
+			-- <Precursor>
+		do
+		end
+
 feature -- Anchor
+
+	subset_anchor: SET [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
 
 	universe_anchor: UNIVERSE [G]
 			-- <Precursor>

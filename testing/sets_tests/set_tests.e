@@ -36,6 +36,7 @@ feature -- Test routines (All)
 			test_u
 			test_universe
 			test_is_universe
+			test_there_exists
 		end
 
 feature -- Test routines (Membership)
@@ -131,7 +132,7 @@ feature -- Test routines (Construction)
 			s: like set_to_be_tested
 		do
 			s := set_to_be_tested
-			assert ("s ∖ {a}", s.prunned (a) ∌ a)
+			assert ("s ∖ {a}", (s / a) ∌ a)
 		end
 
 feature -- Test routines (Access)
@@ -160,6 +161,29 @@ feature -- Test routines (Quality)
 			testing: "covers/{SET}.is_universe"
 		do
 			assert ("is_universe", attached set_to_be_tested.is_universe ⇒ True)
+		end
+
+feature -- Test routines (Quantifier)
+
+	test_there_exists
+			-- Test {SET}.there_exists.
+		note
+			testing: "covers/{SET}.there_exists"
+		local
+			s: like set_to_be_tested
+			l_a: G
+		do
+			l_a := a
+			s := set_to_be_tested.extended (l_a, create {REFERENCE_EQUALITY [G]})
+			assert (
+				"exists",
+				attached (
+					s |∃ agent (x, ia_a: G): BOOLEAN
+						do
+							Result := x = ia_a
+						end (?, l_a)
+					) as exists and then exists.item
+				)
 		end
 
 feature -- Factory (element to be tested)

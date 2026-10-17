@@ -10,9 +10,7 @@ class
 inherit
 	SET [G]
 		redefine
-			out,
-			subset_anchor,
-			superset_anchor
+			out
 		end
 
 	DEBUG_OUTPUT
@@ -59,7 +57,7 @@ feature -- Construction
 			subset: Result.subset = Current -- TODO: Use set equality instead.
 		end
 
-	prunned (a: G): like subset_anchor
+	prunned alias "/" (a: G): like subset_anchor
 			-- <Precursor>
 		do
 			create Result.make (reference_set.extended (a, create {REFERENCE_EQUALITY [G]}))
@@ -106,6 +104,24 @@ feature -- Status report
 			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
 		end
 
+feature -- Quantifier
+
+	there_exists alias "|∃" (p: FUNCTION [G, BOOLEAN]): detachable BOOLEAN_REF
+			-- <Precursor>
+		do
+			Result := u |∃ agent p_holds_outside_reference_set (p, ?)
+		ensure then
+			definition: Result = u |∃ agent p_holds_outside_reference_set (p, ?)
+		end
+
+	p_holds_outside_reference_set (p: FUNCTION [G, BOOLEAN]; x: G): BOOLEAN
+			-- Is not `x' `in reference_set' and does `p' (`x') hold?
+		do
+			Result := reference_set ∌ x and p (x)
+		ensure
+			Result = reference_set ∌ x and p (x)
+		end
+
 feature -- Anchor
 
 	subset_anchor: COMPLEMENT_SET [G]
@@ -120,13 +136,13 @@ feature -- Anchor
 			create Result
 		end
 
---	universe_anchor: UNIVERSE [G]
---			-- <Precursor>
---		do
---			Result := universe
---		ensure then
---			class
---		end
+	universe_anchor: UNIVERSE [G]
+			-- <Precursor>
+		do
+			Result := u
+		ensure then
+			class
+		end
 
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"

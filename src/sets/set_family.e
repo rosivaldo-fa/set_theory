@@ -12,23 +12,18 @@ inherit
 		rename
 			subset_anchor as subfamily_anchor,
 			superset_anchor as superfamily_anchor
-		redefine
-			subfamily_anchor,
-			superfamily_anchor
 		end
 
 feature -- Anchor
 
 	subfamily_anchor: SET_FAMILY [G]
 			-- Anchor for subsets of current set family
-		do
-			Result := Current
+		deferred
 		end
 
 	superfamily_anchor: SET_FAMILY [G]
 			-- Anchor for supersets of current set family
-		do
-			Result := Current
+		deferred
 		end
 
 note

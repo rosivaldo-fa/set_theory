@@ -33,6 +33,7 @@ inherit
 			test_given_element,
 			test_eq,
 			test_subset,
+			test_there_exists,
 			test_given_element_storage
 		end
 
@@ -60,6 +61,32 @@ feature -- Test routines (Initialization)
 			-- <Precursor>
 		note
 			testing: "covers/{EFFECTIVE_SET}.make_extended"
+		do
+			Precursor {EFFECTIVE_SET_TESTS}
+		end
+
+feature -- Test routines (Primitive)
+
+	test_given_element
+			-- <Precursor>
+		note
+			testing: "covers/{EFFECTIVE_SET}.given_element"
+		do
+			Precursor {EFFECTIVE_SET_TESTS}
+		end
+
+	test_eq
+			-- <Precursor>
+		note
+			testing: "covers/{EFFECTIVE_SET}.eq"
+		do
+			Precursor {EFFECTIVE_SET_TESTS}
+		end
+
+	test_subset
+			-- <Precursor>
+		note
+			testing: "covers/{EFFECTIVE_SET}.subset"
 		do
 			Precursor {EFFECTIVE_SET_TESTS}
 		end
@@ -186,31 +213,17 @@ feature -- Test routines (Status report)
 			Precursor {EFFECTIVE_SET_TESTS}
 		end
 
+feature -- Test routines (Quantifier)
+
+	test_there_exists
+			-- Test {EFFECTIVE_SET}.there_exists.
+		note
+			testing: "covers/{EFFECTIVE_SET}.there_exists"
+		do
+			Precursor {EFFECTIVE_SET_TESTS}
+		end
+
 feature -- Test routines (Implementation)
-
-	test_given_element
-			-- <Precursor>
-		note
-			testing: "covers/{EFFECTIVE_SET}.given_element"
-		do
-			Precursor {EFFECTIVE_SET_TESTS}
-		end
-
-	test_eq
-			-- <Precursor>
-		note
-			testing: "covers/{EFFECTIVE_SET}.eq"
-		do
-			Precursor {EFFECTIVE_SET_TESTS}
-		end
-
-	test_subset
-			-- <Precursor>
-		note
-			testing: "covers/{EFFECTIVE_SET}.subset"
-		do
-			Precursor {EFFECTIVE_SET_TESTS}
-		end
 
 	test_given_element_storage
 			-- <Precursor>

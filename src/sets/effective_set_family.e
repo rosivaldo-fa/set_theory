@@ -12,8 +12,6 @@ inherit
 		undefine
 			default_create,
 			out
-		redefine
-			superfamily_anchor
 		end
 
 	EFFECTIVE_SET [SET [G]]
@@ -66,6 +64,12 @@ feature -- Construction
 		end
 
 feature -- Anchor
+
+	subfamily_anchor: SET_FAMILY [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
 
 	superfamily_anchor: EFFECTIVE_SET_FAMILY [G]
 			-- Anchor for supersets of current set family

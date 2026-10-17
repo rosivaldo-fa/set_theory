@@ -82,7 +82,7 @@ feature -- Test routines (Membership)
 			s := s.extended (n, create {REFERENCE_EQUALITY [NATURAL_NUMBER]})
 			assert ("n ∈ s", n ∈ s)
 
-			s := s.prunned (n)
+			s := s / n
 			assert ("not (n ∈ s)", not (n ∈ s))
 		end
 
