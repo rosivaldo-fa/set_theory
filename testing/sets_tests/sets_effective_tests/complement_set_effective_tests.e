@@ -19,7 +19,8 @@ inherit
 			test_make,
 			test_reference_set,
 			test_out,
-			test_debug_output
+			test_debug_output,
+			test_p_holds_outside_reference_set
 		end
 
 feature -- Test routines (All)
@@ -68,6 +69,16 @@ feature -- Test routines (Status report)
 			-- <Precursor>
 		note
 			testing: "covers/{COMPLEMENT_SET}.debug_output"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Quantifier)
+
+	test_p_holds_outside_reference_set
+			-- <Precursor>
+		note
+			testing: "covers/{COMPLEMENT_SET}.p_holds_outside_reference_set"
 		do
 			Precursor {COMPLEMENT_SET_TESTS}
 		end

@@ -28,6 +28,7 @@ feature -- Test routines (All)
 			test_reference_set
 			test_out
 			test_debug_output
+			test_p_holds_outside_reference_set
 		end
 
 feature -- Test routines (Initialization)
@@ -114,6 +115,40 @@ feature -- Test routines (Quantifier)
 			-- Test {COMPLEMENT_SET}.there_exists.
 		note
 			testing: "covers/{COMPLEMENT_SET}.there_exists"
+		local
+			s0: EFFECTIVE_SET [G]
+			s: like set_to_be_tested
+		do
+			create s0
+			s0 := s0.extended (a, create {REFERENCE_EQUALITY [G]})
+			create s.make (s0)
+			assert (
+				"s.p_holds_outside_reference_set",
+				s.p_holds_outside_reference_set (
+					agent (x: G): BOOLEAN
+						do
+							Result := True
+						end,
+					b
+					)
+				)
+
+			assert (
+				"not s.p_holds_outside_reference_set",
+				not s.p_holds_outside_reference_set (
+					agent (x: G): BOOLEAN
+						do
+							Result := True
+						end,
+					a
+					)
+				)
+		end
+
+	test_p_holds_outside_reference_set
+			-- Test {COMPLEMENT_SET}.p_holds_outside_reference_set.
+		note
+			testing: "covers/{COMPLEMENT_SET}.p_holds_outside_reference_set"
 		local
 			s0: EFFECTIVE_SET [G]
 			s: like set_to_be_tested
