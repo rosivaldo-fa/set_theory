@@ -25,14 +25,22 @@ feature -- Membership
 
 	has alias "∋" (a: G): BOOLEAN
 			-- <Precursor>
+			--| Notice that a universe has every thing, but it does not need to know anything about its elements, and indeed probably does not know. It has
+			--| an important impact upon `there_exists'.
 		do
+			known_elements := known_elements.extended (a, create {REFERENCE_EQUALITY [G]})
 			Result := True
+		ensure then
+			knowledge_extended: known_elements ∋ a
 		end
 
 	does_not_have alias "∌" (a: G): BOOLEAN
 			-- <Precursor>
 		do
+			known_elements := known_elements.extended (a, create {REFERENCE_EQUALITY [G]})
 			Result := False
+		ensure then
+			knowledge_extended: known_elements ∋ a
 		end
 
 feature -- Construction
@@ -40,7 +48,10 @@ feature -- Construction
 	extended (a: G; eq: EQUALITY [G]): like universe_anchor
 			-- <Precursor>
 		do
+			known_elements := known_elements.extended (a, eq)
 			Result := Current
+		ensure then
+			knowledge_extended: known_elements ∋ a
 		end
 
 	prunned alias "/" (a: G): COMPLEMENT_SET [G]
@@ -48,8 +59,11 @@ feature -- Construction
 		local
 			s: EFFECTIVE_SET [G]
 		do
+			known_elements := known_elements.extended (a, create {REFERENCE_EQUALITY [G]})
 			create s
 			create Result.make (s.extended (a, create {REFERENCE_EQUALITY [G]}))
+		ensure then
+			knowledge_extended: known_elements ∋ a
 		end
 
 feature -- Access
@@ -92,7 +106,25 @@ feature -- Quantifier
 
 	there_exists alias "|∃" (p: FUNCTION [G, BOOLEAN]): detachable BOOLEAN_REF
 			-- <Precursor>
+			--| Since a universe has every element of a given type, it does not need to know anything about those elements (just their type). So the universe
+			--| does not need to keep a record of its elements, unless it needs them for some operation besides `has' or `does_not_have'. This is why, in
+			--| general, a universe cannot answer a `there_exists' query unless it has some knowledge of actual instances of its elements, hence the need of
+			--| `known_elements'.
 		do
+			if attached (known_elements |∃ p) as exists_in_known_elements and then exists_in_known_elements.item then
+				Result := True
+			end
+		ensure then
+			definition:
+				if attached (known_elements |∃ p) as exists_in_known_elements then
+					if exists_in_known_elements.item then
+						attached Result and then Result.item
+					else
+						not attached Result
+					end
+				else
+					not attached Result
+				end
 		end
 
 feature -- Anchor
@@ -107,6 +139,15 @@ feature -- Anchor
 			-- <Precursor>
 		do
 			Result := Current
+		end
+
+feature {NONE} -- Implementation
+
+	known_elements: EFFECTIVE_SET [G]
+			-- Elements explicitly known to be in current universe
+			--| This set is necessary for making possible to answer `there_exists' query.
+		attribute
+			create Result
 		end
 
 invariant

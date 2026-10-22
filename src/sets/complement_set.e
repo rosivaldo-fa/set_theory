@@ -69,9 +69,7 @@ feature -- Access
 	universe: like universe_anchor
 			-- <Precursor>
 		do
-			Result := {EFFECTIVE_SET [G]}.u
-		ensure then
-			class
+			Result := reference_set.u
 		end
 
 feature -- Quality
@@ -140,8 +138,6 @@ feature -- Anchor
 			-- <Precursor>
 		do
 			Result := u
-		ensure then
-			class
 		end
 
 note

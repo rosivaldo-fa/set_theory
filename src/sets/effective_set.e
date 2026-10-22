@@ -133,9 +133,11 @@ feature -- Access
 	universe: like universe_anchor
 			-- <Precursor>
 		do
-			create Result
-		ensure then
-			class
+			if subset = Current then
+				create Result
+			else
+				Result := subset.u.extended (given_element, create {REFERENCE_EQUALITY [G]})
+			end
 		end
 
 feature -- Quality
@@ -232,8 +234,6 @@ feature -- Anchor
 			-- <Precursor>
 		do
 			Result := u
-		ensure then
-			class
 		end
 
 feature {NONE} -- Implementation

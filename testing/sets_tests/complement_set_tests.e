@@ -114,8 +114,21 @@ feature -- Test routines (Quantifier)
 			-- Test {COMPLEMENT_SET}.there_exists.
 		note
 			testing: "covers/{COMPLEMENT_SET}.there_exists"
+		local
+			s: like set_to_be_tested
+			s1: SET [G]
 		do
-			-- TODO
+			s := set_to_be_tested / a
+			s1 := s.u / b
+			assert (
+				"exists",
+				attached (
+					s |∃ agent (x: G): BOOLEAN
+						do
+							Result := x /= a
+						end
+					) as exists and then exists.item
+				)
 		end
 
 feature -- Factory (element to be tested)
