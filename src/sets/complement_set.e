@@ -117,7 +117,7 @@ feature -- Quantifier
 		do
 			Result := reference_set ∌ x and p (x)
 		ensure
-			Result = reference_set ∌ x and p (x)
+			definition: Result = (reference_set ∌ x and p (x))
 		end
 
 feature -- Anchor

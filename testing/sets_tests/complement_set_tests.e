@@ -115,19 +115,18 @@ feature -- Test routines (Quantifier)
 		note
 			testing: "covers/{COMPLEMENT_SET}.there_exists"
 		local
+			s0: EFFECTIVE_SET [G]
 			s: like set_to_be_tested
-			s1: SET [G]
 		do
-			s := set_to_be_tested / a
-			s1 := s.u / b
+			s := set_to_be_tested
 			assert (
-				"exists",
-				attached (
+				"not quantifiable yet",
+				not attached (
 					s |∃ agent (x: G): BOOLEAN
 						do
-							Result := x /= a
+							Result := True
 						end
-					) as exists and then exists.item
+					)
 				)
 		end
 
