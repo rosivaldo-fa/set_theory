@@ -34,10 +34,7 @@ feature -- Membership
 	does_not_have alias "∌" (a: G): BOOLEAN
 			-- <Precursor>
 		do
-			known_elements := known_elements.extended (a, create {REFERENCE_EQUALITY [G]})
 			Result := False
-		ensure then
-			knowledge_extended: known_elements ∋ a
 		end
 
 feature -- Construction
