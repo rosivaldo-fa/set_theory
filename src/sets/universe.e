@@ -28,10 +28,7 @@ feature -- Membership
 			--| Notice that a universe has every thing, but it does not need to know anything about its elements, and indeed probably does not know. It has
 			--| an important impact upon `there_exists'.
 		do
-			known_elements := known_elements.extended (a, create {REFERENCE_EQUALITY [G]})
 			Result := True
-		ensure then
-			knowledge_extended: known_elements ∋ a
 		end
 
 	does_not_have alias "∌" (a: G): BOOLEAN
