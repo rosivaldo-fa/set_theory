@@ -154,7 +154,7 @@ feature -- Quantifier
 					Result := p (i)
 				invariant
 					bounded: i ≤ max_value
-					not_found_before: 0 < i ⇒ not there_exists_native_integer (p, min_value, i - 1)
+					not_found_before: min_value < i ⇒ not there_exists_native_integer (p, min_value, i - 1)
 					definition: Result = p (i)
 				until
 					i = max_value or Result

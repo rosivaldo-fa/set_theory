@@ -26,6 +26,7 @@ feature -- Test routines (All)
 		do
 			Precursor {SET_TESTS}
 			test_there_exists_native_natural
+			test_there_exists_native_natural
 		end
 
 feature -- Test routines (Initialization)
@@ -117,6 +118,37 @@ feature -- Test routines (Quantifier)
 									Result := n.out.count > 3
 								end,
 							{NATURAL_16} 0, {NATURAL_16}.Max_value
+						)
+				)
+		end
+
+	test_there_exists_native_integer
+			-- Test {UNIVERSE}.there_exists_native_integer.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_integer"
+		local
+			u: like universe_to_be_tested
+		do
+			u := universe_to_be_tested
+			assert (
+					"INTEGER_8",
+					not u.there_exists_native_integer (
+								agent (i: INTEGER_64): BOOLEAN
+									do
+										Result := i.out.count > 4
+									end,
+								{INTEGER_8}.Min_value, {INTEGER_8}.Max_value
+							)
+				)
+
+			assert (
+					"INTEGER_16",
+					u.there_exists_native_integer (
+							agent (i: INTEGER_64): BOOLEAN
+								do
+									Result := i.out.count > 4
+								end,
+							{INTEGER_16}.Min_value, {INTEGER_16}.Max_value
 						)
 				)
 		end
