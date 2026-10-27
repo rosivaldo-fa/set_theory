@@ -104,9 +104,13 @@ feature -- Quantifier
 			g_type_id := ({G}).type_id
 			q := p
 			if g_type_id = ({NATURAL_8}).type_id then
-				Result := there_exists_native_natural (q, {NATURAL_8}.Min_value, {NATURAL_8}.Max_value)
-			else
-
+				Result := there_exists_native_natural (q, {NATURAL_8} 0, {NATURAL_8}.Max_value)
+			elseif g_type_id = ({NATURAL_16}).type_id then
+				Result := there_exists_native_natural (q, {NATURAL_16} 0, {NATURAL_16}.Max_value)
+			elseif g_type_id = ({NATURAL_32}).type_id then
+				Result := there_exists_native_natural (q, {NATURAL_32} 0, {NATURAL_32}.Max_value)
+			elseif g_type_id = ({NATURAL_64}).type_id then
+				Result := there_exists_native_natural (q, {NATURAL_64} 0, {NATURAL_64}.Max_value)
 			end
 		end
 
@@ -120,8 +124,8 @@ feature -- Quantifier
 					n := min_value
 					Result := p (n)
 				invariant
-					bounded: min_value ≤ max_value
-					not_found_before: 0 < n ⇒ not there_exists_native_natural (p, min_value, n - 1)
+					bounded: n ≤ max_value
+					not_found_before: min_value < n ⇒ not there_exists_native_natural (p, min_value, n - 1)
 					definition: Result = p (n)
 				until
 					n = max_value or Result
@@ -136,6 +140,35 @@ feature -- Quantifier
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value)
+		end
+
+	there_exists_native_integer (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_64): BOOLEAN
+			-- Does `p' hold for some native natural number within the interval [`min_value' .. `max_value']?
+		local
+			i: INTEGER_64
+		do
+			if min_value ≤ max_value then
+				from
+					i := min_value
+					Result := p (i)
+				invariant
+					bounded: i ≤ max_value
+					not_found_before: 0 < i ⇒ not there_exists_native_integer (p, min_value, i - 1)
+					definition: Result = p (i)
+				until
+					i = max_value or Result
+				loop
+					i := i + 1
+					Result := p (i)
+				variant
+					i: (max_value - i).as_integer_64
+				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer (p, min_value + 1, max_value)
 			last_chance: min_value = max_value ⇒ Result = p (min_value)
 		end
 
