@@ -28,6 +28,7 @@ feature -- Test routines (All)
 			test_there_exists_native_natural
 			test_there_exists_native_integer
 			test_there_exists_native_real_32
+			test_there_exists_native_real_64
 		end
 
 feature -- Test routines (Initialization)
@@ -177,6 +178,37 @@ feature -- Test routines (Quantifier)
 					"positive too",
 					u.there_exists_native_real_32 (
 							agent (x: REAL_32): BOOLEAN
+								do
+									Result := 0 < x
+								end,
+							{INTEGER_8}.Min_value, {INTEGER_8}.Max_value
+						)
+				)
+		end
+
+	test_there_exists_native_real_64
+			-- Test {UNIVERSE}.there_exists_native_real_64.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_real_64"
+		local
+			u: like universe_to_be_tested
+		do
+			u := universe_to_be_tested
+			assert (
+					"negative only",
+					not u.there_exists_native_real_64 (
+								agent (x: REAL_64): BOOLEAN
+									do
+										Result := 0 < x
+									end,
+								{INTEGER_8}.Min_value, {INTEGER_8} -1
+							)
+				)
+
+			assert (
+					"positive too",
+					u.there_exists_native_real_64 (
+							agent (x: REAL_64): BOOLEAN
 								do
 									Result := 0 < x
 								end,

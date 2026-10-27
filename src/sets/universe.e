@@ -213,6 +213,39 @@ feature -- Quantifier
 			last_chance: min_pattern = max_pattern ⇒ Result = p (real_32_from_bit_pattern (min_pattern))
 		end
 
+	there_exists_native_real_64 (p: PREDICATE [detachable separate ANY]; min_pattern, max_pattern: INTEGER_64): BOOLEAN
+			-- Does `p' hold for some {REAL_64} number whose binary pattern lies within the interval [`min_pattern' .. `max_pattern']?
+		local
+			i: INTEGER_64
+			x: REAL_64
+		do
+			if min_pattern ≤ max_pattern then
+				from
+					i := min_pattern
+					x := real_64_from_bit_pattern (i)
+					Result := p (x)
+				invariant
+					bounded: i ≤ max_pattern
+					not_found_before: min_pattern < i ⇒ not there_exists_native_real_64 (p, min_pattern, i - 1)
+					definition: Result = p (real_64_from_bit_pattern (i))
+				until
+					i = max_pattern or Result
+				loop
+					i := i + 1
+					x := real_64_from_bit_pattern (i)
+					Result := p (x)
+				variant
+					i: max_pattern - i
+				end
+			end
+		ensure
+			not_found: max_pattern < min_pattern ⇒ not Result
+			found: min_pattern < max_pattern and p (real_64_from_bit_pattern (min_pattern)) ⇒ Result
+			still_searching: min_pattern < max_pattern and not p (real_64_from_bit_pattern (min_pattern)) ⇒
+				Result = there_exists_native_real_64 (p, min_pattern + 1, max_pattern)
+			last_chance: min_pattern = max_pattern ⇒ Result = p (real_64_from_bit_pattern (min_pattern))
+		end
+
 feature -- Anchor
 
 	subset_anchor: SET [G]
@@ -241,7 +274,7 @@ feature {NONE} -- Implementation
 	real_32_from_bit_pattern (p: INTEGER_32): REAL_32
 			-- The bit pattern `p' converted to a {REAL_32} value
 			--| Assumptions:
-			--| The bit pattern of `p', unchanged is interpreted a 32-bit, base 2, IEEE 754, floating point number with the following parameters:
+			--| The bit pattern of `p', unchanged, is interpreted a 32-bit, base 2, IEEE 754, floating point number with the following parameters:
 			--| sign bit: 1 bit;
 			--| exponent width: 8 bits;
 			--| significand (mantissa) precision: 24 bits (23 explicitly stored).
@@ -256,7 +289,30 @@ feature {NONE} -- Implementation
 					} ir_32;
 				ir_32.i_32 = $p;
 				return ir_32.r_32;
-				}"
+			}"
+		ensure
+			class
+		end
+
+	real_64_from_bit_pattern (p: INTEGER_64): REAL_64
+			-- The bit pattern `p' converted to a {REAL_64} value
+			--| Assumptions:
+			--| The bit pattern of `p', unchanged, is interpreted a 64-bit, base 2, IEEE 754, floating point number with the following parameters:
+			--| sign bit: 1 bit;
+			--| exponent width: 11 bits;
+			--| significand (mantissa) precision: 53 bits (52 explicitly stored).
+			--| `Result' layout: s_eee_eeee_eeee_mmmm_mmmm_mmmm_mmmm_mmmm_mmmm_mmmm_mmmm_mmmm_mmmm_mmmm_mmmm_mmmm
+		external
+			"C inline"
+		alias
+			"{
+				union {
+					EIF_INTEGER_64 i_64;
+					EIF_REAL_64 r_64;
+					} ir_64;
+				ir_64.i_64 = $p;
+				return ir_64.r_64;
+			}"
 		ensure
 			class
 		end

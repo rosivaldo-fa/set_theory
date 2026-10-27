@@ -21,7 +21,8 @@ inherit
 			test_debug_output,
 			test_there_exists_native_natural,
 			test_there_exists_native_integer,
-			test_there_exists_native_real_32
+			test_there_exists_native_real_32,
+			test_there_exists_native_real_64
 		end
 
 feature -- Test routines (All)
@@ -86,6 +87,14 @@ feature -- Test routines (Quantifier)
 			-- <Precursor>
 		note
 			testing: "covers/{UNIVERSE}.there_exists_native_real_32"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+	test_there_exists_native_real_64
+			-- <Precursor>
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_real_64"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end
