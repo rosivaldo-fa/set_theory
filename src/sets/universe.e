@@ -111,6 +111,14 @@ feature -- Quantifier
 				Result := there_exists_native_natural (q, {NATURAL_32} 0, {NATURAL_32}.Max_value)
 			elseif g_type_id = ({NATURAL_64}).type_id then
 				Result := there_exists_native_natural (q, {NATURAL_64} 0, {NATURAL_64}.Max_value)
+			elseif g_type_id = ({INTEGER_8}).type_id then
+				Result := there_exists_native_integer (q, {INTEGER_8}.Min_value, {INTEGER_8}.Max_value)
+			elseif g_type_id = ({INTEGER_16}).type_id then
+				Result := there_exists_native_integer (q, {INTEGER_16}.Min_value, {INTEGER_16}.Max_value)
+			elseif g_type_id = ({INTEGER_32}).type_id then
+				Result := there_exists_native_integer (q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
+			elseif g_type_id = ({INTEGER_64}).type_id then
+				Result := there_exists_native_integer (q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
 			end
 		end
 
@@ -144,7 +152,7 @@ feature -- Quantifier
 		end
 
 	there_exists_native_integer (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_64): BOOLEAN
-			-- Does `p' hold for some native natural number within the interval [`min_value' .. `max_value']?
+			-- Does `p' hold for some native integer number within the interval [`min_value' .. `max_value']?
 		local
 			i: INTEGER_64
 		do
@@ -162,7 +170,7 @@ feature -- Quantifier
 					i := i + 1
 					Result := p (i)
 				variant
-					i: (max_value - i).as_integer_64
+					i: max_value - i
 				end
 			end
 		ensure
@@ -170,6 +178,39 @@ feature -- Quantifier
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer (p, min_value + 1, max_value)
 			last_chance: min_value = max_value ⇒ Result = p (min_value)
+		end
+
+	there_exists_native_real_32 (p: PREDICATE [detachable separate ANY]; min_pattern, max_pattern: INTEGER_32): BOOLEAN
+			-- Does `p' hold for some {REAL_32} number whose binary pattern lies within the interval [`min_pattern' .. `max_pattern']?
+		local
+			i: INTEGER_32
+			x: REAL_32
+		do
+			if min_pattern ≤ max_pattern then
+				from
+					i := min_pattern
+					x := real_32_from_bit_pattern (i)
+					Result := p (x)
+				invariant
+					bounded: i ≤ max_pattern
+					not_found_before: min_pattern < i ⇒ not there_exists_native_real_32 (p, min_pattern, i - 1)
+					definition: Result = p (real_32_from_bit_pattern (i))
+				until
+					i = max_pattern or Result
+				loop
+					i := i + 1
+					x := real_32_from_bit_pattern (i)
+					Result := p (x)
+				variant
+					i: max_pattern.as_integer_64 - i
+				end
+			end
+		ensure
+			not_found: max_pattern < min_pattern ⇒ not Result
+			found: min_pattern < max_pattern and p (real_32_from_bit_pattern (min_pattern)) ⇒ Result
+			still_searching: min_pattern < max_pattern and not p (real_32_from_bit_pattern (min_pattern)) ⇒
+				Result = there_exists_native_real_32 (p, min_pattern + 1, max_pattern)
+			last_chance: min_pattern = max_pattern ⇒ Result = p (real_32_from_bit_pattern (min_pattern))
 		end
 
 feature -- Anchor
@@ -193,6 +234,31 @@ feature {NONE} -- Implementation
 			--| This set is necessary for making possible to answer `there_exists' query.
 		attribute
 			create Result
+		end
+
+feature {NONE} -- Implementation
+
+	real_32_from_bit_pattern (p: INTEGER_32): REAL_32
+			-- The bit pattern `p' converted to a {REAL_32} value
+			--| Assumptions:
+			--| The bit pattern of `p', unchanged is interpreted a 32-bit, base 2, IEEE 754, floating point number with the following parameters:
+			--| sign bit: 1 bit;
+			--| exponent width: 8 bits;
+			--| significand (mantissa) precision: 24 bits (23 explicitly stored).
+			--| `Result' layout: s_eeee_eeee_mmm_mmmm_mmmm_mmmm_mmmm_mmmm
+		external
+			"C inline"
+		alias
+			"{
+				union {
+					EIF_INTEGER_32 i_32;
+					EIF_REAL_32 r_32;
+					} ir_32;
+				ir_32.i_32 = $p;
+				return ir_32.r_32;
+				}"
+		ensure
+			class
 		end
 
 invariant

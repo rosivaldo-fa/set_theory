@@ -26,7 +26,8 @@ feature -- Test routines (All)
 		do
 			Precursor {SET_TESTS}
 			test_there_exists_native_natural
-			test_there_exists_native_natural
+			test_there_exists_native_integer
+			test_there_exists_native_real_32
 		end
 
 feature -- Test routines (Initialization)
@@ -149,6 +150,37 @@ feature -- Test routines (Quantifier)
 									Result := i.out.count > 4
 								end,
 							{INTEGER_16}.Min_value, {INTEGER_16}.Max_value
+						)
+				)
+		end
+
+	test_there_exists_native_real_32
+			-- Test {UNIVERSE}.there_exists_native_real_32.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_real_32"
+		local
+			u: like universe_to_be_tested
+		do
+			u := universe_to_be_tested
+			assert (
+					"negative only",
+					not u.there_exists_native_real_32 (
+								agent (x: REAL_32): BOOLEAN
+									do
+										Result := 0 < x
+									end,
+								{INTEGER_8}.Min_value, {INTEGER_8} -1
+							)
+				)
+
+			assert (
+					"positive too",
+					u.there_exists_native_real_32 (
+							agent (x: REAL_32): BOOLEAN
+								do
+									Result := 0 < x
+								end,
+							{INTEGER_8}.Min_value, {INTEGER_8}.Max_value
 						)
 				)
 		end
