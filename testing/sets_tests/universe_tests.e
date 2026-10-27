@@ -25,6 +25,7 @@ feature -- Test routines (All)
 			testing: "covers/{UNIVERSE}"
 		do
 			Precursor {SET_TESTS}
+			test_there_exists_native_natural
 		end
 
 feature -- Test routines (Initialization)
@@ -85,6 +86,39 @@ feature -- Test routines (Status report)
 			testing: "covers/{UNIVERSE}.debug_output"
 		do
 			assert ("debug_output", attached universe_to_be_tested.debug_output)
+		end
+
+feature -- Test routines (Quantifier)
+
+	test_there_exists_native_natural
+			-- Test {UNIVERSE}.there_exists_native_natural.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_natural"
+		local
+			u: like universe_to_be_tested
+		do
+			u := universe_to_be_tested
+			assert (
+					"NATURAL_8",
+					not u.there_exists_native_natural (
+								agent (n: NATURAL_64): BOOLEAN
+									do
+										Result := n.out.count > 3
+									end,
+								{NATURAL_8} 0, {NATURAL_8}.Max_value
+							)
+				)
+
+			assert (
+					"NATURAL_16",
+					u.there_exists_native_natural (
+							agent (n: NATURAL_64): BOOLEAN
+								do
+									Result := n.out.count > 3
+								end,
+							{NATURAL_16} 0, {NATURAL_16}.Max_value
+						)
+				)
 		end
 
 feature -- Factory (element to be tested)

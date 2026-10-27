@@ -150,7 +150,6 @@ feature -- Test routines (Quantifier)
 		note
 			testing: "covers/{COMPLEMENT_SET}.p_holds_outside_reference_set"
 		local
-			s0: EFFECTIVE_SET [G]
 			s: like set_to_be_tested
 		do
 			s := set_to_be_tested

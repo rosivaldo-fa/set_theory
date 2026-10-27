@@ -87,7 +87,7 @@ feature -- Quality
 
 feature -- Quantifier
 
-	there_exists alias "|∃" (p: FUNCTION [G, BOOLEAN]): detachable BOOLEAN_REF
+	there_exists alias "|∃" (p: PREDICATE [G]): detachable BOOLEAN_REF
 			-- Existential quantifier: does `p' hold for some element in current set?
 			--| Detachable because perhaps current set is not existentially quantifiable
 		deferred

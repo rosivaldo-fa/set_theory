@@ -104,7 +104,7 @@ feature -- Status report
 
 feature -- Quantifier
 
-	there_exists alias "|∃" (p: FUNCTION [G, BOOLEAN]): detachable BOOLEAN_REF
+	there_exists alias "|∃" (p: PREDICATE [G]): detachable BOOLEAN_REF
 			-- <Precursor>
 		do
 			Result := u |∃ agent p_holds_outside_reference_set (p, ?)

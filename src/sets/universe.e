@@ -42,10 +42,7 @@ feature -- Construction
 	extended (a: G; eq: EQUALITY [G]): like universe_anchor
 			-- <Precursor>
 		do
-			known_elements := known_elements.extended (a, eq)
 			Result := Current
-		ensure then
-			knowledge_extended: known_elements ∋ a
 		end
 
 	prunned alias "/" (a: G): COMPLEMENT_SET [G]
@@ -98,27 +95,48 @@ feature -- Status report
 
 feature -- Quantifier
 
-	there_exists alias "|∃" (p: FUNCTION [G, BOOLEAN]): detachable BOOLEAN_REF
+	there_exists alias "|∃" (p: PREDICATE [G]): detachable BOOLEAN_REF
 			-- <Precursor>
-			--| Since a universe has every element of a given type, it does not need to know anything about those elements (just their type). So the universe
-			--| does not need to keep a record of its elements, unless it needs them for some operation besides `has' or `does_not_have'. This is why, in
-			--| general, a universe cannot answer a `there_exists' query unless it has some knowledge of actual instances of its elements, hence the need of
-			--| `known_elements'.
+		local
+			g_type_id: INTEGER_32
+			q: PREDICATE [detachable separate ANY]
 		do
-			if attached (known_elements |∃ p) as exists_in_known_elements and then exists_in_known_elements.item then
-				Result := True
+			g_type_id := ({G}).type_id
+			q := p
+			if g_type_id = ({NATURAL_8}).type_id then
+				Result := there_exists_native_natural (q, {NATURAL_8}.Min_value, {NATURAL_8}.Max_value)
+			else
+
 			end
-		ensure then
-			definition:
-				if attached (known_elements |∃ p) as exists_in_known_elements then
-					if exists_in_known_elements.item then
-						attached Result and then Result.item
-					else
-						not attached Result
-					end
-				else
-					not attached Result
+		end
+
+	there_exists_native_natural (p: PREDICATE [detachable separate ANY]; min_value, max_value: NATURAL_64): BOOLEAN
+			-- Does `p' hold for some native natural number within the interval [`min_value' .. `max_value']?
+		local
+			n: NATURAL_64
+		do
+			if min_value ≤ max_value then
+				from
+					n := min_value
+					Result := p (n)
+				invariant
+					bounded: min_value ≤ max_value
+					not_found_before: 0 < n ⇒ not there_exists_native_natural (p, min_value, n - 1)
+					definition: Result = p (n)
+				until
+					n = max_value or Result
+				loop
+					n := n + 1
+					Result := p (n)
+				variant
+					n: (max_value - n).as_integer_64
 				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value)
 		end
 
 feature -- Anchor

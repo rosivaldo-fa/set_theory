@@ -200,7 +200,7 @@ feature -- Status report
 
 feature -- Quantifier
 
-	there_exists alias "|∃" (p: FUNCTION [G, BOOLEAN]): detachable BOOLEAN_REF
+	there_exists alias "|∃" (p: PREDICATE [G]): detachable BOOLEAN_REF
 			-- <Precursor>
 		do
 			if subset = Current then

@@ -18,7 +18,8 @@ inherit
 			test_all,
 			test_default_create,
 			test_out,
-			test_debug_output
+			test_debug_output,
+			test_there_exists_native_natural
 		end
 
 feature -- Test routines (All)
@@ -57,6 +58,16 @@ feature -- Test routines (Status report)
 			-- <Precursor>
 		note
 			testing: "covers/{UNIVERSE}.debug_output"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+feature -- Test routines (Quantifier)
+
+	test_there_exists_native_natural
+			-- <Precursor>
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_natural"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end
