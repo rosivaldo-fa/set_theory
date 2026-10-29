@@ -203,8 +203,8 @@ feature -- Quantifier
 					end
 					c := n.to_character_32
 					Result := p (c)
-				variant
-					n: max_value.as_integer_64 - n
+--				variant
+--					n: (max_value - n).as_integer_64 -- Maybe too big. ES uses INTEGER_32 to track the variant
 				end
 			end
 		ensure
