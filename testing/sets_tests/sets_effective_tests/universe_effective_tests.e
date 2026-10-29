@@ -19,6 +19,7 @@ inherit
 			test_default_create,
 			test_out,
 			test_debug_output,
+			test_there_exists_character_8,
 			test_there_exists_native_natural,
 			test_there_exists_native_integer,
 			test_there_exists_native_real_32,
@@ -66,6 +67,14 @@ feature -- Test routines (Status report)
 		end
 
 feature -- Test routines (Quantifier)
+
+	test_there_exists_character_8
+			-- <Precursor>
+		note
+			testing: "covers/{UNIVERSE}.there_exists_character_8"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
 
 	test_there_exists_native_natural
 			-- <Precursor>

@@ -103,7 +103,13 @@ feature -- Quantifier
 		do
 			g_type_id := ({G}).type_id
 			q := p
-			if g_type_id = ({NATURAL_8}).type_id then
+			if g_type_id = ({BOOLEAN}).type_id then
+				Result := q (False) or q (True)
+			elseif g_type_id = ({CHARACTER_8}).type_id then
+				Result := there_exists_character_8 (q, {CHARACTER_8}.Min_value, {CHARACTER_8}.Max_value)
+			elseif g_type_id = ({CHARACTER_32}).type_id then
+				Result := there_exists_character_32 (q, {CHARACTER_32}.Min_value, {CHARACTER_32}.Max_value)
+			elseif g_type_id = ({NATURAL_8}).type_id then
 				Result := there_exists_native_natural (q, {NATURAL_8} 0, {NATURAL_8}.Max_value)
 			elseif g_type_id = ({NATURAL_16}).type_id then
 				Result := there_exists_native_natural (q, {NATURAL_16} 0, {NATURAL_16}.Max_value)
@@ -119,7 +125,93 @@ feature -- Quantifier
 				Result := there_exists_native_integer (q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
 			elseif g_type_id = ({INTEGER_64}).type_id then
 				Result := there_exists_native_integer (q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
+			elseif g_type_id = ({REAL_32}).type_id then
+				Result := there_exists_native_real_32 (q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
+			elseif g_type_id = ({REAL_64}).type_id then
+				Result := there_exists_native_real_64 (q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
 			end
+		end
+
+	there_exists_character_8 (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_32): BOOLEAN
+			-- Does `p' hold for some {CHARACTER_8} within the interval [`min_value'.`to_character_8' .. `max_value'.`to_character_8']?
+		require
+			valid_characters: min_value ≤ max_value ⇒ min_value.is_valid_character_8_code and max_value.is_valid_character_8_code
+		local
+			i: INTEGER_32
+			c: CHARACTER_8
+		do
+			if min_value ≤ max_value then
+				from
+					i := min_value
+					check
+						valid_character: i.is_valid_character_8_code -- min_value ≤ i ≤ max_value and precondition above
+					end
+					c := i.to_character_8
+					Result := p (c)
+				invariant
+					bounded: i ≤ max_value
+					not_found_before: min_value < i ⇒ not there_exists_character_8 (p, min_value, i - 1)
+					valid_character: i.is_valid_character_8_code -- min_value ≤ i ≤ max_value and precondition above
+					definition: Result = p (i.to_character_8)
+				until
+					i = max_value or Result
+				loop
+					i := i + 1
+					check
+						valid_character: i.is_valid_character_8_code -- min_value ≤ i ≤ max_value and precondition above
+					end
+					c := i.to_character_8
+					Result := p (c)
+				variant
+					i: max_value - i
+				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value.to_character_8) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value.to_character_8) ⇒ Result = there_exists_character_8 (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value.to_character_8)
+		end
+
+	there_exists_character_32 (p: PREDICATE [detachable separate ANY]; min_value, max_value: NATURAL_32): BOOLEAN
+			-- Does `p' hold for some {CHARACTER_32} within the interval [`min_value'.`to_character_32' .. `max_value'.`to_character_32']?
+		require
+			valid_characters: min_value ≤ max_value ⇒ min_value.is_valid_character_32_code and max_value.is_valid_character_32_code
+		local
+			n: NATURAL_32
+			c: CHARACTER_32
+		do
+			if min_value ≤ max_value then
+				from
+					n := min_value
+					check
+						valid_character: n.is_valid_character_32_code -- min_value ≤ n ≤ max_value and precondition above
+					end
+					c := n.to_character_32
+					Result := p (c)
+				invariant
+					bounded: n ≤ max_value
+					not_found_before: min_value < n ⇒ not there_exists_character_32 (p, min_value, n - 1)
+					valid_character: n.is_valid_character_32_code -- min_value ≤ n ≤ max_value and precondition above
+					definition: Result = p (n.to_character_32)
+				until
+					n = max_value or Result
+				loop
+					n := n + 1
+					check
+						valid_character: n.is_valid_character_32_code -- min_value ≤ n ≤ max_value and precondition above
+					end
+					c := n.to_character_32
+					Result := p (c)
+				variant
+					n: max_value.as_integer_64 - n
+				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value.to_character_32) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value.to_character_32) ⇒ Result = there_exists_character_32 (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value.to_character_32)
 		end
 
 	there_exists_native_natural (p: PREDICATE [detachable separate ANY]; min_value, max_value: NATURAL_64): BOOLEAN

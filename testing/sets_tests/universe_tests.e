@@ -25,6 +25,7 @@ feature -- Test routines (All)
 			testing: "covers/{UNIVERSE}"
 		do
 			Precursor {SET_TESTS}
+			test_there_exists_character_8
 			test_there_exists_native_natural
 			test_there_exists_native_integer
 			test_there_exists_native_real_32
@@ -92,6 +93,37 @@ feature -- Test routines (Status report)
 		end
 
 feature -- Test routines (Quantifier)
+
+	test_there_exists_character_8
+			-- Test {UNIVERSE}.there_exists_character_8.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_character_8"
+		local
+			u: like universe_to_be_tested
+		do
+			u := universe_to_be_tested
+			assert (
+					"no_negative_code",
+					not u.there_exists_character_8 (
+								agent (c8: CHARACTER_8): BOOLEAN
+									do
+										Result := c8.code < 0
+									end,
+								{CHARACTER_8}.Min_value, {CHARACTER_8}.Max_value
+							)
+				)
+
+			assert (
+					"some_given_code",
+					u.there_exists_character_8 (
+								agent (c8: CHARACTER_8): BOOLEAN
+									do
+										Result := c8.code = 89
+									end,
+								{CHARACTER_8}.Min_value, {CHARACTER_8}.Max_value
+						)
+				)
+		end
 
 	test_there_exists_native_natural
 			-- Test {UNIVERSE}.there_exists_native_natural.
