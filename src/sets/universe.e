@@ -129,6 +129,8 @@ feature -- Quantifier
 				Result := there_exists_native_real_32 (q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
 			elseif g_type_id = ({REAL_64}).type_id then
 				Result := there_exists_native_real_64 (q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
+			else
+				Result := there_exists_g_instances (p)
 			end
 		end
 
@@ -204,7 +206,7 @@ feature -- Quantifier
 					c := n.to_character_32
 					Result := p (c)
 --				variant
---					n: (max_value - n).as_integer_64 -- Maybe too big. ES uses INTEGER_32 to track the variant
+--					n: (max_value - n).as_integer_64 -- Maybe too big. ES uses INTEGER_32 to track the variant.
 				end
 			end
 		ensure
@@ -232,8 +234,8 @@ feature -- Quantifier
 				loop
 					n := n + 1
 					Result := p (n)
-				variant
-					n: (max_value - n).as_integer_64
+--				variant
+--					n: (max_value - n).as_integer_64 -- Maybe too big. ES uses INTEGER_32 to track the variant.
 				end
 			end
 		ensure
@@ -336,6 +338,30 @@ feature -- Quantifier
 			still_searching: min_pattern < max_pattern and not p (real_64_from_bit_pattern (min_pattern)) ⇒
 				Result = there_exists_native_real_64 (p, min_pattern + 1, max_pattern)
 			last_chance: min_pattern = max_pattern ⇒ Result = p (real_64_from_bit_pattern (min_pattern))
+		end
+
+	there_exists_g_instances (p: PREDICATE [G]): detachable BOOLEAN_REF
+			-- Is there any instance x of {G} such that p (x) holds?
+		local
+			type_id: like {TYPE [G]}.type_id
+			mem_map: HASH_TABLE [ARRAYED_LIST [ANY], INTEGER]
+		do
+			Result := False
+			if not ({G}).is_attached then
+				check
+					has_default: ({G}).has_default -- {G} is a detachable type.
+				end
+				Result := p (({G}).default)
+			end
+			if not Result then
+				type_id := ({detachable G}).type_id
+				mem_map := {MEMORY}.memory_map
+				Result := ∃ al: mem_map ¦ if {ISE_RUNTIME}.type_conforms_to (@ al.key, type_id) then
+						∃ x:al ¦ if attached {G} x as a then p (a) else False end
+					else
+						False
+					end
+			end
 		end
 
 feature -- Anchor

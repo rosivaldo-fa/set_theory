@@ -186,6 +186,16 @@ feature -- Test routines (Quantifier)
 							{NATURAL_16} 0, {NATURAL_16}.Max_value
 						)
 				)
+			assert (
+					"NATURAL_32",
+					u.there_exists_native_natural (
+							agent (n: NATURAL_64): BOOLEAN
+								do
+									Result := n.out.count > 5
+								end,
+							{NATURAL_32} 0, {NATURAL_32}.Max_value
+						)
+				)
 		end
 
 	test_there_exists_native_integer
