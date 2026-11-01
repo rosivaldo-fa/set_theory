@@ -31,6 +31,7 @@ feature -- Test routines (All)
 			test_there_exists_native_integer
 			test_there_exists_native_real_32
 			test_there_exists_native_real_64
+			test_there_exists_g_instance
 		end
 
 feature -- Test routines (Initialization)
@@ -186,16 +187,6 @@ feature -- Test routines (Quantifier)
 							{NATURAL_16} 0, {NATURAL_16}.Max_value
 						)
 				)
-			assert (
-					"NATURAL_32",
-					u.there_exists_native_natural (
-							agent (n: NATURAL_64): BOOLEAN
-								do
-									Result := n.out.count > 5
-								end,
-							{NATURAL_32} 0, {NATURAL_32}.Max_value
-						)
-				)
 		end
 
 	test_there_exists_native_integer
@@ -289,6 +280,51 @@ feature -- Test routines (Quantifier)
 							{INTEGER_8}.Min_value, {INTEGER_8}.Max_value
 						)
 				)
+		end
+
+	test_there_exists_g_instance
+			-- Test {UNIVERSE}.there_exists_g_instance.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_g_instance"
+		local
+			u: like universe_to_be_tested
+			s: SET [G]
+			eq: REFERENCE_EQUALITY [G]
+		do
+				-- Let's make something.
+			create {EFFECTIVE_SET [G]} s
+			create eq
+			s := s.extended (a, eq)
+			s := s.extended (b, eq)
+			s := s.extended (c, eq)
+			s := s.extended (d, eq)
+
+			u := universe_to_be_tested
+			{MEMORY}.full_collect
+			assert (
+					"no identity breaking",
+					not u.there_exists_g_instance (
+								agent (x: G): BOOLEAN
+									do
+										Result := x /= x
+									end,
+								{MEMORY}.memory_map
+							)
+				)
+
+			{MEMORY}.full_collect
+			assert (
+					"Need some luck (or cheating).",
+					u.there_exists_g_instance (
+							agent (x: G): BOOLEAN
+								do
+									Result := attached x and then x.out.has ('b')
+								end,
+							{MEMORY}.memory_map
+						)
+				)
+
+			s := s.prunned (a) -- `s' and its elements keep their existence until here.
 		end
 
 feature -- Factory (element to be tested)

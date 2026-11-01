@@ -130,7 +130,8 @@ feature -- Quantifier
 			elseif g_type_id = ({REAL_64}).type_id then
 				Result := there_exists_native_real_64 (q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
 			else
-				Result := there_exists_g_instances (p)
+				{MEMORY}.full_collect -- Get rid of partially collected objects.
+				Result := there_exists_g_instance (p, {MEMORY}.memory_map)
 			end
 		end
 
@@ -206,7 +207,7 @@ feature -- Quantifier
 					c := n.to_character_32
 					Result := p (c)
 --				variant
---					n: (max_value - n).as_integer_64 -- Maybe too big. ES uses INTEGER_32 to track the variant.
+--					n: (max_value - n).as_integer_64 -- Maybe too big even for an {INTEGER_64}
 				end
 			end
 		ensure
@@ -235,7 +236,7 @@ feature -- Quantifier
 					n := n + 1
 					Result := p (n)
 --				variant
---					n: (max_value - n).as_integer_64 -- Maybe too big. ES uses INTEGER_32 to track the variant.
+--					n: (max_value - n).as_integer_64 -- Maybe too big even for an {INTEGER_64}
 				end
 			end
 		ensure
@@ -263,8 +264,8 @@ feature -- Quantifier
 				loop
 					i := i + 1
 					Result := p (i)
-				variant
-					i: max_value - i
+--				variant
+--					i: max_value - i -- Maybe too big even for an {INTEGER_64}
 				end
 			end
 		ensure
@@ -295,8 +296,8 @@ feature -- Quantifier
 					i := i + 1
 					x := real_32_from_bit_pattern (i)
 					Result := p (x)
-				variant
-					i: max_pattern.as_integer_64 - i
+--				variant
+--					i: max_pattern.as_integer_64 - i -- Maybe too big even for an {INTEGER_64}
 				end
 			end
 		ensure
@@ -328,8 +329,8 @@ feature -- Quantifier
 					i := i + 1
 					x := real_64_from_bit_pattern (i)
 					Result := p (x)
-				variant
-					i: max_pattern - i
+--				variant
+--					i: max_pattern - i -- Maybe too big even for an {INTEGER_64}
 				end
 			end
 		ensure
@@ -340,13 +341,11 @@ feature -- Quantifier
 			last_chance: min_pattern = max_pattern ⇒ Result = p (real_64_from_bit_pattern (min_pattern))
 		end
 
-	there_exists_g_instances (p: PREDICATE [G]): detachable BOOLEAN_REF
-			-- Is there any instance x of {G} such that p (x) holds?
+	there_exists_g_instance (p: PREDICATE [G]; mem_map: HASH_TABLE [ARRAYED_LIST [ANY], INTEGER]): BOOLEAN
+			-- Is there an instance x of {G} such that `p' (x) holds?
 		local
 			type_id: like {TYPE [G]}.type_id
-			mem_map: HASH_TABLE [ARRAYED_LIST [ANY], INTEGER]
 		do
-			Result := False
 			if not ({G}).is_attached then
 				check
 					has_default: ({G}).has_default -- {G} is a detachable type.
@@ -355,13 +354,20 @@ feature -- Quantifier
 			end
 			if not Result then
 				type_id := ({detachable G}).type_id
-				mem_map := {MEMORY}.memory_map
 				Result := ∃ al: mem_map ¦ if {ISE_RUNTIME}.type_conforms_to (@ al.key, type_id) then
-						∃ x:al ¦ if attached {G} x as a then p (a) else False end
-					else
-						False
-					end
+							∃ x: al ¦ if attached {G} x as a then p (a) else False end
+						else
+							False
+						end
 			end
+		ensure
+			default_case: not ({G}).is_attached and then ({G}).has_default and then p (({G}).default) ⇒ Result
+			general_case: ({G}).is_attached or else not ({G}).has_default or else not p (({G}).default) ⇒
+				Result = ∃ al: mem_map ¦ if {ISE_RUNTIME}.type_conforms_to (@ al.key, ({detachable G}).type_id) then
+							∃ x: al ¦ if attached {G} x as a then p (a) else False end
+						else
+							False
+						end
 		end
 
 feature -- Anchor
