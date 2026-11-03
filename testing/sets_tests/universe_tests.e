@@ -14,7 +14,8 @@ inherit
 		redefine
 			test_all,
 			test_has,
-			test_does_not_have
+			test_does_not_have,
+			test_there_exists
 		end
 
 feature -- Test routines (All)
@@ -27,6 +28,7 @@ feature -- Test routines (All)
 			Precursor {SET_TESTS}
 			test_there_exists_character_8
 			test_there_exists_character_32
+			test_there_exists_native_natural_8
 			test_there_exists_native_natural
 			test_there_exists_native_integer
 			test_there_exists_native_real_32
@@ -96,6 +98,107 @@ feature -- Test routines (Status report)
 
 feature -- Test routines (Quantifier)
 
+	test_there_exists
+			-- Test {UNIVERSE}.there_exists.
+		note
+			testing: "covers/{UNIVERSE}.there_exists"
+		local
+--			check_assert: BOOLEAN
+			u_b: UNIVERSE [BOOLEAN]
+			u_c8: UNIVERSE [CHARACTER_8]
+			u_c32: UNIVERSE [CHARACTER_32]
+			u_n8: UNIVERSE [NATURAL_8]
+			u: like universe_to_be_tested
+		do
+			create u_b
+			assert (
+					"not invisible",
+					u_b.there_exists (
+							agent (bool: BOOLEAN): BOOLEAN
+								do
+									Result := bool.out ~ ""
+								end
+						) = False
+				)
+
+			assert (
+					"visible",
+					u_b.there_exists (
+							agent (bool: BOOLEAN): BOOLEAN
+								do
+									Result := bool.out /~ ""
+								end
+						) = True
+				)
+
+			create u_c8
+			assert (
+					"no_negative_code c8",
+					u_c8.there_exists (
+							agent (c8: CHARACTER_8): BOOLEAN
+								do
+									Result := c8.code < 0
+								end
+						) = False
+				)
+
+			assert (
+					"some_given_code c8",
+					u_c8.there_exists (
+							agent (c8: CHARACTER_8): BOOLEAN
+								do
+									Result := c8.code = 89
+								end
+						) = True
+				)
+
+			create u_c32
+			assert (
+					"some_given_code c32",
+					u_c32.there_exists (
+							agent (c32: CHARACTER_32): BOOLEAN
+								do
+									Result := c32.code = 329
+								end
+						) = True
+				)
+
+--			check_assert := {ISE_RUNTIME}.check_assert (False) -- Too big to test in reasonable time
+--			assert (
+--					"no_negative_code c32",
+--					u_c32.there_exists (
+--							agent (c32: CHARACTER_32): BOOLEAN
+--								do
+--									Result := c32.natural_32_code < 0
+--								end
+--						) = False
+--				)
+--			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
+
+			create u_n8
+			assert (
+					"no negative n8",
+					u_n8.there_exists (
+							agent (n: NATURAL_8): BOOLEAN
+								do
+									Result := n < 0
+								end
+						) = False
+				)
+
+			assert (
+					"big enough n8",
+					u_n8.there_exists (
+							agent (n: NATURAL_8): BOOLEAN
+								do
+									Result := n.out.count > 2
+								end
+						) = True
+				)
+
+			u := universe_to_be_tested
+		end
+
 	test_there_exists_character_8
 			-- Test {UNIVERSE}.there_exists_character_8.
 		note
@@ -154,6 +257,37 @@ feature -- Test routines (Quantifier)
 									Result := c32.code = 329
 								end,
 							{CHARACTER_32}.Min_value, {CHARACTER_32}.Max_value
+						)
+				)
+		end
+
+	test_there_exists_native_natural_8
+			-- Test {UNIVERSE}.there_exists_native_natural_8.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_natural_8"
+		local
+			u: like universe_to_be_tested
+		do
+			u := universe_to_be_tested
+			assert (
+					"no negative",
+					not u.there_exists_native_natural_8 (
+								agent (n: NATURAL_8): BOOLEAN
+									do
+										Result := n < 0
+									end,
+								{NATURAL_8} 0, {NATURAL_8}.Max_value
+							)
+				)
+
+			assert (
+					"big enough",
+					u.there_exists_native_natural_8 (
+							agent (n: NATURAL_8): BOOLEAN
+								do
+									Result := n.out.count > 2
+								end,
+							{NATURAL_8} 0, {NATURAL_8}.Max_value
 						)
 				)
 		end

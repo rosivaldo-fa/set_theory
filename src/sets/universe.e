@@ -110,7 +110,7 @@ feature -- Quantifier
 			elseif g_type_id = ({CHARACTER_32}).type_id then
 				Result := there_exists_character_32 (q, {CHARACTER_32}.Min_value, {CHARACTER_32}.Max_value)
 			elseif g_type_id = ({NATURAL_8}).type_id then
-				Result := there_exists_native_natural (q, {NATURAL_8} 0, {NATURAL_8}.Max_value)
+				Result := there_exists_native_natural_8 (q, {NATURAL_8} 0, {NATURAL_8}.Max_value)
 			elseif g_type_id = ({NATURAL_16}).type_id then
 				Result := there_exists_native_natural (q, {NATURAL_16} 0, {NATURAL_16}.Max_value)
 			elseif g_type_id = ({NATURAL_32}).type_id then
@@ -133,6 +133,36 @@ feature -- Quantifier
 				{MEMORY}.full_collect -- Get rid of partially collected objects.
 				Result := there_exists_g_instance (p, {MEMORY}.memory_map)
 			end
+		ensure then
+			el_q: attached {PREDICATE [detachable separate ANY]} p as el_q
+			boolean: ({G}).type_id = ({BOOLEAN}).type_id ⇒ Result = el_q (False) or el_q (True)
+			character_8: ({G}).type_id = ({CHARACTER_8}).type_id ⇒ Result = there_exists_character_8 (el_q, {CHARACTER_8}.Min_value, {CHARACTER_8}.Max_value)
+			character_32: ({G}).type_id = ({CHARACTER_32}).type_id ⇒
+				Result = there_exists_character_32 (el_q, {CHARACTER_32}.Min_value, {CHARACTER_32}.Max_value)
+			natural_8: ({G}).type_id = ({NATURAL_8}).type_id ⇒ Result = there_exists_native_natural (el_q, {NATURAL_8} 0, {NATURAL_8}.Max_value)
+			natural_16: ({G}).type_id = ({NATURAL_16}).type_id ⇒ Result = there_exists_native_natural (el_q, {NATURAL_16} 0, {NATURAL_16}.Max_value)
+			natural_32: ({G}).type_id = ({NATURAL_32}).type_id ⇒ Result = there_exists_native_natural (el_q, {NATURAL_32} 0, {NATURAL_32}.Max_value)
+			natural_64: ({G}).type_id = ({NATURAL_64}).type_id ⇒ Result = there_exists_native_natural (el_q, {NATURAL_64} 0, {NATURAL_64}.Max_value)
+			integer_8: ({G}).type_id = ({INTEGER_8}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_8}.Min_value, {INTEGER_8}.Max_value)
+			integer_16: ({G}).type_id = ({INTEGER_16}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_16}.Min_value, {INTEGER_16}.Max_value)
+			integer_32: ({G}).type_id = ({INTEGER_32}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
+			integer_64: ({G}).type_id = ({INTEGER_64}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
+			real_32: ({G}).type_id = ({REAL_32}).type_id ⇒ Result = there_exists_native_real_32 (el_q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
+			real_64: ({G}).type_id = ({REAL_64}).type_id ⇒ Result = there_exists_native_real_64 (el_q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
+			some_other_g: not (
+						({G}).type_id = ({BOOLEAN}).type_id or ({G}).type_id = ({CHARACTER_8}).type_id or ({G}).type_id = ({CHARACTER_32}).type_id or
+						({G}).type_id = ({NATURAL_8}).type_id or ({G}).type_id = ({NATURAL_16}).type_id or ({G}).type_id = ({NATURAL_32}).type_id or
+						({G}).type_id = ({NATURAL_64}).type_id or ({G}).type_id = ({INTEGER_8}).type_id or ({G}).type_id = ({INTEGER_16}).type_id or
+						({G}).type_id = ({INTEGER_32}).type_id or ({G}).type_id = ({INTEGER_64}).type_id or ({G}).type_id = ({REAL_32}).type_id or
+						({G}).type_id = ({REAL_64}).type_id
+					) ⇒ Result = (
+						agent: BOOLEAN
+							do
+								{MEMORY}.full_collect -- Get rid of partially collected objects.
+								Result := True
+							end
+					).item and
+				there_exists_g_instance (p, {MEMORY}.memory_map)
 		end
 
 	there_exists_character_8 (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_32): BOOLEAN
@@ -215,6 +245,35 @@ feature -- Quantifier
 			found: min_value < max_value and p (min_value.to_character_32) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value.to_character_32) ⇒ Result = there_exists_character_32 (p, min_value + 1, max_value)
 			last_chance: min_value = max_value ⇒ Result = p (min_value.to_character_32)
+		end
+
+	there_exists_native_natural_8 (p: PREDICATE [detachable separate ANY]; min_value, max_value: NATURAL_8): BOOLEAN
+			-- Does `p' hold for some {NATURAL_8} within the interval [`min_value' .. `max_value']?
+		local
+			n: NATURAL_8
+		do
+			if min_value ≤ max_value then
+				from
+					n := min_value
+					Result := p (n)
+				invariant
+					bounded: n ≤ max_value
+					not_found_before: min_value < n ⇒ not there_exists_native_natural_8 (p, min_value, n - 1)
+					definition: Result = p (n)
+				until
+					n = max_value or Result
+				loop
+					n := n + 1
+					Result := p (n)
+				variant
+					n: (max_value.as_integer_16 - n)
+				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural_8 (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value)
 		end
 
 	there_exists_native_natural (p: PREDICATE [detachable separate ANY]; min_value, max_value: NATURAL_64): BOOLEAN
