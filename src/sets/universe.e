@@ -276,6 +276,35 @@ feature -- Quantifier
 			last_chance: min_value = max_value ⇒ Result = p (min_value)
 		end
 
+	there_exists_native_natural_16 (p: PREDICATE [detachable separate ANY]; min_value, max_value: NATURAL_16): BOOLEAN
+			-- Does `p' hold for some {NATURAL_16} within the interval [`min_value' .. `max_value']?
+		local
+			n: NATURAL_16
+		do
+			if min_value ≤ max_value then
+				from
+					n := min_value
+					Result := p (n)
+				invariant
+					bounded: n ≤ max_value
+					not_found_before: min_value < n ⇒ not there_exists_native_natural_16 (p, min_value, n - 1)
+					definition: Result = p (n)
+				until
+					n = max_value or Result
+				loop
+					n := n + 1
+					Result := p (n)
+				variant
+					n: (max_value.as_integer_32 - n)
+				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural_16 (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value)
+		end
+
 	there_exists_native_natural (p: PREDICATE [detachable separate ANY]; min_value, max_value: NATURAL_64): BOOLEAN
 			-- Does `p' hold for some native natural number within the interval [`min_value' .. `max_value']?
 		local
