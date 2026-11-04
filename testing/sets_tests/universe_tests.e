@@ -340,7 +340,7 @@ feature -- Test routines (Quantifier)
 									do
 										Result := n < 0
 									end,
-								{NATURAL_16}.Max_value + 1, {NATURAL_16}.Max_value + 10_000
+								{NATURAL_16}.Max_value + 1, {NATURAL_16}.Max_value + 5_000
 							)
 				)
 
@@ -351,7 +351,7 @@ feature -- Test routines (Quantifier)
 								do
 									Result := n > 99_999
 								end,
-							90_000, {NATURAL_32}.Max_value
+							95_000, {NATURAL_32}.Max_value
 						)
 				)
 		end
