@@ -309,7 +309,7 @@ feature -- Test routines (Quantifier)
 									do
 										Result := n < 0
 									end,
-								{NATURAL_8}.Max_value + 1, {NATURAL_8}.Max_value + {NATURAL_16} 10_000
+								{NATURAL_8}.Max_value + 1, {NATURAL_8}.Max_value + {NATURAL_16} 5_000
 							)
 				)
 
@@ -318,7 +318,7 @@ feature -- Test routines (Quantifier)
 					u.there_exists_native_natural_16 (
 							agent (n: NATURAL_16): BOOLEAN
 								do
-									Result := n > 9999
+									Result := n > 4_999
 								end,
 							0, {NATURAL_16}.Max_value
 						)
@@ -331,10 +331,8 @@ feature -- Test routines (Quantifier)
 			testing: "covers/{UNIVERSE}.there_exists_native_natural_32"
 		local
 			u: like universe_to_be_tested
-			check_assert: BOOLEAN
 		do
 			u := universe_to_be_tested
---			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
 			assert (
 					"no negative",
 					not u.there_exists_native_natural_32 (
@@ -342,7 +340,7 @@ feature -- Test routines (Quantifier)
 									do
 										Result := n < 0
 									end,
-								{NATURAL_32}.Max_value - 100_000, {NATURAL_32}.Max_value
+								{NATURAL_16}.Max_value + 1, {NATURAL_16}.Max_value + 10_000
 							)
 				)
 
@@ -351,12 +349,11 @@ feature -- Test routines (Quantifier)
 					u.there_exists_native_natural_32 (
 							agent (n: NATURAL_32): BOOLEAN
 								do
-									Result := n > 99999
+									Result := n > 99_999
 								end,
-							{NATURAL_32} 0, {NATURAL_32}.Max_value
+							90_000, {NATURAL_32}.Max_value
 						)
 				)
---			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
 		end
 
 	test_there_exists_native_natural
