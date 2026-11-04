@@ -30,6 +30,7 @@ feature -- Test routines (All)
 			test_there_exists_character_32
 			test_there_exists_native_natural_8
 			test_there_exists_native_natural_16
+			test_there_exists_native_natural_32
 			test_there_exists_native_natural
 			test_there_exists_native_integer
 			test_there_exists_native_real_32
@@ -277,7 +278,7 @@ feature -- Test routines (Quantifier)
 									do
 										Result := n < 0
 									end,
-								{NATURAL_8} 0, {NATURAL_8}.Max_value
+								0, {NATURAL_8}.Max_value
 							)
 				)
 
@@ -288,7 +289,7 @@ feature -- Test routines (Quantifier)
 								do
 									Result := n.out.count > 2
 								end,
-							{NATURAL_8} 0, {NATURAL_8}.Max_value
+							0, {NATURAL_8}.Max_value
 						)
 				)
 		end
@@ -299,10 +300,8 @@ feature -- Test routines (Quantifier)
 			testing: "covers/{UNIVERSE}.there_exists_native_natural_16"
 		local
 			u: like universe_to_be_tested
-			check_assert: BOOLEAN
 		do
 			u := universe_to_be_tested
-			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
 			assert (
 					"no negative",
 					not u.there_exists_native_natural_16 (
@@ -310,10 +309,9 @@ feature -- Test routines (Quantifier)
 									do
 										Result := n < 0
 									end,
-								{NATURAL_16} 0, {NATURAL_16}.Max_value
+								{NATURAL_8}.Max_value + 1, {NATURAL_8}.Max_value + {NATURAL_16} 10_000
 							)
 				)
-			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
 
 			assert (
 					"big enough",
@@ -322,9 +320,43 @@ feature -- Test routines (Quantifier)
 								do
 									Result := n > 9999
 								end,
-							{NATURAL_16} 0, {NATURAL_16}.Max_value
+							0, {NATURAL_16}.Max_value
 						)
 				)
+		end
+
+	test_there_exists_native_natural_32
+			-- Test {UNIVERSE}.there_exists_native_natural_32.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_natural_32"
+		local
+			u: like universe_to_be_tested
+			check_assert: BOOLEAN
+		do
+			u := universe_to_be_tested
+--			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
+			assert (
+					"no negative",
+					not u.there_exists_native_natural_32 (
+								agent (n: NATURAL_32): BOOLEAN
+									do
+										Result := n < 0
+									end,
+								{NATURAL_32}.Max_value - 100_000, {NATURAL_32}.Max_value
+							)
+				)
+
+			assert (
+					"big enough",
+					u.there_exists_native_natural_32 (
+							agent (n: NATURAL_32): BOOLEAN
+								do
+									Result := n > 99999
+								end,
+							{NATURAL_32} 0, {NATURAL_32}.Max_value
+						)
+				)
+--			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
 		end
 
 	test_there_exists_native_natural

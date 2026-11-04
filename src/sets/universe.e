@@ -110,11 +110,11 @@ feature -- Quantifier
 			elseif g_type_id = ({CHARACTER_32}).type_id then
 				Result := there_exists_character_32 (q, {CHARACTER_32}.Min_value, {CHARACTER_32}.Max_value)
 			elseif g_type_id = ({NATURAL_8}).type_id then
-				Result := there_exists_native_natural_8 (q, {NATURAL_8} 0, {NATURAL_8}.Max_value)
+				Result := there_exists_native_natural_8 (q, 0, {NATURAL_8}.Max_value)
 			elseif g_type_id = ({NATURAL_16}).type_id then
-				Result := there_exists_native_natural (q, {NATURAL_16} 0, {NATURAL_16}.Max_value)
+				Result := there_exists_native_natural_16 (q, 0, {NATURAL_16}.Max_value)
 			elseif g_type_id = ({NATURAL_32}).type_id then
-				Result := there_exists_native_natural (q, {NATURAL_32} 0, {NATURAL_32}.Max_value)
+				Result := there_exists_native_natural_32 (q, 0, {NATURAL_32}.Max_value)
 			elseif g_type_id = ({NATURAL_64}).type_id then
 				Result := there_exists_native_natural (q, {NATURAL_64} 0, {NATURAL_64}.Max_value)
 			elseif g_type_id = ({INTEGER_8}).type_id then
@@ -302,6 +302,35 @@ feature -- Quantifier
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural_16 (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value)
+		end
+
+	there_exists_native_natural_32 (p: PREDICATE [detachable separate ANY]; min_value, max_value: NATURAL_32): BOOLEAN
+			-- Does `p' hold for some {NATURAL_32} within the interval [`min_value' .. `max_value']?
+		local
+			n: NATURAL_32
+		do
+			if min_value ≤ max_value then
+				from
+					n := min_value
+					Result := p (n)
+				invariant
+					bounded: n ≤ max_value
+					not_found_before: min_value < n ⇒ not there_exists_native_natural_32 (p, min_value, n - 1)
+					definition: Result = p (n)
+				until
+					n = max_value or Result
+				loop
+					n := n + 1
+					Result := p (n)
+				variant
+					n: (max_value.as_integer_64 - n)
+				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural_32 (p, min_value + 1, max_value)
 			last_chance: min_value = max_value ⇒ Result = p (min_value)
 		end
 
