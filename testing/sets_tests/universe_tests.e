@@ -31,6 +31,7 @@ feature -- Test routines (All)
 			test_there_exists_native_natural_8
 			test_there_exists_native_natural_16
 			test_there_exists_native_natural_32
+			test_there_exists_native_natural_64
 			test_there_exists_native_natural
 			test_there_exists_native_integer
 			test_there_exists_native_real_32
@@ -352,6 +353,37 @@ feature -- Test routines (Quantifier)
 									Result := n > 99_999
 								end,
 							95_000, {NATURAL_32}.Max_value
+						)
+				)
+		end
+
+	test_there_exists_native_natural_64
+			-- Test {UNIVERSE}.there_exists_native_natural_64.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_natural_64"
+		local
+			u: like universe_to_be_tested
+		do
+			u := universe_to_be_tested
+			assert (
+					"no negative",
+					not u.there_exists_native_natural_64 (
+								agent (n: NATURAL_64): BOOLEAN
+									do
+										Result := n < 0
+									end,
+								{NATURAL_32}.Max_value + 1, {NATURAL_32}.Max_value + 5_000
+							)
+				)
+
+			assert (
+					"big enough",
+					u.there_exists_native_natural_64 (
+							agent (n: NATURAL_64): BOOLEAN
+								do
+									Result := n > 5_000_000_000
+								end,
+							4_999_995_000, {NATURAL_64}.Max_value
 						)
 				)
 		end
