@@ -33,7 +33,9 @@ feature -- Test routines (All)
 			test_there_exists_native_natural_32
 			test_there_exists_native_natural_64
 			test_there_exists_native_integer_8
-			test_there_exists_native_integer
+			test_there_exists_native_integer_16
+			test_there_exists_native_integer_32
+			test_there_exists_native_integer_64
 			test_there_exists_native_real_32
 			test_there_exists_native_real_64
 			test_there_exists_g_instance
@@ -419,33 +421,95 @@ feature -- Test routines (Quantifier)
 				)
 		end
 
-	test_there_exists_native_integer
-			-- Test {UNIVERSE}.there_exists_native_integer.
+	test_there_exists_native_integer_16
+			-- Test {UNIVERSE}.there_exists_native_integer_16.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer"
+			testing: "covers/{UNIVERSE}.there_exists_native_integer_16"
 		local
 			u: like universe_to_be_tested
 		do
 			u := universe_to_be_tested
 			assert (
-					"INTEGER_8",
-					not u.there_exists_native_integer (
-								agent (i: INTEGER_64): BOOLEAN
+					"not too big",
+					not u.there_exists_native_integer_16 (
+								agent (i: INTEGER_16): BOOLEAN
 									do
-										Result := i.out.count > 4
+										Result := i > {INTEGER_16}.Max_value
 									end,
-								{INTEGER_8}.Min_value, {INTEGER_8}.Max_value
+								{INTEGER_8}.Max_value + {INTEGER_16} 1, {INTEGER_8}.Max_value + {INTEGER_16} 5000
 							)
 				)
 
 			assert (
-					"INTEGER_16",
-					u.there_exists_native_integer (
+					"big enough",
+					u.there_exists_native_integer_16 (
+							agent (i: INTEGER_16): BOOLEAN
+								do
+									Result := i > 729
+								end,
+							{INTEGER_8}.Max_value + {INTEGER_16} 1, {INTEGER_8}.Max_value + {INTEGER_16} 5000
+						)
+				)
+		end
+
+	test_there_exists_native_integer_32
+			-- Test {UNIVERSE}.there_exists_native_integer_32.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_integer_32"
+		local
+			u: like universe_to_be_tested
+		do
+			u := universe_to_be_tested
+			assert (
+					"not too big",
+					not u.there_exists_native_integer_32 (
+								agent (i: INTEGER_32): BOOLEAN
+									do
+										Result := i > {INTEGER_32}.Max_value
+									end,
+								{INTEGER_32}.Min_value, {INTEGER_32}.Max_value
+							)
+				)
+
+			assert (
+					"big enough",
+					u.there_exists_native_integer_32 (
+							agent (i: INTEGER_32): BOOLEAN
+								do
+									Result := i > 729
+								end,
+							{INTEGER_32}.Min_value, {INTEGER_32}.Max_value
+						)
+				)
+		end
+
+	test_there_exists_native_integer_64
+			-- Test {UNIVERSE}.there_exists_native_integer_64.
+		note
+			testing: "covers/{UNIVERSE}.there_exists_native_integer_64"
+		local
+			u: like universe_to_be_tested
+		do
+			u := universe_to_be_tested
+			assert (
+					"not too big",
+					not u.there_exists_native_integer_64 (
+								agent (i: INTEGER_64): BOOLEAN
+									do
+										Result := i > {INTEGER_64}.Max_value
+									end,
+								{INTEGER_64}.Min_value, {INTEGER_64}.Max_value
+							)
+				)
+
+			assert (
+					"big enough",
+					u.there_exists_native_integer_64 (
 							agent (i: INTEGER_64): BOOLEAN
 								do
-									Result := i.out.count > 4
+									Result := i > 729
 								end,
-							{INTEGER_16}.Min_value, {INTEGER_16}.Max_value
+							{INTEGER_64}.Min_value, {INTEGER_64}.Max_value
 						)
 				)
 		end

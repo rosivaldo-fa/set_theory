@@ -120,11 +120,11 @@ feature -- Quantifier
 			elseif g_type_id = ({INTEGER_8}).type_id then
 				Result := there_exists_native_integer_8 (q, {INTEGER_8}.Min_value, {INTEGER_8}.Max_value)
 			elseif g_type_id = ({INTEGER_16}).type_id then
-				Result := there_exists_native_integer (q, {INTEGER_16}.Min_value, {INTEGER_16}.Max_value)
+				Result := there_exists_native_integer_16 (q, {INTEGER_16}.Min_value, {INTEGER_16}.Max_value)
 			elseif g_type_id = ({INTEGER_32}).type_id then
-				Result := there_exists_native_integer (q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
+				Result := there_exists_native_integer_32 (q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
 			elseif g_type_id = ({INTEGER_64}).type_id then
-				Result := there_exists_native_integer (q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
+				Result := there_exists_native_integer_64 (q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
 			elseif g_type_id = ({REAL_32}).type_id then
 				Result := there_exists_native_real_32 (q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
 			elseif g_type_id = ({REAL_64}).type_id then
@@ -144,9 +144,9 @@ feature -- Quantifier
 			natural_32: ({G}).type_id = ({NATURAL_32}).type_id ⇒ Result = there_exists_native_natural_32 (el_q, 0, {NATURAL_32}.Max_value)
 			natural_64: ({G}).type_id = ({NATURAL_64}).type_id ⇒ Result = there_exists_native_natural_64 (el_q, 0, {NATURAL_64}.Max_value)
 			integer_8: ({G}).type_id = ({INTEGER_8}).type_id ⇒ Result = there_exists_native_integer_8 (el_q, {INTEGER_8}.Min_value, {INTEGER_8}.Max_value)
-			integer_16: ({G}).type_id = ({INTEGER_16}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_16}.Min_value, {INTEGER_16}.Max_value)
-			integer_32: ({G}).type_id = ({INTEGER_32}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
-			integer_64: ({G}).type_id = ({INTEGER_64}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
+			integer_16: ({G}).type_id = ({INTEGER_16}).type_id ⇒ Result = there_exists_native_integer_16 (el_q, {INTEGER_16}.Min_value, {INTEGER_16}.Max_value)
+			integer_32: ({G}).type_id = ({INTEGER_32}).type_id ⇒ Result = there_exists_native_integer_32 (el_q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
+			integer_64: ({G}).type_id = ({INTEGER_64}).type_id ⇒ Result = there_exists_native_integer_64 (el_q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
 			real_32: ({G}).type_id = ({REAL_32}).type_id ⇒ Result = there_exists_native_real_32 (el_q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
 			real_64: ({G}).type_id = ({REAL_64}).type_id ⇒ Result = there_exists_native_real_64 (el_q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
 			some_other_g: not (
@@ -389,6 +389,93 @@ feature -- Quantifier
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_8 (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value)
+		end
+
+	there_exists_native_integer_16 (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_16): BOOLEAN
+			-- Does `p' hold for some native integer number within the interval [`min_value' .. `max_value']?
+		local
+			i: INTEGER_16
+		do
+			if min_value ≤ max_value then
+				from
+					i := min_value
+					Result := p (i)
+				invariant
+					bounded: i ≤ max_value
+					not_found_before: min_value < i ⇒ not there_exists_native_integer_16 (p, min_value, i - 1)
+					definition: Result = p (i)
+				until
+					i = max_value or Result
+				loop
+					i := i + 1
+					Result := p (i)
+				variant
+					i: max_value - i
+				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_16 (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value)
+		end
+
+	there_exists_native_integer_32 (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_32): BOOLEAN
+			-- Does `p' hold for some native integer number within the interval [`min_value' .. `max_value']?
+		local
+			i: INTEGER_32
+		do
+			if min_value ≤ max_value then
+				from
+					i := min_value
+					Result := p (i)
+				invariant
+					bounded: i ≤ max_value
+					not_found_before: min_value < i ⇒ not there_exists_native_integer_32 (p, min_value, i - 1)
+					definition: Result = p (i)
+				until
+					i = max_value or Result
+				loop
+					i := i + 1
+					Result := p (i)
+				variant
+					i: max_value - i
+				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_32 (p, min_value + 1, max_value)
+			last_chance: min_value = max_value ⇒ Result = p (min_value)
+		end
+
+	there_exists_native_integer_64 (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_64): BOOLEAN
+			-- Does `p' hold for some native integer number within the interval [`min_value' .. `max_value']?
+		local
+			i: INTEGER_64
+		do
+			if min_value ≤ max_value then
+				from
+					i := min_value
+					Result := p (i)
+				invariant
+					bounded: i ≤ max_value
+					not_found_before: min_value < i ⇒ not there_exists_native_integer_64 (p, min_value, i - 1)
+					definition: Result = p (i)
+				until
+					i = max_value or Result
+				loop
+					i := i + 1
+					Result := p (i)
+				variant
+					i: max_value - i
+				end
+			end
+		ensure
+			not_found: max_value < min_value ⇒ not Result
+			found: min_value < max_value and p (min_value) ⇒ Result
+			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_64 (p, min_value + 1, max_value)
 			last_chance: min_value = max_value ⇒ Result = p (min_value)
 		end
 
