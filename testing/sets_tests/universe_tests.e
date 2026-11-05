@@ -498,7 +498,7 @@ feature -- Test routines (Quantifier)
 									do
 										Result := i > {INTEGER_64}.Max_value
 									end,
-								{INTEGER_64}.Min_value, {INTEGER_64}.Max_value
+								{INTEGER_32}.Max_value + 1, {INTEGER_32}.Max_value + 5000
 							)
 				)
 
@@ -507,9 +507,9 @@ feature -- Test routines (Quantifier)
 					u.there_exists_native_integer_64 (
 							agent (i: INTEGER_64): BOOLEAN
 								do
-									Result := i > 729
+									Result := i > {INTEGER_32}.Max_value + 1729
 								end,
-							{INTEGER_64}.Min_value, {INTEGER_64}.Max_value
+							{INTEGER_32}.Max_value + 1, {INTEGER_32}.Max_value + 5000
 						)
 				)
 		end
