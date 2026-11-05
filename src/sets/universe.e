@@ -118,7 +118,7 @@ feature -- Quantifier
 			elseif g_type_id = ({NATURAL_64}).type_id then
 				Result := there_exists_native_natural_64 (q, 0, {NATURAL_64}.Max_value)
 			elseif g_type_id = ({INTEGER_8}).type_id then
-				Result := there_exists_native_integer (q, {INTEGER_8}.Min_value, {INTEGER_8}.Max_value)
+				Result := there_exists_native_integer_8 (q, {INTEGER_8}.Min_value, {INTEGER_8}.Max_value)
 			elseif g_type_id = ({INTEGER_16}).type_id then
 				Result := there_exists_native_integer (q, {INTEGER_16}.Min_value, {INTEGER_16}.Max_value)
 			elseif g_type_id = ({INTEGER_32}).type_id then
@@ -139,11 +139,11 @@ feature -- Quantifier
 			character_8: ({G}).type_id = ({CHARACTER_8}).type_id ⇒ Result = there_exists_character_8 (el_q, {CHARACTER_8}.Min_value, {CHARACTER_8}.Max_value)
 			character_32: ({G}).type_id = ({CHARACTER_32}).type_id ⇒
 				Result = there_exists_character_32 (el_q, {CHARACTER_32}.Min_value, {CHARACTER_32}.Max_value)
-			natural_8: ({G}).type_id = ({NATURAL_8}).type_id ⇒ Result = there_exists_native_natural (el_q, {NATURAL_8} 0, {NATURAL_8}.Max_value)
-			natural_16: ({G}).type_id = ({NATURAL_16}).type_id ⇒ Result = there_exists_native_natural (el_q, {NATURAL_16} 0, {NATURAL_16}.Max_value)
-			natural_32: ({G}).type_id = ({NATURAL_32}).type_id ⇒ Result = there_exists_native_natural (el_q, {NATURAL_32} 0, {NATURAL_32}.Max_value)
-			natural_64: ({G}).type_id = ({NATURAL_64}).type_id ⇒ Result = there_exists_native_natural (el_q, {NATURAL_64} 0, {NATURAL_64}.Max_value)
-			integer_8: ({G}).type_id = ({INTEGER_8}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_8}.Min_value, {INTEGER_8}.Max_value)
+			natural_8: ({G}).type_id = ({NATURAL_8}).type_id ⇒ Result = there_exists_native_natural_8 (el_q, 0, {NATURAL_8}.Max_value)
+			natural_16: ({G}).type_id = ({NATURAL_16}).type_id ⇒ Result = there_exists_native_natural_16 (el_q, 0, {NATURAL_16}.Max_value)
+			natural_32: ({G}).type_id = ({NATURAL_32}).type_id ⇒ Result = there_exists_native_natural_32 (el_q, 0, {NATURAL_32}.Max_value)
+			natural_64: ({G}).type_id = ({NATURAL_64}).type_id ⇒ Result = there_exists_native_natural_64 (el_q, 0, {NATURAL_64}.Max_value)
+			integer_8: ({G}).type_id = ({INTEGER_8}).type_id ⇒ Result = there_exists_native_integer_8 (el_q, {INTEGER_8}.Min_value, {INTEGER_8}.Max_value)
 			integer_16: ({G}).type_id = ({INTEGER_16}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_16}.Min_value, {INTEGER_16}.Max_value)
 			integer_32: ({G}).type_id = ({INTEGER_32}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
 			integer_64: ({G}).type_id = ({INTEGER_64}).type_id ⇒ Result = there_exists_native_integer (el_q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
@@ -363,32 +363,32 @@ feature -- Quantifier
 			last_chance: min_value = max_value ⇒ Result = p (min_value)
 		end
 
-	there_exists_native_natural (p: PREDICATE [detachable separate ANY]; min_value, max_value: NATURAL_64): BOOLEAN
-			-- Does `p' hold for some native natural number within the interval [`min_value' .. `max_value']?
+	there_exists_native_integer_8 (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_8): BOOLEAN
+			-- Does `p' hold for some native integer number within the interval [`min_value' .. `max_value']?
 		local
-			n: NATURAL_64
+			i: INTEGER_8
 		do
 			if min_value ≤ max_value then
 				from
-					n := min_value
-					Result := p (n)
+					i := min_value
+					Result := p (i)
 				invariant
-					bounded: n ≤ max_value
-					not_found_before: min_value < n ⇒ not there_exists_native_natural (p, min_value, n - 1)
-					definition: Result = p (n)
+					bounded: i ≤ max_value
+					not_found_before: min_value < i ⇒ not there_exists_native_integer_8 (p, min_value, i - 1)
+					definition: Result = p (i)
 				until
-					n = max_value or Result
+					i = max_value or Result
 				loop
-					n := n + 1
-					Result := p (n)
---				variant
---					n: (max_value - n).as_integer_64 -- Maybe too big even for an {INTEGER_64}
+					i := i + 1
+					Result := p (i)
+				variant
+					i: max_value - i
 				end
 			end
 		ensure
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
-			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural (p, min_value + 1, max_value)
+			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_8 (p, min_value + 1, max_value)
 			last_chance: min_value = max_value ⇒ Result = p (min_value)
 		end
 

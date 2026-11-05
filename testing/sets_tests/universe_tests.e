@@ -32,7 +32,7 @@ feature -- Test routines (All)
 			test_there_exists_native_natural_16
 			test_there_exists_native_natural_32
 			test_there_exists_native_natural_64
-			test_there_exists_native_natural
+			test_there_exists_native_integer_8
 			test_there_exists_native_integer
 			test_there_exists_native_real_32
 			test_there_exists_native_real_64
@@ -388,33 +388,33 @@ feature -- Test routines (Quantifier)
 				)
 		end
 
-	test_there_exists_native_natural
-			-- Test {UNIVERSE}.there_exists_native_natural.
+	test_there_exists_native_integer_8
+			-- Test {UNIVERSE}.there_exists_native_integer_8.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural"
+			testing: "covers/{UNIVERSE}.there_exists_native_integer_8"
 		local
 			u: like universe_to_be_tested
 		do
 			u := universe_to_be_tested
 			assert (
-					"NATURAL_8",
-					not u.there_exists_native_natural (
-								agent (n: NATURAL_64): BOOLEAN
+					"not too big",
+					not u.there_exists_native_integer_8 (
+								agent (i: INTEGER_8): BOOLEAN
 									do
-										Result := n.out.count > 3
+										Result := i > {INTEGER_8}.Max_value
 									end,
-								{NATURAL_8} 0, {NATURAL_8}.Max_value
+								{INTEGER_8}.Min_value, {INTEGER_8}.Max_value
 							)
 				)
 
 			assert (
-					"NATURAL_16",
-					u.there_exists_native_natural (
-							agent (n: NATURAL_64): BOOLEAN
+					"big enough",
+					u.there_exists_native_integer_8 (
+							agent (i: INTEGER_8): BOOLEAN
 								do
-									Result := n.out.count > 3
+									Result := i > 29
 								end,
-							{NATURAL_16} 0, {NATURAL_16}.Max_value
+							{INTEGER_8}.Min_value, {INTEGER_8}.Max_value
 						)
 				)
 		end

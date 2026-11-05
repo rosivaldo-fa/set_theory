@@ -25,8 +25,7 @@ inherit
 			test_there_exists_native_natural_16,
 			test_there_exists_native_natural_32,
 			test_there_exists_native_natural_64,
-			test_there_exists_native_natural,
-			test_there_exists_native_integer,
+			test_there_exists_native_integer_8,
 			test_there_exists_native_real_32,
 			test_there_exists_native_real_64,
 			test_there_exists_g_instance
@@ -122,18 +121,10 @@ feature -- Test routines (Quantifier)
 			Precursor {UNIVERSE_TESTS}
 		end
 
-	test_there_exists_native_natural
+	test_there_exists_native_integer_8
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural"
-		do
-			Precursor {UNIVERSE_TESTS}
-		end
-
-	test_there_exists_native_integer
-			-- <Precursor>
-		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer"
+			testing: "covers/{UNIVERSE}.there_exists_native_integer_8"
 		do
 			Precursor {UNIVERSE_TESTS}
 		end
