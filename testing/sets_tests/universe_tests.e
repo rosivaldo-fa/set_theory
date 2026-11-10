@@ -108,100 +108,309 @@ feature -- Test routines (Quantifier)
 		note
 			testing: "covers/{UNIVERSE}.there_exists"
 		local
---			check_assert: BOOLEAN
+			check_assert: BOOLEAN
+			u_p: UNIVERSE [POINTER]
 			u_b: UNIVERSE [BOOLEAN]
 			u_c8: UNIVERSE [CHARACTER_8]
 			u_c32: UNIVERSE [CHARACTER_32]
 			u_n8: UNIVERSE [NATURAL_8]
+			u_n16: UNIVERSE [NATURAL_16]
+			u_n32: UNIVERSE [NATURAL_32]
+			u_n64: UNIVERSE [NATURAL_64]
+			u_i8: UNIVERSE [INTEGER_8]
+			u_i16: UNIVERSE [INTEGER_16]
+			u_i32: UNIVERSE [INTEGER_32]
+			u_i64: UNIVERSE [INTEGER_64]
+			u_r32: UNIVERSE [REAL_32]
+			u_r64: UNIVERSE [REAL_64]
 			u: like universe_to_be_tested
+			s: EFFECTIVE_SET [G]
+			eq: REFERENCE_EQUALITY [G]
+			p1, p2, p3, p4: POINTER
 		do
+--			p1 := p1.memory_alloc (32)
+--			p2 := p1.memory_alloc (32)
+--			p3 := p1.memory_alloc (32)
+--			p4 := p1.memory_alloc (32)
+--			create u_p
+--			assert ("impossible",
+--				u_p |∃ agent (p: POINTER): BOOLEAN
+--					do
+--						Result := p.out = Void
+--					end = False
+--				)
+
+--			assert ("inevitable",
+--				u_p |∃ agent (p: POINTER): BOOLEAN
+--					do
+--						Result := p.out /= Void
+--					end = True
+--				)
+
+
+
+
 			create u_b
 			assert (
-					"not invisible",
-					u_b.there_exists (
-							agent (bool: BOOLEAN): BOOLEAN
-								do
-									Result := bool.out ~ ""
-								end
-						) = False
+					"excluded third",
+					u_b |∃ agent (bool: BOOLEAN): BOOLEAN
+						do
+							Result := bool /= False and bool /= True
+						end = False
 				)
 
 			assert (
-					"visible",
-					u_b.there_exists (
-							agent (bool: BOOLEAN): BOOLEAN
-								do
-									Result := bool.out /~ ""
-								end
-						) = True
+					"just two possible values",
+					u_b |∃ agent (bool: BOOLEAN): BOOLEAN
+						do
+							Result := bool xor not bool
+						end = True
 				)
 
 			create u_c8
 			assert (
 					"no_negative_code c8",
-					u_c8.there_exists (
-							agent (c8: CHARACTER_8): BOOLEAN
-								do
-									Result := c8.code < 0
-								end
-						) = False
+					u_c8 |∃ agent (c8: CHARACTER_8): BOOLEAN
+						do
+							Result := c8.code < 0
+						end = False
 				)
 
 			assert (
 					"some_given_code c8",
-					u_c8.there_exists (
-							agent (c8: CHARACTER_8): BOOLEAN
-								do
-									Result := c8.code = 89
-								end
-						) = True
+					u_c8 |∃ agent (c8: CHARACTER_8): BOOLEAN
+						do
+							Result := c8.code = 89
+						end = True
 				)
 
 			create u_c32
 			assert (
 					"some_given_code c32",
-					u_c32.there_exists (
-							agent (c32: CHARACTER_32): BOOLEAN
-								do
-									Result := c32.code = 329
-								end
-						) = True
+					u_c32 |∃ agent (c32: CHARACTER_32): BOOLEAN
+						do
+							Result := c32.code = 329
+						end = True
 				)
 
 --			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
 --			assert (
 --					"no_negative_code c32",
---					u_c32.there_exists (
---							agent (c32: CHARACTER_32): BOOLEAN
---								do
---									Result := c32.natural_32_code < 0
---								end
---						) = False
+--					u_c32 |∃ agent (c32: CHARACTER_32): BOOLEAN
+--						do
+--							Result := c32.natural_32_code < 0
+--						end = False
 --				)
 --			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
 
 			create u_n8
 			assert (
 					"no negative n8",
-					u_n8.there_exists (
-							agent (n: NATURAL_8): BOOLEAN
-								do
-									Result := n < 0
-								end
-						) = False
+					u_n8 |∃ agent (n: NATURAL_8): BOOLEAN
+						do
+							Result := n < 0
+						end = False
 				)
 
 			assert (
 					"big enough n8",
-					u_n8.there_exists (
-							agent (n: NATURAL_8): BOOLEAN
-								do
-									Result := n.out.count > 2
-								end
-						) = True
+					u_n8 |∃ agent (n: NATURAL_8): BOOLEAN
+						do
+							Result := n > 99
+						end = True
+				)
+
+			create u_n16
+			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test every assertion in reasonable time
+			assert (
+					"no negative n16",
+					u_n16 |∃ agent (n: NATURAL_16): BOOLEAN
+						do
+							Result := n < 0
+						end = False
+				)
+			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
+
+			assert (
+					"big enough n16",
+					u_n16 |∃ agent (n: NATURAL_16): BOOLEAN
+						do
+							Result := n > 999
+						end = True
+				)
+
+			create u_n32
+--			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
+--			assert (
+--					"no negative n32",
+--					u_n32 |∃ agent (n: NATURAL_32): BOOLEAN
+--						do
+--							Result := n < 0
+--						end = False
+--				)
+--			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
+
+			assert (
+					"big enough n32",
+					u_n32 |∃ agent (n: NATURAL_32): BOOLEAN
+						do
+							Result := n > 4999
+						end = True
+				)
+
+			create u_n64
+--			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
+--			assert (
+--					"no negative n64",
+--					u_n64 |∃ agent (n: NATURAL_64): BOOLEAN
+--						do
+--							Result := n < 0
+--						end = False
+--				)
+--			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
+
+			assert (
+					"big enough n64",
+					u_n64 |∃ agent (n: NATURAL_64): BOOLEAN
+						do
+							Result := n > 4999
+						end = True
+				)
+
+			create u_i8
+			assert (
+					"small enough i8",
+					u_i8 |∃ agent (i: INTEGER_8): BOOLEAN
+						do
+							Result := i > {INTEGER_8}.Max_value
+						end = False
+				)
+
+			assert (
+					"big enough i8",
+					u_i8 |∃ agent (i: INTEGER_8): BOOLEAN
+						do
+							Result := i > 99
+						end = True
+				)
+
+			create u_i16
+			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test every assertion in reasonable time
+			assert (
+					"small enough i16",
+					u_i16 |∃ agent (i: INTEGER_16): BOOLEAN
+						do
+							Result := i > {INTEGER_16}.Max_value
+						end = False
+				)
+			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
+
+			assert (
+					"big enough i16",
+					u_i16 |∃ agent (i: INTEGER_16): BOOLEAN
+						do
+							Result := i > {INTEGER_16}.Min_value + 4999
+						end = True
+				)
+
+			create u_i32
+--			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
+--			assert (
+--					"small enough i32",
+--					u_i32 |∃ agent (i: INTEGER_32): BOOLEAN
+--						do
+--							Result := i > {INTEGER_32}.Max_value
+--						end = False
+--				)
+--			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
+
+			assert (
+					"big enough i32",
+					u_i32 |∃ agent (i: INTEGER_32): BOOLEAN
+						do
+							Result := i > {INTEGER_32}.Min_value + 4999
+						end = True
+				)
+
+			create u_i64
+--			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
+--			assert (
+--					"small enough i64",
+--					u_i64 |∃ agent (i: INTEGER_64): BOOLEAN
+--						do
+--							Result := i > {INTEGER_64}.Max_value
+--						end = False
+--				)
+--			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
+
+			assert (
+					"big enough i64",
+					u_i64 |∃ agent (i: INTEGER_64): BOOLEAN
+						do
+							Result := i > {INTEGER_64}.Min_value + 4999
+						end = True
+				)
+
+			create u_r32
+--			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
+--			assert (
+--					"small enough r32",
+--					u_r32 |∃ agent (x: REAL_32): BOOLEAN
+--						do
+--							Result := x > {REAL_32}.positive_infinity
+--						end = False
+--				)
+--			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
+
+			assert (
+					"magic negative r32",
+					u_r32 |∃ agent (x: REAL_32): BOOLEAN
+						do
+							Result := x < - (2 ^ (-126) * 5000 / (2 ^ 24))
+						end = True
+				)
+
+			create u_r64
+--			check_assert := {ISE_RUNTIME}.check_assert (False) -- Universe too big to test in reasonable time
+--			assert (
+--					"small enough r64",
+--					u_r64 |∃ agent (x: REAL_64): BOOLEAN
+--						do
+--							Result := x > {REAL_64}.positive_infinity
+--						end = False
+--				)
+--			check_assert := {ISE_RUNTIME}.check_assert (check_assert)
+
+			assert (
+					"magic negative  r64",
+					u_r64 |∃ agent (x: REAL_64): BOOLEAN
+						do
+							Result := x < - (2 ^ (-1022) * 5000 / (2 ^ 53))
+						end = True
 				)
 
 			u := universe_to_be_tested
+				-- Let's populate the universe.
+			create s
+			create eq
+			s := s.extended (a, eq)
+			s := s.extended (b, eq)
+			s := s.extended (c, eq)
+			s := s.extended (d, eq)
+
+			assert ("impossible",
+				u |∃ agent (x: G; il_u: SET [G]): BOOLEAN
+					do
+						Result := il_u ∌ x
+					end (?, u) = False
+				)
+
+			assert ("inevitable",
+				u |∃ agent (x: G; il_s: SET [G]): BOOLEAN
+					do
+						Result := il_s ∋ x
+					end (?, s) = True
+				)
 		end
 
 	test_there_exists_character_8
@@ -602,7 +811,7 @@ feature -- Test routines (Quantifier)
 									do
 										Result := x /= x
 									end,
-								{MEMORY}.memory_map
+								{MEMORY}.objects_instance_of_type (({G}).type_id)
 							)
 				)
 
@@ -614,7 +823,7 @@ feature -- Test routines (Quantifier)
 								do
 									Result := attached x and then x.out.has ('b')
 								end,
-							{MEMORY}.memory_map
+							{MEMORY}.objects_instance_of_type (({G}).type_id)
 						)
 				)
 

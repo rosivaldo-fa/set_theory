@@ -131,7 +131,7 @@ feature -- Quantifier
 				Result := there_exists_native_real_64 (q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
 			else
 				{MEMORY}.full_collect -- Get rid of partially collected objects.
-				Result := there_exists_g_instance (p, {MEMORY}.memory_map)
+				Result := there_exists_g_instance (p, {MEMORY}.objects_instance_of_type (g_type_id))
 			end
 		ensure then
 			el_q: attached {PREDICATE [detachable separate ANY]} p as el_q
@@ -150,19 +150,21 @@ feature -- Quantifier
 			real_32: ({G}).type_id = ({REAL_32}).type_id ⇒ Result = there_exists_native_real_32 (el_q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
 			real_64: ({G}).type_id = ({REAL_64}).type_id ⇒ Result = there_exists_native_real_64 (el_q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
 			some_other_g: not (
-						({G}).type_id = ({BOOLEAN}).type_id or ({G}).type_id = ({CHARACTER_8}).type_id or ({G}).type_id = ({CHARACTER_32}).type_id or
-						({G}).type_id = ({NATURAL_8}).type_id or ({G}).type_id = ({NATURAL_16}).type_id or ({G}).type_id = ({NATURAL_32}).type_id or
-						({G}).type_id = ({NATURAL_64}).type_id or ({G}).type_id = ({INTEGER_8}).type_id or ({G}).type_id = ({INTEGER_16}).type_id or
-						({G}).type_id = ({INTEGER_32}).type_id or ({G}).type_id = ({INTEGER_64}).type_id or ({G}).type_id = ({REAL_32}).type_id or
-						({G}).type_id = ({REAL_64}).type_id
-					) ⇒ Result = (
+					({G}).type_id = ({BOOLEAN}).type_id or ({G}).type_id = ({CHARACTER_8}).type_id or ({G}).type_id = ({CHARACTER_32}).type_id or
+					({G}).type_id = ({NATURAL_8}).type_id or ({G}).type_id = ({NATURAL_16}).type_id or ({G}).type_id = ({NATURAL_32}).type_id or
+					({G}).type_id = ({NATURAL_64}).type_id or ({G}).type_id = ({INTEGER_8}).type_id or ({G}).type_id = ({INTEGER_16}).type_id or
+					({G}).type_id = ({INTEGER_32}).type_id or ({G}).type_id = ({INTEGER_64}).type_id or ({G}).type_id = ({REAL_32}).type_id or
+					({G}).type_id = ({REAL_64}).type_id
+				) ⇒ Result = (
+					(
 						agent: BOOLEAN
 							do
 								{MEMORY}.full_collect -- Get rid of partially collected objects.
 								Result := True
 							end
-					).item and
-				there_exists_g_instance (p, {MEMORY}.memory_map)
+						).item and
+					there_exists_g_instance (p, {MEMORY}.objects_instance_of_type (({G}).type_id))
+					)
 		end
 
 	there_exists_character_8 (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_32): BOOLEAN
@@ -382,7 +384,7 @@ feature -- Quantifier
 					i := i + 1
 					Result := p (i)
 				variant
-					i: max_value - i
+					i: max_value.as_integer_64 - i
 				end
 			end
 		ensure
@@ -411,7 +413,7 @@ feature -- Quantifier
 					i := i + 1
 					Result := p (i)
 				variant
-					i: max_value - i
+					i: max_value.as_integer_64 - i
 				end
 			end
 		ensure
@@ -440,7 +442,7 @@ feature -- Quantifier
 					i := i + 1
 					Result := p (i)
 				variant
-					i: max_value - i
+					i: max_value.as_integer_64 - i
 				end
 			end
 		ensure
@@ -468,43 +470,14 @@ feature -- Quantifier
 				loop
 					i := i + 1
 					Result := p (i)
-				variant
-					i: max_value - i
+--				variant
+--					i: max_value.as_integer_64 - i -- Maybe too big a difference even for an {INTEGER_64}
 				end
 			end
 		ensure
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_64 (p, min_value + 1, max_value)
-			last_chance: min_value = max_value ⇒ Result = p (min_value)
-		end
-
-	there_exists_native_integer (p: PREDICATE [detachable separate ANY]; min_value, max_value: INTEGER_64): BOOLEAN
-			-- Does `p' hold for some native integer number within the interval [`min_value' .. `max_value']?
-		local
-			i: INTEGER_64
-		do
-			if min_value ≤ max_value then
-				from
-					i := min_value
-					Result := p (i)
-				invariant
-					bounded: i ≤ max_value
-					not_found_before: min_value < i ⇒ not there_exists_native_integer (p, min_value, i - 1)
-					definition: Result = p (i)
-				until
-					i = max_value or Result
-				loop
-					i := i + 1
-					Result := p (i)
---				variant
---					i: max_value - i -- Maybe too big even for an {INTEGER_64}
-				end
-			end
-		ensure
-			not_found: max_value < min_value ⇒ not Result
-			found: min_value < max_value and p (min_value) ⇒ Result
-			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer (p, min_value + 1, max_value)
 			last_chance: min_value = max_value ⇒ Result = p (min_value)
 		end
 
@@ -574,7 +547,7 @@ feature -- Quantifier
 			last_chance: min_pattern = max_pattern ⇒ Result = p (real_64_from_bit_pattern (min_pattern))
 		end
 
-	there_exists_g_instance (p: PREDICATE [G]; mem_map: HASH_TABLE [ARRAYED_LIST [ANY], INTEGER]): BOOLEAN
+	there_exists_g_instance (p: PREDICATE [G]; g_instances: SPECIAL [ANY]): BOOLEAN
 			-- Is there an instance x of {G} such that `p' (x) holds?
 		local
 			type_id: like {TYPE [G]}.type_id
@@ -586,21 +559,12 @@ feature -- Quantifier
 				Result := p (({G}).default)
 			end
 			if not Result then
-				type_id := ({detachable G}).type_id
-				Result := ∃ al: mem_map ¦ if {ISE_RUNTIME}.type_conforms_to (@ al.key, type_id) then
-							∃ x: al ¦ if attached {G} x as a then p (a) else False end
-						else
-							False
-						end
+				Result := ∃ x: g_instances ¦ if attached {G} x as a then p (a) else False end
 			end
 		ensure
 			default_case: not ({G}).is_attached and then ({G}).has_default and then p (({G}).default) ⇒ Result
 			general_case: ({G}).is_attached or else not ({G}).has_default or else not p (({G}).default) ⇒
-				Result = ∃ al: mem_map ¦ if {ISE_RUNTIME}.type_conforms_to (@ al.key, ({detachable G}).type_id) then
-							∃ x: al ¦ if attached {G} x as a then p (a) else False end
-						else
-							False
-						end
+				Result = ∃ x: g_instances ¦ if attached {G} x as a then p (a) else False end
 		end
 
 feature -- Anchor
