@@ -123,25 +123,25 @@ feature -- Test routines (Quantifier)
 			s0 := s0.extended (a, create {REFERENCE_EQUALITY [G]})
 			create s.make (s0)
 			assert (
-				"s.p_holds_outside_reference_set",
-				s.p_holds_outside_reference_set (
-					agent (x: G): BOOLEAN
-						do
-							Result := True
-						end,
-					b
-					)
+					"s.p_holds_outside_reference_set",
+					s.p_holds_outside_reference_set (
+							agent (x: G): BOOLEAN
+								do
+									Result := True
+								end,
+							b
+						)
 				)
 
 			assert (
-				"not s.p_holds_outside_reference_set",
-				not s.p_holds_outside_reference_set (
-					agent (x: G): BOOLEAN
-						do
-							Result := True
-						end,
-					a
-					)
+					"not s.p_holds_outside_reference_set",
+					not s.p_holds_outside_reference_set (
+								agent (x: G): BOOLEAN
+									do
+										Result := True
+									end,
+								a
+							)
 				)
 		end
 
@@ -154,13 +154,14 @@ feature -- Test routines (Quantifier)
 		do
 			s := set_to_be_tested
 			assert (
-				"not quantifiable yet",
-				not attached (
-					s |∃ agent (x: G): BOOLEAN
-						do
-							Result := True
-						end
-					)
+					"outside",
+					s.p_holds_outside_reference_set (agent (s.reference_set).does_not_have, a)
+				)
+
+			s := s.prunned (a)
+			assert (
+					"inside",
+					not s.p_holds_outside_reference_set (agent (s.reference_set).has, a)
 				)
 		end
 

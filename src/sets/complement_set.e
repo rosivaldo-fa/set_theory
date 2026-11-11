@@ -112,7 +112,7 @@ feature -- Quantifier
 			definition: Result = u |∃ agent p_holds_outside_reference_set (p, ?)
 		end
 
-	p_holds_outside_reference_set (p: FUNCTION [G, BOOLEAN]; x: G): BOOLEAN
+	p_holds_outside_reference_set (p: PREDICATE [G]; x: G): BOOLEAN
 			-- Is not `x' `in reference_set' and does `p' (`x') hold?
 		do
 			Result := reference_set ∌ x and p (x)
