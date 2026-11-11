@@ -129,6 +129,8 @@ feature -- Quantifier
 				Result := there_exists_native_real_32 (q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
 			elseif g_type_id = ({REAL_64}).type_id then
 				Result := there_exists_native_real_64 (q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
+			elseif g_type_id = ({POINTER}).type_id then
+				-- Pointers are too dangerous to mess with.
 			else
 				{MEMORY}.full_collect -- Get rid of partially collected objects.
 				Result := there_exists_g_instance (p, {MEMORY}.objects_instance_of_type (g_type_id))
@@ -149,12 +151,14 @@ feature -- Quantifier
 			integer_64: ({G}).type_id = ({INTEGER_64}).type_id ⇒ Result = there_exists_native_integer_64 (el_q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
 			real_32: ({G}).type_id = ({REAL_32}).type_id ⇒ Result = there_exists_native_real_32 (el_q, {INTEGER_32}.Min_value, {INTEGER_32}.Max_value)
 			real_64: ({G}).type_id = ({REAL_64}).type_id ⇒ Result = there_exists_native_real_64 (el_q, {INTEGER_64}.Min_value, {INTEGER_64}.Max_value)
+			pointer: ({G}).type_id = ({POINTER}).type_id ⇒ not attached Result -- Pointers are too dangerous to mess with.
 			some_other_g: not (
 					({G}).type_id = ({BOOLEAN}).type_id or ({G}).type_id = ({CHARACTER_8}).type_id or ({G}).type_id = ({CHARACTER_32}).type_id or
 					({G}).type_id = ({NATURAL_8}).type_id or ({G}).type_id = ({NATURAL_16}).type_id or ({G}).type_id = ({NATURAL_32}).type_id or
 					({G}).type_id = ({NATURAL_64}).type_id or ({G}).type_id = ({INTEGER_8}).type_id or ({G}).type_id = ({INTEGER_16}).type_id or
 					({G}).type_id = ({INTEGER_32}).type_id or ({G}).type_id = ({INTEGER_64}).type_id or ({G}).type_id = ({REAL_32}).type_id or
-					({G}).type_id = ({REAL_64}).type_id
+					({G}).type_id = ({REAL_64}).type_id or
+					({G}).type_id = ({POINTER}).type_id
 				) ⇒ Result = (
 					(
 						agent: BOOLEAN
@@ -549,8 +553,6 @@ feature -- Quantifier
 
 	there_exists_g_instance (p: PREDICATE [G]; g_instances: SPECIAL [ANY]): BOOLEAN
 			-- Is there an instance x of {G} such that `p' (x) holds?
-		local
-			type_id: like {TYPE [G]}.type_id
 		do
 			if not ({G}).is_attached then
 				check

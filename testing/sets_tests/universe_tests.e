@@ -109,7 +109,6 @@ feature -- Test routines (Quantifier)
 			testing: "covers/{UNIVERSE}.there_exists"
 		local
 			check_assert: BOOLEAN
-			u_p: UNIVERSE [POINTER]
 			u_b: UNIVERSE [BOOLEAN]
 			u_c8: UNIVERSE [CHARACTER_8]
 			u_c32: UNIVERSE [CHARACTER_32]
@@ -123,33 +122,11 @@ feature -- Test routines (Quantifier)
 			u_i64: UNIVERSE [INTEGER_64]
 			u_r32: UNIVERSE [REAL_32]
 			u_r64: UNIVERSE [REAL_64]
+			u_p: UNIVERSE [POINTER]
 			u: like universe_to_be_tested
 			s: EFFECTIVE_SET [G]
 			eq: REFERENCE_EQUALITY [G]
-			p1, p2, p3, p4: POINTER
 		do
---			p1 := p1.memory_alloc (32)
---			p2 := p1.memory_alloc (32)
---			p3 := p1.memory_alloc (32)
---			p4 := p1.memory_alloc (32)
---			create u_p
---			assert ("impossible",
---				u_p |∃ agent (p: POINTER): BOOLEAN
---					do
---						Result := p.out = Void
---					end = False
---				)
-
---			assert ("inevitable",
---				u_p |∃ agent (p: POINTER): BOOLEAN
---					do
---						Result := p.out /= Void
---					end = True
---				)
-
-
-
-
 			create u_b
 			assert (
 					"excluded third",
@@ -389,6 +366,11 @@ feature -- Test routines (Quantifier)
 						end = True
 				)
 
+			create u_p
+			assert ("hic sunt dracones",
+				not attached (u_p |∃ agent (p: POINTER): BOOLEAN do end)
+				)
+
 			u := universe_to_be_tested
 				-- Let's populate the universe.
 			create s
@@ -399,17 +381,17 @@ feature -- Test routines (Quantifier)
 			s := s.extended (d, eq)
 
 			assert ("impossible",
-				u |∃ agent (x: G; il_u: SET [G]): BOOLEAN
-					do
-						Result := il_u ∌ x
-					end (?, u) = False
+					u |∃ agent (x: G; il_u: SET [G]): BOOLEAN
+						do
+							Result := il_u ∌ x
+						end (?, u) = False
 				)
 
 			assert ("inevitable",
-				u |∃ agent (x: G; il_s: SET [G]): BOOLEAN
-					do
-						Result := il_s ∋ x
-					end (?, s) = True
+					u |∃ agent (x: G; il_s: SET [G]): BOOLEAN
+						do
+							Result := il_s ∋ x
+						end (?, s) = True
 				)
 		end
 
