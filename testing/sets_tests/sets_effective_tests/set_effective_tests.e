@@ -94,10 +94,8 @@ feature -- Test routines (Primitive)
 feature -- Test routines (Membership)
 
 	test_has
-			-- <Precursor>
 			-- Test {EFFECTIVE_SET}.has.
 		note
-			testing: "covers/{SET}.has"
 			testing: "covers/{EFFECTIVE_SET}.has"
 		do
 			Precursor {EFFECTIVE_SET_TESTS}

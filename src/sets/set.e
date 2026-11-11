@@ -58,8 +58,7 @@ feature -- Construction
 		deferred
 		ensure
 			has_a: Result ∋ a
-			quantifiable: attached (Result |∃ agent eq.holds (?, a)) as exists
-			exists_holds: exists.item
+			by_existence: attached (Result |∃ agent eq.holds (?, a)) as exists ⇒ exists = True
 		end
 
 	prunned alias "/" (a: G): like subset_anchor

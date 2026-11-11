@@ -50,11 +50,8 @@ feature -- Construction
 		local
 			s: EFFECTIVE_SET [G]
 		do
-			known_elements := known_elements.extended (a, create {REFERENCE_EQUALITY [G]})
 			create s
 			create Result.make (s.extended (a, create {REFERENCE_EQUALITY [G]}))
-		ensure then
-			knowledge_extended: known_elements ∋ a
 		end
 
 feature -- Access
@@ -585,19 +582,10 @@ feature -- Anchor
 
 feature {NONE} -- Implementation
 
-	known_elements: EFFECTIVE_SET [G]
-			-- Elements explicitly known to be in current universe
-			--| This set is necessary for making possible to answer `there_exists' query.
-		attribute
-			create Result
-		end
-
-feature {NONE} -- Implementation
-
 	real_32_from_bit_pattern (p: INTEGER_32): REAL_32
 			-- The bit pattern `p' converted to a {REAL_32} value
 			--| Assumptions:
-			--| The bit pattern of `p', unchanged, is interpreted a 32-bit, base 2, IEEE 754, floating point number with the following parameters:
+			--| The bit pattern of `p', unchanged, is interpreted as a 32-bit, base 2, IEEE 754, floating point number with the following parameters:
 			--| sign bit: 1 bit;
 			--| exponent width: 8 bits;
 			--| significand (mantissa) precision: 24 bits (23 explicitly stored).
