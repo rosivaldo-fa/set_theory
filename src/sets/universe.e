@@ -442,8 +442,8 @@ feature -- Quantifier
 				loop
 					i := i + 1
 					Result := p (i)
-				variant
-					i: max_value.as_integer_64 - i
+--				variant
+--					i: max_value.as_integer_64 - i -- Maybe too big even for an {INTEGER_64}
 				end
 			end
 		ensure
