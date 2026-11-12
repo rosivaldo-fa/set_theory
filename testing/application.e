@@ -23,6 +23,7 @@ feature -- Initialization
 			(create {SET_FAMILY_EFFECTIVE_TESTS}).test_all;
 			(create {COMPLEMENT_SET_EFFECTIVE_TESTS}).test_all;
 			(create {EFFECTIVE_NATURAL_NUMBER_TESTS}).test_all;
+			(create {NATURAL_SET_EFFECTIVE_TESTS}).test_all;
 		end
 
 note

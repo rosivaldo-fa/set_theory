@@ -24,6 +24,7 @@ feature -- Test routines (All)
 			Precursor {NATURAL_SET_TESTS}
 			test_default_create
 			test_make_extended
+			test_given_element
 		end
 
 feature -- Test routines (Initialization)
@@ -47,6 +48,33 @@ feature -- Test routines (Initialization)
 						create {like set_to_be_tested}.make_extended (n1, set_to_be_tested)
 					)
 				)
+		end
+
+feature -- Test routines (Primitive)
+
+	test_given_element
+			-- Test {EFFECTIVE_NATURAL_SET}.given_element.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.given_element"
+		local
+			s: like set_to_be_tested
+		do
+			create s
+			s := s.extended (n1)
+			assert ("{n1} /= {}", s.subset /= s)
+			assert ("{n1}", s.given_element ≍ n1)
+
+			s := s.extended (n2.standard_twin)
+			assert ("{n1,n2} /= {}", s.subset /= s)
+			assert ("{n1,n2}", s.given_element ≍ n2)
+
+			s := s.extended (n3.twin)
+			assert ("{n1,n2,n3} /= {}", s.subset /= s)
+			assert ("{n1,n2,n3}", s.given_element ≍ n3)
+
+			s := s.extended (n4.deep_twin)
+			assert ("{n1,n2,n3,n4} /= {}", s.subset /= s)
+			assert ("{n1,n2,n3,n4}", s.given_element ≍ n4)
 		end
 
 feature -- Factory (element to be tested)

@@ -14,6 +14,7 @@ inherit
 			test_all,
 			test_default_create,
 			test_make_extended,
+			test_given_element,
 			test_set_extended,
 			test_extended
 		end
@@ -42,6 +43,16 @@ feature -- Test routines (Initialization)
 			-- <Precursor>
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.make_extended"
+		do
+			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
+		end
+
+feature -- Test routines (Primitive)
+
+	test_given_element
+			-- <Precursor>
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.given_element"
 		do
 			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
 		end
