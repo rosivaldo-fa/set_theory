@@ -31,7 +31,7 @@ feature -- Test routines (All)
 			testing: "covers/{NATURAL_SET}"
 		do
 			Precursor {SET_TESTS}
---			test_extended
+			test_extended
 		end
 
 feature -- Test routines (Construction)

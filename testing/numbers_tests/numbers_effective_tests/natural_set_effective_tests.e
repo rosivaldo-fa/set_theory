@@ -13,7 +13,8 @@ inherit
 		redefine
 			test_all,
 			test_default_create,
-			test_make_extended
+			test_make_extended,
+			test_extended
 		end
 
 feature -- Test routines (All)
@@ -40,6 +41,16 @@ feature -- Test routines (Initialization)
 			-- <Precursor>
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.make_extended"
+		do
+			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {EFFECTIVE_NATURAL_SET}.extended.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.extended"
 		do
 			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
 		end
