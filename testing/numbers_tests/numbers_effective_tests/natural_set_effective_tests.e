@@ -14,6 +14,7 @@ inherit
 			test_all,
 			test_default_create,
 			test_make_extended,
+			test_set_extended,
 			test_extended
 		end
 
@@ -46,6 +47,14 @@ feature -- Test routines (Initialization)
 		end
 
 feature -- Test routines (Construction)
+
+	test_set_extended
+			-- Test {EFFECTIVE_NATURAL_SET}.set_extended.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.set_extended"
+		do
+			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
+		end
 
 	test_extended
 			-- Test {EFFECTIVE_NATURAL_SET}.extended.
