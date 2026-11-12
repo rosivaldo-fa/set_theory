@@ -3,6 +3,7 @@
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	testing: "type/manual"
 
 class
 	OBJECT_STANDARD_EQUALITY_TESTS

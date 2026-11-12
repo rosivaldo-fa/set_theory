@@ -3,6 +3,7 @@
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	testing: "type/manual"
 
 deferred class
 	COMPLEMENT_SET_TESTS [G]

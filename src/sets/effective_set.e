@@ -133,11 +133,7 @@ feature -- Access
 	universe: like universe_anchor
 			-- <Precursor>
 		do
-			if subset = Current then
-				create Result
-			else
-				Result := subset.u.extended (given_element, create {REFERENCE_EQUALITY [G]})
-			end
+			create Result
 		end
 
 feature -- Quality
@@ -218,6 +214,14 @@ feature -- Quantifier
 
 feature -- Anchor
 
+	given_element_anchor: G
+			-- Anchor for objects like `given_element'
+		require
+			is_not_empty: subset /= Current
+		do
+			Result := given_element
+		end
+
 	subset_anchor: SET [G]
 			-- <Precursor>
 		do
@@ -243,16 +247,6 @@ feature {NONE} -- Implementation
 		note
 			option: stable
 		attribute
-		end
-
-feature {NONE} -- Anchor
-
-	given_element_anchor: G
-			-- Anchor for objects like `given_element'
-		require
-			is_not_empty: subset /= Current
-		do
-			Result := given_element
 		end
 
 invariant

@@ -3,6 +3,7 @@ note
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	testing: "type/manual"
 
 class
 	REFERENCE_EQUALITY_TESTS

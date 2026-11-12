@@ -3,6 +3,7 @@
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	testing: "type/manual"
 
 deferred class
 	SET_FAMILY_TESTS [G]

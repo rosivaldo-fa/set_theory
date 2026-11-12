@@ -3,6 +3,7 @@
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	testing: "type/manual"
 
 class
 	UNIVERSE_EFFECTIVE_TESTS
@@ -17,8 +18,16 @@ inherit
 		redefine
 			test_all,
 			test_default_create,
+			test_has,
+			test_does_not_have,
+			test_extended,
+			test_prunned,
+			test_u,
+			test_universe,
+			test_is_universe,
 			test_out,
 			test_debug_output,
+			test_there_exists,
 			test_there_exists_character_8,
 			test_there_exists_character_32,
 			test_there_exists_native_natural_8,
@@ -54,6 +63,70 @@ feature -- Test routines (Initialization)
 			Precursor {UNIVERSE_TESTS}
 		end
 
+feature -- Test routines (Membership)
+
+	test_has
+			-- <Precursor>
+		note
+			testing: "covers/{UNIVERSE}.has"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+	test_does_not_have
+			-- <Precursor>
+		note
+			testing: "covers/{UNIVERSE}.does_not_have"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {UNIVERSE}.extended.
+		note
+			testing: "covers/{UNIVERSE}.extended"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+	test_prunned
+			-- Test {UNIVERSE}.prunned.
+		note
+			testing: "covers/{UNIVERSE}.prunned"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+feature -- Test routines (Access)
+
+	test_u
+			-- Test {UNIVERSE}.u.
+		note
+			testing: "covers/{UNIVERSE}.u"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+	test_universe
+			-- Test {UNIVERSE}.universe.
+		note
+			testing: "covers/{UNIVERSE}.universe"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_universe
+			-- Test {UNIVERSE}.is_universe.
+		note
+			testing: "covers/{UNIVERSE}.is_universe"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
+
 feature -- Test routines (Output)
 
 	test_out
@@ -75,6 +148,14 @@ feature -- Test routines (Status report)
 		end
 
 feature -- Test routines (Quantifier)
+
+	test_there_exists
+			-- <Precursor>
+		note
+			testing: "covers/{UNIVERSE}.there_exists"
+		do
+			Precursor {UNIVERSE_TESTS}
+		end
 
 	test_there_exists_character_8
 			-- <Precursor>

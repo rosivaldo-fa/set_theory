@@ -3,6 +3,7 @@
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	testing: "type/manual"
 
 class
 	COMPLEMENT_SET_EFFECTIVE_TESTS
@@ -18,8 +19,15 @@ inherit
 			test_all,
 			test_make,
 			test_reference_set,
+			test_has,
+			test_extended,
+			test_prunned,
+			test_u,
+			test_universe,
+			test_is_universe,
 			test_out,
 			test_debug_output,
+			test_there_exists,
 			test_p_holds_outside_reference_set
 		end
 
@@ -53,6 +61,63 @@ feature -- Test routines (Primitive)
 			Precursor {COMPLEMENT_SET_TESTS}
 		end
 
+feature -- Test routines (Membership)
+
+	test_has
+			-- <Precursor>
+		note
+			testing: "covers/{COMPLEMENT_SET}.has"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {COMPLEMENT_SET}.extended.
+		note
+			testing: "covers/{COMPLEMENT_SET}.extended"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+	test_prunned
+			-- <Precursor>
+			-- Test {COMPLEMENT_SET}.prunned.
+		note
+			testing: "covers/{COMPLEMENT_SET}.prunned"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Access)
+
+	test_u
+			-- Test {COMPLEMENT_SET}.u.
+		note
+			testing: "covers/{COMPLEMENT_SET}.u"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+	test_universe
+			-- Test {COMPLEMENT_SET}.universe.
+		note
+			testing: "covers/{COMPLEMENT_SET}.universe"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_universe
+			-- Test {COMPLEMENT_SET}.is_universe.
+		note
+			testing: "covers/{COMPLEMENT_SET}.is_universe"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
+
 feature -- Test routines (Output)
 
 	test_out
@@ -74,6 +139,14 @@ feature -- Test routines (Status report)
 		end
 
 feature -- Test routines (Quantifier)
+
+	test_there_exists
+			-- <Precursor>
+		note
+			testing: "covers/{COMPLEMENT_SET}.there_exists"
+		do
+			Precursor {COMPLEMENT_SET_TESTS}
+		end
 
 	test_p_holds_outside_reference_set
 			-- <Precursor>

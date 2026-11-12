@@ -3,6 +3,7 @@
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
+	testing: "type/manual"
 
 class
 	SET_FAMILY_EFFECTIVE_TESTS
@@ -11,7 +12,8 @@ inherit
 	EFFECTIVE_SET_FAMILY_TESTS [detachable separate CHARACTER_REF]
 		redefine
 			test_all,
-			test_make_extended
+			test_make_extended,
+			test_extended
 		end
 
 feature -- Test routines (All)
@@ -30,6 +32,16 @@ feature -- Test routines (Initialization)
 			-- <Precursor>
 		note
 			testing: "covers/{EFFECTIVE_SET_FAMILY}.make_extended"
+		do
+			Precursor {EFFECTIVE_SET_FAMILY_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_extended
+			-- Test {EFFECTIVE_SET_FAMILY}.extended.
+		note
+			testing: "covers/{EFFECTIVE_SET_FAMILY}.extended"
 		do
 			Precursor {EFFECTIVE_SET_FAMILY_TESTS}
 		end

@@ -12,17 +12,18 @@ inherit
 		rename
 			u as n,
 			universe as natural_numbers,
-			extended as set_extended
+			extended as set_extended,
+			superset_anchor as set_superset_anchor
 		end
 
 feature -- Construction
 
-	extended alias "&" (a_n: NATURAL_NUMBER): like natural_superset_anchor
-			-- Current natural set extended with `a_n', whose equality with any other element is defined by {NATURAL_NUMBER}.equals
-			--| TODO: How to impose {NATURAL_NUMBER}.equals without requiring an equality object?
+	extended alias "&" (m: NATURAL_NUMBER): like superset_anchor
+			-- Current natural set extended with `m', whose equality with any other element is defined by {NATURAL_NUMBER}.equals
 		deferred
 		ensure
-			has_a_n: Result ∋ a_n
+			has_m: Result ∋ m
+			by_existence: attached (Result |∃ agent m.equals) as exists ⇒ exists = True
 		end
 
 feature -- Anchor
@@ -32,7 +33,7 @@ feature -- Anchor
 		deferred
 		end
 
-	natural_superset_anchor: NATURAL_SET
+	superset_anchor: NATURAL_SET
 			-- Anchor for supersets of current natural set
 		deferred
 		end
