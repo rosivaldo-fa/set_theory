@@ -23,6 +23,7 @@ feature -- Test routines (All)
 		do
 			Precursor {NATURAL_SET_TESTS}
 			test_default_create
+			test_make_extended
 		end
 
 feature -- Test routines (Initialization)
@@ -33,6 +34,19 @@ feature -- Test routines (Initialization)
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.default_create"
 		do
 			assert ("default_create", attached (create {like set_to_be_tested}))
+		end
+
+	test_make_extended
+			-- Test {EFFECTIVE_NATURAL_SET}.make_extended.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.make_extended"
+		do
+			assert (
+					"make_extended",
+					attached (
+						create {like set_to_be_tested}.make_extended (n1, set_to_be_tested)
+					)
+				)
 		end
 
 feature -- Factory (element to be tested)
