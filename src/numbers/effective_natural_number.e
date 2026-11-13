@@ -11,13 +11,15 @@ inherit
 	NATURAL_NUMBER
 		redefine
 			default_create,
+			out,
 			min,
 			max
 		end
 
 	DEBUG_OUTPUT
 		redefine
-			default_create
+			default_create,
+			out
 		end
 
 create
@@ -78,6 +80,16 @@ feature -- Access
 			create Result.make (1)
 		ensure then
 			class
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		do
+			Result := stored_value.out
+		ensure then
+			definition: Result ~ stored_value.out
 		end
 
 feature -- Status report

@@ -62,6 +62,7 @@ feature -- Test routines (All)
 			test_default_create
 			test_make
 			test_make_from_reference
+			test_out
 			test_debug_output
 		end
 
@@ -131,6 +132,25 @@ feature -- Test routines (Access)
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.one"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.out.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.out"
+		local
+			n: like Natural_number_to_be_tested
+		do
+			n := {NATURAL} 0
+			assert ("0", n.debug_output ~ "0")
+
+			n := {NATURAL} 1
+			assert ("0", n.debug_output ~ "1")
+
+			n := {NATURAL} 35
+			assert ("0", n.debug_output ~ "35")
 		end
 
 feature -- Test routines (Status report)
