@@ -24,7 +24,8 @@ inherit
 			test_extended,
 			test_prunned,
 			test_n,
-			test_natural_numbers
+			test_natural_numbers,
+			test_is_universe
 		end
 
 feature -- Test routines (All)
@@ -123,6 +124,16 @@ feature -- Test routines (Access)
 			-- Test {EFFECTIVE_NATURAL_SET}.natural_numbers.
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.natural_numbers"
+		do
+			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_universe
+			-- Test {EFFECTIVE_NATURAL_SET}.is_universe.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.is_universe"
 		do
 			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
 		end
