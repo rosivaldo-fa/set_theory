@@ -11,7 +11,8 @@ class
 inherit
 	EFFECTIVE_NATURAL_SET_TESTS
 		rename
-			test_u as test_n
+			test_u as test_n,
+			test_universe as test_natural_numbers
 		redefine
 			test_all,
 			test_default_create,
@@ -22,7 +23,8 @@ inherit
 			test_set_extended,
 			test_extended,
 			test_prunned,
-			test_n
+			test_n,
+			test_natural_numbers
 		end
 
 feature -- Test routines (All)
@@ -113,6 +115,14 @@ feature -- Test routines (Access)
 			-- Test {EFFECTIVE_NATURAL_SET}.n.
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.n"
+		do
+			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
+		end
+
+	test_natural_numbers
+			-- Test {EFFECTIVE_NATURAL_SET}.natural_numbers.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.natural_numbers"
 		do
 			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
 		end
