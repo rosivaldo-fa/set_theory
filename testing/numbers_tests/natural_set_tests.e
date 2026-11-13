@@ -53,7 +53,7 @@ feature -- Test routines (Membership)
 			-- <Precursor>
 			-- Test {NATURAL_SET}.has.
 		note
-			testing: "covers/{NATURAL_SET}.has"
+			testing: "covers/{SET}.has"
 			testing: "covers/{NATURAL_SET}.has"
 		local
 			s: like set_to_be_tested
