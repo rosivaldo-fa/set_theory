@@ -152,7 +152,10 @@ feature -- Output
 					Result.append (given_element.out)
 					s := subset
 				invariant
---					building_up: Result ~ {TRANSFORMER [A, STRING, EQ, STS_OBJECT_EQUALITY [STRING]]}.tuple_indexed_left_reduction (right_trimmed (s.n), "", 1, agent appending_term_out)
+						-- I've got some help from Grok (https://grok.com/share/c2hhcmQtMw_863f8988-40da-4e15-8deb-b854f6a09e55)
+						-- to come up with this invarint.
+					building_up: Result + (if s = s.subset then "}" else "," + s.out.substring (2, s.out.count) end) ~
+							"{" + given_element.out + (if subset = subset.subset then "}" else "," + subset.out.substring (2, subset.out.count) end)
 				until
 					s = s.subset
 				loop
@@ -162,8 +165,6 @@ feature -- Output
 					end
 					Result.append (s.given_element.out)
 					s := s.subset
---				variant
---					n: natural_as_integer (# s)
 				end
 			end
 			Result.append_character ('}')
