@@ -113,11 +113,11 @@ feature -- Test routines (Output)
 
 			s := s.extended (n2)
 			s_out := s.out
-			assert ("{n1,n2}", s_out ~ "{} & (" + n1.out + ") & (" + n2.out + ")")
+			assert ("{n2,n1}", s_out ~ "{" + n2.out + "," + n1.out + "}")
 
 			s := s.extended (n3)
 			s_out := s.out
-			assert ("{n1,n2,n3}", s_out ~ "{} & (" + n1.out + ") & (" + n2.out + ") & (" + n3.out + ")")
+			assert ("{n3,n2,n1}", s_out ~ "{" + n3.out + "," + n2.out + "," + n1.out + "}")
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
@@ -143,11 +143,11 @@ feature -- Test routines (Status report)
 
 			s := s.extended (n2)
 			s_debug_output := s.debug_output
-			assert ("{n1,n2}", s_debug_output ~ {STRING_32} "{} & (" + n1.out + ") & (" + n2.out + ")")
+			assert ("{n2,n1}", s_debug_output ~ {STRING_32} "{} & (" + n2.out + ") & (" + n1.out + ")")
 
 			s := s.extended (n3)
 			s_debug_output := s.debug_output
-			assert ("{n1,n2,n3}", s_debug_output ~ {STRING_32} "{} & (" + n1.out + ") & (" + n2.out + ") & (" + n3.out + ")")
+			assert ("{n3,n2,n1}", s_debug_output ~ {STRING_32} "{} & (" + n3.out + ") & (" + n2.out + ") & (" + n2.out + ")")
 
 			s := set_to_be_tested
 			assert ("debug_output", attached s.debug_output)

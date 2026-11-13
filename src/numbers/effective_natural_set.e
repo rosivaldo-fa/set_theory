@@ -136,7 +136,7 @@ feature -- Quality
 			-- Is current set a universe, i.e., does it have every instance of {NATURAL_NUMBER}?
 			--| Detachable because it is not always knowable whether a set is a universe of not
 		do
-			-- TODO: Can it be made attached?
+				-- TODO: Can it be made attached?
 		end
 
 feature -- Output
@@ -168,7 +168,10 @@ feature -- Output
 			end
 			Result.append_character ('}')
 		ensure then
---			definition: Result ~ "{" + as_tuple.terms_out + "}"
+			empty: subset = Current ⇒ Result ~ "{}"
+			singleton: subset /= Current and subset.subset = subset ⇒ Result ~ "{" + given_element.out + "}"
+			otherwise: subset /= Current and subset.subset /= subset ⇒
+				Result ~ "{" + given_element.out + "," + subset.out.substring (2, subset.out.count)
 		end
 
 feature -- Status report
@@ -246,4 +249,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end
