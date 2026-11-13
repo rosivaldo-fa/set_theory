@@ -15,6 +15,11 @@ inherit
 			max
 		end
 
+	DEBUG_OUTPUT
+		redefine
+			default_create
+		end
+
 create
 	default_create,
 	make,
@@ -73,6 +78,16 @@ feature -- Access
 			create Result.make (1)
 		ensure then
 			class
+		end
+
+feature -- Status report
+
+	debug_output: READABLE_STRING_GENERAL
+			-- <Precursor>
+		do
+			Result := stored_value.out
+		ensure then
+			definition: Result ~ stored_value.out
 		end
 
 feature -- Comparison

@@ -206,8 +206,6 @@ feature -- Test routines (Output)
 			s_out := s.out
 			assert ("{a,b}", s_out ~ "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ")")
 
-			separate c as sep_c do
-			end
 			s := s.extended (c, eq)
 			s_out := s.out
 			assert ("{a,b,c}", s_out ~ "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ") & (" + s.element_out (c) + ")")
@@ -239,8 +237,6 @@ feature -- Test routines (Status report)
 			s_debug_output := s.debug_output
 			assert ("{a,b}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ")")
 
-			separate c as sep_c do
-			end
 			s := s.extended (c, eq)
 			s_debug_output := s.debug_output
 			assert ("{a,b,c}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ") & (" + s.element_out (c) + ")")

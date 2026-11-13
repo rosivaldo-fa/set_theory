@@ -10,13 +10,14 @@ class
 inherit
 	NATURAL_SET
 		redefine
-			default_create
+			default_create,
+			out
 		end
 
 	DEBUG_OUTPUT
 		redefine
-			default_create--,
---			out
+			default_create,
+			out
 		end
 
 create
@@ -136,6 +137,38 @@ feature -- Quality
 			--| Detachable because it is not always knowable whether a set is a universe of not
 		do
 			-- TODO: Can it be made attached?
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		local
+			s: EFFECTIVE_NATURAL_SET
+		do
+			Result := "{"
+			if subset /= Current then
+				from
+					Result.append (given_element.out)
+					s := subset
+				invariant
+--					building_up: Result ~ {TRANSFORMER [A, STRING, EQ, STS_OBJECT_EQUALITY [STRING]]}.tuple_indexed_left_reduction (right_trimmed (s.n), "", 1, agent appending_term_out)
+				until
+					s = s.subset
+				loop
+					Result.append_character (',')
+					check
+						other_arguments_not_void: s.given_element.out /= Void -- {NATURAL_NUMBER}.out definition
+					end
+					Result.append (s.given_element.out)
+					s := s.subset
+--				variant
+--					n: natural_as_integer (# s)
+				end
+			end
+			Result.append_character ('}')
+		ensure then
+--			definition: Result ~ "{" + as_tuple.terms_out + "}"
 		end
 
 feature -- Status report

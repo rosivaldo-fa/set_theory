@@ -26,6 +26,8 @@ feature -- Test routines (All)
 			test_make_extended
 			test_given_element
 			test_subset
+			test_out
+			test_debug_output
 		end
 
 feature -- Test routines (Initialization)
@@ -90,6 +92,65 @@ feature -- Test routines (Primitive)
 
 			s := s.extended (n1)
 			assert ("{n1}", s /= s.subset)
+		end
+
+feature -- Test routines (Output)
+
+	test_out
+			-- Test {EFFECTIVE_NATURAL_SET}.out.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.out"
+		local
+			s: like set_to_be_tested
+			s_out: STRING
+		do
+			create s
+			assert ("{}", s.out ~ "{}")
+
+			s := s.extended (n1)
+			s_out := s.out
+			assert ("n1", s_out ~ "{" + n1.out + "}")
+
+			s := s.extended (n2)
+			s_out := s.out
+			assert ("{n1,n2}", s_out ~ "{} & (" + n1.out + ") & (" + n2.out + ")")
+
+			s := s.extended (n3)
+			s_out := s.out
+			assert ("{n1,n2,n3}", s_out ~ "{} & (" + n1.out + ") & (" + n2.out + ") & (" + n3.out + ")")
+
+			s := set_to_be_tested
+			assert ("out", attached s.out)
+		end
+
+
+feature -- Test routines (Status report)
+
+	test_debug_output
+			-- Test {EFFECTIVE_NATURAL_SET}.debug_output.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.debug_output"
+		local
+			s: like set_to_be_tested
+			s_debug_output: STRING_32
+		do
+			create s
+			assert ("{}", s.debug_output ~ {STRING_32} "{}")
+
+			s := s.extended (n1)
+			s_debug_output := s.debug_output
+			assert ("{n1}", s_debug_output ~ {STRING_32} "{" + n1.out + "}")
+
+			s := s.extended (n2)
+			s_debug_output := s.debug_output
+			assert ("{n1,n2}", s_debug_output ~ {STRING_32} "{} & (" + n1.out + ") & (" + n2.out + ")")
+
+			s := s.extended (n3)
+			s_debug_output := s.debug_output
+			assert ("{n1,n2,n3}", s_debug_output ~ {STRING_32} "{} & (" + n1.out + ") & (" + n2.out + ") & (" + n3.out + ")")
+
+			s := set_to_be_tested
+			assert ("debug_output", attached s.debug_output)
 		end
 
 feature -- Factory (element to be tested)
