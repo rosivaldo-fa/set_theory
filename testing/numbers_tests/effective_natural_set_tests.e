@@ -25,6 +25,7 @@ feature -- Test routines (All)
 			test_default_create
 			test_make_extended
 			test_given_element
+			test_subset
 		end
 
 feature -- Test routines (Initialization)
@@ -75,6 +76,20 @@ feature -- Test routines (Primitive)
 			s := s.extended (n4.deep_twin)
 			assert ("{n1,n2,n3,n4} /= {}", s.subset /= s)
 			assert ("{n1,n2,n3,n4}", s.given_element ≍ n4)
+		end
+
+	test_subset
+			-- Test {EFFECTIVE_NATURAL_SET}.subset.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.subset"
+		local
+			s: like set_to_be_tested
+		do
+			create s
+			assert ("{}", s = s.subset)
+
+			s := s.extended (n1)
+			assert ("{n1}", s /= s.subset)
 		end
 
 feature -- Factory (element to be tested)
