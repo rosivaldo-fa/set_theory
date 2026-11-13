@@ -10,6 +10,8 @@ class
 
 inherit
 	EFFECTIVE_NATURAL_SET_TESTS
+		rename
+			test_u as test_n
 		redefine
 			test_all,
 			test_default_create,
@@ -19,7 +21,8 @@ inherit
 			test_has,
 			test_set_extended,
 			test_extended,
-			test_prunned
+			test_prunned,
+			test_n
 		end
 
 feature -- Test routines (All)
@@ -100,6 +103,16 @@ feature -- Test routines (Construction)
 			-- Test {EFFECTIVE_NATURAL_SET}.prunned.
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.prunned"
+		do
+			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
+		end
+
+feature -- Test routines (Access)
+
+	test_n
+			-- Test {EFFECTIVE_NATURAL_SET}.n.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.n"
 		do
 			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
 		end
