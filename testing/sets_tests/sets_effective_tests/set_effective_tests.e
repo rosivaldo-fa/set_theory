@@ -145,10 +145,8 @@ feature -- Test routines (Construction)
 		end
 
 	test_prunned
-			-- <Precursor>
 			-- Test {EFFECTIVE_SET}.prunned.
 		note
-			testing: "covers/{SET}.prunned"
 			testing: "covers/{EFFECTIVE_SET}.prunned"
 		do
 			Precursor {EFFECTIVE_SET_TESTS}

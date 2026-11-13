@@ -18,7 +18,8 @@ inherit
 			test_subset,
 			test_has,
 			test_set_extended,
-			test_extended
+			test_extended,
+			test_prunned
 		end
 
 feature -- Test routines (All)
@@ -91,6 +92,14 @@ feature -- Test routines (Construction)
 			-- Test {EFFECTIVE_NATURAL_SET}.extended.
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.extended"
+		do
+			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
+		end
+
+	test_prunned
+			-- Test {EFFECTIVE_NATURAL_SET}.prunned.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.prunned"
 		do
 			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
 		end
