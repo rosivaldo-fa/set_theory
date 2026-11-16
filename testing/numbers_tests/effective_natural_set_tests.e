@@ -102,22 +102,18 @@ feature -- Test routines (Output)
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.out"
 		local
 			s: like set_to_be_tested
-			s_out: STRING
 		do
 			create s
 			assert ("{}", s.out ~ "{}")
 
 			s := s.extended (n1)
-			s_out := s.out
-			assert ("n1", s_out ~ "{" + n1.out + "}")
+			assert ("n1", s.out ~ "{" + n1.out + "}")
 
 			s := s.extended (n2)
-			s_out := s.out
-			assert ("{n2,n1}", s_out ~ "{" + n2.out + "," + n1.out + "}")
+			assert ("{n2,n1}", s.out ~ "{" + n2.out + "," + n1.out + "}")
 
 			s := s.extended (n3)
-			s_out := s.out
-			assert ("{n3,n2,n1}", s_out ~ "{" + n3.out + "," + n2.out + "," + n1.out + "}")
+			assert ("{n3,n2,n1}", s.out ~ "{" + n3.out + "," + n2.out + "," + n1.out + "}")
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)

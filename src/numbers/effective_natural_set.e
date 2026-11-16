@@ -145,7 +145,22 @@ feature -- Output
 			-- <Precursor>
 		local
 			s: EFFECTIVE_NATURAL_SET
+			s_length: FUNCTION [EFFECTIVE_NATURAL_SET, INTEGER]
 		do
+			s_length := agent (ia_s: EFFECTIVE_NATURAL_SET): INTEGER
+					local
+						il_s: EFFECTIVE_NATURAL_SET
+					do
+						from
+							il_s := ia_s
+						until
+							il_s = il_s.subset
+						loop
+							Result := Result + 1
+							il_s := il_s.subset
+						end
+					end
+
 			Result := "{"
 			if subset /= Current then
 				from
@@ -154,8 +169,20 @@ feature -- Output
 				invariant
 						-- I've got some help from Grok (https://grok.com/share/c2hhcmQtMw_863f8988-40da-4e15-8deb-b854f6a09e55)
 						-- to come up with this invarint.
-					building_up: Result + (if s = s.subset then "}" else "," + s.out.substring (2, s.out.count) end) ~
-							"{" + given_element.out + (if subset = subset.subset then "}" else "," + subset.out.substring (2, subset.out.count) end)
+					building_up: s.subset /= s ⇒ Result + "," + s.out.substring (2, s.out.count) ~
+							"{" + given_element.out +
+							if subset.subset = subset then
+								"}"
+							else
+								"," + subset.out.substring (2, subset.out.count)
+							end
+					finished: s.subset = s ⇒ Result + "}" ~
+							"{" + given_element.out +
+							if subset.subset = subset then
+								"}"
+							else
+								"," + subset.out.substring (2, subset.out.count)
+							end
 				until
 					s = s.subset
 				loop
@@ -165,6 +192,8 @@ feature -- Output
 					end
 					Result.append (s.given_element.out)
 					s := s.subset
+				variant
+					s_length: s_length (s)
 				end
 			end
 			Result.append_character ('}')
