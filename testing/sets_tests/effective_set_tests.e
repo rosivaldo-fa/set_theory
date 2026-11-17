@@ -236,15 +236,15 @@ feature -- Test routines (Status report)
 
 			s := s.extended (a, eq)
 			s_debug_output := s.debug_output
-			assert ("{a}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ")")
+			assert ("{a}", s_debug_output ~ {STRING_32} "{} ∪ {" + s.element_out (a) + "}")
 
 			s := s.extended (b, eq)
 			s_debug_output := s.debug_output
-			assert ("{a,b}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ")")
+			assert ("{a,b}", s_debug_output ~ {STRING_32} "{} ∪ {" + s.element_out (a) + "} ∪ {" + s.element_out (b) + "}")
 
 			s := s.extended (c, eq)
 			s_debug_output := s.debug_output
-			assert ("{a,b,c}", s_debug_output ~ {STRING_32} "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ") & (" + s.element_out (c) + ")")
+			assert ("{a,b,c}", s_debug_output ~ {STRING_32} "{} ∪ {" + s.element_out (a) + "} ∪ {" + s.element_out (b) + "} ∪ {" + s.element_out (c) + "}")
 
 			s := set_to_be_tested
 			assert ("debug_output", attached s.debug_output)
