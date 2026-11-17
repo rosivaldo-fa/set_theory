@@ -205,7 +205,7 @@ feature -- Test routines (Status report)
 	test_debug_output
 			-- <Precursor>
 		note
-			testing: "covers/{EFFECTIVE_SET}.out"
+			testing: "covers/{EFFECTIVE_SET}.debug_output"
 		do
 			Precursor {EFFECTIVE_SET_TESTS}
 		end

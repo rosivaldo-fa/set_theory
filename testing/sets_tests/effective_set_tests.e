@@ -200,15 +200,20 @@ feature -- Test routines (Output)
 
 			s := s.extended (a, eq)
 			s_out := s.out
-			assert ("a", s_out ~ "{} & (" + s.element_out (a) + ")")
+			assert ("a", s_out ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("{} ∪ {") + s.element_out (a) + "}")
 
 			s := s.extended (b, eq)
 			s_out := s.out
-			assert ("{a,b}", s_out ~ "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ")")
+			assert ("{a,b}", s_out ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("{} ∪ {") + s.element_out (a) +
+						{UTF_CONVERTER}.string_32_to_utf_8_string_8 ("} ∪ {") + s.element_out (b) + "}"
+				)
 
 			s := s.extended (c, eq)
 			s_out := s.out
-			assert ("{a,b,c}", s_out ~ "{} & (" + s.element_out (a) + ") & (" + s.element_out (b) + ") & (" + s.element_out (c) + ")")
+			assert ("{a,b,c}", s_out ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("{} ∪ {") + s.element_out (a) +
+						{UTF_CONVERTER}.string_32_to_utf_8_string_8 ("} ∪ {") + s.element_out (b) + {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("} ∪ {") +
+						s.element_out (c) + "}"
+				)
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
