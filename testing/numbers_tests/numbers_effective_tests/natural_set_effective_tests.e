@@ -27,7 +27,8 @@ inherit
 			test_natural_numbers,
 			test_is_universe,
 			test_out,
-			test_debug_output
+			test_debug_output,
+			test_there_exists
 		end
 
 feature -- Test routines (All)
@@ -156,6 +157,16 @@ feature -- Test routines (Status report)
 			-- <Precursor>
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.debug_output"
+		do
+			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
+		end
+
+feature -- Test routines (Status)
+
+	test_there_exists
+			-- Test {EFFECTIVE_NATURAL_SET}.there_exists.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.there_exists"
 		do
 			Precursor {EFFECTIVE_NATURAL_SET_TESTS}
 		end
