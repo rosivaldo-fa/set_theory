@@ -161,47 +161,35 @@ feature -- Output
 						end
 					end
 
-			Result := "{"
+			Result := "}"
 			if subset /= Current then
 				from
-					Result.append (given_element.out)
+					Result.prepend (given_element.out)
 					s := subset
 				invariant
-						-- I've got some help from Grok (https://grok.com/share/c2hhcmQtMw_863f8988-40da-4e15-8deb-b854f6a09e55)
-						-- to come up with this invarint.
-					building_up: s.subset /= s ⇒ Result + "," + s.out.substring (2, s.out.count) ~
-							"{" + given_element.out +
-							if subset.subset = subset then
-								"}"
-							else
-								"," + subset.out.substring (2, subset.out.count)
-							end
-					finished: s.subset = s ⇒ Result + "}" ~
-							"{" + given_element.out +
-							if subset.subset = subset then
-								"}"
-							else
-								"," + subset.out.substring (2, subset.out.count)
-							end
+					building_up: s.subset /= s ⇒ s.out.substring (1, s.out.count - 1) + "," + Result ~
+						subset.out.substring (1, subset.out.count - 1) + "," + given_element.out + "}"
+					finished: s.subset = s ⇒ "{" + Result ~
+						if subset.subset = subset then
+							"{" + given_element.out + "}"
+						else
+							subset.out.substring (1, subset.out.count - 1) + "," + given_element.out + "}"
+						end
 				until
-					s = s.subset
+					s.subset = s
 				loop
-					Result.append_character (',')
-					check
-						other_arguments_not_void: s.given_element.out /= Void -- {NATURAL_NUMBER}.out definition
-					end
-					Result.append (s.given_element.out)
+					Result.prepend_character (',')
+					Result.prepend (s.given_element.out)
 					s := s.subset
 				variant
 					s_length: s_length (s)
 				end
 			end
-			Result.append_character ('}')
+			Result.prepend_character ('{')
 		ensure then
 			empty: subset = Current ⇒ Result ~ "{}"
 			singleton: subset /= Current and subset.subset = subset ⇒ Result ~ "{" + given_element.out + "}"
-			otherwise: subset /= Current and subset.subset /= subset ⇒
-				Result ~ "{" + given_element.out + "," + subset.out.substring (2, subset.out.count)
+			otherwise: subset /= Current and subset.subset /= subset ⇒ Result ~ subset.out.substring (1, subset.out.count - 1) + "," + given_element.out + "}"
 		end
 
 feature -- Status report

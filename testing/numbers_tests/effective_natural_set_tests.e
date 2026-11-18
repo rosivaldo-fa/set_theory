@@ -110,10 +110,10 @@ feature -- Test routines (Output)
 			assert ("n1", s.out ~ "{" + n1.out + "}")
 
 			s := s.extended (n2)
-			assert ("{n2,n1}", s.out ~ "{" + n2.out + "," + n1.out + "}")
+			assert ("{n1,n2}", s.out ~ "{" + n1.out + "," + n2.out + "}")
 
 			s := s.extended (n3)
-			assert ("{n3,n2,n1}", s.out ~ "{" + n3.out + "," + n2.out + "," + n1.out + "}")
+			assert ("{n1,n2,n3}", s.out ~ "{" + n1.out + "," + n2.out + "," + n3.out + "}")
 
 			s := set_to_be_tested
 			assert ("out", attached s.out)
