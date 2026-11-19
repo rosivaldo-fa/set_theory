@@ -1,0 +1,124 @@
+﻿note
+	description: "Minimal implementation of {COMPLEMENT_SET}"
+	author: "Rosivaldo F Alves"
+	date: "$Date$"
+	revision: "$Revision$"
+
+class
+	EFFECTIVE_COMPLEMENT_SET [G]
+
+inherit
+	COMPLEMENT_SET [G]
+		redefine
+			out
+		end
+
+	DEBUG_OUTPUT
+		redefine
+			out
+		end
+
+create
+	make
+
+feature {NONE} -- Initialization
+
+	make (s: SET [G])
+			-- Create a complement set whose `reference_set' is `s'.
+		do
+			reference_set := s
+		ensure
+			reference_set: reference_set = s -- TODO: Use set equality instead.
+		end
+
+feature -- Primitive
+
+	reference_set: SET [G]
+			-- <Precursor>
+
+feature -- Construction
+
+	extended (a: G; eq: EQUALITY [G]): like superset_anchor
+			-- <Precursor>
+		do
+			create Result.make_extended (a, eq, Current)
+		ensure then
+			equality: Result.eq = eq
+			is_not_empty: Result.subset /= Result
+			given_element: eq (Result.given_element, a)
+			subset: Result.subset = Current -- TODO: Use set equality instead.
+		end
+
+	prunned alias "/" (a: G): like subset_anchor
+			-- <Precursor>
+		do
+			create Result.make (reference_set.extended (a, create {REFERENCE_EQUALITY [G]}))
+		end
+
+feature -- Access
+
+	u,
+	universe: like universe_anchor
+			-- <Precursor>
+		do
+			Result := reference_set.u
+		end
+
+feature -- Quality
+
+	is_universe: detachable BOOLEAN_REF
+			-- <Precursor>
+		do
+			-- TODO: Check whether `reference_set' is empty.
+		end
+
+feature -- Output
+
+	out: STRING
+			-- <Precursor>
+		do
+			Result := {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("∁ (")
+			Result.append (reference_set.out)
+			Result.append_character (')')
+		ensure then
+			definition: Result ~ {UTF_CONVERTER}.string_32_to_utf_8_string_8 ("∁ (") + reference_set.out + ")"
+		end
+
+feature -- Status report
+
+	debug_output: READABLE_STRING_GENERAL
+			-- <Precursor>
+		do
+			Result := {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
+		ensure then
+			definition: Result ~ {UTF_CONVERTER}.utf_8_string_8_to_string_32 (out)
+		end
+
+feature -- Anchor
+
+	subset_anchor: EFFECTIVE_COMPLEMENT_SET [G]
+			-- <Precursor>
+		do
+			Result := Current
+		end
+
+	superset_anchor: EFFECTIVE_SET [G]
+			-- <Precursor>
+		do
+			create Result
+		end
+
+	universe_anchor: UNIVERSE [G]
+			-- <Precursor>
+		do
+			Result := reference_set.u
+		end
+
+note
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
+	license: "[
+		Eiffel Forum License v2
+		(see https://www.eiffel.com/licensing/forum.txt)
+		]"
+	source: "https://github.com/rosivaldo-fa/set_theory"
+end

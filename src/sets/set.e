@@ -24,7 +24,7 @@ feature -- Membership
 			-- Is `a' an element in current set?
 		deferred
 		ensure
-			universe_has_everything: attached is_universe as is_u and then is_u.item ⇒ Result
+			universe_has_everything: is_universe = True ⇒ Result
 		end
 
 	does_not_have alias "∌" (a: G): BOOLEAN

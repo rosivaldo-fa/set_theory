@@ -122,7 +122,7 @@ feature -- Construction
 feature -- Access
 
 	n,
-	natural_numbers: UNIVERSE [NATURAL_NUMBER]
+	natural_numbers: EFFECTIVE_UNIVERSE [NATURAL_NUMBER]
 			-- <Precursor>
 		once
 			create Result
@@ -245,7 +245,7 @@ feature -- Anchor
 			Result := Current
 		end
 
-	universe_anchor: UNIVERSE [NATURAL_NUMBER]
+	universe_anchor: EFFECTIVE_UNIVERSE [NATURAL_NUMBER]
 			-- <Precursor>
 		do
 			Result := n

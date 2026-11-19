@@ -1,5 +1,5 @@
 ﻿note
-	description: "Effective test suite for {UNIVERSE}"
+	description: "Effective test suite for {EFFECTIVE_UNIVERSE}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -9,7 +9,7 @@ class
 	UNIVERSE_EFFECTIVE_TESTS
 
 inherit
-	UNIVERSE_TESTS [detachable separate CHARACTER_REF]
+	EFFECTIVE_UNIVERSE_TESTS [detachable separate CHARACTER_REF]
 		rename
 			a as c1,
 			b as c2,
@@ -48,9 +48,9 @@ feature -- Test routines (All)
 	test_all
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}"
+			testing: "covers/{EFFECTIVE_UNIVERSE}"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 feature -- Test routines (Initialization)
@@ -58,9 +58,9 @@ feature -- Test routines (Initialization)
 	test_default_create
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.default_create"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.default_create"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 feature -- Test routines (Membership)
@@ -68,63 +68,63 @@ feature -- Test routines (Membership)
 	test_has
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.has"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.has"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_does_not_have
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.does_not_have"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.does_not_have"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 feature -- Test routines (Construction)
 
 	test_extended
-			-- Test {UNIVERSE}.extended.
+			-- Test {EFFECTIVE_UNIVERSE}.extended.
 		note
-			testing: "covers/{UNIVERSE}.extended"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.extended"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_prunned
-			-- Test {UNIVERSE}.prunned.
+			-- Test {EFFECTIVE_UNIVERSE}.prunned.
 		note
-			testing: "covers/{UNIVERSE}.prunned"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.prunned"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 feature -- Test routines (Access)
 
 	test_u
-			-- Test {UNIVERSE}.u.
+			-- Test {EFFECTIVE_UNIVERSE}.u.
 		note
-			testing: "covers/{UNIVERSE}.u"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.u"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_universe
-			-- Test {UNIVERSE}.universe.
+			-- Test {EFFECTIVE_UNIVERSE}.universe.
 		note
-			testing: "covers/{UNIVERSE}.universe"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.universe"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 feature -- Test routines (Quality)
 
 	test_is_universe
-			-- Test {UNIVERSE}.is_universe.
+			-- Test {EFFECTIVE_UNIVERSE}.is_universe.
 		note
-			testing: "covers/{UNIVERSE}.is_universe"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.is_universe"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 feature -- Test routines (Output)
@@ -132,9 +132,9 @@ feature -- Test routines (Output)
 	test_out
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.out"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.out"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 feature -- Test routines (Status report)
@@ -142,9 +142,9 @@ feature -- Test routines (Status report)
 	test_debug_output
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.debug_output"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.debug_output"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 feature -- Test routines (Quantifier)
@@ -152,113 +152,113 @@ feature -- Test routines (Quantifier)
 	test_there_exists
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_character_8
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_character_8"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_character_8"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_character_32
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_character_32"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_character_32"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_natural_8
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural_8"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_natural_8"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_natural_16
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural_16"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_natural_16"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_natural_32
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural_32"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_natural_32"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_natural_64
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural_64"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_natural_64"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_integer_8
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer_8"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_integer_8"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_integer_16
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer_16"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_integer_16"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_integer_32
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer_32"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_integer_32"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_integer_64
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer_64"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_integer_64"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_real_32
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_real_32"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_real_32"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_native_real_64
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_real_64"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_real_64"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 	test_there_exists_g_instance
 			-- <Precursor>
 		note
-			testing: "covers/{UNIVERSE}.there_exists_g_instance"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_g_instance"
 		do
-			Precursor {UNIVERSE_TESTS}
+			Precursor {EFFECTIVE_UNIVERSE_TESTS}
 		end
 
 feature -- Factory

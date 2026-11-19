@@ -1,12 +1,12 @@
 ﻿note
-	description: "Test suite for {COMPLEMENT_SET}"
+	description: "Test suite for {EFFECTIVE_COMPLEMENT_SET}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
 
 deferred class
-	COMPLEMENT_SET_TESTS [G]
+	EFFECTIVE_COMPLEMENT_SET_TESTS [G]
 
 inherit
 	SET_TESTS [G]
@@ -20,9 +20,9 @@ inherit
 feature -- Test routines (All)
 
 	test_all
-			-- Test every routine of {COMPLEMENT_SET}.
+			-- Test every routine of {EFFECTIVE_COMPLEMENT_SET}.
 		note
-			testing: "covers/{COMPLEMENT_SET}"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}"
 		do
 			Precursor {SET_TESTS}
 			test_make
@@ -35,9 +35,9 @@ feature -- Test routines (All)
 feature -- Test routines (Initialization)
 
 	test_make
-			-- Test {COMPLEMENT_SET}.make.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.make.
 		note
-			testing: "covers/{COMPLEMENT_SET}.make"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.make"
 		do
 			assert (
 					"make",
@@ -50,9 +50,9 @@ feature -- Test routines (Initialization)
 feature -- Test routines (Primitive)
 
 	test_reference_set
-			-- Test {COMPLEMENT_SET}.reference_set.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.reference_set.
 		note
-			testing: "covers/{COMPLEMENT_SET}.reference_set"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.reference_set"
 		do
 			assert ("reference_set", attached set_to_be_tested.reference_set)
 		end
@@ -60,9 +60,9 @@ feature -- Test routines (Primitive)
 feature -- Test routines (Membership)
 
 	test_has
-			-- Test {COMPLEMENT_SET}.has.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.has.
 		note
-			testing: "covers/{COMPLEMENT_SET}.has"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.has"
 		local
 			s: like set_to_be_tested
 		do
@@ -76,9 +76,9 @@ feature -- Test routines (Membership)
 		end
 
 	test_does_not_have
-			-- Test {COMPLEMENT_SET}.does_not_have.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.does_not_have.
 		note
-			testing: "covers/{COMPLEMENT_SET}.does_not_have"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.does_not_have"
 		local
 			s: like set_to_be_tested
 		do
@@ -93,9 +93,9 @@ feature -- Test routines (Membership)
 feature -- Test routines (Output)
 
 	test_out
-			-- Test {COMPLEMENT_SET}.out.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.out.
 		note
-			testing: "covers/{COMPLEMENT_SET}.out"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.out"
 		do
 			assert ("out", attached set_to_be_tested.out)
 		end
@@ -103,9 +103,9 @@ feature -- Test routines (Output)
 feature -- Test routines (Status report)
 
 	test_debug_output
-			-- Test {COMPLEMENT_SET}.debug_output.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.debug_output.
 		note
-			testing: "covers/{COMPLEMENT_SET}.debug_output"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.debug_output"
 		do
 			assert ("debug_output", attached set_to_be_tested.debug_output)
 		end
@@ -113,9 +113,9 @@ feature -- Test routines (Status report)
 feature -- Test routines (Quantifier)
 
 	test_there_exists
-			-- Test {COMPLEMENT_SET}.there_exists.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.there_exists.
 		note
-			testing: "covers/{COMPLEMENT_SET}.there_exists"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.there_exists"
 		local
 			s0: EFFECTIVE_SET [G]
 			s: like set_to_be_tested
@@ -147,9 +147,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_p_holds_outside_reference_set
-			-- Test {COMPLEMENT_SET}.p_holds_outside_reference_set.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.p_holds_outside_reference_set.
 		note
-			testing: "covers/{COMPLEMENT_SET}.p_holds_outside_reference_set"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.p_holds_outside_reference_set"
 		local
 			s: like set_to_be_tested
 		do
@@ -168,7 +168,7 @@ feature -- Test routines (Quantifier)
 
 feature -- Factory (element to be tested)
 
-	set_to_be_tested: COMPLEMENT_SET [G]
+	set_to_be_tested: EFFECTIVE_COMPLEMENT_SET [G]
 			-- <Precursor>
 		deferred
 		end

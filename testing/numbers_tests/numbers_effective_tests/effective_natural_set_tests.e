@@ -5,13 +5,21 @@
 	revision: "$Revision$"
 	testing: "type/manual"
 
-deferred class
+class
 	EFFECTIVE_NATURAL_SET_TESTS
 
 inherit
 	NATURAL_SET_TESTS
 		redefine
-			test_all
+			test_all,
+			test_has,
+			test_set_extended,
+			test_extended,
+			test_prunned,
+			test_n,
+			test_natural_numbers,
+			test_is_universe,
+			test_there_exists
 		end
 
 feature -- Test routines (All)
@@ -94,6 +102,70 @@ feature -- Test routines (Primitive)
 			assert ("{n1}", s /= s.subset)
 		end
 
+feature -- Test routines (Membership)
+
+	test_has
+			-- Test {EFFECTIVE_NATURAL_SET}.has.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.has"
+		do
+			Precursor {NATURAL_SET_TESTS}
+		end
+
+feature -- Test routines (Construction)
+
+	test_set_extended
+			-- Test {EFFECTIVE_NATURAL_SET}.set_extended.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.set_extended"
+		do
+			Precursor {NATURAL_SET_TESTS}
+		end
+
+	test_extended
+			-- Test {EFFECTIVE_NATURAL_SET}.extended.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.extended"
+		do
+			Precursor {NATURAL_SET_TESTS}
+		end
+
+	test_prunned
+			-- Test {EFFECTIVE_NATURAL_SET}.prunned.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.prunned"
+		do
+			Precursor {NATURAL_SET_TESTS}
+		end
+
+feature -- Test routines (Access)
+
+	test_n
+			-- Test {EFFECTIVE_NATURAL_SET}.n.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.n"
+		do
+			Precursor {NATURAL_SET_TESTS}
+		end
+
+	test_natural_numbers
+			-- Test {EFFECTIVE_NATURAL_SET}.natural_numbers.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.natural_numbers"
+		do
+			Precursor {NATURAL_SET_TESTS}
+		end
+
+feature -- Test routines (Quality)
+
+	test_is_universe
+			-- Test {EFFECTIVE_NATURAL_SET}.is_universe.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.is_universe"
+		do
+			Precursor {NATURAL_SET_TESTS}
+		end
+
 feature -- Test routines (Output)
 
 	test_out
@@ -147,6 +219,16 @@ feature -- Test routines (Status report)
 
 			s := set_to_be_tested
 			assert ("debug_output", attached s.debug_output)
+		end
+
+feature -- Test routines (Quantifier)
+
+	test_there_exists
+			-- Test {EFFECTIVE_NATURAL_SET}.there_exists.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.there_exists"
+		do
+			Precursor {NATURAL_SET_TESTS}
 		end
 
 feature -- Factory (element to be tested)

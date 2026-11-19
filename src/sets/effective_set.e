@@ -234,7 +234,7 @@ feature -- Anchor
 			Result := Current
 		end
 
-	universe_anchor: UNIVERSE [G]
+	universe_anchor: EFFECTIVE_UNIVERSE [G]
 			-- <Precursor>
 		do
 			Result := u

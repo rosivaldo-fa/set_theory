@@ -12,6 +12,8 @@ inherit
 	SET_TESTS [NATURAL_NUMBER]
 		rename
 			test_extended as test_set_extended,
+			test_u as test_n,
+			test_universe as test_natural_numbers,
 			a as n1,
 			b as n2,
 			c as n3,

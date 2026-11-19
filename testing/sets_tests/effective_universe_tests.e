@@ -1,12 +1,12 @@
 ﻿note
-	description: "Test suite for {UNIVERSE}"
+	description: "Test suite for {EFFECTIVE_UNIVERSE}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
 	testing: "type/manual"
 
 deferred class
-	UNIVERSE_TESTS [G]
+	EFFECTIVE_UNIVERSE_TESTS [G]
 
 inherit
 	SET_TESTS [G]
@@ -22,9 +22,9 @@ inherit
 feature -- Test routines (All)
 
 	test_all
-			-- Test every routine of {UNIVERSE}.
+			-- Test every routine of {EFFECTIVE_UNIVERSE}.
 		note
-			testing: "covers/{UNIVERSE}"
+			testing: "covers/{EFFECTIVE_UNIVERSE}"
 		do
 			Precursor {SET_TESTS}
 			test_there_exists_character_8
@@ -45,9 +45,9 @@ feature -- Test routines (All)
 feature -- Test routines (Initialization)
 
 	test_default_create
-			-- Test {UNIVERSE}.default_create.
+			-- Test {EFFECTIVE_UNIVERSE}.default_create.
 		note
-			testing: "covers/{UNIVERSE}.default_create"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.default_create"
 		do
 			assert ("default_create", attached (create {like universe_to_be_tested}))
 		end
@@ -55,9 +55,9 @@ feature -- Test routines (Initialization)
 feature -- Test routines (Membership)
 
 	test_has
-			-- Test {UNIVERSE}.has.
+			-- Test {EFFECTIVE_UNIVERSE}.has.
 		note
-			testing: "covers/{UNIVERSE}.has"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.has"
 		local
 			u: like universe_to_be_tested
 		do
@@ -69,9 +69,9 @@ feature -- Test routines (Membership)
 		end
 
 	test_does_not_have
-			-- Test {UNIVERSE}.does_not_have.
+			-- Test {EFFECTIVE_UNIVERSE}.does_not_have.
 		note
-			testing: "covers/{UNIVERSE}.does_not_have"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.does_not_have"
 		local
 			u: like universe_to_be_tested
 		do
@@ -85,9 +85,9 @@ feature -- Test routines (Membership)
 feature -- Test routines (Output)
 
 	test_out
-			-- Test {UNIVERSE}.out.
+			-- Test {EFFECTIVE_UNIVERSE}.out.
 		note
-			testing: "covers/{UNIVERSE}.out"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.out"
 		do
 			assert ("out", attached universe_to_be_tested.out)
 		end
@@ -95,9 +95,9 @@ feature -- Test routines (Output)
 feature -- Test routines (Status report)
 
 	test_debug_output
-			-- Test {UNIVERSE}.debug_output.
+			-- Test {EFFECTIVE_UNIVERSE}.debug_output.
 		note
-			testing: "covers/{UNIVERSE}.debug_output"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.debug_output"
 		do
 			assert ("debug_output", attached universe_to_be_tested.debug_output)
 		end
@@ -105,25 +105,25 @@ feature -- Test routines (Status report)
 feature -- Test routines (Quantifier)
 
 	test_there_exists
-			-- Test {UNIVERSE}.there_exists.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists.
 		note
-			testing: "covers/{UNIVERSE}.there_exists"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists"
 		local
 			check_assert: BOOLEAN
-			u_b: UNIVERSE [BOOLEAN]
-			u_c8: UNIVERSE [CHARACTER_8]
-			u_c32: UNIVERSE [CHARACTER_32]
-			u_n8: UNIVERSE [NATURAL_8]
-			u_n16: UNIVERSE [NATURAL_16]
-			u_n32: UNIVERSE [NATURAL_32]
-			u_n64: UNIVERSE [NATURAL_64]
-			u_i8: UNIVERSE [INTEGER_8]
-			u_i16: UNIVERSE [INTEGER_16]
-			u_i32: UNIVERSE [INTEGER_32]
-			u_i64: UNIVERSE [INTEGER_64]
-			u_r32: UNIVERSE [REAL_32]
-			u_r64: UNIVERSE [REAL_64]
-			u_p: UNIVERSE [POINTER]
+			u_b: EFFECTIVE_UNIVERSE [BOOLEAN]
+			u_c8: EFFECTIVE_UNIVERSE [CHARACTER_8]
+			u_c32: EFFECTIVE_UNIVERSE [CHARACTER_32]
+			u_n8: EFFECTIVE_UNIVERSE [NATURAL_8]
+			u_n16: EFFECTIVE_UNIVERSE [NATURAL_16]
+			u_n32: EFFECTIVE_UNIVERSE [NATURAL_32]
+			u_n64: EFFECTIVE_UNIVERSE [NATURAL_64]
+			u_i8: EFFECTIVE_UNIVERSE [INTEGER_8]
+			u_i16: EFFECTIVE_UNIVERSE [INTEGER_16]
+			u_i32: EFFECTIVE_UNIVERSE [INTEGER_32]
+			u_i64: EFFECTIVE_UNIVERSE [INTEGER_64]
+			u_r32: EFFECTIVE_UNIVERSE [REAL_32]
+			u_r64: EFFECTIVE_UNIVERSE [REAL_64]
+			u_p: EFFECTIVE_UNIVERSE [POINTER]
 			u: like universe_to_be_tested
 			s: EFFECTIVE_SET [G]
 			eq: REFERENCE_EQUALITY [G]
@@ -397,9 +397,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_character_8
-			-- Test {UNIVERSE}.there_exists_character_8.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_character_8.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_character_8"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_character_8"
 		local
 			u: like universe_to_be_tested
 		do
@@ -428,9 +428,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_character_32
-			-- Test {UNIVERSE}.there_exists_character_32.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_character_32.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_character_32"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_character_32"
 		local
 			u: like universe_to_be_tested
 		do
@@ -459,9 +459,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_natural_8
-			-- Test {UNIVERSE}.there_exists_native_natural_8.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_natural_8.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural_8"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_natural_8"
 		local
 			u: like universe_to_be_tested
 		do
@@ -490,9 +490,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_natural_16
-			-- Test {UNIVERSE}.there_exists_native_natural_16.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_natural_16.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural_16"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_natural_16"
 		local
 			u: like universe_to_be_tested
 		do
@@ -521,9 +521,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_natural_32
-			-- Test {UNIVERSE}.there_exists_native_natural_32.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_natural_32.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural_32"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_natural_32"
 		local
 			u: like universe_to_be_tested
 		do
@@ -552,9 +552,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_natural_64
-			-- Test {UNIVERSE}.there_exists_native_natural_64.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_natural_64.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_natural_64"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_natural_64"
 		local
 			u: like universe_to_be_tested
 		do
@@ -583,9 +583,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_integer_8
-			-- Test {UNIVERSE}.there_exists_native_integer_8.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_integer_8.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer_8"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_integer_8"
 		local
 			u: like universe_to_be_tested
 		do
@@ -614,9 +614,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_integer_16
-			-- Test {UNIVERSE}.there_exists_native_integer_16.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_integer_16.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer_16"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_integer_16"
 		local
 			u: like universe_to_be_tested
 		do
@@ -645,9 +645,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_integer_32
-			-- Test {UNIVERSE}.there_exists_native_integer_32.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_integer_32.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer_32"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_integer_32"
 		local
 			u: like universe_to_be_tested
 		do
@@ -676,9 +676,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_integer_64
-			-- Test {UNIVERSE}.there_exists_native_integer_64.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_integer_64.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_integer_64"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_integer_64"
 		local
 			u: like universe_to_be_tested
 		do
@@ -707,9 +707,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_real_32
-			-- Test {UNIVERSE}.there_exists_native_real_32.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_real_32.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_real_32"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_real_32"
 		local
 			u: like universe_to_be_tested
 		do
@@ -738,9 +738,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_native_real_64
-			-- Test {UNIVERSE}.there_exists_native_real_64.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_native_real_64.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_native_real_64"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_native_real_64"
 		local
 			u: like universe_to_be_tested
 		do
@@ -769,9 +769,9 @@ feature -- Test routines (Quantifier)
 		end
 
 	test_there_exists_g_instance
-			-- Test {UNIVERSE}.there_exists_g_instance.
+			-- Test {EFFECTIVE_UNIVERSE}.there_exists_g_instance.
 		note
-			testing: "covers/{UNIVERSE}.there_exists_g_instance"
+			testing: "covers/{EFFECTIVE_UNIVERSE}.there_exists_g_instance"
 		local
 			u: like universe_to_be_tested
 			s: SET [G]
@@ -815,7 +815,7 @@ feature -- Test routines (Quantifier)
 
 feature -- Factory (element to be tested)
 
-	universe_to_be_tested: UNIVERSE [G]
+	universe_to_be_tested: EFFECTIVE_UNIVERSE [G]
 			-- Universe meant to be under tests
 		do
 			create Result

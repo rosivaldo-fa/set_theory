@@ -1,5 +1,5 @@
 ﻿note
-	description: "Effective test suite for {COMPLEMENT_SET}"
+	description: "Effective test suite for {EFFECTIVE_COMPLEMENT_SET}"
 	author: "Rosivaldo F Alves"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -9,7 +9,7 @@ class
 	COMPLEMENT_SET_EFFECTIVE_TESTS
 
 inherit
-	COMPLEMENT_SET_TESTS [detachable separate CHARACTER_REF]
+	EFFECTIVE_COMPLEMENT_SET_TESTS [detachable separate CHARACTER_REF]
 		rename
 			a as c1,
 			b as c2,
@@ -36,9 +36,9 @@ feature -- Test routines (All)
 	test_all
 			-- <Precursor>
 		note
-			testing: "covers/{COMPLEMENT_SET}"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Test routines (Initialization)
@@ -46,9 +46,9 @@ feature -- Test routines (Initialization)
 	test_make
 			-- <Precursor>
 		note
-			testing: "covers/{COMPLEMENT_SET}.make"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.make"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Test routines (Primitive)
@@ -56,9 +56,9 @@ feature -- Test routines (Primitive)
 	test_reference_set
 			-- <Precursor>
 		note
-			testing: "covers/{COMPLEMENT_SET}.reference_set"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.reference_set"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Test routines (Membership)
@@ -66,56 +66,56 @@ feature -- Test routines (Membership)
 	test_has
 			-- <Precursor>
 		note
-			testing: "covers/{COMPLEMENT_SET}.has"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.has"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Test routines (Construction)
 
 	test_extended
-			-- Test {COMPLEMENT_SET}.extended.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.extended.
 		note
-			testing: "covers/{COMPLEMENT_SET}.extended"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.extended"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 	test_prunned
 			-- <Precursor>
-			-- Test {COMPLEMENT_SET}.prunned.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.prunned.
 		note
-			testing: "covers/{COMPLEMENT_SET}.prunned"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.prunned"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Test routines (Access)
 
 	test_u
-			-- Test {COMPLEMENT_SET}.u.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.u.
 		note
-			testing: "covers/{COMPLEMENT_SET}.u"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.u"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 	test_universe
-			-- Test {COMPLEMENT_SET}.universe.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.universe.
 		note
-			testing: "covers/{COMPLEMENT_SET}.universe"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.universe"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Test routines (Quality)
 
 	test_is_universe
-			-- Test {COMPLEMENT_SET}.is_universe.
+			-- Test {EFFECTIVE_COMPLEMENT_SET}.is_universe.
 		note
-			testing: "covers/{COMPLEMENT_SET}.is_universe"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.is_universe"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Test routines (Output)
@@ -123,9 +123,9 @@ feature -- Test routines (Output)
 	test_out
 			-- <Precursor>
 		note
-			testing: "covers/{COMPLEMENT_SET}.out"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.out"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Test routines (Status report)
@@ -133,9 +133,9 @@ feature -- Test routines (Status report)
 	test_debug_output
 			-- <Precursor>
 		note
-			testing: "covers/{COMPLEMENT_SET}.debug_output"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.debug_output"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Test routines (Quantifier)
@@ -143,22 +143,22 @@ feature -- Test routines (Quantifier)
 	test_there_exists
 			-- <Precursor>
 		note
-			testing: "covers/{COMPLEMENT_SET}.there_exists"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.there_exists"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 	test_p_holds_outside_reference_set
 			-- <Precursor>
 		note
-			testing: "covers/{COMPLEMENT_SET}.p_holds_outside_reference_set"
+			testing: "covers/{EFFECTIVE_COMPLEMENT_SET}.p_holds_outside_reference_set"
 		do
-			Precursor {COMPLEMENT_SET_TESTS}
+			Precursor {EFFECTIVE_COMPLEMENT_SET_TESTS}
 		end
 
 feature -- Factory (element to be tested)
 
-	set_to_be_tested: COMPLEMENT_SET [detachable separate CHARACTER_REF]
+	set_to_be_tested: EFFECTIVE_COMPLEMENT_SET [detachable separate CHARACTER_REF]
 			-- <Precursor>
 		do
 			create Result.make ({SET_EFFECTIVE_TESTS}.set_to_be_tested)
