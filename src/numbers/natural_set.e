@@ -28,11 +28,6 @@ feature -- Construction
 
 feature -- Anchor
 
-	subset_anchor: NATURAL_SET
-			-- <Precursor>
-		deferred
-		end
-
 	superset_anchor: NATURAL_SET
 			-- Anchor for supersets of current natural set
 		deferred

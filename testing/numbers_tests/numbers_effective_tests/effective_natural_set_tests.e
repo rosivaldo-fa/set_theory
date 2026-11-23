@@ -13,6 +13,7 @@ inherit
 		redefine
 			test_all,
 			test_has,
+			test_does_not_have,
 			test_set_extended,
 			test_extended,
 			test_prunned,
@@ -108,8 +109,29 @@ feature -- Test routines (Membership)
 			-- Test {EFFECTIVE_NATURAL_SET}.has.
 		note
 			testing: "covers/{EFFECTIVE_NATURAL_SET}.has"
+		local
+			s: like set_to_be_tested
 		do
 			Precursor {NATURAL_SET_TESTS}
+
+			s := set_to_be_tested.prunned (n1)
+			assert ("not (s ∋ n1)", not (s ∋ n1))
+		end
+
+	test_does_not_have
+			-- <Precursor>
+			-- Test {EFFECTIVE_NATURAL_SET}.does_not_have.
+		note
+			testing: "covers/{SET}.does_not_have"
+			testing: "covers/{NATURAL_SET}.does_not_have"
+			testing: "covers/{EFFECTIVE_NATURAL_SET}.does_not_have"
+		local
+			s: like set_to_be_tested
+		do
+			Precursor {NATURAL_SET_TESTS}
+
+			s := set_to_be_tested.prunned (n1)
+			assert ("s ∌ n1", s ∌ n1)
 		end
 
 feature -- Test routines (Construction)

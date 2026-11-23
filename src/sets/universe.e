@@ -9,6 +9,8 @@ deferred class
 
 inherit
 	SET [G]
+		rename
+			superset_anchor as universe_anchor
 		redefine
 			does_not_have
 		end

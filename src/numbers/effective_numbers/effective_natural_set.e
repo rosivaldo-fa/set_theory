@@ -123,7 +123,7 @@ feature -- Access
 
 	n,
 	natural_numbers: EFFECTIVE_UNIVERSE [NATURAL_NUMBER]
-			-- <Precursor>
+			-- Set of all natural numbers, i.e. the set ℕ
 		once
 			create Result
 		ensure then

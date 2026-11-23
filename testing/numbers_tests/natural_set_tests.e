@@ -60,10 +60,7 @@ feature -- Test routines (Membership)
 		local
 			s: like set_to_be_tested
 		do
-			s := set_to_be_tested.prunned (n1)
-			assert ("not (s ∋ n1)", not (s ∋ n1))
-
-			s := s.extended (n1)
+			s := set_to_be_tested.extended (n1)
 			assert ("s ∋ n1", s ∋ n1)
 
 			s := set_to_be_tested
@@ -74,15 +71,12 @@ feature -- Test routines (Membership)
 			-- <Precursor>
 			-- Test {NATURAL_SET}.does_not_have.
 		note
-			testing: "covers/{NATURAL_SET}.does_not_have"
+			testing: "covers/{SET}.does_not_have"
 			testing: "covers/{NATURAL_SET}.does_not_have"
 		local
 			s: like set_to_be_tested
 		do
-			s := set_to_be_tested.prunned (n1)
-			assert ("s ∌ n1", s ∌ n1)
-
-			s := s.extended (n1)
+			s := set_to_be_tested.extended (n1)
 			assert ("not (s ∌ n1)", not (s ∌ n1))
 
 			s := set_to_be_tested

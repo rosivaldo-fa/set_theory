@@ -9,8 +9,6 @@ class
 
 inherit
 	UNIVERSE [G]
-		rename
-			superset_anchor as universe_anchor
 		redefine
 			out
 		end
