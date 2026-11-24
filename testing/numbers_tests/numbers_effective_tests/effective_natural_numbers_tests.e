@@ -11,7 +11,8 @@ class
 inherit
 	NATURAL_NUMBERS_TESTS
 		redefine
-			test_extended
+			test_extended,
+			test_there_exists
 		end
 
 feature -- Test routines (Construction)
@@ -22,6 +23,16 @@ feature -- Test routines (Construction)
 		note
 			testing: "covers/{NATURAL_NUMBERS}.extended"
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBERS}.extended"
+		do
+			Precursor {NATURAL_NUMBERS_TESTS}
+		end
+
+feature -- Test routines (Quantifier)
+
+	test_there_exists
+			-- Test {EFFECTIVE_NATURAL_NUMBERS}.there_exists.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBERS}.there_exists"
 		do
 			Precursor {NATURAL_NUMBERS_TESTS}
 		end

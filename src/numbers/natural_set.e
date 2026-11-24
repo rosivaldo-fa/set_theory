@@ -33,6 +33,11 @@ feature -- Anchor
 		deferred
 		end
 
+	universe_anchor: NATURAL_NUMBERS
+			-- <Precursor>
+		deferred
+		end
+
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
 	license: "[

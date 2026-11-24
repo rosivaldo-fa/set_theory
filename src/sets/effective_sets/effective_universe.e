@@ -163,6 +163,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value.to_character_8) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value.to_character_8) ⇒ Result = there_exists_character_8 (p, min_value + 1, max_value)
@@ -204,6 +205,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value.to_character_32) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value.to_character_32) ⇒ Result = there_exists_character_32 (p, min_value + 1, max_value)
@@ -233,6 +235,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural_8 (p, min_value + 1, max_value)
@@ -262,6 +265,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural_16 (p, min_value + 1, max_value)
@@ -291,6 +295,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural_32 (p, min_value + 1, max_value)
@@ -320,6 +325,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_natural_64 (p, min_value + 1, max_value)
@@ -349,6 +355,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_8 (p, min_value + 1, max_value)
@@ -378,6 +385,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_16 (p, min_value + 1, max_value)
@@ -407,6 +415,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_32 (p, min_value + 1, max_value)
@@ -436,6 +445,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_value < min_value ⇒ not Result
 			found: min_value < max_value and p (min_value) ⇒ Result
 			still_searching: min_value < max_value and not p (min_value) ⇒ Result = there_exists_native_integer_64 (p, min_value + 1, max_value)
@@ -468,6 +478,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_pattern < min_pattern ⇒ not Result
 			found: min_pattern < max_pattern and p (real_32_from_bit_pattern (min_pattern)) ⇒ Result
 			still_searching: min_pattern < max_pattern and not p (real_32_from_bit_pattern (min_pattern)) ⇒
@@ -501,6 +512,7 @@ feature -- Quantifier
 				end
 			end
 		ensure
+			class
 			not_found: max_pattern < min_pattern ⇒ not Result
 			found: min_pattern < max_pattern and p (real_64_from_bit_pattern (min_pattern)) ⇒ Result
 			still_searching: min_pattern < max_pattern and not p (real_64_from_bit_pattern (min_pattern)) ⇒
@@ -521,6 +533,7 @@ feature -- Quantifier
 				Result := ∃ x: g_instances ¦ if attached {G} x as a then p (a) else False end
 			end
 		ensure
+			class
 			default_case: not ({G}).is_attached and then ({G}).has_default and then p (({G}).default) ⇒ Result
 			general_case: ({G}).is_attached or else not ({G}).has_default or else not p (({G}).default) ⇒
 				Result = ∃ x: g_instances ¦ if attached {G} x as a then p (a) else False end

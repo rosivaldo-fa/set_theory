@@ -93,16 +93,14 @@ feature -- Test routines (Quantifier)
 			testing: "covers/{NATURAL_SET}.there_exists"
 		local
 			s: like set_to_be_tested
-			l_n1: NATURAL_NUMBER
 		do
-			l_n1 := n1
-			s := set_to_be_tested & l_n1
+			s := set_to_be_tested & n4
 			assert (
 				"exists",
-				s |∃ agent (m, ia_n1: NATURAL_NUMBER): BOOLEAN
+				s |∃ agent (m: NATURAL_NUMBER): BOOLEAN
 					do
-						Result := m = ia_n1
-					end (?, l_n1) = True
+						Result := m ≍ n4
+					end = True
 				)
 		end
 

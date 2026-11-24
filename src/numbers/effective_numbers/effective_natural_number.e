@@ -86,10 +86,10 @@ feature -- Access
 			-- Maximum value representable by this implementation of natural numbers
 			--| NOTICE: Every natural number must be an integer number, hence the need for the quotient {like stored_value}.Max_value \\ 2.
 		once
-			Result := adjusted_value ({like stored_value}.Max_value \\ 2)
+			Result := adjusted_value ({like stored_value}.Max_value // 2)
 		ensure then
 			class
-			definition: Result.value = {like stored_value}.Max_value \\ 2
+			definition: Result.value = {like stored_value}.Max_value // 2
 		end
 
 feature -- Output
