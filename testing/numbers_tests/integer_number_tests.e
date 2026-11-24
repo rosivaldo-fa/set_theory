@@ -17,6 +17,36 @@ inherit
 			is_not_in_ok as element_is_not_in_ok
 		undefine
 			integer_number_to_be_tested
+		redefine
+			test_all
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {INTEGER_NUMBER}.
+		note
+			testing: "covers/{INTEGER_NUMBER}"
+		do
+			Precursor {ELEMENT_TESTS}
+			test_value
+		end
+
+feature -- Test routines (Primitive)
+
+	test_value
+			-- Test {INTEGER_NUMBER}.value.
+		note
+			testing: "covers/{INTEGER_NUMBER}.value"
+		do
+			assert ("value", attached integer_number_to_be_tested.value)
+		end
+
+feature {NONE} -- Factory (element to be tested)
+
+	integer_number_to_be_tested: INTEGER_NUMBER
+			-- Integer number meant to be under tests
+		deferred
 		end
 
 note

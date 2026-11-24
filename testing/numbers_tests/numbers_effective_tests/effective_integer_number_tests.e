@@ -11,7 +11,8 @@ class
 inherit
 	INTEGER_NUMBER_TESTS
 		redefine
-			test_all
+			test_all,
+			test_value
 		end
 
 feature -- Test routines (All)
@@ -53,6 +54,16 @@ feature -- Test routines (Initialization)
 		do
 			assert ("make_from_reference", attached (create {like integer_number_to_be_tested}.make_from_reference (create {EFFECTIVE_INTEGER_NUMBER}.make (1))))
 			assert ("integer_number_from_reference", attached integer_number_from_reference (create {EFFECTIVE_INTEGER_NUMBER}.make (1)))
+		end
+
+feature -- Test routines (Primitive)
+
+	test_value
+			-- Test {EFFECTIVE_INTEGER_NUMBER}.value.
+		note
+			testing: "covers/{EFFECTIVE_INTEGER_NUMBER}.value"
+		do
+			Precursor {INTEGER_NUMBER_TESTS}
 		end
 
 feature -- Factory (element to be tested)
