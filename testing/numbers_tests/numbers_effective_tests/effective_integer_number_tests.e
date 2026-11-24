@@ -23,6 +23,7 @@ feature -- Test routines (All)
 		do
 			Precursor {INTEGER_NUMBER_TESTS}
 			test_default_create
+			test_make
 		end
 
 feature -- Test routines (Initialization)
@@ -32,7 +33,16 @@ feature -- Test routines (Initialization)
 		note
 			testing: "covers/{EFFECTIVE_INTEGER_NUMBER}.default_create"
 		do
-			assert ("default_create", attached (create {like Integer_number_to_be_tested}))
+			assert ("default_create", attached (create {like integer_number_to_be_tested}))
+		end
+
+	test_make
+			-- Test {EFFECTIVE_INTEGER_NUMBER}.make.
+		note
+			testing: "covers/{EFFECTIVE_INTEGER_NUMBER}.make"
+		do
+			assert ("make", attached (create {like integer_number_to_be_tested}.make (1)))
+			assert ("integer_number_from_native", attached integer_number_from_native (1))
 		end
 
 feature -- Factory (element to be tested)
@@ -43,6 +53,17 @@ feature -- Factory (element to be tested)
 			create Result
 		ensure then
 			class
+		end
+
+feature -- Conversion
+
+	integer_number_from_native (v: like native_integer_anchor): like integer_number_to_be_tested
+			-- `v' converted to an integer number like `integer_number_to_be_tested'
+		do
+			Result := v
+		ensure then
+			class
+			adjusted_value: Result.value = {like integer_number_to_be_tested}.adjusted_value (v)
 		end
 
 feature -- Anchor
