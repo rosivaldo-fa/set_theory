@@ -25,6 +25,7 @@ feature -- Initialization
 			(create {EFFECTIVE_NATURAL_NUMBER_TESTS}).test_all;
 			(create {EFFECTIVE_NATURAL_SET_TESTS}).test_all;
 			(create {EFFECTIVE_NATURAL_NUMBERS_TESTS}).test_all;
+			(create {EFFECTIVE_INTEGER_NUMBER_TESTS}).test_all;
 		end
 
 note

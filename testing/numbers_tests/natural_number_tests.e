@@ -9,14 +9,9 @@ deferred class
 	NATURAL_NUMBER_TESTS
 
 inherit
-	ELEMENT_TESTS
+	INTEGER_NUMBER_TESTS
 		rename
-			test_is_in as test_element_is_in,
-			test_is_not_in as test_element_is_not_in,
-			element_to_be_tested as natural_number_to_be_tested,
-			is_not_in_ok as element_is_not_in_ok
-		undefine
-			natural_number_to_be_tested
+			integer_number_to_be_tested as natural_number_to_be_tested
 		redefine
 			test_all
 		end
@@ -31,7 +26,7 @@ feature -- Access
 		end
 
 	one: like natural_number_to_be_tested
-			-- The natural number
+			-- The natural number 1
 		deferred
 		ensure
 			one: Result.value = 1
@@ -44,7 +39,7 @@ feature -- Test routines (All)
 		note
 			testing: "covers/{NATURAL_NUMBER}"
 		do
-			Precursor {ELEMENT_TESTS}
+			Precursor {INTEGER_NUMBER_TESTS}
 			test_is_in
 			test_is_not_in
 			test_zero
@@ -286,7 +281,6 @@ feature -- Test routines (Comparison)
 			assert ("not (n ≥ m) ok", is_greater_equal_ok (n, m, natural_number_from_native (3)))
 		end
 
-
 	test_min
 			-- Test {NATURAL_NUMBER}.min.
 		note
@@ -425,9 +419,9 @@ feature -- Test routines (Operation)
 				n := natural_number_from_native (n.value + 1)
 				m := natural_number_from_native (n.value - 1)
 			end
-				check
-					small_enough: m ≤ n -- m = n - 1
-				end
+			check
+				small_enough: m ≤ n -- m = n - 1
+			end
 			assert ("minus", attached (n - m))
 			assert ("minus ok", minus_ok (n, m, natural_number_from_native (3)))
 		end
@@ -720,4 +714,5 @@ note
 		(see https://www.eiffel.com/licensing/forum.txt)
 		]"
 	source: "https://github.com/rosivaldo-fa/set_theory"
+
 end

@@ -59,6 +59,12 @@ feature {NONE} -- Initialization
 
 feature -- Primitive
 
+	integer_value: like native_integer_anchor
+			-- <Precursor>
+		do
+			Result := stored_value
+		end
+
 	value: like native_natural_anchor
 			-- <Precursor>
 		do
@@ -168,6 +174,15 @@ feature -- Operation
 
 feature -- Implementation
 
+	integer_adjusted_value (v: like integer_value): like integer_value
+			-- <Precursor>
+		do
+			Result := {EFFECTIVE_INTEGER_NUMBER}.adjusted_value (v)
+		ensure then
+			class
+			definition: Result = {EFFECTIVE_INTEGER_NUMBER}.adjusted_value (v)
+		end
+
 	adjusted_value (v: like value): like value
 			-- <Precursor>
 		do
@@ -187,6 +202,13 @@ feature -- Anchor
 		end
 
 	native_natural_anchor: NATURAL
+			-- <Precursor>
+		do
+		ensure then
+			class
+		end
+
+	native_integer_anchor: INTEGER
 			-- <Precursor>
 		do
 		ensure then

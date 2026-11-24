@@ -361,7 +361,7 @@ feature -- Conversion
 			Result := n
 		ensure
 			class
---			same_natural_number: Result ≍ n
+			same_natural_number: Result ≍ n
 		end
 
 feature -- Anchor

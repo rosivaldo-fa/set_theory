@@ -1,0 +1,54 @@
+﻿note
+	description: "Test suite for {EFFECTIVE_INTEGER_NUMBER}"
+	author: "Rosivaldo F Alves"
+	date: "$Date$"
+	revision: "$Revision$"
+	testing: "type/manual"
+
+class
+	EFFECTIVE_INTEGER_NUMBER_TESTS
+
+inherit
+	INTEGER_NUMBER_TESTS
+		redefine
+			test_all
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {EFFECTIVE_INTEGER_NUMBER}.
+		note
+			testing: "covers/{EFFECTIVE_INTEGER_NUMBER}"
+		do
+			Precursor {INTEGER_NUMBER_TESTS}
+		end
+
+feature -- Factory (element to be tested)
+
+	integer_number_to_be_tested: EFFECTIVE_INTEGER_NUMBER
+			-- Integer number meant to be under tests
+		once
+			create Result
+		ensure then
+			class
+		end
+
+feature -- Anchor
+
+	native_integer_anchor: INTEGER
+			-- <Precursor>
+		do
+		ensure then
+			class
+		end
+
+note
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
+	license: "[
+		Eiffel Forum License v2
+		(see https://www.eiffel.com/licensing/forum.txt)
+		]"
+	source: "https://github.com/rosivaldo-fa/set_theory"
+
+end

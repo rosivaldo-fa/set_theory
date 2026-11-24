@@ -8,10 +8,10 @@ deferred class
 	NATURAL_NUMBER
 
 inherit
-	ELEMENT
+	INTEGER_NUMBER
 		rename
-			is_in as element_is_in,
-			is_not_in as element_is_not_in
+			value as integer_value,
+			adjusted_value as integer_adjusted_value
 		end
 
 feature -- Primitive

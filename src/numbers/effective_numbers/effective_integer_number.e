@@ -1,0 +1,54 @@
+﻿note
+	description: "Implementation of {INTEGER_NUMBER}"
+	author: "Rosivaldo Fernandes Alves"
+	date: "$Date$"
+	revision: "$Revision$"
+
+expanded class
+	EFFECTIVE_INTEGER_NUMBER
+
+inherit
+	INTEGER_NUMBER
+
+feature -- Primitive
+
+	value: like native_integer_anchor
+			-- <Precursor>
+		do
+			Result := stored_value
+		end
+
+feature -- Implementation
+
+	adjusted_value (v: like value): like value
+			-- <Precursor>
+		do
+			Result := v.as_integer_8
+		ensure then
+			class
+			definition: Result = v.as_integer_8
+		end
+
+feature -- Anchor
+
+	native_integer_anchor: INTEGER
+			-- <Precursor>
+		once
+		ensure then
+			class
+		end
+
+feature {NONE} -- Implementation
+
+	stored_value: INTEGER_8;
+			-- Bit pattern of the `value' of current integer number
+
+note
+	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"
+	license: "[
+		Eiffel Forum License v2
+		(see https://www.eiffel.com/licensing/forum.txt)
+		]"
+	source: "https://github.com/rosivaldo-fa/set_theory"
+
+end
