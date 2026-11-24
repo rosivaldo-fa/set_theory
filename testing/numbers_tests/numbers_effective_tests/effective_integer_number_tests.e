@@ -24,6 +24,7 @@ feature -- Test routines (All)
 			Precursor {INTEGER_NUMBER_TESTS}
 			test_default_create
 			test_make
+			test_make_from_reference
 		end
 
 feature -- Test routines (Initialization)
@@ -45,6 +46,15 @@ feature -- Test routines (Initialization)
 			assert ("integer_number_from_native", attached integer_number_from_native (1))
 		end
 
+	test_make_from_reference
+			-- Test {EFFECTIVE_INTEGER_NUMBER}.make_from_reference.
+		note
+			testing: "covers/{EFFECTIVE_INTEGER_NUMBER}.make_from_reference"
+		do
+			assert ("make_from_reference", attached (create {like integer_number_to_be_tested}.make_from_reference (create {EFFECTIVE_INTEGER_NUMBER}.make (1))))
+			assert ("integer_number_from_reference", attached integer_number_from_reference (create {EFFECTIVE_INTEGER_NUMBER}.make (1)))
+		end
+
 feature -- Factory (element to be tested)
 
 	integer_number_to_be_tested: EFFECTIVE_INTEGER_NUMBER
@@ -53,6 +63,15 @@ feature -- Factory (element to be tested)
 			create Result
 		ensure then
 			class
+		end
+
+	integer_number_from_reference (i: INTEGER_NUMBER): like integer_number_to_be_tested
+			-- `i' converted to an integer number like `integer_number_to_be_tested'
+		do
+			Result := i
+		ensure
+			class
+--			same_integer_number: Result ≍ i -- TODO: Uncomment.
 		end
 
 feature -- Conversion
