@@ -598,7 +598,7 @@ feature -- Properties (Comparison)
 feature -- Properties (Relationship)
 
 	divides_ok (n, m, l: NATURAL_NUMBER): BOOLEAN
-			-- Do the properties verified within set theory hold for {NATURAL_NUMBER}.divides?
+			-- Do the properties verified within number theory hold for {NATURAL_NUMBER}.divides?
 		do
 			check
 				quasi_reflexive: n ≭ zero ⇒ n | n

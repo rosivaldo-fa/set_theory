@@ -10,7 +10,8 @@ deferred class
 inherit
 	NATURAL_SET
 		rename
-			set_superset_anchor as universe_anchor
+			set_superset_anchor as universe_anchor,
+			superset_anchor as universe_anchor
 		undefine
 			does_not_have
 		end
@@ -24,24 +25,23 @@ inherit
 
 feature -- Construction
 
-	prunned alias "/" (m: NATURAL_NUMBER): COMPLEMENT_SET [NATURAL_NUMBER]
-			-- <Precursor>
-		deferred
+	extended alias "&" (m: NATURAL_NUMBER): like Current
+			-- Current universe itself
+		do
+			Result := Current
 		end
 
-feature -- Access
-
-	n,
-	natural_numbers: like Current
-			-- Set of all natural numbers, i.e. the set ℕ
+	prunned alias "/" (m: NATURAL_NUMBER): COMPLEMENT_SET [NATURAL_NUMBER]
+			-- <Precursor>
 		deferred
 		end
 
 feature -- Anchor
 
 	universe_anchor: like Current
-			-- <Precursor>
-		deferred
+			-- Anchor for the universe of natural numbers
+		do
+			Result := Current
 		end
 
 note

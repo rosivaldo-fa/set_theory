@@ -110,13 +110,13 @@ feature -- Construction
 				if m ≍ given_element then
 					Result := subset / m
 				else
-					Result := (subset / m).extended (given_element)
+					Result := (subset / m) & given_element
 				end
 			end
 		ensure then
 			when_empty: subset = Current ⇒ Result = Current -- TODO: Use set equality instead.
 --			when_found: attached eq and then eq (a, given_element) ⇒ Result ≍ (subset / a)
---			when_not_found: attached eq and then not eq (a, given_element) ⇒ Result ≍ (subset / a).extended (given_element, eq)
+--			when_not_found: attached eq and then not eq (a, given_element) ⇒ Result ≍ (subset / a) & given_element
 		end
 
 feature -- Access

@@ -82,6 +82,16 @@ feature -- Access
 			class
 		end
 
+	Max_value: EFFECTIVE_NATURAL_NUMBER
+			-- Maximum value representable by this implementation of natural numbers
+			--| NOTICE: Every natural number must be an integer number, hence the need for the quotient {like stored_value}.Max_value \\ 2.
+		once
+			Result := adjusted_value ({like stored_value}.Max_value \\ 2)
+		ensure then
+			class
+			definition: Result.value = {like stored_value}.Max_value \\ 2
+		end
+
 feature -- Output
 
 	out: STRING
@@ -190,6 +200,9 @@ feature {NONE} -- Implementation
 
 	stored_value_mask: like stored_value = 0b0111_1111
 			-- Binary mask for the (stored) value of a natural number
+
+invariant
+	Max_value: Current ≤ Max_value
 
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"

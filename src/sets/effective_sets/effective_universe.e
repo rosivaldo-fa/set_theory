@@ -29,15 +29,6 @@ feature -- Construction
 			create Result.make (s.extended (a, create {REFERENCE_EQUALITY [G]}))
 		end
 
-feature -- Access
-
-	u,
-	universe: like Current
-			-- <Precursor>
-		do
-			Result := Current
-		end
-
 feature -- Output
 
 	out: STRING
@@ -596,9 +587,6 @@ feature {NONE} -- Implementation
 		ensure
 			class
 		end
-
-invariant
-	is_universe: is_universe
 
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"

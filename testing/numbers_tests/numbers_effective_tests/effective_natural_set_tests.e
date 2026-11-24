@@ -72,19 +72,19 @@ feature -- Test routines (Primitive)
 			s: like set_to_be_tested
 		do
 			create s
-			s := s.extended (n1)
+			s := s & n1
 			assert ("{n1} /= {}", s.subset /= s)
 			assert ("{n1}", s.given_element ≍ n1)
 
-			s := s.extended (n2.standard_twin)
+			s := s & n2.standard_twin
 			assert ("{n1,n2} /= {}", s.subset /= s)
 			assert ("{n1,n2}", s.given_element ≍ n2)
 
-			s := s.extended (n3.twin)
+			s := s & n3.twin
 			assert ("{n1,n2,n3} /= {}", s.subset /= s)
 			assert ("{n1,n2,n3}", s.given_element ≍ n3)
 
-			s := s.extended (n4.deep_twin)
+			s := s & n4.deep_twin
 			assert ("{n1,n2,n3,n4} /= {}", s.subset /= s)
 			assert ("{n1,n2,n3,n4}", s.given_element ≍ n4)
 		end
@@ -99,7 +99,7 @@ feature -- Test routines (Primitive)
 			create s
 			assert ("{}", s = s.subset)
 
-			s := s.extended (n1)
+			s := s & n1
 			assert ("{n1}", s /= s.subset)
 		end
 
@@ -200,13 +200,13 @@ feature -- Test routines (Output)
 			create s
 			assert ("{}", s.out ~ "{}")
 
-			s := s.extended (n1)
+			s := s & n1
 			assert ("n1", s.out ~ "{" + n1.out + "}")
 
-			s := s.extended (n2)
+			s := s & n2
 			assert ("{n1,n2}", s.out ~ "{" + n1.out + "," + n2.out + "}")
 
-			s := s.extended (n3)
+			s := s & n3
 			assert ("{n1,n2,n3}", s.out ~ "{" + n1.out + "," + n2.out + "," + n3.out + "}")
 
 			s := set_to_be_tested
@@ -227,15 +227,15 @@ feature -- Test routines (Status report)
 			create s
 			assert ("{}", s.debug_output ~ {STRING_32} "{}")
 
-			s := s.extended (n1)
+			s := s & n1
 			s_debug_output := s.debug_output
 			assert ("{n1}", s_debug_output ~ {STRING_32} "{" + n1.out + "}")
 
-			s := s.extended (n2)
+			s := s & n2
 			s_debug_output := s.debug_output
 			assert ("{n1,n2}", s_debug_output ~ {STRING_32} "{" + n1.out + "," + n2.out + "}")
 
-			s := s.extended (n3)
+			s := s & n3
 			s_debug_output := s.debug_output
 			assert ("{n1,n2,n3}", s_debug_output ~ {STRING_32} "{" + n1.out + "," + n2.out + "," + n3.out + "}")
 

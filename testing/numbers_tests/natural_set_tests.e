@@ -45,7 +45,7 @@ feature -- Test routines (Construction)
 		local
 			s: like set_to_be_tested
 		do
-			s := set_to_be_tested.extended (n1)
+			s := set_to_be_tested & n1
 			assert ("{n1, ...}", s ∋ n1)
 		end
 
@@ -60,7 +60,7 @@ feature -- Test routines (Membership)
 		local
 			s: like set_to_be_tested
 		do
-			s := set_to_be_tested.extended (n1)
+			s := set_to_be_tested & n1
 			assert ("s ∋ n1", s ∋ n1)
 
 			s := set_to_be_tested
@@ -76,7 +76,7 @@ feature -- Test routines (Membership)
 		local
 			s: like set_to_be_tested
 		do
-			s := set_to_be_tested.extended (n1)
+			s := set_to_be_tested & n1
 			assert ("not (s ∌ n1)", not (s ∌ n1))
 
 			s := set_to_be_tested
@@ -96,7 +96,7 @@ feature -- Test routines (Quantifier)
 			l_n1: NATURAL_NUMBER
 		do
 			l_n1 := n1
-			s := set_to_be_tested.extended (l_n1)
+			s := set_to_be_tested & l_n1
 			assert (
 				"exists",
 				s |∃ agent (m, ia_n1: NATURAL_NUMBER): BOOLEAN

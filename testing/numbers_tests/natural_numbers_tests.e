@@ -5,8 +5,21 @@
 	revision: "$Revision$"
 	testing: "type/manual"
 
-class
+deferred class
 	NATURAL_NUMBERS_TESTS
+
+inherit
+	NATURAL_SET_TESTS
+		rename
+			set_to_be_tested as universe_to_be_tested
+		end
+
+feature -- Factory (element to be tested)
+
+	universe_to_be_tested: NATURAL_NUMBERS
+			-- Universe meant to be under tests
+		deferred
+		end
 
 note
 	copyright: "Copyright (c) 2012-2026, Rosivaldo F Alves"

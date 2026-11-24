@@ -62,6 +62,7 @@ feature -- Test routines (All)
 			test_default_create
 			test_make
 			test_make_from_reference
+			test_Max_value
 			test_out
 			test_debug_output
 		end
@@ -132,6 +133,15 @@ feature -- Test routines (Access)
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.one"
 		do
 			Precursor {NATURAL_NUMBER_TESTS}
+		end
+
+	test_Max_value
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.Max_value.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.Max_value"
+		do
+			assert ("Max_value", attached natural_number_to_be_tested.Max_value)
+			assert ("Max_value", attached {EFFECTIVE_NATURAL_NUMBER}.Max_value)
 		end
 
 feature -- Test routines (Output)

@@ -57,7 +57,8 @@ feature -- Access
 	u,
 	universe: like Current
 			-- <Precursor>
-		deferred
+		do
+			Result := Current
 		end
 
 feature -- Anchor
