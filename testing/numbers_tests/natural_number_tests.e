@@ -11,6 +11,7 @@ deferred class
 inherit
 	INTEGER_NUMBER_TESTS
 		rename
+			test_value as test_integer_value,
 			integer_number_to_be_tested as natural_number_to_be_tested
 		redefine
 			test_all
@@ -40,6 +41,7 @@ feature -- Test routines (All)
 			testing: "covers/{NATURAL_NUMBER}"
 		do
 			Precursor {INTEGER_NUMBER_TESTS}
+			test_value
 			test_is_in
 			test_is_not_in
 			test_zero
@@ -60,6 +62,16 @@ feature -- Test routines (All)
 			test_product
 			test_natural_quotient
 			test_natural_remainder
+		end
+
+feature -- Test routines (Primitive)
+
+	test_value
+			-- Test {NATURAL_NUMBER}.value.
+		note
+			testing: "covers/{NATURAL_NUMBER}.value"
+		do
+			assert ("value", attached natural_number_to_be_tested.value)
 		end
 
 feature -- Test routines (Membership)

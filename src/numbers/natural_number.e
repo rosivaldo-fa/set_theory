@@ -11,6 +11,7 @@ inherit
 	INTEGER_NUMBER
 		rename
 			value as integer_value,
+			is_in as integer_is_in,
 			adjusted_value as integer_adjusted_value
 		end
 

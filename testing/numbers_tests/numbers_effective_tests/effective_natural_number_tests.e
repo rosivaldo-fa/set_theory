@@ -11,6 +11,7 @@ class
 inherit
 	NATURAL_NUMBER_TESTS
 		redefine
+			test_value,
 			test_all,
 			test_is_in,
 			test_is_not_in,
@@ -93,6 +94,16 @@ feature -- Test routines (Initialization)
 		do
 			assert ("make_from_reference", attached (create {like natural_number_to_be_tested}.make_from_reference (create {EFFECTIVE_NATURAL_NUMBER}.make (1))))
 			assert ("natural_number_from_reference", attached natural_number_from_reference (create {EFFECTIVE_NATURAL_NUMBER}.make (1)))
+		end
+
+feature -- Test routines (Primitive)
+
+	test_value
+			-- Test {EFFECTIVE_NATURAL_NUMBER}.value.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBER}.value"
+		do
+			Precursor {NATURAL_NUMBER_TESTS}
 		end
 
 feature -- Test routines (Membership)

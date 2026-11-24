@@ -23,6 +23,16 @@ feature -- Primitive
 			adjusted: Result = adjusted_value (Result)
 		end
 
+feature -- Membership
+
+	is_in alias "∈" (s: SET [INTEGER_NUMBER]): BOOLEAN
+			-- Does `s` have current integer number?
+		do
+			Result := s ∋ Current
+		ensure
+			definition: Result = s ∋ Current
+		end
+
 feature -- Implementation
 
 	adjusted_value (v: like value): like value
