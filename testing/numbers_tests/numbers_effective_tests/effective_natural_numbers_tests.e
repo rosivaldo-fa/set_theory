@@ -12,6 +12,7 @@ inherit
 	NATURAL_NUMBERS_TESTS
 		redefine
 			test_extended,
+			test_prunned,
 			test_there_exists
 		end
 
@@ -23,6 +24,14 @@ feature -- Test routines (Construction)
 		note
 			testing: "covers/{NATURAL_NUMBERS}.extended"
 			testing: "covers/{EFFECTIVE_NATURAL_NUMBERS}.extended"
+		do
+			Precursor {NATURAL_NUMBERS_TESTS}
+		end
+
+	test_prunned
+			-- Test {EFFECTIVE_NATURAL_NUMBERS}.prunned.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBERS}.prunned"
 		do
 			Precursor {NATURAL_NUMBERS_TESTS}
 		end
