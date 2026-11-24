@@ -12,7 +12,8 @@ inherit
 	INTEGER_NUMBER_TESTS
 		redefine
 			test_all,
-			test_value
+			test_value,
+			test_is_in
 		end
 
 feature -- Test routines (All)
@@ -62,6 +63,18 @@ feature -- Test routines (Primitive)
 			-- Test {EFFECTIVE_INTEGER_NUMBER}.value.
 		note
 			testing: "covers/{EFFECTIVE_INTEGER_NUMBER}.value"
+		do
+			Precursor {INTEGER_NUMBER_TESTS}
+		end
+
+feature -- Test routines (Membership)
+
+	test_is_in
+			-- <Precursor>
+			-- Test {EFFECTIVE_INTEGER_NUMBER}.is_in.
+		note
+			testing: "covers/{INTEGER_NUMBER}.is_in"
+			testing: "covers/{EFFECTIVE_INTEGER_NUMBER}.is_in"
 		do
 			Precursor {INTEGER_NUMBER_TESTS}
 		end

@@ -12,6 +12,7 @@ inherit
 	INTEGER_NUMBER_TESTS
 		rename
 			test_value as test_integer_value,
+			test_is_in as test_integer_is_in,
 			integer_number_to_be_tested as natural_number_to_be_tested
 		redefine
 			test_all

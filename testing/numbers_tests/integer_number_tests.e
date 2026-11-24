@@ -30,6 +30,7 @@ feature -- Test routines (All)
 		do
 			Precursor {ELEMENT_TESTS}
 			test_value
+			test_is_in
 		end
 
 feature -- Test routines (Primitive)
@@ -40,6 +41,25 @@ feature -- Test routines (Primitive)
 			testing: "covers/{INTEGER_NUMBER}.value"
 		do
 			assert ("value", attached integer_number_to_be_tested.value)
+		end
+
+feature -- Test routines (Membership)
+
+	test_is_in
+			-- Test {INTEGER_NUMBER}.is_in.
+		note
+			testing: "covers/{INTEGER_NUMBER}.is_in"
+		local
+			i: like integer_number_to_be_tested
+			s: SET [INTEGER_NUMBER]
+		do
+			i := integer_number_to_be_tested
+			create {EFFECTIVE_SET [INTEGER_NUMBER]} s
+			s := s.extended (i, create {REFERENCE_EQUALITY [INTEGER_NUMBER]})
+			assert ("i ∈ s", i ∈ s)
+
+			s := s / i
+			assert ("not (i ∈ s)", not (i ∈ s))
 		end
 
 feature {NONE} -- Factory (element to be tested)
