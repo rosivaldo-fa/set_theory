@@ -11,9 +11,20 @@ class
 inherit
 	NATURAL_NUMBERS_TESTS
 		redefine
+			test_all,
 			test_extended,
 			test_prunned,
 			test_there_exists
+		end
+
+feature -- Test routines (All)
+
+	test_all
+			-- Test every routine of {EFFECTIVE_NATURAL_NUMBERS}.
+		note
+			testing: "covers/{EFFECTIVE_NATURAL_NUMBERS}"
+		do
+			Precursor {NATURAL_NUMBERS_TESTS}
 		end
 
 feature -- Test routines (Construction)
